@@ -139,16 +139,16 @@ public class SonderbauwerkPanel extends JPanel {
     			this.hauptModul.getObjekt().getId());
     	log.debug("Sonderbauwerk aus DB geholt: " + this.sonderbauwerk);
     	
-    	List<Referenz> referenzen = Referenz.getAll();
-    	this.referenz = null;
-    	
-    	for (Referenz ref : referenzen) {
-    	    if (ref.getSonderbauwerkByQSbNr().getNr() == this.sonderbauwerk.getNr()
-    		    && ref.getKlaeranlageByZKaNr() != null) {
-    		this.referenz = Referenz.findById(ref.getNr());
-    	    	log.debug("Referenz aus DB geholt: " + this.referenz);
-    	    }
-    	}
+//    	List<Referenz> referenzen = Referenz.getAll();
+//    	this.referenz = null;
+//    	
+//    	for (Referenz ref : referenzen) {
+//    	    if (ref.getSonderbauwerkByQSbNr().getNr() == this.sonderbauwerk.getNr()
+//    		    && ref.getKlaeranlageByZKaNr() != null) {
+//    		this.referenz = Referenz.findById(ref.getNr());
+//    	    	log.debug("Referenz aus DB geholt: " + this.referenz);
+//    	    }
+//    	}
     }
     
     /**
@@ -237,7 +237,7 @@ public class SonderbauwerkPanel extends JPanel {
         	this.sonderbauwerk.setObjekt(this.hauptModul.getObjekt());
         	this.sonderbauwerk.merge();
         	//ElkaEinleitungsstelle.merge(this.einleitungstelle);
-        	log.debug("Neue ElkaEinleitungsstelle " + this.sonderbauwerk + " gespeichert.");
+        	log.debug("Neues Sonderbauwerk " + this.sonderbauwerk + " gespeichert.");
         }
     }
     

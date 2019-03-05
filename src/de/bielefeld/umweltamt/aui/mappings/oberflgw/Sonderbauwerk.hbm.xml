@@ -4,9 +4,8 @@
 <!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk" table="sonderbauwerk" schema="oberflgw" optimistic-lock="version">
-        <id name="nr" type="long">
-            <column name="nr" />
-            <generator class="assigned" />
+        <id name="nr" type="long" column="nr" unsaved-value="0">
+            <generator class="identity"/>
         </id>
         <many-to-one name="adresse" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select">
             <column name="anspr_adr_nr" />
@@ -18,7 +17,7 @@
             <column name="wasserrecht_genehmigung_nr" />
         </many-to-one>
         <property name="gemeindeId" type="java.lang.String">
-            <column name="gemeinde_id" length="8" not-null="true" />
+            <column name="gemeinde_id" length="8" />
         </property>
         <property name="bezeichnung" type="java.lang.String">
             <column name="bezeichnung" length="60" />
@@ -30,7 +29,7 @@
             <column name="entw_einzugsgeb_opt" />
         </property>
         <property name="typOpt" type="java.lang.Integer">
-            <column name="typ_opt" not-null="true" />
+            <column name="typ_opt" />
         </property>
         <property name="inbetriebnahme" type="java.lang.Integer">
             <column name="inbetriebnahme" />
@@ -45,16 +44,16 @@
             <column name="bemerkung" length="1000" />
         </property>
         <property name="e32" type="java.lang.Integer">
-            <column name="e32" not-null="true" />
+            <column name="e32" />
         </property>
         <property name="n32" type="java.lang.Integer">
-            <column name="n32" not-null="true" />
+            <column name="n32" />
         </property>
         <property name="inNrwTog" type="boolean">
-            <column name="in_nrw_tog" not-null="true" />
+            <column name="in_nrw_tog" />
         </property>
         <property name="industrTog" type="boolean">
-            <column name="industr_tog" not-null="true" />
+            <column name="industr_tog" />
         </property>
         <property name="nameAusserhalbNrw" type="java.lang.String">
             <column name="name_ausserhalb_nrw" length="30" />
@@ -78,7 +77,7 @@
             <column name="beckentyp_opt" />
         </property>
         <property name="rohrspeicherTog" type="boolean">
-            <column name="rohrspeicher_tog" not-null="true" />
+            <column name="rohrspeicher_tog" />
         </property>
         <property name="bauweiseOpt" type="java.lang.Integer">
             <column name="bauweise_opt" />
@@ -93,61 +92,61 @@
             <column name="beckensteuerung_opt" />
         </property>
         <property name="AReiEinrichTog" type="boolean">
-            <column name="a_rei_einrich_tog" not-null="true" />
+            <column name="a_rei_einrich_tog" />
         </property>
         <property name="messartTog" type="boolean">
-            <column name="messart_tog" not-null="true" />
+            <column name="messart_tog" />
         </property>
         <property name="drosselTog" type="boolean">
-            <column name="drossel_tog" not-null="true" />
+            <column name="drossel_tog" />
         </property>
         <property name="fuellstandTog" type="boolean">
-            <column name="fuellstand_tog" not-null="true" />
+            <column name="fuellstand_tog" />
         </property>
         <property name="entlastungswasserTog" type="boolean">
-            <column name="entlastungswasser_tog" not-null="true" />
+            <column name="entlastungswasser_tog" />
         </property>
         <property name="entlastungsdauerTog" type="boolean">
-            <column name="entlastungsdauer_tog" not-null="true" />
+            <column name="entlastungsdauer_tog" />
         </property>
         <property name="entlastungshaeufigTog" type="boolean">
-            <column name="entlastungshaeufig_tog" not-null="true" />
+            <column name="entlastungshaeufig_tog" />
         </property>
         <property name="fernMessTog" type="boolean">
-            <column name="fern_mess_tog" not-null="true" />
+            <column name="fern_mess_tog" />
         </property>
         <property name="niederschlagTog" type="boolean">
-            <column name="niederschlag_tog" not-null="true" />
+            <column name="niederschlag_tog" />
         </property>
         <property name="fernStoerTog" type="boolean">
-            <column name="fern_stoer_tog" not-null="true" />
+            <column name="fern_stoer_tog" />
         </property>
         <property name="hwfreiTog" type="boolean">
-            <column name="hwfrei_tog" not-null="true" />
+            <column name="hwfrei_tog" />
         </property>
         <property name="einstauHaeufig" type="big_decimal">
             <column name="einstau_haeufig" precision="11" />
         </property>
         <property name="hwEinrichtungTog" type="boolean">
-            <column name="hw_einrichtung_tog" not-null="true" />
+            <column name="hw_einrichtung_tog" />
         </property>
         <property name="hwRueckstauTog" type="boolean">
-            <column name="hw_rueckstau_tog" not-null="true" />
+            <column name="hw_rueckstau_tog" />
         </property>
         <property name="hwSchieberTog" type="boolean">
-            <column name="hw_schieber_tog" not-null="true" />
+            <column name="hw_schieber_tog" />
         </property>
         <property name="hwPumpwerkTog" type="boolean">
-            <column name="hw_pumpwerk_tog" not-null="true" />
+            <column name="hw_pumpwerk_tog" />
         </property>
         <property name="hwWeitereTog" type="boolean">
-            <column name="hw_weitere_tog" not-null="true" />
+            <column name="hw_weitere_tog" />
         </property>
         <property name="hwSonstText" type="java.lang.String">
             <column name="hw_sonst_text" length="80" />
         </property>
         <property name="bemesWeitergTog" type="boolean">
-            <column name="bemes_weiterg_tog" not-null="true" />
+            <column name="bemes_weiterg_tog" />
         </property>
         <property name="bemessungText" type="java.lang.String">
             <column name="bemessung_text" length="80" />
@@ -180,7 +179,7 @@
             <column name="dross_abfluss_opt" />
         </property>
         <property name="drossUeberTog" type="boolean">
-            <column name="dross_ueber_tog" not-null="true" />
+            <column name="dross_ueber_tog" />
         </property>
         <property name="entlastungsartOpt" type="java.lang.Integer">
             <column name="entlastungsart_opt" />
@@ -315,29 +314,35 @@
             <column name="w_oberflaeche" />
         </property>
         <property name="erstellDat" type="java.util.Date">
-            <column name="erstell_dat" length="29" not-null="true" />
+            <column name="erstell_dat" length="29" />
         </property>
         <property name="aktualDat" type="java.util.Date">
-            <column name="aktual_dat" length="29" not-null="true" />
+            <column name="aktual_dat" length="29" />
         </property>
         <property name="externalNr" type="java.lang.String">
             <column name="external_nr" length="50" />
         </property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" />
+        </property>
         <set name="ZSbVerfahrens" table="z_sb_verfahren" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="sb_nr" not-null="true" />
+                <column name="sb_nr" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbVerfahren" />
         </set>
         <set name="sbEntlastungs" table="sb_entlastung" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="sb_nr" not-null="true" />
+                <column name="sb_nr" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung" />
         </set>
         <set name="ZSbRegelns" table="z_sb_regeln" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="sb_nr" not-null="true" />
+                <column name="sb_nr" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbRegeln" />
         </set>
@@ -355,7 +360,7 @@
         </set>
         <set name="ZRbfSchutzgueters" table="z_rbf_schutzgueter" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="sb_nr" not-null="true" />
+                <column name="sb_nr" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter" />
         </set>

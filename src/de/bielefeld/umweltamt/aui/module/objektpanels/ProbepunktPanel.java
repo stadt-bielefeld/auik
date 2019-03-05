@@ -67,6 +67,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
@@ -112,6 +113,7 @@ public class ProbepunktPanel extends JPanel {
 
     // Daten
     private Messstelle probepkt = null;
+    private Sielhaut sielhaut = null;
     private Probeart[] probearten = null;
     private Klaeranlage[] klaeranlagen = null;
     private Sachbearbeiter[] sachbearbeiter = null;
@@ -380,6 +382,11 @@ public class ProbepunktPanel extends JPanel {
             // Probepunkt speichern
             if (this.probepkt.merge()) {
                 log.debug("Neuer Probepunkt " + this.probepkt + " gespeichert.");
+                if (this.probepkt.getObjekt().getObjektarten().getId() == 40) {
+                	this.sielhaut = new Sielhaut();
+                	this.sielhaut.setMessstelle(probepkt);
+                	this.sielhaut.merge();
+                }
             }
         }
     }

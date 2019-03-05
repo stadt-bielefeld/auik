@@ -23,6 +23,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.oberflgw;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -31,6 +32,8 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -156,6 +159,8 @@ public class Sonderbauwerk  implements java.io.Serializable {
     private Date erstellDat;
     private Date aktualDat;
     private String externalNr;
+    private boolean enabled;
+    private boolean deleted;
     private Set<ZSbVerfahren> ZSbVerfahrens = new HashSet<ZSbVerfahren>(0);
     private Set<SbEntlastung> sbEntlastungs = new HashSet<SbEntlastung>(0);
     private Set<ZSbRegeln> ZSbRegelns = new HashSet<ZSbRegeln>(0);
@@ -1171,6 +1176,22 @@ public class Sonderbauwerk  implements java.io.Serializable {
         this.externalNr = externalNr;
     }
 
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isDeleted() {
+        return this.deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     public Set<ZSbVerfahren> getZSbVerfahrens() {
         return this.ZSbVerfahrens;
     }
@@ -1351,6 +1372,8 @@ public class Sonderbauwerk  implements java.io.Serializable {
         buffer.append("referenzsForQSbNr").append("='").append(getReferenzsForQSbNr()).append("' ");			
         buffer.append("referenzsForZSbNr").append("='").append(getReferenzsForZSbNr()).append("' ");			
         buffer.append("ZRbfSchutzgueters").append("='").append(getZRbfSchutzgueters()).append("' ");			
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");					
         buffer.append("]");
 
         return buffer.toString();
@@ -1527,7 +1550,9 @@ public class Sonderbauwerk  implements java.io.Serializable {
         this.ZSbRegelns = copy.getZSbRegelns();            
         this.referenzsForQSbNr = copy.getReferenzsForQSbNr();            
         this.referenzsForZSbNr = copy.getReferenzsForZSbNr();            
-        this.ZRbfSchutzgueters = copy.getZRbfSchutzgueters();            
+        this.ZRbfSchutzgueters = copy.getZRbfSchutzgueters();              
+        this.enabled = copy.isEnabled();            
+        this.deleted = copy.isDeleted();           
     }    
 
     /**
@@ -1573,8 +1598,11 @@ public class Sonderbauwerk  implements java.io.Serializable {
     }
 
 	public static Sonderbauwerk findByObjektId(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+        log.debug("Getting Sonderbauwerk instance with connected BasisObjekt with id " + id);
+
+        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
+        Set<Sonderbauwerk> list = objekt.getSonderbauwerks();
+        return list.iterator().next();
 	}
 
     /* Custom code goes below here! */

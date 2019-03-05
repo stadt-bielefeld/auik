@@ -402,6 +402,7 @@ public class SielhautBearbeiten extends AbstractModul {
         neuerPunkt.setN32(new Double(0.0));
         neuerPunkt.setBezeichnung("Neuer Sielhaut-Punkt");
         setSielhautPunkt(neuerPunkt);
+        
     }
 
     /**
@@ -420,19 +421,16 @@ public class SielhautBearbeiten extends AbstractModul {
     /**
      * Speichert einen neu angelegten Probenahmepunkt.
      */
-    public boolean saveProbepunkt(Objekt objekt) {
-        boolean saved = false;
+	public boolean saveProbepunkt(Objekt objekt) {
+		boolean saved = false;
 
-//        objekt = BasisObjekt.findById(objekt.getObjektid());
-        this.sprobePkt.setObjekt(objekt);
-//        this.spunkt = AtlSielhaut.getSielhaut(this.spunkt.getId());
-//        this.sprobePkt.setAtlSielhaut(this.spunkt);
+		// objekt = BasisObjekt.findById(objekt.getObjektid());
+		this.sprobePkt.setObjekt(objekt);
 
-        this.standort = standort.merge(objekt.getStandortid());
-        this.objekt.setStandortid(standort);
-        this.objekt = Objekt.merge(this.objekt);
-        this.sprobePkt.setObjekt(this.objekt);
-        this.sprobePkt = Messstelle.merge(this.sprobePkt);
+		this.objekt.setStandortid(standort);
+		this.objekt = Objekt.merge(this.objekt);
+		this.sprobePkt.setObjekt(this.objekt);
+		this.sprobePkt = Messstelle.merge(this.sprobePkt);
 
         saved = true;
 
@@ -936,7 +934,8 @@ public class SielhautBearbeiten extends AbstractModul {
             this.punktNeuButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    neuerSielhautPunkt();
+                    SielhautBearbeiten.this.manager
+                    .switchModul("m_objekt_bearbeiten");
                 }
             });
         }
