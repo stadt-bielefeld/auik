@@ -67,6 +67,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
+import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -86,8 +87,18 @@ public class SonderbauwerkPanel extends JPanel {
     private BasisObjektBearbeiten hauptModul;
 
     // Widgets
-    private TextFieldDateChooser erstellDatDatum = null;
     private JTextField bezeichnungFeld = null;
+    private JTextField kurzbezeichnungFeld = null;
+    private JCheckBox stillgelegtCheck = null;
+    private TextFieldDateChooser stillegdatDatum = null;
+    private JComboBox verfahrenBox = null;
+    private JComboBox typBox = null;
+    private JFormattedTextField inbetriebnahmeFeld = null;
+    private TextFieldDateChooser wiederinebetriebdatDatum = null;
+    private JFormattedTextField e32Feld = null;
+    private JFormattedTextField n32Feld = null;
+    private JComboBox klaeranlageBox = null;
+    private LimitedTextArea bemerkungArea = null;
     // Daten
     private Sonderbauwerk  sonderbauwerk = null;
     private Referenz referenz = null;
@@ -105,16 +116,47 @@ public class SonderbauwerkPanel extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-        		"r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
+        		"r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
         builder.setDefaultDialogBorder();
         
-        builder.appendSeparator("ELKA");
-        builder.append("Erstellung:", getErstellDatDatum());
+        builder.appendSeparator("Stammdaten");
         builder.append("Bezeichnung:", getBezeichnungFeld());
         builder.nextLine();
+        builder.append("Kurbezeichnung:", getKurzbezeichnungFeld());
+        builder.nextLine();
+        builder.append("Entwässerungsverfahren:", getVerfahrenBox());
+        builder.nextLine();
+        builder.append("Typ:", getTypBox());
+        builder.nextLine();
+        builder.append("Inbetriebnahme:", getInbetriebnahmeFeld());
+        builder.nextLine();
+        builder.append("Wiederinbetriebnahme:", getWiederinebetriebdatDatum());
+        builder.nextLine();
+        builder.append("stillgelegt:", getStillgelegtCheck());
+        builder.append("am:", getStillegdatDatum());
+        builder.nextLine();
+        builder.append("Ostwert:", getE32Feld());
+        builder.nextLine();
+        builder.append("Nordwert:", getN32Feld());
+        builder.nextLine();
+        builder.append("Kläranlage:", getKlaeranlageBox());
+        builder.nextLine();
+        builder.appendSeparator("Bemerkungen");
+        builder.appendRow("3dlu");
+        builder.nextLine(2);
+        JScrollPane bemerkungsScroller = new JScrollPane(
+            getBemerkungFeld(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        builder.appendRow("fill:30dlu");
+        builder.append(bemerkungsScroller, 7);
+
+        builder.appendSeparator("Verknüpfte Objekte");
+        builder.appendRow("3dlu");
+        builder.nextLine(2);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -129,6 +171,123 @@ public class SonderbauwerkPanel extends JPanel {
     }
     
 	/**
+	 * @return the hauptModul
+	 */
+	public BasisObjektBearbeiten getHauptModul() {
+		return hauptModul;
+	}
+
+	/**
+	 * @return the kurzbezeichnungFeld
+	 */
+	private JTextField getKurzbezeichnungFeld() {
+        if (this.kurzbezeichnungFeld == null) {
+            this.kurzbezeichnungFeld = new LimitedTextField(50);
+        }
+		return kurzbezeichnungFeld;
+	}
+
+	/**
+	 * @return the stillgelegtCheck
+	 */
+	private JCheckBox getStillgelegtCheck() {
+        if (this.stillgelegtCheck == null) {
+            this.stillgelegtCheck = new JCheckBox("stillgelegt");
+        }
+		return stillgelegtCheck;
+	}
+
+	/**
+	 * @return the stillegdatDatum
+	 */
+	private TextFieldDateChooser getStillegdatDatum() {
+        if (this.stillegdatDatum == null) {
+            this.stillegdatDatum = new TextFieldDateChooser();
+        }
+		return stillegdatDatum;
+	}
+
+	/**
+	 * @return the verfahrenBox
+	 */
+	private JComboBox getVerfahrenBox() {
+        if (this.verfahrenBox == null) {
+            this.verfahrenBox = new JComboBox();
+        }
+		return verfahrenBox;
+	}
+
+	/**
+	 * @return the typBox
+	 */
+	private JComboBox getTypBox() {
+        if (this.typBox == null) {
+            this.typBox = new JComboBox();
+        }
+		return typBox;
+	}
+
+	/**
+	 * @return the inbetriebnahmeFeld
+	 */
+	private JFormattedTextField getInbetriebnahmeFeld() {
+        if (this.inbetriebnahmeFeld == null) {
+            this.inbetriebnahmeFeld = new IntegerField();
+        }
+		return inbetriebnahmeFeld;
+	}
+
+	/**
+	 * @return the wiederinebetriebdatDatum
+	 */
+	private TextFieldDateChooser getWiederinebetriebdatDatum() {
+        if (this.wiederinebetriebdatDatum == null) {
+            this.wiederinebetriebdatDatum = new TextFieldDateChooser();
+        }
+		return wiederinebetriebdatDatum;
+	}
+
+	/**
+	 * @return the e32Feld
+	 */
+	private JFormattedTextField getE32Feld() {
+        if (this.e32Feld == null) {
+            this.e32Feld = new IntegerField();
+        }
+		return e32Feld;
+	}
+
+	/**
+	 * @return the n32Feld
+	 */
+	private JFormattedTextField getN32Feld() {
+        if (this.n32Feld == null) {
+            this.n32Feld = new IntegerField();
+        }
+		return n32Feld;
+	}
+
+	/**
+	 * @return the kläranlageBox
+	 */
+	private JComboBox getKlaeranlageBox() {
+        if (this.klaeranlageBox == null) {
+        	klaeranlageBox = new JComboBox(DatabaseQuery.getKlaeranlage());
+        }
+		return klaeranlageBox;
+	}
+
+	/**
+	 * @return the bemerkungFeld
+	 */
+	private LimitedTextArea getBemerkungFeld() {
+        if (this.bemerkungArea == null) {
+            this.bemerkungArea = new LimitedTextArea(255);
+        }
+		return bemerkungArea;
+	}
+
+	/**
      * Methode verknüpft das lokal erstelle Objekt Sonderbauwerk
      * mit dem Sonderbauwerk der Datenbank und holt sich die Klaeranlagen
      * aus der Datenbank
@@ -139,16 +298,7 @@ public class SonderbauwerkPanel extends JPanel {
     			this.hauptModul.getObjekt().getId());
     	log.debug("Sonderbauwerk aus DB geholt: " + this.sonderbauwerk);
     	
-//    	List<Referenz> referenzen = Referenz.getAll();
-//    	this.referenz = null;
-//    	
-//    	for (Referenz ref : referenzen) {
-//    	    if (ref.getSonderbauwerkByQSbNr().getNr() == this.sonderbauwerk.getNr()
-//    		    && ref.getKlaeranlageByZKaNr() != null) {
-//    		this.referenz = Referenz.findById(ref.getNr());
-//    	    	log.debug("Referenz aus DB geholt: " + this.referenz);
-//    	    }
-//    	}
+
     }
     
     /**
@@ -159,12 +309,19 @@ public class SonderbauwerkPanel extends JPanel {
      */
     public void updateForm() throws RuntimeException {
     	if (this.sonderbauwerk != null) {
-    		if (this.sonderbauwerk.getErstellDat() != null) {
-    			getErstellDatDatum().setDate(this.sonderbauwerk.getErstellDat());
-    		}
     	
     		if (this.sonderbauwerk.getBezeichnung() != null) {
     			getBezeichnungFeld().setText(this.sonderbauwerk.getBezeichnung());
+    		}
+    		
+    		String[] verfahren = {"-", "Trennverfahren", "Mischverfahren"};
+            getVerfahrenBox().setModel(new DefaultComboBoxModel(verfahren));
+    		
+    		String[] typ = {"-", "RRB", "RKB", "RBF", "BF", "RÜT", "RST", "AL"};
+            getTypBox().setModel(new DefaultComboBoxModel(typ));
+            
+    		if (this.sonderbauwerk.getErstellDat() != null) {
+    			getErstellDatDatum().setDate(this.sonderbauwerk.getErstellDat());
     		}
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
     	}
@@ -204,7 +361,7 @@ public class SonderbauwerkPanel extends JPanel {
     	
     	this.sonderbauwerk.setAktualDat(new Date());
     	
-    	Date erstellDat = this.erstellDatDatum.getDate();
+    	Date erstellDat = this.stillegdatDatum.getDate();
     	this.sonderbauwerk.setErstellDat(erstellDat);
     	    	
     	String bezeichnung = this.bezeichnungFeld.getText();
@@ -246,10 +403,10 @@ public class SonderbauwerkPanel extends JPanel {
      * @return {@link TextFieldDateChooser}
      */
     private TextFieldDateChooser getErstellDatDatum() {
-    	if (this.erstellDatDatum == null) {
-    		this.erstellDatDatum = new TextFieldDateChooser();
+    	if (this.stillegdatDatum == null) {
+    		this.stillegdatDatum = new TextFieldDateChooser();
     	}
-    	return this.erstellDatDatum;
+    	return this.stillegdatDatum;
     }
     
     /**
