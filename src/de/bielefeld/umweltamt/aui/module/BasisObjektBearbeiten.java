@@ -137,12 +137,6 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.FotoPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.GenehmigungPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepktAuswPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepunktPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.SbArtPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.SbBerechnungPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.SbRBFPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.SbRKBPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.SbRRBPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.SbSonstigePanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SonderbauwerkPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SuevPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.VawsPanel;
@@ -189,12 +183,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private EinleitungsstellePanel einleitungsstelleTab;
     private AnfallstellePanel anfallstelleTab;
     private SonderbauwerkPanel sonderbauwerkTab;
-    private SbArtPanel sbArtTab;
-    private SbBerechnungPanel sbBerechnungTab;
-    private SbRBFPanel sbRBFTab;
-    private SbRKBPanel sbRKBTab;
-    private SbRRBPanel sbRRBTab;
-    private SbSonstigePanel sbSonstigeTab;
     private EntwaesserungsgrundstueckPanel entwaesserungsgrundstueckTab;
 
     // Daten
@@ -471,48 +459,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
     	return sonderbauwerkTab;
     }
     
-    public SbArtPanel getSbArtTab() {
-    	if (sbArtTab == null) {
-    		sbArtTab = new SbArtPanel(this);
-    	}
-    	return sbArtTab;
-    }
-    
-    public SbBerechnungPanel getSbBerechnungTab() {
-    	if (sbBerechnungTab == null) {
-    		sbBerechnungTab = new SbBerechnungPanel(this);
-    	}
-    	return sbBerechnungTab;
-    }
-    
-    public SbRBFPanel getSbRBFTab() {
-    	if (sbRBFTab == null) {
-    		sbRBFTab = new SbRBFPanel(this);
-    	}
-    	return sbRBFTab;
-    }
-    
-    public SbRKBPanel getSbRKBTab() {
-    	if (sbRKBTab == null) {
-    		sbRKBTab = new SbRKBPanel(this);
-    	}
-    	return sbRKBTab;
-    }
-    
-    public SbRRBPanel getSbRRBTab() {
-    	if (sbRRBTab == null) {
-    		sbRRBTab = new SbRRBPanel(this);
-    	}
-    	return sbRRBTab;
-    }
-    
-    public SbSonstigePanel getSbSonstigeTab() {
-    	if (sbSonstigeTab == null) {
-    		sbSonstigeTab = new SbSonstigePanel(this);
-    	}
-    	return sbSonstigeTab;
-    }
-    
     public EntwaesserungsgrundstueckPanel getEntwaesserungsgrundstueckTab() {
     	if (entwaesserungsgrundstueckTab == null) {
     		entwaesserungsgrundstueckTab = new EntwaesserungsgrundstueckPanel(this);
@@ -662,13 +608,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                         case DatabaseConstants.BASIS_OBJEKTART_ID_SONDERBAUWERK:
                             getChronoTab().fetchFormData();
                             getSonderbauwerkTab().fetchFormData();
-                            getSbArtTab().fetchFormData();
-                            getSbBerechnungTab().fetchFormData();
-                            getSbRBFTab().fetchFormData();
-                            getSbRKBTab().fetchFormData();
-                            getSbSonstigeTab().fetchFormData();
-                            getSbSonstigeTab().fetchFormData();
-                            break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ENTWAESSERUNGSGRUNDSTUECK:
                             getChronoTab().fetchFormData();
                             getEntwaesserungsgrundstueckTab().fetchFormData();
@@ -850,20 +789,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_SONDERBAUWERK:
                             	getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                             	getTabbedPane().addTab(getSonderbauwerkTab().getName(), getSonderbauwerkTab());
-                            	getTabbedPane().addTab(getSbArtTab().getName(), getSbArtTab());
-                            	getTabbedPane().addTab(getSbBerechnungTab().getName(), getSbBerechnungTab());
-                            	getTabbedPane().addTab(getSbRBFTab().getName(), getSbRBFTab());
-                            	getTabbedPane().addTab(getSbRKBTab().getName(), getSbRKBTab());
-                            	getTabbedPane().addTab(getSbRRBTab().getName(), getSbRRBTab());
-                            	getTabbedPane().addTab(getSbSonstigeTab().getName(), getSbSonstigeTab());
                             	getChronoTab().updateForm();
                             	getSonderbauwerkTab().updateForm();
-                            	getSbArtTab().updateForm();
-                            	getSbBerechnungTab().updateForm();
-                            	getSbRBFTab().updateForm();
-                            	getSbRKBTab().updateForm();
-                            	getSbRRBTab().updateForm();
-                            	getSbSonstigeTab().updateForm();
                             	getTabbedPane().setSelectedComponent(getSonderbauwerkTab());
                             	break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ENTWAESSERUNGSGRUNDSTUECK:
@@ -1098,12 +1025,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SONDERBAUWERK:
                 	getSonderbauwerkTab().completeObjekt();
-                    getSbArtTab().completeObjekt();
-                    getSbBerechnungTab().completeObjekt();
-                    getSbRBFTab().completeObjekt();
-                    getSbRKBTab().completeObjekt();
-                    getSbSonstigeTab().completeObjekt();
-                    getSbSonstigeTab().completeObjekt();
                 	break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ENTWAESSERUNGSGRUNDSTUECK:
                 	getEntwaesserungsgrundstueckTab().completeObjekt();
