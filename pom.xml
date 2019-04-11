@@ -13,22 +13,22 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-tools</artifactId>
       <version>5.4.2.Final</version>
-	  <scope>test</scope>
-	  <exclusions>
+    <scope>test</scope>
+    <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
           <artifactId>commons-logging</artifactId>
         </exclusion>
       </exclusions>
-	</dependency>
+  </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.7.21</version>
       <scope>test</scope>
     </dependency>
-    
-	<dependency>
+
+  <dependency>
       <groupId>dom4j</groupId>
       <artifactId>dom4j</artifactId>
       <version>1.6.1</version>
@@ -233,7 +233,7 @@
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports-fonts</artifactId>
       <version>6.0.0</version>
-	</dependency>
+  </dependency>
      -->
     <!-- A repacked jasperreports jar file with necessary fonts included, workaround for font problems on Windows systems-->
     <dependency>
@@ -245,9 +245,9 @@
       <groupId>org.jfree</groupId>
       <artifactId>jfreechart</artifactId>
       <version>1.0.19</version>
-    </dependency> 
-    <!-- 
-	<dependency>
+    </dependency>
+    <!--
+  <dependency>
       <groupId>org.hibernate.common</groupId>
       <artifactId>hibernate-commons-annotations</artifactId>
       <version>5.0.0.Final</version>
@@ -265,12 +265,12 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-search-engine</artifactId>
-      <version>5.4.0.Final</version>
+      <version>5.11.1.Final</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-search-orm</artifactId>
-      <version>5.4.0.Final</version>
+      <version>5.11.1.Final</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.hk2</groupId>
@@ -322,11 +322,13 @@
       <artifactId>javax.inject</artifactId>
       <version>2.4.0-b34</version>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
       <version>3.3.0.Final</version>
     </dependency>
+    -->
     <dependency>
       <groupId>org.glassfish.jersey.ext</groupId>
       <artifactId>jersey-entity-filtering</artifactId>
@@ -352,6 +354,7 @@
       <artifactId>log4j-core</artifactId>
       <version>2.5</version>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-analyzers-common</artifactId>
@@ -362,6 +365,7 @@
       <artifactId>lucene-core</artifactId>
       <version>4.10.4</version>
     </dependency>
+    -->
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.core</artifactId>
@@ -427,38 +431,38 @@
       <name>JBoss.org Maven repository</name>
       <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
     </repository>
-  </repositories>  
+  </repositories>
 
   <build>
     <sourceDirectory>src</sourceDirectory>
-	<resources>
-	  <resource>
-	    <directory>src</directory>
-		<excludes>
+  <resources>
+    <resource>
+      <directory>src</directory>
+    <excludes>
           <exclude>**/*.java</exclude>
-		</excludes>
-	  </resource>
+    </excludes>
+    </resource>
       <!-- If needed: include log4j config -->
-	  <resource>
-		<directory>src/de/bielefeld/umweltamt/aui/resources/config/</directory>
-	    <includes>
-		  <include>log4j2.xml</include>
-		</includes>
-	  </resource>
+    <resource>
+    <directory>src/de/bielefeld/umweltamt/aui/resources/config/</directory>
+      <includes>
+      <include>log4j2.xml</include>
+    </includes>
+    </resource>
      </resources>
      <plugins>
        <plugin>
          <artifactId>maven-compiler-plugin</artifactId>
          <version>3.1</version>
          <configuration>
-		        <source>8</source>
-            <target>8</target>
+            <source>11</source>
+            <target>11</target>
             <compilerArgs>
               <arg>--illegal-access=warn</arg>
             </compilerArgs>
          </configuration>
        </plugin>
-	   <plugin>
+     <plugin>
          <artifactId>maven-assembly-plugin</artifactId>
          <version>2.5.5</version>
          <configuration>
@@ -490,28 +494,28 @@
         </configuration>
       </plugin>
 
-	  <!--install local jars via install plugin,
-		  use "mvn validate" before compiling -->
-	  <plugin>
+    <!--install local jars via install plugin,
+      use "mvn validate" before compiling -->
+    <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
-      	  <version>2.5.1</version>    	  
-  		  <executions>
-      	  <execution>
-         	<id>install-jgoodies</id>
+          <version>2.5.1</version>
+        <executions>
+          <execution>
+           <id>install-jgoodies</id>
             <goals>
               <goal>install-file</goal>
-         	</goals>
-         	<phase>validate</phase>
+           </goals>
+           <phase>validate</phase>
             <configuration>
               <groupId>com.jgoodies</groupId>
               <artifactId>uif_lite</artifactId>
-      	      <version>1.0</version>
-      	      <packaging>jar</packaging>
-      	      <file>${project.basedir}/lib/com.jgoodies.uif_lite.jar</file>
-      	      <generatePom>true</generatePom>
-    	    </configuration>
-      	  </execution>
+              <version>1.0</version>
+              <packaging>jar</packaging>
+              <file>${project.basedir}/lib/com.jgoodies.uif_lite.jar</file>
+              <generatePom>true</generatePom>
+          </configuration>
+          </execution>
           <!-- Install local repacked jasperreports jar file-->
           <execution>
             <id>install-fonts</id>
@@ -523,54 +527,54 @@
               <groupId>de.bielefeld.umweltamt.aui</groupId>
               <artifactId>jasperreports-auik-font-repack</artifactId>
               <version>1.0.0</version>
-      	      <packaging>jar</packaging>
-      	      <file>${project.basedir}/lib/jasperreports-auik-font-repack.jar</file>
-      	      <generatePom>true</generatePom>
-    	    </configuration>
-      	  </execution>          
-   		</executions>
-	  </plugin>
-	  <plugin>
-	    <artifactId>maven-antrun-plugin</artifactId>
+              <packaging>jar</packaging>
+              <file>${project.basedir}/lib/jasperreports-auik-font-repack.jar</file>
+              <generatePom>true</generatePom>
+          </configuration>
+          </execution>
+       </executions>
+    </plugin>
+    <plugin>
+      <artifactId>maven-antrun-plugin</artifactId>
         <version>1.8</version>
         <executions>
-		  <!--run hibernate tools via antrun plugin-->
-      	  <!-- TODO: run with mvn antrun:run@db2mapping -->
-	 	  <!-- <execution>
-			<id>db2mapping</id>
-		    <phase>test-compile</phase>
+      <!--run hibernate tools via antrun plugin-->
+          <!-- TODO: run with mvn antrun:run@db2mapping -->
+       <!-- <execution>
+      <id>db2mapping</id>
+        <phase>test-compile</phase>
             <configuration>
               <property name="src"        location="src" />
-			  <property name="resources"  value="src/de/bielefeld/umweltamt/aui/resources" />
+        <property name="resources"  value="src/de/bielefeld/umweltamt/aui/resources" />
               <property name="config"     value="src/de/bielefeld/umweltamt/aui/resources/config" />
-			  <property name="data" location="data" />
-			  <target>
-			    <property name="maven_compile_classpath" refid="maven.compile.classpath"/>
+        <property name="data" location="data" />
+        <target>
+          <property name="maven_compile_classpath" refid="maven.compile.classpath"/>
                 <property name="maven_test_classpath" refid="maven.test.classpath"/>
-				<path id="hibernatetool.path">
-					<pathelement path="${maven_compile_classpath}"/>
-					<pathelement path="${maven_test_classpath}"/>
+        <path id="hibernatetool.path">
+          <pathelement path="${maven_compile_classpath}"/>
+          <pathelement path="${maven_test_classpath}"/>
                 </path>
-				<taskdef name="hibernatetool"
+        <taskdef name="hibernatetool"
                   classname="org.hibernate.tool.ant.HibernateToolTask"
-                	  classpathref="hibernatetool.path" />
-                
+                    classpathref="hibernatetool.path" />
+
                 <hibernatetool destdir="src">
                   <jdbcconfiguration
                     propertyfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.properties"
                     revengfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.reveng.xml">
                   </jdbcconfiguration>
-                  <hbm2hbmxml /> 
+                  <hbm2hbmxml />
                   <hbm2cfgxml destdir="src/de/bielefeld/umweltamt/aui/resources/config/generated" />
-				  <hbm2java />
+          <hbm2java />
                 </hibernatetool>
-		      </target>
+          </target>
             </configuration>
-		    <goals>
-		      <goal>run</goal>
-		    </goals>
-		  </execution>-->
-		  <execution>
+        <goals>
+          <goal>run</goal>
+        </goals>
+      </execution>-->
+      <execution>
             <id>copy-jars</id>
             <phase>install</phase>
             <configuration>
@@ -590,43 +594,43 @@
               <goal>run</goal>
             </goals>
           </execution>
-		</executions>
+    </executions>
       </plugin>
     </plugins>
      <pluginManagement>
-     	<plugins>
-     		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-     		<plugin>
-     			<groupId>org.eclipse.m2e</groupId>
-     			<artifactId>lifecycle-mapping</artifactId>
-     			<version>1.0.0</version>
-     			<configuration>
-     				<lifecycleMappingMetadata>
-     					<pluginExecutions>
-     						<pluginExecution>
-     							<pluginExecutionFilter>
-     								<groupId>
-     									org.apache.maven.plugins
-     								</groupId>
-     								<artifactId>
-     									maven-install-plugin
-     								</artifactId>
-     								<versionRange>
-     									[2.5.1,)
-     								</versionRange>
-     								<goals>
-     									<goal>install-file</goal>
-     								</goals>
-     							</pluginExecutionFilter>
-     							<action>
-     								<ignore></ignore>
-     							</action>
-     						</pluginExecution>
-     					</pluginExecutions>
-     				</lifecycleMappingMetadata>
-     			</configuration>
-     		</plugin>
-     	</plugins>
+       <plugins>
+         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+         <plugin>
+           <groupId>org.eclipse.m2e</groupId>
+           <artifactId>lifecycle-mapping</artifactId>
+           <version>1.0.0</version>
+           <configuration>
+             <lifecycleMappingMetadata>
+               <pluginExecutions>
+                 <pluginExecution>
+                   <pluginExecutionFilter>
+                     <groupId>
+                       org.apache.maven.plugins
+                     </groupId>
+                     <artifactId>
+                       maven-install-plugin
+                     </artifactId>
+                     <versionRange>
+                       [2.5.1,)
+                     </versionRange>
+                     <goals>
+                       <goal>install-file</goal>
+                     </goals>
+                   </pluginExecutionFilter>
+                   <action>
+                     <ignore></ignore>
+                   </action>
+                 </pluginExecution>
+               </pluginExecutions>
+             </lifecycleMappingMetadata>
+           </configuration>
+         </plugin>
+       </plugins>
      </pluginManagement>
   </build>
 </project>
