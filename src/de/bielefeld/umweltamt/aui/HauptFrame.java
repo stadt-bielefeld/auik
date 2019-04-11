@@ -236,8 +236,8 @@ public class HauptFrame extends JFrame {
             Options.setUseSystemFonts(true);
 
             // Look & Feel umschalten
-            UIManager
-                    .setLookAndFeel("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
+            //UIManager
+            //        .setLookAndFeel("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
 
             /*
              * Falls mal ein Wechsel auf Linux anstehen sollte, wird der
@@ -246,7 +246,7 @@ public class HauptFrame extends JFrame {
              * haben möchte. Dann einfach statt der Zeile oben die folgende
              * nehmen:
              */
-            // UIManager.setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
+             UIManager.setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
 
             // Erleichert das Finden von manchen Layout-Fehlern
             // ClearLookManager.setMode(ClearLookMode.DEBUG);
