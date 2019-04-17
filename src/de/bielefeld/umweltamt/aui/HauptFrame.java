@@ -119,7 +119,6 @@ import org.hibernate.HibernateException;
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.plaf.FontSizeHints;
 import com.jgoodies.plaf.HeaderStyle;
 import com.jgoodies.plaf.Options;
 import com.jgoodies.uif_lite.component.Factory;
@@ -246,7 +245,7 @@ public class HauptFrame extends JFrame {
              * haben möchte. Dann einfach statt der Zeile oben die folgende
              * nehmen:
              */
-             UIManager.setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
+             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
             // Erleichert das Finden von manchen Layout-Fehlern
             // ClearLookManager.setMode(ClearLookMode.DEBUG);
