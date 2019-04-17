@@ -313,7 +313,7 @@ public class ModulManager {
                 button.setSelected(true);
 
                 // ... die rechte Überschrift auf den Titel dieses Moduls setzen
-                frame.getRightFrame().setTitle(m.getName());
+                frame.setRightFrameTitle(m.getName());
                 // ... speichern, welches das aktuelle Modul ist
                 currentModul = identifier;
 

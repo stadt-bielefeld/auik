@@ -74,13 +74,16 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
+import java.awt.Insets;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -113,15 +116,10 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 import org.hibernate.HibernateException;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.plaf.HeaderStyle;
-import com.jgoodies.plaf.Options;
-import com.jgoodies.uif_lite.component.Factory;
 import com.jgoodies.uif_lite.panel.SimpleInternalFrame;
 
 import de.bielefeld.umweltamt.aui.module.common.editors.EinstellungenEditor;
@@ -187,12 +185,14 @@ public class HauptFrame extends JFrame {
 
     private JSplitPane splitPane = null;
 
-    private SimpleInternalFrame leftFrame = null;
+    private JSplitPane leftFrame = null;
     private JScrollPane leftScroller = null;
     private JPanel leftCardPanel = null;
 
-    private SimpleInternalFrame rightFrame = null;
+    private JSplitPane rightFrame = null;
     private JPanel rightCardPanel = null;
+
+    private JLabel rightFrameTitle = null;
 
     // Das Kategorien-Menü
     private JPopupMenu viewMenu = null;
@@ -229,26 +229,7 @@ public class HauptFrame extends JFrame {
      */
     private void initialize() {
         try {
-            // Systemschriftarten benutzen
-            UIManager.put(Options.USE_SYSTEM_FONTS_APP_KEY, Boolean.TRUE);
-           //TODO Options.setGlobalFontSizeHints(FontSizeHints.MIXED);
-            Options.setUseSystemFonts(true);
-
-            // Look & Feel umschalten
-            //UIManager
-            //        .setLookAndFeel("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
-
-            /*
-             * Falls mal ein Wechsel auf Linux anstehen sollte, wird der
-             * Windows-L'n'F vermutlich nicht mehr funktionieren. Auch kann es
-             * sein, dass man auf allen NT- und XP-Rechner den selben L'n'F
-             * haben möchte. Dann einfach statt der Zeile oben die folgende
-             * nehmen:
-             */
              UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-            // Erleichert das Finden von manchen Layout-Fehlern
-            // ClearLookManager.setMode(ClearLookMode.DEBUG);
         } catch (Exception e) {
             log.debug("Konnte Look & Feel nicht ändern!");
         }
@@ -311,6 +292,14 @@ public class HauptFrame extends JFrame {
         }
     }
 
+    public void setRightFrameTitle(String title) {
+        this.rightFrameTitle.setText(title);
+    }
+
+    public String getRightFrameTitle() {
+        return this.rightFrameTitle.getText();
+    }
+
     private boolean askForDBCredentials() {
         BenutzerDatenDialog benutzerDialog = new BenutzerDatenDialog(this);
         locateOnScreen(benutzerDialog);
@@ -369,6 +358,7 @@ public class HauptFrame extends JFrame {
     private JToolBar getViewMenuBar() {
         if (viewMenuBar == null) {
             viewMenuBar = new JToolBar();
+            viewMenuBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
             viewMenuBar.putClientProperty("JToolBar.isRollover", Boolean.TRUE);
             viewMenuBar.setFloatable(false);
             viewMenuBar.setOpaque(false);
@@ -396,8 +386,8 @@ public class HauptFrame extends JFrame {
                         }
                     });
 
-            viewMenuButton
-                    .setForeground(getLeftFrame().getTextForeground(true));
+            //viewMenuButton
+            //        .setForeground(getLeftFrame().getTextForeground(true));
             viewMenuButton.setOpaque(false);
             viewMenuButton.setHorizontalTextPosition(JButton.LEADING);
             viewMenuButton
@@ -415,9 +405,18 @@ public class HauptFrame extends JFrame {
             modulBar.putClientProperty("JToolBar.isRollover", Boolean.TRUE);
             modulBar.setFloatable(false);
             modulBar.setOpaque(false);
-            // modulBar.add(getQgis());
-            modulBar.add(getModulBackButton());
-            modulBar.add(getModulFwdButton());
+            this.rightFrameTitle = new JLabel("Title");
+            this.rightFrameTitle.setVerticalAlignment(JLabel.CENTER);
+            JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            leftPanel.add(this.rightFrameTitle);
+            JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+            rightPanel.add(getModulBackButton());
+            rightPanel.add(getModulFwdButton());
+            // rightPanel.add(getQgis());
+            JSplitPane content = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+            content.setDividerSize(0);
+            content.setDividerLocation(250);
+            modulBar.add(content);
         }
         return modulBar;
     }
@@ -432,8 +431,8 @@ public class HauptFrame extends JFrame {
                 new JButton(AuikUtils.getIcon(16, "back.png", desc));
 
             modulBackButton.setToolTipText(desc);
-            modulBackButton.setForeground(
-                    getRightFrame().getTextForeground(true));
+            //modulBackButton.setForeground(
+            //        getRightFrame().getTextForeground(true));
             modulBackButton.setOpaque(false);
 
             modulBackButton.addActionListener(new ActionListener() {
@@ -458,8 +457,8 @@ public class HauptFrame extends JFrame {
                 new JButton(AuikUtils.getIcon(16, "forward.png", desc));
 
             modulFwdButton.setToolTipText(desc);
-            modulFwdButton.setForeground(
-                    getRightFrame().getTextForeground(true));
+            //modulFwdButton.setForeground(
+            //        getRightFrame().getTextForeground(true));
             modulFwdButton.setOpaque(false);
 
             modulFwdButton.addActionListener(new ActionListener() {
@@ -545,8 +544,6 @@ public class HauptFrame extends JFrame {
             hauptMenue.add(getFileMenu());
             // hauptMenue.add(Box.createHorizontalGlue());
             hauptMenue.add(getHelpMenu());
-            hauptMenue.putClientProperty(
-                    Options.HEADER_STYLE_KEY, HeaderStyle.SINGLE);
         }
         return hauptMenue;
     }
@@ -579,7 +576,6 @@ public class HauptFrame extends JFrame {
             helpMenu = new JMenu();
             helpMenu.setText("Hilfe");
             helpMenu.setMnemonic(KeyEvent.VK_H);
-            helpMenu.putClientProperty(Options.NO_ICONS_KEY, Boolean.TRUE);
             helpMenu.add(getAboutMenuItem());
             helpMenu.add(getDoku());
         }
@@ -737,9 +733,9 @@ public class HauptFrame extends JFrame {
      */
     private JSplitPane getSplitPane() {
         if (splitPane == null) {
-            splitPane = Factory.createStrippedSplitPane(
-                    JSplitPane.HORIZONTAL_SPLIT, getLeftFrame(),
-                    getRightFrame(), 0.08f);
+            splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                    getLeftFrame(), getRightFrame());
+            splitPane.setDividerLocation(175);
         }
         return splitPane;
     }
@@ -749,15 +745,14 @@ public class HauptFrame extends JFrame {
      *
      * @return com.jgoodies.uif_life.panel.SimpleInternalFrame
      */
-    protected SimpleInternalFrame getLeftFrame() {
+    protected JSplitPane getLeftFrame() {
         if (leftFrame == null) {
-            leftFrame = new SimpleInternalFrame(" ");
-
+            leftFrame = new JSplitPane(JSplitPane.VERTICAL_SPLIT, getViewMenuBar(),
+                    getLeftScroller());
+            leftFrame.setDividerSize(0);
             leftFrame.setMinimumSize(new Dimension(100, 0));
             leftFrame.setPreferredSize(leftFrame.getMinimumSize());
 
-            leftFrame.setToolBar(getViewMenuBar());
-            leftFrame.setContent(getLeftScroller());
         }
         return leftFrame;
     }
@@ -767,14 +762,12 @@ public class HauptFrame extends JFrame {
      *
      * @return com.jgoodies.uif_life.panel.SimpleInternalFrame
      */
-    protected SimpleInternalFrame getRightFrame() {
+    protected JSplitPane getRightFrame() {
         if (rightFrame == null) {
-            rightFrame = new SimpleInternalFrame(" ");
-
+            rightFrame = new JSplitPane(JSplitPane.VERTICAL_SPLIT, getModulBar(),
+                    getRightCardPanel());
+            rightFrame.setDividerSize(0);
             rightFrame.setMinimumSize(new Dimension(250, 0));
-
-            rightFrame.setToolBar(getModulBar());
-            rightFrame.setContent(getRightCardPanel());
         }
         return rightFrame;
     }
@@ -939,8 +932,8 @@ public class HauptFrame extends JFrame {
     private final class BenutzerDatenDialog extends JDialog {
         private static final long serialVersionUID = 4180635601687537049L;
         private JLabel textLabel;
-        private JTextField benutzerFeld;
-        private JPasswordField passwortFeld;
+        private JTextField userField;
+        private JPasswordField passwordField;
         private JButton loginButton;
 
         private String user, pw;
@@ -974,24 +967,24 @@ public class HauptFrame extends JFrame {
                     "<html>Bitte geben Sie ihren Benutzernamen und <br>"
                     + "ihr Passwort ein und klicken Sie auf <br>"
                     + "den Button \"Login\".</html>");
-            this.benutzerFeld = new JTextField(10);
+            this.userField = new JTextField(10);
             if (settings.getSetting("auik.prefs.lastuser") == null) {
-                benutzerFeld.setText(System.getProperty("user.name"));
+                userField.setText(System.getProperty("user.name"));
             } else {
-                benutzerFeld
+                userField
                         .setText(settings.getSetting("auik.prefs.lastuser"));
             }
-            this.benutzerFeld.selectAll();
-            this.passwortFeld = new JPasswordField(10);
+            this.userField.selectAll();
+            this.passwordField = new JPasswordField(10);
             this.loginButton = new JButton("Login");
 
-            this.benutzerFeld.addActionListener(new ActionListener() {
+            this.userField.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    passwortFeld.requestFocus();
+                    passwordField.requestFocus();
                 }
             });
-            this.passwortFeld.addActionListener(new ActionListener() {
+            this.passwordField.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     loginButton.requestFocus();
@@ -1014,14 +1007,14 @@ public class HauptFrame extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     loginButton.setEnabled(false);
-                    benutzerFeld.setEnabled(false);
-                    passwortFeld.setEnabled(false);
+                    userField.setEnabled(false);
+                    passwordField.setEnabled(false);
                     busy = true;
 
-                    user = benutzerFeld.getText();
-                    pw = new String(passwortFeld.getPassword());
+                    user = userField.getText();
+                    pw = new String(passwordField.getPassword());
                     SwingWorkerVariant worker =
-                        new SwingWorkerVariant(benutzerFeld) {
+                        new SwingWorkerVariant(userField) {
                             boolean tmp = false;
 
                             @Override
@@ -1048,14 +1041,14 @@ public class HauptFrame extends JFrame {
                                         "Der eingegebene Benutzername oder das Passwort war falsch (oder es ist aus anderen\n"
                                         + "Gründen keine Verbindung mit der Datenbank möglich), bitte versuchen Sie es erneut!",
                                         "Fehler");
-                                    benutzerFeld.setEnabled(true);
-                                    passwortFeld.setEnabled(true);
+                                    userField.setEnabled(true);
+                                    passwordField.setEnabled(true);
                                     loginButton.setEnabled(true);
                                     busy = false;
-                                    passwortFeld.setText("");
-                                    benutzerFeld.setSelectionStart(0);
-                                    benutzerFeld.setSelectionEnd(
-                                            benutzerFeld.getText().length());
+                                    passwordField.setText("");
+                                    userField.setSelectionStart(0);
+                                    userField.setSelectionEnd(
+                                            userField.getText().length());
                                 }
                             }
                         };
@@ -1063,29 +1056,53 @@ public class HauptFrame extends JFrame {
                 }
             });
 
-            FormLayout layout = new FormLayout(
-                    "right:pref, 4dlu, pref:grow, 4dlu, pref", // Spalten
-                    "pref:grow, 3dlu, pref, 3dlu, pref, 5dlu:grow" // Zeilen
-            );
+            JLabel userLabel = new JLabel("Benutzer:");
+            JLabel urlLabel = new JLabel("Url:");
+            JLabel passwordLabel = new JLabel("Passwort:");
+        
+            JPanel contentPanel;
+            GridBagLayout layout;
+            GridBagConstraints layoutConstraints;
 
-            layout.setRowGroups(new int[][]{{3, 5}});
+            urlLabel = new JLabel("URL:");
+            userLabel = new JLabel("Benutzer:");
+            passwordLabel = new JLabel("Passwort:");
+            contentPanel = new JPanel();
+            contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+            layout = new GridBagLayout();
+            layoutConstraints = new GridBagConstraints();
+    
+            layoutConstraints.insets = new Insets(2, 4, 2, 4);
+            layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+            layoutConstraints.anchor = GridBagConstraints.WEST;
+    
+            contentPanel.setLayout(layout);
 
-            PanelBuilder builder = new PanelBuilder(layout);
-            builder.setDefaultDialogBorder();
-            CellConstraints cc = new CellConstraints();
+            layoutConstraints.gridwidth = GridBagConstraints.REMAINDER;
+            layout.setConstraints(textLabel, layoutConstraints);
+            contentPanel.add(textLabel);
+            layoutConstraints.gridwidth = GridBagConstraints.RELATIVE;
+            layout.setConstraints(userLabel, layoutConstraints);
+            contentPanel.add(userLabel);
+            layoutConstraints.gridwidth = GridBagConstraints.REMAINDER;
+            layout.setConstraints(userField, layoutConstraints);
+            contentPanel.add(userField);
+            layoutConstraints.gridwidth = GridBagConstraints.RELATIVE;
+            layout.setConstraints(passwordLabel, layoutConstraints);
+            contentPanel.add(passwordLabel);
+            layoutConstraints.gridwidth = GridBagConstraints.REMAINDER;
+            layout.setConstraints(passwordField, layoutConstraints);
+            contentPanel.add(passwordField);
+            layoutConstraints.fill = GridBagConstraints.NONE;
+            layoutConstraints.gridwidth = GridBagConstraints.REMAINDER;
+            layout.setConstraints(loginButton, layoutConstraints);
+            contentPanel.add(loginButton);
 
-            builder.add(textLabel, cc.xyw(1, 1, 5));
-            builder.addLabel("Benutzer:", cc.xy(1, 3));
-            builder.add(benutzerFeld, cc.xy(3, 3));
-            builder.addLabel("Passwort:", cc.xy(1, 5));
-            builder.add(passwortFeld, cc.xy(3, 5));
-            builder.add(loginButton, cc.xy(5, 5));
-
-            this.setContentPane(builder.getPanel());
+            this.setContentPane(contentPanel);
             this.pack();
 
             /* Set the focus to the password field */
-            this.passwortFeld.grabFocus();
+            this.passwordField.grabFocus();
         }
 
         public void close() {
