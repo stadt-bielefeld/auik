@@ -20,7 +20,10 @@
  */
 package de.bielefeld.umweltamt.aui.gui;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
+import java.awt.Insets;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
@@ -30,16 +33,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
-import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.module.ELKASync;
 
@@ -48,13 +49,18 @@ public class CredentialsDialog extends JDialog {
 
     private SettingsManager settings;
     private ELKASync modul;
-    private String selection;
-
     private JLabel textLabel;
-    private JTextField benutzerFeld;
+    private JLabel userLabel;
+    private JTextField userField;
+    private JLabel urlLabel;
     private JTextField urlFeld;
-    private JPasswordField passwortFeld;
+    private JLabel passwordLabel;
+    private JPasswordField passwordField;
     private JButton loginButton;
+
+    private JPanel contentPanel;
+    private GridBagLayout layout;
+    private GridBagConstraints layoutConstraints;
 
     private KeyEventDispatcher escListener;
 
@@ -84,7 +90,7 @@ public class CredentialsDialog extends JDialog {
             "<html>Bitte geben Sie die URL zu dem Dienst,"
                 + " Ihren Benutzernamen und <br>"
                 + "ihr Passwort ein und klicken Sie auf \"Ok\".</html>");
-        this.benutzerFeld = new JTextField(10);
+        this.userField = new JTextField(10);
         this.urlFeld = new JTextField();
         if (settings.getSetting("auik.elka.lasturl") == null) {
             urlFeld.setText("");
@@ -92,28 +98,28 @@ public class CredentialsDialog extends JDialog {
             urlFeld.setText(settings.getSetting("auik.elka.lasturl"));
         }
         if (settings.getSetting("auik.elka.lastuser") == null) {
-            benutzerFeld.setText("");
+            userField.setText("");
         } else {
-            benutzerFeld.setText(settings.getSetting("auik.elka.lastuser"));
+            userField.setText(settings.getSetting("auik.elka.lastuser"));
         }
-        this.benutzerFeld.selectAll();
-        this.passwortFeld = new JPasswordField(10);
+        this.userField.selectAll();
+        this.passwordField = new JPasswordField(10);
         this.loginButton = new JButton("Ok");
 
-        this.benutzerFeld.addActionListener(new ActionListener() {
+        this.userField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                passwortFeld.requestFocus();
+                passwordField.requestFocus();
             }
         });
         this.urlFeld.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                benutzerFeld.requestFocus();
+                userField.requestFocus();
             }
         });
 
-        this.passwortFeld.addActionListener(new ActionListener() {
+        this.passwordField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loginButton.requestFocus();
@@ -133,42 +139,60 @@ public class CredentialsDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String url = urlFeld.getText();
-                String user = benutzerFeld.getText();
-                String pw = new String(passwortFeld.getPassword());
+                String user = userField.getText();
+                String pw = new String(passwordField.getPassword());
                 modul.setServiceUrl(url);
                 modul.setServiceUser(user);
                 modul.setServicePassword(pw);
                 settings.setSetting("auik.elka.lastuser", user, true);
                 settings.setSetting("auik.elka.lasturl", url, true);
                 CredentialsDialog.this.close();
-			}
+            }
         });
 
-        FormLayout layout = new FormLayout(
-            "right:pref, 4dlu, pref:grow, 4dlu, pref", // Spalten
-            "pref:grow, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref:grow" // Zeilen
-        );
+        urlLabel = new JLabel("URL:");
+        userLabel = new JLabel("Benutzer:");
+        passwordLabel = new JLabel("Passwort:");
+        contentPanel = new JPanel();
+        contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        layout = new GridBagLayout();
+        layoutConstraints = new GridBagConstraints();
 
-        layout.setRowGroups(new int[][] {{3, 5}});
+        layoutConstraints.insets = new Insets(2, 4, 2, 4);
+        layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+        layoutConstraints.anchor = GridBagConstraints.WEST;
 
-        PanelBuilder builder = new PanelBuilder(layout);
-        builder.setDefaultDialogBorder();
-        CellConstraints cc = new CellConstraints();
+        contentPanel.setLayout(layout);
 
-        builder.add(textLabel, cc.xyw(1, 1, 5));
-        builder.addLabel("Url:", cc.xy(1, 3));
-        builder.add(urlFeld, cc.xy(3, 3));
-        builder.addLabel("Benutzer:", cc.xy(1, 5));
-        builder.add(benutzerFeld, cc.xy(3, 5));
-        builder.addLabel("Passwort:", cc.xy(1, 7));
-        builder.add(passwortFeld, cc.xy(3, 7));
-        builder.add(loginButton, cc.xy(1, 9));
+        layoutConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        addGridCmp(textLabel);
+        layoutConstraints.gridwidth = GridBagConstraints.RELATIVE;
+        addGridCmp(urlLabel);
+        layoutConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        addGridCmp(urlFeld);
+        layoutConstraints.gridwidth = GridBagConstraints.RELATIVE;
+        addGridCmp(userLabel);
+        layoutConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        addGridCmp(userField);
+        layoutConstraints.gridwidth = GridBagConstraints.RELATIVE;
+        addGridCmp(passwordLabel);
+        layoutConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        addGridCmp(passwordField);
+        layoutConstraints.fill = GridBagConstraints.NONE;
+        layoutConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        addGridCmp(loginButton);
 
-        this.setContentPane(builder.getPanel());
+
+        this.setContentPane(contentPanel);
         this.pack();
 
         /* Set the focus to the password field */
-        this.passwortFeld.grabFocus();
+        this.passwordField.grabFocus();
+    }
+
+    public void addGridCmp(JComponent comp) {
+        layout.setConstraints(comp, layoutConstraints);
+        contentPanel.add(comp);
     }
 
     public void close() {
