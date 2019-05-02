@@ -242,22 +242,6 @@ public class BasisAdresseSuchen extends AbstractModul {
             panelBuilder.setWeightX(1);
             panelBuilder.addComponent(tabellenSplit, true);
 
-            /*
-            builder.add(getSuchBox(), cc.xy(1, 1));
-            builder.add(getSuchFeld(), cc.xy(3, 1));
-            builder.add(getSubmitButton(), cc.xyw(13, 1, 3));
-			builder.addLabel("Straße:", cc.xy(1, 3));
-			builder.add(getStrassenFeld(), cc.xy(3, 3));
-			builder.addLabel("Haus-Nr.:", cc.xy(5, 3));
-			builder.add(getHausnrFeld(), cc.xy(7, 3));
-			builder.addLabel("Ort:", cc.xy(9, 3));
-			builder.add(getOrtFeld(), cc.xy(11, 3));
-//            builder.add(getSubmitButtonBetreiber(), cc.xy(13, 3));
-//            builder.add(getSubmitButtonStandort(), cc.xy(15, 3));
-            builder.add(this.tabellenSplit, cc.xyw(1, 5, 15));
-
-            this.panel = builder.getPanel();
-            */
             this.panel = panelBuilder.getPanel();
         }
         return this.panel;

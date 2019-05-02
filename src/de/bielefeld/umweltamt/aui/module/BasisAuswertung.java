@@ -49,6 +49,8 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -57,9 +59,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
@@ -67,6 +66,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh40Model;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisModel;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -137,15 +137,16 @@ public class BasisAuswertung extends AbstractQueryModul {
                 }
             });
 
-            // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append(artBox, submitButton);
+            PanelBuilder builder = new PanelBuilder();
+            builder.setGridWidth(1);
+            builder.setAnchor(GridBagConstraints.NORTHWEST);
+            builder.setFill(GridBagConstraints.BOTH);
+            builder.setInsets(new Insets(5, 0, 5, 5));
+            builder.addComponent(artBox);
+            builder.addComponent(submitButton, true);
 
             queryPanel = builder.getPanel();
         }
-
         return queryPanel;
     }
 
