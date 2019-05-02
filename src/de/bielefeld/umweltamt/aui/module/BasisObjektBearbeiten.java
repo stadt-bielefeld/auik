@@ -100,10 +100,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.plaf.Options;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ModulManager;
@@ -141,6 +137,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.SonderbauwerkPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SuevPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.VawsPanel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 /**
@@ -264,11 +261,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
     private JPanel getTopPanel() {
         if (topPanel == null) {
-            FormLayout layout = new FormLayout("100dlu:g");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+            PanelBuilder builder = new PanelBuilder();
 
-            builder.append(getHeaderLabel());
+            builder.addComponent(getHeaderLabel());
 
             topPanel = builder.getPanel();
         }
@@ -472,7 +467,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         if (tabbedPane == null) {
             tabbedPane = new JTabbedPane();
 
-            tabbedPane.putClientProperty(Options.NO_CONTENT_BORDER_KEY, Boolean.TRUE);
+            //tabbedPane.putClientProperty(Options.NO_CONTENT_BORDER_KEY, Boolean.TRUE);
             tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
             tabbedPane.addTab(getBasisTab().getName(), getBasisTab());
