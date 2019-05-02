@@ -91,6 +91,16 @@ import javax.swing.border.EmptyBorder;
     }
 
     /**
+     * Set the weightX and weightY for the next component
+     * @param weightX Horizontal weight of the next component
+     * @param weightY Vertical weight of the next component
+     */
+    public void setWeight(double weightX, double weightY) {
+        this.c.weightx = weightX;
+        this.c.weighty = weightY;
+    }
+
+    /**
      * Set the weightX for the next component
      * @param weightx weight as double
      */
@@ -137,14 +147,11 @@ import javax.swing.border.EmptyBorder;
     public void addSeparator(int orientation, String label, boolean endRow) {
         double weightx = this.c.weightx;
         int fill = this.c.fill;
-        int gridWidth = this.c.gridwidth;
-        this.setGridWidth(1);
         this.setWeightX(0);
         this.setFill(GridBagConstraints.NONE);
         addComponent(new JLabel(label));
         this.setWeightX(weightx);
         this.setFill(fill);
-        this.setGridWidth(gridWidth);
         addSeparator(orientation, endRow);
     }
 
@@ -154,19 +161,40 @@ import javax.swing.border.EmptyBorder;
      * @param label Label text
      */
     public void addComponent(JComponent comp, String label) {
+        double weightx = this.c.weightx;
+        this.c.weightx = 0;
         addComponent(new JLabel(label));
+        this.c.weightx = weightx;
         addComponent(comp);
     }
 
+    /**
+     * Adds a labeled component.
+     * @param comp Component to add
+     * @param label Label to add
+     * @param endRow Ends the row, if true
+     */
     public void addComponent(JComponent comp, String label, boolean endRow) {
+        double weightx = this.c.weightx;
+        this.c.weightx = 0;
         addComponent(new JLabel(label));
+        this.c.weightx = weightx;
         addComponent(comp, endRow);
     }
 
+    /**
+     * Adds a Component
+     * @param comp Component to add
+     */
     public void addComponent(JComponent comp) {
         addComponent(comp, false);
     }
 
+    /**
+     * Adds a Component.
+     * @param comp Component to add.
+     * @param endRow Ends the row, if true.
+     */
     public void addComponent(JComponent comp, boolean endRow) {
         int gridwidth = this.c.gridwidth;
         if (endRow == true) {
@@ -181,6 +209,35 @@ import javax.swing.border.EmptyBorder;
         this.setGridWidth(gridwidth);
     }
 
+    /**
+     * Adds multiple components.
+     * @param comps List of components.
+     */
+    public void addComponents(JComponent... comps) {
+        for (JComponent comp: comps) {
+            addComponent(comp);
+        }
+    }
+
+    /**
+     * Adds multiple Components.
+     * @param endRow If true, end the row after the last component
+     * @param comps List of components
+     */
+    public void addComponents(boolean endRow, JComponent... comps) {
+        for (int i = 0; i < comps.length; i++) {
+            if (i == comps.length - 1 && endRow == true) {
+                addComponent(comps[i], true);
+            } else {
+                addComponent(comps[i]);
+            }
+        }
+    }
+
+    /**
+     * Return the panel.
+     * @return The panel
+     */
     public JPanel getPanel() {
         return this.panel;
     }

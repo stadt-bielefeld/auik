@@ -99,6 +99,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -262,7 +263,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private JPanel getTopPanel() {
         if (topPanel == null) {
             PanelBuilder builder = new PanelBuilder();
-
+            builder.setBorder(new EmptyBorder(10, 0, 10, 0));
             builder.addComponent(getHeaderLabel());
 
             topPanel = builder.getPanel();
