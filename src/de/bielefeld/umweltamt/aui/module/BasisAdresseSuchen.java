@@ -50,6 +50,8 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -76,14 +78,10 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.uif_lite.component.Factory;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -101,6 +99,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.BasicEntryField;
 import de.bielefeld.umweltamt.aui.utils.NamedObject;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -220,18 +219,30 @@ public class BasisAdresseSuchen extends AbstractModul {
             ta.addComp(getBetreiberTabelle());
             ta.addComp(getObjektTabelle());
 
-            this.tabellenSplit = Factory.createStrippedSplitPane(
-                JSplitPane.VERTICAL_SPLIT, betreiberScroller, objektScroller,
-                0.7);
+            this.tabellenSplit = new JSplitPane(
+                JSplitPane.VERTICAL_SPLIT, betreiberScroller, objektScroller);
+            tabellenSplit.setDividerLocation(0.7);
 
-            FormLayout layout = new FormLayout(
-					"l:p, max(4dlu;p), p:g, 3dlu, p, 3dlu, 40dlu, 3dlu, p, 3dlu,  p:g, 3dlu, 70dlu, 3dlu, 70dlu", // spalten
-					"pref, 3dlu, pref, 3dlu, 150dlu:grow"); // zeilen
+            PanelBuilder panelBuilder = new PanelBuilder();
+            panelBuilder.setBorder(new EmptyBorder(15, 15, 15, 15));
+            panelBuilder.setInsets(new Insets(5, 5, 0, 0));
+            panelBuilder.setAnchor(GridBagConstraints.WEST);
+            panelBuilder.setFill(GridBagConstraints.HORIZONTAL);
+            panelBuilder.setWeightX(0);
+            panelBuilder.addComponent(getSuchBox());
+            panelBuilder.setWeightX(0.85);
+            panelBuilder.addComponent(getSuchFeld());
+            panelBuilder.setWeightX(0.15);
+            panelBuilder.addComponent(new JPanel());
+            panelBuilder.setAnchor(GridBagConstraints.EAST);
+            panelBuilder.addComponent(getSubmitButton(), true);
+            panelBuilder.addComponent(getStrassenFeld(), "Straße:");
+            panelBuilder.addComponent(getHausnrFeld(), "Haus-Nr:");
+            panelBuilder.addComponent(getOrtFeld(), "Ort:", true);
+            panelBuilder.setWeightX(1);
+            panelBuilder.addComponent(tabellenSplit, true);
 
-            PanelBuilder builder = new PanelBuilder(layout);
-            builder.setDefaultDialogBorder();
-            CellConstraints cc = new CellConstraints();
-
+            /*
             builder.add(getSuchBox(), cc.xy(1, 1));
             builder.add(getSuchFeld(), cc.xy(3, 1));
             builder.add(getSubmitButton(), cc.xyw(13, 1, 3));
@@ -246,6 +257,8 @@ public class BasisAdresseSuchen extends AbstractModul {
             builder.add(this.tabellenSplit, cc.xyw(1, 5, 15));
 
             this.panel = builder.getPanel();
+            */
+            this.panel = panelBuilder.getPanel();
         }
         return this.panel;
     }
