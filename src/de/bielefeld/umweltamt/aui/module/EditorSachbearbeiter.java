@@ -39,6 +39,8 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,11 +58,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumn;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -69,6 +68,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorSachbearbeiterModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -154,16 +154,15 @@ public class EditorSachbearbeiter extends AbstractModul {
                 }
             });
 
-            // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 4dlu, pref:grow", "pref, 3dlu, f:150dlu:grow");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            
-            builder.setDefaultDialogBorder();
-            CellConstraints cc = new CellConstraints();
-
-            builder.add(submitButton, cc.xy(1, 1));
-            builder.add(getTableScroller(), cc.xyw(1, 3, 3));
-
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setBorder(new EmptyBorder(10, 10, 10, 10));
+            builder.setInsets(new Insets(5, 0, 5, 0));
+            builder.addComponent(submitButton, true);
+            builder.setFill(GridBagConstraints.BOTH);
+            builder.setGridWidth(1);
+            builder.setWeightX(1);
+            builder.addComponent(getTableScroller(), true);
             panel = builder.getPanel();
         }
 
