@@ -55,6 +55,8 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -65,9 +67,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -76,6 +75,7 @@ import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49Model;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -165,23 +165,20 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                 }
             });
 
-            // Noch etwas Layout...
-            FormLayout layout = new FormLayout(
-                "pref, 20dlu, pref, 20dlu, pref, 3dlu, pref, 20dlu, pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append("SachbearbeiterIn:", sachbBox);
-            builder.append(auswahlButton);
-            builder.append(abgemeldetCheck);
-            builder.append(aktivCheck);
-            builder.nextLine();
-            builder.append("");
-            builder.append("");
-//            builder.append("TÜV/DEKRA Termin:", dekraTuevBox);
-            builder.append(getTabelleExportButton());
-            builder.append(wiedervorlageCheck);
-            builder.append(abwasserfreiCheck);
-
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setFill(GridBagConstraints.HORIZONTAL);
+            builder.setWeightX(0);
+            builder.setInsets(new Insets(10, 10, 0, 0));
+            builder.addComponent(sachbBox, "SachbearbeiterIn:");
+            builder.addComponent(auswahlButton);
+            builder.setWeightX(1);
+            builder.addComponents(true, abgemeldetCheck, aktivCheck);
+            builder.setWeightX(0);
+            builder.addComponents(false,new JPanel(), new JPanel());
+            builder.addComponent(getTabelleExportButton());
+            builder.setWeightX(1);
+            builder.addComponents(true, wiedervorlageCheck, abwasserfreiCheck);
             queryPanel = builder.getPanel();
         }
 

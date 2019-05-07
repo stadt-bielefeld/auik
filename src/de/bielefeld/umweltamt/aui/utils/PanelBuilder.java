@@ -32,7 +32,11 @@ import javax.swing.border.EmptyBorder;
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
 
- public class PanelBuilder {
+/**
+ * Wrapper class for some GridBagLayout functions for building a panel.
+ * See GridBagLayout JavaDoc for further details.
+ */
+public class PanelBuilder {
     private JPanel panel;
     private GridBagConstraints c;
     private GridBagLayout layout;
@@ -46,6 +50,10 @@ import javax.swing.border.EmptyBorder;
         this.componentBorder = null;
     }
 
+    /**
+     * Set the next components external padding.
+     * @param insets New Insets
+     */
     public void setInsets(Insets insets) {
         this.c.insets = insets;
     }
@@ -54,22 +62,42 @@ import javax.swing.border.EmptyBorder;
         return this.c.insets;
     }
 
+    /**
+     * Set the components border
+     * @param border New border
+     */
     public void setComponentBorder(Border border) {
         this.componentBorder = border;
     }
 
+    /**
+     * Set the components internal vertical padding.
+     * @param ipady
+     */
     public void setIpadY(int ipady) {
         this.c.ipady = ipady;
     }
 
+    /**
+     * Set the result panel border.
+     * @param border
+     */
     public void setBorder(Border border) {
         this.panel.setBorder(border);
     }
 
+    /**
+     * Set the components number of cells in grid row
+     * @param gridWidth Next gridwidth
+     */
     public void setGridWidth(int gridWidth) {
         this.c.gridwidth = gridWidth;
     }
 
+    /**
+     * Set the components number of cell in a grid column
+     * @param gridHeight Next gridheight
+     */
     public void setGridHeight(int gridHeight) {
         this.c.gridheight = gridHeight;
     }
@@ -108,6 +136,10 @@ import javax.swing.border.EmptyBorder;
         this.c.weightx = weightx;
     }
 
+    /**
+     * Set the vertical weight for the next component
+     * @param weighty Next weighty
+     */
     public void setWeightY(double weighty) {
         this.c.weighty = weighty;
     }
@@ -136,6 +168,26 @@ import javax.swing.border.EmptyBorder;
      */
     public void addSeparator(int orientation, boolean endRow) {
         addComponent(new JSeparator(orientation), endRow);
+    }
+
+    /**
+     * Adds an empty JPanel that fills up the rest of the row.
+     * Use this to prevent the component centering.
+     */
+    public void fillRow() {
+        fillRow(false);
+    }
+
+    /**
+     * Adds an empty JPanel that fills up the rest of the row.
+     * Use this to prevent the component centering.
+     * @param endRow If true, end the row
+     */
+    public void fillRow(boolean endRow) {
+        double weightX = this.c.weightx;
+        setWeightX(1);
+        addComponent(new JPanel(), endRow);
+        setWeightX(weightX);
     }
 
     /**

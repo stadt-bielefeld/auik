@@ -21,6 +21,8 @@
 
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,13 +31,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.border.EmptyBorder;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.GenehmigungModel;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -76,18 +77,12 @@ public class EinleiterGenehmigungAuswertung extends AbstractQueryModul {
     @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
-            FormLayout layout = new FormLayout(
-                "pref, 3dlu, pref, 3dlu, pref, 3dlu, " +
-                "pref, 3dlu, pref, 3dlu, pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append(new JLabel("Anhang:"));
-            builder.append(this.getAnhangBox());
-            builder.append(this.getInaktivCheck());
-            builder.append(this.getGen58Check());
-            builder.append(this.getGen59Check());
-            builder.append(this.getOkayButton());
-
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setInsets(new Insets(0, 0, 0, 10));
+            builder.addComponent(getAnhangBox(), "Anhang:");
+            builder.addComponents(getInaktivCheck(), getGen58Check(), getGen59Check(), getOkayButton());
+            builder.fillRow(true);
             queryPanel = builder.getPanel();
         }
 

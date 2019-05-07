@@ -46,19 +46,20 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.border.EmptyBorder;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh50Model;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -108,12 +109,13 @@ public class EinleiterAnh50Auswertung extends AbstractQueryModul {
                 }
             });
 
-            // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append(wiedervorlageCheck, submitButton);
-
+            PanelBuilder builder = new PanelBuilder();
+            builder.setInsets(new Insets(0, 0, 0, 10));
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setWeightX(0);
+            builder.addComponents(wiedervorlageCheck, submitButton);
+            builder.setWeightX(1);
+            builder.addComponent(new JPanel());
             queryPanel = builder.getPanel();
         }
 

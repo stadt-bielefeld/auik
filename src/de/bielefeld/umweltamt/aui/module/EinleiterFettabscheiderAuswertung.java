@@ -52,18 +52,17 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.FettabschModel;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -123,14 +122,10 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
                 }
             });
 
-
-
-            //Layout
-            FormLayout layout = new FormLayout("pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append(submitButton);
-
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.addComponent(submitButton);
+            builder.fillRow(true);
 
             queryPanel = builder.getPanel();
         }
