@@ -33,11 +33,7 @@
       <artifactId>dom4j</artifactId>
       <version>1.6.1</version>
     </dependency>
-    <dependency>
-      <groupId>jgoodies</groupId>
-      <artifactId>forms</artifactId>
-      <version>1.0.5</version>
-    </dependency>
+
     <dependency>
       <groupId>com.toedter</groupId>
       <artifactId>jcalendar</artifactId>
@@ -77,11 +73,6 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
-    </dependency>
-    <dependency>
-      <groupId>jgoodies</groupId>
-      <artifactId>looks</artifactId>
-      <version>1.2.2</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
@@ -191,7 +182,7 @@
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib</artifactId>
-      <version>3.2.2</version>
+      <version>3.2.11</version>
     </dependency>
     <dependency>
       <groupId>commons-beanutils</groupId>
@@ -408,11 +399,6 @@
       <version>1.1-rev-1</version>
     </dependency>
     <dependency>
-      <groupId>com.jgoodies</groupId>
-      <artifactId>uif_lite</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
       <groupId>com.l2fprod.common</groupId>
       <artifactId>l2fprod-common-buttonbar</artifactId>
       <version>6.9.1</version>
@@ -422,6 +408,23 @@
       <artifactId>commons-codec</artifactId>
       <version>1.10</version>
     </dependency>
+    <!--JGoodies-->
+    <dependency>
+      <groupId>jgoodies</groupId>
+      <artifactId>looks</artifactId>
+      <version>1.2.2</version>
+    </dependency>
+        <dependency>
+      <groupId>jgoodies</groupId>
+      <artifactId>forms</artifactId>
+      <version>1.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jgoodies</groupId>
+      <artifactId>uif_lite</artifactId>
+      <version>1.0</version>
+    </dependency>
+
  </dependencies>
 
   <!-- jboss public repository-->
@@ -446,20 +449,17 @@
     <resource>
     <directory>src/de/bielefeld/umweltamt/aui/resources/config/</directory>
       <includes>
-      <include>log4j2.xml</include>
-    </includes>
+        <include>log4j2.xml</include>
+      </includes>
     </resource>
      </resources>
      <plugins>
        <plugin>
          <artifactId>maven-compiler-plugin</artifactId>
-         <version>3.1</version>
+         <version>3.8.0</version>
          <configuration>
             <source>11</source>
             <target>11</target>
-            <compilerArgs>
-              <arg>--illegal-access=warn</arg>
-            </compilerArgs>
          </configuration>
        </plugin>
      <plugin>
@@ -484,6 +484,20 @@
              </goals>
            </execution>
          </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>maven_lib</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
