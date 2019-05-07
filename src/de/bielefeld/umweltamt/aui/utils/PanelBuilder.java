@@ -199,9 +199,12 @@ public class PanelBuilder {
     public void addSeparator(int orientation, String label, boolean endRow) {
         double weightx = this.c.weightx;
         int fill = this.c.fill;
+        Insets insets = this.c.insets;
         this.setWeightX(0);
         this.setFill(GridBagConstraints.NONE);
+        this.setInsets(new Insets(0, insets.top, insets.bottom, 5));
         addComponent(new JLabel(label));
+        this.setInsets(insets);
         this.setWeightX(weightx);
         this.setFill(fill);
         addSeparator(orientation, endRow);
@@ -214,9 +217,15 @@ public class PanelBuilder {
      */
     public void addComponent(JComponent comp, String label) {
         double weightx = this.c.weightx;
-        this.c.weightx = 0;
+        int fill = this.c.fill;
+        Insets insets = this.c.insets;
+        this.setWeightX(0);
+        this.setFill(GridBagConstraints.NONE);
+        this.setInsets(new Insets(0, insets.top, insets.bottom, 5));
         addComponent(new JLabel(label));
-        this.c.weightx = weightx;
+        this.setInsets(insets);
+        this.setWeightX(weightx);
+        this.setFill(fill);
         addComponent(comp);
     }
 
@@ -228,9 +237,15 @@ public class PanelBuilder {
      */
     public void addComponent(JComponent comp, String label, boolean endRow) {
         double weightx = this.c.weightx;
-        this.c.weightx = 0;
+        int fill = this.c.fill;
+        Insets insets = this.c.insets;
+        this.setWeightX(0);
+        this.setFill(GridBagConstraints.NONE);
+        this.setInsets(new Insets(0, insets.top, insets.bottom, 5));
         addComponent(new JLabel(label));
-        this.c.weightx = weightx;
+        this.setInsets(insets);
+        this.setWeightX(weightx);
+        this.setFill(fill);
         addComponent(comp, endRow);
     }
 

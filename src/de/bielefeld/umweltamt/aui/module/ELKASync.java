@@ -20,6 +20,8 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -46,6 +48,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EmptyBorder;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -60,10 +63,6 @@ import org.glassfish.jersey.filter.LoggingFilter;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -102,6 +101,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.EMessstelleModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ESonderbauwerkModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 public class ELKASync extends AbstractModul {
@@ -650,26 +650,35 @@ public class ELKASync extends AbstractModul {
                     worker.start();
                 }
             });
-            FormLayout layout = new FormLayout(
-                "pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu:grow(1.0)",
-                "pref, 3dlu, 150dlu:grow(2.0), 3dlu, pref");
-            PanelBuilder builder = new PanelBuilder(layout);
-            builder.setDefaultDialogBorder();
-            CellConstraints cc = new CellConstraints();
+
             JScrollPane dbScroller = new JScrollPane(this.dbTable,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            builder.addLabel("Tabelle", cc.xy(1, 1));
-            builder.add(selection, cc.xy(3, 1));
-            builder.add(commitTable, cc.xy(5, 1));
-            builder.add(commitEntries, cc.xy(7, 1));
-            builder.add(deleteEntries, cc.xy(9, 1));
-            builder.add(dbScroller, cc.xyw(1, 3, 10));
-            builder.addLabel("Anzahl der Elemente: ", cc.xy(1, 5));
-            builder.add(this.rowCount, cc.xy(3, 5));
-            builder.add(new JLabel("Fortschritt: "), cc.xy(5, 5, CellConstraints.RIGHT, CellConstraints.CENTER));
-            builder.add(progress, cc.xy(7, 5));
-            builder.add(this.progressCounter, cc.xy(9, 5));
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+            PanelBuilder builder = new PanelBuilder();
+            builder.setBorder(new EmptyBorder(10, 10, 10, 10));
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setWeightY(0);
+            builder.setInsets(new Insets(0, 0, 10, 10));
+            builder.addComponent(selection, "Tabelle:");
+            builder.addComponents(commitTable, commitEntries, deleteEntries);
+            builder.fillRow(true);
+
+            builder.setWeightY(1);
+            builder.setFill(GridBagConstraints.BOTH);
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setWeightX(1);
+            builder.addComponent(dbScroller, true);
+            builder.setWeightX(0);
+
+            builder.setWeightY(0);
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setInsets(new Insets(0, 0, 10, 50));
+            builder.addComponent(rowCount, "Anzahl der Elemente:");
+            builder.setInsets(new Insets(0, 0, 10, 10));
+            builder.addComponent(progress, "Fortschritt:");
+            builder.addComponent(progressCounter);
+            builder.fillRow();
             this.panel = builder.getPanel();
         }
         return this.panel;
