@@ -63,10 +63,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
+import javax.swing.border.EmptyBorder;
 
-
-
-import com.jgoodies.forms.factories.Borders;
 import com.l2fprod.common.swing.JButtonBar;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -90,7 +88,7 @@ public class ModulManager {
             this.module = new ArrayList<Modul>();
             this.buttonBar = new JButtonBar(JButtonBar.VERTICAL);
 
-            buttonBar.setBorder(Borders.EMPTY_BORDER);
+            buttonBar.setBorder(new EmptyBorder(10, 10, 10, 10));
             buttonBar.setBackground(frame.getLeftFrame().getBackground());
         }
 

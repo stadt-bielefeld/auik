@@ -120,8 +120,6 @@ import javax.swing.border.EmptyBorder;
 
 import org.hibernate.HibernateException;
 
-import com.jgoodies.uif_lite.panel.SimpleInternalFrame;
-
 import de.bielefeld.umweltamt.aui.module.common.editors.EinstellungenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -735,7 +733,7 @@ public class HauptFrame extends JFrame {
         if (splitPane == null) {
             splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                     getLeftFrame(), getRightFrame());
-            splitPane.setDividerLocation(175);
+            splitPane.setDividerLocation(185);
         }
         return splitPane;
     }
@@ -743,7 +741,7 @@ public class HauptFrame extends JFrame {
     /**
      * This method initializes leftFrame
      *
-     * @return com.jgoodies.uif_life.panel.SimpleInternalFrame
+     * @return The left frame including view menu and left scroller
      */
     protected JSplitPane getLeftFrame() {
         if (leftFrame == null) {
@@ -760,7 +758,7 @@ public class HauptFrame extends JFrame {
     /**
      * This method initializes rightFrame
      *
-     * @return com.jgoodies.uif_life.panel.SimpleInternalFrame
+     * @return the right frame including modul bar and right content panel
      */
     protected JSplitPane getRightFrame() {
         if (rightFrame == null) {
