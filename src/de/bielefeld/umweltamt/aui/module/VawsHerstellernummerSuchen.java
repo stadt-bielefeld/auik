@@ -28,6 +28,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -38,15 +39,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.HerstellNrSuchenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -130,7 +129,7 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
                     SuchStart();
                 }
             });
-
+            /*
             // Noch etwas Layout...
             FormLayout layout = new FormLayout(
                     "pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 20dlu, pref"
@@ -141,7 +140,12 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
             builder.append("Herstellnr.:", herstellFeld, suchenButton);
             builder.nextLine();
             builder.append("");
-
+            */
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setInsets(0, 0, 0, 5);
+            builder.addComponent(herstellFeld, "Herstellnr.:");
+            builder.addComponent(suchenButton, true, true);
             queryPanel = builder.getPanel();
         }
 

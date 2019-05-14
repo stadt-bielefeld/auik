@@ -46,6 +46,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -53,10 +54,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumnModel;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
@@ -66,6 +65,7 @@ import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh50Model;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.VawsAnlagenchronoModel;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -189,13 +189,18 @@ public class VawsChronologieAuswertung extends AbstractQueryModul {
                     frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                 }
             });
-
+/*
             // Noch etwas Layout...
             FormLayout layout = new FormLayout("pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append(wiedervorlageCheck, abgeschlossenCheck, submitButton);
-
+*/
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.addComponents(wiedervorlageCheck, abgeschlossenCheck);
+            builder.fillRow(true);
+            builder.addComponent(submitButton, true, true);
             queryPanel = builder.getPanel();
         }
 

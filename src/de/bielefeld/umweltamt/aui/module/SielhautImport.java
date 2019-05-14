@@ -50,6 +50,7 @@
 package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.Cursor;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -68,11 +69,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -83,6 +82,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -454,31 +454,31 @@ public class SielhautImport extends AbstractModul {
     public JPanel getPanel() {
         if (this.panel == null) {
             initIcons();
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setFill(GridBagConstraints.NONE);
+            builder.setWeight(0, 0);
+            builder.setBorder(new EmptyBorder(5, 5, 5, 5));
+            builder.setInsets(5, 5, 5, 0);
 
-            FormLayout layout = new FormLayout(
-                "40px, 5dlu, 65dlu, 5dlu, 175dlu:g", // Spalten
-                ""); // Zeilen werden dynamisch erzeugt
+            builder.addComponents(getStepOneLabel(), getDateiButton(), getDateiLabel());
+            builder.fillRow(true);
 
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+            builder.setWeightX(0);
+            builder.addComponent(getStepTwoLabel());
+            builder.setWeight(1, 1);
+            builder.setFill(GridBagConstraints.BOTH);
+            builder.addComponent(getImportScroller(), true, true);
+            builder.setWeight(0, 0);
+            builder.setFill(GridBagConstraints.NONE);
 
-            builder
-                .append(getStepOneLabel(), getDateiButton(), getDateiLabel());
-            builder.appendRelatedComponentsGapRow();
-            builder.appendRow("f:50dlu:g");
-            builder.nextLine(2);
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.addComponent(new JPanel());
+            builder.addComponent(getErklaerungsLabel(), true, true);
 
-            builder.append(getStepTwoLabel());
-            builder.append(getImportScroller(), 3);
-            builder.appendRelatedComponentsGapRow();
-            builder.nextLine(2);
-
-            builder.append("");
-            builder.append(getErklaerungsLabel(), 3);
-            builder.appendRelatedComponentsGapRow();
-            builder.nextLine(2);
-
-            builder.append(getStepThreeLabel(), getImportButton());
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.addComponents(getStepThreeLabel(), getImportButton());
+            builder.fillRow(true);
 
             this.panel = builder.getPanel();
         }

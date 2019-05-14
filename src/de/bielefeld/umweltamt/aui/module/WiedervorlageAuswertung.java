@@ -46,6 +46,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -53,13 +54,11 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh50Model;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.WiedervorlageModel;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -108,12 +107,17 @@ public class WiedervorlageAuswertung extends AbstractQueryModul {
                     frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                 }
             });
-
+            /*
             // Noch etwas Layout...
             FormLayout layout = new FormLayout("pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append(wiedervorlageCheck, submitButton);
+            */
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.addComponents(wiedervorlageCheck, submitButton);
+            builder.fillRow();
 
             queryPanel = builder.getPanel();
         }
