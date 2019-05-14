@@ -1,5 +1,6 @@
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,16 +17,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.border.EmptyBorder;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -121,6 +120,19 @@ class SielhautChooser extends OkCancelDialog {
         submitToolBar.setRollover(true);
         submitToolBar.add(getSubmitButton());
 
+        PanelBuilder builder = new PanelBuilder();
+        builder.setBorder(new EmptyBorder(5, 5, 5, 5));
+        builder.setInsets(5, 0, 0, 5);
+        builder.setAnchor(GridBagConstraints.WEST);
+        builder.setWeightX(1);
+        builder.setFill(GridBagConstraints.HORIZONTAL);
+        builder.addComponent(getSuchFeld());
+        builder.setWeightX(0);
+        builder.addComponent(submitToolBar, true);
+        builder.setWeight(1,1);
+        builder.setFill(GridBagConstraints.BOTH);
+        builder.addComponent(tabellenScroller, true);
+        /*
         FormLayout layout = new FormLayout("180dlu:g, 3dlu, min(16dlu;p)", // spalten
             "20dlu, 3dlu, 300dlu:g"); // zeilen
         PanelBuilder builder = new PanelBuilder(layout);
@@ -129,7 +141,7 @@ class SielhautChooser extends OkCancelDialog {
         builder.add(getSuchFeld(), cc.xy(1, 1));
         builder.add(submitToolBar, cc.xy(3, 1));
         builder.add(tabellenScroller, cc.xyw(1, 3, 3));
-
+        */
         return builder.getPanel();
     }
 

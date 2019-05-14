@@ -51,6 +51,25 @@ public class PanelBuilder {
     }
 
     /**
+     * Sets the next components external padding
+     * @param insets Padding to use in every direction
+     */
+    public void setInsets(int insets) {
+        this.setInsets(new Insets(insets, insets, insets, insets));
+    }
+
+    /**
+     * Sets the next components external padding
+     * @param top Top padding
+     * @param left Left padding
+     * @param bottom bottom padding
+     * @param right right padding
+     */
+    public void setInsets(int top, int left, int bottom, int right) {
+        this.setInsets(new Insets(top, left, bottom, right));
+    }
+
+    /**
      * Set the next components external padding.
      * @param insets New Insets
      */
@@ -144,30 +163,25 @@ public class PanelBuilder {
         this.c.weighty = weighty;
     }
 
+
     /**
-     * Add a separator with the given orienation
-     * @param orientation Orientation, use JSeparator.HORIZONTAl etc.
+     * Adds an empty JPanel that fills up the rest of the column.
+     * Use this to prevent vertical component centering.
      */
-    public void addSeparator(int orientation) {
-        addSeparator(orientation, false);
+    public void fillColumn() {
+        fillColumn(false);
     }
 
     /**
-     * Adds a label separator
-     * @param orienation Orientation, use JSeparator.HORIZONTAl etc.
-     * @param label Label text
+     * Adds an empty JPanel that fills up the rest of the column.
+     * Use this to prevent vertical component centering.
+     * @param endRow If true, end the row after adding this component
      */
-    public void addSeparator(int orientation, String label) {
-        addSeparator(orientation, label, false);
-    }
-
-    /**
-     * Add a separator with the given orienation
-     * @param orientation Orientation, use JSeparator.HORIZONTAl etc.
-     * @param endRow If true, row will be ended after add the separator
-     */
-    public void addSeparator(int orientation, boolean endRow) {
-        addComponent(new JSeparator(orientation), endRow);
+    public void fillColumn(boolean endRow) {
+        double weightY =this.c.weighty;
+        setWeightY(1);
+        addComponent(new JPanel(), endRow);
+        setWeightY(weightY);
     }
 
     /**
@@ -191,6 +205,55 @@ public class PanelBuilder {
     }
 
     /**
+     * Add a separator with the given orienation
+     * @param orientation Orientation, use JSeparator.HORIZONTAl etc.
+     */
+    public void addSeparator(int orientation) {
+        addSeparator(orientation, false);
+    }
+
+    /**
+     * Adds a horizontal separator.
+     */
+    public void addSeparator() {
+        addSeparator(JSeparator.HORIZONTAL);
+    }
+
+    /**
+     * Adds a label separator
+     * @param orienation Orientation, use JSeparator.HORIZONTAl etc.
+     * @param label Label text
+     */
+    public void addSeparator(int orientation, String label) {
+        addSeparator(orientation, label, false);
+    }
+
+    /**
+     * Adds a labeled, horizontal separator
+     * @param label Label text
+     */
+    public void addSeparator(String label) {
+        addSeparator(JSeparator.HORIZONTAL, label);
+    }
+
+    /**
+     * Add a separator with the given orienation
+     * @param orientation Orientation, use JSeparator.HORIZONTAl etc.
+     * @param endRow If true, row will be ended after add the separator
+     */
+    public void addSeparator(int orientation, boolean endRow) {
+        addComponent(new JSeparator(orientation), endRow);
+    }
+
+    /**
+     * Adds a horizontal separator
+     * @param endRow If true, row will be ended after add the separator
+     */
+    public void addSeparator(boolean endRow) {
+        addSeparator(JSeparator.HORIZONTAL, endRow);
+    }
+
+    /**
      * Add a labeled separator with the given orienation
      * @param orientation Orientation, use JSeparator.HORIZONTAl etc.
      * @param label Label text
@@ -202,12 +265,21 @@ public class PanelBuilder {
         Insets insets = this.c.insets;
         this.setWeightX(0);
         this.setFill(GridBagConstraints.NONE);
-        this.setInsets(new Insets(0, insets.top, insets.bottom, 5));
+        this.setInsets(new Insets(insets.top, 5, insets.bottom, 5));
         addComponent(new JLabel(label));
         this.setInsets(insets);
         this.setWeightX(weightx);
         this.setFill(fill);
         addSeparator(orientation, endRow);
+    }
+
+    /**
+     * Add a labeled, horizontal separator with the given orienation
+     * @param label Label text
+     * @param endRow If true, row will be ended after add the separator
+     */
+    public void addSeparator(String label, boolean endRow) {
+        addSeparator(JSeparator.HORIZONTAL, label, endRow);
     }
 
     /**
@@ -221,7 +293,7 @@ public class PanelBuilder {
         Insets insets = this.c.insets;
         this.setWeightX(0);
         this.setFill(GridBagConstraints.NONE);
-        this.setInsets(new Insets(0, insets.top, insets.bottom, 5));
+        this.setInsets(new Insets(insets.top, 5, insets.bottom, 5));
         addComponent(new JLabel(label));
         this.setInsets(insets);
         this.setWeightX(weightx);
@@ -236,17 +308,28 @@ public class PanelBuilder {
      * @param endRow Ends the row, if true
      */
     public void addComponent(JComponent comp, String label, boolean endRow) {
+        addComponent(comp, label, endRow, false);
+    }
+
+    /**
+     * Adds a labeled component.
+     * @param comp Component to add
+     * @param label Label to add
+     * @param endRow Ends the row, if true
+     * @param fill If true, the row is filled with an empty panel
+     */
+    public void addComponent(JComponent comp, String label, boolean endRow, boolean fill) {
         double weightx = this.c.weightx;
-        int fill = this.c.fill;
+        int gridFill = this.c.fill;
         Insets insets = this.c.insets;
         this.setWeightX(0);
         this.setFill(GridBagConstraints.NONE);
-        this.setInsets(new Insets(0, insets.top, insets.bottom, 5));
+        this.setInsets(new Insets(insets.top, 0, insets.bottom, 5));
         addComponent(new JLabel(label));
         this.setInsets(insets);
         this.setWeightX(weightx);
-        this.setFill(fill);
-        addComponent(comp, endRow);
+        this.setFill(gridFill);
+        addComponent(comp, endRow, fill);
     }
 
     /**
@@ -254,7 +337,7 @@ public class PanelBuilder {
      * @param comp Component to add
      */
     public void addComponent(JComponent comp) {
-        addComponent(comp, false);
+        addComponent(comp, false, false);
     }
 
     /**
@@ -263,16 +346,32 @@ public class PanelBuilder {
      * @param endRow Ends the row, if true.
      */
     public void addComponent(JComponent comp, boolean endRow) {
-        int gridwidth = this.c.gridwidth;
-        if (endRow == true) {
-            this.c.gridwidth = GridBagConstraints.REMAINDER;
-        }
+        addComponent(comp, endRow, false);
+    }
 
-        layout.setConstraints(comp, this.c);
+    /**
+     * Adds a Component.
+     * @param comp Component to add.
+     * @param endRow Ends the row, if true.
+     * @param fill If true, the row is filled with an empty panel
+     */
+    public void addComponent(JComponent comp, boolean endRow, boolean fill) {
+        int gridwidth = this.c.gridwidth;
+
         if (this.componentBorder != null) {
             comp.setBorder(this.componentBorder);
         }
-        this.panel.add(comp);
+        if (fill == false) {
+            if (endRow == true) {
+                this.c.gridwidth = GridBagConstraints.REMAINDER;
+            }
+            layout.setConstraints(comp, this.c);
+            this.panel.add(comp);
+        } else {
+            layout.setConstraints(comp, this.c);
+            this.panel.add(comp);
+            this.fillRow(endRow);
+        }
         this.setGridWidth(gridwidth);
     }
 

@@ -49,21 +49,21 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumn;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbepunkteModel;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -221,14 +221,13 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                 }
             });
 
-            // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append(eSatzungButton, uwbButton);
-            builder.append(selbstueberwButton, inaktivButton);
-            builder.append(probenehmerButton);
-
+            PanelBuilder builder = new PanelBuilder();
+            builder.setInsets(5, 0, 5, 5);
+            builder.setBorder(new EmptyBorder(5, 5, 5, 5));
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.addComponents(eSatzungButton, uwbButton, selbstueberwButton,
+                    inaktivButton, probenehmerButton);
+            builder.fillRow();
             queryPanel = builder.getPanel();
         }
 

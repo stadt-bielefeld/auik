@@ -61,6 +61,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.GridBagConstraints;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -87,10 +88,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -100,6 +97,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.NamedObject;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -187,18 +185,20 @@ public class LaborProbeSuchen extends AbstractModul {
             ta.addComp(getSuchFeld());
             ta.addComp(getProbeTabelle());
 
-            FormLayout layout = new FormLayout(
-                "65dlu, 4dlu, pref:grow, 3dlu, min(16dlu;p)", // spalten
-                "pref, 3dlu, f:150dlu:grow"); // zeilen
-
-            PanelBuilder builder = new PanelBuilder(layout);
-            builder.setDefaultDialogBorder();
-            CellConstraints cc = new CellConstraints();
-
-            builder.add(getSuchBox(), cc.xy(1, 1));
-            builder.add(getSuchFeld(), cc.xy(3, 1));
-            builder.add(submitToolBar, cc.xy(5, 1));// , "r, d"));
-            builder.add(probeScroller, cc.xyw(1, 3, 5));
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setInsets(5, 5, 0, 0);
+            builder.setWeightX(0);
+            builder.addComponents(getSuchBox());
+            builder.setWeightX(1);
+            builder.setFill(GridBagConstraints.HORIZONTAL);
+            builder.addComponent(getSuchFeld());
+            builder.setFill(GridBagConstraints.NONE);
+            builder.setWeightX(0);
+            builder.addComponent(getSubmitButton(), true);
+            builder.setWeight(1, 1);
+            builder.setFill(GridBagConstraints.BOTH);
+            builder.addComponent(probeScroller, true);
 
             this.panel = builder.getPanel();
         }

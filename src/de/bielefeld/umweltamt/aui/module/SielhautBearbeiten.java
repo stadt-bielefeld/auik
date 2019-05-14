@@ -81,8 +81,11 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import static org.junit.Assert.assertTrue;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -122,6 +125,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -130,6 +134,7 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -140,13 +145,6 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
@@ -181,6 +179,7 @@ import de.bielefeld.umweltamt.aui.utils.charts.APosDataItem;
 import de.bielefeld.umweltamt.aui.utils.charts.ChartDataSets;
 import de.bielefeld.umweltamt.aui.utils.charts.Charts;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 
 /**
  * Ein Modul zum Anzeigen und Bearbeiten von SielhautBearbeiten-Punkten.
@@ -806,25 +805,30 @@ public class SielhautBearbeiten extends AbstractModul {
         if (this.panel == null) {
             this.probeModel = new SielhautProbeModel();
 
+            PanelBuilder sep = new PanelBuilder();
+            sep.setAnchor(GridBagConstraints.WEST);
+            sep.setFill(GridBagConstraints.HORIZONTAL);
+            sep.setWeightX(1);
+            sep.addSeparator(JSeparator.HORIZONTAL, "Stammdaten");
+
             RetractablePanel datenRP = new RetractablePanel(
-                DefaultComponentFactory.getInstance().createSeparator(
-                    "Stammdaten"), getDatenPanel(), true, null);
+                sep.getPanel(), getDatenPanel(), true, null);
 
-            FormLayout layout = new FormLayout(
-                "pref, 5dlu, 100dlu:g, 3dlu, l:p",
-                "p, 3dlu, t:p, 10dlu, t:p, 10dlu, t:p, 10dlu, t:p");
-            PanelBuilder builder = new PanelBuilder(layout);
-            CellConstraints cc = new CellConstraints();
-
-            builder.setDefaultDialogBorder();
-
-            builder.addLabel("Messstelle:", cc.xy(1, 1));
-            builder.add(getPunktFeld(), cc.xy(3, 1));
-            builder.add(getPunktToolBar(), cc.xy(5, 1));
-            builder.add(datenRP, cc.xyw(1, 3, 5, "f, f"));
-            builder.add(getProbenRtPanel(), cc.xyw(1, 5, 5, "f, f"));
-            builder.add(getFotoRtPanel(), cc.xyw(1, 7, 5, "f, f"));
-            builder.add(getKartenRtPanel(), cc.xyw(1, 9, 5, "f, f"));
+            PanelBuilder builder = new PanelBuilder();
+            builder.setBorder(new EmptyBorder(5, 5, 5, 5));
+            builder.setInsets(0, 0, 5, 0);
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setWeightX(1);
+            builder.setFill(GridBagConstraints.HORIZONTAL);
+            builder.addComponent(getPunktFeld(), "Messstelle:");
+            builder.setWeightX(0);
+            builder.addComponent(getPunktToolBar(), true);
+            builder.setWeightX(1);
+            builder.addComponent(datenRP, true);
+            builder.addComponent(getProbenRtPanel(), true);
+            builder.addComponent(getFotoRtPanel(), true);
+            builder.addComponent(getKartenRtPanel(), true);
+            builder.fillColumn();
 
             this.panel = builder.getPanel();
         }
@@ -964,54 +968,52 @@ public class SielhautBearbeiten extends AbstractModul {
     // Daten
     private JPanel getDatenPanel() {
         if (this.datenPanel == null) {
-            FormLayout layout = new FormLayout(
-                "r:p, 3dlu, 150dlu, 10dlu, 70dlu, 10dlu, 100dlu", "pref, " + // 1
-                    "3dlu, " + // 2
-                    "pref, " + // 3
-                    "3dlu, " + // 4
-                    "pref, " + // 5
-                    "3dlu, " + // 6
-                    "fill:30dlu, " + // 7
-                    "10dlu, " + // 8
-                    "pref, " + // 9
-                    "3dlu, " + // 10
-                    "pref, " + // 11
-                    "3dlu, " + // 12
-                    "pref, " + // 13
-                    "3dlu, " + // 14
-                    "pref, " // 15
-            );
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-            CellConstraints cc = new CellConstraints();
+            PanelBuilder builder = new PanelBuilder();
+
             JScrollPane bemerkungsScroller = new JScrollPane(
                 getSpBemerkungsArea(),
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-            builder.addLabel("<html><b>Name:</b></html>", cc.xy(1, 1));
-            builder.add(getSpNamenFeld(), cc.xy(3, 1));
-            builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 3));
-            builder.add(getSpEntgebFeld(), cc.xy(3, 3));
-            builder.addLabel("Lage:", cc.xy(1, 5));
-            builder.add(getSpLageFeld(), cc.xy(3, 5));
-            builder.addLabel("Bemerkungen:", cc.xy(1, 7));
-            builder.add(bemerkungsScroller, cc.xyw(3, 7, 5));
-            builder.addLabel("E32:", cc.xy(1, 9));
-            builder.add(getSpE32Feld(), cc.xy(3, 9));
-            builder.add(getAusAblageButton(), cc.xywh(5, 9, 1, 3));
-            builder.add(getSpSielhautCheck(), cc.xy(7, 9));
-            builder.addLabel("N32:", cc.xy(1, 11));
-            builder.add(getSpN32Feld(), cc.xy(3, 11));
-            builder.add(getSpFirmenprobeCheck(), cc.xy(7, 11));
-            builder.addLabel("Schacht-Nr.:", cc.xy(1, 13));
-            builder.add(getSpHaltungsnrFeld(), cc.xyw(3, 13, 3));
-            builder.add(getSpNachprobeCheck(), cc.xy(7, 13));
-            builder.addLabel("Alarmplan-Nr.:", cc.xy(1, 15));
-            builder.add(getSpAlarmplannrFeld(), cc.xyw(3, 15, 3));
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setInsets(0, 0, 5, 5);
+            builder.setBorder(new EmptyBorder(5, 5, 5, 5));
+            builder.setWeightX(0.3);
+            builder.setFill(GridBagConstraints.HORIZONTAL);
+            builder.addComponent(getSpNamenFeld(), "Name: ", true, true);
+            builder.addComponent(getSpEntgebFeld(), "Entwässerungsgebiet:", true, true);
+            builder.addComponent(getSpLageFeld(), "Lage:", true, true);
+            builder.setGridHeight(2);
+            builder.setWeightX(0.7);
+            builder.addComponent(bemerkungsScroller, "Bemerkungen:", true, true);
 
-            // builder.getPanel().setBackground(Color.WHITE);
-            // builder.getPanel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            PanelBuilder bottomContent = new PanelBuilder();
+            bottomContent.setAnchor(GridBagConstraints.WEST);
+
+            PanelBuilder lagePanel = new PanelBuilder();
+            lagePanel.setWeightX(1);
+            lagePanel.setFill(GridBagConstraints.HORIZONTAL);
+            lagePanel.setAnchor(GridBagConstraints.WEST);
+            lagePanel.addComponent(getSpE32Feld(), "E32:", true);
+            lagePanel.addComponent(getSpN32Feld(), "N32:", true);
+
+            PanelBuilder checkboxes = new PanelBuilder();
+            checkboxes.setAnchor(GridBagConstraints.WEST);
+            checkboxes.addComponent(getSpSielhautCheck(), true);
+            checkboxes.addComponent(getSpFirmenprobeCheck(), true);
+            checkboxes.addComponent(getSpNachprobeCheck(), true);
+
+            bottomContent.setWeightX(1);
+            bottomContent.setFill(GridBagConstraints.HORIZONTAL);
+            bottomContent.addComponent(lagePanel.getPanel());
+            bottomContent.addComponent(getAusAblageButton(), true);
+            bottomContent.addComponent(getSpHaltungsnrFeld(), "Schacht-Nr.:", true, true);
+            bottomContent.addComponent(getSpAlarmplannrFeld(), "Alarmplan-Nr.:", true, true);
+
+            builder.setWeightX(1);
+            builder.addComponent(bottomContent.getPanel());
+            builder.setWeightX(0);
+            builder.addComponent(checkboxes.getPanel(), true);
             this.datenPanel = builder.getPanel();
         }
         return this.datenPanel;
@@ -1099,27 +1101,28 @@ public class SielhautBearbeiten extends AbstractModul {
     // Proben
     private RetractablePanel getProbenRtPanel() {
         if (this.probenRtPanel == null) {
-            FormLayout layout = new FormLayout(
-                "p:g");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+            PanelBuilder builder = new PanelBuilder();
 
-            builder.appendRow("f:65dlu:g");
-            builder.append(new JScrollPane(getPrTabelle()));
-
-            builder.appendSeparator("Neue Probenahme");
-            builder.append(getNeuProbPanel());
-            // builder.append("Kennummer:", getPrNummerFeld());
-            // builder.append("Datum:", getPrDateChooser());
-            // builder.append(getPrAnlegenButton());
-            // builder.append(getTabelleExportButton());
-            builder.nextLine();
-            builder.appendSeparator("Auswertung");
-            builder.append(getAuswertungPanel());
+            builder.setAnchor(GridBagConstraints.NORTHWEST);
+            builder.setFill(GridBagConstraints.BOTH);
+            builder.setInsets(5, 5, 0, 5);
+            builder.setWeightX(1);
+            builder.setWeightY(0.8);
+            builder.addComponent(new JScrollPane(getPrTabelle()), true);
+            builder.setWeightY(0);
+            builder.addSeparator("Neue Probenahme", true);
+            builder.addComponent(getNeuProbPanel(), true);
+            builder.addSeparator("Auswertung", true);
+            builder.addComponent(getAuswertungPanel(), true);
 
             JPanel probenPanel = builder.getPanel();
-            this.probenRtPanel = new RetractablePanel(DefaultComponentFactory
-                .getInstance().createSeparator("Probenahmen"), probenPanel,
+
+            PanelBuilder sep = new PanelBuilder();
+            sep.setAnchor(GridBagConstraints.WEST);
+            sep.setFill(GridBagConstraints.HORIZONTAL);
+            sep.setWeightX(1);
+            sep.addSeparator("Probenahmen");
+            this.probenRtPanel = new RetractablePanel(sep.getPanel(), probenPanel,
                 false, null) {
                 private static final long serialVersionUID = -6231371376662899465L;
 
@@ -1149,58 +1152,35 @@ public class SielhautBearbeiten extends AbstractModul {
 
     private JPanel getNeuProbPanel() {
         if (this.neuProbPanel == null) {
-            FormLayout layout = new FormLayout(
-                "pref, 5dlu,  pref, 5dlu, pref, 5dlu,  pref, 5dlu, pref, 5dlu,pref, 5dlu, pref, 5dlu,pref, 5dlu,pref, 5dlu,  pref, 5dlu, pref, 5dlu,  "
-                    + "pref, 5dlu, pref, 5dlu,pref,pref, 5dlu, pref, 5dlu,pref",
-
-                "pref, 3dlu" + ", " + "pref");
-            CellConstraints cc = new CellConstraints();
-            CellConstraints cc2 = (CellConstraints) cc.clone();
-
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
-            builder.add(new JLabel("Kennummer:"), cc.xy(1, 1),
-                getPrNummerFeld(), cc2.xyw(3, 1, 20));
-            builder.add(new JLabel("Datum:"), cc.xy(25, 1), getPrDateChooser(),
-                cc2.xy(28, 1));
-
-            builder.add(getPrAnlegenButton(), cc.xy(30, 1));
-            builder.add(getTabelleExportButton(), cc.xy(32, 1));
-
+            PanelBuilder builder = new PanelBuilder();
+            builder.setInsets(0, 0, 0, 5);
+            builder.setBorder(new EmptyBorder(5, 5, 5, 5));
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setWeightX(0.5);
+            builder.setFill(GridBagConstraints.HORIZONTAL);
+            builder.addComponent(getPrNummerFeld(), "Kennummer:");
+            builder.setWeightX(0);
+            builder.addComponent(getPrDateChooser(), "Datum:");
+            builder.addComponent(getPrAnlegenButton());
+            builder.addComponent(getTabelleExportButton(), true);
             this.neuProbPanel = builder.getPanel();
-
         }
         return this.neuProbPanel;
     }
 
     private JPanel getAuswertungPanel() {
         if (this.auswertungPanel == null) {
-            FormLayout layout = new FormLayout(
-                "pref, 5dlu,  pref, 5dlu, pref, 5dlu,  pref, 5dlu, pref, 5dlu,pref, 5dlu, pref, 5dlu,pref, 5dlu,pref, 5dlu,  pref, 5dlu, pref, 5dlu,  "
-                    + "pref, 5dlu, pref, 5dlu,pref",
+            PanelBuilder builder = new PanelBuilder();
 
-                "pref, 3dlu" + ", " + "pref");
-            CellConstraints cc = new CellConstraints();
-            CellConstraints cc2 = (CellConstraints) cc.clone();
-
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
-            builder.add(new JLabel("Von:"), cc.xy(1, 1), getVonDateChooser(),
-                cc2.xy(3, 1));
-            builder.add(new JLabel("Bis:"), cc.xy(5, 1), getBisDateChooser(),
-                cc2.xy(7, 1));
-
-            builder.add(getBleiCheck(), cc.xy(11, 1));
-            builder.add(getCadmiumCheck(), cc.xy(13, 1));
-            builder.add(getChromCheck(), cc.xy(15, 1));
-            builder.add(getKupferCheck(), cc.xy(17, 1));
-            builder.add(getNickelCheck(), cc.xy(19, 1));
-            builder.add(getQuecksilberCheck(), cc.xy(21, 1));
-            builder.add(getZinkCheck(), cc.xy(23, 1));
-            builder.add(getSubmitButton(), cc.xy(27, 1));
-
+            builder.setInsets(0, 0, 0, 5);
+            builder.setBorder(new EmptyBorder(5, 5, 5, 5));
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.addComponent(getVonDateChooser(), "Von:");
+            builder.addComponent(getBisDateChooser(), "Bis:");
+            builder.addComponents(getBleiCheck(), getCadmiumCheck(),
+                    getChromCheck(), getKupferCheck(), getNickelCheck(),
+                    getQuecksilberCheck(), getZinkCheck(), getSubmitButton());
+            builder.fillRow(true);
             this.auswertungPanel = builder.getPanel();
 
         }
@@ -1482,10 +1462,10 @@ public class SielhautBearbeiten extends AbstractModul {
             JPanel tmp = new JPanel(new BorderLayout(0, 7));
 
             tmp.add(initializeContent(), BorderLayout.CENTER);
-            JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(
-                this.speichernButton, this.abbrechenButton);
+            PanelBuilder bbar = new PanelBuilder();
+            bbar.addComponents(this.speichernButton, this.abbrechenButton);
+            JPanel buttonBar = bbar.getPanel();
             tmp.add(buttonBar, BorderLayout.SOUTH);
-            tmp.setBorder(Borders.TABBED_DIALOG_BORDER);
 
             this.setContentPane(tmp);
             this.pack();
@@ -1512,7 +1492,6 @@ public class SielhautBearbeiten extends AbstractModul {
             }
 
             this.chartPanel = new ChartPanel(chart, false);
-            this.chartPanel.setBorder(Borders.DIALOG_BORDER);
 
             return this.chartPanel;
         }
@@ -1561,7 +1540,6 @@ public class SielhautBearbeiten extends AbstractModul {
             JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            tabellenScroller.setBorder(Borders.DIALOG_BORDER);
 
             return tabellenScroller;
         }
@@ -1899,8 +1877,12 @@ public class SielhautBearbeiten extends AbstractModul {
             fotoPanel.add(getFotoLabel());
             fotoPanel.setBackground(Color.WHITE);
             fotoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            this.fotoRtPanel = new RetractablePanel(DefaultComponentFactory
-                .getInstance().createSeparator("Foto"), fotoPanel, false, null) {
+            PanelBuilder sep = new PanelBuilder();
+            sep.setAnchor(GridBagConstraints.WEST);
+            sep.setFill(GridBagConstraints.HORIZONTAL);
+            sep.setWeightX(1);
+            sep.addSeparator(JSeparator.HORIZONTAL, "Foto");
+            this.fotoRtPanel = new RetractablePanel(sep.getPanel(), fotoPanel, false, null) {
                 private static final long serialVersionUID = 6505102322099919490L;
 
                 @Override
@@ -1956,9 +1938,12 @@ public class SielhautBearbeiten extends AbstractModul {
             kartenPanel.add(getKartenLabel());
             kartenPanel.setBackground(Color.WHITE);
             kartenPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-            this.kartenRtPanel = new RetractablePanel(DefaultComponentFactory
-                .getInstance().createSeparator("Kartenausschnitt"),
+            PanelBuilder sep = new PanelBuilder();
+            sep.setAnchor(GridBagConstraints.WEST);
+            sep.setFill(GridBagConstraints.HORIZONTAL);
+            sep.setWeightX(1);
+            sep.addSeparator(JSeparator.HORIZONTAL, "Kartenausschnitt");
+            this.kartenRtPanel = new RetractablePanel(sep.getPanel(),
                 kartenPanel, false, null) {
                 private static final long serialVersionUID = 1276454146798307743L;
 
