@@ -162,7 +162,7 @@ public class EditorEinheiten extends AbstractModul {
             builder.addComponent(submitButton, true);
             builder.setFill(GridBagConstraints.BOTH);
             builder.setInsets(new Insets(5, 0, 0, 0));
-            builder.setWeightX(1);
+            builder.setWeight(1, 1);
             builder.addComponent(getTableScroller(), true);
             panel = builder.getPanel();
         }

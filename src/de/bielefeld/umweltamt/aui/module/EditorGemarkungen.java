@@ -163,7 +163,7 @@ public class EditorGemarkungen extends AbstractModul {
             builder.addComponent(submitButton, true);
             builder.setFill(GridBagConstraints.BOTH);
             builder.setGridWidth(1);
-            builder.setWeightX(1);
+            builder.setWeight(1, 1);
             builder.addComponent(getTableScroller(), true);
             panel = builder.getPanel();
         }
