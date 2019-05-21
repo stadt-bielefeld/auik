@@ -124,7 +124,6 @@ import org.hibernate.HibernateException;
 import de.bielefeld.umweltamt.aui.module.common.editors.EinstellungenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
-import de.bielefeld.umweltamt.aui.utils.GradientPanel;
 import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
@@ -406,7 +405,7 @@ public class HauptFrame extends JFrame {
             modulBar.setFloatable(false);
             modulBar.setOpaque(false);
             this.rightFrameTitle = new JLabel("Title");
-            PanelBuilder content = new PanelBuilder();
+            PanelBuilder content = new PanelBuilder(PanelBuilder.GRADIENT_PANEL);
             content.setBorder(new EmptyBorder(5, 5, 5, 5));
             content.setAnchor(GridBagConstraints.WEST);
             content.setWeightX(0);
@@ -692,7 +691,8 @@ public class HauptFrame extends JFrame {
      */
     private JPanel getTitlePanel() {
         if (titlePanel == null) {
-            titlePanel = new GradientPanel(new BorderLayout(), Color.WHITE);
+            titlePanel = new JPanel(new BorderLayout());
+            titlePanel.setBackground(Color.WHITE);
             titlePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             titlePanel.add(
                     new JLabel(AuikUtils.getIcon(32, "uaicon32.png",

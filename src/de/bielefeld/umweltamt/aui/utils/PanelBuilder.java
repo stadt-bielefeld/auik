@@ -1,5 +1,6 @@
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -37,17 +38,35 @@ import javax.swing.border.EmptyBorder;
  * See GridBagLayout JavaDoc for further details.
  */
 public class PanelBuilder {
-    private JPanel panel;
-    private GridBagConstraints c;
-    private GridBagLayout layout;
-    private Border componentBorder;
+    protected JPanel panel;
+    protected GridBagConstraints c;
+    protected GridBagLayout layout;
+    protected Border componentBorder;
 
-    public PanelBuilder() {
-        this.panel = new JPanel();
+    public static final int GRADIENT_PANEL = 0;
+    public static final int DEFAULT_PANEL = 1;
+
+    /**
+     * Constructor
+     * @param panelType Set to GRADIENT_PANEL to use a gradient background color
+     */
+    public PanelBuilder(int panelType) {
         this.c = new GridBagConstraints();
         this.layout = new GridBagLayout();
+        switch (panelType) {
+            case GRADIENT_PANEL:
+                this.panel = new GradientPanel(this.layout, new Color(186, 211, 237), new JPanel().getBackground());
+            break;
+            default: 
+                this.panel = new JPanel();
+        }
+
         panel.setLayout(this.layout);
         this.componentBorder = null;
+    }
+
+    public PanelBuilder() {
+        this(DEFAULT_PANEL);
     }
 
     /**
@@ -200,7 +219,9 @@ public class PanelBuilder {
     public void fillRow(boolean endRow) {
         double weightX = this.c.weightx;
         setWeightX(1);
-        addComponent(new JPanel(), endRow);
+        JPanel p = new JPanel();
+        p.setOpaque(false);
+        addComponent(p, endRow);
         setWeightX(weightX);
     }
 

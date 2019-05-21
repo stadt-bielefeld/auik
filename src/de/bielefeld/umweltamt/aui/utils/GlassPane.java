@@ -93,6 +93,10 @@ public class GlassPane extends JComponent implements AWTEventListener {
         RootPaneContainer aContainer = null;
         Component aComponent = startComponent;
 
+        if (aComponent == null) {
+            return null;
+        }
+
         // Climb the component hierarchy until a RootPaneContainer is found or
         // until the very top
         while ((aComponent.getParent() != null)

@@ -37,14 +37,36 @@ import javax.swing.UIManager;
  */
 public class GradientPanel extends JPanel {
     private static final long serialVersionUID = -3777558294138807738L;
+    private Color startColor;
+    private Color endColor;
 
-    public GradientPanel(LayoutManager lm, Color background) {
+    /**
+     * Constructor
+     * @param lm Panel layout manager
+     * @param startColor Color to start with
+     * @param endColor Color to end with
+     */
+    public GradientPanel(LayoutManager lm, Color startColor, Color endColor) {
         super(lm);
-        setBackground(background);
+        this.startColor = startColor;
+        this.endColor = endColor;
     }
 
+    @Override protected void paintComponent( Graphics g ) {
+        super.paintComponent( g );
+        int panelHeight = getHeight();
+        int panelWidth = getWidth();
+        GradientPaint gradientPaint = new GradientPaint(0, panelHeight, startColor,
+        panelWidth * 0.85f, panelHeight, endColor );
+        if( g instanceof Graphics2D ) {
+            Graphics2D graphics2D = (Graphics2D)g;
+            graphics2D.setPaint( gradientPaint );
+            graphics2D.fillRect( 0 , 0 , panelWidth , panelHeight );
+        }
+    }
+/*
     @Override
-    public void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (!isOpaque()) {
             return;
@@ -60,4 +82,5 @@ public class GradientPanel extends JPanel {
         g2.fillRect(0, 0, width, height);
         g2.setPaint(storedPaint);
     }
+*/
 }
