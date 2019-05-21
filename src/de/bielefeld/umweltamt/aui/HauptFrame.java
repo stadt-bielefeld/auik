@@ -77,6 +77,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.GradientPaint;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
@@ -124,6 +125,7 @@ import de.bielefeld.umweltamt.aui.module.common.editors.EinstellungenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.GradientPanel;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 /**
@@ -404,17 +406,16 @@ public class HauptFrame extends JFrame {
             modulBar.setFloatable(false);
             modulBar.setOpaque(false);
             this.rightFrameTitle = new JLabel("Title");
-            this.rightFrameTitle.setVerticalAlignment(JLabel.CENTER);
-            JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            leftPanel.add(this.rightFrameTitle);
-            JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            rightPanel.add(getModulBackButton());
-            rightPanel.add(getModulFwdButton());
-            // rightPanel.add(getQgis());
-            JSplitPane content = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
-            content.setDividerSize(0);
-            content.setDividerLocation(250);
-            modulBar.add(content);
+            PanelBuilder content = new PanelBuilder();
+            content.setBorder(new EmptyBorder(5, 5, 5, 5));
+            content.setAnchor(GridBagConstraints.WEST);
+            content.setWeightX(0);
+            content.addComponent(this.rightFrameTitle);
+            content.fillRow();
+            content.setAnchor(GridBagConstraints.EAST);
+            content.setInsets(0, 0, 0, 5);
+            content.addComponents(true, getModulBackButton(), getModulFwdButton());
+            modulBar.add(content.getPanel());
         }
         return modulBar;
     }
