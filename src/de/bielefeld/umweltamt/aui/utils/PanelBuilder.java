@@ -416,12 +416,15 @@ public class PanelBuilder {
         double weightx = this.c.weightx;
         int fill = this.c.fill;
         int width = this.getGridWidth();
+        Insets insets = getInsets();
         this.setFill(true, false);
         this.setWeightX(1);
         this.setGridWidth(1);
+        setInsets(0, 5, 0, 0);
         setAnchor(GridBagConstraints.WEST);
         addComponent(new JSeparator(orientation), endRow);
         setAnchor(anchor);
+        this.setInsets(insets.top, insets.left, insets.bottom, insets.right);
         this.setGridWidth(width);
         this.setWeightX(weightx);
         this.setFill(fill);
