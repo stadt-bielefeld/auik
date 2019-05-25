@@ -53,6 +53,7 @@
 package de.bielefeld.umweltamt.aui.module.common;
 
 import java.awt.Component;
+import java.awt.GridBagConstraints;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -72,13 +73,10 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -116,6 +114,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
     @Override
     public JPanel getPanel() {
         if (panel == null) {
+            /*
             FormLayout layout = new FormLayout(
                     "100dlu:g",
                     "pref, 3dlu, f:150dlu:grow"
@@ -126,7 +125,18 @@ public abstract class AbstractQueryModul extends AbstractModul {
 
             builder.add(getQueryOptionsPanel(),    cc.xy(1,1));
             builder.add(getTableScroller(),        cc.xy(1,3));
-
+            */
+            PanelBuilder builder = new PanelBuilder();
+            builder.setEmptyBorder(10);
+            builder.setAnchor(GridBagConstraints.NORTHWEST);
+            builder.setInsets(0, 5, 5, 0);
+            builder.addComponent(getQueryOptionsPanel());
+            builder.fillRow(true);
+            builder.setFill(true, true);
+            builder.setWeight(1, 1);
+            builder.addComponent(getTableScroller(), true);
+            builder.setFill(false, false);
+            builder.fillColumn();
             panel = builder.getPanel();
         }
 

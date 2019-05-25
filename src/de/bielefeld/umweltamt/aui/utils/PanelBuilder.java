@@ -38,19 +38,37 @@ import javax.swing.border.EmptyBorder;
  * See GridBagLayout JavaDoc for further details.
  */
 public class PanelBuilder {
-    protected JPanel panel;
-    protected GridBagConstraints c;
-    protected GridBagLayout layout;
-    protected Border componentBorder;
+    private JPanel panel;
+    private GridBagConstraints c;
+    private GridBagLayout layout;
+    private Border componentBorder;
+    private int panelType;
 
     public static final int GRADIENT_PANEL = 0;
     public static final int DEFAULT_PANEL = 1;
+
+    /**
+     * Constructor, copies the given builders setttings.
+     * @param builder PanelBuilder to copy settings from
+     */
+    public PanelBuilder(PanelBuilder builder) {
+        this(builder.getPanelType());
+        this.setAnchor(builder.getAnchor());
+        this.setBorder(builder.getBorder());
+        this.setComponentBorder(builder.getComponentBorder());
+        this.setFill(builder.getFill());
+        this.setGridHeight(builder.getGridHeight());
+        this.setGridWidth(builder.getGridWidth());
+        this.setInsets(builder.getInsets());
+        this.setWeight(builder.getWeightX(), builder.getWeightY());
+    }
 
     /**
      * Constructor
      * @param panelType Set to GRADIENT_PANEL to use a gradient background color
      */
     public PanelBuilder(int panelType) {
+        this.panelType = panelType;
         this.c = new GridBagConstraints();
         this.layout = new GridBagLayout();
         switch (panelType) {
@@ -62,11 +80,20 @@ public class PanelBuilder {
         }
 
         panel.setLayout(this.layout);
+        this.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.componentBorder = null;
     }
 
     public PanelBuilder() {
         this(DEFAULT_PANEL);
+    }
+
+    /**
+     * Return the type of the built panel
+     * @return Panel type
+     */
+    public int getPanelType() {
+        return this.panelType;
     }
 
     /**
@@ -101,11 +128,27 @@ public class PanelBuilder {
     }
 
     /**
+     * Returns the component border
+     * @return The component border
+     */
+    public Border getComponentBorder() {
+        return this.componentBorder;
+    }
+
+    /**
      * Set the components border
      * @param border New border
      */
     public void setComponentBorder(Border border) {
         this.componentBorder = border;
+    }
+
+    /**
+     * Return components internal vertical padding.
+     * @return vertical padding as int
+     */
+    public int getIpadY() {
+        return this.c.ipady;
     }
 
     /**
@@ -117,11 +160,35 @@ public class PanelBuilder {
     }
 
     /**
+     * Return the panels border
+     * @return The border instance
+     */
+    public Border getBorder() {
+        return this.panel.getBorder();
+    }
+
+    /**
+     * Adds an empty border with given thickness to the panel.
+     * @param border Border thickness
+     */
+    public void setEmptyBorder(int border) {
+        this.setBorder(new EmptyBorder(border, border, border, border));
+    }
+
+    /**
      * Set the result panel border.
      * @param border
      */
     public void setBorder(Border border) {
         this.panel.setBorder(border);
+    }
+
+    /**
+     * Get the grid with
+     * @return The gridwidth as int
+     */
+    public int getGridWidth() {
+        return this.c.gridwidth;
     }
 
     /**
@@ -133,11 +200,27 @@ public class PanelBuilder {
     }
 
     /**
+     * Get the grid height
+     * @return Grid height as int
+     */
+    public int getGridHeight() {
+        return this.c.gridheight;
+    }
+
+    /**
      * Set the components number of cell in a grid column
      * @param gridHeight Next gridheight
      */
     public void setGridHeight(int gridHeight) {
         this.c.gridheight = gridHeight;
+    }
+
+    /**
+     * Get the current Anchor
+     * @return The anchor as int
+     */
+    public int getAnchor() {
+        return this.c.anchor;
     }
 
     /**
@@ -149,11 +232,44 @@ public class PanelBuilder {
     }
 
     /**
+     * Get the current fill.
+     * @return The fill as int
+     */
+    public int getFill() {
+        return this.c.fill;
+    }
+
+    /**
      * Set the fill for the next component
      * @param fill Fill direction. Use GridBagConstraints.HORIZONTAl etc.
      */
     public void setFill(int fill) {
         this.c.fill = fill;
+    }
+
+    /**
+     * Set the fill.
+     * @param horizontal If true, activate horizontal fill
+     * @param vertical if true activate vertical fill
+     */
+    public void setFill(boolean horizontal, boolean vertical) {
+        if (horizontal && vertical) {
+            this.setFill(GridBagConstraints.BOTH);
+        } else {
+            if (horizontal) {
+                this.setFill(GridBagConstraints.HORIZONTAL);
+            }
+            if (vertical) {
+                this.setFill(GridBagConstraints.VERTICAL);
+            }
+            if (!vertical && !horizontal) {
+                this.setFill(GridBagConstraints.NONE);
+            }
+        }
+    }
+
+    public void disableFill() {
+        this.setFill(GridBagConstraints.NONE);
     }
 
     /**
@@ -167,11 +283,27 @@ public class PanelBuilder {
     }
 
     /**
+     * Get the current horizontal weight.
+     * @return The weight as double
+     */
+    public double getWeightX() {
+        return this.c.weightx;
+    }
+
+    /**
      * Set the weightX for the next component
      * @param weightx weight as double
      */
     public void setWeightX(double weightx) {
         this.c.weightx = weightx;
+    }
+
+    /**
+     * Get the current vertical weight.
+     * @return The weight as double
+     */
+    public double getWeightY() {
+        return this.c.weighty;
     }
 
     /**
@@ -226,6 +358,13 @@ public class PanelBuilder {
     }
 
     /**
+     * Adds a horizontal separator.
+     */
+    public void addSeparator() {
+        addSeparator(JSeparator.HORIZONTAL);
+    }
+
+    /**
      * Add a separator with the given orienation
      * @param orientation Orientation, use JSeparator.HORIZONTAl etc.
      */
@@ -234,10 +373,19 @@ public class PanelBuilder {
     }
 
     /**
-     * Adds a horizontal separator.
+     * Adds a labeled, horizontal separator
+     * @param label Label text
      */
-    public void addSeparator() {
-        addSeparator(JSeparator.HORIZONTAL);
+    public void addSeparator(String label) {
+        addSeparator(JSeparator.HORIZONTAL, label);
+    }
+
+    /**
+     * Adds a horizontal separator
+     * @param endRow If true, row will be ended after add the separator
+     */
+    public void addSeparator(boolean endRow) {
+        addSeparator(JSeparator.HORIZONTAL, endRow);
     }
 
     /**
@@ -250,11 +398,12 @@ public class PanelBuilder {
     }
 
     /**
-     * Adds a labeled, horizontal separator
+     * Add a labeled, horizontal separator with the given orienation
      * @param label Label text
+     * @param endRow If true, row will be ended after add the separator
      */
-    public void addSeparator(String label) {
-        addSeparator(JSeparator.HORIZONTAL, label);
+    public void addSeparator(String label, boolean endRow) {
+        addSeparator(JSeparator.HORIZONTAL, label, endRow);
     }
 
     /**
@@ -263,16 +412,21 @@ public class PanelBuilder {
      * @param endRow If true, row will be ended after add the separator
      */
     public void addSeparator(int orientation, boolean endRow) {
+        int anchor = this.c.anchor;
+        double weightx = this.c.weightx;
+        int fill = this.c.fill;
+        int width = this.getGridWidth();
+        this.setFill(true, false);
+        this.setWeightX(1);
+        this.setGridWidth(1);
+        setAnchor(GridBagConstraints.WEST);
         addComponent(new JSeparator(orientation), endRow);
+        setAnchor(anchor);
+        this.setGridWidth(width);
+        this.setWeightX(weightx);
+        this.setFill(fill);
     }
 
-    /**
-     * Adds a horizontal separator
-     * @param endRow If true, row will be ended after add the separator
-     */
-    public void addSeparator(boolean endRow) {
-        addSeparator(JSeparator.HORIZONTAL, endRow);
-    }
 
     /**
      * Add a labeled separator with the given orienation
@@ -283,24 +437,15 @@ public class PanelBuilder {
     public void addSeparator(int orientation, String label, boolean endRow) {
         double weightx = this.c.weightx;
         int fill = this.c.fill;
-        Insets insets = this.c.insets;
+        int width = this.getGridWidth();
         this.setWeightX(0);
         this.setFill(GridBagConstraints.NONE);
-        this.setInsets(new Insets(insets.top, 5, insets.bottom, 5));
         addComponent(new JLabel(label));
-        this.setInsets(insets);
+        this.setGridWidth(width);
         this.setWeightX(weightx);
         this.setFill(fill);
         addSeparator(orientation, endRow);
-    }
 
-    /**
-     * Add a labeled, horizontal separator with the given orienation
-     * @param label Label text
-     * @param endRow If true, row will be ended after add the separator
-     */
-    public void addSeparator(String label, boolean endRow) {
-        addSeparator(JSeparator.HORIZONTAL, label, endRow);
     }
 
     /**
@@ -309,17 +454,7 @@ public class PanelBuilder {
      * @param label Label text
      */
     public void addComponent(JComponent comp, String label) {
-        double weightx = this.c.weightx;
-        int fill = this.c.fill;
-        Insets insets = this.c.insets;
-        this.setWeightX(0);
-        this.setFill(GridBagConstraints.NONE);
-        this.setInsets(new Insets(insets.top, 5, insets.bottom, 5));
-        addComponent(new JLabel(label));
-        this.setInsets(insets);
-        this.setWeightX(weightx);
-        this.setFill(fill);
-        addComponent(comp);
+        addComponent(comp, label, false, false);
     }
 
     /**
@@ -346,12 +481,54 @@ public class PanelBuilder {
         this.setWeightX(0);
         this.setFill(GridBagConstraints.NONE);
         this.setInsets(new Insets(insets.top, 0, insets.bottom, 5));
-        addComponent(new JLabel(label));
+        JLabel labelObj = new JLabel(label);
+        addComponent(labelObj);
         this.setInsets(insets);
         this.setWeightX(weightx);
         this.setFill(gridFill);
         addComponent(comp, endRow, fill);
     }
+
+    /**
+     * Adds a labeled component
+     * @param comp Component to add
+     * @param label Label Object
+     */
+    public void addComponent(JComponent comp, JLabel label) {
+        addComponent(comp, label, false, false);
+    }
+
+    /**
+     * Adds a labeled component.
+     * @param comp Component to add
+     * @param label Label to add
+     * @param endRow Ends the row, if true
+     */
+    public void addComponent(JComponent comp, JLabel label, boolean endRow) {
+        addComponent(comp, label, endRow, false);
+    }
+
+    /**
+     * Adds a labeled component.
+     * @param comp Component to add
+     * @param label Label to add
+     * @param endRow Ends the row, if true
+     * @param fill If true, the row is filled with an empty panel
+     */
+    public void addComponent(JComponent comp, JLabel label, boolean endRow, boolean fill) {
+        double weightx = this.c.weightx;
+        int gridFill = this.c.fill;
+        Insets insets = this.c.insets;
+        this.setWeightX(0);
+        this.setFill(GridBagConstraints.NONE);
+        this.setInsets(new Insets(insets.top, 0, insets.bottom, 5));
+        addComponent(label);
+        this.setInsets(insets);
+        this.setWeightX(weightx);
+        this.setFill(gridFill);
+        addComponent(comp, endRow, fill);
+    }
+
 
     /**
      * Adds a Component

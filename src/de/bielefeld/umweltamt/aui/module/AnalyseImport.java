@@ -21,6 +21,7 @@
 package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.Cursor;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -38,14 +39,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.border.EmptyBorder;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -503,27 +503,29 @@ public class AnalyseImport extends AbstractModul {
             return this.panel;
         }
 
-        FormLayout layout = new FormLayout("40px,5dlu,65dlu,5dlu,175dlu:g", "");
-        DefaultFormBuilder b = new DefaultFormBuilder(layout);
+        PanelBuilder b = new PanelBuilder();
+        b.setAnchor(GridBagConstraints.NORTHWEST);
+        b.setBorder(new EmptyBorder(10, 10, 10, 10));
+        b.setInsets(0, 0, 0, 5);
+        b.addComponent(getParseLabel());
+        b.setInsets(5, 0, 0, 5);
+        b.addComponents(getDateiButton(), getDateiLabel());
+        b.fillRow(true);
 
-        b.setDefaultDialogBorder();
+        b.addComponent(new JPanel());
+        b.setWeight(1, 1);
+        b.setFill(GridBagConstraints.BOTH);
+        b.addComponent(getListScroller(), true);
+        b.setFill(GridBagConstraints.NONE);
+        b.setWeight(0, 0);
+        b.addComponents(new JPanel(), getBeschreibungLabel());
+        b.fillRow(true);
 
-        b.append(getParseLabel(), getDateiButton(), getDateiLabel());
-        b.appendRelatedComponentsGapRow();
-        b.appendRow("f:50dlu:g");
-        b.nextLine(2);
-
-        b.append(""); // no label in front of the list
-        b.append(getListScroller(), 3);
-        b.appendRelatedComponentsGapRow();
-        b.nextLine(2);
-
-        b.append(""); // no label in front of the descriptions
-        b.append(getBeschreibungLabel(), 3);
-        b.appendRelatedComponentsGapRow();
-        b.nextLine(2);
-
-        b.append(getImportLabel(), getImportButton());
+        b.setInsets(0, 0, 0, 5);
+        b.addComponents(getImportLabel());
+        b.setInsets(5, 0, 0, 5);
+        b.addComponent(getImportButton());
+        b.fillColumn();
 
         this.panel = b.getPanel();
 
