@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -34,16 +35,13 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -79,35 +77,32 @@ public class AnfallstellePanel extends JPanel {
         this.name = "Anfallstelle";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:70dlu, 5dlu, 90dlu, r:90dlu, 5dlu, 20dlu", // Spalten
-            "");
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 0);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
+        content.addComponent(getSeqIdFeld(), "SeqId:", true);
+        content.addComponent(getErstellDatDatum(), "erstellDat:", true);
+        content.addComponent(getAnhangIdFeld(), "anhangId", true);
+        content.addComponent(getHerkunftFeld(), "Herkunft:", true);
+        content.addComponent(getAnwendungsbereichFeld(), "Anwendungsbereich:", true);
+        content.addComponent(getBezeichnungFeld(), "Bezeichung:", true);
+        content.addComponent(getStillgelegtAmDatum(), "Still gelegt am:", true);
+        content.addComponent(getAbwaBeschaffOptFeld(), "abwaBeschaffOpt", true);
+        content.addComponent(getBetriebsweiseOptFeld(), "betriebsweiseOpt", true);
+
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, false, false, 0, 0, 1, 1,
+                0, 0, 5, 0);
         
-        builder.appendSeparator("Anfallstelle");
-        builder.append("SeqId: ", getSeqIdFeld());
-        builder.nextLine();
-        builder.append("erstellDat: ", getErstellDatDatum());
-        builder.nextLine();
-        builder.append("anhangId: ", getAnhangIdFeld());
-        builder.nextLine();
-        builder.append("herkunft: ", getHerkunftFeld());
-        builder.nextLine();
-        builder.append("anwendungssbereich: ", getAnwendungsbereichFeld());
-        builder.nextLine();
-        builder.append("bezeichnung: ", getBezeichnungFeld());
-        builder.nextLine();
-        builder.append("stillgelegtam: ", getStillgelegtAmDatum());
-        builder.nextLine();
-        builder.append("abwaBeschaffOpt: ", getAbwaBeschaffOptFeld());
-        builder.nextLine();
-        builder.append("betriebsweiseOpt: ", getBetriebsweiseOptFeld());
-        builder.nextLine();
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(getSaveAnfallstelleButton());
-        builder.append(buttonBar,6);
-  
+        builder.setEmptyBorder(15);
+        builder.addSeparator("Anfallstelle");
+        builder.fillRow(true);
+        builder.addComponent(content.getPanel(), true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponents(getSaveAnfallstelleButton());
+        builder.fillRow(true);
+        builder.fillColumn();
+        this.setLayout(new BorderLayout());
+        this.add(builder.getPanel());
     }
 
     /**

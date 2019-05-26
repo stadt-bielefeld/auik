@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,10 +47,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
@@ -61,6 +58,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -108,7 +106,7 @@ public class Anh40Panel extends JPanel {
     public Anh40Panel(BasisObjektBearbeiten hauptModul) {
         this.name = "Anhang 40";
         this.hauptModul = hauptModul;
-
+        /*
         FormLayout layout = new FormLayout(
             "r:120dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 100dlu", // Spalten
             "");
@@ -145,10 +143,6 @@ public class Anh40Panel extends JPanel {
         builder.appendSeparator("Bemerkungen");
         builder.appendRow("3dlu");
         builder.nextLine(2);
-        JScrollPane bemerkungsScroller = new JScrollPane(
-            getAnh40BemerkungArea(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:30dlu");
         builder.append(bemerkungsScroller, 7);
         builder.nextLine();
@@ -156,10 +150,6 @@ public class Anh40Panel extends JPanel {
         builder.appendSeparator("Verknüpfte Objekte");
         builder.appendRow("3dlu");
         builder.nextLine(2);
-        JScrollPane objektverknuepfungScroller = new JScrollPane(
-            getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:100dlu");
         builder.append(objektverknuepfungScroller, 7);
         builder.nextLine();
@@ -168,6 +158,63 @@ public class Anh40Panel extends JPanel {
             getSelectObjektButton(), getSaveAnh40Button());
 
         builder.append(buttonBar, 7);
+        */
+
+        JScrollPane bemerkungsScroller = new JScrollPane(
+            getAnh40BemerkungArea(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane objektverknuepfungScroller = new JScrollPane(
+            getObjektverknuepungTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 0, 0);
+
+        PanelBuilder fachdaten = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 0.5, 0, 1, 1,
+                0, 0, 5, 5);
+        fachdaten.addComponent(getSachbearbeiterravFeld(), "SachbearbeiterIn Rav.-Str.:");
+        fachdaten.addComponent(getWsgCheck(), true);
+        fachdaten.addComponent(getSachbearbeiterheepenFeld(), "SachbearbeiterIn Heepen.:");
+        fachdaten.addComponent(getGenehmigungspflichtCheck(), true);
+        fachdaten.addComponent(getAnsprechpartnerFeld(), "AnsprechpartnerIn:");
+        fachdaten.addComponent(getGen58Datum(), "Genehmigung §58:");
+        fachdaten.fillRow(true);
+        fachdaten.addComponent(getHerkunftsbereichFeld(), "Herkunftsbereich:");
+        fachdaten.addComponent(getGen59Datum(), "Genehmigung §59:");
+        fachdaten.fillRow(true);
+        fachdaten.addComponent(getKlaeranlageFeld(), "Kläranlage:");
+        fachdaten.addComponent(getNachtragCheck(), true);
+        fachdaten.addComponent(getAbwmengegenehmigtFeld(), "Abwassermenge genehmigt [m³/a]:");
+        fachdaten.addComponent(getBimschCheck(), true);
+        fachdaten.addComponent(getAbwmengeprodspezFeld(), "Abwassermenge prod.-spez. [m³/a]:");
+        fachdaten.fillRow(true);
+        fachdaten.addComponent(getAbwmengegesamtFeld(), "Abwassermenge gesamt [m³/a]:");
+        fachdaten.fillRow(true);
+
+        PanelBuilder buttons = new PanelBuilder(PanelBuilder.NORTHEAST, true, false, 0, 0, 1, 1,
+                5, 5, 0, 0);
+        buttons.fillRow();
+        buttons.addComponents(getSelectObjektButton(), getSaveAnh40Button());
+
+        builder.setEmptyBorder(15);
+        builder.addSeparator("Fachdaten", true);
+        builder.addComponent(fachdaten.getPanel(), true);
+        builder.addSeparator("Bemerkungen", true);
+        builder.setFill(true, true);
+        builder.setWeight(1, 1);
+        builder.addComponent(bemerkungsScroller, true);
+        builder.setWeight(1, 0);
+        builder.addSeparator("Verknüpfte Objekte", true);
+        builder.setFill(true, true);
+        builder.setWeight(1, 1);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(1, 0);
+        builder.addComponent(buttons.getPanel());
+
+        this.setLayout(new BorderLayout());
+        this.add(builder.getPanel());
     }
 
     public void fetchFormData() throws RuntimeException {

@@ -24,6 +24,8 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -51,10 +53,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
@@ -73,6 +71,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -120,51 +119,54 @@ private static final long serialVersionUID = -4030805403749508467L;
         this.name = "Abwasserbehandlungsanlage";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:70dlu, 5dlu, 90dlu, r:90dlu, 5dlu, 20dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
-        builder.appendSeparator("Fachdaten");
-        builder.append("Erstellt am:", getErstellDat());
-        builder.nextLine();
-        builder.append("Aktualisiert am:", getAktualDat());
-        builder.nextLine();
-        builder.append("", getGenehmigungdpflichtCheck());
-        builder.nextLine();
-        builder.append("", getWartungsvertragCheck());
-        builder.nextLine();
-        builder.append("", getEinzelabnahmeCheck());
-        builder.nextLine();
-        builder.append("Verfahren:", getVerfahrenBox(), 2);
-        builder.nextLine();
-
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane bemerkungsScroller = new JScrollPane(
             getBezeichnungArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 6);
-
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 6);
-        builder.nextLine();
 
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveAbaButton());
-        builder.append(buttonBar, 6);
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 0);
+
+        PanelBuilder fachdaten = new PanelBuilder(builder);
+        fachdaten.setWeightX(0);
+        fachdaten.setFill(false, false);
+        fachdaten.addComponent(getErstellDat(), "Erstellt am:", true);
+        fachdaten.addComponent(getAktualDat(), "Aktualisiert am:", true);
+        fachdaten.addComponent(getGenehmigungdpflichtCheck(), true);
+        fachdaten.addComponent(getWartungsvertragCheck(), true);
+        fachdaten.addComponent(getEinzelabnahmeCheck(), true);
+        fachdaten.setWeightX(1);
+        fachdaten.setFill(true, false);
+        fachdaten.addComponent(getVerfahrenBox(), "Verfahren:", true);
+
+        builder.setEmptyBorder(5);
+        builder.addSeparator("Fachdaten", true);
+        builder.addComponent(fachdaten.getPanel(), true);
+        builder.addSeparator("Bemerkungen", true);
+        builder.setFill(true, true);
+        builder.setWeight(1, 1);
+        builder.addComponent(bemerkungsScroller, true);
+        builder.setFill(true, false);
+        builder.setWeight(1, 0);
+        builder.addSeparator("Verknüpfte Objekte", true);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.setInsets(0, 5, 0, 0);
+        builder.addComponents(true, getSelectObjektButton(), getSaveAbaButton());
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, false, true, 0, 1, 1, 1,
+                0, 0, 0, 0);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
     }
 
     public void fetchFormData() throws RuntimeException {
