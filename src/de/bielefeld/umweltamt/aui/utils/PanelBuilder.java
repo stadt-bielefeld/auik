@@ -74,6 +74,19 @@ public class PanelBuilder {
     public static final int DEFAULT_PANEL = 1;
 
     /**
+     * Anchor values
+     */
+    public static final int NORTH = GridBagConstraints.NORTH;
+    public static final int NORTHWEST = GridBagConstraints.NORTHWEST;
+    public static final int WEST = GridBagConstraints.WEST;
+    public static final int SOUTHWEST = GridBagConstraints.SOUTHWEST;
+    public static final int SOUTH = GridBagConstraints.SOUTH;
+    public static final int SOUTHEAST = GridBagConstraints.SOUTHEAST;
+    public static final int EAST = GridBagConstraints.EAST;
+    public static final int NORTHEAST = GridBagConstraints.NORTHEAST;
+    public static final int CENTER = GridBagConstraints.CENTER;
+
+    /**
      * Copy constructor, copies the given builders setttings.
      * @param builder PanelBuilder to copy settings from
      */
@@ -299,7 +312,7 @@ public class PanelBuilder {
 
     /**
      * Set the anchor for the next component
-     * @param anchor Anchor diretion. Use GridBagConstraints.NORTH etc.
+     * @param anchor Anchor diretion. Use GridBagConstraints.NORTH or PanelBuilder.NORTH etc.
      */
     public void setAnchor(int anchor) {
         this.c.anchor = anchor;
@@ -486,22 +499,7 @@ public class PanelBuilder {
      * @param endRow If true, row will be ended after add the separator
      */
     public void addSeparator(int orientation, boolean endRow) {
-        int anchor = this.c.anchor;
-        double weightx = this.c.weightx;
-        int fill = this.c.fill;
-        int width = this.getGridWidth();
-        Insets insets = getInsets();
-        this.setFill(true, false);
-        this.setWeightX(1);
-        this.setGridWidth(1);
-        setInsets(0, 5, 0, 0);
-        setAnchor(GridBagConstraints.WEST);
-        addComponent(new JSeparator(orientation), endRow);
-        setAnchor(anchor);
-        this.setInsets(insets.top, insets.left, insets.bottom, insets.right);
-        this.setGridWidth(width);
-        this.setWeightX(weightx);
-        this.setFill(fill);
+        addSeparator(orientation, null, endRow);
     }
 
 
@@ -515,13 +513,31 @@ public class PanelBuilder {
         double weightx = this.c.weightx;
         int fill = this.c.fill;
         int width = this.getGridWidth();
-        this.setWeightX(0);
-        this.setFill(GridBagConstraints.NONE);
-        addComponent(new JLabel(label));
+        int anchor = this.c.anchor;
+        Insets insets = getInsets();
+        PanelBuilder sepPanel = new PanelBuilder();
+        if (label != null) {
+            sepPanel.setWeightX(0);
+            sepPanel.setFill(GridBagConstraints.NONE);
+            sepPanel.addComponent(new JLabel(label));
+        }
+
+        sepPanel.setFill(true, false);
+        sepPanel.setWeightX(1);
+        sepPanel.setGridWidth(1);
+        sepPanel.setInsets(0, 5, 0, 0);
+        sepPanel.setAnchor(GridBagConstraints.WEST);
+        sepPanel.addComponent(new JSeparator(orientation), endRow);
+        sepPanel.setAnchor(anchor);
+
+        this.setFill(true, false);
+        this.setWeightX(1);
+        this.addComponent(sepPanel.getPanel(), endRow);
+
+        this.setInsets(insets.top, insets.left, insets.bottom, insets.right);
         this.setGridWidth(width);
         this.setWeightX(weightx);
         this.setFill(fill);
-        addSeparator(orientation, endRow);
 
     }
 
