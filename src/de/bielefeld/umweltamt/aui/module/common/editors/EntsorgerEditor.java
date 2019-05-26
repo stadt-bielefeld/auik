@@ -51,6 +51,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import java.awt.GridBagConstraints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -58,16 +59,14 @@ import java.awt.event.KeyListener;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.border.EmptyBorder;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 /**
  * Ein Dialog zum Bearbeiten eines Zahnarztentsorgers.
  * @author Gerhard Genuit
@@ -117,50 +116,33 @@ public class EntsorgerEditor extends AbstractBaseEditor {
         hausnrFeld.addKeyListener(escListener);
         plzFeld.addKeyListener(escListener);
         ortsFeld.addKeyListener(escListener);
-        telefonFeld.addKeyListener(escListener);
 
+        PanelBuilder builder = new PanelBuilder();
+        builder.setAnchor(GridBagConstraints.NORTHWEST);
+        builder.setFill(true, false);
+        builder.setWeight(0.5, 0);
+        builder.setEmptyBorder(10);
+        builder.setInsets(0, 0, 5, 5);
 
-        String columnString = "r:p, 3dlu, 30dlu, 40dlu:g, 5dlu, r:p, 3dlu, 27dlu";//, 3dlu, 30dlu";
-        FormLayout layout = new FormLayout(
-                // Spalten
-                columnString,
+        PanelBuilder strasse = new PanelBuilder(builder);
+        strasse.setEmptyBorder(0);
+        PanelBuilder ort = new PanelBuilder(strasse);
 
-                // Zeilen:
-                "pref, 3dlu, " +    //1    Stammdaten --------
-                "pref, 3dlu, " +    //3    Name
-                "pref, 3dlu, " +    //5    Straße Hausnr
-                "pref, 3dlu, " +    //7 Plz Ort
-                "pref");            //9 Telefon
-                /*, 3dlu, " +    //9
-
-                "pref, 3dlu, " +    //11 Adresse    - Alte Revision
-                "pref, 3dlu, " +    //13
-                "pref, 3dlu, " +    //15
-                "pref, 3dlu, " +    //17            - Neue Revision
-                "pref, 3dlu, " +    //19
-                "pref, 10dlu, " +    //21
-
-        "bottom:pref:grow");//23 Buttons*/
-        layout.setRowGroups(new int[][]{{1,3,5,7,9}});
-
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-
-        // Stamdaten ------------------------------------
-        builder.addSeparator("Stammdaten",    cc.xyw(1, 1, 8));
-        builder.addLabel("Name:",            cc.xy( 1, 3));
-        builder.add(namenFeld,                cc.xyw(3, 3, 6));
-        builder.addLabel("Straße:",            cc.xy( 1, 5));
-        builder.add(strassenFeld,             cc.xyw(3, 5, 4));
-        builder.add(hausnrFeld,             cc.xy( 8, 5));
-        // Ort
-        builder.addLabel("Ort:",             cc.xy( 1, 7));
-        builder.add(plzFeld,                 cc.xy( 3, 7));
-        builder.add(ortsFeld,                 cc.xyw(4, 7, 5));
-        // Telefon
-        builder.addLabel("Telefon:",        cc.xy( 1, 9));
-        builder.add(telefonFeld,            cc.xyw(3, 9, 4));
-
+        builder.addSeparator("Stammdaten:", true);
+        builder.addComponent(namenFeld, "Name:", true);
+        strasse.setWeightX(0.8);
+        strasse.addComponent(strassenFeld);
+        strasse.setWeightX(0.2);
+        strasse.setInsets(0, 0, 0, 0);
+        strasse.addComponent(hausnrFeld, true);
+        ort.setWeightX(.25);
+        ort.addComponent(plzFeld);
+        ort.setWeightX(0.75);
+        ort.setInsets(0, 0, 0, 0);
+        ort.addComponent(ortsFeld, true);
+        builder.addComponent(strasse.getPanel(), "Straße:", true);
+        builder.addComponent(ort.getPanel(), "Ort:", true);
+        builder.addComponent(telefonFeld, "Telefon:", true);
         return builder.getPanel();
     }
 

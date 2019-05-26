@@ -60,16 +60,15 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import java.awt.GridBagConstraints;
+
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.border.EmptyBorder;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
@@ -77,6 +76,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 
 /**
  * Ein Dialog zum Bearbeiten von Abscheiderdetails.
@@ -84,9 +84,9 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * @author David Klotz
  */
 public class AbscheiderEditor extends AbstractBaseEditor{
-	private static final long serialVersionUID = -6112634548181223631L;
+    private static final long serialVersionUID = -6112634548181223631L;
 
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     private JTextField lageFeld;
@@ -124,60 +124,36 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     @Override
     protected JComponent buildContentArea() {
 
-        String columnString = "right:pref, 3dlu, 30dlu, 3dlu:g, right:pref:g, 3dlu, 30dlu";
-        FormLayout layout = new FormLayout(
-                // Spalten
-                columnString,
-                // Zeilen:
-                "pref, 3dlu, " +    //1 Stammdaten    - Abscheider
-                "pref, 3dlu, " +    //3
-                "pref, 3dlu, " +    // 5
-                "pref, 3dlu, " +    //7
-                "pref, 3dlu, " +    //9
-                "pref, 3dlu, " +    //11
-                "pref, 3dlu, " +    //13
-                "pref, 3dlu, " +    //15
-                "pref, 3dlu, " +    //17
-                "pref, 3dlu, " +    //19
-                "pref, 3dlu, " +    //21
-                "pref, 3dlu, " +    //23
-                "40dlu:g");            //25
-        //layout.setRowGroups(new int[][]{{1,3,5,7,9,}});
-
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-
-        // Stamdaten ------------------------------------
-        builder.addSeparator("Stammdaten",    cc.xyw(1, 1, 7));
-        builder.addLabel("Nr.:",            cc.xy( 1, 3));
-        builder.add(getNrFeld(),             cc.xy( 3, 3));
-        builder.addLabel("Von:",            cc.xy( 5, 3));
-        builder.add(getVonFeld(),             cc.xy( 7, 3));
-        builder.addLabel("Lage:",            cc.xy( 1, 5));
-        builder.add(getLageFeld(),            cc.xyw(3, 5, 5));
-        builder.addLabel("Hersteller:",        cc.xy( 1, 7));
-        builder.add(getHerstellerFeld(),    cc.xyw(3, 7, 5));
-        builder.addLabel("Nenngröße:",            cc.xy( 1,9));
-        builder.add(getNgfaFeld(),            cc.xy( 3,9));
-        builder.addSeparator("Ölabscheider",    cc.xyw(1, 11, 7));
-        builder.addLabel("NG SF:",            cc.xy( 1,13));
-        builder.add(getNgsfFeld(),             cc.xy( 3,13));
-        builder.addLabel("NG KA:",            cc.xy( 5,13));
-        builder.add(getNgkaFeld(),            cc.xy( 7,13));
-        builder.add(getTankstelleCheck(),    cc.xyw( 1, 15, 3, "l, b"));
-        builder.add(getSchlammfangCheck(),    cc.xyw( 5, 15, 3, "l, b"));
-        builder.add(getBenzinabscheiderCheck(),    cc.xyw( 1,17, 3, "l, b"));
-        builder.add(getKoalenszenzfilterCheck(), cc.xyw( 5,17, 3, "l, b"));
-        builder.add(getIntegriertCheck(),    cc.xyw( 1,19, 3, "l, b"));
-        builder.add(getEmulsionCheck(),        cc.xyw(5,19, 3, "l, b"));
-        builder.add(getSchwimmerCheck(),    cc.xyw(1,21, 3, "l, b"));
-        builder.add(getWohnhausCheck(),        cc.xyw(5,21, 3, "l, b"));
-        builder.addSeparator("Bemerkungen",    cc.xyw(1,23,7));
         JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(bemerkungsScroller,        cc.xyw(1,25,7, "fill, fill"));
-    	
+
+        PanelBuilder builder = new PanelBuilder();
+        builder.setWeight(1, 0);
+        builder.setFill(true, false);
+        builder.setAnchor(GridBagConstraints.NORTHWEST);
+        builder.setBorder(new EmptyBorder(5, 5, 5, 5));
+        builder.setInsets(0, 0, 5, 5);
+
+        builder.addSeparator("Stammdaten", true);
+        builder.addComponent(getNrFeld(), "Nr.:");
+        builder.addComponent(getVonFeld(), "Von:", true);
+        builder.addComponent(getLageFeld(), "Lage:", true);
+        builder.addComponent(getHerstellerFeld(), "Hersteller:", true);
+        builder.addComponent(getNgfaFeld(), "Nenngröße:", true);
+        builder.addSeparator("Ölabscheider", true);
+        builder.addComponent(getNgsfFeld(), "NG SF:");
+        builder.addComponent(getNgkaFeld(), "NG KA:", true);
+        builder.addComponents(true, getTankstelleCheck(), getSchlammfangCheck());
+        builder.addComponents(true, getBenzinabscheiderCheck(), getKoalenszenzfilterCheck());
+        builder.addComponents(true, getIntegriertCheck(), getEmulsionCheck());
+        builder.addComponents(true, getSchwimmerCheck(), getWohnhausCheck());
+        builder.addSeparator("Bemerkungen", true);
+        builder.setFill(true, true);
+        builder.setWeight(1, 4);
+        builder.setGridHeight(5);
+        builder.addComponent(bemerkungsScroller, true);
+
         return builder.getPanel();
-    	
+    
     }
 
     /* (non-Javadoc)
@@ -187,8 +163,8 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     protected void fillForm() {
         
         Anh49Abscheiderdetails details = this.getDetails();
-    	// Nur für vorhandene Abscheider Werte laden.
-    	if (details.getId() != null) {
+        // Nur für vorhandene Abscheider Werte laden.
+        if (details.getId() != null) {
             getLageFeld().setText(details.getLage());
             getHerstellerFeld().setText(details.getHersteller());
             getNrFeld().setValue(details.getAbscheidernr());
@@ -201,13 +177,13 @@ public class AbscheiderEditor extends AbstractBaseEditor{
             getTankstelleCheck().setSelected(details.getTankstelle());
             getSchlammfangCheck().setSelected(details.getSchlammfang());
             getBenzinabscheiderCheck().setSelected(
-            		details.getBenzinOelabscheider());
+                    details.getBenzinOelabscheider());
             getKoalenszenzfilterCheck().setSelected(details.getKoaleszenzfilter());
             getIntegriertCheck().setSelected(details.getIntegriert());
             getEmulsionCheck().setSelected(details.getEmulsionsspaltanlage());
             getSchwimmerCheck().setSelected(details.getSchwimmer());
             getWohnhausCheck().setSelected(details.getWohnhaus());
-    	}
+        }
     }
 
     /* (non-Javadoc)
@@ -223,9 +199,9 @@ public class AbscheiderEditor extends AbstractBaseEditor{
      */
     @Override
     protected boolean doSave() {
-    	Anh49Abscheiderdetails details = this.getDetails();
+        Anh49Abscheiderdetails details = this.getDetails();
 
-    	// Lage:
+        // Lage:
         details.setLage(lageFeld.getText());
 
         // Hersteller:

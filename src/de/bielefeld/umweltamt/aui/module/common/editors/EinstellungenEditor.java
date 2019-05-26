@@ -51,6 +51,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -67,14 +68,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.border.EmptyBorder;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -86,117 +85,117 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * @author Gerhard Genuit
  */
 public class EinstellungenEditor extends AbstractApplyEditor {
-	private static final long serialVersionUID = -225497689116093559L;
-	private static SettingsManager _instance = SettingsManager.getInstance();
-	private JTable einstellungenTabelle;
-	private JLabel titel;
-	private EinstellungenModel einstModel;
-	private List settinglist;
+    private static final long serialVersionUID = -225497689116093559L;
+    private static SettingsManager _instance = SettingsManager.getInstance();
+    private JTable einstellungenTabelle;
+    private JLabel titel;
+    private EinstellungenModel einstModel;
+    private List settinglist;
 
-	/** Logging */
-	private static final AuikLogger log = AuikLogger.getLogger();
+    /** Logging */
+    private static final AuikLogger log = AuikLogger.getLogger();
 
-	private class EinstellungenModel extends EditableListTableModel {
-		private static final long serialVersionUID = 6042681141925302970L;
+    private class EinstellungenModel extends EditableListTableModel {
+        private static final long serialVersionUID = 6042681141925302970L;
 
-		public EinstellungenModel(SettingsManager instance) {
-			super(new String[] { "Parameter", "Wert" }, true);
+        public EinstellungenModel(SettingsManager instance) {
+            super(new String[] { "Parameter", "Wert" }, true);
 
-			settinglist = Arrays.asList(_instance.getSettingList());
+            settinglist = Arrays.asList(_instance.getSettingList());
 
-			updateList();
-		}
+            updateList();
+        }
 
-		@Override
-		public void updateList() {
+        @Override
+        public void updateList() {
 
-			setList(settinglist);
-			fireTableDataChanged();
-		}
+            setList(settinglist);
+            fireTableDataChanged();
+        }
 
-		@Override
-		public Object getColumnValue(Object objectAtRow, int columnIndex) {
-			Object value;
-			Object[] row = (Object[]) objectAtRow;
-			switch (columnIndex) {
-			// Parameter
-			case 0:
-				value = row[0];
-				break;
-			// Wert
-			case 1:
-				value = row[1];
-				break;
-			default:
-				value = null;
-			}
+        @Override
+        public Object getColumnValue(Object objectAtRow, int columnIndex) {
+            Object value;
+            Object[] row = (Object[]) objectAtRow;
+            switch (columnIndex) {
+            // Parameter
+            case 0:
+                value = row[0];
+                break;
+            // Wert
+            case 1:
+                value = row[1];
+                break;
+            default:
+                value = null;
+            }
 
-			return value;
-		}
+            return value;
+        }
 
-		@Override
-		public void editObject(Object objectAtRow, int columnIndex,
-				Object newValue) {
-			Object[] row = (Object[]) objectAtRow;
+        @Override
+        public void editObject(Object objectAtRow, int columnIndex,
+                Object newValue) {
+            Object[] row = (Object[]) objectAtRow;
 
-			switch (columnIndex) {
-			case 0:
-				String tmpPara = (String) newValue;
-				row[0] = tmpPara;
-				break;
+            switch (columnIndex) {
+            case 0:
+                String tmpPara = (String) newValue;
+                row[0] = tmpPara;
+                break;
 
-			case 1:
-				String tmpWert = (String) newValue;
-				row[1] = tmpWert;
-				_instance.setSetting((String)row[0], tmpWert, true);
-				break;
-				
-			default:
-				break;
-			}
-			
-		}
+            case 1:
+                String tmpWert = (String) newValue;
+                row[1] = tmpWert;
+                _instance.setSetting((String)row[0], tmpWert, true);
+                break;
+                
+            default:
+                break;
+            }
+            
+        }
 
-		@Override
-		public Object newObject() {
-			return _instance;
-		}
+        @Override
+        public Object newObject() {
+            return _instance;
+        }
 
-		@Override
-		public boolean objectRemoved(Object objectAtRow) {
+        @Override
+        public boolean objectRemoved(Object objectAtRow) {
 
-			return true;
-		}
-	}
+            return true;
+        }
+    }
 
-	/**
-	 * Erzeugt einen neuen Dialog zum Bearbeiten der Einstellungen.
-	 */
-	public EinstellungenEditor(Object[] settinglist, HauptFrame owner) {
-		super("Einstellung ", settinglist, owner);
-	}
+    /**
+     * Erzeugt einen neuen Dialog zum Bearbeiten der Einstellungen.
+     */
+    public EinstellungenEditor(Object[] settinglist, HauptFrame owner) {
+        super("Einstellung ", settinglist, owner);
+    }
 
-	@Override
-	protected JComponent buildContentArea() {
+    @Override
+    protected JComponent buildContentArea() {
 
-		// Der folgende KeyListener wird benutzt um mit Escape
-		// das Bearbeiten abzubrechen.
-		KeyListener escListener = new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					doCancel();
-				}
-			}
-		};
-		getEinstellungenTabelle().setModel(getEinstellungenModel());
-		JScrollPane tabellenScroller = new JScrollPane(
-				getEinstellungenTabelle(),
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		TabAction ta = new TabAction();
-		ta.addComp(this.einstellungenTabelle);
-		
+        // Der folgende KeyListener wird benutzt um mit Escape
+        // das Bearbeiten abzubrechen.
+        KeyListener escListener = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    doCancel();
+                }
+            }
+        };
+        getEinstellungenTabelle().setModel(getEinstellungenModel());
+        JScrollPane tabellenScroller = new JScrollPane(
+                getEinstellungenTabelle(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        TabAction ta = new TabAction();
+        ta.addComp(this.einstellungenTabelle);
+        
 
         Action einstRemoveAction = new AbstractAction("Einstellung löschen") {
             private static final long serialVersionUID = -5755536713201543469L;
@@ -206,112 +205,113 @@ public class EinstellungenEditor extends AbstractApplyEditor {
                 int row = EinstellungenEditor.this.einstellungenTabelle.getSelectedRow();
                 if (row != -1
                     && EinstellungenEditor.this.einstellungenTabelle.getEditingRow() == -1) {
-                	EinstellungenEditor.this.einstModel.removeRow(row);
+                    EinstellungenEditor.this.einstModel.removeRow(row);
                 }
             }
-		};
+        };
 
-		KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
-				0, false);
+        KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
+                0, false);
 
-		einstRemoveAction.putValue(Action.ACCELERATOR_KEY, deleteKeyStroke);
+        einstRemoveAction.putValue(Action.ACCELERATOR_KEY, deleteKeyStroke);
 
-		this.einstellungenTabelle.getInputMap().put(deleteKeyStroke,
-				einstRemoveAction.getValue(Action.NAME));
+        this.einstellungenTabelle.getInputMap().put(deleteKeyStroke,
+                einstRemoveAction.getValue(Action.NAME));
 
-		this.einstellungenTabelle.getActionMap().put(
-				einstRemoveAction.getValue(Action.NAME), einstRemoveAction);
+        this.einstellungenTabelle.getActionMap().put(
+                einstRemoveAction.getValue(Action.NAME), einstRemoveAction);
 
-		titel = new JLabel("<html><body>An dieser Stelle können die Einstellungen des AUIK verändert werden.<br>"
-				+"Einige Einstellungen werden erst nach einem Neustart des AUIK wirksam (172.20.70.24)</body></html>");
+        titel = new JLabel("<html><body>An dieser Stelle können die Einstellungen des AUIK verändert werden.<br>"
+                +"Einige Einstellungen werden erst nach einem Neustart des AUIK wirksam (172.20.70.24)</body></html>");
 
-		FormLayout layout = new FormLayout("180dlu:g", // spalten
-				"20dlu, 3dlu, 300dlu:g"); // zeilen
-		PanelBuilder builder = new PanelBuilder(layout);
-		CellConstraints cc = new CellConstraints();
+        PanelBuilder builder = new PanelBuilder();
+        builder.setAnchor(GridBagConstraints.NORTHWEST);
+        builder.setFill(true, true);
+        builder.setBorder(new EmptyBorder(5, 5, 5, 5));
+        builder.setInsets(0, 0, 10, 0);
+        builder.setWeight(1, 0);
+        builder.addComponent(titel, true);
+        builder.setWeight(1, 1);
+        builder.addComponent(tabellenScroller, true);
+        button3.setVisible(false);
 
-		builder.add(titel, cc.xy(1, 1));
-		builder.add(tabellenScroller, cc.xy(1, 3));
+        return builder.getPanel();
+    }
 
-		button3.setVisible(false);
+    @Override
+    protected void fillForm() {
 
-		return builder.getPanel();
-	}
+    }
 
-	@Override
-	protected void fillForm() {
+    @Override
+    protected boolean canSave() {
+        return true;
+    }
 
-	}
+    /**
+     * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
+     */
+    @Override
+    protected boolean doSave() {
+        if(einstellungenTabelle.getCellEditor() != null){
+            einstellungenTabelle.getCellEditor().stopCellEditing();
+        }
+        SettingsManager.setInstance(_instance);
+        if(SettingsManager.setInstance(_instance)){
+            saved = true;
+        }
+        return saved;
+        
+    }
 
-	@Override
-	protected boolean canSave() {
-		return true;
-	}
+    @Override
+    protected void doApply() {
+        // TODO Auto-generated method stub
 
-	/**
-	 * Wird aufgerufen, wenn der Benutzen auf "Speichern" geklickt hat.
-	 */
-	@Override
-	protected boolean doSave() {
-		if(einstellungenTabelle.getCellEditor() != null){
-			einstellungenTabelle.getCellEditor().stopCellEditing();
-		}
-		SettingsManager.setInstance(_instance);
-		if(SettingsManager.setInstance(_instance)){
-			saved = true;
-		}
-		return saved;
-		
-	}
+    }
 
-	@Override
-	protected void doApply() {
-		// TODO Auto-generated method stub
+    private JTable getEinstellungenTabelle() {
+        if (this.einstellungenTabelle == null) {
+            this.einstellungenTabelle = new SelectTable();
 
-	}
+            Action submitAction = new AbstractAction("Einstellungen") {
+                private static final long serialVersionUID = -6645922378885851686L;
 
-	private JTable getEinstellungenTabelle() {
-		if (this.einstellungenTabelle == null) {
-			this.einstellungenTabelle = new SelectTable();
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    doOk();
+                }
+            };
+            submitAction.putValue(Action.ACCELERATOR_KEY,
+                    KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
 
-			Action submitAction = new AbstractAction("Einstellungen") {
-				private static final long serialVersionUID = -6645922378885851686L;
+            this.einstellungenTabelle.getInputMap().put(
+                    (KeyStroke) submitAction.getValue(Action.ACCELERATOR_KEY),
+                    submitAction.getValue(Action.NAME));
+            this.einstellungenTabelle.getActionMap().put(
+                    submitAction.getValue(Action.NAME), submitAction);
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					doOk();
-				}
-			};
-			submitAction.putValue(Action.ACCELERATOR_KEY,
-					KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+            this.einstellungenTabelle.addFocusListener(TableFocusListener
+                    .getInstance());
+            this.einstellungenTabelle.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                    if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                        // TODO: Check this: Nothing happens here
+                        // Point origin = e.getPoint();
+                        // int row = ergebnisTabelle.rowAtPoint(origin);
+                    }
+                }
+            });
 
-			this.einstellungenTabelle.getInputMap().put(
-					(KeyStroke) submitAction.getValue(Action.ACCELERATOR_KEY),
-					submitAction.getValue(Action.NAME));
-			this.einstellungenTabelle.getActionMap().put(
-					submitAction.getValue(Action.NAME), submitAction);
+        }
 
-			this.einstellungenTabelle.addFocusListener(TableFocusListener
-					.getInstance());
-			this.einstellungenTabelle.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(java.awt.event.MouseEvent e) {
-					if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-						// TODO: Check this: Nothing happens here
-						// Point origin = e.getPoint();
-						// int row = ergebnisTabelle.rowAtPoint(origin);
-					}
-				}
-			});
+        return this.einstellungenTabelle;
+    }
 
-		}
-
-		return this.einstellungenTabelle;
-	}
-
-	private EinstellungenModel getEinstellungenModel() {
-		this.einstModel = new EinstellungenModel(SettingsManager.getInstance());
-		return this.einstModel;
-	}
+    private EinstellungenModel getEinstellungenModel() {
+        this.einstModel = new EinstellungenModel(SettingsManager.getInstance());
+        return this.einstModel;
+    }
 
 }

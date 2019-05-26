@@ -60,6 +60,7 @@ package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.Point;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -119,6 +120,7 @@ import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
@@ -167,8 +169,8 @@ public class VawsEditor extends AbstractBaseEditor {
     private LimitedTextArea bemerkungArea;
     private JTable anlagenChronoTabelle;
     private VawsAnlagenChronoModel anlagenChronoModel;
-	private JSplitPane tabellenSplit;
-	
+    private JSplitPane tabellenSplit;
+    
     // Benötigt bei Lageranlagen & Rohrleitungen
     private JComboBox behaelterArtBox;
     private JComboBox materialBox;
@@ -341,7 +343,6 @@ public class VawsEditor extends AbstractBaseEditor {
             tabbedPane.setSelectedComponent(getVerwVerfahrenTab());
         } else if("Herstellnummer".equals(tab)) {
             // Der Reiter Daten wird aufgerufen
-
         }
 
     }
@@ -407,10 +408,10 @@ public class VawsEditor extends AbstractBaseEditor {
      */
     private Jgs getJgs() {
         if (jgs == null) {
-        	jgs = Jgs.findByBehaelterid(getFachdaten().getBehaelterid());
+            jgs = Jgs.findByBehaelterid(getFachdaten().getBehaelterid());
             if (jgs == null) {
-            	jgs = new Jgs();
-            	jgs.setFachdaten(getFachdaten());
+                jgs = new Jgs();
+                jgs.setFachdaten(getFachdaten());
             }
         }
         return jgs;
@@ -745,6 +746,7 @@ public class VawsEditor extends AbstractBaseEditor {
         verwGebuehrenTabelle.getInputMap().put((KeyStroke)getTabellenItemLoeschAction().getValue(Action.ACCELERATOR_KEY), getTabellenItemLoeschAction().getValue(Action.NAME));
         verwGebuehrenTabelle.getActionMap().put(getTabellenItemLoeschAction().getValue(Action.NAME), getTabellenItemLoeschAction());
 
+        /*
         // Layout topPanel:
         FormLayout topLayout = new FormLayout(
                 "p:g, 3dlu:g, p:g, 3dlu:g, p:g, 3dlu:g, p:g, 3dlu:g, p:g"
@@ -755,13 +757,26 @@ public class VawsEditor extends AbstractBaseEditor {
         topBuilder.append(header, 9);
 //        topBuilder.append(ButtonBarFactory.buildRightAlignedBar(reportButton), 7);
 //        topBuilder.append(subHeader, 9);
-        /*hnrLabel =*/ topBuilder.append("Bezeichnung / Zuordnung:");
+        topBuilder.append("Bezeichnung / Zuordnung:");
         topBuilder.append("Flüssigkeit:");
         topBuilder.append("VbF:");
         topBuilder.append("Gefährdungsstufe:");
         topBuilder.append("WGK:");
         topBuilder.append(hnrFeld, fluessigkeitBox, vbfBox);
         topBuilder.append(gefStufeBox, wgkBox);
+        */
+        PanelBuilder topBuilder = new PanelBuilder();
+        topBuilder.setWeight(1, 0);
+        topBuilder.setEmptyBorder(10);
+        topBuilder.setFill(true, false);
+        topBuilder.setAnchor(GridBagConstraints.NORTHWEST);
+        topBuilder.setInsets(0, 0, 5, 25);
+
+        topBuilder.addComponent(header, true);
+        topBuilder.addComponents(true, new JLabel("Bezeichnung / Zurodnung:"),
+                new JLabel("Flüssigkeit:"), new JLabel("VbF:"), new JLabel("Gefährdungsstufe:"),
+                new JLabel("WGK:"));
+        topBuilder.addComponents(true, hnrFeld, fluessigkeitBox, vbfBox, gefStufeBox, wgkBox);
 
         topPanel = topBuilder.getPanel();
 
@@ -803,7 +818,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
         if (getFachdaten().getAnlagenart().equals(
             DatabaseConstants.VAWS_ANLAGENART_VAWS_ABSCHEIDER)) {
-        	Abscheider abs = this.getAbscheider();
+            Abscheider abs = this.getAbscheider();
             tabbedPane.addTab("Daten", getDatenVAWSAbscheiderTab());
             tabbedPane.addTab("Ausführung", getAusfuehrungVAWSAbscheiderTab());
             tabbedPane.addTab("Schutzvorkehrungen", getSchutzvorkehrungenVAWSAbscheiderTab());
@@ -1008,7 +1023,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
         } else if (getFachdaten().getAnlagenart().equals(
             DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)) {
-        	Abfuellflaeche flaeche = this.getAbfuellflaeche();
+            Abfuellflaeche flaeche = this.getAbfuellflaeche();
             tabbedPane.addTab("Daten", getDatenAbfuellflaechenTab());
             tabbedPane.addTab("Ausführung", getAusfuehrungAbfuellflaechenTab());
 
@@ -1049,7 +1064,9 @@ public class VawsEditor extends AbstractBaseEditor {
             beschrFugenmaterialArea.setText(getAbfuellflaeche().getBeschfugenmat());
             beschrAblNiederschlArea.setText(getAbfuellflaeche().getBeschableitung());
         } else if (
+            getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_FS) || 
         	getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_FS) || 
+            getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_FS) || 
             getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GK) || 
             getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GHB))
         {
@@ -1066,45 +1083,57 @@ public class VawsEditor extends AbstractBaseEditor {
             if(getJgs().getSeitenwaende()!=null)
                 seitenwandCheck.setSelected(getJgs().getSeitenwaende());
             else
-            	seitenwandCheck.setSelected(false);
+                seitenwandCheck.setSelected(false);
             
             wandhoeheFeld.setValue(getJgs().getWandhoehe());
             bodenflaechenAusfBox.setSelectedItem(getJgs().getBodenplatte());
 
-			if (getJgs().getUeberdachung() != null)
-				ueberdachungCheck.setSelected(getJgs().getUeberdachung());
-			else
+            if (getJgs().getUeberdachung() != null)
+                ueberdachungCheck.setSelected(getJgs().getUeberdachung());
+            else
+                ueberdachungCheck.setSelected(false);    
 				ueberdachungCheck.setSelected(false);    
-			
-			auffangbehBox.setSelectedItem(getJgs().getAuffangbeh());
-			volumenAuffangbehFeld.setValue(getJgs().getVolumenAuffangbeh());
-			rohrleitungBox.setSelectedItem(getJgs().getRohrleitung());
-	        dichtheitChooser.setDate(getJgs().getDichtheitspruefung());
+                ueberdachungCheck.setSelected(false);    
+            
+            auffangbehBox.setSelectedItem(getJgs().getAuffangbeh());
+            volumenAuffangbehFeld.setValue(getJgs().getVolumenAuffangbeh());
+            rohrleitungBox.setSelectedItem(getJgs().getRohrleitung());
+            dichtheitChooser.setDate(getJgs().getDichtheitspruefung());
 
-			if (getJgs().getDrainage() != null)
-				drainageCheck.setSelected(getJgs().getDrainage());
-			else
+            if (getJgs().getDrainage() != null)
+                drainageCheck.setSelected(getJgs().getDrainage());
+            else
+                drainageCheck.setSelected(false);  
 				drainageCheck.setSelected(false);  
+                drainageCheck.setSelected(false);  
 
-			if (getJgs().getFuellanzeiger() != null)
-				fuellanzeigerCheck.setSelected(getJgs().getFuellanzeiger());
-			else
+            if (getJgs().getFuellanzeiger() != null)
+                fuellanzeigerCheck.setSelected(getJgs().getFuellanzeiger());
+            else
+                fuellanzeigerCheck.setSelected(false);  
 				fuellanzeigerCheck.setSelected(false);  
+                fuellanzeigerCheck.setSelected(false);  
 
-			if (getJgs().getSchieber() != null)
-				schieberCheck.setSelected(getJgs().getSchieber());
-			else
+            if (getJgs().getSchieber() != null)
+                schieberCheck.setSelected(getJgs().getSchieber());
+            else
+                schieberCheck.setSelected(false);  
 				schieberCheck.setSelected(false);  
+                schieberCheck.setSelected(false);  
 
-			if (getJgs().getAbdeckung() != null)
-				abdeckungCheck.setSelected(getJgs().getAbdeckung());
-			else
+            if (getJgs().getAbdeckung() != null)
+                abdeckungCheck.setSelected(getJgs().getAbdeckung());
+            else
+                abdeckungCheck.setSelected(false);  
 				abdeckungCheck.setSelected(false);  
+                abdeckungCheck.setSelected(false);  
 
-			if (getJgs().getLeitungGeprueft() != null)
-				leitung_geprueftCheck.setSelected(getJgs().getLeitungGeprueft());
-			else
+            if (getJgs().getLeitungGeprueft() != null)
+                leitung_geprueftCheck.setSelected(getJgs().getLeitungGeprueft());
+            else
+                leitung_geprueftCheck.setSelected(false);  
 				leitung_geprueftCheck.setSelected(false);  
+                leitung_geprueftCheck.setSelected(false);  
             
         }
         tabbedPane.addTab("Sachverständigenprüfung", getSvPruefungTab());
@@ -1289,25 +1318,27 @@ public class VawsEditor extends AbstractBaseEditor {
             getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GK) || 
             getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GHB)) {
          
-        	getJgs().setBodenplatte((String)bodenflaechenAusfBox.getSelectedItem());
-        	getJgs().setBrunnenAbstand(abstandBrunnenFeld.getIntValue());
-        	getJgs().setGewaesserAbstand(abstandGewFeld.getIntValue());
-        	getJgs().setGewaesserName(gewNameFeld.getText());
+            getJgs().setBodenplatte((String)bodenflaechenAusfBox.getSelectedItem());
+            getJgs().setBrunnenAbstand(abstandBrunnenFeld.getIntValue());
+            getJgs().setGewaesserAbstand(abstandGewFeld.getIntValue());
+            getJgs().setGewaesserName(gewNameFeld.getText());
+            getJgs().setLagerflaeche(lagerflaecheFeld.getIntValue());   
         	getJgs().setLagerflaeche(lagerflaecheFeld.getIntValue());   
-        	getJgs().setSeitenwaende(seitenwandCheck.isSelected());
-        	getJgs().setTierhaltung(tierhaltungFeld.getText());
-        	getJgs().setWandhoehe(wandhoeheFeld.getIntValue());
-        	getJgs().setAuffangbeh((String)auffangbehBox.getSelectedItem());
-        	getJgs().setVolumenAuffangbeh(volumenAuffangbehFeld.getDoubleValue());
-        	getJgs().setRohrleitung((String)rohrleitungBox.getSelectedItem());
-        	getJgs().setDichtheitspruefung(dichtheitChooser.getDate());
-        	getJgs().setDrainage(drainageCheck.isSelected());
-        	getJgs().setFuellanzeiger(fuellanzeigerCheck.isSelected());
-        	getJgs().setSchieber(schieberCheck.isSelected());
-        	getJgs().setAbdeckung(abdeckungCheck.isSelected());
-        	getJgs().setLeitungGeprueft(leitung_geprueftCheck.isSelected());
-        	
-        	
+            getJgs().setLagerflaeche(lagerflaecheFeld.getIntValue());   
+            getJgs().setSeitenwaende(seitenwandCheck.isSelected());
+            getJgs().setTierhaltung(tierhaltungFeld.getText());
+            getJgs().setWandhoehe(wandhoeheFeld.getIntValue());
+            getJgs().setAuffangbeh((String)auffangbehBox.getSelectedItem());
+            getJgs().setVolumenAuffangbeh(volumenAuffangbehFeld.getDoubleValue());
+            getJgs().setRohrleitung((String)rohrleitungBox.getSelectedItem());
+            getJgs().setDichtheitspruefung(dichtheitChooser.getDate());
+            getJgs().setDrainage(drainageCheck.isSelected());
+            getJgs().setFuellanzeiger(fuellanzeigerCheck.isSelected());
+            getJgs().setSchieber(schieberCheck.isSelected());
+            getJgs().setAbdeckung(abdeckungCheck.isSelected());
+            getJgs().setLeitungGeprueft(leitung_geprueftCheck.isSelected());
+            
+            
 
             success = success && getJgs().merge();
         }
@@ -1331,9 +1362,9 @@ public class VawsEditor extends AbstractBaseEditor {
             success = success && it.next().delete();
         }
         log.debug(svPruefungModel.getList().size()
-        		+ " Sachverständigenprüfungs-Einträge neu/behalten, "
-        		+ svPruefungModel.getGeloeschte().size()
-        		+ " Einträge gelöscht.");
+                + " Sachverständigenprüfungs-Einträge neu/behalten, "
+                + svPruefungModel.getGeloeschte().size()
+                + " Einträge gelöscht.");
 
         // Verwaltungsverfahren speichern:
         for (Iterator<?> it = verwVerfahrenModel.getList().iterator(); it.hasNext();) {
@@ -1343,9 +1374,9 @@ public class VawsEditor extends AbstractBaseEditor {
             success = success && it.next().delete();
         }
         log.debug(verwVerfahrenModel.getList().size()
-        		+ " Verwaltungsverfahren-Einträge neu/behalten, "
-        		+ verwVerfahrenModel.getGeloeschte().size()
-        		+ " Einträge gelöscht.");
+                + " Verwaltungsverfahren-Einträge neu/behalten, "
+                + verwVerfahrenModel.getGeloeschte().size()
+                + " Einträge gelöscht.");
 
         // Verwaltunggebühren speichern:
         for (Iterator<?> it = verwGebuehrenModel.getList().iterator(); it.hasNext();) {
@@ -1355,9 +1386,9 @@ public class VawsEditor extends AbstractBaseEditor {
             success = success && it.next().delete();
         }
         log.debug(verwGebuehrenModel.getList().size()
-        		+ " Verwaltungsgebühren-Einträge neu/behalten, "
-        		+ verwGebuehrenModel.getGeloeschte().size()
-        		+ " Einträge gelöscht.");
+                + " Verwaltungsgebühren-Einträge neu/behalten, "
+                + verwGebuehrenModel.getGeloeschte().size()
+                + " Einträge gelöscht.");
 
         return success;
     }
@@ -1429,63 +1460,47 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getDatenVAWSAbscheiderTab() {
         if (datenVAWSAbscheiderTab == null) {
 
-			JScrollPane bemerkungScroller = new JScrollPane(
-					bemerkungArea,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            JScrollPane bemerkungScroller = new JScrollPane(
+                    bemerkungArea,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        	
-			this.tabellenSplit = Factory.createStrippedSplitPane(
-					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-					chronoScroller, 0.3);
-        	
+            JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             
-            FormLayout layout = new FormLayout(
-                    "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g"
-            );
-            layout.setColumnGroups(new int[][]{{1,5}, {3,7}});
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+            this.tabellenSplit = Factory.createStrippedSplitPane(
+                    JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
+                    chronoScroller, 0.3);
 
-            builder.appendSeparator("Stammdaten");
-            builder.append("Baujahr:", baujahrFeld);
-            builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-            builder.nextLine();
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.NORTHWEST);
+            builder.setWeight(1, 0);
+            builder.setFill(true, false);
+            builder.setEmptyBorder(10);
+            builder.setInsets(0, 0, 5, 5);
 
-            builder.append("Erfassung:", erfassungChooser);
-            builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
-            builder.nextLine();
-
-            builder.append("Stillegung:", stillegungChooser);
-            builder.nextLine();
-
-            /*builder.appendRow("fill:30dlu");
-            builder.append("Flüssigkeit/Medium", flüssigkField);
-            builder.nextLine();*/
-            builder.appendSeparator("Komponenten");
-//            builder.appendRow("3dlu");
-            //builder.appendColumn("r:p, 3dlu, f:p:g, 10dlu, r:p, r:p, r:p, r:p, 0:g");
-//            builder.append("Flüssigkeit/Medium", flüssigkField);
-            builder.append("", kompaktCheck);
-            builder.nextLine();
-            builder.append("", kompSFCheck);
-            builder.append("", kompPSCheck);
-            builder.nextLine();
-            builder.append("", kompKCheck);
-            builder.append("", kompLFCheck);
-            builder.nextLine();
-
-            builder.appendSeparator("Bemerkungen und Anlagenchronologie");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:30dlu:grow");
-            builder.nextLine(2);
-
-            builder.append(this.tabellenSplit, 8);
+            //Stammdaten
+            PanelBuilder stammdaten = new PanelBuilder(builder);
+            stammdaten.addComponent(baujahrFeld, "Baujahr:");
+            stammdaten.addComponent(inbetriebnahmeChooser, "Inbetriebnahme:", true);
+            stammdaten.addComponent(erfassungChooser, "Erfassung:");
+            stammdaten.addComponent(pruefTurnusFeld, "Prüfturnus [Jahre]", true);
+            stammdaten.addComponent(stillegungChooser, "Stillegung:", true);
             
+            PanelBuilder komponenten = new PanelBuilder(builder);
+            komponenten.addComponent(kompaktCheck, true);
+            komponenten.addComponents(true, kompSFCheck, kompPSCheck);
+            komponenten.addComponents(true, kompKCheck, kompLFCheck);
 
+            builder.addSeparator("Stammdaten:", true);
+            builder.addComponent(stammdaten.getPanel(), true);
+            builder.addSeparator("Komponenten:", true);
+            builder.addComponent(komponenten.getPanel(), true);
+            builder.addSeparator("Bemerkungen und Anlagenchronologie", true);
+            builder.setWeight(1, 1);
+            builder.setFill(true, true);
+            builder.addComponent(this.tabellenSplit, true);
 
             datenVAWSAbscheiderTab = builder.getPanel();
         }
@@ -1495,51 +1510,55 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getAusfuehrungVAWSAbscheiderTab()
     {
         if (ausfuehrungVAWSAbscheiderTab == null) {
-            FormLayout layout = new FormLayout(
-                    "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"
-            );
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+            PanelBuilder builder = new PanelBuilder();
+            builder.setAnchor(GridBagConstraints.NORTHWEST);
+            builder.setWeight(1, 0);
+            builder.setFill(true, false);
+            builder.setEmptyBorder(10);
+            builder.setInsets(0, 0, 5, 5);
 
+            PanelBuilder schlammfang = new PanelBuilder(builder);
+            schlammfang.addComponent(schlammHerstField, "Hersteller:");
+            schlammfang.addComponent(schlammTypField, "Typ");
+            schlammfang.addComponent(schlammSFVField, "SF-Volumen [Liter]", true);
+            schlammfang.addComponent(schlammMatField, "Material");
+            schlammfang.addComponent(schlammBeschField, "Beschichtung", true, true);
 
-            builder.appendSeparator("Schlammfang");
-            builder.append("Hersteller:", schlammHerstField);
-            builder.append("Typ:", schlammTypField);
-            builder.append("SF-Volumen [Liter]:", schlammSFVField);
-            builder.nextLine();
-            builder.append("Material:", schlammMatField);
-            builder.append("Beschichtung:", schlammBeschField);
-            builder.nextLine();
+            PanelBuilder absch = new PanelBuilder(builder);
+            absch.addComponent(abscheiderHerstField, "Hersteller");
+            absch.addComponent(abscheiderTypField, "Typ");
+            absch.addComponent(abscheiderPruefField, "Prüfzeichen", true);
+            absch.addComponent(abscheiderMatField, "Material");
+            absch.addComponent(abscheiderBeschField, "Beschichtung");
+            absch.addComponent(abscheiderNSField, "Nenngröße (NS)", true);
+            absch.addComponent(abscheideroelField, "Ölspeichervolumen [Liter]", true, true);
 
-            builder.appendSeparator("Abscheider");
-            builder.append("Hersteller:", abscheiderHerstField);
-            builder.append("Typ:", abscheiderTypField);
-            builder.append("Prüfzeichen:", abscheiderPruefField);
-            builder.nextLine();
-            builder.append("Material:", abscheiderMatField);
-            builder.append("Beschichtung:", abscheiderBeschField);
-            builder.append("Nenngröße (NS):", abscheiderNSField);
-            builder.nextLine();
-            builder.append("Ölspeichervolumen [Liter]:", abscheideroelField);
-            builder.nextLine();
+            PanelBuilder zul = new PanelBuilder(builder);
+            zul.addComponent(zulDNField, "DN:");
+            zul.addComponent(zulMatField, "Material:");
+            zul.addComponent(zulLField, "Länge [m]:");
 
-            builder.appendSeparator("Rohrleitungen: Zuleitungen");
-            builder.append("DN:", zulDNField);
-            builder.append("Material:", zulMatField);
-            builder.append("Länge [m]:", zulLField);
-            builder.nextLine();
+            PanelBuilder vbl = new PanelBuilder(builder);
+            vbl.addComponent(verbDNField, "DN:");
+            vbl.addComponent(verbMatField, "Material");
+            vbl.addComponent(verbLField, "Länge [m]");
 
-            builder.appendSeparator("Rohrleitungen: Verbindungsleitungen");
-            builder.append("DN:", verbDNField);
-            builder.append("Material:", verbMatField);
-            builder.append("Länge [m]:", verbLField);
-            builder.nextLine();
+            PanelBuilder sonst = new PanelBuilder(builder);
+            sonst.addComponent(sonsDNField, "DN:");
+            sonst.addComponent(sonsMatField, "Material");
+            sonst.addComponent(sonsLField, "Länge [m]");
 
-            builder.appendSeparator("Rohrleitungen: Sonstige");
-            builder.append("DN:", sonsDNField);
-            builder.append("Material:", sonsMatField);
-            builder.append("Länge [m]:", sonsLField);
-            builder.nextLine();
+            builder.addSeparator("Schlammfang", true);
+            builder.addComponent(schlammfang.getPanel(), true);
+            builder.addSeparator("Abscheider", true);
+            builder.addComponent(absch.getPanel(), true);
+            builder.addSeparator("Rohrleitungen: Zuleitungen", true);
+            builder.addComponent(zul.getPanel(), true);
+            builder.addSeparator("Rohrleitungen: Verbindungsleitungen", true);
+            builder.addComponent(vbl.getPanel(), true);
+            builder.addSeparator("Rohrleitungen: Sonstige", true);
+            builder.addComponent(sonst.getPanel(), true);
+            builder.fillColumn();
 
             ausfuehrungVAWSAbscheiderTab = builder.getPanel();
         }
@@ -1579,19 +1598,19 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getDatenLageranlagenTab() {
         if (datenLageranlagenTab == null) {
 
-			JScrollPane bemerkungScroller = new JScrollPane(
-					bemerkungArea,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            JScrollPane bemerkungScroller = new JScrollPane(
+                    bemerkungArea,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        	
-			this.tabellenSplit = Factory.createStrippedSplitPane(
-					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-					chronoScroller, 0.3);
-        	
+            JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            
+            this.tabellenSplit = Factory.createStrippedSplitPane(
+                    JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
+                    chronoScroller, 0.3);
+            
             
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g"
@@ -1693,19 +1712,19 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getDatenRohrleitungenTab() {
         if (datenRohrleitungenTab == null) {
 
-			JScrollPane bemerkungScroller = new JScrollPane(
-					bemerkungArea,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            JScrollPane bemerkungScroller = new JScrollPane(
+                    bemerkungArea,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        	
-			this.tabellenSplit = Factory.createStrippedSplitPane(
-					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-					chronoScroller, 0.3);
-        	
+            JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            
+            this.tabellenSplit = Factory.createStrippedSplitPane(
+                    JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
+                    chronoScroller, 0.3);
+            
             
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, p, 10dlu, r:p, 3dlu, p, 0:g"
@@ -1751,19 +1770,19 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getDatenAbfuellflaechenTab() {
         if (datenAbfuellflaechenTab == null) {
 
-			JScrollPane bemerkungScroller = new JScrollPane(
-					bemerkungArea,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            JScrollPane bemerkungScroller = new JScrollPane(
+                    bemerkungArea,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        	
-			this.tabellenSplit = Factory.createStrippedSplitPane(
-					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-					chronoScroller, 0.3);
-        	
+            JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            
+            this.tabellenSplit = Factory.createStrippedSplitPane(
+                    JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
+                    chronoScroller, 0.3);
+            
             
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
@@ -1812,12 +1831,12 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getAbfuellflaecheJgsTab() {
         if (datenAbfuellflaechenJgsTab == null) {
 
-        	
-			JScrollPane bemerkungScroller = new JScrollPane(
-					bemerkungArea,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			
+            
+            JScrollPane bemerkungScroller = new JScrollPane(
+                    bemerkungArea,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            
             
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
@@ -1870,11 +1889,11 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getDatenJgsTab() {
         if (datenJgsTab == null) {
 
-			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        	
-        	
+            JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            
+            
             
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
