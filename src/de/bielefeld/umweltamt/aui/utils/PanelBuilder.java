@@ -38,17 +38,43 @@ import javax.swing.border.EmptyBorder;
  * See GridBagLayout JavaDoc for further details.
  */
 public class PanelBuilder {
+    /**
+     * Panel to be constructed
+     */
     private JPanel panel;
+
+    /**
+     * Layout constraints
+     */
     private GridBagConstraints c;
+
+    /**
+     * Layout object
+     */
     private GridBagLayout layout;
+
+    /**
+     * Border to be applied to components
+     */
     private Border componentBorder;
+
+    /**
+     * Integer to set the containing panel type
+     */
     private int panelType;
 
+    /**
+     * Panel type with a gradient background
+     */
     public static final int GRADIENT_PANEL = 0;
+
+    /**
+     * Default Panel with solid background
+     */
     public static final int DEFAULT_PANEL = 1;
 
     /**
-     * Constructor, copies the given builders setttings.
+     * Copy constructor, copies the given builders setttings.
      * @param builder PanelBuilder to copy settings from
      */
     public PanelBuilder(PanelBuilder builder) {
@@ -61,6 +87,54 @@ public class PanelBuilder {
         this.setGridWidth(builder.getGridWidth());
         this.setInsets(builder.getInsets());
         this.setWeight(builder.getWeightX(), builder.getWeightY());
+    }
+
+    /**
+     * Full constructor
+     * @param panelType Set to GRADIENT_PANEL to use a gradient background color
+     * @param anchor Anchor location, see setAnchor
+     * @param hfill Fill horizontal if true
+     * @param vfill Fill vertical if true
+     * @param weightX Horizontal weight
+     * @param weightY Vertical weight
+     * @param width GridWidth, see setGridWith
+     * @param height GridHeight, see setGridHeight
+     * @param insetTop Top component padding
+     * @param insetLeft Left component padding
+     * @param insetBottom Bottom component padding
+     * @param insetRight Right component padding
+     */
+    public PanelBuilder(int panelType, int anchor, boolean hfill, boolean vfill,
+            double weightX, double weightY, int width, int height,
+            int insetTop, int insetLeft, int insetBottom, int insetRight) {
+        this(panelType);
+        setAnchor(anchor);
+        setFill(hfill, vfill);
+        setWeight(weightX, weightY);
+        setGridWidth(width);
+        setGridHeight(height);
+        setInsets(insetTop, insetLeft, insetBottom, insetRight);
+    }
+
+    /**
+     * Full constructor with default panel
+     * @param anchor Anchor location, see setAnchor
+     * @param hfill Fill horizontal if true
+     * @param vfill Fill vertical if true
+     * @param weightX Horizontal weight
+     * @param weightY Vertical weight
+     * @param width GridWidth, see setGridWith
+     * @param height GridHeight, see setGridHeight
+     * @param insetTop Top component padding
+     * @param insetLeft Left component padding
+     * @param insetBottom Bottom component padding
+     * @param insetRight Right component padding
+     */
+    public PanelBuilder(int anchor, boolean hfill, boolean vfill,
+            double weightX, double weightY, int width, int height,
+            int insetTop, int insetLeft, int insetBottom, int insetRight) {
+        this(DEFAULT_PANEL, anchor, hfill, vfill, weightX, weightY, width, height,
+                insetTop, insetLeft, insetBottom, insetRight);
     }
 
     /**

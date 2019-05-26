@@ -96,11 +96,6 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.uif_lite.component.Factory;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -746,25 +741,6 @@ public class VawsEditor extends AbstractBaseEditor {
         verwGebuehrenTabelle.getInputMap().put((KeyStroke)getTabellenItemLoeschAction().getValue(Action.ACCELERATOR_KEY), getTabellenItemLoeschAction().getValue(Action.NAME));
         verwGebuehrenTabelle.getActionMap().put(getTabellenItemLoeschAction().getValue(Action.NAME), getTabellenItemLoeschAction());
 
-        /*
-        // Layout topPanel:
-        FormLayout topLayout = new FormLayout(
-                "p:g, 3dlu:g, p:g, 3dlu:g, p:g, 3dlu:g, p:g, 3dlu:g, p:g"
-        );
-        DefaultFormBuilder topBuilder = new DefaultFormBuilder(topLayout);
-        topBuilder.setBorder(Borders.DLU2_BORDER);
-
-        topBuilder.append(header, 9);
-//        topBuilder.append(ButtonBarFactory.buildRightAlignedBar(reportButton), 7);
-//        topBuilder.append(subHeader, 9);
-        topBuilder.append("Bezeichnung / Zuordnung:");
-        topBuilder.append("Flüssigkeit:");
-        topBuilder.append("VbF:");
-        topBuilder.append("Gefährdungsstufe:");
-        topBuilder.append("WGK:");
-        topBuilder.append(hnrFeld, fluessigkeitBox, vbfBox);
-        topBuilder.append(gefStufeBox, wgkBox);
-        */
         PanelBuilder topBuilder = new PanelBuilder();
         topBuilder.setWeight(1, 0);
         topBuilder.setEmptyBorder(10);
@@ -1469,9 +1445,10 @@ public class VawsEditor extends AbstractBaseEditor {
                     ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             
-            this.tabellenSplit = Factory.createStrippedSplitPane(
+            this.tabellenSplit = new JSplitPane(
                     JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-                    chronoScroller, 0.3);
+                    chronoScroller);
+            this.tabellenSplit.setDividerLocation(0.3);
 
             PanelBuilder builder = new PanelBuilder();
             builder.setAnchor(GridBagConstraints.NORTHWEST);
@@ -1519,19 +1496,19 @@ public class VawsEditor extends AbstractBaseEditor {
 
             PanelBuilder schlammfang = new PanelBuilder(builder);
             schlammfang.addComponent(schlammHerstField, "Hersteller:");
-            schlammfang.addComponent(schlammTypField, "Typ");
-            schlammfang.addComponent(schlammSFVField, "SF-Volumen [Liter]", true);
-            schlammfang.addComponent(schlammMatField, "Material");
-            schlammfang.addComponent(schlammBeschField, "Beschichtung", true, true);
+            schlammfang.addComponent(schlammTypField, "Typ:");
+            schlammfang.addComponent(schlammSFVField, "SF-Volumen [Liter]:", true);
+            schlammfang.addComponent(schlammMatField, "Material:");
+            schlammfang.addComponent(schlammBeschField, "Beschichtung:", true, true);
 
             PanelBuilder absch = new PanelBuilder(builder);
             absch.addComponent(abscheiderHerstField, "Hersteller");
-            absch.addComponent(abscheiderTypField, "Typ");
-            absch.addComponent(abscheiderPruefField, "Prüfzeichen", true);
-            absch.addComponent(abscheiderMatField, "Material");
-            absch.addComponent(abscheiderBeschField, "Beschichtung");
-            absch.addComponent(abscheiderNSField, "Nenngröße (NS)", true);
-            absch.addComponent(abscheideroelField, "Ölspeichervolumen [Liter]", true, true);
+            absch.addComponent(abscheiderTypField, "Typ:");
+            absch.addComponent(abscheiderPruefField, "Prüfzeichen:", true);
+            absch.addComponent(abscheiderMatField, "Material:");
+            absch.addComponent(abscheiderBeschField, "Beschichtung:");
+            absch.addComponent(abscheiderNSField, "Nenngröße (NS):", true);
+            absch.addComponent(abscheideroelField, "Ölspeichervolumen [Liter]:", true, true);
 
             PanelBuilder zul = new PanelBuilder(builder);
             zul.addComponent(zulDNField, "DN:");
@@ -1540,13 +1517,13 @@ public class VawsEditor extends AbstractBaseEditor {
 
             PanelBuilder vbl = new PanelBuilder(builder);
             vbl.addComponent(verbDNField, "DN:");
-            vbl.addComponent(verbMatField, "Material");
-            vbl.addComponent(verbLField, "Länge [m]");
+            vbl.addComponent(verbMatField, "Material:");
+            vbl.addComponent(verbLField, "Länge [m]:");
 
             PanelBuilder sonst = new PanelBuilder(builder);
             sonst.addComponent(sonsDNField, "DN:");
-            sonst.addComponent(sonsMatField, "Material");
-            sonst.addComponent(sonsLField, "Länge [m]");
+            sonst.addComponent(sonsMatField, "Material:");
+            sonst.addComponent(sonsLField, "Länge [m]:");
 
             builder.addSeparator("Schlammfang", true);
             builder.addComponent(schlammfang.getPanel(), true);
@@ -1568,28 +1545,23 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getSchutzvorkehrungenVAWSAbscheiderTab()
     {
         if (schutzvorkehrungenVAWSAbscheiderTab == null) {
-            FormLayout layout = new FormLayout("p:g");
-            //layout.setColumnGroups(new int[][]{{1}});
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
+            PanelBuilder stammdaten = new PanelBuilder(builder);
+            stammdaten.addComponent(ueberCheck, true);
+            stammdaten.addComponent(waschCheck, true);
 
-            builder.appendSeparator("Stammdaten");
-            builder.append(ueberCheck);
-            builder.nextLine();
+            PanelBuilder rueckhalte = new PanelBuilder(builder);
+            rueckhalte.addComponent(abgabeCheck, true);
+            rueckhalte.addComponent(hochCheck, true);
+            rueckhalte.addComponent(belueftCheck, true);
 
-            builder.append(waschCheck);
-            builder.nextLine();
-
-            builder.appendSeparator("Rückhaltevermögen");
-            builder.append(abgabeCheck);
-            builder.nextLine();
-            builder.append(hochCheck);
-            builder.nextLine();
-            builder.append(belueftCheck);
-            builder.nextLine();
-            builder.append(rueckCheck);
-            builder.nextLine();
-
+            builder.addSeparator("Stammdaten", true);
+            builder.addComponent(stammdaten.getPanel(), true);
+            builder.addSeparator("Rückhaltevermögen", true);
+            builder.addComponent(rueckhalte.getPanel(), true);
+            builder.fillColumn();
             schutzvorkehrungenVAWSAbscheiderTab = builder.getPanel();
         }
         return schutzvorkehrungenVAWSAbscheiderTab;
@@ -1607,47 +1579,33 @@ public class VawsEditor extends AbstractBaseEditor {
                     ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             
-            this.tabellenSplit = Factory.createStrippedSplitPane(
+            this.tabellenSplit = new JSplitPane(
                     JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-                    chronoScroller, 0.3);
-            
-            
-            FormLayout layout = new FormLayout(
-                    "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g"
-            );
-            layout.setColumnGroups(new int[][]{{1,5}, {3,7}});
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+                    chronoScroller);
+            this.tabellenSplit.setResizeWeight(0.3);
 
-            builder.appendSeparator("Stammdaten");
-            builder.append("Baujahr:", baujahrFeld);
-            builder.append("Menge [m³]:", mengeFeld);
-            builder.nextLine();
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
+            PanelBuilder stammdaten = new PanelBuilder(builder);
+            stammdaten.addComponent(baujahrFeld, "Baujahr:");
+            stammdaten.addComponent(mengeFeld, "Menge [m³]:", true);
+            stammdaten.addComponent(inbetriebnahmeChooser, "Inbetriebnahme:");
+            stammdaten.addComponent(pruefTurnusFeld, "Prüfturnus[Jahre]:", true);
+            stammdaten.addComponent(genehmigungChooser, "Genehmigung:");
+            stammdaten.addComponent(behaelterArtBox, "Behälterart:", true);
+            stammdaten.addComponent(aktenzeichenField, "Aktenzeichen:");
+            stammdaten.addComponent(materialBox, "Material:", true);
+            stammdaten.addComponent(erfassungChooser, "Erfassung:");
+            stammdaten.addComponent(stillegungChooser, "Stillegung:", true);
 
-            builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-            builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
-            builder.nextLine();
-
-            builder.append("Genehmigung:", genehmigungChooser);
-            builder.append("Behälterart:", behaelterArtBox);
-            builder.nextLine();
-
-            builder.append("Aktenzeichen:", aktenzeichenField);
-            builder.append("Material:", materialBox);
-            builder.nextLine();
-
-            builder.append("Erfassung:", erfassungChooser);
-            builder.append("Stillegung:", stillegungChooser);
-            builder.nextLine();
-
-            builder.appendSeparator("Bemerkungen und Anlagenchronologie");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:30dlu:grow");
-            builder.nextLine(2);
-
-            builder.append(this.tabellenSplit, 8);
-            
-
+            builder.addSeparator("Stammdaten", true);
+            builder.addComponent(stammdaten.getPanel(), true);
+            builder.addSeparator("Bemerkungen und Anlagenchronologie", true);
+            builder.setFill(true, true);
+            builder.setGridHeight(6);
+            builder.setWeightY(0.5);
+            builder.addComponent(this.tabellenSplit, true);
             datenLageranlagenTab = builder.getPanel();
         }
         return datenLageranlagenTab;
@@ -1655,32 +1613,22 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getSchutzLageranlagenTab() {
         if (schutzLageranlagenTab == null) {
-            FormLayout layout = new FormLayout("p, 3dlu:g, p, 3dlu:g, p, 3dlu:g, p");
-            layout.setColumnGroups(new int[][]{{1,3,5,7}});
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
-            builder.append(doppelWandigCheck, leckAnzeigeCheck);
-            builder.append(leckSchutzAuskleidungCheck, schutzSensorCheck);
-            builder.nextLine();
-            builder.append(auffangRaumCheck, kellerLagerungCheck);
-            builder.append(innenBeschichtungCheck, schutzFolieCheck);
-            builder.nextLine();
-            builder.append(grenzWertGeberCheck, schutzAntiheberCheck);
-            builder.nextLine();
-
-            builder.appendSeparator("Beschreibung: Schutzvorkehrungen");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:25dlu:grow");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(beschreibungSFeld), 7);
-
-            builder.appendSeparator("Beschreibung: Auffangraum");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:25dlu");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(beschreibungAFeld), 7);
-
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
+            builder.addComponents(true, doppelWandigCheck, leckAnzeigeCheck, leckSchutzAuskleidungCheck, schutzSensorCheck);
+            builder.addComponents(true, auffangRaumCheck, kellerLagerungCheck, innenBeschichtungCheck, schutzFolieCheck);
+            builder.addComponents(true, grenzWertGeberCheck, schutzAntiheberCheck);
+            builder.fillRow(true);
+            builder.addSeparator("Beschreibung: Schutzvorkehrungen", true);
+            builder.setFill(true, true);
+            builder.setWeightY(0.20);
+            builder.addComponent(new JScrollPane(beschreibungSFeld), true);
+            builder.setWeightY(0);
+            builder.addSeparator("Beschreibung: Auffangraum", true);
+            builder.setFill(true, true);
+            builder.setWeightY(0.25);
+            builder.addComponent(new JScrollPane(beschreibungAFeld), true);
             schutzLageranlagenTab = builder.getPanel();
         }
         return schutzLageranlagenTab;
@@ -1688,22 +1636,16 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getLeitungenLageranlagenTab() {
         if (leitungenLageranlagenTab == null) {
-            FormLayout layout = new FormLayout("p, 3dlu:g, p, 3dlu:g, p");
-            layout.setColumnGroups(new int[][]{{1,3,5}});
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
-            builder.append(oberIrdischCheck, ausKupferCheck, saugLeitungCheck);
-            builder.append(unterIrdischCheck, ausStahlCheck, rohrKathSchCheck);
-            builder.append(schutzrohrCheck, ausHdpeCheck, druckleitungCheck);
-            builder.nextLine();
-
-            builder.appendSeparator("Beschreibung: Rohrleitung");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:25dlu:grow");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(beschreibungRFeld), 5);
-
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
+            builder.addComponents(true, oberIrdischCheck, ausKupferCheck, saugLeitungCheck);
+            builder.addComponents(true, unterIrdischCheck, ausStahlCheck, rohrKathSchCheck);
+            builder.addComponents(true, schutzrohrCheck, ausHdpeCheck, druckleitungCheck);
+            builder.addSeparator("Beschreibung: Rohrleitung", true);
+            builder.setFill(true, true);
+            builder.setWeightY(0.5);
+            builder.addComponent(new JScrollPane(beschreibungRFeld), true);
             leitungenLageranlagenTab = builder.getPanel();
         }
         return leitungenLageranlagenTab;
@@ -1721,46 +1663,33 @@ public class VawsEditor extends AbstractBaseEditor {
                     ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             
-            this.tabellenSplit = Factory.createStrippedSplitPane(
+            this.tabellenSplit = new JSplitPane(
                     JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-                    chronoScroller, 0.3);
-            
-            
-            FormLayout layout = new FormLayout(
-                    "r:p, 3dlu, p, 10dlu, r:p, 3dlu, p, 0:g"
-            );
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+                    chronoScroller);
+            this.tabellenSplit.setResizeWeight(0.3);
 
-            builder.appendSeparator("Stammdaten");
-            builder.append("Baujahr:", baujahrFeld);
-            builder.append("Ausführung:", ausfuehrungBox);
-            builder.nextLine();
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
 
-            builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-            builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
-            builder.nextLine();
+            PanelBuilder stammdaten = new PanelBuilder(builder);
+            stammdaten.addComponent(baujahrFeld, "Baujahr:");
+            stammdaten.addComponent(ausfuehrungBox, "Ausführung:", true);
+            stammdaten.addComponent(inbetriebnahmeChooser, "Inbetriebnahme:");
+            stammdaten.addComponent(pruefTurnusFeld, "Prüfturnus[Jahre]", true);
+            stammdaten.addComponent(genehmigungChooser, "Genehmigung:");
+            stammdaten.addComponent(behaelterArtBox, "Bauart:", true);
+            stammdaten.addComponent(aktenzeichenField, "Aktenzeichen:");
+            stammdaten.addComponent(materialBox, "Material:", true);
+            stammdaten.addComponent(erfassungChooser, "Erfassung:");
+            stammdaten.addComponent(stillegungChooser, "Stillegung:", true);
 
-            builder.append("Genehmigung:", genehmigungChooser);
-            builder.append("Bauart:", behaelterArtBox);
-            builder.nextLine();
-
-            builder.append("Aktenzeichen:", aktenzeichenField);
-            builder.append("Material:", materialBox);
-            builder.nextLine();
-
-            builder.append("Erfassung:", erfassungChooser);
-            builder.append("Stillegung:", stillegungChooser);
-            builder.nextLine();
-
-            builder.appendSeparator("Bemerkungen und Anlagenchronologie");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:30dlu:grow");
-            builder.nextLine(2);
-
-            builder.append(this.tabellenSplit, 8);
-            
-
+            builder.addSeparator("Stammdaten", true);
+            builder.addComponent(stammdaten.getPanel(), true);
+            builder.addSeparator("Bemerkungen und Anlagenchronologie", true);
+            builder.setFill(true, true);
+            builder.setWeightY(0.5);
+            builder.addComponent(this.tabellenSplit, true);
 
             datenRohrleitungenTab = builder.getPanel();
         }
@@ -1779,50 +1708,38 @@ public class VawsEditor extends AbstractBaseEditor {
                     ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             
-            this.tabellenSplit = Factory.createStrippedSplitPane(
+            this.tabellenSplit = new JSplitPane(
                     JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-                    chronoScroller, 0.3);
-            
-            
-            FormLayout layout = new FormLayout(
-                    "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
-            );
-            layout.setColumnGroups(new int[][]{{1,5},{3,7}});
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+                    chronoScroller);
+            this.tabellenSplit.setResizeWeight(0.35);
 
-            builder.appendSeparator("Stammdaten");
-            builder.append("Baujahr:", baujahrFeld);
-            builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
 
-            builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-            builder.append("Erfassung:", erfassungChooser);
+            PanelBuilder stammdaten = new PanelBuilder(builder);
+            stammdaten.addComponent(baujahrFeld, "Baujahr:");
+            stammdaten.addComponent(pruefTurnusFeld, "Prüfturnus[Jahre]:", true);
+            stammdaten.addComponent(inbetriebnahmeChooser, "Inbetriebnahme:");
+            stammdaten.addComponent(erfassungChooser, "Erfassung:", true);
+            stammdaten.addComponent(genehmigungChooser, "Genehmigung:");
+            stammdaten.addComponent(stillegungChooser, "Stillegung:", true);
+            stammdaten.addComponent(aktenzeichenField, "Aktenzeichen:");
+            stammdaten.addComponent(groesseField, "Größe[m²]:", true);
 
-            builder.append("Genehmigung:", genehmigungChooser);
-            builder.append("Stillegung:", stillegungChooser);
+            PanelBuilder abfl = new PanelBuilder(builder);
+            abfl.addComponents(true, neuErstelltCheck, eohCheck);
+            abfl.addComponents(true, saniertCheck, efCheck);
+            abfl.addComponents(true, unbktCheck, svbCheck);
 
-            builder.append("Aktenzeichen:", aktenzeichenField);
-            builder.append("Größe [m²]:", groesseField);
-            builder.nextLine();
-
-            builder.appendSeparator("Abfüllfläche");
-
-            builder.append("", neuErstelltCheck);
-            builder.append("", eohCheck);
-            builder.append("", saniertCheck);
-            builder.append("", efCheck);
-            builder.append("", unbktCheck);
-            builder.append("", svbCheck);
-
-            builder.appendSeparator("Bemerkungen und Anlagenchronologie");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:30dlu:grow");
-            builder.nextLine(2);
-
-            builder.append(this.tabellenSplit, 7);
-            
-
-
+            builder.addSeparator("Stammdaten", true);
+            builder.addComponent(stammdaten.getPanel(), true);
+            builder.addSeparator("Abfüllfläche", true);
+            builder.addComponent(abfl.getPanel(), true);
+            builder.addSeparator("Bemerkungen und Anlagenchronologie", true);
+            builder.setFill(true, true);
+            builder.setWeightY(1);
+            builder.addComponent(this.tabellenSplit, true);
             datenAbfuellflaechenTab = builder.getPanel();
         }
         return datenAbfuellflaechenTab;
@@ -1836,50 +1753,30 @@ public class VawsEditor extends AbstractBaseEditor {
                     bemerkungArea,
                     ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            
-            
-            FormLayout layout = new FormLayout(
-                    "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
-            );
-            layout.setColumnGroups(new int[][]{{1,5},{3,7}});
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
 
+            PanelBuilder daten = new PanelBuilder(builder);
+            daten.addComponent(bodenflaechenAusfBox, "Bodenplatte", true, true);
+            daten.addComponents(true, seitenwandCheck, drainageCheck);
+            daten.addComponents(true, fuellanzeigerCheck, schieberCheck);
+            daten.addComponents(true, abdeckungCheck, leitung_geprueftCheck);
 
-            builder.appendSeparator("Ausführung");
+            PanelBuilder auffang = new PanelBuilder(builder);
+            auffang.addComponent(auffangbehBox, "Auffangbehälter");
+            auffang.addComponent(volumenAuffangbehFeld, "Behältervolumen[m³]", true);
+            auffang.addComponent(rohrleitungBox, "Rohrleitung");
+            auffang.addComponent(wandhoeheFeld, "Wandhöhe[m]", true);
 
-            builder.append("Bodenplatte", bodenflaechenAusfBox);
-            
-            builder.nextLine();
-
-            builder.append("", seitenwandCheck);
-            builder.append("", drainageCheck);
-
-            builder.append("", fuellanzeigerCheck);
-            builder.append("", schieberCheck);
-
-            builder.append("", abdeckungCheck);
-            builder.append("", leitung_geprueftCheck);
-            
-            builder.nextLine();
-
-            builder.appendSeparator("Auffangvorrichtung");
-            
-            builder.append("Auffangbehälter", auffangbehBox);
-            builder.append("Behältervolumen [m³]", volumenAuffangbehFeld);
-            
-            builder.append("Rohrleitung", rohrleitungBox);
-            builder.append("Wandhöhe [m]", wandhoeheFeld);
-
-            builder.nextLine();
-
-            builder.appendSeparator("Bemerkungen");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:30dlu:grow");
-            builder.nextLine(2);
-
-            builder.append(bemerkungScroller, 7);
-
+            builder.addSeparator("Ausführung", true);
+            builder.addComponent(daten.getPanel(), true);
+            builder.addSeparator("Auffangvorrichtung", true);
+            builder.addComponent(auffang.getPanel(), true);
+            builder.addSeparator("Bemerkungen", true);
+            builder.setFill(true, true);
+            builder.setWeightY(0.3);
+            builder.addComponent(bemerkungScroller, true);
 
             datenAbfuellflaechenJgsTab = builder.getPanel();
         }
@@ -1892,47 +1789,30 @@ public class VawsEditor extends AbstractBaseEditor {
             JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
                     ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            
-            
-            
-            FormLayout layout = new FormLayout(
-                    "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
-            );
-            layout.setColumnGroups(new int[][]{{1,5},{3,7}});
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
 
-            builder.appendSeparator("Stammdaten");
-            builder.append("Baujahr:", baujahrFeld);
-            builder.append("Aktenzeichen:", aktenzeichenField);
-            
-            builder.append("Lagerfläche [m²]:", lagerflaecheFeld);
-            builder.append("Lagervolumen [m³]:", mengeFeld);
-            
-            builder.append("Abstand zu Gewässer [m]:", abstandGewFeld);
-            builder.append("Gewässername:", gewNameFeld);
-            
-            builder.append("Abstand zu Brunnen [m]:", abstandBrunnenFeld);
-            builder.append("Tierhaltung:", tierhaltungFeld);
+            PanelBuilder stammdaten = new PanelBuilder(builder);
+            stammdaten.addComponent(baujahrFeld, "Baujahr:");
+            stammdaten.addComponent(aktenzeichenField, "Aktenzeichen:", true);
+            stammdaten.addComponent(lagerflaecheFeld, "Lagerfläche[m²]:");
+            stammdaten.addComponent(mengeFeld, "Lagervolumen[m³]:", true);
+            stammdaten.addComponent(abstandGewFeld, "Abstand zu Gewässer[m]:");
+            stammdaten.addComponent(gewNameFeld, "Gewässername:", true);
+            stammdaten.addComponent(abstandBrunnenFeld, "Abstand zu Brunnen[m]:");
+            stammdaten.addComponent(tierhaltungFeld, "Tierhaltung:", true);
+            stammdaten.addComponent(inbetriebnahmeChooser, "Inbetriebnahme:");
+            stammdaten.addComponent(erfassungChooser, "Erfassung:", true);
+            stammdaten.addComponent(genehmigungChooser, "Genehmigung:");
+            stammdaten.addComponent(stillegungChooser, "Stillegung:", true);
 
-            builder.nextLine();
-
-            builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-            builder.append("Erfassung:", erfassungChooser);
-
-            builder.append("Genehmigung:", genehmigungChooser);
-            builder.append("Stillegung:", stillegungChooser);
-
-            builder.nextLine();
-
-            builder.appendSeparator("Anlagenchronologie");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:30dlu:grow");
-            builder.nextLine(2);
-
-            builder.append(chronoScroller, 7);
-            
-
+            builder.addSeparator("Stammdaten", true);
+            builder.addComponent(stammdaten.getPanel(), true);
+            builder.addSeparator("Anlagenchronologie", true);
+            builder.setFill(true, true);
+            builder.setWeightY(1);
+            builder.addComponent(chronoScroller, true);
 
             datenJgsTab = builder.getPanel();
         }
@@ -1941,43 +1821,33 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getAusfuehrungAbfuellflaechenTab() {
         if (ausfuehrungAbfuellflaechenTab == null) {
-            FormLayout layout = new FormLayout(
-                    "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"
-            );
-            layout.setColumnGroups(new int[][]{{1,5},{3,7}});
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
 
-            builder.appendSeparator("Daten");
-            builder.append("Bodenflächenausführung:", bodenflaechenAusfBox);
-            builder.append("Fugenmaterial:", fugenMaterialFeld);
+            PanelBuilder daten = new PanelBuilder(builder);
+            daten.addComponent(bodenflaechenAusfBox, "Bodenflächenausführung:");
+            daten.addComponent(fugenMaterialFeld, "Fugenmaterial:", true);
+            daten.addComponent(dickeFeld, "Dicke:");
+            daten.addComponent(niederschlagSchutzBox, "Niederschlagsschutz:", true);
+            daten.addComponent(gueteFeld, "Güte:");
+            daten.addComponent(abscheiderVorhandenCheck, true);
 
-            builder.append("Dicke [cm]:", dickeFeld);
-            builder.append("Niederschlagsschutz:", niederschlagSchutzBox);
-
-            builder.append("Güte:", gueteFeld);
-            builder.append("", abscheiderVorhandenCheck);
-
-            builder.appendSeparator("Beschreibung Bodenfläche");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:25dlu:grow");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(beschrBodenflaecheArea), 7);
-            builder.nextLine();
-
-            builder.appendSeparator("Beschreibung Fugenmaterial");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:25dlu:grow");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(beschrFugenmaterialArea), 7);
-            builder.nextLine();
-
-            builder.appendSeparator("Beschreibung Ableitung / Niederschlagswasser");
-            builder.appendRow("3dlu");
-            builder.appendRow("fill:25dlu:grow");
-            builder.nextLine(2);
-            builder.append(new JScrollPane(beschrAblNiederschlArea),7);
-
+            builder.addSeparator("Daten", true);
+            builder.addComponent(daten.getPanel(), true);
+            builder.addSeparator("Beschreibung Bodenfläche", true);
+            builder.setFill(true, true);
+            builder.setWeightY(1);
+            builder.addComponent(new JScrollPane(beschrBodenflaecheArea), true);
+            builder.setWeightY(0);
+            builder.addSeparator("Beschreibung Fugenmaterial", true);
+            builder.setWeightY(1);
+            builder.addComponent(new JScrollPane(beschrFugenmaterialArea), true);
+            builder.setWeightY(0);
+            builder.addSeparator("Beschreibung Ableitung/Niederschlagswasser", true);
+            builder.setWeightY(1);
+            builder.addComponent(new JScrollPane(beschrAblNiederschlArea), true);
+            builder.fillColumn();
             ausfuehrungAbfuellflaechenTab = builder.getPanel();
         }
         return ausfuehrungAbfuellflaechenTab;
@@ -1985,15 +1855,10 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getSvPruefungTab() {
         if (svPruefungTab == null) {
-            FormLayout layout = new FormLayout(
-                    "f:p:g"
-            );
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
-            builder.appendRow("fill:25dlu:grow");
-            builder.append(new JScrollPane(svPruefungTabelle));//,7);
-
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, true, 1, 1, 1, 1,
+            0, 0, 5, 5);
+            builder.setEmptyBorder(5);
+            builder.addComponent(new JScrollPane(svPruefungTabelle));
             svPruefungTab = builder.getPanel();
         }
         return svPruefungTab;
@@ -2001,15 +1866,10 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getVerwVerfahrenTab() {
         if (verwVerfahrenTab == null) {
-            FormLayout layout = new FormLayout(
-                    "f:p:g"
-            );
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
-            builder.appendRow("fill:25dlu:grow");
-            builder.append(new JScrollPane(verwVerfahrenTabelle));//,7);
-
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, true, 1, 1, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
+            builder.addComponent(new JScrollPane(verwVerfahrenTabelle));
             verwVerfahrenTab = builder.getPanel();
         }
         return verwVerfahrenTab;
@@ -2017,15 +1877,10 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getVerwGebuehrenTab() {
         if (verwGebuehrenTab == null) {
-            FormLayout layout = new FormLayout(
-                    "f:p:g"
-            );
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
-            builder.appendRow("fill:25dlu:grow");
-            builder.append(new JScrollPane(verwGebuehrenTabelle));//,7);
-
+            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, true, 1, 1, 1, 1,
+                    0, 0, 5, 5);
+            builder.setEmptyBorder(5);
+            builder.addComponent(new JScrollPane(verwGebuehrenTabelle));
             verwGebuehrenTab = builder.getPanel();
         }
         return verwGebuehrenTab;
