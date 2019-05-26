@@ -49,6 +49,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -71,10 +72,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -91,6 +88,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 
@@ -131,13 +129,10 @@ public class SchlammPanel extends JPanel {
     private JPopupMenu probePopup;
 
     public SchlammPanel(Probeart art, HauptFrame frame) {
-        super(new FormLayout("pref, 4dlu, pref:grow", // spalten
-                "pref, 3dlu, 140dlu:grow, 3dlu, pref"));// zeilen
+        super(new BorderLayout());
 
         this.art = art;
         this.frame = frame;
-
-        setBorder(Borders.DIALOG_BORDER);
 
         probeModel = new ProbenahmenModel();
 
@@ -147,27 +142,27 @@ public class SchlammPanel extends JPanel {
         JScrollPane probeScroller = new JScrollPane(getProbeTabelle());
         JLabel anlageLabel = new JLabel("Kläranlage:");
 
-        FormLayout anlegenLayout = new FormLayout(
-                "pref, 4dlu, max(60dlu;pref), 7dlu, pref, 4dlu, max(60dlu;pref), 7dlu, max(60dlu;pref)", // spalten
-                ""); // zeilen werden automatisch erzeugt
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
 
-        DefaultFormBuilder anlPanelBuilder = new DefaultFormBuilder(
-                anlegenLayout);
+        PanelBuilder anlegenBuilder = new PanelBuilder(builder);
+        anlegenBuilder.setInsets(5, 0, 0, 5);
+        anlegenBuilder.addComponent(getKennummerFeld(), "Kennummer:");
+        anlegenBuilder.addComponent(getDatumsChooser(), "Datum:");
+        anlegenBuilder.addComponent(getAnlegenButton(), true, true);
 
-        anlPanelBuilder.appendSeparator("Neue Probenahme");
+        builder.setEmptyBorder(15);
+        builder.addComponents(anlageLabel, getAnlageBox());
+        builder.fillRow(true);
+        builder.setFill(true, true);
+        builder.setWeightY(1);
+        builder.addComponent(probeScroller, true);
+        builder.setWeightY(0);
+        builder.setFill(true, false);
+        builder.addSeparator("Neue Probenahme", true);
+        builder.addComponent(anlegenBuilder.getPanel(), true, true);
 
-        anlPanelBuilder.append("Kennummer:", getKennummerFeld());
-        anlPanelBuilder.append("Datum:", getDatumsChooser());
-        anlPanelBuilder.append(getAnlegenButton());
-
-        anlegenPanel = anlPanelBuilder.getPanel();
-
-        CellConstraints cc = new CellConstraints();
-
-        this.add(anlageLabel, cc.xy(1, 1));
-        this.add(getAnlageBox(), cc.xy(3, 1));
-        this.add(probeScroller, cc.xyw(1, 3, 3, "f, f"));
-        this.add(anlegenPanel, cc.xyw(1, 5, 3));
+        this.add(builder.getPanel());
     }
 
     public void updateProbeListe() {

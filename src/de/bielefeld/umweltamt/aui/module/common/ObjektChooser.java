@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common;
 
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -31,9 +32,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
@@ -41,6 +39,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
@@ -122,12 +121,10 @@ public class ObjektChooser extends OkCancelDialog {
         TabAction ta = new TabAction();
         ta.addComp(ergebnisTabelle);
 
-        FormLayout layout = new FormLayout("180dlu:g, 3dlu, min(16dlu;p)", // spalten
-                "300dlu:g"); // zeilen
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-
-        builder.add(tabellenScroller, cc.xyw(1, 1, 3));
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+                0, 0, 5, 5);
+        builder.setEmptyBorder(25);
+        builder.addComponent(tabellenScroller);
 
         return builder.getPanel();
     }

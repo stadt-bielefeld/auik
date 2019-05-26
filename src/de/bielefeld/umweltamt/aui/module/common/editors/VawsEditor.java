@@ -1545,7 +1545,7 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getSchutzvorkehrungenVAWSAbscheiderTab()
     {
         if (schutzvorkehrungenVAWSAbscheiderTab == null) {
-            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+            PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
                     0, 0, 5, 5);
             builder.setEmptyBorder(5);
             PanelBuilder stammdaten = new PanelBuilder(builder);
