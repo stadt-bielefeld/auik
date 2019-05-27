@@ -235,163 +235,13 @@ public class BetreiberEditor extends AbstractBaseEditor {
         // Ermögliche TAB aus dem Bemerkungs-Feld zu springen
         bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
         bemerkungsScroller.getHorizontalScrollBar().setFocusable(false);
-        // This was not used:
-        // TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
-        /*
-        FormLayout layout = new FormLayout(
-                "right:pref, 3dlu, 20dlu, 50dlu, 3dlu, right:pref, 3dlu, 27dlu, 3dlu, 30dlu, 10dlu, 60dlu, 3dlu, 60dlu, 3dlu, 20dlu", // Spalten
-                "pref, 3dlu, " + // 1 - Stammdaten
-                        "pref, 3dlu, " + // 3
-                        "pref, 3dlu, " + // 5
-                        "pref, 3dlu, " + // 7
-                        "pref, 3dlu, " + // 9
-                        "pref, 3dlu, " + // 11
-                        "pref, 3dlu, " + // 13
-                        "pref, 3dlu, " + // 15
-                        "pref, 3dlu, " + // 17
-                        "pref, 3dlu, " + // 19
-                        "pref, 3dlu, " + // 21
-
-                        "pref, 3dlu, " + // 23 - Lage
-                        "pref, 3dlu, " + // 25
-                        "pref, 3dlu, " + // 27
-                        "pref, 3dlu, " + // 29
-                        "pref, 3dlu, " + // 31
-                        "pref, 3dlu, " + // 33
-                        "pref, 3dlu, " + // 35
-
-                        "pref, 3dlu, " + // 37 - Bemerkungen und Revision
-                        "pref, 3dlu, " + // 39
-                        "pref, 3dlu, " + // 41
-                        "pref, 3dlu, " + // 43
-
-                        "pref, 3dlu, " + // 45
-                        "pref, 3dlu, " + // 47
-                        "pref, 10dlu, " + // 49
-
-                        "top:pref:grow");// 51 - Buttons
-        layout.setRowGroups(new int[][] {
-                { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45 } });
-
-        PanelBuilder builder = new PanelBuilder(layout);
-        builder.setDefaultDialogBorder();
-        CellConstraints cc = new CellConstraints();
-
-        // Stamdaten ------------------------------------
-        builder.addSeparator("Stammdaten", cc.xyw(1, 1, 16));
-        // Name
-        builder.add(namenFeld, cc.xyw(3, 3, 6));
-        // Telefon
-        builder.addLabel("Telefon:", cc.xy(10, 3));
-        builder.add(telefonFeld, cc.xyw(12, 3, 5));
-        // Anrede
-        builder.addLabel("Anrede:", cc.xy(1, 5));
-        builder.add(anredeFeld, cc.xyw(3, 5, 6));
-        // Telefax
-        builder.addLabel("Telefax:", cc.xy(10, 5));
-        builder.add(telefaxFeld, cc.xyw(12, 5, 5));
-        // Vorname
-        builder.addLabel("Vorname:", cc.xy(1, 7));
-        builder.add(vornamenFeld, cc.xyw(3, 7, 6));
-        // eMail
-        builder.addLabel("E-Mail:", cc.xy(10, 7));
-        builder.add(emailFeld, cc.xyw(12, 7, 5));
-        // Zusatz
-        builder.addLabel("Zusatz:", cc.xy(1, 9));
-        builder.add(nameZusFeld, cc.xyw(3, 9, 6));
-
-        // Ansprechpartner -------------------------
-        builder.addSeparator("Ansprechpartner", cc.xyw(10, 9, 7));
-        // Vorname
-        builder.addLabel("Vorname:", cc.xy(10, 11));
-        builder.add(betrBeaufVornameFeld, cc.xyw(12, 11, 5));
-        // Nachname
-        builder.addLabel("Name:", cc.xy(10, 13));
-        builder.add(betrBeaufNachnameFeld, cc.xyw(12, 13, 5));
-        // Kassenzeichen
-        builder.addLabel("Kassenzeichen:", cc.xy(1, 11));
-        builder.add(kassenzeichenFeld, cc.xyw(3, 11, 6));
-        // Wirtschaftszweig
-        builder.addLabel("Wirtschaftszweig:", cc.xy(1, 13));
-        builder.add(wirtschaftszweigBox, cc.xyw(3, 13, 6));
-
-        // Adresse --------------------------------------
-        builder.addSeparator("Adresse", cc.xyw(1, 15, 10));
-        // auswählen --------------------------------------
-        builder.addSeparator("auswählen", cc.xyw(12, 15, 5));
-        // Ort
-        builder.addLabel("Ort:", cc.xy(1, 17));
-        builder.add(plzZsFeld, cc.xy(3, 17));
-        builder.add(plzFeld, cc.xy(4, 17));
-        builder.add(ortFeld, cc.xyw(6, 17, 5));
-        // Straße
-        builder.addLabel("Straße:", cc.xy(1, 19));
-        builder.add(strasseFeld, cc.xyw(3, 19, 4));
-        builder.add(hausnrFeld, cc.xy(8, 19));
-        builder.add(hausnrZusFeld, cc.xy(10, 19));
-        builder.add(getStrassenBox(), cc.xyw(12, 17, 5));
-
-        builder.add(getStandorteScroller(), cc.xywh(12, 19, 5, 7));
-        
-        builder.addSeparator("Datenschutzhinweis erhalten:", cc.xyw(12, 27, 5));
-        builder.add(daten_awsvCheck, cc.xy(12, 29));
-        builder.add(daten_esatzungCheck, cc.xy(12, 31));
-        builder.add(daten_whgCheck, cc.xy(12, 33));
-
-        // Lage --------------------------------------
-        builder.addSeparator("Lage", cc.xyw(1, 21, 10));
-
-        // Koordinaten
-        builder.addLabel("E32:", cc.xy(1, 23));
-        builder.add(e32Feld, cc.xyw(3, 23, 3));
-        builder.add(getAusAblageButton(), cc.xywh(8, 23, 3, 3));
-        builder.addLabel("N32:", cc.xy(1, 25));
-        builder.add(n32Feld, cc.xyw(3, 25, 3));
-        builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 27));
-        builder.add(entwGebBox, cc.xyw(3, 27, 3));
-
-        //
-        builder.addLabel("Gemarkung:", cc.xy(1, 29));
-        builder.add(gemarkungBox, cc.xyw(3, 29, 8));
-
-        // VAwS
-        builder.addLabel("Standortgegebenheit:", cc.xy(1, 31));
-        builder.add(standortGgBox, cc.xyw(3, 31, 8));
-        builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 33));
-        builder.add(wEinzugsGebBox, cc.xyw(3, 33, 8));
-
-        // Bemerkungen ----------------------------------
-        builder.addSeparator("Bemerkungen", cc.xyw(1, 35, 10));
-        builder.add(bemerkungsScroller, cc.xywh(1, 37, 10, 7));
-
-        // Letzte Revision -------------------------------------
-        builder.addSeparator("Letzte Revision", cc.xyw(12, 35, 5));
-        // Datum
-        builder.addLabel("Datum:", cc.xy(12, 37));
-        builder.add(revdatumsFeld, cc.xyw(14, 37, 3));
-        // Handzeichen alt
-        handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 39));
-        builder.add(handzeichenAltFeld, cc.xyw(14, 39, 3));
-
-        // Neue Revision -------------------------------------
-        builder.addSeparator("Neue Revision", cc.xyw(12, 41, 5));
-        // Handzeichen neu
-        builder.add(handzeichenNeuFeld, cc.xyw(14, 43, 3));
-
-        */
-
 
         namenLabel = new JLabel("Name:");
         handzeichenLabel = new JLabel("Handzeichen:");
 
         //Stamdaten - Ansprechpartner
-        PanelBuilder stammdaten = new PanelBuilder();
-        stammdaten.setBorder(new EmptyBorder(5, 5, 5, 5));
-        stammdaten.setInsets(5, 0, 0, 5);
-        stammdaten.setAnchor(GridBagConstraints.NORTHWEST);
-        stammdaten.setFill(true, false);
-        stammdaten.setWeightX(0);
-
+        PanelBuilder stammdaten = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
         stammdaten.addComponent(namenFeld, namenLabel);
         stammdaten.addComponent(telefonFeld, "Telefon:", true);
         stammdaten.addComponent(anredeFeld, "Anrede:");
@@ -405,28 +255,26 @@ public class BetreiberEditor extends AbstractBaseEditor {
         stammdaten.addComponent(wirtschaftszweigBox, "Wirtschaftszweig:");
         stammdaten.addComponent(betrBeaufNachnameFeld, "Nachname:", true);
 
-        //Adresse - Lage
-        PanelBuilder adresseLage = new PanelBuilder();
-        adresseLage.setInsets(5, 0, 0, 0);
-        adresseLage.setAnchor(GridBagConstraints.NORTHWEST);
-        adresseLage.setFill(true, false);
-        adresseLage.setWeight(1, 0);
-
-        adresseLage.addSeparator("Adresse", true);
-        adresseLage.addComponents(true, new JLabel("Ort:"), plzZsFeld, plzFeld, ortFeld);
-        adresseLage.addComponents(true, new JLabel("Straße:"), strasseFeld, hausnrFeld, hausnrZusFeld);
-        adresseLage.addSeparator("Lage", true);
-
-        PanelBuilder coordPanel = new PanelBuilder(adresseLage);
+        PanelBuilder coordPanel = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
         coordPanel.addComponent(e32Feld, "E32:", true);
         coordPanel.addComponent(n32Feld, "N32:");
-        PanelBuilder qgisButton = new PanelBuilder(adresseLage);
+
+        PanelBuilder qgisButton = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
         qgisButton.setWeight(0, 1);
         qgisButton.setFill(true, true);
         qgisButton.addComponent(getAusAblageButton());
         qgisButton.setWeight(0, 0);
         qgisButton.fillRow();
 
+        //Adresse - Lage
+        PanelBuilder adresseLage = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
+        adresseLage.addSeparator("Adresse", true);
+        adresseLage.addComponents(true, new JLabel("Ort:"), plzZsFeld, plzFeld, ortFeld);
+        adresseLage.addComponents(true, new JLabel("Straße:"), strasseFeld, hausnrFeld, hausnrZusFeld);
+        adresseLage.addSeparator("Lage", true);
         adresseLage.setWeightX(0.75);
         adresseLage.setInsets(5, 0, 0, 5);
         adresseLage.addComponent(coordPanel.getPanel());
@@ -443,7 +291,6 @@ public class BetreiberEditor extends AbstractBaseEditor {
         adresseLage.addComponent(wEinzugsGebBox, "W.Einzugsgebiet", true);
 
         adresseLage.addSeparator("Bemerkungen", true);
-        adresseLage.setGridHeight(4);
         adresseLage.setFill(true, true); 
         adresseLage.setWeight(1, 10);
         adresseLage.addComponent(bemerkungsScroller, true);
@@ -451,12 +298,8 @@ public class BetreiberEditor extends AbstractBaseEditor {
         adresseLage.setWeight(1, 0);
         adresseLage.setFill(true, false);
 
-        PanelBuilder sePanel = new PanelBuilder();
-        sePanel.setBorder(new EmptyBorder(0, 25, 0, 0));
-        sePanel.setInsets(5, 0, 0, 0);
-        sePanel.setWeight(1, 0);
-        sePanel.setAnchor(GridBagConstraints.NORTHWEST);
-        sePanel.setFill(true, false);
+        PanelBuilder sePanel = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
         sePanel.addSeparator("auswählen", true);
         sePanel.addComponent(getStrassenBox(), true);
         sePanel.setWeight(1, 10);
@@ -476,15 +319,14 @@ public class BetreiberEditor extends AbstractBaseEditor {
         sePanel.addSeparator("Neue Revision", true);
         sePanel.addComponent(handzeichenNeuFeld, "Handzeichen", true);
 
-        PanelBuilder builder = new PanelBuilder();
-        builder.setAnchor(GridBagConstraints.NORTHWEST);
-        builder.setBorder(new EmptyBorder(1, 1, 1, 1));
-        builder.setWeight(1, 0);
-        builder.setFill(true, false);
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, false, true, 0, 0, 1, 1,
+                0, 0, 5, 10);
+        builder.setEmptyBorder(15);
+        builder.setPreferedSize(550, 250);
         builder.addSeparator("Stammdaten", true);
-        builder.setFill(true, true);
-        builder.setWeight(1, 1);
         builder.addComponent(stammdaten.getPanel(), true);
+        builder.setFill(true, true);
+        builder.setWeight(1,1);
         builder.addComponent(adresseLage.getPanel());
         builder.addComponent(sePanel.getPanel(), true);
         builder.fillColumn();

@@ -758,51 +758,32 @@ public class KlaerschlammAuswertung extends AbstractModul
         if (this.panel == null)
         {
             this.einheiten = DatabaseQuery.getEinheiten();
-            /*
-            builder.addSeparator("Kläranlagen / Art", cc.xyw(1, 1, 5));
-            builder.add(new JScrollPane(getKlaeranlagen()), cc.xywh(1, 3, 3, 5));
-            builder.add(getArtBox(), cc.xy(5, 7, "l,d"));
+            PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                    0, 0, 5, 5);
 
-            builder.addSeparator("Zeitraum", cc.xyw(7, 1, 3));
-            builder.add(new JLabel("Von:"), cc.xy(7, 3, "r,d"),
-                        getVonDateChooser(), cc2.xy(9, 3, "l,d"));
-            builder.add(new JLabel("Bis:"), cc.xy(7, 5, "r,d"),
-                        getBisDateChooser(), cc2.xy(9, 5, "l,d"));
-
-            builder.addSeparator("Parameter", cc.xyw(1, 9, 9));
-            builder.add(getParameterPanel(), cc.xyw(1, 11, 9, "fill, fill"));
-            JPanel buttonPanel = ButtonBarFactory.buildOKBar(getSubmitButton());
-            builder.add(buttonPanel, cc.xyw(1, 13, 9, "fill, fill"));
-            */
-            PanelBuilder builder = new PanelBuilder();
-            builder.setFill(GridBagConstraints.BOTH);
-            builder.setAnchor(GridBagConstraints.WEST);
-            builder.setWeightX(1);
-            builder.setInsets(new Insets(5, 5, 5, 50));
-            builder.addSeparator(JSeparator.HORIZONTAL, "Kläranlagen / Art");
-            builder.setInsets(new Insets(5, 5, 5, 5));
-            builder.addSeparator(JSeparator.HORIZONTAL, "Zeitraum", true);
-
-            builder.setWeightX(0);
-            builder.addComponent(new JScrollPane(getKlaeranlagen()));
-
-            PanelBuilder artBox = new PanelBuilder();
-            artBox.setAnchor(GridBagConstraints.WEST);
-            artBox.fillColumn(true);
+            PanelBuilder artBox = new PanelBuilder(builder);
+            artBox.fillRows(4);
             artBox.addComponent(getArtBox());
-            artBox.fillRow();
-            builder.addComponent(artBox.getPanel());
 
-            builder.addComponent(getDatePanel(), true);
+            PanelBuilder anlage = new PanelBuilder(builder);
+            anlage.addComponents(getKlaeranlagen(), artBox.getPanel());
 
-            builder.setWeightX(1);
-            builder.addSeparator(JSeparator.HORIZONTAL, "Parameter", true);
-            builder.setWeightY(1);
+            PanelBuilder time = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 0, 0, 1, 1,
+                    0, 0, 5, 5);
+            time.addComponent(getVonDateChooser(), "Von:", true, true);
+            time.addComponent(getBisDateChooser(), "Bis:", true, true);
+
+            builder.setEmptyBorder(15);
+            builder.addSeparator("Kläranlagen / Art");
+            builder.addSeparator("Zeitraum", true);
+            builder.setInsets(0, 0, 5, 25);
+            builder.addComponent(anlage.getPanel());
+            builder.setInsets(0, 0, 5, 5);
+            builder.addComponent(time.getPanel(), true);
+            builder.addSeparator("Parameter", true);
             builder.addComponent(getParameterPanel(), true);
-            builder.setWeightY(0);
-            builder.fillRow();
-            builder.setAnchor(GridBagConstraints.EAST);
-            builder.addComponent(getSubmitButton());
+            builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSubmitButton()), true);
+            builder.fillColumn();
 
             this.panel = builder.getPanel();
         }
@@ -1069,32 +1050,8 @@ public class KlaerschlammAuswertung extends AbstractModul
     {
         if (this.parameterPanel == null)
         {
-            PanelBuilder builder = new PanelBuilder();
-            builder.setAnchor(GridBagConstraints.WEST);
-            builder.addComponent(new JLabel("Erste Y-Achse"));
-            builder.fillRow();
-            builder.setAnchor(GridBagConstraints.EAST);
-            builder.addComponent(new JLabel("Zweite-Y-Achse"), true);
-            builder.setWeightX(0.3);
-
-            //Create left panel
-            PanelBuilder westPanel = new PanelBuilder();
-            westPanel.setAnchor(GridBagConstraints.SOUTHWEST);
-            westPanel.setInsets(0, 0, 5, 0);
-            westPanel.setWeightY(1);
-            westPanel.setWeightX(1);
-            westPanel.setFill(GridBagConstraints.BOTH);
-            westPanel.addComponent(new JScrollPane(getLeftList()), true);
-            westPanel.setWeightY(0);
-            westPanel.setWeightX(0);
-            westPanel.addComponent(getLeftDeleteButton(), true);
-            westPanel.addComponent(getLeftEinheitenBox(), true);
-            westPanel.addComponent(getLeftAnalyseFeld(), true);
-
-            //Create center param chooser
-            PanelBuilder centerPanel = new PanelBuilder();
-            centerPanel.setAnchor(GridBagConstraints.NORTH);
-            centerPanel.setInsets(0, 0, 5, 0);
+            JScrollPane leftList = new JScrollPane(getLeftList());
+            JScrollPane rightList = new JScrollPane(getRightList());
             String[] paramIDs = {
                 DatabaseConstants.ATL_PARAMETER_ID_CADMIUM,
                 DatabaseConstants.ATL_PARAMETER_ID_CHROM,
@@ -1104,44 +1061,50 @@ public class KlaerschlammAuswertung extends AbstractModul
                 DatabaseConstants.ATL_PARAMETER_ID_BLEI,
                 DatabaseConstants.ATL_PARAMETER_ID_ZINK
             };
-            for (String paramID : paramIDs)
-            {
-                centerPanel.addComponent(createRLButton(true, paramID));
-                centerPanel.addComponent(
-                    new JLabel(
-                            Parameter.findById(paramID).getBezeichnung(),
-                            JLabel.CENTER));
-                centerPanel.addComponent(createRLButton(false, paramID), true);
+
+            PanelBuilder leftParam = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+                    0, 0, 5, 5);
+            leftParam.addComponent(leftList, true);
+            leftParam.setWeightY(0);
+            leftParam.setAnchor(PanelBuilder.CENTER);
+            leftParam.addComponents(true, new JPanel(), getLeftDeleteButton(), new JPanel());
+            leftParam.addComponents(true, new JPanel(), getLeftEinheitenBox(), new JPanel());
+            leftParam.addComponents(true, new JPanel(), getLeftAnalyseFeld(), new JPanel());
+
+            PanelBuilder centerParam = new PanelBuilder(PanelBuilder.CENTER, true, true, 0, 0, 1, 1,
+                    0, 0, 10, 0);
+            int y = 9;
+            for (String paramID : paramIDs) {
+                centerParam.addComponent(createRLButton(true, paramID));
+                centerParam.fillRow();
+                centerParam.addComponent(new JLabel(
+                    Parameter.findById(paramID).getBezeichnung()));
+                centerParam.fillRow();
+                centerParam.addComponent(createRLButton(false, paramID), true);
+                y += 2;
             }
-            centerPanel.addComponent(createRLButton(true, "box"));
-            centerPanel.addComponent(getParameterBox());
-            centerPanel.addComponent(createRLButton(false, "box"), true);
-            centerPanel.addComponent(new JLabel("<  Einheit  >", JLabel.CENTER), true);
-            centerPanel.addComponent(new JLabel("<  Analyse von  >", JLabel.CENTER), true);
+            //Add two empty panel rows to keep alignment
+            centerParam.fillRows(2);
+            centerParam.addComponents(true, new JPanel(), new JPanel(),
+                    new JLabel("< Einheit >"), new JPanel(), new JPanel());
+            centerParam.addComponents(true, new JPanel(), new JPanel(),
+                    new JLabel("< Analyse von >"), new JPanel(), new JPanel());
+    
+            PanelBuilder rightParam = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+                 0, 0, 5, 5);
+            rightParam.addComponent(rightList, true);
+            rightParam.setWeightY(0);
+            rightParam.setAnchor(PanelBuilder.CENTER);
+            rightParam.addComponents(true, new JPanel(), getRightDeleteButton(), new JPanel());
+            rightParam.addComponents(true, new JPanel(), getRightEinheitenBox(), new JPanel());
+            rightParam.addComponents(true, new JPanel(), getRightAnalyseFeld(), new JPanel());
+    
+            PanelBuilder param = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+                    0, 0, 5, 5);
+            param.addComponents(true, new JLabel("Erste Y-Achse"), new JPanel(), new JLabel("Zweite Y-Achse"));
+            param.addComponents(true, leftParam.getPanel(), centerParam.getPanel(), rightParam.getPanel());
 
-            //Create right panel
-            PanelBuilder eastPanel = new PanelBuilder();
-            eastPanel.setAnchor(GridBagConstraints.SOUTHWEST);
-            eastPanel.setInsets(0, 0, 5, 0);
-            eastPanel.setWeightY(1);
-            eastPanel.setWeightX(1);
-            eastPanel.setFill(GridBagConstraints.BOTH);
-            eastPanel.addComponent(new JScrollPane(getRightList()), true);
-            eastPanel.setWeightY(0);
-            eastPanel.setWeightX(0);
-            eastPanel.addComponent(getRightDeleteButton(), true);
-            eastPanel.addComponent(getRightEinheitenBox(), true);
-            eastPanel.addComponent(getRightAnalyseFeld(), true);
-
-            builder.setAnchor(GridBagConstraints.NORTHWEST);
-            builder.setWeight(1, 1);
-            builder.setFill(GridBagConstraints.BOTH);
-            builder.addComponent(westPanel.getPanel());
-            builder.addComponent(centerPanel.getPanel());
-            builder.addComponent(eastPanel.getPanel());
-            builder.fillColumn(true);
-
-            this.parameterPanel = builder.getPanel();
+            this.parameterPanel = param.getPanel();
         }
 
         return this.parameterPanel;

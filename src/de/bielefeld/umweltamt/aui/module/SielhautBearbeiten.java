@@ -814,12 +814,8 @@ public class SielhautBearbeiten extends AbstractModul {
             RetractablePanel datenRP = new RetractablePanel(
                 sep.getPanel(), getDatenPanel(), true, null);
 
-            PanelBuilder builder = new PanelBuilder();
-            builder.setBorder(new EmptyBorder(5, 5, 5, 5));
-            builder.setInsets(0, 0, 5, 0);
-            builder.setAnchor(GridBagConstraints.WEST);
-            builder.setWeightX(1);
-            builder.setFill(GridBagConstraints.HORIZONTAL);
+            PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                    5, 5, 5, 5);
             builder.addComponent(getPunktFeld(), "Messstelle:");
             builder.setWeightX(0);
             builder.addComponent(getPunktToolBar(), true);
@@ -968,53 +964,64 @@ public class SielhautBearbeiten extends AbstractModul {
     // Daten
     private JPanel getDatenPanel() {
         if (this.datenPanel == null) {
-            PanelBuilder builder = new PanelBuilder();
 
             JScrollPane bemerkungsScroller = new JScrollPane(
                 getSpBemerkungsArea(),
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-            builder.setAnchor(GridBagConstraints.WEST);
-            builder.setInsets(0, 0, 5, 5);
-            builder.setBorder(new EmptyBorder(5, 5, 5, 5));
-            builder.setWeightX(0.3);
-            builder.setFill(GridBagConstraints.HORIZONTAL);
-            builder.addComponent(getSpNamenFeld(), "Name: ", true, true);
-            builder.addComponent(getSpEntgebFeld(), "Entwässerungsgebiet:", true, true);
-            builder.addComponent(getSpLageFeld(), "Lage:", true, true);
-            builder.setGridHeight(2);
-            builder.setWeightX(0.7);
-            builder.addComponent(bemerkungsScroller, "Bemerkungen:", true, true);
-
-            PanelBuilder bottomContent = new PanelBuilder();
-            bottomContent.setAnchor(GridBagConstraints.WEST);
-
-            PanelBuilder lagePanel = new PanelBuilder();
-            lagePanel.setWeightX(1);
-            lagePanel.setFill(GridBagConstraints.HORIZONTAL);
-            lagePanel.setAnchor(GridBagConstraints.WEST);
+            PanelBuilder topPanel = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            topPanel.addComponent(getSpNamenFeld(), "Name: ", true, true);
+            topPanel.addComponent(getSpEntgebFeld(), "Entwässerungsgebiet:", true, true);
+            topPanel.addComponent(getSpLageFeld(), "Lage:", true, true);
+            topPanel.setWeightY(1);
+            topPanel.addComponent(bemerkungsScroller, "Bemerkungen:", true);
+            topPanel.setWeightY(0);
+        
+            PanelBuilder lagePanel = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 1, 0, 1, 1,
+                    0, 0, 5, 5);
             lagePanel.addComponent(getSpE32Feld(), "E32:", true);
             lagePanel.addComponent(getSpN32Feld(), "N32:", true);
+            lagePanel.addComponent(getSpHaltungsnrFeld(), "Schacht-Nr.:", true);
+            lagePanel.addComponent(getSpAlarmplannrFeld(), "Alarmplan-Nr.:", true);
 
-            PanelBuilder checkboxes = new PanelBuilder();
-            checkboxes.setAnchor(GridBagConstraints.WEST);
+            PanelBuilder checkboxes = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 1, 0, 1, 1,
+                    0, 0, 5, 5);
             checkboxes.addComponent(getSpSielhautCheck(), true);
             checkboxes.addComponent(getSpFirmenprobeCheck(), true);
             checkboxes.addComponent(getSpNachprobeCheck(), true);
+            checkboxes.fillColumn();
 
+            PanelBuilder button = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 1, 1, 1, 1,
+                    0, 0, 5, 5);
+                    button.addComponent(getAusAblageButton(), true, true);
+                    button.fillRows(2);
+
+            PanelBuilder bottomContent = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            bottomContent.setBorder(new EmptyBorder(0, 60, 0, 0));
             bottomContent.setWeightX(1);
-            bottomContent.setFill(GridBagConstraints.HORIZONTAL);
-            bottomContent.addComponent(lagePanel.getPanel());
-            bottomContent.addComponent(getAusAblageButton(), true);
-            bottomContent.addComponent(getSpHaltungsnrFeld(), "Schacht-Nr.:", true, true);
-            bottomContent.addComponent(getSpAlarmplannrFeld(), "Alarmplan-Nr.:", true, true);
+            bottomContent.addComponents(true, lagePanel.getPanel(), button.getPanel());
+            bottomContent.setWeight(0, 1);
 
+            PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            builder.setPreferedSize(800, 250);
+            builder.setEmptyBorder(5);
+            builder.setWeightY(1);
+            builder.addComponent(topPanel.getPanel(), true);
+            builder.setWeightY(0);
             builder.setWeightX(1);
             builder.addComponent(bottomContent.getPanel());
             builder.setWeightX(0);
             builder.addComponent(checkboxes.getPanel(), true);
-            this.datenPanel = builder.getPanel();
+
+            PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 1, 1, 1,
+                    0, 0, 5, 5);
+            content.setEmptyBorder(15);
+            content.addComponent(builder.getPanel());
+            content.fillRow(true);
+            this.datenPanel = content.getPanel();
         }
         return this.datenPanel;
     }

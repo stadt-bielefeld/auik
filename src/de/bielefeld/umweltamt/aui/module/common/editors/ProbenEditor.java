@@ -113,11 +113,6 @@ import javax.swing.table.TableColumn;
 
 import net.sf.jasperreports.engine.JRDataSource;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
@@ -143,6 +138,7 @@ import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -838,9 +834,9 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
         });
 
-        return ButtonBarFactory.buildRightAlignedBar(new JButton[] {
+        return PanelBuilder.buildRightAlignedButtonToolbar(new JButton[] {
                 this.button1, this.button2, this.button3, this.auftragDrucken,
-                this.bescheidDrucken}, true);
+                this.bescheidDrucken});
     }
 
     @Override
@@ -920,6 +916,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        /*
         FormLayout layout = new FormLayout(
             "70dlu, 60dlu, 40dlu, 5dlu, 30dlu, 5dlu, 60dlu, 5dlu, 30dlu, 50dlu, 5dlu, 50dlu",
             "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu,"
@@ -999,7 +996,42 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         row += 2;
         builder.add(parameterScroller, cc.xyw(1, row, 12));
+        */
 
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
+
+        PanelBuilder probe = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 15, 5);
+        probe.addComponent(this.probenummer, "Probenummer:", true, true);
+        probe.addComponent(this.vorgangsstatusBox, "Vorgangsstatus");
+        probe.setWeightX(0);
+        probe.addComponent(this.statusHoch, true, true);
+        probe.setWeightX(1);
+        probe.addComponent(this.sachbearbeiterBox, "SachbearbeiterIn", true, true);
+        probe.addComponent(this.betrieb, "Name des Betriebs:", true, true);
+        probe.addComponent(this.entnahmepunkt, "Entnahmepunkt:", true, true);
+        probe.setWeightX(0);
+        probe.addComponent(this.datum, "Datum:");
+        probe.setWeightX(1);
+        probe.addComponent(this.uhrzeitVon, "von:");
+        probe.addComponent(this.uhrzeitBis, "bis:");
+        probe.addComponent(this.fahrtzeit, "Fahrzeit:", true);
+        probe.setWeightX(0);
+        probe.addComponent(this.bezug, "Bezug:");
+        probe.addComponent(this.beteiligte, "Beteiligte:", true, true);
+        probe.addComponent(this.rechnungsDatum, "Rechnungsdatum:");
+        probe.addComponent(this.rechnungsBetrag, "Rechnungsbetrag:", true);
+
+        builder.setEmptyBorder(15);
+        builder.addSeparator("Probe", true);
+        builder.addComponent(probe.getPanel(), true);
+        builder.addSeparator("Bemerkungen", true);
+        builder.setWeightY(0.4);
+        builder.addComponent(bemerkungsScroller, true);
+        builder.setWeightY(0);
+        builder.addSeparator("Parameter", true);
+        builder.addComponent(parameterScroller);
         return builder.getPanel();
     }
 
@@ -1915,12 +1947,10 @@ class ParameterChooser extends OkCancelApplyDialog {
         TabAction ta = new TabAction();
         ta.addComp(this.ergebnisTabelle);
 
-        FormLayout layout = new FormLayout("180dlu:g, 3dlu, min(16dlu;p)", // spalten
-            "20dlu, 3dlu, 300dlu:g"); // zeilen
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+                0, 0, 5, 5);
 
-        builder.add(tabellenScroller, cc.xyw(1, 3, 3));
+        builder.addComponent(tabellenScroller);
 
         return builder.getPanel();
     }

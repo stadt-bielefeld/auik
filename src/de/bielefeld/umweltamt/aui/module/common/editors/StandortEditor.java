@@ -44,10 +44,6 @@ import javax.swing.JTextField;
 
 import org.hibernate.criterion.MatchMode;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
@@ -203,6 +199,7 @@ public class StandortEditor extends AbstractBaseEditor
 		String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
 		String rechteSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g";
 		int rS = 10;
+		/*
 
 		FormLayout layout = new FormLayout(
 				linkeSpalten + ", 10dlu, " + rechteSpalten, // Spalten
@@ -304,6 +301,9 @@ public class StandortEditor extends AbstractBaseEditor
 		});
 
 		return builder.getPanel();
+		*/
+		//TODO: This class seems to be unused!
+		return null;
 	}
 
 	/**

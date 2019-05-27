@@ -52,6 +52,7 @@
 package de.bielefeld.umweltamt.aui.utils.dialogbase;
 
 import java.awt.BorderLayout;
+import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -60,11 +61,10 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.factories.ButtonBarFactory;
+import javax.swing.border.EmptyBorder;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 
 /**
  * Eine Grundlage für einen einfachen Dialog mit einem, zwei oder drei Buttons.
@@ -106,10 +106,9 @@ public abstract class SimpleDialog extends JDialog {
         }
 
         JPanel tmp = new JPanel(new BorderLayout());
-        tmp.setBorder(Borders.DIALOG_BORDER);
 
         buttonBar = createButtonBar();
-        buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
+        buttonBar.setBorder(new EmptyBorder(new Insets(0, 0, 15, 30)));
 
         JComponent content = buildContentArea();
         tmp.add(content, BorderLayout.CENTER);
@@ -131,13 +130,13 @@ public abstract class SimpleDialog extends JDialog {
      */
     protected JPanel createButtonBar() {
         if (threeButtons) {
-            return ButtonBarFactory.buildOKCancelApplyBar(button1, button2, button3);
+            return PanelBuilder.buildRightAlignedButtonToolbar(button1, button2, button3);
         }
         else if (twoButtons) {
-            return ButtonBarFactory.buildOKCancelBar(button1, button2);
+            return PanelBuilder.buildRightAlignedButtonToolbar(button1, button2);
         }
         else {
-           return ButtonBarFactory.buildOKBar(button1);
+           return PanelBuilder.buildRightAlignedButtonToolbar(button1);
         }
     }
 
