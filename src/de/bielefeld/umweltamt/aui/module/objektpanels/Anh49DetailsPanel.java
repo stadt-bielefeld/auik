@@ -101,6 +101,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -127,11 +128,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.uif_lite.component.Factory;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -142,6 +138,7 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.AbscheiderEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -425,19 +422,21 @@ public class Anh49DetailsPanel extends JPanel {
         ta.addComp(getAbscheiderTabelle());
         ta.addComp(getOrtsterminTabelle());
 
-        JSplitPane tabellenSplit = Factory.createStrippedSplitPane(
-            JSplitPane.VERTICAL_SPLIT, abscheiderScroller, ortsterminScroller,
-            0.5);
+        JSplitPane tabellenSplit = new JSplitPane(
+                JSplitPane.VERTICAL_SPLIT, abscheiderScroller, ortsterminScroller);
+        tabellenSplit.setResizeWeight(0.5);
 
-        FormLayout layout = new FormLayout("150dlu:grow, 100dlu", // Spalten
-            "100dlu:grow, 3dlu, pref"); // Zeilen
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+            5, 5, 5, 5);
+        builder.setEmptyBorder(15);
+        builder.addComponent(tabellenSplit, true);
+        builder.setFill(true, false);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.addComponent(getSpeichernButton(), true);
 
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-        CellConstraints cc = new CellConstraints();
-
-        builder.add(tabellenSplit, cc.xyw(1, 1, 2));
-        builder.add(getSpeichernButton(), cc.xy(2, 3));
+        this.setLayout(new BorderLayout());
+        this.add(builder.getPanel());
     }
 
     private Action getAbscheiderLoeschAction() {

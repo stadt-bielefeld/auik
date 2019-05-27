@@ -75,6 +75,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -96,10 +97,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
@@ -112,6 +109,7 @@ import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 
 /**
  * Das Panel zum Bearbeiten von Druckereien
@@ -173,86 +171,82 @@ public class Anh55Panel extends JPanel {
         this.name = "Wäscherei";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
-        builder.appendSeparator("Fachdaten");
-        builder.append("Entwässerungsgebiet:", getEntgebIdFeld());
-        builder.append("", getAbgemeldetCheck());
-        builder.nextLine();
-        builder.append("Branche:", getBrancheFeld());
-        builder.append("", getPutztuecherCheck());
-        builder.nextLine();
-        builder.append("Ansprechpartner:", getAnsprechpartnerFeld());
-        builder.append("", getMattenCheck());
-        builder.nextLine();
-        builder.append("Menge:", getMengeFeld());
-        builder.append("", getTeppichCheck());
-        builder.nextLine();
-        builder.append("Sonstige Textilien:", getSonsttexFeld());
-        builder.append("", getBerufsklCheck());
-        builder.nextLine();
-        builder.append("Monatl. Wasserverbrauch:", getMonatwasserverbFeld());
-        builder.append("", getHaushaltstexCheck());
-        builder.nextLine();
-        builder.append("Anteil am Waschgut:", getAnteilwaschgutFeld());
-        builder.append("", getGasthotelCheck());
-        builder.nextLine();
-        builder.append("Anteil am Gesamtwaschgut:", getGesamtwaschgutFeld());
-        builder.append("", getKrankenhausCheck());
-        builder.nextLine();
-        builder.append("Sachbearbeiter/in:", getSachbearbeiterFeld());
-        builder.append("", getHeimwaescheCheck());
-        builder.nextLine();
-        builder.append("", getVliesCheck());
-        builder.append("", getFischCheck());
-        builder.nextLine();
-        builder.append("", getLoesungsmittelCheck());
-        builder.append("", getBetrwasseraufberCheck());
-        builder.nextLine();
-        builder.append("", getChlorCheck());
-        builder.append("", getAktivchlorCheck());
-        builder.nextLine();
-
-        builder.appendSeparator("Wasch-Situation");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane waschsituationScroller = new JScrollPane(
-            getWaschsituationArea(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(waschsituationScroller, 7);
-
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
-
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+                getWaschsituationArea(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane bemerkungsScroller = new JScrollPane(
+                getBemerkungenArea(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
-            getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
-        builder.nextLine();
+                getObjektverknuepungTabelle(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
 
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveAnh55Button());
+        PanelBuilder fachdaten = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
+        fachdaten.setWrapLabelComponents(false);
+        fachdaten.setPreferedSize(600, 500);
+        fachdaten.addComponent(getEntgebIdFeld(), "Entwässerungsgebiet:");
+        fachdaten.addComponent(getAbgemeldetCheck(), true);
+        fachdaten.addComponent(getBrancheFeld(), "Branche:");
+        fachdaten.addComponent(getPutztuecherCheck(), true);
+        fachdaten.addComponent(getAnsprechpartnerFeld(), "Ansprechpartner:");
+        fachdaten.addComponent(getMattenCheck(), true);
+        fachdaten.addComponent(getMengeFeld(), "Menge:");
+        fachdaten.addComponent(getTeppichCheck(), true);
+        fachdaten.addComponent(getSonsttexFeld(), "Sonstige Textilien:");
+        fachdaten.addComponent(getBerufsklCheck(), true);
+        fachdaten.addComponent(getMonatwasserverbFeld(), "Monatl. Wasserverbrauch");
+        fachdaten.addComponent(getHaushaltstexCheck(), true);
+        fachdaten.addComponent(getAnteilwaschgutFeld(), "Anteil am Waschgut:");
+        fachdaten.addComponent(getGasthotelCheck(), true);
+        fachdaten.addComponent(getGesamtwaschgutFeld(), "Anteil am Gesamtwaschgut:");
+        fachdaten.addComponent(getKrankenhausCheck(), true);
+        fachdaten.addComponent(getSachbearbeiterFeld(), "SachbearbeiterIn:");
+        fachdaten.addComponent(getHeimwaescheCheck(), true);
+        fachdaten.addComponents(true, new JPanel(), getVliesCheck(), getFischCheck());
+        fachdaten.addComponents(true, new JPanel(), getLoesungsmittelCheck(), getBetrwasseraufberCheck());
+        fachdaten.addComponents(true, new JPanel(), getChlorCheck(), getAktivchlorCheck());
 
-        // JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveAnh55Button());
-        builder.append(buttonBar, 7);
+
+        builder.setPreferedSize(600, 750);
+        builder.addSeparator("Fachdaten", true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponent(fachdaten.getPanel(), true);
+        builder.setAnchor(PanelBuilder.NORTHWEST);
+        builder.addSeparator("Wasch-Situatuion", true);
+        builder.setWeightY(0.4);
+        builder.addComponent(waschsituationScroller, true);
+        builder.setWeightY(0);
+        builder.addSeparator("Bemerkungen", true);
+        builder.setWeightY(0.4);
+        builder.addComponent(bemerkungsScroller, true);
+        builder.setWeightY(0);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeightY(0.6);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(
+                getSelectObjektButton(), getSaveAnh55Button()), true);
+
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
 
     }
 

@@ -1,6 +1,7 @@
 package de.bielefeld.umweltamt.aui.utils;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -72,6 +73,11 @@ public class PanelBuilder {
      * Default Panel with solid background
      */
     public static final int DEFAULT_PANEL = 1;
+
+    /**
+     * If true, labeled components are wrapped in a panel
+     */
+    private boolean wrapLabeledComponents;
 
     /**
      * Anchor values
@@ -158,6 +164,7 @@ public class PanelBuilder {
         this.panelType = panelType;
         this.c = new GridBagConstraints();
         this.layout = new GridBagLayout();
+        this.wrapLabeledComponents = false;
         switch (panelType) {
             case GRADIENT_PANEL:
                 this.panel = new GradientPanel(this.layout, new Color(186, 211, 237), new JPanel().getBackground());
@@ -173,6 +180,14 @@ public class PanelBuilder {
 
     public PanelBuilder() {
         this(DEFAULT_PANEL);
+    }
+
+    /**
+     * Set wrapLabeledComponents
+     * @param wrapLabeledComponents New value
+     */
+    public void setWrapLabelComponents(boolean wrapLabeledComponents) {
+        this.wrapLabeledComponents = wrapLabeledComponents;
     }
 
     /**
@@ -437,7 +452,7 @@ public class PanelBuilder {
      */
     public void fillRow(boolean endRow) {
         double weightX = this.c.weightx;
-        setWeightX(1);
+        setWeightX(0.1);
         JPanel p = new JPanel();
         p.setOpaque(false);
         addComponent(p, endRow);
@@ -568,18 +583,7 @@ public class PanelBuilder {
      * @param fill If true, the row is filled with an empty panel
      */
     public void addComponent(JComponent comp, String label, boolean endRow, boolean fill) {
-        double weightx = this.c.weightx;
-        int gridFill = this.c.fill;
-        Insets insets = this.c.insets;
-        this.setWeightX(0);
-        this.setFill(GridBagConstraints.NONE);
-        this.setInsets(new Insets(insets.top, 0, insets.bottom, 5));
-        JLabel labelObj = new JLabel(label);
-        addComponent(labelObj);
-        this.setInsets(insets);
-        this.setWeightX(weightx);
-        this.setFill(gridFill);
-        addComponent(comp, endRow, fill);
+        addComponent(comp, new JLabel(label), endRow, fill);
     }
 
     /**
@@ -612,14 +616,26 @@ public class PanelBuilder {
         double weightx = this.c.weightx;
         int gridFill = this.c.fill;
         Insets insets = this.c.insets;
-        this.setWeightX(0);
-        this.setFill(GridBagConstraints.NONE);
-        this.setInsets(new Insets(insets.top, 0, insets.bottom, 5));
-        addComponent(label);
-        this.setInsets(insets);
-        this.setWeightX(weightx);
-        this.setFill(gridFill);
-        addComponent(comp, endRow, fill);
+        int anchor = this.getAnchor();
+        PanelBuilder builderToAdd;
+        if (this.wrapLabeledComponents) {
+            builderToAdd = new PanelBuilder();
+        } else {
+            builderToAdd = this;
+        }
+        builderToAdd.setWeightX(0);
+        builderToAdd.setAnchor(NORTHEAST);
+        builderToAdd.setFill(GridBagConstraints.NONE);
+        builderToAdd.setInsets(new Insets(insets.top, 0, insets.bottom, 5));
+        builderToAdd.addComponent(label);
+        builderToAdd.setAnchor(anchor);
+        builderToAdd.setInsets(insets);
+        builderToAdd.setWeightX(weightx);
+        builderToAdd.setFill(gridFill);
+        builderToAdd.addComponent(comp, endRow, fill);
+        if (this.wrapLabeledComponents) {
+            this.addComponent(builderToAdd.getPanel(), endRow, fill);
+        }
     }
 
 
@@ -691,11 +707,46 @@ public class PanelBuilder {
         }
     }
 
+    public static JPanel buildRightAlignedButtonToolbar(JComponent... comps) {
+        PanelBuilder buttons = new PanelBuilder(PanelBuilder.NORTHEAST, false, false, 0, 0, 1, 1,
+                0, 5, 0, 0);
+        buttons.fillRow();
+        buttons.addComponents(comps);
+        return buttons.getPanel();
+    }
+
     /**
      * Return the panel.
      * @return The panel
      */
     public JPanel getPanel() {
         return this.panel;
+    }
+
+    /**
+     * Set minimum size for the built panel.
+     * @param minWidth Minimum width
+     * @param minHeight Minimum height
+     */
+    public void setMinimumSize(int minWidth, int minHeight) {
+        this.panel.setMinimumSize(new Dimension(minWidth, minHeight));
+    }
+
+    /**
+     * Set maximum size for the built panel.
+     * @param maxWidth Maximum width
+     * @param maxHeight Maximum height
+     */
+    public void setMaximumSize(int maxWidth, int maxHeight) {
+        this.panel.setMaximumSize(new Dimension(maxWidth, maxHeight));
+    }
+
+    /**
+     * Set the prefered size for the built panel
+     * @param width Width
+     * @param height Height
+     */
+    public void setPreferedSize(int width, int height) {
+        this.panel.setPreferredSize(new Dimension(width, height));
     }
  }

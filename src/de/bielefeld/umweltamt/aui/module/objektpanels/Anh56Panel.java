@@ -39,6 +39,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,10 +61,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
@@ -74,6 +71,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungMo
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -116,54 +114,61 @@ public class Anh56Panel extends JPanel {
         this.name = "Druckerei";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
-        builder.appendSeparator("Fachdaten");
-        builder.append("Druckverfahren:", getDruckverfahrenFeld());
-        builder.append("", getAbwasseranfallCheck());
-        builder.nextLine();
-        builder.append("Wasserverbrauch:", getVerbrauchFeld());
-        builder.append("", getAbaCheck());
-        builder.nextLine();
-        builder.append("Entsorgung:", getEntsorgungFeld());
-        builder.append("", getGenpflichtCheck());
-        builder.nextLine();
-        builder.append("Datum 58er Genehmigung:", getGen58Datum());
-        builder.nextLine();
-        builder.append("Datum 59er Genehmigung:", getGen59Datum());
-        builder.nextLine();
-
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
+        JScrollPane bemerkungsScroller = new JScrollPane(
+            getBemerkungenArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
 
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
-        builder.nextLine();
 
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveAnh56Button());
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
 
-        // JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveAnh56Button());
-        builder.append(buttonBar, 7);
+        PanelBuilder fachdaten = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 0, 0, 1, 1,
+                0, 0, 5, 5);
 
+        fachdaten.setWrapLabelComponents(false);
+        fachdaten.setPreferedSize(650, 500);
+        fachdaten.addComponent(getDruckverfahrenFeld(), "Druckverfahren:");
+        fachdaten.addComponent(getAbwasseranfallCheck(), true);
+        fachdaten.addComponent(getVerbrauchFeld(), "Wasserverbrauch:");
+        fachdaten.addComponent(getAbaCheck(), true);
+        fachdaten.addComponent(getEntsorgungFeld(), "Entsorgung:");
+        fachdaten.addComponent(getGenpflichtCheck(), true);
+        fachdaten.addComponent(getGen58Datum(), "Datum 58er Genehmigung", true, true);
+        fachdaten.addComponent(getGen59Datum(), "Datum 59er Genehmigung", true, true);
+
+        builder.setPreferedSize(650, 500);
+        builder.addSeparator("Fachdaten", true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponent(fachdaten.getPanel(), true);
+        builder.setAnchor(PanelBuilder.NORTHWEST);
+        builder.addSeparator("Bemerkungen", true);
+        builder.setWeightY(0.4);
+        builder.addComponent(bemerkungsScroller, true);
+        builder.setWeightY(0);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeightY(0.6);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveAnh56Button()), true);
+
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
     }
 
     public void completeObjekt() {

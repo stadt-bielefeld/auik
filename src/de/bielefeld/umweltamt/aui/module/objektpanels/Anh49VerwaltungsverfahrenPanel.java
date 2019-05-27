@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,15 +45,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49VerwaltungsverfahrenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 
 /**
@@ -91,16 +89,17 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        FormLayout layout = new FormLayout("pref:grow, pref", // Spalten
-                "f:100dlu:grow, 3dlu, pref"); // Zeilen
-
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
-        CellConstraints cc = new CellConstraints();
-
-        builder.add(verwaltungsverfahrenScroller, cc.xyw(1, 1, 2));
-        builder.add(getSpeichernButton(), cc.xy(2, 3));
+            PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+                5, 5, 5, 5);
+            builder.setEmptyBorder(15);
+            builder.addComponent(verwaltungsverfahrenScroller, true);
+            builder.setFill(true, false);
+            builder.setWeight(0, 0);
+            builder.fillRow();
+            builder.addComponent(getSpeichernButton(), true);
+    
+            this.setLayout(new BorderLayout());
+            this.add(builder.getPanel());
     }
 
     private Action getVerwaltungsverfahrenLoeschAction() {

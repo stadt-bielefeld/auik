@@ -89,18 +89,19 @@ public class AnfallstellePanel extends JPanel {
         content.addComponent(getStillgelegtAmDatum(), "Still gelegt am:", true);
         content.addComponent(getAbwaBeschaffOptFeld(), "abwaBeschaffOpt", true);
         content.addComponent(getBetriebsweiseOptFeld(), "betriebsweiseOpt", true);
+        content.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSaveAnfallstelleButton()), true);
+        content.fillColumn();
+        content.setPreferedSize(500, 500);
 
-        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, false, false, 0, 0, 1, 1,
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, false, true, 0, 0, 1, 1,
                 0, 0, 5, 0);
-        
+
         builder.setEmptyBorder(15);
-        builder.addSeparator("Anfallstelle");
-        builder.fillRow(true);
+        builder.addSeparator("Anfallstelle", true);
         builder.addComponent(content.getPanel(), true);
-        builder.setAnchor(PanelBuilder.NORTHEAST);
-        builder.addComponents(getSaveAnfallstelleButton());
         builder.fillRow(true);
         builder.fillColumn();
+
         this.setLayout(new BorderLayout());
         this.add(builder.getPanel());
     }

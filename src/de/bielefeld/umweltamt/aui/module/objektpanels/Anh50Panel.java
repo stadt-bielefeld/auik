@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,10 +50,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
@@ -68,6 +65,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -113,53 +111,66 @@ public class Anh50Panel extends JPanel {
         this.name = "Zahnarzt";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:70dlu, 5dlu, 90dlu, r:90dlu, 5dlu, 20dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
-        builder.appendSeparator("Fachdaten");
-        builder.append("Antrag:", getAntragDatum());
-        builder.nextLine();
-        builder.append("Genehmigung:", getGenehmigungDatum());
-        builder.nextLine();
-        builder.append("Wiedervorlagen:", getWiedervorlageDatum());
-        builder.nextLine();
-        builder.append("Gefährdungsklasse:", getGefaehrdungsklasseFeld());
-        builder.nextLine();
-        builder.append("", getErloschenCheck());
-        builder.nextLine();
-
-        builder.appendSeparator("Entsorger");
-        builder.append("Entsorger:", getEntsorgerBox(), 2);
-        builder.append(getEntsorBearbToolBar());
-
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane bemerkungsScroller = new JScrollPane(
             getAnh50BemerkungArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 6);
 
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 6);
-        builder.nextLine();
 
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveAnh50Button());
-        builder.append(buttonBar, 6);
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
+
+        PanelBuilder fachdaten = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        fachdaten.setWrapLabelComponents(false);
+        fachdaten.addComponent(getAntragDatum(), "Antrag:", true);
+        fachdaten.addComponent(getGenehmigungDatum(), "Genehmigung:", true);
+        fachdaten.addComponent(getWiedervorlageDatum(), "Wiedervorlagen:", true);
+        fachdaten.setWeightX(1);
+        fachdaten.addComponent(getGefaehrdungsklasseFeld(), "Gefährdungsklasse:", true);
+        fachdaten.addComponents(new JPanel(), getErloschenCheck());
+        fachdaten.setPreferedSize(500, 50);
+
+        PanelBuilder entsorger = new PanelBuilder(fachdaten);
+        entsorger.setAnchor(PanelBuilder.WEST);
+        entsorger.addComponent(getEntsorgerBox(), "Entsorger:");
+        entsorger.setWeightX(0);
+        entsorger.addComponent(getEntsorBearbToolBar(), true, true);
+
+        builder.setPreferedSize(500, 500);
+        builder.addSeparator("Fachdaten", true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponent(fachdaten.getPanel(), true);
+        builder.setAnchor(PanelBuilder.NORTHWEST);
+        builder.addSeparator("Entsorger", true);
+        builder.addComponent(entsorger.getPanel(), true);
+        builder.addSeparator("Bemerkungen", true);
+        builder.setWeightY(0.4);
+        builder.addComponent(bemerkungsScroller, true);
+        builder.setWeightY(0);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeightY(0.6);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveAnh50Button()), true);
+
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
     }
 
     public void fetchFormData() throws RuntimeException {

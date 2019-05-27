@@ -73,6 +73,8 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -95,11 +97,6 @@ import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
@@ -111,6 +108,7 @@ import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
@@ -158,8 +156,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
     public Anh49Panel(BasisObjektBearbeiten hauptModul) {
         super("Anhang 49", hauptModul);
 
-        /* Add components to the "Anhang" panel */
-        /* Left column */
+
         super.addComponent(this.ANSPRECHPARTNER, new LimitedTextField(50));
         super.addComponent(this.SACHKUNDE_LFA, new LimitedTextField(50));
         super.addComponent(this.ANALYSEMONAT, new LimitedTextField(50));
@@ -168,7 +165,6 @@ public class Anh49Panel extends AbstractAnhangPanel {
         textArea.setWrapStyleWord(true);
         super.addComponent(this.BEMERKUNGEN, textArea);
 
-        /* Right column */
         super.addComponent(this.GENEHMIGUNGSDATUM, new TextFieldDateChooser());
         super.addComponent(this.AENDERUNGSGENEHMIGUNGSDATUM,
             new TextFieldDateChooser());
@@ -178,109 +174,58 @@ public class Anh49Panel extends AbstractAnhangPanel {
         super.addComponent(this.WIEDERVORLAGEDATUM, new TextFieldDateChooser());
         super.addComponent(this.SPEICHERN, getSaveAnh49Button());
 
-        FormLayout layout = new FormLayout(
-            "pref, 5dlu, 100dlu, 10dlu, pref, 5dlu, 100dlu", // Spalten
-            "pref, " + // Bearbeitung | Erfassung
-                "3dlu, " + //
-                "pref, " + // Sachbearbeiter | Genehmigungsdatum
-                "3dlu, " + //
-                "pref, " + // Ansprechpartner | Änderungsgenehmigungsdatum
-                "3dlu, " + //
-                "pref, " + // Sachkunde LFA | abgemeldet
-                "3dlu, " + //
-                "pref, " + // Analyse | abwasserfrei
-                "3dlu, " + //
-                "pref, " + // Analysemonat | E-Satzung
-                "3dlu, " + //
-                "pref, " + // Bemerkung | Kontrolle
-                "3dlu, " + //
-                "pref, " + // Bemerkung | Wiedervorlage
-                "30dlu, " + //
-                "3dlu, " + //
-                "pref, " + // Verknüpfte Objekte
-                "5dlu, " + //
-                "fill:100dlu, " + // Tabelle
-                "5dlu, " + //
-                "pref"); // Buttons
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
 
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-        CellConstraints cc = new CellConstraints();
+        PanelBuilder bearbeitung = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
+        bearbeitung.addComponent(super.getComponent(this.ANSPRECHPARTNER), this.ANSPRECHPARTNER, true);
+        bearbeitung.addComponent(super.getComponent(this.SACHKUNDE_LFA), this.SACHKUNDE_LFA, true);
 
-        /* Left column */
-        Integer row = 1;
-        Integer labelCol = 1;
-        Integer fieldCol = 3;
-        Integer colWidth = 3;
-        Integer cols = 7;
+        PanelBuilder erfassung = new PanelBuilder(bearbeitung);
+        erfassung.addComponents(true, super.getComponent(this.ABGEMELDET), super.getComponent(this.E_SATZUNG));
+        erfassung.addComponent(super.getComponent(this.ABWASSERFREI), true, true);
 
-        builder.addSeparator("Bearbeitung", cc.xyw(labelCol, row, colWidth));
-        row += 2;
-        builder.addLabel(this.ANSPRECHPARTNER, cc.xy(labelCol, row));
-        builder.add(super.getComponent(this.ANSPRECHPARTNER),
-            cc.xy(fieldCol, row));
-        row += 2;
-        builder.addLabel(this.SACHKUNDE_LFA, cc.xy(labelCol, row));
-        builder.add(super.getComponent(this.SACHKUNDE_LFA),
-            cc.xy(fieldCol, row));
-        row += 2;
+        builder.setEmptyBorder(15);
+        builder.addSeparator("Bearbeitung");
+        builder.addSeparator("Erfassung", true);
+        builder.addComponent(bearbeitung.getPanel());
+        builder.addComponent(erfassung.getPanel(), true);
+        builder.addSeparator("Analyse");
+        builder.addSeparator("Wiedervorlage", true);
+        builder.addComponent(super.getComponent(this.ANALYSEMONAT), this.ANALYSEMONAT);
+        builder.addComponent(super.getComponent(this.WIEDERVORLAGEDATUM), this.WIEDERVORLAGEDATUM, true);
+        builder.addSeparator("Bemerkungen", true);
+        builder.setWeightY(0.4);
+        builder.addComponent(new JScrollPane(super.getComponent(this.BEMERKUNGEN),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), true);
+        builder.setWeightY(0);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeightY(0.6);
+        builder.addComponent(new JScrollPane(getObjektverknuepungTabelle(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveAnh49Button()), true);
 
-        builder.addSeparator("Analyse", cc.xyw(labelCol, row, colWidth));
-        row += 2;
-        builder.addLabel(this.ANALYSEMONAT, cc.xy(labelCol, row));
-        builder
-            .add(super.getComponent(this.ANALYSEMONAT), cc.xy(fieldCol, row));
-        row += 2;
+        builder.setPreferedSize(750, 500);
 
-        builder.addSeparator("Bemerkungen", cc.xyw(labelCol, row, cols));
-        row += 2;
-        builder.add(new JScrollPane(super.getComponent(this.BEMERKUNGEN),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh(labelCol,
-            row, cols, 4));
-        row += 5;
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
 
-        /* Bottom */
-        builder.addSeparator("Verknüpfte Objekte", cc.xyw(labelCol, row, cols));
-        row += 2;
-        builder.add(new JScrollPane(getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xyw(labelCol,
-            row, cols));
-        row += 2;
-        builder.add(ButtonBarFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveAnh49Button()), cc.xyw(labelCol,
-            row, cols));
-
-        /* Right column */
-        row = 1;
-        labelCol = 5;
-        fieldCol = 7;
-
-        builder.appendRow("fill:100dlu");
-
-        builder.addSeparator("Erfassung", cc.xyw(labelCol, row, colWidth));
-        row += 2;
-        builder.add(super.getComponent(this.ABGEMELDET),
-            cc.xy(labelCol, row, "l,d"));
-        builder.add(super.getComponent(this.E_SATZUNG),
-            cc.xy(fieldCol, row, "l,d"));
-        row += 2;
-        builder.add(super.getComponent(this.ABWASSERFREI),
-            cc.xy(labelCol, row, "l,d"));
-        row += 2;
-
-        builder.addSeparator("Wiedervorlage", cc.xyw(labelCol, row, colWidth));
-        row += 2;
-        builder.addLabel(this.WIEDERVORLAGEDATUM, cc.xy(labelCol, row));
-        builder.add(super.getComponent(this.WIEDERVORLAGEDATUM),
-            cc.xy(fieldCol, row));
-
-        builder.nextLine();
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
     }
 
     public void fetchFormData() {
-		this.fachdaten = Anh49Fachdaten.findByObjektId(
+        this.fachdaten = Anh49Fachdaten.findByObjektId(
             this.hauptModul.getObjekt().getId());
         this.log.debug("Anhang 49 Objekt aus DB geholt: " + this.fachdaten);
     }
@@ -562,15 +507,15 @@ public class Anh49Panel extends AbstractAnhangPanel {
             this.selectObjektButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-					if(Anh49Panel.this.fachdaten == null){
-						Anh49Panel.this.log.debug("fachdaten null");
-					}
-					if(Anh49Panel.this.fachdaten.getObjekt() == null){
-						Anh49Panel.this.log.debug("fachdaten.getBasisObjekt null");
-					}
-					if(Anh49Panel.this.objektVerknuepfungModel == null){
-						Anh49Panel.this.log.debug("objektVerknuepfungsmodel null");
-					}
+                    if(Anh49Panel.this.fachdaten == null){
+                        Anh49Panel.this.log.debug("fachdaten null");
+                    }
+                    if(Anh49Panel.this.fachdaten.getObjekt() == null){
+                        Anh49Panel.this.log.debug("fachdaten.getBasisObjekt null");
+                    }
+                    if(Anh49Panel.this.objektVerknuepfungModel == null){
+                        Anh49Panel.this.log.debug("objektVerknuepfungsmodel null");
+                    }
                     ObjektChooser chooser = new ObjektChooser(
                         Anh49Panel.this.hauptModul.getFrame(),
                         Anh49Panel.this.fachdaten.getObjekt(),

@@ -70,6 +70,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -89,11 +90,6 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.TableColumn;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.uif_lite.component.Factory;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -103,6 +99,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
@@ -499,19 +496,21 @@ public class Anh49AnalysenPanel extends JPanel {
             getKontrollenTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        JSplitPane tabellenSplit = Factory.createStrippedSplitPane(
-            JSplitPane.VERTICAL_SPLIT, analysenScroller, kontrollenScroller,
-            0.5);
+        JSplitPane tabellenSplit = new JSplitPane(
+            JSplitPane.VERTICAL_SPLIT, analysenScroller, kontrollenScroller);
+        tabellenSplit.setResizeWeight(0.5);
 
-        FormLayout layout = new FormLayout("150dlu:grow, 150dlu", // Spalten
-            "f:100dlu:grow, 3dlu, pref"); // Zeilen
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+            5, 5, 5, 5);
+        builder.setEmptyBorder(15);
+        builder.addComponent(tabellenSplit, true);
+        builder.setFill(true, false);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.addComponent(getSpeichernButton(), true);
 
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-        CellConstraints cc = new CellConstraints();
-
-        builder.add(tabellenSplit, cc.xyw(1, 1, 2));
-        builder.add(getSpeichernButton(), cc.xy(2, 3));
+        this.setLayout(new BorderLayout());
+        this.add(builder.getPanel());
     }
 
     private JTable getAnalysenTabelle() {

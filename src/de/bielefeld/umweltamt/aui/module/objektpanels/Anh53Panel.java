@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,10 +45,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
@@ -59,6 +56,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -107,59 +105,62 @@ public class Anh53Panel extends JPanel {
         this.name = "Fotografische Prozesse";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:100dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 100dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
-        builder.appendSeparator("Fachdaten");
-        builder.append("Branche:", getBrancheFeld());
-        builder.append("Durchsatz:", getDurchsatzFeld());
-        builder.nextLine();
-        builder.append("Gesamtmenge:", getGesamtmengeFeld());
-        builder.append("Spülwasser:", getSpuelwasserFeld());
-        builder.nextLine();
-        builder.append("Bagatelle seit:", getBagatellDatum());
-        builder.append("", getBagatellCheck());
-        builder.nextLine();
-        builder.append("", getAbwasserCheck());
-        builder.append("", getOnlinesilberCheck());
-        builder.nextLine();
-        builder.append("", getAbgemeldetCheck());
-        builder.append("", getTagebuchCheck());
-        builder.nextLine();
-        builder.append("", getWasseruhrCheck());
-        builder.append("", getWartungCheck());
-        builder.nextLine();
-        builder.append("", getGrgenCheck());
-        builder.nextLine();
-
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane bemerkungsScroller = new JScrollPane(
             getAnh53BemerkungArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
 
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
-        builder.nextLine();
 
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveAnh53Button());
-        builder.append(buttonBar, 7);
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
+
+        PanelBuilder fachdaten = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
+        fachdaten.setWrapLabelComponents(false);
+        fachdaten.setPreferedSize(500, 50);
+        fachdaten.addComponent(getBrancheFeld(), "Branche:");
+        fachdaten.addComponent(getDurchsatzFeld(), "Durchsatz:", true);
+        fachdaten.addComponent(getGesamtmengeFeld(), "Gesamtmenge:");
+        fachdaten.addComponent(getSpuelwasserFeld(), "Spülwasser:", true);
+        fachdaten.addComponent(getBagatellDatum(), "Bagatelle seit:");
+        fachdaten.addComponents(true, new JPanel(), getBagatellCheck());
+        fachdaten.addComponents(true, new JPanel(), getAbwasserCheck(), new JPanel(), getOnlinesilberCheck());
+        fachdaten.addComponents(true, new JPanel(), getAbgemeldetCheck(), new JPanel(), getTagebuchCheck());
+        fachdaten.addComponents(true, new JPanel(), getWasseruhrCheck(), new JPanel(), getWartungCheck());
+        fachdaten.addComponents(true, new JPanel(), getGrgenCheck());
+
+        builder.setPreferedSize(500, 500);
+        builder.addSeparator("Fachdaten", true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponent(fachdaten.getPanel(), true);
+        builder.setAnchor(PanelBuilder.NORTHWEST);
+        builder.addSeparator("Bemerkungen", true);
+        builder.setWeightY(0.4);
+        builder.addComponent(bemerkungsScroller, true);
+        builder.setWeightY(0);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeightY(0.6);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveAnh53Button()), true);
+
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
     }
 
     public void fetchFormData() throws RuntimeException {

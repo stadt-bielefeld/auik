@@ -106,59 +106,6 @@ public class Anh40Panel extends JPanel {
     public Anh40Panel(BasisObjektBearbeiten hauptModul) {
         this.name = "Anhang 40";
         this.hauptModul = hauptModul;
-        /*
-        FormLayout layout = new FormLayout(
-            "r:120dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 100dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
-        builder.appendSeparator("Fachdaten");
-        builder.append("SachbearbeiterIn Rav.-Str.:",
-            getSachbearbeiterravFeld());
-        builder.append("", getWsgCheck());
-        builder.nextLine();
-        builder.append("SachbearbeiterIn Heepen.:",
-            getSachbearbeiterheepenFeld());
-        builder.append("", getGenehmigungspflichtCheck());
-        builder.nextLine();
-        builder.append("AnsprechpartnerIn:", getAnsprechpartnerFeld());
-        builder.append("Genehmigung §58:", getGen58Datum());
-        builder.nextLine();
-        builder.append("Herkunftsbereich:", getHerkunftsbereichFeld());
-        builder.append("Genehmigung §59:", getGen59Datum());
-        builder.nextLine();
-        builder.append("Kläranlage:", getKlaeranlageFeld());
-        builder.append("", getNachtragCheck());
-        builder.nextLine();
-        builder.append("Abwassermenge genehmigt [m³/a]:", getAbwmengegenehmigtFeld());
-        builder.append("", getBimschCheck());
-        builder.nextLine();
-        builder.append("Abwassermenge prod.-spez. [m³/a]:",
-            getAbwmengeprodspezFeld());
-        builder.nextLine();
-        builder.append("Abwassermenge gesamt [m³/a]:", getAbwmengegesamtFeld());
-        builder.nextLine();
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
-        builder.nextLine();
-
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
-        builder.nextLine();
-
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveAnh40Button());
-
-        builder.append(buttonBar, 7);
-        */
 
         JScrollPane bemerkungsScroller = new JScrollPane(
             getAnh40BemerkungArea(),

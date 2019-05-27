@@ -70,12 +70,11 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,11 +90,6 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.TableColumn;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.uif_lite.component.Factory;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -107,6 +101,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleRenderer;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
@@ -127,286 +122,286 @@ public class Anh49AbfuhrenPanel extends JPanel {
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
-	 * Ein TableModel für eine Tabelle mit Abscheider-Kontrollen.
-	 * @author Gerhard Genuit
-	 */
-	private class Anh49AbfuhrModel extends EditableListTableModel {
-	    private static final long serialVersionUID = -1286333922211056915L;
-	    private Anh49Fachdaten fachdaten;
-	
-	    /**
-	     * Erzeugt ein neues Abfuhr-TableModel. Dieses hat die Spalten
-	     * "Abfuhrdatum", "Ensorger", "Menge" und "Nächste Abfuhr".
-	     */
-	    public Anh49AbfuhrModel() {
-	        super(
-	            new String[] {"Abfuhrdatum", "Entsorger", "Menge", "Nächste Abfuhr"},
-	            false, true);
-	    }
-	
-	    /**
-	     * Setzt das Fachdatenobjekt, nach dessen Abfuhren gesucht
-	     * werden soll.
-	     * @param fachdaten Das Anhang49-Fachdatenobjekt
-	     */
-	    private void setFachdaten(Anh49Fachdaten fachdaten) {
-	        this.fachdaten = fachdaten;
-	        updateList();
-	    }
-	
-	    @Override
-	    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-	        Anh49Abfuhr abf = (Anh49Abfuhr) objectAtRow;
-	        Double menge = abf.getMenge();
-	
-	        Object tmp;
-	
-			switch (columnIndex) {
-				case 0:
-					tmp = AuikUtils.getStringFromDate(abf.getAbfuhrdatum());
-					break;
-				case 1:
-					tmp = abf.getEntsorger();
-					break;
-				case 2:
-					tmp = new KommaDouble(menge);
-				break;
-	            case 3:
-	                tmp = AuikUtils.getStringFromDate(abf.getNaechsteabfuhr());
-	                break;
-	            default:
-	                tmp = null;
-	        }
-	
-	        return tmp;
-	    }
-	
-	    @Override
-	    public boolean objectRemoved(Object objectAtRow) {
-	        Anh49Abfuhr removedOt = (Anh49Abfuhr) objectAtRow;
-	        boolean removed;
-	
-	        if (removedOt.getId() != null) {
-	            removed = Anh49Abfuhr.delete(removedOt);
-	        } else {
-	            removed = true;
-	        }
-	
-	        return removed;
-	    }
-	
-	    @Override
-	    public void updateList() {
-	        if (fachdaten != null) {
-	            setList(DatabaseQuery.getAbfuhr(fachdaten));
-	        }
-	        fireTableDataChanged();
-	    }
-	
-	    @Override
-	    public void editObject(Object objectAtRow, int columnIndex,
-	        Object newValue) {
-	    	Anh49Abfuhr abf = (Anh49Abfuhr) objectAtRow;
-	
-	        String tmp = (String) newValue;
-	
-	        switch (columnIndex) {
-	            case 0:
-	                DateFormat format = DateFormat
-	                    .getDateInstance(DateFormat.SHORT);
-	                try {
-	                    Date tmpDate = format.parse(tmp);
-	                    abf.setAbfuhrdatum(tmpDate);
-	                } catch (ParseException e) {
-	                    hauptModul
-	                        .getFrame()
-	                        .changeStatus(
-	                            "Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!",
-	                            HauptFrame.ERROR_COLOR);
-	                }
-	                break;
-	            case 1:
-	                // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255
-	                // Zeichen breit ist
-	                if (tmp.length() > 255) {
-	                    tmp = tmp.substring(0, 255);
-	                }
-	                abf.setEntsorger(tmp);
-	                break;
-	            case 2:
+     * Ein TableModel für eine Tabelle mit Abscheider-Kontrollen.
+     * @author Gerhard Genuit
+     */
+    private class Anh49AbfuhrModel extends EditableListTableModel {
+        private static final long serialVersionUID = -1286333922211056915L;
+        private Anh49Fachdaten fachdaten;
+    
+        /**
+         * Erzeugt ein neues Abfuhr-TableModel. Dieses hat die Spalten
+         * "Abfuhrdatum", "Ensorger", "Menge" und "Nächste Abfuhr".
+         */
+        public Anh49AbfuhrModel() {
+            super(
+                new String[] {"Abfuhrdatum", "Entsorger", "Menge", "Nächste Abfuhr"},
+                false, true);
+        }
+    
+        /**
+         * Setzt das Fachdatenobjekt, nach dessen Abfuhren gesucht
+         * werden soll.
+         * @param fachdaten Das Anhang49-Fachdatenobjekt
+         */
+        private void setFachdaten(Anh49Fachdaten fachdaten) {
+            this.fachdaten = fachdaten;
+            updateList();
+        }
+    
+        @Override
+        public Object getColumnValue(Object objectAtRow, int columnIndex) {
+            Anh49Abfuhr abf = (Anh49Abfuhr) objectAtRow;
+            Double menge = abf.getMenge();
+    
+            Object tmp;
+    
+            switch (columnIndex) {
+                case 0:
+                    tmp = AuikUtils.getStringFromDate(abf.getAbfuhrdatum());
+                    break;
+                case 1:
+                    tmp = abf.getEntsorger();
+                    break;
+                case 2:
+                    tmp = new KommaDouble(menge);
+                break;
+                case 3:
+                    tmp = AuikUtils.getStringFromDate(abf.getNaechsteabfuhr());
+                    break;
+                default:
+                    tmp = null;
+            }
+    
+            return tmp;
+        }
+    
+        @Override
+        public boolean objectRemoved(Object objectAtRow) {
+            Anh49Abfuhr removedOt = (Anh49Abfuhr) objectAtRow;
+            boolean removed;
+    
+            if (removedOt.getId() != null) {
+                removed = Anh49Abfuhr.delete(removedOt);
+            } else {
+                removed = true;
+            }
+    
+            return removed;
+        }
+    
+        @Override
+        public void updateList() {
+            if (fachdaten != null) {
+                setList(DatabaseQuery.getAbfuhr(fachdaten));
+            }
+            fireTableDataChanged();
+        }
+    
+        @Override
+        public void editObject(Object objectAtRow, int columnIndex,
+            Object newValue) {
+            Anh49Abfuhr abf = (Anh49Abfuhr) objectAtRow;
+    
+            String tmp = (String) newValue;
+    
+            switch (columnIndex) {
+                case 0:
+                    DateFormat format = DateFormat
+                        .getDateInstance(DateFormat.SHORT);
+                    try {
+                        Date tmpDate = format.parse(tmp);
+                        abf.setAbfuhrdatum(tmpDate);
+                    } catch (ParseException e) {
+                        hauptModul
+                            .getFrame()
+                            .changeStatus(
+                                "Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!",
+                                HauptFrame.ERROR_COLOR);
+                    }
+                    break;
+                case 1:
+                    // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255
+                    // Zeichen breit ist
+                    if (tmp.length() > 255) {
+                        tmp = tmp.substring(0, 255);
+                    }
+                    abf.setEntsorger(tmp);
+                    break;
+                case 2:
                     Double dbl = new KommaDouble(tmp).getValue();
                     abf.setMenge(dbl);
-					break;
-	            case 3:
-	                DateFormat formatNp = DateFormat
-	                    .getDateInstance(DateFormat.SHORT);
-	                try {
-	                    Date tmpDate = formatNp.parse(tmp);
-	                    abf.setNaechsteabfuhr(tmpDate);
-	                } catch (ParseException e) {
-	                    hauptModul
-	                        .getFrame()
-	                        .changeStatus(
-	                            "Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!",
-	                            HauptFrame.ERROR_COLOR);
-	                }
-	                break;
-	
-	            default:
-	                break;
-	        }
-	    }
-	
-	    @Override
-	    public Object newObject() {
-	    	Anh49Abfuhr abf = new Anh49Abfuhr();
-	        abf.setAnh49Fachdaten(fachdaten);
-	        abf.setAbfuhrdatum(new Date());
-	        return abf;
-	    }
-	
-	    public Anh49Abfuhr getRow(int rowIndex) {
-	        return (Anh49Abfuhr) getObjectAtRow(rowIndex);
-	    }
-	}
+                    break;
+                case 3:
+                    DateFormat formatNp = DateFormat
+                        .getDateInstance(DateFormat.SHORT);
+                    try {
+                        Date tmpDate = formatNp.parse(tmp);
+                        abf.setNaechsteabfuhr(tmpDate);
+                    } catch (ParseException e) {
+                        hauptModul
+                            .getFrame()
+                            .changeStatus(
+                                "Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!",
+                                HauptFrame.ERROR_COLOR);
+                    }
+                    break;
+    
+                default:
+                    break;
+            }
+        }
+    
+        @Override
+        public Object newObject() {
+            Anh49Abfuhr abf = new Anh49Abfuhr();
+            abf.setAnh49Fachdaten(fachdaten);
+            abf.setAbfuhrdatum(new Date());
+            return abf;
+        }
+    
+        public Anh49Abfuhr getRow(int rowIndex) {
+            return (Anh49Abfuhr) getObjectAtRow(rowIndex);
+        }
+    }
 
-	/**
-	 * Ein TableModel für eine Tabelle mit Abscheider-Kontrollen.
-	 * @author Gerhard Genuit
-	 */
-	private class Anh49KontrollenModel extends EditableListTableModel {
-	    private static final long serialVersionUID = -1286333922211056915L;
-	    private Anh49Fachdaten fachdaten;
-	
-	    /**
-	     * Erzeugt ein neues Ortstermin-TableModel. Dieses hat die Spalten
-	     * "Datum", "SachbearbeiterIn" und "Bemerkung".
-	     */
-	    public Anh49KontrollenModel() {
-	        super(
-	            new String[] {"Prüfdatum", "Prüfergebnis", "Nächste Prüfung"},
-	            false, true);
-	    }
-	
-	    /**
-	     * Setzt das Fachdatenobjekt, nach dessen Abscheider-Details gesucht
-	     * werden soll.
-	     * @param fachdaten Das Anhang49-Fachdatenobjekt
-	     */
-	    private void setFachdaten(Anh49Fachdaten fachdaten) {
-	        this.fachdaten = fachdaten;
-	        updateList();
-	    }
-	
-	    @Override
-	    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-	        Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
-	
-	        Object tmp;
-	
-	        switch (columnIndex) {
-	            case 0:
-	                tmp = AuikUtils.getStringFromDate(kt.getPruefdatum());
-	                break;
-	            case 1:
-	                tmp = kt.getPruefergebnis();
-	                break;
-	            case 2:
-	                tmp = AuikUtils.getStringFromDate(kt.getNaechstepruefung());
-	                break;
-	            default:
-	                tmp = null;
-	        }
-	
-	        return tmp;
-	    }
-	
-	    @Override
-	    public boolean objectRemoved(Object objectAtRow) {
-	        Anh49Kontrollen removedOt = (Anh49Kontrollen) objectAtRow;
-	        boolean removed;
-	
-	        if (removedOt.getId() != null) {
-	            removed = Anh49Kontrollen.delete(removedOt);
-	        } else {
-	            removed = true;
-	        }
-	
-	        return removed;
-	    }
-	
-	    @Override
-	    public void updateList() {
-	        if (fachdaten != null) {
-	            setList(DatabaseQuery.getKontrollen(fachdaten));
-	        }
-	        fireTableDataChanged();
-	    }
-	
-	    @Override
-	    public void editObject(Object objectAtRow, int columnIndex,
-	        Object newValue) {
-	        Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
-	
-	        String tmp = (String) newValue;
-	
-	        switch (columnIndex) {
-	            case 0:
-	                DateFormat format = DateFormat
-	                    .getDateInstance(DateFormat.SHORT);
-	                try {
-	                    Date tmpDate = format.parse(tmp);
-	                    kt.setPruefdatum(tmpDate);
-	                } catch (ParseException e) {
-	                    hauptModul
-	                        .getFrame()
-	                        .changeStatus(
-	                            "Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!",
-	                            HauptFrame.ERROR_COLOR);
-	                }
-	                break;
-	            case 1:
-	                // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255
-	                // Zeichen breit ist
-	                if (tmp.length() > 255) {
-	                    tmp = tmp.substring(0, 255);
-	                }
-	                kt.setPruefergebnis(tmp);
-	                break;
-	            case 2:
-	                DateFormat formatNp = DateFormat
-	                    .getDateInstance(DateFormat.SHORT);
-	                try {
-	                    Date tmpDate = formatNp.parse(tmp);
-	                    kt.setNaechstepruefung(tmpDate);
-	                } catch (ParseException e) {
-	                    hauptModul
-	                        .getFrame()
-	                        .changeStatus(
-	                            "Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!",
-	                            HauptFrame.ERROR_COLOR);
-	                }
-	                break;
-	
-	            default:
-	                break;
-	        }
-	    }
-	
-	    @Override
-	    public Object newObject() {
-	        Anh49Kontrollen kt = new Anh49Kontrollen();
-	        kt.setAnh49Fachdaten(fachdaten);
-	        kt.setPruefdatum(new Date());
-	        return kt;
-	    }
-	
-	    public Anh49Kontrollen getRow(int rowIndex) {
-	        return (Anh49Kontrollen) getObjectAtRow(rowIndex);
-	    }
-	}
+    /**
+     * Ein TableModel für eine Tabelle mit Abscheider-Kontrollen.
+     * @author Gerhard Genuit
+     */
+    private class Anh49KontrollenModel extends EditableListTableModel {
+        private static final long serialVersionUID = -1286333922211056915L;
+        private Anh49Fachdaten fachdaten;
+    
+        /**
+         * Erzeugt ein neues Ortstermin-TableModel. Dieses hat die Spalten
+         * "Datum", "SachbearbeiterIn" und "Bemerkung".
+         */
+        public Anh49KontrollenModel() {
+            super(
+                new String[] {"Prüfdatum", "Prüfergebnis", "Nächste Prüfung"},
+                false, true);
+        }
+    
+        /**
+         * Setzt das Fachdatenobjekt, nach dessen Abscheider-Details gesucht
+         * werden soll.
+         * @param fachdaten Das Anhang49-Fachdatenobjekt
+         */
+        private void setFachdaten(Anh49Fachdaten fachdaten) {
+            this.fachdaten = fachdaten;
+            updateList();
+        }
+    
+        @Override
+        public Object getColumnValue(Object objectAtRow, int columnIndex) {
+            Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
+    
+            Object tmp;
+    
+            switch (columnIndex) {
+                case 0:
+                    tmp = AuikUtils.getStringFromDate(kt.getPruefdatum());
+                    break;
+                case 1:
+                    tmp = kt.getPruefergebnis();
+                    break;
+                case 2:
+                    tmp = AuikUtils.getStringFromDate(kt.getNaechstepruefung());
+                    break;
+                default:
+                    tmp = null;
+            }
+    
+            return tmp;
+        }
+    
+        @Override
+        public boolean objectRemoved(Object objectAtRow) {
+            Anh49Kontrollen removedOt = (Anh49Kontrollen) objectAtRow;
+            boolean removed;
+    
+            if (removedOt.getId() != null) {
+                removed = Anh49Kontrollen.delete(removedOt);
+            } else {
+                removed = true;
+            }
+    
+            return removed;
+        }
+    
+        @Override
+        public void updateList() {
+            if (fachdaten != null) {
+                setList(DatabaseQuery.getKontrollen(fachdaten));
+            }
+            fireTableDataChanged();
+        }
+    
+        @Override
+        public void editObject(Object objectAtRow, int columnIndex,
+            Object newValue) {
+            Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
+    
+            String tmp = (String) newValue;
+    
+            switch (columnIndex) {
+                case 0:
+                    DateFormat format = DateFormat
+                        .getDateInstance(DateFormat.SHORT);
+                    try {
+                        Date tmpDate = format.parse(tmp);
+                        kt.setPruefdatum(tmpDate);
+                    } catch (ParseException e) {
+                        hauptModul
+                            .getFrame()
+                            .changeStatus(
+                                "Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!",
+                                HauptFrame.ERROR_COLOR);
+                    }
+                    break;
+                case 1:
+                    // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255
+                    // Zeichen breit ist
+                    if (tmp.length() > 255) {
+                        tmp = tmp.substring(0, 255);
+                    }
+                    kt.setPruefergebnis(tmp);
+                    break;
+                case 2:
+                    DateFormat formatNp = DateFormat
+                        .getDateInstance(DateFormat.SHORT);
+                    try {
+                        Date tmpDate = formatNp.parse(tmp);
+                        kt.setNaechstepruefung(tmpDate);
+                    } catch (ParseException e) {
+                        hauptModul
+                            .getFrame()
+                            .changeStatus(
+                                "Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!",
+                                HauptFrame.ERROR_COLOR);
+                    }
+                    break;
+    
+                default:
+                    break;
+            }
+        }
+    
+        @Override
+        public Object newObject() {
+            Anh49Kontrollen kt = new Anh49Kontrollen();
+            kt.setAnh49Fachdaten(fachdaten);
+            kt.setPruefdatum(new Date());
+            return kt;
+        }
+    
+        public Anh49Kontrollen getRow(int rowIndex) {
+            return (Anh49Kontrollen) getObjectAtRow(rowIndex);
+        }
+    }
 
-	private String name;
+    private String name;
 
     private BasisObjektBearbeiten hauptModul;
 
@@ -429,31 +424,32 @@ public class Anh49AbfuhrenPanel extends JPanel {
         getAbfuhrTabelle().addFocusListener(tfl);
 
         JScrollPane abfuhrScroller = new JScrollPane(getAbfuhrTabelle(),
-            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollPane kontrollenScroller = new JScrollPane(
-            getKontrollenTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                getKontrollenTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        JSplitPane tabellenSplit = Factory.createStrippedSplitPane(
-            JSplitPane.VERTICAL_SPLIT, abfuhrScroller, kontrollenScroller,
-            0.5);
+        JSplitPane tabellenSplit = new JSplitPane(
+                JSplitPane.VERTICAL_SPLIT, abfuhrScroller, kontrollenScroller);
+        tabellenSplit.setResizeWeight(0.5);
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+            5, 5, 5, 5);
+        builder.setEmptyBorder(15);
+        builder.addComponent(tabellenSplit, true);
+        builder.setFill(true, false);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.addComponent(getSpeichernButton(), true);
 
-        FormLayout layout = new FormLayout("150dlu:grow, 150dlu", // Spalten
-            "f:100dlu:grow, 3dlu, pref"); // Zeilen
-
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-        CellConstraints cc = new CellConstraints();
-
-        builder.add(tabellenSplit, cc.xyw(1, 1, 2));
-        builder.add(getSpeichernButton(), cc.xy(2, 3));
+        this.setLayout(new BorderLayout());
+        this.add(builder.getPanel());
     }
 
     private JTable getAbfuhrTabelle() {
         if (abfuhrTabelle == null) {
-        	abfuhrTabelle = new SelectTable(abfuhrModel);
-        	abfuhrTabelle.setDefaultRenderer(KommaDouble.class,
+            abfuhrTabelle = new SelectTable(abfuhrModel);
+            abfuhrTabelle.setDefaultRenderer(KommaDouble.class,
             new DoubleRenderer());
 
             // Wenn die Spaltengröße sich verändert, verändert sich nur die
@@ -478,7 +474,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
                                 "Soll die Abfuhr " + abfuhr.getId()
                                     + " wirklich inkl. aller untersuchten Parameter gelöscht werden?",
                                 "Löschen bestätigen")) {
-                        	abfuhrModel.removeRow(row);
+                            abfuhrModel.removeRow(row);
                             log.debug("Abfuhr " + abfuhr.getId()
                                 + " wurde gelöscht!");
                         } else {
@@ -602,8 +598,8 @@ public class Anh49AbfuhrenPanel extends JPanel {
 
     public void updateForm() {
         if (fachdaten != null) {
-        	abfuhrModel.setFachdaten(fachdaten);
-        	abfuhrModel.updateList();
+            abfuhrModel.setFachdaten(fachdaten);
+            abfuhrModel.updateList();
             kontrollenModel.setFachdaten(fachdaten);
             kontrollenModel.updateList();
         }
@@ -611,7 +607,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 
     public void clearForm() {
         // Hier füllen wir das Analysen-TableModel mit einer leeren Liste
-    	abfuhrModel.setList(new ArrayList<Anh49Abfuhr>());
+        abfuhrModel.setList(new ArrayList<Anh49Abfuhr>());
         kontrollenModel.setList(new ArrayList<Anh49Kontrollen>());
     }
 

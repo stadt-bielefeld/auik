@@ -48,6 +48,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -59,10 +60,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -70,6 +67,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -103,42 +101,43 @@ public class Anh52Panel extends JPanel{
         name = "Chemische Wäscherei";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout (
-                "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
-                "");
+        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
 
-        builder.appendSeparator("Fachdaten");
-        builder.append("Nr. der Betriebsstätte:", getNrBetriebsstaette());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Firmenname:", getFirmennameFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Ansprechpartner:",  getAnsprechpartnerFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Telefon:", getTelefonFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Telefax:", getTelefaxFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Genehmigung:", getGenehmigungDatum());
-        builder.append("");
-        builder.nextLine();
+        PanelBuilder fachdaten = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
+        fachdaten.setWrapLabelComponents(false);
+        fachdaten.setPreferedSize(500, 50);
+        fachdaten.addComponent(getNrBetriebsstaette(), "Nr. der Betriebsstätte:", true);
+        fachdaten.addComponent(getFirmennameFeld(), "Firmenname:", true);
+        fachdaten.addComponent(getTelefonFeld(), "Telefon:", true);
+        fachdaten.addComponent(getTelefaxFeld(), "Telefax:", true);
+        fachdaten.addComponent(getGenehmigungDatum(), "Genehmigung:", true);
 
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
+        builder.setPreferedSize(500, 500);
+        builder.addSeparator("Fachdaten", true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponent(fachdaten.getPanel(), true);
+        builder.addSeparator("Bemerkungen", true);
+        builder.setWeightY(0.1);
+        builder.addComponent(bemerkungsScroller, true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSaveAnh52Button()), true);
 
-        JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveAnh52Button());
-        builder.append(buttonBar, 7);
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
 
     }
 
