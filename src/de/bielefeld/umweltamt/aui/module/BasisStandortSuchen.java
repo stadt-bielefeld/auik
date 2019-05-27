@@ -77,6 +77,7 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.KeyboardFocusManager;
@@ -287,7 +288,9 @@ public class BasisStandortSuchen extends AbstractModul
 
             this.tabellenSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                     standortScroller, objektScroller);
-            this.tabellenSplit.setDividerLocation(0.6);
+            //Workaround for wrong panel height
+            this.tabellenSplit.setPreferredSize(new Dimension(1500, 775));
+            this.tabellenSplit.setResizeWeight(0.5);
 
             PanelBuilder builder = new PanelBuilder();
             builder.setBorder(new EmptyBorder(10, 15, 15, 15));
@@ -306,8 +309,9 @@ public class BasisStandortSuchen extends AbstractModul
             builder.setInsets(new Insets(0, 0, 5, 0));
             builder.addComponent(submitToolBar, true);
             builder.setWeightY(0);
+
             builder.addComponent(this.tabellenSplit, true);
-            builder.setWeightY(0.1);
+            builder.setWeightY(0);
             builder.addComponent(restrictPanel, true);
             this.panel = builder.getPanel();
         }

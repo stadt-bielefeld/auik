@@ -50,6 +50,7 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.KeyboardFocusManager;
@@ -221,8 +222,8 @@ public class BasisAdresseSuchen extends AbstractModul {
 
             this.tabellenSplit = new JSplitPane(
                 JSplitPane.VERTICAL_SPLIT, betreiberScroller, objektScroller);
-            tabellenSplit.setDividerLocation(0.7);
-
+            this.tabellenSplit.setPreferredSize(new Dimension(1500, 785));
+            this.tabellenSplit.setResizeWeight(0.5);
             PanelBuilder panelBuilder = new PanelBuilder();
             panelBuilder.setBorder(new EmptyBorder(15, 15, 15, 15));
             panelBuilder.setInsets(new Insets(5, 5, 0, 0));
