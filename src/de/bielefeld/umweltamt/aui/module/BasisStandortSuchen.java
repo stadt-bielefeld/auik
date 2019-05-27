@@ -291,9 +291,9 @@ public class BasisStandortSuchen extends AbstractModul
 
             PanelBuilder builder = new PanelBuilder();
             builder.setBorder(new EmptyBorder(10, 15, 15, 15));
-            builder.setInsets(new Insets(0, 0, 0, 10));
+            builder.setInsets(new Insets(10, 0, 0, 10));
             builder.setFill(GridBagConstraints.HORIZONTAL);
-            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setAnchor(GridBagConstraints.NORTHWEST);
             builder.setWeightY(0.1);
             builder.setWeightX(0.35);
             builder.addComponent(getStrassenFeld(), "Straße:");

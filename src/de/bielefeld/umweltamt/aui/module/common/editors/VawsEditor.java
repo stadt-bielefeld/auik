@@ -1450,12 +1450,8 @@ public class VawsEditor extends AbstractBaseEditor {
                     chronoScroller);
             this.tabellenSplit.setDividerLocation(0.3);
 
-            PanelBuilder builder = new PanelBuilder();
-            builder.setAnchor(GridBagConstraints.NORTHWEST);
-            builder.setWeight(1, 0);
-            builder.setFill(true, false);
-            builder.setEmptyBorder(10);
-            builder.setInsets(0, 0, 5, 5);
+            PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
 
             //Stammdaten
             PanelBuilder stammdaten = new PanelBuilder(builder);
@@ -1487,12 +1483,8 @@ public class VawsEditor extends AbstractBaseEditor {
     private JPanel getAusfuehrungVAWSAbscheiderTab()
     {
         if (ausfuehrungVAWSAbscheiderTab == null) {
-            PanelBuilder builder = new PanelBuilder();
-            builder.setAnchor(GridBagConstraints.NORTHWEST);
-            builder.setWeight(1, 0);
-            builder.setFill(true, false);
-            builder.setEmptyBorder(10);
-            builder.setInsets(0, 0, 5, 5);
+            PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
 
             PanelBuilder schlammfang = new PanelBuilder(builder);
             schlammfang.addComponent(schlammHerstField, "Hersteller:");
@@ -1584,7 +1576,7 @@ public class VawsEditor extends AbstractBaseEditor {
                     chronoScroller);
             this.tabellenSplit.setResizeWeight(0.3);
 
-            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+            PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
                     0, 0, 5, 5);
             builder.setEmptyBorder(5);
             PanelBuilder stammdaten = new PanelBuilder(builder);
@@ -1613,7 +1605,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
     private JPanel getSchutzLageranlagenTab() {
         if (schutzLageranlagenTab == null) {
-            PanelBuilder builder = new PanelBuilder(GridBagConstraints.NORTHWEST, true, false, 1, 0, 1, 1,
+            PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
                     0, 0, 5, 5);
             builder.setEmptyBorder(5);
             builder.addComponents(true, doppelWandigCheck, leckAnzeigeCheck, leckSchutzAuskleidungCheck, schutzSensorCheck);
