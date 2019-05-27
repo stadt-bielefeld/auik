@@ -667,9 +667,13 @@ public class BasisPanel extends JPanel {
         eigenschaften.setWrapLabelComponents(false);
         eigenschaften.setPreferedSize(650, 500);
         eigenschaften.addComponent(getBetreiberFeld(), "Betreiber-Adresse:");
+        eigenschaften.setWeightX(0);
         eigenschaften.addComponent(getBetreiberToolBar(), true);
+        eigenschaften.setWeightX(1);
         eigenschaften.addComponent(getStandortFeld(), "Standort-Adresse:");
+        eigenschaften.setWeightX(0);
         eigenschaften.addComponent(getStandortToolBar(), true);
+        eigenschaften.setWeightX(1);
         eigenschaften.addComponent(getLageFeld(), "Lage:", true, true);
         eigenschaften.addComponent(getArtBox(), "Art:", true, true);
         eigenschaften.addComponent(getSachbearbeiterBox(), "SachbearbeiterIn:", true, true);

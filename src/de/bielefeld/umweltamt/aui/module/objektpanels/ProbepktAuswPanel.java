@@ -71,11 +71,6 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -90,6 +85,7 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.charts.APosDataItem;
@@ -141,61 +137,8 @@ public class ProbepktAuswPanel extends JPanel {
         this.einheiten = DatabaseQuery.getEinheiten();
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "20dlu, 5dlu, 70dlu, 5dlu, 20dlu, 5dlu, 140dlu, 5dlu, r:16px, 5dlu, c:70dlu:g(0.1), 5dlu, l:16px, 10dlu, 300dlu", // Spalten
-            "pref, 3dlu" + ", " + // 1
-                "pref, 3dlu " + ", " + // 2
-                "pref, 3dlu" + ", " + // 3
-                "pref, 3dlu" + ", " + // 4
-                "pref, 3dlu" + ", " + // 5
-                "pref, 3dlu" + ", " + // 6
-                "pref, 3dlu" + ", " + // 7
-                "pref, 3dlu" + ", " + // 8
-                "pref, 3dlu" + ", " + // 9
-                "pref, 3dlu" + ", " + // 10
-                "pref, 3dlu" + ", " + // 11
-                "pref, 3dlu" + ", " + // 12
-                "pref, 3dlu" + ", " + // 13
-                "pref, 3dlu" + ", " + // 14
-                "pref, 3dlu" + ", " + // 15
-                "pref, 3dlu" + ", " + // 16
-                "pref, 3dlu" + ", " + // 17
-                "pref, 3dlu" + ", " + // 18
-                "pref, 3dlu" + ", " + // 19
-                "pref, 3dlu" + ", " + // 20
-                "pref, 3dlu" + ", " + // 21
-                "pref, 3dlu" + ", " + // 22
-                "pref, 3dlu" + ", " + // 23
-                "pref, 3dlu" + ", " + // 24
-                "pref, 3dlu" + ", " + // 25
-                "pref, 3dlu" + ", " + // 26
-                "pref"); // 27
-
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-        CellConstraints cc = new CellConstraints();
-        CellConstraints cc2 = (CellConstraints) cc.clone();
-
-        builder.addSeparator("Zeitraum", cc.xyw(1, 1, 11));
-        builder.addSeparator("Analyse von...", cc.xyw(15, 1, 1));
-
-        builder.add(new JLabel("Von:"), cc.xy(1, 3, "r,d"),
-            getVonDateChooser(), cc2.xy(3, 3, "l,d"));
-        builder.add(new JLabel("Bis:"), cc.xy(5, 3, "r,d"),
-            getBisDateChooser(), cc2.xy(7, 3, "l,d"));
-        builder.add(getAnalyseVonBox(), cc2.xyw(15, 3, 1, "l,d"));
-
-        builder.addSeparator("Parameter", cc.xyw(1, 5, 15));
-
-        builder.add(new JLabel("Erste Y-Achse"), cc.xyw(1, 7, 7));
-        builder.add(new JLabel("Zweite Y-Achse"), cc.xy(15, 7));
-
-        JList lList = getLeftList();
-        JList rList = getRightList();
-        builder.add(new JScrollPane(lList), cc.xywh(1, 9, 7, 15, "fill, fill"));
-        builder
-            .add(new JScrollPane(rList), cc.xywh(15, 9, 1, 15, "fill, fill"));
-
+        JScrollPane leftList = new JScrollPane(getLeftList());
+        JScrollPane rightList = new JScrollPane(getRightList());
         String[] paramIDs = {
             DatabaseConstants.ATL_PARAMETER_ID_CADMIUM,
             DatabaseConstants.ATL_PARAMETER_ID_CHROM,
@@ -205,28 +148,64 @@ public class ProbepktAuswPanel extends JPanel {
             DatabaseConstants.ATL_PARAMETER_ID_BLEI,
             DatabaseConstants.ATL_PARAMETER_ID_ZINK
         };
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
+        PanelBuilder time = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                10, 0, 10, 5);
+        time.addComponent(getVonDateChooser(), "Von:");
+        time.addComponent(getBisDateChooser(), "Bis:", true, true);
+
+        PanelBuilder analyse = new PanelBuilder(time);
+        analyse.addComponent(getAnalyseVonBox(), true, true);
+
+        PanelBuilder leftParam = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+                0, 0, 5, 5);
+        leftParam.addComponent(leftList, true);
+        leftParam.setWeightY(0);
+        leftParam.setAnchor(PanelBuilder.CENTER);
+        leftParam.addComponents(true, new JPanel(), getLeftEinheitenBox(), new JPanel());
+        leftParam.addComponents(true, new JPanel(), getLeftDeleteButton(), new JPanel());
+
+        PanelBuilder centerParam = new PanelBuilder(PanelBuilder.CENTER, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
         int y = 9;
         for (String paramID : paramIDs) {
-            builder.add(createRLButton(true, paramID), cc.xy(9, y));
-            builder.add(new JLabel(
-                Parameter.findById(paramID).getBezeichnung(), JLabel.CENTER),
-                cc.xy(11, y, "f,d"));
-            builder.add(createRLButton(false, paramID), cc.xy(13, y));
+            centerParam.addComponent(createRLButton(true, paramID));
+            centerParam.fillRow();
+            centerParam.addComponent(new JLabel(
+                Parameter.findById(paramID).getBezeichnung()));
+            centerParam.fillRow();
+            centerParam.addComponent(createRLButton(false, paramID), true);
             y += 2;
         }
+        //Add four empty panel rows to keep alignment
+        centerParam.addComponent(new JPanel(), true, true);
+        centerParam.addComponent(new JPanel(), true, true);
+        centerParam.addComponent(new JPanel(), true, true);
+        centerParam.addComponents(true, new JPanel(), new JPanel(), getSubmitButton(), new JPanel(), new JPanel());
 
-        builder.add(createRLButton(true, "box"), cc.xy(9, 23));
-        builder.add(getParameterBox(), cc.xy(11, 23, "f,d"));
-        builder.add(createRLButton(false, "box"), cc.xy(13, 23));
+        PanelBuilder rightParam = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+             0, 0, 5, 5);
+        rightParam.addComponent(rightList, true);
+        rightParam.setWeightY(0);
+        rightParam.setAnchor(PanelBuilder.CENTER);
+        rightParam.addComponents(true, new JPanel(), getRightEinheitenBox(), new JPanel());
+        rightParam.addComponents(true, new JPanel(), getRightDeleteButton(), new JPanel());
 
-        builder.add(getLeftEinheitenBox(), cc.xyw(1, 25, 7, "c,d"));
-        builder.add(new JLabel("<  Einheit  >", JLabel.CENTER),
-            cc.xy(11, 25, "f,d"));
-        builder.add(getRightEinheitenBox(), cc.xy(15, 25, "c,d"));
+        PanelBuilder param = new PanelBuilder(builder);
+        param.addComponents(true, new JLabel("Erste Y-Achse"), new JPanel(), new JLabel("Zweite Y-Achse"));
+        param.addComponents(true, leftParam.getPanel(), centerParam.getPanel(), rightParam.getPanel());
 
-        builder.add(getLeftDeleteButton(), cc.xyw(1, 27, 7, "c,d"));
-        builder.add(getRightDeleteButton(), cc.xy(15, 27, "c,d"));
-        builder.add(getSubmitButton(), cc.xy(11, 27));
+        builder.setEmptyBorder(15);
+        builder.addSeparator("Zeitraum");
+        builder.addSeparator("Analyse von...", true);
+        builder.addComponents(true, time.getPanel(), analyse.getPanel());
+        builder.addSeparator("Parameter", true);
+        builder.addComponent(param.getPanel(), true);
+        builder.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(builder.getPanel());
     }
 
     private class AuswertungsDialog extends JDialog {
@@ -452,10 +431,9 @@ public class ProbepktAuswPanel extends JPanel {
             JPanel tmp = new JPanel(new BorderLayout(0, 7));
 
             tmp.add(initializeContent(), BorderLayout.CENTER);
-            JPanel buttonBar = ButtonBarFactory.buildOKCancelApplyBar(
+            JPanel buttonBar = PanelBuilder.buildRightAlignedButtonToolbar(
                 this.speichernButton, this.printButton, this.abbrechenButton);
             tmp.add(buttonBar, BorderLayout.SOUTH);
-            tmp.setBorder(Borders.TABBED_DIALOG_BORDER);
 
             this.setContentPane(tmp);
             this.pack();
@@ -482,7 +460,6 @@ public class ProbepktAuswPanel extends JPanel {
             }
 
             this.chartPanel = new ChartPanel(chart, false);
-            this.chartPanel.setBorder(Borders.DIALOG_BORDER);
 
             return this.chartPanel;
         }
@@ -531,7 +508,6 @@ public class ProbepktAuswPanel extends JPanel {
             JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            tabellenScroller.setBorder(Borders.DIALOG_BORDER);
 
             return tabellenScroller;
         }

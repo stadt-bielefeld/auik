@@ -25,6 +25,7 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,10 +50,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -69,6 +66,7 @@ import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -127,8 +125,9 @@ public class EinleitungsstellePanel extends JPanel {
         this.name = "Einleitungsstelle";
         this.hauptModul = hauptModul;
 
+        /*
         FormLayout layout = new FormLayout(
-        		"r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
+                "r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
@@ -171,42 +170,97 @@ public class EinleitungsstellePanel extends JPanel {
         builder.nextLine();
         builder.append("", getTypAusserortStrasseneinlCheck());
         builder.nextLine();
-        JScrollPane objektverknuepfungScroller = new JScrollPane(
-            getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:100dlu");
         builder.append(objektverknuepfungScroller, 7);
         builder.nextLine();
         JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-        		getSelectObjektButton(), getSaveElkaEinleitungsstelleButton());
+                getSelectObjektButton(), getSaveElkaEinleitungsstelleButton());
         builder.append(buttonBar, 7);
+        */
+        JScrollPane objektverknuepfungScroller = new JScrollPane(
+            getObjektverknuepungTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
+
+        PanelBuilder elka = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
+        elka.addComponent(getErstellDatDatum(), "Erstellung:");
+        elka.addComponent(getStationierungNs3Feld(), "StationierungNS3:", true);
+        elka.addComponent(getHerkunftFeld(), "Herkunft:");
+        elka.addComponent(getEinzugsgebietFeld(), "Einzugsgebiet:", true);
+        elka.addComponent(getBezeichnungFeld(), "Bezeichnung:");
+        elka.addComponent(getStationierungSt3Feld(), "StationierungSt3:", true);
+        elka.addComponent(getGewaessernameAlias3Feld(), "Gewässeralias3:");
+        elka.addComponent(getAbgaberelEinlFeld(), "Abgabe Einleitung:", true);
+        elka.addComponent(getGewaessernameNsFeld(), "GewässernameNS");
+        elka.addComponent(getKanalArtOptFeld(), "Kanal Art Opt:", true);
+        elka.addComponent(getNadiaIdFeld(), "NadiaId");
+        elka.addComponent(getE32Feld(), "E32:", true);
+        elka.addComponent(getStillgelegtAmDatum(), "Datum:");
+        elka.addComponent(getN32Feld(), "N32:", true);
+        elka.addComponents(new JPanel(), getTypIndirektCheck());
+        elka.addComponent(getStationierung3OptFeld(), "Stationierung", true);
+        elka.addComponents(new JPanel(), getTypIndGewDirektCheck());
+        elka.addComponent(getSchutzzoneOptFeld(), "Schutzzone:", true);
+        elka.addComponents(new JPanel(), getTypKommTrennCheck());
+        elka.addComponent(getKlaeranlageBox(), "Kläranlage:", true);
+        elka.addComponents(true, new JPanel(), getTypPrivatTrennCheck());
+        elka.addComponents(true, new JPanel(), getTypSonstigeCheck());
+        elka.addComponents(true, new JPanel(), getTypAusserortStrasseneinlCheck());
+
+
+        builder.setPreferedSize(650, 500);
+        builder.addSeparator("Fachdaten", true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponent(elka.getPanel(), true);
+        builder.setAnchor(PanelBuilder.NORTHWEST);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeightY(0.6);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveElkaEinleitungsstelleButton()), true);
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
 
     }
     
-	/**
+    /**
      * Methode verknüpft das lokal erstelle Objekt einleitungstelle
      * mit der ElkaEinleitungsstelle der Datenbank und holt sich die Klaeranlagen
      * aus der Datenbank
      * @throws RuntimeException
      */
     public void fetchFormData() throws RuntimeException {
-    	this.einleitungsstelle = Einleitungsstelle.findByObjektId(
-    			this.hauptModul.getObjekt().getId());
-    	log.debug("Einleitungsstelle aus DB geholt: " + this.einleitungsstelle);
-    	
-    	List<Referenz> referenzen = Referenz.getAll();
-    	this.referenz = null;
-    	
-    	for (Referenz ref : referenzen) {
-    	    if (ref.getqEl().getId() == this.einleitungsstelle.getId()
-    		    && ref.getKlaeranlageByZKaNr() != null) {
-    		this.referenz = Referenz.findById(ref.getNr());
-    	    	log.debug("Referenz aus DB geholt: " + this.referenz);
-    	    }
-    	}
+        this.einleitungsstelle = Einleitungsstelle.findByObjektId(
+                this.hauptModul.getObjekt().getId());
+        log.debug("Einleitungsstelle aus DB geholt: " + this.einleitungsstelle);
+        
+        List<Referenz> referenzen = Referenz.getAll();
+        this.referenz = null;
+        
+        for (Referenz ref : referenzen) {
+            if (ref.getqEl().getId() == this.einleitungsstelle.getId()
+                && ref.getKlaeranlageByZKaNr() != null) {
+            this.referenz = Referenz.findById(ref.getNr());
+                log.debug("Referenz aus DB geholt: " + this.referenz);
+            }
+        }
       
-    	if (this.klaeranlagen == null) {
+        if (this.klaeranlagen == null) {
             this.klaeranlagen = DatabaseQuery.getKlaeranlage();
         }
     }
@@ -218,136 +272,136 @@ public class EinleitungsstellePanel extends JPanel {
      * @throws RuntimeException
      */
     public void updateForm() throws RuntimeException {
-    	if (this.einleitungsstelle != null) {
-    		if (this.einleitungsstelle.getErstellDat() != null) {
-    			getErstellDatDatum().setDate(this.einleitungsstelle.getErstellDat());
-    		}
-    		
-    		if(this.einleitungsstelle.getHerkunft() != null) {
-    			getHerkunftFeld().setText(this.einleitungsstelle.getHerkunft());
-    		}
-    	
-    		if (this.einleitungsstelle.getBezeichnung() != null) {
-    			getBezeichnungFeld().setText(this.einleitungsstelle.getBezeichnung());
-    		}
-    		
-    		if (this.einleitungsstelle.getGewaessernameAlias3() != null) {
-    			getGewaessernameAlias3Feld().setText(this.einleitungsstelle.getGewaessernameAlias3());
-    		}
-    		
-    		if (this.einleitungsstelle.getGewaessernameNs() != null) {
-    			getGewaessernameNsFeld().setText(this.einleitungsstelle.getGewaessernameNs());
-    		}
-    	
-    		if (this.einleitungsstelle.getNadiaId() != null) {
-    			getNadiaIdFeld().setText(this.einleitungsstelle.getNadiaId());
-    		}
-    		
-    		if (this.einleitungsstelle.getStillgelegtAm() != null) {
-    			getStillgelegtAmDatum().setDate(this.einleitungsstelle.getStillgelegtAm());
-    		}
-    		
-    		if (this.einleitungsstelle.getTypIndirekt() != null) {
-    			getTypIndirektCheck().setSelected(this.einleitungsstelle.getTypIndirekt());
-    		}
-    		
-    		if (this.einleitungsstelle.getTypIndGewDirekt() != null) {
-    			getTypIndGewDirektCheck().setSelected(this.einleitungsstelle.getTypIndGewDirekt());
-    		}
-    		
-    		if (this.einleitungsstelle.getTypKommTrenn() != null) {
-    			getTypKommTrennCheck().setSelected(this.einleitungsstelle.getTypKommTrenn());
-    		}
-    		
-    		
-    		if (this.einleitungsstelle.getTypPrivatTrenn() != null) {
-    			getTypPrivatTrennCheck().setSelected(this.einleitungsstelle.getTypPrivatTrenn());
-    		}
-    		
-    		if (this.einleitungsstelle.getTypSonstige() != null) {
-    			getTypSonstigeCheck().setSelected(this.einleitungsstelle.getTypSonstige());
-    		}
-    		
-    		if (this.einleitungsstelle.getTypAusserortStrasseneinl() != null) {
-    			getTypAusserortStrasseneinlCheck().setSelected(this.einleitungsstelle.getTypAusserortStrasseneinl());
-    		}
-    		
-    		if (this.einleitungsstelle.getStationierungNs3() != null) {
-    			getStationierungNs3Feld().setText(new GermanDouble(this.einleitungsstelle.getStationierungNs3()).toString());
-    		}
-    		
-    		if (this.einleitungsstelle.getEinzugsgebiet() != null) {
-    			getEinzugsgebietFeld().setText(new GermanDouble(this.einleitungsstelle.getEinzugsgebiet()).toString());
-    		}
-    		
-    		if (this.einleitungsstelle.getStationierungSt3() != null) {
-    			getStationierungSt3Feld().setText(new GermanDouble(this.einleitungsstelle.getStationierungSt3()).toString());
-    		}
-    		
-    		if (this.einleitungsstelle.getAbgaberelEinl() != null) {
-    			getAbgaberelEinlFeld().setText(this.einleitungsstelle.getAbgaberelEinl().toString());
-    		}
-    		
-    		if (this.einleitungsstelle.getE32() != null) {
-    			getE32Feld().setText(this.einleitungsstelle.getE32().toString());
-    		}
-    		
-    		if (this.einleitungsstelle.getN32() != null) {
-    			getN32Feld().setText(this.einleitungsstelle.getN32().toString());
-    		}
-    		
-    		if (this.einleitungsstelle.getKanalArtOpt() != null) {
-    			getKanalArtOptFeld().setText(this.einleitungsstelle.getKanalArtOpt().toString());
-    		}
-    		
-    		if (this.einleitungsstelle.getStationierung3Opt() != null) {
-    			getStationierung3OptFeld().setText(this.einleitungsstelle.getStationierung3Opt().toString());
-    		}
-    		
-    		if (this.einleitungsstelle.getSchutzzoneOpt() != null) {
-    			getSchutzzoneOptFeld().setText(this.einleitungsstelle.getSchutzzoneOpt().toString());
-    		} 		
-    		
-    		if (this.klaeranlagen != null) {
-    		    getKlaeranlageBox().setModel(new DefaultComboBoxModel<Klaeranlage>(this.klaeranlagen));
-    		    getKlaeranlageBox().setSelectedIndex(-1);
-    		}
-    		
-    		if (this.referenz != null) {
-    		    getKlaeranlageBox().setSelectedItem(this.referenz.getKlaeranlageByZKaNr());
-    		}
+        if (this.einleitungsstelle != null) {
+            if (this.einleitungsstelle.getErstellDat() != null) {
+                getErstellDatDatum().setDate(this.einleitungsstelle.getErstellDat());
+            }
+            
+            if(this.einleitungsstelle.getHerkunft() != null) {
+                getHerkunftFeld().setText(this.einleitungsstelle.getHerkunft());
+            }
+        
+            if (this.einleitungsstelle.getBezeichnung() != null) {
+                getBezeichnungFeld().setText(this.einleitungsstelle.getBezeichnung());
+            }
+            
+            if (this.einleitungsstelle.getGewaessernameAlias3() != null) {
+                getGewaessernameAlias3Feld().setText(this.einleitungsstelle.getGewaessernameAlias3());
+            }
+            
+            if (this.einleitungsstelle.getGewaessernameNs() != null) {
+                getGewaessernameNsFeld().setText(this.einleitungsstelle.getGewaessernameNs());
+            }
+        
+            if (this.einleitungsstelle.getNadiaId() != null) {
+                getNadiaIdFeld().setText(this.einleitungsstelle.getNadiaId());
+            }
+            
+            if (this.einleitungsstelle.getStillgelegtAm() != null) {
+                getStillgelegtAmDatum().setDate(this.einleitungsstelle.getStillgelegtAm());
+            }
+            
+            if (this.einleitungsstelle.getTypIndirekt() != null) {
+                getTypIndirektCheck().setSelected(this.einleitungsstelle.getTypIndirekt());
+            }
+            
+            if (this.einleitungsstelle.getTypIndGewDirekt() != null) {
+                getTypIndGewDirektCheck().setSelected(this.einleitungsstelle.getTypIndGewDirekt());
+            }
+            
+            if (this.einleitungsstelle.getTypKommTrenn() != null) {
+                getTypKommTrennCheck().setSelected(this.einleitungsstelle.getTypKommTrenn());
+            }
+            
+            
+            if (this.einleitungsstelle.getTypPrivatTrenn() != null) {
+                getTypPrivatTrennCheck().setSelected(this.einleitungsstelle.getTypPrivatTrenn());
+            }
+            
+            if (this.einleitungsstelle.getTypSonstige() != null) {
+                getTypSonstigeCheck().setSelected(this.einleitungsstelle.getTypSonstige());
+            }
+            
+            if (this.einleitungsstelle.getTypAusserortStrasseneinl() != null) {
+                getTypAusserortStrasseneinlCheck().setSelected(this.einleitungsstelle.getTypAusserortStrasseneinl());
+            }
+            
+            if (this.einleitungsstelle.getStationierungNs3() != null) {
+                getStationierungNs3Feld().setText(new GermanDouble(this.einleitungsstelle.getStationierungNs3()).toString());
+            }
+            
+            if (this.einleitungsstelle.getEinzugsgebiet() != null) {
+                getEinzugsgebietFeld().setText(new GermanDouble(this.einleitungsstelle.getEinzugsgebiet()).toString());
+            }
+            
+            if (this.einleitungsstelle.getStationierungSt3() != null) {
+                getStationierungSt3Feld().setText(new GermanDouble(this.einleitungsstelle.getStationierungSt3()).toString());
+            }
+            
+            if (this.einleitungsstelle.getAbgaberelEinl() != null) {
+                getAbgaberelEinlFeld().setText(this.einleitungsstelle.getAbgaberelEinl().toString());
+            }
+            
+            if (this.einleitungsstelle.getE32() != null) {
+                getE32Feld().setText(this.einleitungsstelle.getE32().toString());
+            }
+            
+            if (this.einleitungsstelle.getN32() != null) {
+                getN32Feld().setText(this.einleitungsstelle.getN32().toString());
+            }
+            
+            if (this.einleitungsstelle.getKanalArtOpt() != null) {
+                getKanalArtOptFeld().setText(this.einleitungsstelle.getKanalArtOpt().toString());
+            }
+            
+            if (this.einleitungsstelle.getStationierung3Opt() != null) {
+                getStationierung3OptFeld().setText(this.einleitungsstelle.getStationierung3Opt().toString());
+            }
+            
+            if (this.einleitungsstelle.getSchutzzoneOpt() != null) {
+                getSchutzzoneOptFeld().setText(this.einleitungsstelle.getSchutzzoneOpt().toString());
+            } 		
+            
+            if (this.klaeranlagen != null) {
+                getKlaeranlageBox().setModel(new DefaultComboBoxModel<Klaeranlage>(this.klaeranlagen));
+                getKlaeranlageBox().setSelectedIndex(-1);
+            }
+            
+            if (this.referenz != null) {
+                getKlaeranlageBox().setSelectedItem(this.referenz.getKlaeranlageByZKaNr());
+            }
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
-    	}
+        }
     }
   
     /**
      * Methode die alle Eingabefelder des Panels auf den Standard zurücksetzt.
      */
     public void clearForm() {
-    	getErstellDatDatum().setDate(null);
-    	getHerkunftFeld().setText(null);
-    	getBezeichnungFeld().setText(null);
-    	getGewaessernameAlias3Feld().setText(null);
-    	getGewaessernameNsFeld().setText(null);
-    	getNadiaIdFeld().setText(null);
-    	getStillgelegtAmDatum().setDate(null);
-    	getTypIndirektCheck().setSelected(false);
-    	getTypIndGewDirektCheck().setSelected(false);
-    	getTypKommTrennCheck().setSelected(false);
-    	getTypPrivatTrennCheck().setSelected(false);
-    	getTypSonstigeCheck().setSelected(false);
-    	getTypAusserortStrasseneinlCheck().setSelected(false);
-    	getStationierungNs3Feld().setText(null);
-    	getEinzugsgebietFeld().setText(null);
-    	getStationierungSt3Feld().setText(null);
-    	getAbgaberelEinlFeld().setText(null);
-    	getE32Feld().setText(null);
-    	getN32Feld().setText(null);
-    	getKanalArtOptFeld().setText(null);
-    	getStationierung3OptFeld().setText(null);
-    	getSchutzzoneOptFeld().setText(null);
-    	getKlaeranlageBox().setSelectedIndex(-1);
-    	
+        getErstellDatDatum().setDate(null);
+        getHerkunftFeld().setText(null);
+        getBezeichnungFeld().setText(null);
+        getGewaessernameAlias3Feld().setText(null);
+        getGewaessernameNsFeld().setText(null);
+        getNadiaIdFeld().setText(null);
+        getStillgelegtAmDatum().setDate(null);
+        getTypIndirektCheck().setSelected(false);
+        getTypIndGewDirektCheck().setSelected(false);
+        getTypKommTrennCheck().setSelected(false);
+        getTypPrivatTrennCheck().setSelected(false);
+        getTypSonstigeCheck().setSelected(false);
+        getTypAusserortStrasseneinlCheck().setSelected(false);
+        getStationierungNs3Feld().setText(null);
+        getEinzugsgebietFeld().setText(null);
+        getStationierungSt3Feld().setText(null);
+        getAbgaberelEinlFeld().setText(null);
+        getE32Feld().setText(null);
+        getN32Feld().setText(null);
+        getKanalArtOptFeld().setText(null);
+        getStationierung3OptFeld().setText(null);
+        getSchutzzoneOptFeld().setText(null);
+        getKlaeranlageBox().setSelectedIndex(-1);
+        
     }
     
     /**
@@ -356,29 +410,29 @@ public class EinleitungsstellePanel extends JPanel {
      * @param enabled
      */
     public void enableAll(boolean enabled) {
-    	getErstellDatDatum().setEnabled(enabled);
-    	getHerkunftFeld().setEnabled(enabled);
-    	getBezeichnungFeld().setEnabled(enabled);
-    	getGewaessernameAlias3Feld().setEnabled(enabled);
-    	getGewaessernameNsFeld().setEnabled(enabled);
-    	getNadiaIdFeld().setEnabled(enabled);
-    	getStillgelegtAmDatum().setEnabled(enabled);
-    	getTypIndirektCheck().setEnabled(enabled);
-    	getTypIndGewDirektCheck().setEnabled(enabled);
-    	getTypKommTrennCheck().setEnabled(enabled);
-    	getTypPrivatTrennCheck().setEnabled(enabled);
-    	getTypSonstigeCheck().setEnabled(enabled);
-    	getTypAusserortStrasseneinlCheck().setEnabled(enabled);
-    	getStationierungNs3Feld().setEnabled(enabled);
-    	getEinzugsgebietFeld().setEnabled(enabled);
-    	getStationierungSt3Feld().setEnabled(enabled);
-    	getAbgaberelEinlFeld().setEnabled(enabled);
-    	getE32Feld().setEnabled(enabled);
-    	getN32Feld().setEnabled(enabled);
-    	getKanalArtOptFeld().setEnabled(enabled);
-    	getStationierung3OptFeld().setEnabled(enabled);
-    	getSchutzzoneOptFeld().setEnabled(enabled);
-    	getKlaeranlageBox().setEnabled(enabled);
+        getErstellDatDatum().setEnabled(enabled);
+        getHerkunftFeld().setEnabled(enabled);
+        getBezeichnungFeld().setEnabled(enabled);
+        getGewaessernameAlias3Feld().setEnabled(enabled);
+        getGewaessernameNsFeld().setEnabled(enabled);
+        getNadiaIdFeld().setEnabled(enabled);
+        getStillgelegtAmDatum().setEnabled(enabled);
+        getTypIndirektCheck().setEnabled(enabled);
+        getTypIndGewDirektCheck().setEnabled(enabled);
+        getTypKommTrennCheck().setEnabled(enabled);
+        getTypPrivatTrennCheck().setEnabled(enabled);
+        getTypSonstigeCheck().setEnabled(enabled);
+        getTypAusserortStrasseneinlCheck().setEnabled(enabled);
+        getStationierungNs3Feld().setEnabled(enabled);
+        getEinzugsgebietFeld().setEnabled(enabled);
+        getStationierungSt3Feld().setEnabled(enabled);
+        getAbgaberelEinlFeld().setEnabled(enabled);
+        getE32Feld().setEnabled(enabled);
+        getN32Feld().setEnabled(enabled);
+        getKanalArtOptFeld().setEnabled(enabled);
+        getStationierung3OptFeld().setEnabled(enabled);
+        getSchutzzoneOptFeld().setEnabled(enabled);
+        getKlaeranlageBox().setEnabled(enabled);
     }
 
     @Override
@@ -392,124 +446,124 @@ public class EinleitungsstellePanel extends JPanel {
      * @return boolean
      */
     private boolean saveElkaEinleitungsstelleDaten() {
-    	boolean success;
-    	
-    	this.einleitungsstelle.setAktualDat(new Date());
-    	
-    	Date erstellDat = this.erstellDatDatum.getDate();
-    	this.einleitungsstelle.setErstellDat(erstellDat);
-    	
-    	String herkunft = this.herkunftFeld.getText();
-    	if ("".equals(herkunft)) {
-    		this.einleitungsstelle.setHerkunft(null);
-    	} else {
-    		this.einleitungsstelle.setHerkunft(herkunft);
-    	}
-    	
-    	String bezeichnung = this.bezeichnungFeld.getText();
-    	if("".equals(bezeichnung)) {
-    		this.einleitungsstelle.setBezeichnung(null);
-    	} else {
-    		this.einleitungsstelle.setBezeichnung(bezeichnung);
-    	}
-    	
-    	String gewaessernameAlias3 = this.gewaessernameAlias3Feld.getText();
-    	if("".equals(gewaessernameAlias3)) {
-    		this.einleitungsstelle.setGewaessernameAlias3(null);
-    	} else {
-    		this.einleitungsstelle.setGewaessernameAlias3(gewaessernameAlias3);
-    	}
-    	
-    	String gewaessernameNs = this.gewaessernameNsFeld.getText();
-    	if("".equals(gewaessernameNs)) {
-    		this.einleitungsstelle.setGewaessernameNs(null);
-    	} else {
-    		this.einleitungsstelle.setGewaessernameNs(gewaessernameNs);
-    	}
-    	
-    	String nadiaId = this.nadiaIdFeld.getText();
-    	if("".equals(nadiaId)) {
-    		this.einleitungsstelle.setNadiaId(null);
-    	} else {
-    		this.einleitungsstelle.setNadiaId(nadiaId);
-    	}
-    	
-    	Date stillgelegtAm = this.stillgelegtAmDatum.getDate();
-    	this.einleitungsstelle.setStillgelegtAm(stillgelegtAm);
-    	
-    	if(getTypIndirektCheck().isSelected()) {
-    		this.einleitungsstelle.setTypIndirekt(true);
-    	} else {
-    		this.einleitungsstelle.setTypIndirekt(false);
-    	}
-    	
-    	if(getTypIndGewDirektCheck().isSelected()) {
-    		this.einleitungsstelle.setTypIndGewDirekt(true);
-    	} else {
-    		this.einleitungsstelle.setTypIndGewDirekt(false);
-    	}
-    	
-    	if(getTypKommTrennCheck().isSelected()) {
-    		this.einleitungsstelle.setTypKommTrenn(true);
-    	} else {
-    		this.einleitungsstelle.setTypKommTrenn(false);
-    	}
-    	
-    	if(getTypPrivatTrennCheck().isSelected()) {
-    		this.einleitungsstelle.setTypPrivatTrenn(true);
-    	} else {
-    		this.einleitungsstelle.setTypPrivatTrenn(false);
-    	}
-    	
-    	if(getTypSonstigeCheck().isSelected()) {
-    		this.einleitungsstelle.setTypSonstige(true);
-    	} else {		
-    		this.einleitungsstelle.setTypSonstige(false);
-    	}
-    	
-    	if(getTypAusserortStrasseneinlCheck().isSelected()) {
-    		this.einleitungsstelle.setTypAusserortStrasseneinl(true);
-    	} else {
-    		this.einleitungsstelle.setTypAusserortStrasseneinl(false);
-    	}
-    	
-    	Double stationierungNs3 = this.stationierungNs3Feld.getDoubleValue();
-    	this.einleitungsstelle.setStationierungNs3(stationierungNs3);
-    		
-    	Double einzugsgebiet = this.einzugsgebietFeld.getDoubleValue();
-    	this.einleitungsstelle.setEinzugsgebiet(einzugsgebiet);
-    	
-    	Double stationierungSt3 = this.stationierungSt3Feld.getDoubleValue();
-    	this.einleitungsstelle.setStationierungSt3(stationierungSt3);
-    	
-    	Integer abgaberelEinl = ((IntegerField)this.abgaberelEinlFeld).getIntValue();
-    	this.einleitungsstelle.setAbgaberelevanteEltOpt(abgaberelEinl);
-    	
-    	Integer e32 = ((IntegerField)this.e32Feld).getIntValue();
-    	this.einleitungsstelle.setE32(e32);
-    	
-    	Integer n32 = ((IntegerField)this.n32Feld).getIntValue();
-    	this.einleitungsstelle.setN32(n32);
-    	
-    	Integer kanalArtOpt = ((IntegerField)this.kanalArtOptFeld).getIntValue();
-    	this.einleitungsstelle.setKanalArtOpt(kanalArtOpt);
-    	
-    	Integer stationierung3Opt = ((IntegerField)this.stationierung3OptFeld).getIntValue();
-    	this.einleitungsstelle.setStationierung3Opt(stationierung3Opt);
-    	
-    	Integer schutzzoneOpt = ((IntegerField)this.schutzzoneOptFeld).getIntValue();
-    	this.einleitungsstelle.setSchutzzoneOpt(schutzzoneOpt);
- 	  	
-    	success = this.einleitungsstelle.merge();
-    	if (success) {
-    		log.debug("Einleitungsstelle"
-    				+ this.einleitungsstelle.getObjekt().getBetreiberid()
-    				.getBetrname() + " gespeichert.");
-    	} else {
-    		log.debug("Einleitungsstelle" + this.einleitungsstelle
-    				+ " konnte nicht gespeichert werden!");
-    	}
-    	return success;
+        boolean success;
+        
+        this.einleitungsstelle.setAktualDat(new Date());
+        
+        Date erstellDat = this.erstellDatDatum.getDate();
+        this.einleitungsstelle.setErstellDat(erstellDat);
+        
+        String herkunft = this.herkunftFeld.getText();
+        if ("".equals(herkunft)) {
+            this.einleitungsstelle.setHerkunft(null);
+        } else {
+            this.einleitungsstelle.setHerkunft(herkunft);
+        }
+        
+        String bezeichnung = this.bezeichnungFeld.getText();
+        if("".equals(bezeichnung)) {
+            this.einleitungsstelle.setBezeichnung(null);
+        } else {
+            this.einleitungsstelle.setBezeichnung(bezeichnung);
+        }
+        
+        String gewaessernameAlias3 = this.gewaessernameAlias3Feld.getText();
+        if("".equals(gewaessernameAlias3)) {
+            this.einleitungsstelle.setGewaessernameAlias3(null);
+        } else {
+            this.einleitungsstelle.setGewaessernameAlias3(gewaessernameAlias3);
+        }
+        
+        String gewaessernameNs = this.gewaessernameNsFeld.getText();
+        if("".equals(gewaessernameNs)) {
+            this.einleitungsstelle.setGewaessernameNs(null);
+        } else {
+            this.einleitungsstelle.setGewaessernameNs(gewaessernameNs);
+        }
+        
+        String nadiaId = this.nadiaIdFeld.getText();
+        if("".equals(nadiaId)) {
+            this.einleitungsstelle.setNadiaId(null);
+        } else {
+            this.einleitungsstelle.setNadiaId(nadiaId);
+        }
+        
+        Date stillgelegtAm = this.stillgelegtAmDatum.getDate();
+        this.einleitungsstelle.setStillgelegtAm(stillgelegtAm);
+        
+        if(getTypIndirektCheck().isSelected()) {
+            this.einleitungsstelle.setTypIndirekt(true);
+        } else {
+            this.einleitungsstelle.setTypIndirekt(false);
+        }
+        
+        if(getTypIndGewDirektCheck().isSelected()) {
+            this.einleitungsstelle.setTypIndGewDirekt(true);
+        } else {
+            this.einleitungsstelle.setTypIndGewDirekt(false);
+        }
+        
+        if(getTypKommTrennCheck().isSelected()) {
+            this.einleitungsstelle.setTypKommTrenn(true);
+        } else {
+            this.einleitungsstelle.setTypKommTrenn(false);
+        }
+        
+        if(getTypPrivatTrennCheck().isSelected()) {
+            this.einleitungsstelle.setTypPrivatTrenn(true);
+        } else {
+            this.einleitungsstelle.setTypPrivatTrenn(false);
+        }
+        
+        if(getTypSonstigeCheck().isSelected()) {
+            this.einleitungsstelle.setTypSonstige(true);
+        } else {		
+            this.einleitungsstelle.setTypSonstige(false);
+        }
+        
+        if(getTypAusserortStrasseneinlCheck().isSelected()) {
+            this.einleitungsstelle.setTypAusserortStrasseneinl(true);
+        } else {
+            this.einleitungsstelle.setTypAusserortStrasseneinl(false);
+        }
+        
+        Double stationierungNs3 = this.stationierungNs3Feld.getDoubleValue();
+        this.einleitungsstelle.setStationierungNs3(stationierungNs3);
+            
+        Double einzugsgebiet = this.einzugsgebietFeld.getDoubleValue();
+        this.einleitungsstelle.setEinzugsgebiet(einzugsgebiet);
+        
+        Double stationierungSt3 = this.stationierungSt3Feld.getDoubleValue();
+        this.einleitungsstelle.setStationierungSt3(stationierungSt3);
+        
+        Integer abgaberelEinl = ((IntegerField)this.abgaberelEinlFeld).getIntValue();
+        this.einleitungsstelle.setAbgaberelevanteEltOpt(abgaberelEinl);
+        
+        Integer e32 = ((IntegerField)this.e32Feld).getIntValue();
+        this.einleitungsstelle.setE32(e32);
+        
+        Integer n32 = ((IntegerField)this.n32Feld).getIntValue();
+        this.einleitungsstelle.setN32(n32);
+        
+        Integer kanalArtOpt = ((IntegerField)this.kanalArtOptFeld).getIntValue();
+        this.einleitungsstelle.setKanalArtOpt(kanalArtOpt);
+        
+        Integer stationierung3Opt = ((IntegerField)this.stationierung3OptFeld).getIntValue();
+        this.einleitungsstelle.setStationierung3Opt(stationierung3Opt);
+        
+        Integer schutzzoneOpt = ((IntegerField)this.schutzzoneOptFeld).getIntValue();
+        this.einleitungsstelle.setSchutzzoneOpt(schutzzoneOpt);
+           
+        success = this.einleitungsstelle.merge();
+        if (success) {
+            log.debug("Einleitungsstelle"
+                    + this.einleitungsstelle.getObjekt().getBetreiberid()
+                    .getBetrname() + " gespeichert.");
+        } else {
+            log.debug("Einleitungsstelle" + this.einleitungsstelle
+                    + " konnte nicht gespeichert werden!");
+        }
+        return success;
     }
     
     /**
@@ -518,19 +572,19 @@ public class EinleitungsstellePanel extends JPanel {
      * @return booleanS
      */
     private boolean saveKlaeranlageDaten() {
-    	boolean success;
-    	if (getKlaeranlageBox().getSelectedItem() != null) {
-    	    if (this.referenz == null) {
-    		this.referenz = new Referenz();
-    	    }
-    	    this.referenz.setKlaeranlageByZKaNr((Klaeranlage)getKlaeranlageBox().getSelectedItem());
-    	    this.referenz.setqEl(this.einleitungsstelle);
-    	    success = this.referenz.merge();
-    	}
-    	else {
-    	    success = false;
-    	}
-    	return success;
+        boolean success;
+        if (getKlaeranlageBox().getSelectedItem() != null) {
+            if (this.referenz == null) {
+            this.referenz = new Referenz();
+            }
+            this.referenz.setKlaeranlageByZKaNr((Klaeranlage)getKlaeranlageBox().getSelectedItem());
+            this.referenz.setqEl(this.einleitungsstelle);
+            success = this.referenz.merge();
+        }
+        else {
+            success = false;
+        }
+        return success;
     }
 
     /**
@@ -539,13 +593,13 @@ public class EinleitungsstellePanel extends JPanel {
      */
     public void completeObjekt() {
         if (this.hauptModul.isNew() || this.einleitungsstelle == null) {
-        	// Neue EinleitungstellePanel erzeugen
-        	this.einleitungsstelle = new Einleitungsstelle();
-        	//Objekt_Id setzen
-        	this.einleitungsstelle.setObjekt(this.hauptModul.getObjekt());
-        	this.einleitungsstelle.merge();
-        	//ElkaEinleitungsstelle.merge(this.einleitungstelle);
-        	log.debug("Neue ElkaEinleitungsstelle " + this.einleitungsstelle + " gespeichert.");
+            // Neue EinleitungstellePanel erzeugen
+            this.einleitungsstelle = new Einleitungsstelle();
+            //Objekt_Id setzen
+            this.einleitungsstelle.setObjekt(this.hauptModul.getObjekt());
+            this.einleitungsstelle.merge();
+            //ElkaEinleitungsstelle.merge(this.einleitungstelle);
+            log.debug("Neue ElkaEinleitungsstelle " + this.einleitungsstelle + " gespeichert.");
         }
     }
     
@@ -554,10 +608,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link TextFieldDateChooser}
      */
     private TextFieldDateChooser getErstellDatDatum() {
-    	if (this.erstellDatDatum == null) {
-    		this.erstellDatDatum = new TextFieldDateChooser();
-    	}
-    	return this.erstellDatDatum;
+        if (this.erstellDatDatum == null) {
+            this.erstellDatDatum = new TextFieldDateChooser();
+        }
+        return this.erstellDatDatum;
     }
     
     /**
@@ -565,10 +619,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JTextField}
      */
     private JTextField getHerkunftFeld() {
-    	if (this.herkunftFeld == null) {
-    		this.herkunftFeld = new LimitedTextField(50);
-    	}
-    	return this.herkunftFeld;
+        if (this.herkunftFeld == null) {
+            this.herkunftFeld = new LimitedTextField(50);
+        }
+        return this.herkunftFeld;
     }
     
     /**
@@ -576,10 +630,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JTextField}
      */
     private JTextField getBezeichnungFeld() {
-    	if (this.bezeichnungFeld == null) {
-    		this.bezeichnungFeld = new LimitedTextField(50);
-    	}
-    	return this.bezeichnungFeld;
+        if (this.bezeichnungFeld == null) {
+            this.bezeichnungFeld = new LimitedTextField(50);
+        }
+        return this.bezeichnungFeld;
     }
     
     /**
@@ -587,10 +641,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JTextField}
      */
     private JTextField getGewaessernameAlias3Feld() {
-    	if (this.gewaessernameAlias3Feld == null) {
-    		this.gewaessernameAlias3Feld = new LimitedTextField(50);
-    	}
-    	return this.gewaessernameAlias3Feld;
+        if (this.gewaessernameAlias3Feld == null) {
+            this.gewaessernameAlias3Feld = new LimitedTextField(50);
+        }
+        return this.gewaessernameAlias3Feld;
     }
     
     /**
@@ -598,20 +652,20 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JTextField}
      */
     private JTextField getGewaessernameNsFeld() {
-    	if (this.gewaessernameNsFeld == null) {
-    		this.gewaessernameNsFeld = new LimitedTextField(50);
-    	}
-    	return this.gewaessernameNsFeld;
+        if (this.gewaessernameNsFeld == null) {
+            this.gewaessernameNsFeld = new LimitedTextField(50);
+        }
+        return this.gewaessernameNsFeld;
     }
      /**
       * Get-Methode die das NadiaIdFeld des Panels zurückgibt:
       * @return {@link JTextField}
       */
     private JTextField getNadiaIdFeld() {
-    	if (this.nadiaIdFeld == null) {
-    		this.nadiaIdFeld = new LimitedTextField(50);
-    	}
-    	return this.nadiaIdFeld;
+        if (this.nadiaIdFeld == null) {
+            this.nadiaIdFeld = new LimitedTextField(50);
+        }
+        return this.nadiaIdFeld;
     }
     
     /**
@@ -619,10 +673,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link TextFieldDateChooser}
      */
     private TextFieldDateChooser getStillgelegtAmDatum() {
-    	if (this.stillgelegtAmDatum == null){
-    		this.stillgelegtAmDatum = new TextFieldDateChooser();
-    	}
-    	return this.stillgelegtAmDatum;
+        if (this.stillgelegtAmDatum == null){
+            this.stillgelegtAmDatum = new TextFieldDateChooser();
+        }
+        return this.stillgelegtAmDatum;
     }
     
     /**
@@ -630,10 +684,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JCheckBox}
      */
     private JCheckBox getTypIndirektCheck() {
-    	if (this.typIndirektCheck == null) {
-    		this.typIndirektCheck = new JCheckBox("Typ");
-    	}
-    	return this.typIndirektCheck;
+        if (this.typIndirektCheck == null) {
+            this.typIndirektCheck = new JCheckBox("Typ");
+        }
+        return this.typIndirektCheck;
     }
     
     /**
@@ -641,10 +695,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JCheckBox}
      */
     private JCheckBox getTypIndGewDirektCheck() {
-    	if (this.typIndGewDirektCheck == null) {
-    		this.typIndGewDirektCheck = new JCheckBox("TypIndGewDirek");
-    	}
-    	return this.typIndGewDirektCheck;
+        if (this.typIndGewDirektCheck == null) {
+            this.typIndGewDirektCheck = new JCheckBox("TypIndGewDirek");
+        }
+        return this.typIndGewDirektCheck;
     }
     
     /**
@@ -652,10 +706,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JcheckBox}
      */
     private JCheckBox getTypKommTrennCheck() {
-    	if (this.typKommTrennCheck == null) {
-    		this.typKommTrennCheck =  new JCheckBox("TypKommTrenn");
-    	}
-    	return this.typKommTrennCheck;
+        if (this.typKommTrennCheck == null) {
+            this.typKommTrennCheck =  new JCheckBox("TypKommTrenn");
+        }
+        return this.typKommTrennCheck;
     }
     
     /**
@@ -663,10 +717,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JCheckBox}
      */
     private JCheckBox getTypPrivatTrennCheck() {
-    	if (this.typPrivatTrennCheck == null) {
-    		this.typPrivatTrennCheck = new JCheckBox("TypPrivatTren");
-    	}
-    	return this.typPrivatTrennCheck;
+        if (this.typPrivatTrennCheck == null) {
+            this.typPrivatTrennCheck = new JCheckBox("TypPrivatTren");
+        }
+        return this.typPrivatTrennCheck;
     }
     
     /**
@@ -674,10 +728,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JCheckBox}
      */
     private JCheckBox getTypSonstigeCheck() {
-    	if (this.typSonstigeCheck == null) {
-    		this.typSonstigeCheck = new JCheckBox("TypSonstige");
-    	}
-    	return this.typSonstigeCheck;
+        if (this.typSonstigeCheck == null) {
+            this.typSonstigeCheck = new JCheckBox("TypSonstige");
+        }
+        return this.typSonstigeCheck;
     }
     
     /**
@@ -685,10 +739,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JCheckBox}
      */
     private JCheckBox getTypAusserortStrasseneinlCheck() {
-    	if (this.typAusserortStrasseneinlCheck  == null) {
-    		this.typAusserortStrasseneinlCheck = new JCheckBox("TypAusserortStrasseneinl");
-    	}
-    	return this.typAusserortStrasseneinlCheck;
+        if (this.typAusserortStrasseneinlCheck  == null) {
+            this.typAusserortStrasseneinlCheck = new JCheckBox("TypAusserortStrasseneinl");
+        }
+        return this.typAusserortStrasseneinlCheck;
     }
     
     /**
@@ -696,10 +750,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link DoubleField}
      */
     private DoubleField getStationierungNs3Feld() {
-    	if (this.stationierungNs3Feld == null) {
-    		this.stationierungNs3Feld = new DoubleField(50);
-    	}
-    	return this.stationierungNs3Feld;
+        if (this.stationierungNs3Feld == null) {
+            this.stationierungNs3Feld = new DoubleField(50);
+        }
+        return this.stationierungNs3Feld;
     }
     
     /**
@@ -707,10 +761,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link DoubleField}
      */
     private DoubleField getEinzugsgebietFeld() {
-    	if (this.einzugsgebietFeld == null) {
-    		this.einzugsgebietFeld = new DoubleField(50);
-    	}
-    	return this.einzugsgebietFeld;
+        if (this.einzugsgebietFeld == null) {
+            this.einzugsgebietFeld = new DoubleField(50);
+        }
+        return this.einzugsgebietFeld;
     }
     
     /**
@@ -718,10 +772,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link DoubleField}
      */   
     private DoubleField getStationierungSt3Feld() {
-    	if (this.stationierungSt3Feld == null) {
-    		this.stationierungSt3Feld = new DoubleField(50);
-    	}
-    	return this.stationierungSt3Feld;
+        if (this.stationierungSt3Feld == null) {
+            this.stationierungSt3Feld = new DoubleField(50);
+        }
+        return this.stationierungSt3Feld;
     }
     
     /**
@@ -729,10 +783,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JFormattedTextField}
      */
     private JFormattedTextField getAbgaberelEinlFeld() {
-    	if (this.abgaberelEinlFeld == null) {
-    		this.abgaberelEinlFeld = new IntegerField();
-    	}
-    	return this.abgaberelEinlFeld;
+        if (this.abgaberelEinlFeld == null) {
+            this.abgaberelEinlFeld = new IntegerField();
+        }
+        return this.abgaberelEinlFeld;
     }
     
     /**
@@ -740,10 +794,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JFormattedTextField}
      */
     private JFormattedTextField getE32Feld() {
-    	if (this.e32Feld == null) {
-    		this.e32Feld = new IntegerField();
-    	}
-    	return this.e32Feld;
+        if (this.e32Feld == null) {
+            this.e32Feld = new IntegerField();
+        }
+        return this.e32Feld;
     }
     
     /***
@@ -751,10 +805,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JFormattedTextField}
      */
     private JFormattedTextField getN32Feld() {
-    	if (this.n32Feld == null) {
-    		this.n32Feld = new IntegerField();
-    	}
-    	return this.n32Feld;
+        if (this.n32Feld == null) {
+            this.n32Feld = new IntegerField();
+        }
+        return this.n32Feld;
     }
     
     /**
@@ -762,10 +816,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JFormattedTextField}
      */
     private JFormattedTextField getKanalArtOptFeld() {
-    	if (this.kanalArtOptFeld == null) {
-    		this.kanalArtOptFeld = new IntegerField();
-    	}
-    	return this.kanalArtOptFeld;
+        if (this.kanalArtOptFeld == null) {
+            this.kanalArtOptFeld = new IntegerField();
+        }
+        return this.kanalArtOptFeld;
     }
     
     /**
@@ -773,10 +827,10 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JFormattedTextField}
      */
     private JFormattedTextField getStationierung3OptFeld() {
-    	if (this.stationierung3OptFeld == null) {
-    		this.stationierung3OptFeld = new IntegerField();
-    	}
-    	return this.stationierung3OptFeld;
+        if (this.stationierung3OptFeld == null) {
+            this.stationierung3OptFeld = new IntegerField();
+        }
+        return this.stationierung3OptFeld;
     }
     
     /**
@@ -798,115 +852,115 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JFormattedTextField}
      */
     private JFormattedTextField getSchutzzoneOptFeld() {
-    	if (this.schutzzoneOptFeld == null) {
-    		this.schutzzoneOptFeld = new IntegerField();
-    		}
-    	return this.schutzzoneOptFeld;
+        if (this.schutzzoneOptFeld == null) {
+            this.schutzzoneOptFeld = new IntegerField();
+            }
+        return this.schutzzoneOptFeld;
     }
     
     private JTable getObjektverknuepungTabelle() {
-	
-	    if (this.objektVerknuepfungModel == null) {
-	        this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
-	            this.hauptModul.getObjekt());
-	
-	        if (this.objektverknuepfungTabelle == null) {
-	            this.objektverknuepfungTabelle = new JTable(
-	                this.objektVerknuepfungModel);
-	        } else {
-	            this.objektverknuepfungTabelle
-	                .setModel(this.objektVerknuepfungModel);
-	        }
-	        this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
-	            .setPreferredWidth(5);
-	        this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
-	            .setPreferredWidth(100);
-	        this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
-	            .setPreferredWidth(250);
-	
-	        this.objektverknuepfungTabelle
-	            .addMouseListener(new java.awt.event.MouseAdapter() {
-	                @Override
-	                public void mouseClicked(java.awt.event.MouseEvent e) {
-	                    if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-	                        Point origin = e.getPoint();
-	                        int row = getObjektverknuepungTabelle().rowAtPoint(
-	                            origin);
-	
-	                        if (row != -1) {
-	                            Objektverknuepfung obj = EinleitungsstellePanel.this.objektVerknuepfungModel
-	                                .getRow(row);
-	                            if (obj.getObjektByIstVerknuepftMit()
-	                                .getId().intValue() != EinleitungsstellePanel.this.hauptModul
-	                                .getObjekt().getId().intValue())
-	                            	EinleitungsstellePanel.this.hauptModul
-	                                    .getManager()
-	                                    .getSettingsManager()
-	                                    .setSetting(
-	                                        "auik.imc.edit_object",
-	                                        obj.getObjektByIstVerknuepftMit()
-	                                            .getId().intValue(),
-	                                        false);
-	                            else
-	                            	EinleitungsstellePanel.this.hauptModul
-	                                    .getManager()
-	                                    .getSettingsManager()
-	                                    .setSetting(
-	                                        "auik.imc.edit_object",
-	                                        obj.getObjektByObjekt()
-	                                            .getId().intValue(),
-	                                        false);
-	                            EinleitungsstellePanel.this.hauptModul.getManager()
-	                                .switchModul("m_objekt_bearbeiten");
-	                        }
-	                    }
-	                }
-	
-	                @Override
-	                public void mousePressed(MouseEvent e) {
-	                    showVerknuepfungPopup(e);
-	                }
-	
-	                @Override
-	                public void mouseReleased(MouseEvent e) {
-	                    showVerknuepfungPopup(e);
-	                }
-	            });
-	
-	        this.objektverknuepfungTabelle.getInputMap().put(
-	            (KeyStroke) getVerknuepfungLoeschAction().getValue(
-	                Action.ACCELERATOR_KEY),
-	            getVerknuepfungLoeschAction().getValue(Action.NAME));
-	        this.objektverknuepfungTabelle.getActionMap().put(
-	            getVerknuepfungLoeschAction().getValue(Action.NAME),
-	            getVerknuepfungLoeschAction());
-	    }
-	
-	    return this.objektverknuepfungTabelle;
-	
-	}
+    
+        if (this.objektVerknuepfungModel == null) {
+            this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
+                this.hauptModul.getObjekt());
+    
+            if (this.objektverknuepfungTabelle == null) {
+                this.objektverknuepfungTabelle = new JTable(
+                    this.objektVerknuepfungModel);
+            } else {
+                this.objektverknuepfungTabelle
+                    .setModel(this.objektVerknuepfungModel);
+            }
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
+                .setPreferredWidth(5);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
+                .setPreferredWidth(100);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
+                .setPreferredWidth(250);
+    
+            this.objektverknuepfungTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getObjektverknuepungTabelle().rowAtPoint(
+                                origin);
+    
+                            if (row != -1) {
+                                Objektverknuepfung obj = EinleitungsstellePanel.this.objektVerknuepfungModel
+                                    .getRow(row);
+                                if (obj.getObjektByIstVerknuepftMit()
+                                    .getId().intValue() != EinleitungsstellePanel.this.hauptModul
+                                    .getObjekt().getId().intValue())
+                                    EinleitungsstellePanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getObjektByIstVerknuepftMit()
+                                                .getId().intValue(),
+                                            false);
+                                else
+                                    EinleitungsstellePanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getObjektByObjekt()
+                                                .getId().intValue(),
+                                            false);
+                                EinleitungsstellePanel.this.hauptModul.getManager()
+                                    .switchModul("m_objekt_bearbeiten");
+                            }
+                        }
+                    }
+    
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+    
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+                });
+    
+            this.objektverknuepfungTabelle.getInputMap().put(
+                (KeyStroke) getVerknuepfungLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getVerknuepfungLoeschAction().getValue(Action.NAME));
+            this.objektverknuepfungTabelle.getActionMap().put(
+                getVerknuepfungLoeschAction().getValue(Action.NAME),
+                getVerknuepfungLoeschAction());
+        }
+    
+        return this.objektverknuepfungTabelle;
+    
+    }
 
-	private void showVerknuepfungPopup(MouseEvent e) {
-	    if (this.verknuepfungPopup == null) {
-	        this.verknuepfungPopup = new JPopupMenu("Objekt");
-	        JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-	        this.verknuepfungPopup.add(loeschItem);
-	    }
-	
-	    if (e.isPopupTrigger()) {
-	        Point origin = e.getPoint();
-	        int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
-	
-	        if (row != -1) {
-	            this.objektverknuepfungTabelle
-	                .setRowSelectionInterval(row, row);
-	            this.verknuepfungPopup.show(e.getComponent(), e.getX(),
-	                e.getY());
-	        }
-	    }
-	}
+    private void showVerknuepfungPopup(MouseEvent e) {
+        if (this.verknuepfungPopup == null) {
+            this.verknuepfungPopup = new JPopupMenu("Objekt");
+            JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
+            this.verknuepfungPopup.add(loeschItem);
+        }
+    
+        if (e.isPopupTrigger()) {
+            Point origin = e.getPoint();
+            int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
+    
+            if (row != -1) {
+                this.objektverknuepfungTabelle
+                    .setRowSelectionInterval(row, row);
+                this.verknuepfungPopup.show(e.getComponent(), e.getX(),
+                    e.getY());
+            }
+        }
+    }
 
-	/**
+    /**
      * Methode die den SaveElkaEinleitungsstelleButton zurückgibt sofern er existiert,
      * ansonsten wird ein neuer erstellt und diesem einen {@link ActionListener} hinzugefügt,
      * der bei einem Klick die Methoden <code>saveElkaEinleitungsstelleDaten</code> und
@@ -916,101 +970,101 @@ public class EinleitungsstellePanel extends JPanel {
      * @return {@link JButton}
      */
     private JButton getSaveElkaEinleitungsstelleButton() {
-    	if (this.saveElkaEinleitungsstelleButton == null) {
-    		this.saveElkaEinleitungsstelleButton = new JButton("Speichern");
-    		
-    		this.saveElkaEinleitungsstelleButton.addActionListener(new ActionListener() {
-			@Override
-    		public void actionPerformed(ActionEvent e) {
-	    			enableAll(false);
-	    			String status = "";
-	    			if(saveElkaEinleitungsstelleDaten()) {
-	    			    status = "Einleitungsstelle " + 
-	    			EinleitungsstellePanel.this.einleitungsstelle.getId()
-	    			+ " erfolgreich gespeichert.";
-	    			} else {
-	    			    status = "Fehler beim Speichern der Einleitungsstelle!";				
-	    			}
-	    			if (saveKlaeranlageDaten()) {
-	    			    status = status + " & Verknüpfung mit der Kläranlage "
-	    				    + EinleitungsstellePanel.this.referenz.getKlaeranlageByZKaNr().getAnlage()
-	    			    	    + " über die Referenz-Tabelle erfolgreich gespeichert.";
-	    			} else {
-	    			    status = status + " & Verknüpfung konnte nicht gespeichert werden!";
-	    			}
-	    			if(status.startsWith("Einleitungsstelle")) {
-	    			    EinleitungsstellePanel.this.hauptModul.getFrame().changeStatus(status,
-	    				    HauptFrame.SUCCESS_COLOR);
-	    			} else {
-	    			    EinleitungsstellePanel.this.hauptModul.getFrame().changeStatus(status,
-	    				    HauptFrame.ERROR_COLOR);
-	    			}
-	    			EinleitungsstellePanel.this.hauptModul.fillForm();
-    		}	
-    		});		
-    	}
-    	return this.saveElkaEinleitungsstelleButton;
+        if (this.saveElkaEinleitungsstelleButton == null) {
+            this.saveElkaEinleitungsstelleButton = new JButton("Speichern");
+            
+            this.saveElkaEinleitungsstelleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    enableAll(false);
+                    String status = "";
+                    if(saveElkaEinleitungsstelleDaten()) {
+                        status = "Einleitungsstelle " + 
+                    EinleitungsstellePanel.this.einleitungsstelle.getId()
+                    + " erfolgreich gespeichert.";
+                    } else {
+                        status = "Fehler beim Speichern der Einleitungsstelle!";				
+                    }
+                    if (saveKlaeranlageDaten()) {
+                        status = status + " & Verknüpfung mit der Kläranlage "
+                            + EinleitungsstellePanel.this.referenz.getKlaeranlageByZKaNr().getAnlage()
+                                + " über die Referenz-Tabelle erfolgreich gespeichert.";
+                    } else {
+                        status = status + " & Verknüpfung konnte nicht gespeichert werden!";
+                    }
+                    if(status.startsWith("Einleitungsstelle")) {
+                        EinleitungsstellePanel.this.hauptModul.getFrame().changeStatus(status,
+                            HauptFrame.SUCCESS_COLOR);
+                    } else {
+                        EinleitungsstellePanel.this.hauptModul.getFrame().changeStatus(status,
+                            HauptFrame.ERROR_COLOR);
+                    }
+                    EinleitungsstellePanel.this.hauptModul.fillForm();
+            }	
+            });		
+        }
+        return this.saveElkaEinleitungsstelleButton;
     }
 
-	private Action getVerknuepfungLoeschAction() {
-	    if (this.verknuepfungLoeschAction == null) {
-	        this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
-	
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                int row = getObjektverknuepungTabelle().getSelectedRow();
-	                if (row != -1
-	                    && getObjektverknuepungTabelle().getEditingRow() == -1) {
-	                    Objektverknuepfung verknuepfung = EinleitungsstellePanel.this.objektVerknuepfungModel
-	                        .getRow(row);
-	                    if (GUIManager.getInstance().showQuestion(
-	                        "Soll die Verknüpfung wirklich gelöscht werden?\n"
-	                            + "Hinweis: Die Aktion betrifft nur die "
-	                            + "Verknüpfung, die Objekte bleiben erhalten "
-	                            + "und können jederzeit neu verknüpft werden.",
-	                        "Löschen bestätigen")) {
-	                        if (EinleitungsstellePanel.this.objektVerknuepfungModel
-	                            .removeRow(row)) {
-	                        	EinleitungsstellePanel.this.hauptModul.getFrame()
-	                                .changeStatus("Objekt gelöscht.",
-	                                    HauptFrame.SUCCESS_COLOR);
-	                            log.debug("Objekt " + verknuepfung.getId()
-	                                + " wurde gelöscht!");
-	                        } else {
-	                        	EinleitungsstellePanel.this.hauptModul.getFrame()
-	                                .changeStatus(
-	                                    "Konnte das Objekt nicht löschen!",
-	                                    HauptFrame.ERROR_COLOR);
-	                        }
-	                    }
-	                }
-	            }
-	        };
-	        this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
-	            new Integer(KeyEvent.VK_L));
-	        this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
-	            KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
-	    }
-	
-	    return this.verknuepfungLoeschAction;
-	}
+    private Action getVerknuepfungLoeschAction() {
+        if (this.verknuepfungLoeschAction == null) {
+            this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
+    
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int row = getObjektverknuepungTabelle().getSelectedRow();
+                    if (row != -1
+                        && getObjektverknuepungTabelle().getEditingRow() == -1) {
+                        Objektverknuepfung verknuepfung = EinleitungsstellePanel.this.objektVerknuepfungModel
+                            .getRow(row);
+                        if (GUIManager.getInstance().showQuestion(
+                            "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                + "Hinweis: Die Aktion betrifft nur die "
+                                + "Verknüpfung, die Objekte bleiben erhalten "
+                                + "und können jederzeit neu verknüpft werden.",
+                            "Löschen bestätigen")) {
+                            if (EinleitungsstellePanel.this.objektVerknuepfungModel
+                                .removeRow(row)) {
+                                EinleitungsstellePanel.this.hauptModul.getFrame()
+                                    .changeStatus("Objekt gelöscht.",
+                                        HauptFrame.SUCCESS_COLOR);
+                                log.debug("Objekt " + verknuepfung.getId()
+                                    + " wurde gelöscht!");
+                            } else {
+                                EinleitungsstellePanel.this.hauptModul.getFrame()
+                                    .changeStatus(
+                                        "Konnte das Objekt nicht löschen!",
+                                        HauptFrame.ERROR_COLOR);
+                            }
+                        }
+                    }
+                }
+            };
+            this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+        }
+    
+        return this.verknuepfungLoeschAction;
+    }
 
-	private JButton getSelectObjektButton() {
-	    if (this.selectObjektButton == null) {
-	        this.selectObjektButton = new JButton("Objekt auswählen");
-	
-	        this.selectObjektButton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                ObjektChooser chooser = new ObjektChooser(
-	                		EinleitungsstellePanel.this.hauptModul.getFrame(),
-	                		EinleitungsstellePanel.this.einleitungsstelle.getObjekt(),
-	                		EinleitungsstellePanel.this.objektVerknuepfungModel);
-	                chooser.setVisible(true);
-	            }
-	        });
-	    }
-	    return this.selectObjektButton;
-	}    
+    private JButton getSelectObjektButton() {
+        if (this.selectObjektButton == null) {
+            this.selectObjektButton = new JButton("Objekt auswählen");
+    
+            this.selectObjektButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ObjektChooser chooser = new ObjektChooser(
+                            EinleitungsstellePanel.this.hauptModul.getFrame(),
+                            EinleitungsstellePanel.this.einleitungsstelle.getObjekt(),
+                            EinleitungsstellePanel.this.objektVerknuepfungModel);
+                    chooser.setVisible(true);
+                }
+            });
+        }
+        return this.selectObjektButton;
+    }    
     
 }

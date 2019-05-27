@@ -68,6 +68,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -99,9 +100,6 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -112,6 +110,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 
 /**
  * Das "Objekt-Chronologie"-Panel des Objekt-Bearbeiten-Moduls.
@@ -162,15 +161,16 @@ public class ChronoPanel extends JPanel {
         });
 
         JScrollPane chronoScroller = new JScrollPane(getChronoTable());
-
-        FormLayout layout = new FormLayout("pref 3dlu, pref, 3dlu, pref, 3dlu, pref:g",
-            "f:80dlu:g, 3dlu, pref");
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
-        builder.append(chronoScroller, 7);
-        builder.nextLine(2);
-        builder.append(this.reportListeButton, getSaveButton(), getAllButton());
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+                0, 0, 5, 5);
+        builder.setEmptyBorder(15);
+        builder.addComponent(chronoScroller, true);
+        builder.fillRow();
+        builder.setWeightY(0);
+        builder.setFill(true, false);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(this.reportListeButton, getSaveButton(), getAllButton()), true);
+        this.setLayout(new BorderLayout());
+        this.add(builder.getPanel());
     }
 
     public class ChronoModel extends EditableListTableModel {

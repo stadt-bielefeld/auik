@@ -437,6 +437,15 @@ public class PanelBuilder {
         setWeightY(weightY);
     }
 
+    public void fillRows(int rows) throws IllegalArgumentException{
+        if (rows <= 0) {
+            throw new IllegalArgumentException("Negative param");
+        }
+        for (int i = 0; i < rows; i++) {
+            this.fillRow(true);
+        }
+    }
+
     /**
      * Adds an empty JPanel that fills up the rest of the row.
      * Use this to prevent the component centering.

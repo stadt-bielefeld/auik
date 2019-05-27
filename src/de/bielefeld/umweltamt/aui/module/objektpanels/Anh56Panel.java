@@ -159,7 +159,6 @@ public class Anh56Panel extends JPanel {
         builder.setInsets(0, 0, 0, 5);
         builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveAnh56Button()), true);
 
-
         PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
                 0, 0, 5, 5);
         content.setEmptyBorder(15);

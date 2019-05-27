@@ -24,7 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,10 +49,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -70,6 +66,7 @@ import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -115,8 +112,9 @@ public class SonderbauwerkPanel extends JPanel {
         this.name = "Sonderbauwerk";
         this.hauptModul = hauptModul;
 
+        /*
         FormLayout layout = new FormLayout(
-        		"r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
+                "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
@@ -147,157 +145,212 @@ public class SonderbauwerkPanel extends JPanel {
         builder.appendSeparator("Bemerkungen");
         builder.appendRow("3dlu");
         builder.nextLine(2);
-        JScrollPane bemerkungsScroller = new JScrollPane(
-            getBemerkungFeld(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:30dlu");
         builder.append(bemerkungsScroller, 7);
 
         builder.appendSeparator("Verknüpfte Objekte");
         builder.appendRow("3dlu");
         builder.nextLine(2);
-        JScrollPane objektverknuepfungScroller = new JScrollPane(
-            getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:100dlu");
         builder.append(objektverknuepfungScroller, 7);
         builder.nextLine();
         JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-        		getSelectObjektButton(), getSaveSonderbauwerkButton());
+                getSelectObjektButton(), getSaveSonderbauwerkButton());
         builder.append(buttonBar, 7);
+        */
+        JScrollPane objektverknuepfungScroller = new JScrollPane(
+                getObjektverknuepungTabelle(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane bemerkungsScroller = new JScrollPane(
+                getBemerkungFeld(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+        0, 0, 5, 10);
+
+        PanelBuilder stillgelegt = new PanelBuilder(PanelBuilder.NORTHEAST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 0);
+        stillgelegt.addComponent(getStillgelegtCheck(), false, true);
+        stillgelegt.addComponent(getStillegdatDatum(), "am:");
+
+        PanelBuilder stammdaten = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 0, 0, 1, 1,
+                5, 0, 5, 5);
+        stammdaten.setWrapLabelComponents(false);
+        stammdaten.setPreferedSize(650, 500);
+        stammdaten.addComponent(getBezeichnungFeld(), "Bezeichnung:", true);
+        stammdaten.addComponent(getKurzbezeichnungFeld(), "Kurzbezeichnung:", true);
+        stammdaten.addComponent(getVerfahrenBox(), "Entwässerungsverfahren:", true);
+        stammdaten.addComponent(getTypBox(), "Typ:", true);
+        stammdaten.addComponent(getInbetriebnahmeFeld(), "Inbetriebnahme:", true);
+        stammdaten.addComponent(getWiederinebetriebdatDatum(), "Wiederinbetriebnahme:", true);
+        stammdaten.setWeightX(1);
+        stammdaten.addComponent(stillgelegt.getPanel(), "stillgelegt:", true);
+        stammdaten.setWeightX(0);
+        stammdaten.addComponent(getE32Feld(), "Ostwert:", true);
+        stammdaten.addComponent(getN32Feld(), "Nordwert:", true);
+        stammdaten.addComponent(getKlaeranlageBox(), "Kläranlage:", true);
+
+        builder.setPreferedSize(650, 500);
+        builder.addSeparator("Stammdaten", true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponent(stammdaten.getPanel(), true);
+        builder.setAnchor(PanelBuilder.NORTHWEST);
+        builder.addSeparator("Bemerkungen", true);
+        builder.setWeightY(0.4);
+        builder.addComponent(bemerkungsScroller, true);
+        builder.setWeightY(0);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeightY(0.6);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveSonderbauwerkButton()), true);
+
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
 
     }
     
-	/**
-	 * @return the hauptModul
-	 */
-	public BasisObjektBearbeiten getHauptModul() {
-		return hauptModul;
-	}
+    /**
+     * @return the hauptModul
+     */
+    public BasisObjektBearbeiten getHauptModul() {
+        return hauptModul;
+    }
 
-	/**
-	 * @return the kurzbezeichnungFeld
-	 */
-	private JTextField getKurzbezeichnungFeld() {
+    /**
+     * @return the kurzbezeichnungFeld
+     */
+    private JTextField getKurzbezeichnungFeld() {
         if (this.kurzbezeichnungFeld == null) {
             this.kurzbezeichnungFeld = new LimitedTextField(50);
         }
-		return kurzbezeichnungFeld;
-	}
+        return kurzbezeichnungFeld;
+    }
 
-	/**
-	 * @return the stillgelegtCheck
-	 */
-	private JCheckBox getStillgelegtCheck() {
+    /**
+     * @return the stillgelegtCheck
+     */
+    private JCheckBox getStillgelegtCheck() {
         if (this.stillgelegtCheck == null) {
             this.stillgelegtCheck = new JCheckBox("stillgelegt");
         }
-		return stillgelegtCheck;
-	}
+        return stillgelegtCheck;
+    }
 
-	/**
-	 * @return the stillegdatDatum
-	 */
-	private TextFieldDateChooser getStillegdatDatum() {
+    /**
+     * @return the stillegdatDatum
+     */
+    private TextFieldDateChooser getStillegdatDatum() {
         if (this.stillegdatDatum == null) {
             this.stillegdatDatum = new TextFieldDateChooser();
         }
-		return stillegdatDatum;
-	}
+        return stillegdatDatum;
+    }
 
-	/**
-	 * @return the verfahrenBox
-	 */
-	private JComboBox getVerfahrenBox() {
+    /**
+     * @return the verfahrenBox
+     */
+    private JComboBox getVerfahrenBox() {
         if (this.verfahrenBox == null) {
             this.verfahrenBox = new JComboBox();
         }
-		return verfahrenBox;
-	}
+        return verfahrenBox;
+    }
 
-	/**
-	 * @return the typBox
-	 */
-	private JComboBox getTypBox() {
+    /**
+     * @return the typBox
+     */
+    private JComboBox getTypBox() {
         if (this.typBox == null) {
             this.typBox = new JComboBox();
         }
-		return typBox;
-	}
+        return typBox;
+    }
 
-	/**
-	 * @return the inbetriebnahmeFeld
-	 */
-	private JFormattedTextField getInbetriebnahmeFeld() {
+    /**
+     * @return the inbetriebnahmeFeld
+     */
+    private JFormattedTextField getInbetriebnahmeFeld() {
         if (this.inbetriebnahmeFeld == null) {
             this.inbetriebnahmeFeld = new IntegerField();
         }
-		return inbetriebnahmeFeld;
-	}
+        return inbetriebnahmeFeld;
+    }
 
-	/**
-	 * @return the wiederinebetriebdatDatum
-	 */
-	private TextFieldDateChooser getWiederinebetriebdatDatum() {
+    /**
+     * @return the wiederinebetriebdatDatum
+     */
+    private TextFieldDateChooser getWiederinebetriebdatDatum() {
         if (this.wiederinebetriebdatDatum == null) {
             this.wiederinebetriebdatDatum = new TextFieldDateChooser();
         }
-		return wiederinebetriebdatDatum;
-	}
+        return wiederinebetriebdatDatum;
+    }
 
-	/**
-	 * @return the e32Feld
-	 */
-	private JFormattedTextField getE32Feld() {
+    /**
+     * @return the e32Feld
+     */
+    private JFormattedTextField getE32Feld() {
         if (this.e32Feld == null) {
             this.e32Feld = new IntegerField();
         }
-		return e32Feld;
-	}
+        return e32Feld;
+    }
 
-	/**
-	 * @return the n32Feld
-	 */
-	private JFormattedTextField getN32Feld() {
+    /**
+     * @return the n32Feld
+     */
+    private JFormattedTextField getN32Feld() {
         if (this.n32Feld == null) {
             this.n32Feld = new IntegerField();
         }
-		return n32Feld;
-	}
+        return n32Feld;
+    }
 
-	/**
-	 * @return the kläranlageBox
-	 */
-	private JComboBox getKlaeranlageBox() {
+    /**
+     * @return the kläranlageBox
+     */
+    private JComboBox getKlaeranlageBox() {
         if (this.klaeranlageBox == null) {
-        	klaeranlageBox = new JComboBox(DatabaseQuery.getKlaeranlage());
+            klaeranlageBox = new JComboBox(DatabaseQuery.getKlaeranlage());
         }
-		return klaeranlageBox;
-	}
+        return klaeranlageBox;
+    }
 
-	/**
-	 * @return the bemerkungFeld
-	 */
-	private LimitedTextArea getBemerkungFeld() {
+    /**
+     * @return the bemerkungFeld
+     */
+    private LimitedTextArea getBemerkungFeld() {
         if (this.bemerkungArea == null) {
             this.bemerkungArea = new LimitedTextArea(255);
         }
-		return bemerkungArea;
-	}
+        return bemerkungArea;
+    }
 
-	/**
+    /**
      * Methode verknüpft das lokal erstelle Objekt Sonderbauwerk
      * mit dem Sonderbauwerk der Datenbank und holt sich die Klaeranlagen
      * aus der Datenbank
      * @throws RuntimeException
      */
     public void fetchFormData() throws RuntimeException {
-    	this.sonderbauwerk = Sonderbauwerk.findByObjektId(
-    			this.hauptModul.getObjekt().getId());
-    	log.debug("Sonderbauwerk aus DB geholt: " + this.sonderbauwerk);
-    	
+        this.sonderbauwerk = Sonderbauwerk.findByObjektId(
+                this.hauptModul.getObjekt().getId());
+        log.debug("Sonderbauwerk aus DB geholt: " + this.sonderbauwerk);
+        
 
     }
     
@@ -308,32 +361,32 @@ public class SonderbauwerkPanel extends JPanel {
      * @throws RuntimeException
      */
     public void updateForm() throws RuntimeException {
-    	if (this.sonderbauwerk != null) {
-    	
-    		if (this.sonderbauwerk.getBezeichnung() != null) {
-    			getBezeichnungFeld().setText(this.sonderbauwerk.getBezeichnung());
-    		}
-    		
-    		String[] verfahren = {"-", "Trennverfahren", "Mischverfahren"};
+        if (this.sonderbauwerk != null) {
+        
+            if (this.sonderbauwerk.getBezeichnung() != null) {
+                getBezeichnungFeld().setText(this.sonderbauwerk.getBezeichnung());
+            }
+            
+            String[] verfahren = {"-", "Trennverfahren", "Mischverfahren"};
             getVerfahrenBox().setModel(new DefaultComboBoxModel(verfahren));
-    		
-    		String[] typ = {"-", "RRB", "RKB", "RBF", "BF", "RÜT", "RST", "AL"};
+            
+            String[] typ = {"-", "RRB", "RKB", "RBF", "BF", "RÜT", "RST", "AL"};
             getTypBox().setModel(new DefaultComboBoxModel(typ));
             
-    		if (this.sonderbauwerk.getErstellDat() != null) {
-    			getErstellDatDatum().setDate(this.sonderbauwerk.getErstellDat());
-    		}
+            if (this.sonderbauwerk.getErstellDat() != null) {
+                getErstellDatDatum().setDate(this.sonderbauwerk.getErstellDat());
+            }
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
-    	}
+        }
     }
   
     /**
      * Methode die alle Eingabefelder des Panels auf den Standard zurücksetzt.
      */
     public void clearForm() {
-    	getErstellDatDatum().setDate(null);
-    	getBezeichnungFeld().setText(null);
-    	
+        getErstellDatDatum().setDate(null);
+        getBezeichnungFeld().setText(null);
+        
     }
     
     /**
@@ -342,8 +395,8 @@ public class SonderbauwerkPanel extends JPanel {
      * @param enabled
      */
     public void enableAll(boolean enabled) {
-    	getErstellDatDatum().setEnabled(enabled);
-    	getBezeichnungFeld().setEnabled(enabled);
+        getErstellDatDatum().setEnabled(enabled);
+        getBezeichnungFeld().setEnabled(enabled);
     }
 
     @Override
@@ -357,29 +410,29 @@ public class SonderbauwerkPanel extends JPanel {
      * @return boolean
      */
     private boolean saveSonderbauwerkDaten() {
-    	boolean success;
-    	
-    	this.sonderbauwerk.setAktualDat(new Date());
-    	
-    	Date erstellDat = this.stillegdatDatum.getDate();
-    	this.sonderbauwerk.setErstellDat(erstellDat);
-    	    	
-    	String bezeichnung = this.bezeichnungFeld.getText();
-    	if("".equals(bezeichnung)) {
-    		this.sonderbauwerk.setBezeichnung(null);
-    	} else {
-    		this.sonderbauwerk.setBezeichnung(bezeichnung);
-    	}
-    	success = this.sonderbauwerk.merge();
-    	if (success) {
-    		log.debug("Sonderbauwerk"
-    				+ this.sonderbauwerk.getObjekt().getBetreiberid()
-    				.getBetrname() + " gespeichert.");
-    	} else {
-    		log.debug("Sonderbauwerk" + this.sonderbauwerk
-    				+ " konnte nicht gespeichert werden!");
-    	}
-    	return success;
+        boolean success;
+        
+        this.sonderbauwerk.setAktualDat(new Date());
+        
+        Date erstellDat = this.stillegdatDatum.getDate();
+        this.sonderbauwerk.setErstellDat(erstellDat);
+                
+        String bezeichnung = this.bezeichnungFeld.getText();
+        if("".equals(bezeichnung)) {
+            this.sonderbauwerk.setBezeichnung(null);
+        } else {
+            this.sonderbauwerk.setBezeichnung(bezeichnung);
+        }
+        success = this.sonderbauwerk.merge();
+        if (success) {
+            log.debug("Sonderbauwerk"
+                    + this.sonderbauwerk.getObjekt().getBetreiberid()
+                    .getBetrname() + " gespeichert.");
+        } else {
+            log.debug("Sonderbauwerk" + this.sonderbauwerk
+                    + " konnte nicht gespeichert werden!");
+        }
+        return success;
     }
 
     /**
@@ -388,13 +441,13 @@ public class SonderbauwerkPanel extends JPanel {
      */
     public void completeObjekt() {
         if (this.hauptModul.isNew() || this.sonderbauwerk == null) {
-        	// Neue EinleitungstellePanel erzeugen
-        	this.sonderbauwerk = new Sonderbauwerk();
-        	//Objekt_Id setzen
-        	this.sonderbauwerk.setObjekt(this.hauptModul.getObjekt());
-        	this.sonderbauwerk.merge();
-        	//ElkaEinleitungsstelle.merge(this.einleitungstelle);
-        	log.debug("Neues Sonderbauwerk " + this.sonderbauwerk + " gespeichert.");
+            // Neue EinleitungstellePanel erzeugen
+            this.sonderbauwerk = new Sonderbauwerk();
+            //Objekt_Id setzen
+            this.sonderbauwerk.setObjekt(this.hauptModul.getObjekt());
+            this.sonderbauwerk.merge();
+            //ElkaEinleitungsstelle.merge(this.einleitungstelle);
+            log.debug("Neues Sonderbauwerk " + this.sonderbauwerk + " gespeichert.");
         }
     }
     
@@ -403,10 +456,10 @@ public class SonderbauwerkPanel extends JPanel {
      * @return {@link TextFieldDateChooser}
      */
     private TextFieldDateChooser getErstellDatDatum() {
-    	if (this.stillegdatDatum == null) {
-    		this.stillegdatDatum = new TextFieldDateChooser();
-    	}
-    	return this.stillegdatDatum;
+        if (this.stillegdatDatum == null) {
+            this.stillegdatDatum = new TextFieldDateChooser();
+        }
+        return this.stillegdatDatum;
     }
     
     /**
@@ -414,115 +467,115 @@ public class SonderbauwerkPanel extends JPanel {
      * @return {@link JTextField}
      */
     private JTextField getBezeichnungFeld() {
-    	if (this.bezeichnungFeld == null) {
-    		this.bezeichnungFeld = new LimitedTextField(50);
-    	}
-    	return this.bezeichnungFeld;
+        if (this.bezeichnungFeld == null) {
+            this.bezeichnungFeld = new LimitedTextField(50);
+        }
+        return this.bezeichnungFeld;
     }
     
     private JTable getObjektverknuepungTabelle() {
-	
-	    if (this.objektVerknuepfungModel == null) {
-	        this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
-	            this.hauptModul.getObjekt());
-	
-	        if (this.objektverknuepfungTabelle == null) {
-	            this.objektverknuepfungTabelle = new JTable(
-	                this.objektVerknuepfungModel);
-	        } else {
-	            this.objektverknuepfungTabelle
-	                .setModel(this.objektVerknuepfungModel);
-	        }
-	        this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
-	            .setPreferredWidth(5);
-	        this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
-	            .setPreferredWidth(100);
-	        this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
-	            .setPreferredWidth(250);
-	
-	        this.objektverknuepfungTabelle
-	            .addMouseListener(new java.awt.event.MouseAdapter() {
-	                @Override
-	                public void mouseClicked(java.awt.event.MouseEvent e) {
-	                    if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-	                        Point origin = e.getPoint();
-	                        int row = getObjektverknuepungTabelle().rowAtPoint(
-	                            origin);
-	
-	                        if (row != -1) {
-	                            Objektverknuepfung obj = SonderbauwerkPanel.this.objektVerknuepfungModel
-	                                .getRow(row);
-	                            if (obj.getObjektByIstVerknuepftMit()
-	                                .getId().intValue() != SonderbauwerkPanel.this.hauptModul
-	                                .getObjekt().getId().intValue())
-	                            	SonderbauwerkPanel.this.hauptModul
-	                                    .getManager()
-	                                    .getSettingsManager()
-	                                    .setSetting(
-	                                        "auik.imc.edit_object",
-	                                        obj.getObjektByIstVerknuepftMit()
-	                                            .getId().intValue(),
-	                                        false);
-	                            else
-	                            	SonderbauwerkPanel.this.hauptModul
-	                                    .getManager()
-	                                    .getSettingsManager()
-	                                    .setSetting(
-	                                        "auik.imc.edit_object",
-	                                        obj.getObjektByObjekt()
-	                                            .getId().intValue(),
-	                                        false);
-	                            SonderbauwerkPanel.this.hauptModul.getManager()
-	                                .switchModul("m_objekt_bearbeiten");
-	                        }
-	                    }
-	                }
-	
-	                @Override
-	                public void mousePressed(MouseEvent e) {
-	                    showVerknuepfungPopup(e);
-	                }
-	
-	                @Override
-	                public void mouseReleased(MouseEvent e) {
-	                    showVerknuepfungPopup(e);
-	                }
-	            });
-	
-	        this.objektverknuepfungTabelle.getInputMap().put(
-	            (KeyStroke) getVerknuepfungLoeschAction().getValue(
-	                Action.ACCELERATOR_KEY),
-	            getVerknuepfungLoeschAction().getValue(Action.NAME));
-	        this.objektverknuepfungTabelle.getActionMap().put(
-	            getVerknuepfungLoeschAction().getValue(Action.NAME),
-	            getVerknuepfungLoeschAction());
-	    }
-	
-	    return this.objektverknuepfungTabelle;
-	
-	}
+    
+        if (this.objektVerknuepfungModel == null) {
+            this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
+                this.hauptModul.getObjekt());
+    
+            if (this.objektverknuepfungTabelle == null) {
+                this.objektverknuepfungTabelle = new JTable(
+                    this.objektVerknuepfungModel);
+            } else {
+                this.objektverknuepfungTabelle
+                    .setModel(this.objektVerknuepfungModel);
+            }
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
+                .setPreferredWidth(5);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
+                .setPreferredWidth(100);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
+                .setPreferredWidth(250);
+    
+            this.objektverknuepfungTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getObjektverknuepungTabelle().rowAtPoint(
+                                origin);
+    
+                            if (row != -1) {
+                                Objektverknuepfung obj = SonderbauwerkPanel.this.objektVerknuepfungModel
+                                    .getRow(row);
+                                if (obj.getObjektByIstVerknuepftMit()
+                                    .getId().intValue() != SonderbauwerkPanel.this.hauptModul
+                                    .getObjekt().getId().intValue())
+                                    SonderbauwerkPanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getObjektByIstVerknuepftMit()
+                                                .getId().intValue(),
+                                            false);
+                                else
+                                    SonderbauwerkPanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getObjektByObjekt()
+                                                .getId().intValue(),
+                                            false);
+                                SonderbauwerkPanel.this.hauptModul.getManager()
+                                    .switchModul("m_objekt_bearbeiten");
+                            }
+                        }
+                    }
+    
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+    
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+                });
+    
+            this.objektverknuepfungTabelle.getInputMap().put(
+                (KeyStroke) getVerknuepfungLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getVerknuepfungLoeschAction().getValue(Action.NAME));
+            this.objektverknuepfungTabelle.getActionMap().put(
+                getVerknuepfungLoeschAction().getValue(Action.NAME),
+                getVerknuepfungLoeschAction());
+        }
+    
+        return this.objektverknuepfungTabelle;
+    
+    }
 
-	private void showVerknuepfungPopup(MouseEvent e) {
-	    if (this.verknuepfungPopup == null) {
-	        this.verknuepfungPopup = new JPopupMenu("Objekt");
-	        JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-	        this.verknuepfungPopup.add(loeschItem);
-	    }
-	
-	    if (e.isPopupTrigger()) {
-	        Point origin = e.getPoint();
-	        int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
-	
-	        if (row != -1) {
-	            this.objektverknuepfungTabelle
-	                .setRowSelectionInterval(row, row);
-	            this.verknuepfungPopup.show(e.getComponent(), e.getX(),
-	                e.getY());
-	        }
-	    }
-	}
+    private void showVerknuepfungPopup(MouseEvent e) {
+        if (this.verknuepfungPopup == null) {
+            this.verknuepfungPopup = new JPopupMenu("Objekt");
+            JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
+            this.verknuepfungPopup.add(loeschItem);
+        }
+    
+        if (e.isPopupTrigger()) {
+            Point origin = e.getPoint();
+            int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
+    
+            if (row != -1) {
+                this.objektverknuepfungTabelle
+                    .setRowSelectionInterval(row, row);
+                this.verknuepfungPopup.show(e.getComponent(), e.getX(),
+                    e.getY());
+            }
+        }
+    }
 
-	/**
+    /**
      * Methode die den SaveSonderbauwerkButton zurückgibt sofern er existiert,
      * ansonsten wird ein neuer erstellt und diesem einen {@link ActionListener} hinzugefügt,
      * der bei einem Klick die Methoden <code>saveSonderbauwerkDaten</code> und
@@ -532,94 +585,94 @@ public class SonderbauwerkPanel extends JPanel {
      * @return {@link JButton}
      */
     private JButton getSaveSonderbauwerkButton() {
-    	if (this.saveSonderbauwerkButton == null) {
-    		this.saveSonderbauwerkButton = new JButton("Speichern");
-    		
-    		this.saveSonderbauwerkButton.addActionListener(new ActionListener() {
-			@Override
-    		public void actionPerformed(ActionEvent e) {
-	    			enableAll(false);
-	    			String status = "";
-	    			if(saveSonderbauwerkDaten()) {
-	    			    status = "Einleitungsstelle " + 
-	    			SonderbauwerkPanel.this.sonderbauwerk.getNr()
-	    			+ " erfolgreich gespeichert.";
-	    			} else {
-	    			    status = "Fehler beim Speichern der Einleitungsstelle!";				
-	    			}
-	    			if(status.startsWith("Sonderbauwerk")) {
-	    			    SonderbauwerkPanel.this.hauptModul.getFrame().changeStatus(status,
-	    				    HauptFrame.SUCCESS_COLOR);
-	    			} else {
-	    			    SonderbauwerkPanel.this.hauptModul.getFrame().changeStatus(status,
-	    				    HauptFrame.ERROR_COLOR);
-	    			}
-	    			SonderbauwerkPanel.this.hauptModul.fillForm();
-    		}	
-    		});		
-    	}
-    	return this.saveSonderbauwerkButton;
+        if (this.saveSonderbauwerkButton == null) {
+            this.saveSonderbauwerkButton = new JButton("Speichern");
+            
+            this.saveSonderbauwerkButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    enableAll(false);
+                    String status = "";
+                    if(saveSonderbauwerkDaten()) {
+                        status = "Einleitungsstelle " + 
+                    SonderbauwerkPanel.this.sonderbauwerk.getNr()
+                    + " erfolgreich gespeichert.";
+                    } else {
+                        status = "Fehler beim Speichern der Einleitungsstelle!";				
+                    }
+                    if(status.startsWith("Sonderbauwerk")) {
+                        SonderbauwerkPanel.this.hauptModul.getFrame().changeStatus(status,
+                            HauptFrame.SUCCESS_COLOR);
+                    } else {
+                        SonderbauwerkPanel.this.hauptModul.getFrame().changeStatus(status,
+                            HauptFrame.ERROR_COLOR);
+                    }
+                    SonderbauwerkPanel.this.hauptModul.fillForm();
+            }	
+            });		
+        }
+        return this.saveSonderbauwerkButton;
     }
 
-	private Action getVerknuepfungLoeschAction() {
-	    if (this.verknuepfungLoeschAction == null) {
-	        this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
-	
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                int row = getObjektverknuepungTabelle().getSelectedRow();
-	                if (row != -1
-	                    && getObjektverknuepungTabelle().getEditingRow() == -1) {
-	                    Objektverknuepfung verknuepfung = SonderbauwerkPanel.this.objektVerknuepfungModel
-	                        .getRow(row);
-	                    if (GUIManager.getInstance().showQuestion(
-	                        "Soll die Verknüpfung wirklich gelöscht werden?\n"
-	                            + "Hinweis: Die Aktion betrifft nur die "
-	                            + "Verknüpfung, die Objekte bleiben erhalten "
-	                            + "und können jederzeit neu verknüpft werden.",
-	                        "Löschen bestätigen")) {
-	                        if (SonderbauwerkPanel.this.objektVerknuepfungModel
-	                            .removeRow(row)) {
-	                        	SonderbauwerkPanel.this.hauptModul.getFrame()
-	                                .changeStatus("Objekt gelöscht.",
-	                                    HauptFrame.SUCCESS_COLOR);
-	                            log.debug("Objekt " + verknuepfung.getId()
-	                                + " wurde gelöscht!");
-	                        } else {
-	                        	SonderbauwerkPanel.this.hauptModul.getFrame()
-	                                .changeStatus(
-	                                    "Konnte das Objekt nicht löschen!",
-	                                    HauptFrame.ERROR_COLOR);
-	                        }
-	                    }
-	                }
-	            }
-	        };
-	        this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
-	            new Integer(KeyEvent.VK_L));
-	        this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
-	            KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
-	    }
-	
-	    return this.verknuepfungLoeschAction;
-	}
+    private Action getVerknuepfungLoeschAction() {
+        if (this.verknuepfungLoeschAction == null) {
+            this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
+    
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int row = getObjektverknuepungTabelle().getSelectedRow();
+                    if (row != -1
+                        && getObjektverknuepungTabelle().getEditingRow() == -1) {
+                        Objektverknuepfung verknuepfung = SonderbauwerkPanel.this.objektVerknuepfungModel
+                            .getRow(row);
+                        if (GUIManager.getInstance().showQuestion(
+                            "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                + "Hinweis: Die Aktion betrifft nur die "
+                                + "Verknüpfung, die Objekte bleiben erhalten "
+                                + "und können jederzeit neu verknüpft werden.",
+                            "Löschen bestätigen")) {
+                            if (SonderbauwerkPanel.this.objektVerknuepfungModel
+                                .removeRow(row)) {
+                                SonderbauwerkPanel.this.hauptModul.getFrame()
+                                    .changeStatus("Objekt gelöscht.",
+                                        HauptFrame.SUCCESS_COLOR);
+                                log.debug("Objekt " + verknuepfung.getId()
+                                    + " wurde gelöscht!");
+                            } else {
+                                SonderbauwerkPanel.this.hauptModul.getFrame()
+                                    .changeStatus(
+                                        "Konnte das Objekt nicht löschen!",
+                                        HauptFrame.ERROR_COLOR);
+                            }
+                        }
+                    }
+                }
+            };
+            this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+        }
+    
+        return this.verknuepfungLoeschAction;
+    }
 
-	private JButton getSelectObjektButton() {
-	    if (this.selectObjektButton == null) {
-	        this.selectObjektButton = new JButton("Objekt auswählen");
-	
-	        this.selectObjektButton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                ObjektChooser chooser = new ObjektChooser(
-	                		SonderbauwerkPanel.this.hauptModul.getFrame(),
-	                		SonderbauwerkPanel.this.sonderbauwerk.getObjekt(),
-	                		SonderbauwerkPanel.this.objektVerknuepfungModel);
-	                chooser.setVisible(true);
-	            }
-	        });
-	    }
-	    return this.selectObjektButton;
-	}    
+    private JButton getSelectObjektButton() {
+        if (this.selectObjektButton == null) {
+            this.selectObjektButton = new JButton("Objekt auswählen");
+    
+            this.selectObjektButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ObjektChooser chooser = new ObjektChooser(
+                            SonderbauwerkPanel.this.hauptModul.getFrame(),
+                            SonderbauwerkPanel.this.sonderbauwerk.getObjekt(),
+                            SonderbauwerkPanel.this.objektVerknuepfungModel);
+                    chooser.setVisible(true);
+                }
+            });
+        }
+        return this.selectObjektButton;
+    }    
     
 }

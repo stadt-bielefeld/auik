@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,11 +53,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -81,6 +77,7 @@ import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 
 /**
  * Das "Probepunkt"-Tab des BasisObjektBearbeiten-Moduls
@@ -130,82 +127,74 @@ public class ProbepunktPanel extends JPanel {
         this.name = "Probenahmepunkt";
         this.hauptModul = hauptModul;
         this.probenahmenModel = new ProbenahmenModel();
-
-        FormLayout layout = new FormLayout(
-            "r:50dlu, 5dlu, 250dlu, r:45dlu, 5dlu, 25dlu", // Spalten
-            "pref, " + // 1
-                "3dlu, " + // 2
-                "pref, " + // 3
-                "3dlu, " + // 4
-                "pref, " + // 5
-                "3dlu, " + // 6
-                "pref, " + // 7
-                "5dlu, " + // 8
-                "pref, " + // 9
-                "3dlu, " + // 10
-                "pref, " + // 11
-                "3dlu, " + // 12
-                "pref, " + // 13
-                "3dlu, " + // 14
-                "pref, " + // 15
-                "3dlu, " + // 16
-                "pref, " + // 17
-                "3dlu, " + // 18
-                "fill:40dlu:g, " + // 19
-                "3dlu, " + // 20
-                "pref, " + // 21
-                "3dlu, " + // 22
-                "pref, " + // 23
-                "3dlu, " + // 24
-                "fill:40dlu:g, " + // 25
-                "3dlu, " + // 26
-                "pref"); // 27
-
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-        CellConstraints cc = new CellConstraints();
-
-        builder.addSeparator("Eigenschaften", cc.xyw(1, 1, 6));
-        builder.addLabel("Art:", cc.xy(1, 3));
-        builder.add(getProbePktArtBox(), cc.xy(3, 3));
-        builder.addLabel("Nr:", cc.xy(4, 3));
-        builder.add(getProbePktNrFeld(), cc.xy(6, 3));
-        builder.addLabel("Kläranlage:", cc.xy(1, 5));
-        builder.add(getProbeKABox(), cc.xy(3, 5));
-        builder.addLabel("Sachbearbeiter:", cc.xy(1, 7));
-        builder.add(getSachbearbeiterBox(), cc.xy(3, 7));
-        builder.addLabel("Branche:", cc.xy(1, 9));
-        builder.add(getBrancheFeld(), cc.xy(3, 9));
-
-        JPanel buttonBar = ButtonBarFactory.buildOKBar(getSavePktButton());
-        builder.add(buttonBar, cc.xyw(1, 11, 6));
-
-        builder.addSeparator("Beschreibung", cc.xyw(1, 13, 6));
         JScrollPane beschScroller = new JScrollPane(
-            getProbePktBeschreibungsArea(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        beschScroller.setBorder(null);
-        builder.add(beschScroller, cc.xyw(1, 15, 6));
+                getProbePktBeschreibungsArea(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        builder.addSeparator("Probenahmen", cc.xyw(1, 17, 6));
         JScrollPane tabellenScroller = new JScrollPane(getProbenahmeTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(tabellenScroller, cc.xyw(1, 19, 6));
-        builder.add(getNeueProbePanel(), cc.xyw(1, 21, 6));
-
-        builder.addSeparator("Verknüpfte Objekte", cc.xyw(1, 23, 6));
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
-            getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(objektverknuepfungScroller, cc.xyw(1, 25, 6));
+                getObjektverknuepungTabelle(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        JPanel buttonBarOv = ButtonBarFactory
-            .buildRightAlignedBar(getPrintDeckblattButton(), getSelectObjektButton());
 
-        builder.add(buttonBarOv, cc.xyw(1, 27, 6));
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+        0, 0, 5, 5);
+
+        PanelBuilder eigenschaften = new PanelBuilder(PanelBuilder.NORTHEAST, true, false, 0, 0, 1, 1,
+                0, 0, 5, 5);
+
+        eigenschaften.setWrapLabelComponents(false);
+        eigenschaften.setPreferedSize(650, 750);
+        eigenschaften.addComponent(getProbePktArtBox(), "Art");
+        eigenschaften.setWrapLabelComponents(true);
+        eigenschaften.setWeightX(1);
+        eigenschaften.addComponent(getProbePktNrFeld(), "Nr:", true);
+        eigenschaften.setWeightX(0);
+        eigenschaften.setWrapLabelComponents(false);
+        eigenschaften.addComponent(getProbeKABox(), "Kläranlage:", true, true);
+        eigenschaften.addComponent(getSachbearbeiterBox(), "SachbearbeiterIn:", true, true);
+        eigenschaften.addComponent(getBrancheFeld(), "Branche:", true, true);
+
+        builder.setPreferedSize(650, 750);
+        builder.addSeparator("Fachdaten", true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponent(eigenschaften.getPanel(), true);
+        builder.addComponent(
+                PanelBuilder.buildRightAlignedButtonToolbar(getSavePktButton()), true);
+        builder.setAnchor(PanelBuilder.NORTHWEST);
+        builder.addSeparator("Beschreibung", true);
+        builder.setWeightY(0.2);
+        builder.addComponent(beschScroller, true);
+        builder.setWeightY(0);
+        builder.addSeparator("Probenahmen", true);
+        builder.setWeightY(0.3);
+        builder.addComponent(tabellenScroller, true);
+        builder.setWeightY(0);
+        builder.addComponent(getNeueProbePanel(), true);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeightY(0.3);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(
+                getPrintDeckblattButton(), getSelectObjektButton()), true);
+
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -537,17 +526,13 @@ public class ProbepunktPanel extends JPanel {
         if (this.neueProbePanel == null) {
             // neueProbePanel = new JPanel();
 
-            FormLayout anlegenLayout = new FormLayout(
-                "pref, 4dlu, max(60dlu;pref), 7dlu, pref, 4dlu, max(60dlu;pref), 7dlu, max(60dlu;pref)");
-            // spalten, nur eine zeile
+            PanelBuilder anlegen = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                    5, 0, 5, 5);
+            anlegen.addComponent(getKennummerFeld(), "Kennummer:");
+            anlegen.addComponent(getDatumsChooser(), "Datum:");
+            anlegen.addComponent(getAnlegenButton(), true, true);
 
-            DefaultFormBuilder builder = new DefaultFormBuilder(anlegenLayout);
-
-            // builder.appendSeparator("Neue Probenahme");
-            builder.append("Kennummer:", getKennummerFeld());
-            builder.append("Datum:", getDatumsChooser());
-            builder.append(getAnlegenButton());
-            this.neueProbePanel = builder.getPanel();
+            this.neueProbePanel = anlegen.getPanel();
         }
         return this.neueProbePanel;
     }

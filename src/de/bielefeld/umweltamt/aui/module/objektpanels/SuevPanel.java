@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,10 +45,6 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
@@ -57,6 +54,7 @@ import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -101,49 +99,54 @@ public class SuevPanel extends JPanel {
         this.name = "SüwVO-Abw-Teil1";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:70dlu, 5dlu, 90dlu, 5dlu, 10dlu, 5dlu, 90dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
-        builder.appendSeparator("Fachdaten");
-        builder.append("Datum Anschreiben:", getDatAnschreibenDatum());
-        builder.append("", getSanierungskonzeptCheck());
-        builder.nextLine();
-        builder.append("Datum Anzeige:", getDatAnzeige58Datum());
-        builder.append("", getSanierungErfolgtCheck());
-        builder.nextLine();
-        builder.append("versiegelte Fläche:", getVersFlaecheFeld());
-        builder.append("", getDirektrwCheck());
-        builder.nextLine();
-        builder.append("", getGroesser3haCheck());
-        builder.append("", getDirektswCheck());
-        builder.nextLine();
-        builder.append("", getSuevkanPflichtCheck());
-        builder.append("", getIndirektrwCheck());
-        builder.nextLine();
-        builder.append("", getKeineAngabenCheck());
-        builder.append("", getIndirektswCheck());
-        builder.nextLine();
-
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
-        builder.nextLine();
 
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveSuevButton());
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
 
-        // JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveSuevButton());
-        builder.append(buttonBar, 7);
+        PanelBuilder fachdaten = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 0, 0, 1, 1,
+                0, 0, 5, 5);
+
+        fachdaten.setWrapLabelComponents(false);
+        fachdaten.setPreferedSize(650, 500);
+        fachdaten.addComponent(getDatAnschreibenDatum(), "Datum Anschreiben:");
+        fachdaten.addComponent(getSanierungskonzeptCheck(), true);
+        fachdaten.addComponent(getDatAnzeige58Datum(), "Datum Anzeige:");
+        fachdaten.addComponent(getSanierungErfolgtCheck(), true);
+        fachdaten.addComponent(getVersFlaecheFeld(), "versiegelte Fläche:");
+        fachdaten.addComponent(getDirektrwCheck(), true);
+        fachdaten.addComponents(true, new JPanel(), getGroesser3haCheck(), getDirektswCheck());
+        fachdaten.addComponents(true, new JPanel(), getSuevkanPflichtCheck(), getIndirektrwCheck());
+        fachdaten.addComponents(true, new JPanel(), getKeineAngabenCheck(), getIndirektswCheck());
+
+
+        builder.setPreferedSize(650, 500);
+        builder.addSeparator("Fachdaten", true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponent(fachdaten.getPanel(), true);
+        builder.setAnchor(PanelBuilder.NORTHWEST);
+        builder.setWeightY(0);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeightY(0.6);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveSuevButton()), true);
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
     }
 
     public void fetchFormData() throws RuntimeException {
