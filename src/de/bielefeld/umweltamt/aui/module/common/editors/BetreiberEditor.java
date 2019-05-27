@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Toolkit;
@@ -239,9 +240,11 @@ public class BetreiberEditor extends AbstractBaseEditor {
         namenLabel = new JLabel("Name:");
         handzeichenLabel = new JLabel("Handzeichen:");
 
+        wirtschaftszweigBox.setPreferredSize(new Dimension(15, 20));
+
         //Stamdaten - Ansprechpartner
-        PanelBuilder stammdaten = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
-                0, 0, 5, 5);
+        PanelBuilder stammdaten = new PanelBuilder(PanelBuilder.NORTHEAST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 15);
         stammdaten.addComponent(namenFeld, namenLabel);
         stammdaten.addComponent(telefonFeld, "Telefon:", true);
         stammdaten.addComponent(anredeFeld, "Anrede:");
@@ -255,89 +258,105 @@ public class BetreiberEditor extends AbstractBaseEditor {
         stammdaten.addComponent(wirtschaftszweigBox, "Wirtschaftszweig:");
         stammdaten.addComponent(betrBeaufNachnameFeld, "Nachname:", true);
 
-        PanelBuilder coordPanel = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+        PanelBuilder coordPanel = new PanelBuilder(PanelBuilder.NORTHEAST, true, false, 1, 0, 1, 1,
                 0, 0, 5, 5);
         coordPanel.addComponent(e32Feld, "E32:", true);
         coordPanel.addComponent(n32Feld, "N32:");
 
-        PanelBuilder qgisButton = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+        PanelBuilder qgisButton = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 0, 1, 1, 1,
                 0, 0, 5, 5);
-        qgisButton.setWeight(0, 1);
-        qgisButton.setFill(true, true);
+        qgisButton.setBorder(new EmptyBorder(0, 0, 0, 95));
         qgisButton.addComponent(getAusAblageButton());
-        qgisButton.setWeight(0, 0);
         qgisButton.fillRow();
+
+        PanelBuilder lage = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+                0, 0, 5, 5);
+        lage.setBorder(new EmptyBorder(0, 200, 0, 0));
+        lage.fillRow();
+        lage.addComponent(coordPanel.getPanel());
+        lage.addComponent(qgisButton.getPanel(), true);
+
+        PanelBuilder ort = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
+        ort.addComponents(plzZsFeld, plzFeld, ortFeld);
+        PanelBuilder strasse = new PanelBuilder(ort);
+        strasse.addComponents(strasseFeld, hausnrFeld, hausnrZusFeld);
 
         //Adresse - Lage
         PanelBuilder adresseLage = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
                 0, 0, 5, 5);
         adresseLage.addSeparator("Adresse", true);
-        adresseLage.addComponents(true, new JLabel("Ort:"), plzZsFeld, plzFeld, ortFeld);
-        adresseLage.addComponents(true, new JLabel("Straße:"), strasseFeld, hausnrFeld, hausnrZusFeld);
+        adresseLage.setWeightX(0);
+        adresseLage.addComponent(ort.getPanel(), "Ort:", true, true);
+        adresseLage.addComponent(strasse.getPanel(), new JLabel("Straße:"), true, true);
+        adresseLage.setWeightX(1);
         adresseLage.addSeparator("Lage", true);
-        adresseLage.setWeightX(0.75);
-        adresseLage.setInsets(5, 0, 0, 5);
-        adresseLage.addComponent(coordPanel.getPanel());
-        adresseLage.setFill(true, true);
-        adresseLage.setWeight(0.25, 1);
-        adresseLage.setInsets(5, 0, 0, 0);
-        adresseLage.addComponent(qgisButton.getPanel(), true);
-        adresseLage.setWeight(1, 0);
-        adresseLage.setFill(true, false);
+        adresseLage.addComponent(lage.getPanel(), true);
 
-        adresseLage.addComponent(entwGebBox, "Entwässerungsgebiet:", true);
-        adresseLage.addComponent(gemarkungBox, "Gemarkung:", true);
-        adresseLage.addComponent(standortGgBox, "Standortgegebenheit:", true);
-        adresseLage.addComponent(wEinzugsGebBox, "W.Einzugsgebiet", true);
 
-        adresseLage.addSeparator("Bemerkungen", true);
-        adresseLage.setFill(true, true); 
-        adresseLage.setWeight(1, 10);
-        adresseLage.addComponent(bemerkungsScroller, true);
-        adresseLage.setGridHeight(1);
-        adresseLage.setWeight(1, 0);
-        adresseLage.setFill(true, false);
+        adresseLage.addComponent(entwGebBox, "Entwässerungsgebiet:", true, true);
+        adresseLage.addComponent(gemarkungBox, "Gemarkung:", true, true);
+        adresseLage.addComponent(standortGgBox, "Standortgegebenheit:", true, true);
+        adresseLage.addComponent(wEinzugsGebBox, "W.Einzugsgebiet", true, true);
+        adresseLage.fillColumn();
 
-        PanelBuilder sePanel = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+        PanelBuilder bemerkungen = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
+        bemerkungen.addSeparator("Bemerkungen", true);
+        bemerkungen.setFill(true, true); 
+        bemerkungen.setWeight(1, 1);
+        bemerkungen.addComponent(bemerkungsScroller, true);
+
+        PanelBuilder sePanel = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
                 0, 0, 5, 5);
         sePanel.addSeparator("auswählen", true);
         sePanel.addComponent(getStrassenBox(), true);
-        sePanel.setWeight(1, 10);
-        sePanel.setGridHeight(5);
-        sePanel.setFill(true, true);
+        sePanel.setWeightY(1);
         sePanel.addComponent(getStandorteScroller(), true);
-        sePanel.setWeight(0, 1);
-        sePanel.setGridHeight(1);
-        sePanel.setFill(true, false);
+        sePanel.setWeightY(0);
         sePanel.addSeparator("Datenschutzhinweis erhalten:", true);
         sePanel.addComponent(daten_awsvCheck, true);
         sePanel.addComponent(daten_esatzungCheck, true);
         sePanel.addComponent(daten_whgCheck, true);
-        sePanel.addSeparator("Letzte Revision", true);
-        sePanel.addComponent(revdatumsFeld, "Datum:", true);
-        sePanel.addComponent(handzeichenAltFeld, "Handzeichen:", true);
-        sePanel.addSeparator("Neue Revision", true);
-        sePanel.addComponent(handzeichenNeuFeld, "Handzeichen", true);
 
-        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, false, true, 0, 0, 1, 1,
+        PanelBuilder revision = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
+                0, 0, 5, 5);
+
+        revision.addSeparator("Letzte Revision", true);
+        revision.addComponent(revdatumsFeld, "Datum:", true);
+        revision.addComponent(handzeichenAltFeld, "Handzeichen:", true);
+        revision.addSeparator("Neue Revision", true);
+        revision.addComponent(handzeichenNeuFeld, "Handzeichen", true);
+
+
+        PanelBuilder bottomPanel = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 1, 1, 1,
+                0, 0, 5, 5);
+        bottomPanel.addComponent(adresseLage.getPanel());
+        bottomPanel.addComponent(sePanel.getPanel(), true);
+        bottomPanel.addComponent(bemerkungen.getPanel());
+        bottomPanel.addComponent(revision.getPanel());
+
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 1, 1, 1,
                 0, 0, 5, 10);
-        builder.setEmptyBorder(15);
-        builder.setPreferedSize(550, 250);
         builder.addSeparator("Stammdaten", true);
         builder.addComponent(stammdaten.getPanel(), true);
         builder.setFill(true, true);
+        builder.addComponent(bottomPanel.getPanel());
         builder.setWeight(1,1);
-        builder.addComponent(adresseLage.getPanel());
-        builder.addComponent(sePanel.getPanel(), true);
-        builder.fillColumn();
 
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
 
         BetreiberListener dialogListener = new BetreiberListener();
 
         strasseFeld.addActionListener(dialogListener);
         strassenBox.addActionListener(dialogListener);
 
-        return builder.getPanel();
+        return content.getPanel();
     }
 
     @Override
