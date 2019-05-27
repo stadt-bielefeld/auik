@@ -60,6 +60,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Point;
@@ -97,12 +98,6 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
@@ -126,6 +121,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.BasicEntryField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -153,7 +149,7 @@ public class BasisPanel extends JPanel {
 
         private JTextField suchFeld;
         private JTextField strasseFeld;
-    	private JTextField hausnrFeld;
+        private JTextField hausnrFeld;
         private JButton submitButton;
         private JButton submitButtonStrassen;
         private JTable ergebnisTabelle;
@@ -161,7 +157,7 @@ public class BasisPanel extends JPanel {
         private JButton okButton;
         private JButton abbrechenButton;
 
-    	private Timer suchTimer;
+        private Timer suchTimer;
 
 
         public ChooseDialog(Object initial, HauptFrame frame, String caller) {
@@ -210,33 +206,38 @@ public class BasisPanel extends JPanel {
             ta.addComp(getOkButton());
             ta.addComp(getAbbrechenButton());
 
-            JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(getOkButton(),
-                getAbbrechenButton());
+            PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHEAST, true, false, 1, 0, 1, 1,
+                    0, 0, 0, 0);
 
-            JToolBar submitToolBar = new JToolBar();
-            submitToolBar.setFloatable(false);
-            submitToolBar.setRollover(true);
-            submitToolBar.add(getSubmitButton());
+            PanelBuilder top = new PanelBuilder(PanelBuilder.NORTHEAST, true, false, 1, 0, 1, 1,
+                    0, 0, 5, 5);
+            top.setWrapLabelComponents(false);
+            top.addComponent(getSuchFeld(), "Name:", false, true);
+            top.setWeightX(0);
+            top.addComponent(getSubmitButton(), true);
+            top.setWeightX(1);
+            top.addComponent(getStrassenFeld(), "Straße:");
+            top.setWrapLabelComponents(true);
+            top.addComponent(getHausnrFeld(), "Hausnr.:", false);
+            top.setWeightX(0);
+            top.addComponent(getSubmitButtonStrassen(), true);
 
-            FormLayout layout = new FormLayout("pref, 3dlu, 400dlu:g, 3dlu, pref, 3dlu, 30dlu:g, 3dlu, pref", // spalten
-                "pref, 3dlu, pref, 3dlu, 320dlu:g, 3dlu, 3dlu, pref"); // zeilen
-            PanelBuilder builder = new PanelBuilder(layout);
-            builder.setDefaultDialogBorder();
-            CellConstraints cc = new CellConstraints();
+            builder.setEmptyBorder(15);
+            builder.setPreferedSize(1200, 750);
 
-			builder.addLabel("Name:", cc.xy(1, 1));
-            builder.add(getSuchFeld(), cc.xyw(3, 1, 5));
-            builder.add(submitToolBar, cc.xy(9, 1));
-			builder.add(getSubmitButton(), cc.xy(9, 1));
-			builder.addLabel("Straße:", cc.xy(1, 3));
-            builder.add(getStrassenFeld(), cc.xy(3, 3));
-			builder.addLabel("Hausnr.:", cc.xy(5, 3));
-			builder.add(getHausnrFeld(), cc.xy(7, 3));
-			builder.add(getSubmitButtonStrassen(), cc.xy(9, 3));
-            builder.add(tabellenScroller, cc.xywh(1, 5, 9, 2));
-            builder.add(buttonBar, cc.xyw(3, 8, 3));
+            builder.addComponent(top.getPanel(), true);
+            builder.setFill(true, true);
+            builder.setWeight(1, 1);
+            builder.addComponent(tabellenScroller, true);
+            builder.setFill(true, false);
+            builder.setWeight(1, 0);
+            builder.setAnchor(PanelBuilder.NORTHEAST);
+            builder.fillRow();
+            builder.setInsets(5, 0, 0, 0);
+            builder.addComponent(
+                    PanelBuilder.buildRightAlignedButtonToolbar(getOkButton(), getAbbrechenButton()));
 
-            return (builder.getPanel());
+            return builder.getPanel();
         }
 
         private void choose(int row) {
@@ -269,9 +270,9 @@ public class BasisPanel extends JPanel {
                 };
                 worker.start();
 
-				getStrassenFeld().setText("");
-				getHausnrFeld().setText("");
-				
+                getStrassenFeld().setText("");
+                getHausnrFeld().setText("");
+                
             } else if (caller == "standort") {
                 SwingWorkerVariant worker = new SwingWorkerVariant(
                         getErgebnisTabelle()) {
@@ -288,68 +289,68 @@ public class BasisPanel extends JPanel {
                 };
                 worker.start();
 
-				getStrassenFeld().setText("");
-				getHausnrFeld().setText("");
+                getStrassenFeld().setText("");
+                getHausnrFeld().setText("");
             }
         } 
         
         /**
-    	 * Filtert die Standort-Liste nach Straße und Hausnummer.
-    	 * 
-    	 * @param focusComp
-    	 *            Welche Komponente soll nach der Suche den Fokus bekommen.
-    	 */
-    	public void filterBetreiberListe(Component focusComp)
-    	{
-    	    log.debug("Start filterStandortListe()");
-    		int hausnr;
-    		try
-    		{
-    			hausnr = Integer.parseInt(getHausnrFeld().getText());
-    		}
-    		catch (NumberFormatException e1)
-    		{
-    			hausnr = -1;
-    		}
-    		final int fhausnr = hausnr;
-    	
-    		SwingWorkerVariant worker = new SwingWorkerVariant(focusComp)
-    		{
-    	
-    			@Override
-    			protected void doNonUILogic()
-    			{
-    				if (SettingsManager.getInstance().getStandort() == null)
-    				{
-    					ChooseDialog.this.betreiberModel.filterStandort(
-    																		getStrassenFeld().getText(),
-    																		fhausnr, null);
-    				}
-    				getSuchFeld().setText("");
-    			}
-    	
-    			@Override
-    			protected void doUIUpdateLogic()
-    			{
-    				getErgebnisTabelle().clearSelection();
-    	
-    				ChooseDialog.this.betreiberModel.fireTableDataChanged();
-    				String statusMsg = "Suche: "
-    						+ ChooseDialog.this.betreiberModel.getRowCount()
-    						+ " Ergebnis";
-    				if (ChooseDialog.this.betreiberModel.getRowCount() != 1)
-    				{
-    					statusMsg += "se";
-    				}
-    				statusMsg += ".";
-    				ChooseDialog.this.frame.changeStatus(statusMsg);
-    			}
-    		};
-    	
-    		this.frame.changeStatus("Suche...");
-    		worker.start();
-    	    log.debug("End filterStandortListe()");
-    	}
+         * Filtert die Standort-Liste nach Straße und Hausnummer.
+         * 
+         * @param focusComp
+         *            Welche Komponente soll nach der Suche den Fokus bekommen.
+         */
+        public void filterBetreiberListe(Component focusComp)
+        {
+            log.debug("Start filterStandortListe()");
+            int hausnr;
+            try
+            {
+                hausnr = Integer.parseInt(getHausnrFeld().getText());
+            }
+            catch (NumberFormatException e1)
+            {
+                hausnr = -1;
+            }
+            final int fhausnr = hausnr;
+        
+            SwingWorkerVariant worker = new SwingWorkerVariant(focusComp)
+            {
+        
+                @Override
+                protected void doNonUILogic()
+                {
+                    if (SettingsManager.getInstance().getStandort() == null)
+                    {
+                        ChooseDialog.this.betreiberModel.filterStandort(
+                                                                            getStrassenFeld().getText(),
+                                                                            fhausnr, null);
+                    }
+                    getSuchFeld().setText("");
+                }
+        
+                @Override
+                protected void doUIUpdateLogic()
+                {
+                    getErgebnisTabelle().clearSelection();
+        
+                    ChooseDialog.this.betreiberModel.fireTableDataChanged();
+                    String statusMsg = "Suche: "
+                            + ChooseDialog.this.betreiberModel.getRowCount()
+                            + " Ergebnis";
+                    if (ChooseDialog.this.betreiberModel.getRowCount() != 1)
+                    {
+                        statusMsg += "se";
+                    }
+                    statusMsg += ".";
+                    ChooseDialog.this.frame.changeStatus(statusMsg);
+                }
+            };
+        
+            this.frame.changeStatus("Suche...");
+            worker.start();
+            log.debug("End filterStandortListe()");
+        }
 
         private JTextField getSuchFeld() {
             if (this.suchFeld == null) {
@@ -366,69 +367,69 @@ public class BasisPanel extends JPanel {
         }
 
         private JTextField getStrassenFeld() {
-        	
+            
             if (this.strasseFeld == null) {
-            	
+                
                 this.strasseFeld = new JTextField();
                 this.strasseFeld.addActionListener(new ActionListener() {
-                	
+                    
                     @Override
                     public void actionPerformed(ActionEvent e) {
-    					getSuchTimer().stop();
-    					filterBetreiberListe(getErgebnisTabelle());
+                        getSuchTimer().stop();
+                        filterBetreiberListe(getErgebnisTabelle());
                     }
                 });
-            	
-    			this.strasseFeld.addKeyListener(new KeyAdapter()
-    			{
-    				@Override
-    				public void keyPressed(KeyEvent e)
-    				{
-    					if (e.getKeyCode() == KeyEvent.VK_TAB)
-    					{
-    						getSuchTimer().stop();
-    						filterBetreiberListe(getHausnrFeld());
-    					}
-    				}
-    	
-    				@Override
-    				public void keyTyped(KeyEvent e)
-    				{
-    					if (Character.isLetterOrDigit(e.getKeyChar()))
-    					{
-    						if (getSuchTimer().isRunning())
-    						{
-    							getSuchTimer().restart();
-    						}
-    						else
-    						{
-    							getSuchTimer().start();
-    						}
-    					}
-    				}
-    			});
+                
+                this.strasseFeld.addKeyListener(new KeyAdapter()
+                {
+                    @Override
+                    public void keyPressed(KeyEvent e)
+                    {
+                        if (e.getKeyCode() == KeyEvent.VK_TAB)
+                        {
+                            getSuchTimer().stop();
+                            filterBetreiberListe(getHausnrFeld());
+                        }
+                    }
+        
+                    @Override
+                    public void keyTyped(KeyEvent e)
+                    {
+                        if (Character.isLetterOrDigit(e.getKeyChar()))
+                        {
+                            if (getSuchTimer().isRunning())
+                            {
+                                getSuchTimer().restart();
+                            }
+                            else
+                            {
+                                getSuchTimer().start();
+                            }
+                        }
+                    }
+                });
             }
 
             return this.strasseFeld;
         }
 
-    	private JTextField getHausnrFeld()
-    	{
-    		if (this.hausnrFeld == null)
-    		{
-    			this.hausnrFeld = new BasicEntryField();
-    	
-    			this.hausnrFeld.addActionListener(new ActionListener()
-    			{
-    				@Override
-    				public void actionPerformed(ActionEvent e)
-    				{
-    					filterBetreiberListe(getErgebnisTabelle());
-    				}
-    			});
-    		}
-    		return this.hausnrFeld;
-    	}
+        private JTextField getHausnrFeld()
+        {
+            if (this.hausnrFeld == null)
+            {
+                this.hausnrFeld = new BasicEntryField();
+        
+                this.hausnrFeld.addActionListener(new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        filterBetreiberListe(getErgebnisTabelle());
+                    }
+                });
+            }
+            return this.hausnrFeld;
+        }
 
         private JButton getSubmitButton() {
             if (this.submitButton == null) {
@@ -523,70 +524,70 @@ public class BasisPanel extends JPanel {
             return this.abbrechenButton;
         }
 
-		private Timer getSuchTimer()
-		{
-			if (this.suchTimer == null)
-			{
-				this.suchTimer = new Timer(900, new ActionListener()
-				{
-					@Override
-					public void actionPerformed(ActionEvent e)
-					{
-		
-						// Was diese ganze "SwingWorkerVariant"-Geschichte
-						// soll, steht unter
-						// http://www.javaworld.com/javaworld/jw-06-2003/jw-0606-swingworker.html
-						// Ist auch ausgedruckt im Ordner im Regal. -DK
-						SwingWorkerVariant worker = new SwingWorkerVariant(
-								getStrassenFeld())
-						{
-							protected String oldText = "";
-							private String newText = "";
-		
-							@Override
-							protected void doNonUILogic()
-							{
-								this.oldText = getStrassenFeld().getText();
-								if (this.oldText.equals(""))
-								{
-									this.newText = "";
-								}
-								else
-								{
-									String suchText = AuikUtils
-											.sanitizeQueryInput(this.oldText);
-									Strassen str = DatabaseQuery
-											.findStrasse(suchText);
-		
-									if (str != null)
-									{
-										this.newText = str.getStrasse();
-									}
-									else
-									{
-										this.newText = this.oldText;
-									}
-								}
-							}
-		
-							@Override
-							protected void doUIUpdateLogic()
-							{
-								getStrassenFeld().setText(this.newText);
-								getStrassenFeld().setSelectionStart(
-																	this.oldText.length());
-								getStrassenFeld().setSelectionEnd(
-																	this.newText.length());
-							}
-						};
-						worker.start();
-					}
-				});
-				this.suchTimer.setRepeats(false);
-			}
-		
-			return this.suchTimer;
-		}
+        private Timer getSuchTimer()
+        {
+            if (this.suchTimer == null)
+            {
+                this.suchTimer = new Timer(900, new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+        
+                        // Was diese ganze "SwingWorkerVariant"-Geschichte
+                        // soll, steht unter
+                        // http://www.javaworld.com/javaworld/jw-06-2003/jw-0606-swingworker.html
+                        // Ist auch ausgedruckt im Ordner im Regal. -DK
+                        SwingWorkerVariant worker = new SwingWorkerVariant(
+                                getStrassenFeld())
+                        {
+                            protected String oldText = "";
+                            private String newText = "";
+        
+                            @Override
+                            protected void doNonUILogic()
+                            {
+                                this.oldText = getStrassenFeld().getText();
+                                if (this.oldText.equals(""))
+                                {
+                                    this.newText = "";
+                                }
+                                else
+                                {
+                                    String suchText = AuikUtils
+                                            .sanitizeQueryInput(this.oldText);
+                                    Strassen str = DatabaseQuery
+                                            .findStrasse(suchText);
+        
+                                    if (str != null)
+                                    {
+                                        this.newText = str.getStrasse();
+                                    }
+                                    else
+                                    {
+                                        this.newText = this.oldText;
+                                    }
+                                }
+                            }
+        
+                            @Override
+                            protected void doUIUpdateLogic()
+                            {
+                                getStrassenFeld().setText(this.newText);
+                                getStrassenFeld().setSelectionStart(
+                                                                    this.oldText.length());
+                                getStrassenFeld().setSelectionEnd(
+                                                                    this.newText.length());
+                            }
+                        };
+                        worker.start();
+                    }
+                });
+                this.suchTimer.setRepeats(false);
+            }
+        
+            return this.suchTimer;
+        }
     }
 
     // Widgets
@@ -643,79 +644,67 @@ public class BasisPanel extends JPanel {
     private JPopupMenu verknuepfungPopup;
     
     
-	private ActionListener deleteButtonListener;
+    private ActionListener deleteButtonListener;
     public BasisPanel(BasisObjektBearbeiten hauptModul) {
 
         this.name = "Objekt";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:70dlu, 5dlu, 15dlu, 3dlu, 165dlu, 3dlu, l:min(55dlu;p)", ""
-            // Zeilen werden dynamisch erzeugt
-        );
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
-        builder.appendSeparator("Eigenschaften");
-        builder.append("Betreiber-Adresse:", getBetreiberFeld(), 3);
-        builder.append(getBetreiberToolBar());
-        builder.nextLine();
-
-        builder.append("Standort-Adresse:", getStandortFeld(), 3);
-        builder.append(getStandortToolBar());
-        builder.nextLine();
-
-        builder.append("Lage:", getLageFeld(), 3);
-        builder.nextLine();
-
-        builder.append("Art:", getArtBox(), 3);
-        builder.nextLine();
-
-        builder.append("Sachbearbeiter:", getSachbearbeiterBox(), 3);
-        builder.nextLine();
-
-        builder.append("Wiedervorlage:", getWiedervorlageDatum(), 3);
-        builder.nextLine();
-
-        builder.append("Inaktiv:", getInaktivBox());
-        builder.nextLine();
-
-        builder.append(getElkarelevantLabel(), getElkarelevantBox());	
-		builder.nextLine();
-
-		builder.append(getPrioritaetLabel(), getPrioritaetFeld());		
-		builder.nextLine();
-   
-        builder.appendSeparator("Beschreibung");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-
-        JScrollPane beschreibungsScroller = new JScrollPane(
-            getBeschreibungsArea(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:25dlu");
-        builder.append(beschreibungsScroller, 5);
-
-        builder.appendRelatedComponentsGapRow();
-        builder.nextLine(2);
-
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 5);
-        builder.nextLine();
+        JScrollPane beschreibungsScroller = new JScrollPane(
+            getBeschreibungsArea(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 1, 0, 1, 1,
+                0, 0, 5, 5);
 
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveButton());
+        PanelBuilder eigenschaften = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        eigenschaften.setWrapLabelComponents(false);
+        eigenschaften.setPreferedSize(650, 500);
+        eigenschaften.addComponent(getBetreiberFeld(), "Betreiber-Adresse:");
+        eigenschaften.addComponent(getBetreiberToolBar(), true);
+        eigenschaften.addComponent(getStandortFeld(), "Standort-Adresse:");
+        eigenschaften.addComponent(getStandortToolBar(), true);
+        eigenschaften.addComponent(getLageFeld(), "Lage:", true, true);
+        eigenschaften.addComponent(getArtBox(), "Art:", true, true);
+        eigenschaften.addComponent(getSachbearbeiterBox(), "SachbearbeiterIn:", true, true);
+        eigenschaften.addComponent(getWiedervorlageDatum(), "Wiedervorlage:", true, true);
+        eigenschaften.addComponent(getInaktivBox(), "Inaktiv:", true, true);
+        eigenschaften.addComponent(getElkarelevantBox(), getElkarelevantLabel(), true, true);
+        eigenschaften.addComponent(getPrioritaetFeld(), getPrioritaetLabel(), true, true);
 
-        builder.append(buttonBar, 5);
+        builder.setPreferedSize(650, 500);
+        builder.addSeparator("Eigenschaften", true);
+        builder.setAnchor(PanelBuilder.NORTHEAST);
+        builder.addComponent(eigenschaften.getPanel(), true);
+        builder.setAnchor(PanelBuilder.NORTHWEST);
+        builder.addSeparator("Beschreibung", true);
+        builder.setWeightY(0.4);
+        builder.addComponent(beschreibungsScroller, true);
+        builder.setWeightY(0);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeightY(0.6);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(1, 0);
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(
+                PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveButton()), true);
+
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
     }
 
     public void fetchFormData() {
@@ -726,20 +715,20 @@ public class BasisPanel extends JPanel {
 
     public void updateForm() {
         boolean neu = false;
-		log.debug("Updating BasisPanel");
+        log.debug("Updating BasisPanel");
         // Is this a new object?
         if (this.hauptModul.getObjekt() == null
             || this.hauptModul.getObjekt().getId() == null) {
             neu = true;
-			log.debug("Neues Objekt");
+            log.debug("Neues Objekt");
         }
 
         if (neu == true) {
             // Create a new object
-			log.debug("Creating new Objekt");
+            log.debug("Creating new Objekt");
             //TODO: set new Objekt's elkarelevant-Field to a default value?
-			hauptModul.getObjekt().setElkarelevant(new Boolean(false));
-			// Only load enabled Sachbearbeiter
+            hauptModul.getObjekt().setElkarelevant(new Boolean(false));
+            // Only load enabled Sachbearbeiter
             getSachbearbeiterBox().setModel(new DefaultComboBoxModel(
                 DatabaseQuery.getEnabledSachbearbeiter()));
             // Preset the current Sachbearbeiter
@@ -801,7 +790,7 @@ public class BasisPanel extends JPanel {
             log.debug("Updating Form with Objekt: " + hauptModul.getObjekt().getId() + " " + hauptModul.getObjekt().getBetreiberid() + " " + hauptModul.getObjekt().getStandortid());
             if (this.hauptModul.getObjekt().getBetreiberid() != null) {
                 // TODO: Why are we using html here? :-/
-            	
+                
                 Adresse betr = this.hauptModul.getObjekt()
                     .getBetreiberid();
                 log.debug("Set betreiber field to " + betr);
@@ -833,42 +822,42 @@ public class BasisPanel extends JPanel {
                 getBetreiberFeld().setToolTipText(toolTip);
             
             }
-			if (this.hauptModul.getObjekt().getStandortid() != null) {
+            if (this.hauptModul.getObjekt().getStandortid() != null) {
 
-				Standort standort = (Standort) Standort
-						.findByAdresse(this.hauptModul.getObjekt()
-								.getStandortid().getAdresse());
-				if (standort != null) {
-					Adresse adr = standort.getAdresse();
-					log.debug("Set standort field to: " + adr
-							+ this.hauptModul.getObjekt().getStandortid()
-							+ " " + this.hauptModul.getObjekt().getStandortid().getLage());
-					String toolTip = "<html>" + adr + "<br>";
-					if (adr.getPlz() != null) {
-						toolTip += "<b>PLZ:</b> " + adr.getPlz() + "<br>";
-					}
-					toolTip += "<b>Gemarkung:</b> "
-							+ standort.getLage().getGemarkung()
-							+ ((standort.getLage().getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
-									+ standort.getLage().getEntgebid()
-									: "") + "</html>";
-					getStandortFeld().setToolTipText(toolTip);
-					getStandortFeld().setText(
-							standort.getAdresse().toString());
+                Standort standort = (Standort) Standort
+                        .findByAdresse(this.hauptModul.getObjekt()
+                                .getStandortid().getAdresse());
+                if (standort != null) {
+                    Adresse adr = standort.getAdresse();
+                    log.debug("Set standort field to: " + adr
+                            + this.hauptModul.getObjekt().getStandortid()
+                            + " " + this.hauptModul.getObjekt().getStandortid().getLage());
+                    String toolTip = "<html>" + adr + "<br>";
+                    if (adr.getPlz() != null) {
+                        toolTip += "<b>PLZ:</b> " + adr.getPlz() + "<br>";
+                    }
+                    toolTip += "<b>Gemarkung:</b> "
+                            + standort.getLage().getGemarkung()
+                            + ((standort.getLage().getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
+                                    + standort.getLage().getEntgebid()
+                                    : "") + "</html>";
+                    getStandortFeld().setToolTipText(toolTip);
+                    getStandortFeld().setText(
+                            standort.getAdresse().toString());
 
-					if (this.hauptModul.getObjekt().getStandortid().getLage() == null) {
-						standort = (Standort) Standort
-								.findByAdresse(this.hauptModul.getObjekt()
-										.getStandortid().getAdresse());
-						this.hauptModul.getObjekt().getStandortid().setLage(
-								standort.getLage());
-					}
-					getLageFeld().setText(standort.getLage().toString());
-				}else {
-					getLageFeld().setText(this.hauptModul.getObjekt().getStandortid().getLage().toString());
-				}
-			}
-			
+                    if (this.hauptModul.getObjekt().getStandortid().getLage() == null) {
+                        standort = (Standort) Standort
+                                .findByAdresse(this.hauptModul.getObjekt()
+                                        .getStandortid().getAdresse());
+                        this.hauptModul.getObjekt().getStandortid().setLage(
+                                standort.getLage());
+                    }
+                    getLageFeld().setText(standort.getLage().toString());
+                }else {
+                    getLageFeld().setText(this.hauptModul.getObjekt().getStandortid().getLage().toString());
+                }
+            }
+            
 //			if (this.hauptModul.getObjekt().getStandortid().getId() == 3) {
 //
 //				getLageFeld().setText(this.hauptModul.getObjekt().getStandortid().getLage().toString());
@@ -897,15 +886,15 @@ public class BasisPanel extends JPanel {
                 this.hauptModul.getObjekt().isInaktiv());
             
             if(this.hauptModul == null)
-				log.debug("hauptModul null");
-			if(this.hauptModul.getObjekt() == null)
-				log.debug("hauptModul.getObjekt() null");
-			if(this.hauptModul.getObjekt().getElkarelevant() == null)
-				log.debug("hauptModul.getObjekt().getElkarelevant() null");
-				
-			log.debug("ELKA relevant: " + hauptModul.getObjekt().getElkarelevant().booleanValue() );
-			log.debug("Objekt: " + hauptModul.getObjekt().toString());
-			getElkarelevantBox().setSelected(
+                log.debug("hauptModul null");
+            if(this.hauptModul.getObjekt() == null)
+                log.debug("hauptModul.getObjekt() null");
+            if(this.hauptModul.getObjekt().getElkarelevant() == null)
+                log.debug("hauptModul.getObjekt().getElkarelevant() null");
+                
+            log.debug("ELKA relevant: " + hauptModul.getObjekt().getElkarelevant().booleanValue() );
+            log.debug("Objekt: " + hauptModul.getObjekt().toString());
+            getElkarelevantBox().setSelected(
                     this.hauptModul.getObjekt().getElkarelevant());
 
             if (!neu) {
@@ -915,20 +904,20 @@ public class BasisPanel extends JPanel {
                 }
             }
 
-			if (!neu) {
-				if (this.hauptModul.getObjekt().getObjektarten()
-						.getAbteilung().equals("360.33")) {
-					getPrioritaetFeld().setVisible(true);
-					getPrioritaetLabel().setVisible(true);
-					getElkarelevantBox().setVisible(true);
-					getElkarelevantLabel().setVisible(true);
-				} else {
-					getPrioritaetFeld().setVisible(false);
-					getPrioritaetLabel().setVisible(false);
-					getElkarelevantBox().setVisible(false);
-					getElkarelevantLabel().setVisible(false);
-				}
-			}
+            if (!neu) {
+                if (this.hauptModul.getObjekt().getObjektarten()
+                        .getAbteilung().equals("360.33")) {
+                    getPrioritaetFeld().setVisible(true);
+                    getPrioritaetLabel().setVisible(true);
+                    getElkarelevantBox().setVisible(true);
+                    getElkarelevantLabel().setVisible(true);
+                } else {
+                    getPrioritaetFeld().setVisible(false);
+                    getPrioritaetLabel().setVisible(false);
+                    getElkarelevantBox().setVisible(false);
+                    getElkarelevantLabel().setVisible(false);
+                }
+            }
 
             if (this.hauptModul.getObjekt().getBeschreibung() != null) {
                 getBeschreibungsArea().setText(
@@ -962,31 +951,31 @@ public class BasisPanel extends JPanel {
         getInaktivBox().setSelected(false);
         getPrioritaetFeld().setText("");
         getBeschreibungsArea().setText(null);
-	}
+    }
 
-	public void enableAll(boolean enabled) {
-		getSaveButton().setEnabled(enabled);
-		getBetreiberToolBar().setEnabled(enabled);
-		getStandortToolBar().setEnabled(enabled);
-		getArtBox().setEnabled(enabled);
-		getSachbearbeiterBox().setEnabled(enabled);
-				
-		if (this.hauptModul.getObjekt() != null && this.hauptModul.getObjekt().getSachbearbeiter() != null){	
-			log.debug("getObjekt: " + this.hauptModul.getObjekt());
-			log.debug("Sachbearbeiter: " + this.hauptModul.getObjekt().getSachbearbeiter());
-	
-			if (DatabaseQuery.getCurrentSachbearbeiter() != null
-				|| this.hauptModul.getObjekt().getSachbearbeiter().equals(DatabaseQuery.getCurrentSachbearbeiter())) {
-				getWiedervorlageDatum().setEnabled(enabled);
-			} else
-				getWiedervorlageDatum().setEnabled(false);
-			getInaktivBox().setEnabled(enabled);
-			getPrioritaetFeld().setEnabled(enabled);
-			getBeschreibungsArea().setEnabled(enabled);
-		}
-		else
-			log.debug("Objekt oder Sachbearbeiter null - Objekt: " + this.hauptModul.getObjekt() + ", Sachbearbeiter: " + this.hauptModul.getObjekt().getSachbearbeiter());
-	}
+    public void enableAll(boolean enabled) {
+        getSaveButton().setEnabled(enabled);
+        getBetreiberToolBar().setEnabled(enabled);
+        getStandortToolBar().setEnabled(enabled);
+        getArtBox().setEnabled(enabled);
+        getSachbearbeiterBox().setEnabled(enabled);
+                
+        if (this.hauptModul.getObjekt() != null && this.hauptModul.getObjekt().getSachbearbeiter() != null){	
+            log.debug("getObjekt: " + this.hauptModul.getObjekt());
+            log.debug("Sachbearbeiter: " + this.hauptModul.getObjekt().getSachbearbeiter());
+    
+            if (DatabaseQuery.getCurrentSachbearbeiter() != null
+                || this.hauptModul.getObjekt().getSachbearbeiter().equals(DatabaseQuery.getCurrentSachbearbeiter())) {
+                getWiedervorlageDatum().setEnabled(enabled);
+            } else
+                getWiedervorlageDatum().setEnabled(false);
+            getInaktivBox().setEnabled(enabled);
+            getPrioritaetFeld().setEnabled(enabled);
+            getBeschreibungsArea().setEnabled(enabled);
+        }
+        else
+            log.debug("Objekt oder Sachbearbeiter null - Objekt: " + this.hauptModul.getObjekt() + ", Sachbearbeiter: " + this.hauptModul.getObjekt().getSachbearbeiter());
+    }
 
     @Override
     public String getName() {
@@ -1132,46 +1121,46 @@ public class BasisPanel extends JPanel {
     }
 
     private JButton getStandortChooseButton() {
-	    if (this.standortChooseButton == null) {
-	        this.standortChooseButton = new JButton(AuikUtils.getIcon(16,
-	            "reload.png", ""));
-	        this.standortChooseButton
-	            .setHorizontalAlignment(SwingConstants.CENTER);
-	        this.standortChooseButton.setToolTipText("Adresse auswählen");
-	
-	        this.standortChooseButton.addActionListener(new ActionListener() {
-	            @Override
-				public void actionPerformed(ActionEvent e) {
-					Standort standort = BasisPanel.this.hauptModul
-							.getObjekt().getStandortid();
-					if (BasisPanel.this. hauptModul.getObjekt().getBetreiberid() != null &&
-							standort == null) {
-						standort = new Standort();
-						standort.setAdresse(BasisPanel.this. hauptModul.getObjekt().getBetreiberid());
-					}
-					if(standort == null){
-						standort = new Standort();
-						standort.setAdresse(new Adresse());
-					}
-					ChooseDialog chooser = new ChooseDialog(standort.getAdresse(),
-							BasisPanel.this.hauptModul.getFrame(), "standort");
-					chooser.setVisible(true);
-	
-					if (chooser.getChosenBetreiber() != null) {
-						standortFeld.setText(chooser.getChosenBetreiber()
-								.toString());
-						BasisPanel.this.hauptModul.getObjekt()
-								.setStandortid(chooser.getChosenBetreiber().getStandort());
-					}
-					updateForm();
-				}
-	        });
-	    }
-	
-	    return this.standortChooseButton;
-	}
+        if (this.standortChooseButton == null) {
+            this.standortChooseButton = new JButton(AuikUtils.getIcon(16,
+                "reload.png", ""));
+            this.standortChooseButton
+                .setHorizontalAlignment(SwingConstants.CENTER);
+            this.standortChooseButton.setToolTipText("Adresse auswählen");
+    
+            this.standortChooseButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Standort standort = BasisPanel.this.hauptModul
+                            .getObjekt().getStandortid();
+                    if (BasisPanel.this. hauptModul.getObjekt().getBetreiberid() != null &&
+                            standort == null) {
+                        standort = new Standort();
+                        standort.setAdresse(BasisPanel.this. hauptModul.getObjekt().getBetreiberid());
+                    }
+                    if(standort == null){
+                        standort = new Standort();
+                        standort.setAdresse(new Adresse());
+                    }
+                    ChooseDialog chooser = new ChooseDialog(standort.getAdresse(),
+                            BasisPanel.this.hauptModul.getFrame(), "standort");
+                    chooser.setVisible(true);
+    
+                    if (chooser.getChosenBetreiber() != null) {
+                        standortFeld.setText(chooser.getChosenBetreiber()
+                                .toString());
+                        BasisPanel.this.hauptModul.getObjekt()
+                                .setStandortid(chooser.getChosenBetreiber().getStandort());
+                    }
+                    updateForm();
+                }
+            });
+        }
+    
+        return this.standortChooseButton;
+    }
 
-	private JButton getBetreiberEditButton() {
+    private JButton getBetreiberEditButton() {
         if (this.betreiberEditButton == null) {
             this.betreiberEditButton = new JButton(AuikUtils.getIcon(16,
                 "edit.png", ""));
@@ -1385,6 +1374,7 @@ public class BasisPanel extends JPanel {
     private JCheckBox getElkarelevantBox() {
         if (this.elkarelevantBox == null) {
             this.elkarelevantBox = new JCheckBox();
+            this.elkarelevantBox.setVisible(false);
         }
         return this.elkarelevantBox;
     }
@@ -1633,8 +1623,8 @@ public class BasisPanel extends JPanel {
 
 
 
-	public JButton getStandortDeleteButton() {
-		if (this.standortDeleteButton == null) {
+    public JButton getStandortDeleteButton() {
+        if (this.standortDeleteButton == null) {
             this.standortDeleteButton = new JButton(AuikUtils.getIcon(16,"exit.png",""));
             this.standortDeleteButton
                 .setHorizontalAlignment(SwingConstants.CENTER);
@@ -1647,12 +1637,12 @@ public class BasisPanel extends JPanel {
 
         return this.standortDeleteButton;
     }
-	
-	
+    
+    
 
 
 
-	private ActionListener getDeleteButtonListener() {
+    private ActionListener getDeleteButtonListener() {
         if (this.deleteButtonListener == null) {
             this.deleteButtonListener = new ActionListener() {
                 @Override
@@ -1666,22 +1656,22 @@ public class BasisPanel extends JPanel {
 
                     if ("betreiber_delete".equals(action) && betreiber != null) {
                         
-                    	boolean dCheck = delCheck(true);
-                    	if (dCheck == true){
-                    		deleteBetreiber();
-                    		 getBetreiberFeld().setText("");
-                    	     getBetreiberFeld().setToolTipText(null);
-                    	}
-                    	
+                        boolean dCheck = delCheck(true);
+                        if (dCheck == true){
+                            deleteBetreiber();
+                             getBetreiberFeld().setText("");
+                             getBetreiberFeld().setToolTipText(null);
+                        }
+                        
                     } else if ("standort_delete".equals(action)
                         && standort != null) {
-                    	
-                    	boolean dCheck = delCheck(false);
-                    	if (dCheck == true){
-                    		deleteStandort();
-                    		getStandortFeld().setText("");
+                        
+                        boolean dCheck = delCheck(false);
+                        if (dCheck == true){
+                            deleteStandort();
+                            getStandortFeld().setText("");
                             getStandortFeld().setToolTipText(null);
-                    	}
+                        }
                      
                         
                     }
@@ -1690,13 +1680,13 @@ public class BasisPanel extends JPanel {
                 }
             };
         }
-		return deleteButtonListener;
-	}
+        return deleteButtonListener;
+    }
 
-	
+    
 
-	public JButton getBetreiberDeleteButton() {
-		if (this.betreiberDeleteButton == null) {
+    public JButton getBetreiberDeleteButton() {
+        if (this.betreiberDeleteButton == null) {
             this.betreiberDeleteButton = new JButton(AuikUtils.getIcon(16,"exit.png",""));
             this.betreiberDeleteButton
                 .setHorizontalAlignment(SwingConstants.CENTER);
@@ -1708,47 +1698,47 @@ public class BasisPanel extends JPanel {
         }
 
         return this.betreiberDeleteButton;
-	}
-	
-	private void deleteStandort(){
-    	
-		Standort tmp = this.hauptModul.getObjekt().getStandortid();
-    	tmp.setDeleted(true);
-    	tmp.merge();
-    	this.hauptModul.getObjekt().setStandortid(null);
-    	
+    }
+    
+    private void deleteStandort(){
+        
+        Standort tmp = this.hauptModul.getObjekt().getStandortid();
+        tmp.setDeleted(true);
+        tmp.merge();
+        this.hauptModul.getObjekt().setStandortid(null);
+        
     }
     
     private void deleteBetreiber(){
-    	
-    	Adresse tmp = this.hauptModul.getObjekt().getBetreiberid();
-    	tmp.setDeleted(true);
-    	tmp.merge();
-    	this.hauptModul.getObjekt().setBetreiberid(null);
+        
+        Adresse tmp = this.hauptModul.getObjekt().getBetreiberid();
+        tmp.setDeleted(true);
+        tmp.merge();
+        this.hauptModul.getObjekt().setBetreiberid(null);
     }
     
     private boolean delCheck(boolean betr){
-    	
-    	if(betr == true){
-    		JOptionPane dcp = new JOptionPane ("Betreiber löschen");
-        	Object[] options = new String[]{"Ja", "Nein"};
-        	JDialog dia = dcp.createDialog("Wirklich löschen?");
-        	int a = JOptionPane.showOptionDialog(dia, "Soll der Betreiber gelöscht werden?",
-        			"Wirklich löschen?", JOptionPane.YES_NO_OPTION,
-        			JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
-        	if (a == JOptionPane.YES_OPTION) return true;
-        	else return false;
-    	}
-    	else{
-    	JOptionPane dcp = new JOptionPane ("Standort löschen");
-    	Object[] options = new String[]{"Ja", "Nein"};
-    	JDialog dia = dcp.createDialog("Wirklich löschen?");
-    	int a = JOptionPane.showOptionDialog(dia, "Soll der Standort gelöscht werden?",
-    			"Wirklich löschen?", JOptionPane.YES_NO_OPTION,
-    			JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
-    		if (a == JOptionPane.YES_OPTION) return true;
-    		else return false;
-    	}
-    	    	
+        
+        if(betr == true){
+            JOptionPane dcp = new JOptionPane ("Betreiber löschen");
+            Object[] options = new String[]{"Ja", "Nein"};
+            JDialog dia = dcp.createDialog("Wirklich löschen?");
+            int a = JOptionPane.showOptionDialog(dia, "Soll der Betreiber gelöscht werden?",
+                    "Wirklich löschen?", JOptionPane.YES_NO_OPTION,
+                    JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+            if (a == JOptionPane.YES_OPTION) return true;
+            else return false;
+        }
+        else{
+        JOptionPane dcp = new JOptionPane ("Standort löschen");
+        Object[] options = new String[]{"Ja", "Nein"};
+        JDialog dia = dcp.createDialog("Wirklich löschen?");
+        int a = JOptionPane.showOptionDialog(dia, "Soll der Standort gelöscht werden?",
+                "Wirklich löschen?", JOptionPane.YES_NO_OPTION,
+                JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+            if (a == JOptionPane.YES_OPTION) return true;
+            else return false;
+        }
+                
     }
 }

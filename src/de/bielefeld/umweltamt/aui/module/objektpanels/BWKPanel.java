@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,11 +47,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
@@ -62,6 +58,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.PanelBuilder;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -108,7 +105,7 @@ public class BWKPanel extends JPanel {
     public BWKPanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Brennwertkessel";
         this.hauptModul = hauptModul;
-
+        /*
         FormLayout layout = new FormLayout(
             "r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 70dlu, , 70dlu, 70dlu", // Spalten
             "pref, " + // 1
@@ -175,23 +172,82 @@ public class BWKPanel extends JPanel {
         builder.add(getgenehmpflichtCheck(), cc.xyw(5, 11, 3));
         builder.add(getAbaCheck(), cc.xy(8, 11));
         builder.addSeparator("Bemerkungen", cc.xyw(5, 13, 3));
-        builder.add(new JScrollPane(getBwkBeschreibungsArea(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh(5, 15, 3,
-            5));
+        builder.add(
 
         builder.addSeparator("Verknüpfte Objekte", cc.xyw(1, 21, 7));
-        JScrollPane objektverknuepfungScroller = new JScrollPane(
-            getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:100dlu");
         builder.add(objektverknuepfungScroller, cc.xyw(1, 23, 7));
         builder.nextLine();
 
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveBwkButton());
-        builder.add(buttonBar, cc.xyw(1, 25, 7));
+        */
+
+        JScrollPane bemerkungScroller = new JScrollPane(getBwkBeschreibungsArea(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane objektverknuepfungScroller = new JScrollPane(
+            getObjektverknuepungTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        PanelBuilder builder = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 0.5, 0, 1, 1,
+                0, 0, 5, 10);
+
+        PanelBuilder kessel = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 1, 0, 1, 1,
+            0, 0, 5, 0);
+        kessel.addComponent(getHerstellerFeld(), "Hersteller:", true);
+        kessel.addComponent(getTypFeld(), "Typ:", true);
+        kessel.addComponent(getBrennmittelFeld(), "Brennmittel:", true);
+        kessel.addComponent(getLeistungFeld(), "Leistung:", true);
+        kessel.fillRow();
+        kessel.fillColumn();
+
+        PanelBuilder checks = new PanelBuilder(kessel);
+        checks.setWeightX(0);
+        checks.addComponents(true, getgenehmpflichtCheck(), getAbaCheck());
+
+        PanelBuilder erfassung = new PanelBuilder(kessel);
+        erfassung.addComponent(getJahrgangFeld(), "Jahrgang:", true);
+        erfassung.addComponent(getAbnahmeFeld(), "Abnahme:", true);
+        erfassung.setWeightX(0);
+        erfassung.addComponent(getAnschreibenFeld(), "Anschreiben:", true);
+        erfassung.addComponent(getGenehmigungDatum(), "Genehmigung:", true);
+        erfassung.addComponent(checks.getPanel(), true);
+
+        PanelBuilder werkstoffe = new PanelBuilder(kessel);
+        werkstoffe.addComponent(getBrennerFeld(), "Brenner:", true);
+        werkstoffe.addComponent(getWaermetauscherFeld(), "Tauscher:", true);
+        werkstoffe.addComponent(getAbgasleitungFeld(), "Abgasleitung:", true);
+        werkstoffe.addComponent(getKondensatltgFeld(), "Kondesatabl.:", true);
+
+        builder.setPreferedSize(700, 650);
+        builder.addSeparator("Kessel");
+        builder.addSeparator("Erfassung", true);
+        builder.addComponents(true, kessel.getPanel(), erfassung.getPanel());
+        builder.addSeparator("Werkstoffe");
+        builder.addSeparator("Bemerkung", true);
+        builder.addComponent(werkstoffe.getPanel());
+        builder.addComponent(bemerkungScroller, true);
+
+        builder.setWeightY(0);
+        builder.addSeparator("Veknüpfte Objekte", true);
+        builder.setWeight(1, 0.6);
+        builder.addComponent(objektverknuepfungScroller, true);
+        builder.setWeight(0, 0);
+        builder.fillRow();
+        builder.fillRow();
+        builder.setInsets(0, 0, 0, 5);
+        builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveBwkButton()), true);
+
+        PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,
+                0, 0, 5, 5);
+        content.setEmptyBorder(15);
+        content.addComponent(builder.getPanel());
+        content.fillRow(true);
+        content.fillColumn();
+
+        this.setLayout(new BorderLayout());
+        this.add(content.getPanel());
+
 
     }
 
