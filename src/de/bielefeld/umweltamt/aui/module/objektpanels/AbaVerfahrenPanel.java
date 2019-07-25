@@ -80,8 +80,8 @@ public class AbaVerfahrenPanel extends JPanel {
     public AbaVerfahrenPanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Behandlungsverfahren";
         this.hauptModul = hauptModul;
-        this.uebernehmenButton = new JButton("Übernehmen >");
-        this.entfernenButton = new JButton("< Entfernen");
+        this.uebernehmenButton = getUebernehmenButton();
+        this.entfernenButton = getEntfernenButton();
         this.saveAbaverfButton = getSaveAbaverfButton();
         this.rightList = new JList<Abaverfahren>(rightListModel);
 
@@ -198,8 +198,68 @@ public class AbaVerfahrenPanel extends JPanel {
         return this.saveAbaverfButton;
     }
 
-
-        
+    private JButton getUebernehmenButton() {
+        if (this.uebernehmenButton == null) {
+            this.uebernehmenButton = new JButton("Übernehmen >");
     
+            this.uebernehmenButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    enableAll(false);
+                    if (saveAbaverf()) {
+                        AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
+                            "List der Abwasserbehandklungsverfahren "
+                                + AbaVerfahrenPanel.this.fachdaten.getId()
+                                + " erfolgreich gespeichert.",
+                            HauptFrame.SUCCESS_COLOR);
+                    } else {
+                        AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
+                            "Fehler beim Speichern des Zahnarztes!",
+                            HauptFrame.ERROR_COLOR);
+                    }
+    
+                    AbaVerfahrenPanel.this.hauptModul.fillForm();
+                }
+
+                private boolean saveAbaverf() {
+                    // TODO Auto-generated method stub
+                    return false;
+                }
+            });
+        }
+        return this.uebernehmenButton;
+    }
+
+    private JButton getEntfernenButton() {
+        if (this.entfernenButton == null) {
+            this.entfernenButton = new JButton("< Entfernen");
+    
+            this.entfernenButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    enableAll(false);
+                    if (saveAbaverf()) {
+                        AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
+                            "List der Abwasserbehandklungsverfahren "
+                                + AbaVerfahrenPanel.this.fachdaten.getId()
+                                + " erfolgreich gespeichert.",
+                            HauptFrame.SUCCESS_COLOR);
+                    } else {
+                        AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
+                            "Fehler beim Speichern des Zahnarztes!",
+                            HauptFrame.ERROR_COLOR);
+                    }
+    
+                    AbaVerfahrenPanel.this.hauptModul.fillForm();
+                }
+
+                private boolean saveAbaverf() {
+                    // TODO Auto-generated method stub
+                    return false;
+                }
+            });
+        }
+        return this.entfernenButton;
+    }    
 
 }

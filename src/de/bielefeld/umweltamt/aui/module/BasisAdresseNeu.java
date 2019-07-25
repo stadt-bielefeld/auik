@@ -301,7 +301,7 @@ public class BasisAdresseNeu extends AbstractModul
             namenLabel = new JLabel("Name:");
             handzeichenLabel = new JLabel("Handzeichen:");
 
-            wirtschaftszweigBox.setPreferredSize(new Dimension(15, 20));
+            wirtschaftszweigBox.setPrototypeDisplayValue("XXXXXXX");
 
             //Stamdaten - Ansprechpartner
             PanelBuilder stammdaten = new PanelBuilder(PanelBuilder.NORTHEAST, true, false, 1, 0, 1, 1,
@@ -339,9 +339,19 @@ public class BasisAdresseNeu extends AbstractModul
 
             PanelBuilder ort = new PanelBuilder(PanelBuilder.NORTHEAST, true, true, 1, 0, 1, 1,
                     0, 0, 5, 5);
-            ort.addComponents(plzZsFeld, plzFeld, ortFeld);
+            ort.setWeightX(0.05);
+            ort.addComponent(plzZsFeld);
+            ort.setWeightX(0.2);
+            ort.addComponent(plzFeld);
+            ort.setWeightX(0.75);
+            ort.addComponent(ortFeld);
             PanelBuilder strasse = new PanelBuilder(ort);
-            strasse.addComponents(strasseFeld, hausnrFeld, hausnrZusFeld);
+            strasse.setWeightX(0.8);
+            strasse.addComponent(strasseFeld);
+            strasse.setWeightX(0.1);
+            strasse.addComponent(hausnrFeld);
+            strasse.setWeightX(0.1);
+            strasse.addComponent(hausnrZusFeld);
 
             //Adresse - Lage
             PanelBuilder adresseLage = new PanelBuilder(PanelBuilder.NORTHWEST, true, false, 1, 0, 1, 1,
@@ -396,7 +406,10 @@ public class BasisAdresseNeu extends AbstractModul
             builder.addSeparator("Stammdaten", true);
             builder.addComponent(stammdaten.getPanel(), true);
             builder.setFill(true, true);
-            builder.addComponent(bottomPanel.getPanel());
+            builder.addComponent(bottomPanel.getPanel(), true);
+            builder.setFill(false, false);
+            builder.setAnchor(PanelBuilder.NORTHEAST);
+            builder.addComponent(speichernButton);
             builder.setWeight(1,1);
 
             PanelBuilder content = new PanelBuilder(PanelBuilder.NORTHWEST, true, true, 0, 0, 1, 1,

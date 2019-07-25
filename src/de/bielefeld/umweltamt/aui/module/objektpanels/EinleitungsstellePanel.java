@@ -125,58 +125,6 @@ public class EinleitungsstellePanel extends JPanel {
         this.name = "Einleitungsstelle";
         this.hauptModul = hauptModul;
 
-        /*
-        FormLayout layout = new FormLayout(
-                "r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-        
-        builder.appendSeparator("ELKA");
-        builder.append("Erstellung:", getErstellDatDatum());
-        builder.append("Stationierungns3: ", getStationierungNs3Feld());
-        builder.nextLine();
-        builder.append("Herkunft:", getHerkunftFeld());
-        builder.append("Einzugsgebiet:", getEinzugsgebietFeld());
-        builder.nextLine();
-        builder.append("Bezeichnung:", getBezeichnungFeld());
-        builder.append("Stationierungst3", getStationierungSt3Feld());
-        builder.nextLine();
-        builder.append("Gewässernamealias3:", getGewaessernameAlias3Feld());
-        builder.append("Abgabe einleitung: ", getAbgaberelEinlFeld());
-        builder.nextLine();
-        builder.append("GewässernameNs: ", getGewaessernameNsFeld());
-        builder.append("Kanal Art Opt:", getKanalArtOptFeld());
-        builder.nextLine();
-        builder.append("NadiaId:", getNadiaIdFeld());
-        builder.append("E32:", getE32Feld());
-        builder.nextLine();
-        builder.append("Datum:", getStillgelegtAmDatum());
-        builder.append("N32:",  getN32Feld());
-        builder.nextLine();
-        builder.append("", getTypIndirektCheck());
-        builder.append("Stationierung:", getStationierung3OptFeld());
-        builder.nextLine();
-        builder.append("", getTypIndGewDirektCheck());
-        builder.append("Schutzzone:", getSchutzzoneOptFeld());
-        builder.nextLine();
-        builder.append("", getTypKommTrennCheck());
-        builder.append("Kläranlage: ", getKlaeranlageBox());
-        builder.nextLine();
-        builder.append("", getTypPrivatTrennCheck());
-        builder.nextLine();
-        builder.append("", getTypSonstigeCheck());
-        builder.nextLine();
-        builder.append("", getTypAusserortStrasseneinlCheck());
-        builder.nextLine();
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
-        builder.nextLine();
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
-                getSelectObjektButton(), getSaveElkaEinleitungsstelleButton());
-        builder.append(buttonBar, 7);
-        */
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -221,7 +169,6 @@ public class EinleitungsstellePanel extends JPanel {
         builder.setWeightY(0.6);
         builder.addComponent(objektverknuepfungScroller, true);
         builder.setWeight(0, 0);
-        builder.fillRow();
         builder.fillRow();
         builder.setInsets(0, 0, 0, 5);
         builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(getSelectObjektButton(), getSaveElkaEinleitungsstelleButton()), true);

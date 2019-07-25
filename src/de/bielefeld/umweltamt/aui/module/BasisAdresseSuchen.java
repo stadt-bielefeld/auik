@@ -222,11 +222,11 @@ public class BasisAdresseSuchen extends AbstractModul {
 
             this.tabellenSplit = new JSplitPane(
                 JSplitPane.VERTICAL_SPLIT, betreiberScroller, objektScroller);
-            this.tabellenSplit.setPreferredSize(new Dimension(1500, 785));
+            this.tabellenSplit.setPreferredSize(new Dimension(750, 750));
             this.tabellenSplit.setResizeWeight(0.5);
             PanelBuilder panelBuilder = new PanelBuilder();
             panelBuilder.setBorder(new EmptyBorder(15, 15, 15, 15));
-            panelBuilder.setInsets(new Insets(5, 5, 0, 0));
+            panelBuilder.setInsets(new Insets(5, 5, 0, 10));
             panelBuilder.setAnchor(GridBagConstraints.WEST);
             panelBuilder.setFill(GridBagConstraints.HORIZONTAL);
             panelBuilder.setWeightX(0);
@@ -237,10 +237,14 @@ public class BasisAdresseSuchen extends AbstractModul {
             panelBuilder.addComponent(new JPanel());
             panelBuilder.setAnchor(GridBagConstraints.EAST);
             panelBuilder.addComponent(getSubmitButton(), true);
+            panelBuilder.setAnchor(GridBagConstraints.WEST);
+            panelBuilder.setMaximumSize(100, 0);
             panelBuilder.addComponent(getStrassenFeld(), "Straße:");
+            panelBuilder.setMaximumSize(10, 0);
             panelBuilder.addComponent(getHausnrFeld(), "Haus-Nr:");
+            panelBuilder.setMaximumSize(100, 0);
             panelBuilder.addComponent(getOrtFeld(), "Ort:", true);
-            panelBuilder.setWeightX(1);
+//            panelBuilder.setWeightX(1);
             panelBuilder.addComponent(tabellenSplit, true);
 
             this.panel = panelBuilder.getPanel();
@@ -1025,7 +1029,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private JButton getSubmitButton() {
         if (this.submitButton == null) {
-            this.submitButton = new JButton("Alle Adressen", AuikUtils.getIcon(16,
+            this.submitButton = new JButton("Adressen suchen", AuikUtils.getIcon(16,
                 "key_enter.png"));
             this.submitButton.setToolTipText("Suche starten");
             this.submitButton.addActionListener(new ActionListener() {

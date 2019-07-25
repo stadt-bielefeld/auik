@@ -76,8 +76,10 @@
 package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.KeyboardFocusManager;
@@ -119,6 +121,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
+
+import org.jfree.chart.block.CenterArrangement;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -261,6 +265,7 @@ public class BasisStandortSuchen extends AbstractModul
             JToolBar submitToolBar = new JToolBar();
             submitToolBar.setFloatable(false);
             submitToolBar.setRollover(true);
+            submitToolBar.setAlignmentX(FlowLayout.LEFT);
             submitToolBar.add(getSubmitButton());
 
             PanelBuilder restrictBuilder = new PanelBuilder();
@@ -289,29 +294,32 @@ public class BasisStandortSuchen extends AbstractModul
             this.tabellenSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                     standortScroller, objektScroller);
             //Workaround for wrong panel height
-            this.tabellenSplit.setPreferredSize(new Dimension(1500, 775));
-            this.tabellenSplit.setResizeWeight(0.5);
+            this.tabellenSplit.setPreferredSize(new Dimension(750, 750));
+            this.tabellenSplit.setDividerLocation(370);
 
             PanelBuilder builder = new PanelBuilder();
             builder.setBorder(new EmptyBorder(10, 15, 15, 15));
-            builder.setInsets(new Insets(10, 0, 0, 10));
             builder.setFill(GridBagConstraints.HORIZONTAL);
-            builder.setAnchor(GridBagConstraints.NORTHWEST);
-            builder.setWeightY(0.1);
-            builder.setWeightX(0.35);
-            builder.addComponent(getStrassenFeld(), "Straße:");
-            builder.setWeightX(0.2);
-            builder.addComponent(getHausnrFeld(), "Haus-Nr:");
-            builder.setWeightX(0.35);
-            builder.addComponent(getOrtFeld(), "Ort:");
+            builder.setAnchor(GridBagConstraints.WEST);
+            builder.setInsets(new Insets(0, 0, 0, 10));
+            builder.setWeightY(0.05);
             builder.setWeightX(0);
-            builder.setAnchor(GridBagConstraints.EAST);
-            builder.setInsets(new Insets(0, 0, 5, 0));
+            builder.addComponent(new JLabel("Straße:"));
+            builder.setWeightX(0.4);
+            builder.addComponent(getStrassenFeld());
+            builder.setWeightX(0);
+            builder.addComponent(new JLabel("Haus-Nr:"));
+            builder.setWeightX(0.04);
+            builder.addComponent(getHausnrFeld());
+            builder.setWeightX(0);
+            builder.addComponent(new JLabel("Ort:"));
+            builder.setWeightX(0.4);
+            builder.addComponent(getOrtFeld());
+            builder.setWeightX(0);
             builder.addComponent(submitToolBar, true);
-            builder.setWeightY(0);
-
+            builder.setWeightY(0.9);
             builder.addComponent(this.tabellenSplit, true);
-            builder.setWeightY(0);
+            builder.setWeightY(0.05);
             builder.addComponent(restrictPanel, true);
             this.panel = builder.getPanel();
         }
@@ -330,15 +338,15 @@ public class BasisStandortSuchen extends AbstractModul
         super.show();
 
         // Gespeicherte Position des Dividers setzen
-        if (SettingsManager.getInstance().getSetting(
-                                                        "auik.prefs.divloc_standort") != null)
-        {
-            double divloc = Double.parseDouble(SettingsManager.getInstance()
-                    .getSetting("auik.prefs.divloc_standort"));
-            // AUIKataster.debugOutput("Lese divloc_standort als: " + divloc,
-            // "BasisLageSuchen.DIVIDER");
-            this.tabellenSplit.setDividerLocation(divloc);
-        }
+//        if (SettingsManager.getInstance().getSetting(
+//                                                        "auik.prefs.divloc_standort") != null)
+//        {
+//            double divloc = Double.parseDouble(SettingsManager.getInstance()
+//                    .getSetting("auik.prefs.divloc_standort"));
+//            // AUIKataster.debugOutput("Lese divloc_standort als: " + divloc,
+//            // "BasisLageSuchen.DIVIDER");
+//            this.tabellenSplit.setDividerLocation(divloc);
+//        }
 
         this.lastStandort = null;
         updateStandortListe();
@@ -1025,7 +1033,27 @@ public class BasisStandortSuchen extends AbstractModul
                 else if (i == 3)
                 {
                     // column.setMaxWidth(70);
-                    column.setPreferredWidth(200);
+					column.setPreferredWidth(80);
+				}
+				else if (i == 4)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(80);
+				}
+				else if (i == 5)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(80);
+				}
+				else if (i == 6)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(80);
+				}
+				else if (i == 7)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(80);
                 }
             }
 
@@ -1033,6 +1061,7 @@ public class BasisStandortSuchen extends AbstractModul
                     .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             this.standortTabelle.setColumnSelectionAllowed(false);
             this.standortTabelle.setRowSelectionAllowed(true);
+            this.standortTabelle.setGridColor(new Color(230, 230, 230));
 
             this.standortTabelle.addMouseListener(new MouseAdapter()
             {
@@ -1407,6 +1436,7 @@ public class BasisStandortSuchen extends AbstractModul
                     .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
             objektTabelle.setAutoCreateRowSorter(true);
+            this.objektTabelle.setGridColor(new Color(230, 230, 230));
 
             TableColumn column = null;
             for (int i = 0; i < this.objektModel.getColumnCount(); i++)

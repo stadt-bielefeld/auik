@@ -1027,7 +1027,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         builder.addSeparator("Probe", true);
         builder.addComponent(probe.getPanel(), true);
         builder.addSeparator("Bemerkungen", true);
-        builder.setWeightY(0.4);
+        builder.setWeightY(0.2);
         builder.addComponent(bemerkungsScroller, true);
         builder.setWeightY(0);
         builder.addSeparator("Parameter", true);
