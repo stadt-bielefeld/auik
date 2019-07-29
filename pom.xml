@@ -447,7 +447,7 @@
        </plugin>
      <plugin>
          <artifactId>maven-assembly-plugin</artifactId>
-         <version>2.5.5</version>
+         <version>2.3</version>
          <configuration>
            <descriptorRefs>
              <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -468,20 +468,7 @@
            </execution>
          </executions>
       </plugin>
-      <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>compile</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>maven_lib</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+      
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
@@ -564,7 +551,7 @@
                 <tstamp>
                   <format property="today" pattern="yyyyMMdd"/>
                 </tstamp>
-                <copy todir="X:\Applikationen\Anlagenkataster\AUIK">
+                <copy todir="X:\Applikationen\Anlagenkataster\java11">
                   <fileset dir="target">
                     <include name="*.jar"/>
                   </fileset>
@@ -581,7 +568,20 @@
     </plugins>
      <pluginManagement>
        <plugins>
-         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.--><plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>maven_lib</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
          <plugin>
            <groupId>org.eclipse.m2e</groupId>
            <artifactId>lifecycle-mapping</artifactId>
