@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -192,6 +193,7 @@ public class ELKASync extends AbstractModul {
         this.sbModel = new ESonderbauwerkModel();
 
         this.dbTable = new JTable();
+        this.dbTable.setGridColor(new Color(230, 230, 230));
         this.rowCount = new JLabel("0");
         this.progressCounter = new JLabel("-/-");
     }

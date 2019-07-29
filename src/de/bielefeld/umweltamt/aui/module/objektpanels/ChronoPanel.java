@@ -69,6 +69,7 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -571,6 +572,7 @@ public class ChronoPanel extends JPanel {
                 .setPreferredWidth(300);
             this.chronoTable
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.chronoTable.setGridColor(new Color(230, 230, 230));
 
             this.chronoTable
                 .addMouseListener(new java.awt.event.MouseAdapter() {

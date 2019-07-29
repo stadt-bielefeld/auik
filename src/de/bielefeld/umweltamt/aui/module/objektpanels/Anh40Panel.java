@@ -25,6 +25,7 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -538,6 +539,7 @@ public class Anh40Panel extends JPanel {
             if (this.objektverknuepfungTabelle == null) {
                 this.objektverknuepfungTabelle = new JTable(
                     this.objektVerknuepfungModel);
+                    this.objektverknuepfungTabelle.setGridColor(new Color(230, 230, 230));
             } else {
                 this.objektverknuepfungTabelle
                     .setModel(this.objektVerknuepfungModel);

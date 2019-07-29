@@ -21,6 +21,7 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -177,6 +178,7 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
             // Nachbarspalte mit
             verwaltungsverfahrenTabelle
                     .setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+            verwaltungsverfahrenTabelle.setGridColor(new Color(230, 230, 230));
 
             // Es darf immer nur eine Zeile ausgewählt werden
             verwaltungsverfahrenTabelle

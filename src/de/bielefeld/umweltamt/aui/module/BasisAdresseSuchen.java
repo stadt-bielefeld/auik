@@ -856,6 +856,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             this.betreiberTabelle.setColumnSelectionAllowed(false);
             this.betreiberTabelle.setRowSelectionAllowed(true);
+            this.betreiberTabelle.setGridColor(new Color(230, 230, 230));
 
             this.betreiberTabelle
                 .addMouseListener(new java.awt.event.MouseAdapter() {
@@ -943,6 +944,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			this.objektTabelle
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             this.objektTabelle.getColumnModel().getColumn(0).setMaxWidth(60);
+            this.objektTabelle.setGridColor(new Color(230, 230, 230));
             this.objektTabelle
                 .getColumnModel()
                 .getColumn(0)

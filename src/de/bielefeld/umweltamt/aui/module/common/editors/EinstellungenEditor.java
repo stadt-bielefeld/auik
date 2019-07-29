@@ -51,6 +51,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -272,7 +273,8 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 
     private JTable getEinstellungenTabelle() {
         if (this.einstellungenTabelle == null) {
-            this.einstellungenTabelle = new SelectTable();
+        	this.einstellungenTabelle = new SelectTable();
+            this.einstellungenTabelle.setGridColor(new Color(230, 230, 230));
 
             Action submitAction = new AbstractAction("Einstellungen") {
                 private static final long serialVersionUID = -6645922378885851686L;

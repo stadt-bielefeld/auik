@@ -39,6 +39,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Point;
@@ -188,6 +189,7 @@ public class EditorParameter extends AbstractModul {
             resultTable = new JTable(getTableModel());
             resultTable.setAutoCreateRowSorter(true);
             resultTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.resultTable.setGridColor(new Color(230, 230, 230));
 
 			this.resultTable
 					.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);

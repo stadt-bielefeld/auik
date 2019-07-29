@@ -25,6 +25,7 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,6 +61,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -173,11 +175,16 @@ public class ProbepktAuswPanel extends JPanel {
             centerParam.addComponent(createRLButton(true, paramID));
             centerParam.fillRow();
             centerParam.addComponent(new JLabel(
-                Parameter.findById(paramID).getBezeichnung()));
+                Parameter.findById(paramID).getBezeichnung(), SwingConstants.CENTER));
             centerParam.fillRow();
             centerParam.addComponent(createRLButton(false, paramID), true);
             y += 2;
         }
+        centerParam.addComponent(createRLButton(true, "box"));
+        centerParam.fillRow();
+        centerParam.addComponent(getParameterBox());
+        centerParam.fillRow();
+        centerParam.addComponent(createRLButton(false, "box"), true);
         //Add four empty panel rows to keep alignment
         centerParam.addComponent(new JPanel(), true, true);
         centerParam.addComponent(new JPanel(), true, true);
@@ -472,6 +479,7 @@ public class ProbepktAuswPanel extends JPanel {
             this.exportTable.setColumnSelectionAllowed(true);
             this.exportTable.setRowSelectionAllowed(true);
             this.exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            this.exportTable.setGridColor(new Color(230, 230, 230));
 
             this.exportTable.addMouseListener(new MouseAdapter() {
                 @Override

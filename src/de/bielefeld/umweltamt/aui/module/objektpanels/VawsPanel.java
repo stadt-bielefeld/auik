@@ -76,6 +76,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -418,6 +419,7 @@ public class VawsPanel extends JPanel {
     private JTable getVawsTable() {
         if (vawsTable == null) {
             vawsTable = new JTable(vawsModel);
+            vawsTable.setGridColor(new Color(230, 230, 230));
             vawsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
             vawsTable.addMouseListener(new java.awt.event.MouseAdapter() {

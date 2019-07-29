@@ -80,6 +80,7 @@
 package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Point;
@@ -500,6 +501,7 @@ public class KlaerschlammAuswertung extends AbstractModul
             this.exportTable.setColumnSelectionAllowed(true);
             this.exportTable.setRowSelectionAllowed(true);
             this.exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            this.exportTable.setGridColor(new Color(230, 230, 230));
 
             this.exportTable.addMouseListener(new MouseAdapter()
             {

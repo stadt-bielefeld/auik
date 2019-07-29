@@ -49,6 +49,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -250,6 +251,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         JTable resultTable = getResultTable();
 
         resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+        resultTable.setGridColor(new Color(230, 230, 230));
         TableColumn column = null;
 
         for (int i = 0; i < 5; i++) {

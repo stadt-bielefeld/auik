@@ -50,6 +50,7 @@
 package de.bielefeld.umweltamt.aui.module.common;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -369,6 +370,7 @@ public class SchlammPanel extends JPanel {
     private JTable getProbeTabelle() {
         if (probeTabelle == null) {
             probeTabelle = new JTable(probeModel);
+            probeTabelle.setGridColor(new Color(230, 230, 230));
 
             probeTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             probeTabelle.setColumnSelectionAllowed(false);

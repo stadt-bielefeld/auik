@@ -39,6 +39,7 @@
  */
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
@@ -70,6 +71,7 @@ public class SelectTable extends JTable {
         this.setColumnSelectionAllowed(false);
         this.setRowSelectionAllowed(true);
         this.setSurrendersFocusOnKeystroke(true);
+        this.setGridColor(new Color(230, 230, 230));
     }
 
     @Override

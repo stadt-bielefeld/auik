@@ -25,6 +25,7 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -582,6 +583,7 @@ public class GenehmigungPanel extends JPanel {
                 .setPreferredWidth(100);
             this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
                 .setPreferredWidth(250);
+            this.objektverknuepfungTabelle.setGridColor(new Color(230, 230, 230));
 
             this.objektverknuepfungTabelle
                 .addMouseListener(new java.awt.event.MouseAdapter() {

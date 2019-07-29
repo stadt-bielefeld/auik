@@ -357,11 +357,17 @@ public class HauptFrame extends JFrame {
     private JToolBar getViewMenuBar() {
         if (viewMenuBar == null) {
             viewMenuBar = new JToolBar();
-            viewMenuBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
             viewMenuBar.putClientProperty("JToolBar.isRollover", Boolean.TRUE);
             viewMenuBar.setFloatable(false);
             viewMenuBar.setOpaque(false);
-            viewMenuBar.add(getViewMenuButton());
+            PanelBuilder content = new PanelBuilder(PanelBuilder.GRADIENT_PANEL);
+            content.setBorder(new EmptyBorder(5, 5, 5, 5));
+            content.setWeightX(0);
+            content.fillRow();
+            content.setAnchor(GridBagConstraints.EAST);
+            content.setInsets(0, 0, 0, 0);
+            content.addComponent(getViewMenuButton());
+            viewMenuBar.add(content.getPanel());
         }
         return viewMenuBar;
     }
@@ -385,10 +391,9 @@ public class HauptFrame extends JFrame {
                         }
                     });
 
-            //viewMenuButton
-            //        .setForeground(getLeftFrame().getTextForeground(true));
-            viewMenuButton.setOpaque(false);
             viewMenuButton.setHorizontalTextPosition(JButton.LEADING);
+            viewMenuButton.setBackground(getViewMenuBar().getBackground());
+            viewMenuButton.setContentAreaFilled(false);
             viewMenuButton
                     .setToolTipText("Hier klicken, um die Kategorie zu wechseln");
         }
@@ -412,7 +417,7 @@ public class HauptFrame extends JFrame {
             content.addComponent(this.rightFrameTitle);
             content.fillRow();
             content.setAnchor(GridBagConstraints.EAST);
-            content.setInsets(0, 0, 0, 5);
+            content.setInsets(0, 0, 0, 0);
             content.addComponents(true, getModulBackButton(), getModulFwdButton());
             modulBar.add(content.getPanel());
         }
@@ -441,6 +446,8 @@ public class HauptFrame extends JFrame {
             });
 
             modulBackButton.setEnabled(false);
+            modulBackButton.setContentAreaFilled(false);
+            modulBackButton.setPreferredSize(new Dimension(20, 20));
         }
         return modulBackButton;
     }
@@ -467,6 +474,8 @@ public class HauptFrame extends JFrame {
             });
 
             modulFwdButton.setEnabled(false);
+            modulFwdButton.setContentAreaFilled(false);
+            modulFwdButton.setPreferredSize(new Dimension(20, 20));
         }
         return modulFwdButton;
     }
@@ -734,7 +743,7 @@ public class HauptFrame extends JFrame {
         if (splitPane == null) {
             splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                     getLeftFrame(), getRightFrame());
-            splitPane.setDividerLocation(185);
+            splitPane.setDividerLocation(120);
         }
         return splitPane;
     }
@@ -749,7 +758,7 @@ public class HauptFrame extends JFrame {
             leftFrame = new JSplitPane(JSplitPane.VERTICAL_SPLIT, getViewMenuBar(),
                     getLeftScroller());
             leftFrame.setDividerSize(0);
-            leftFrame.setMinimumSize(new Dimension(100, 0));
+            leftFrame.setMinimumSize(new Dimension(120, 0));
             leftFrame.setPreferredSize(leftFrame.getMinimumSize());
 
         }

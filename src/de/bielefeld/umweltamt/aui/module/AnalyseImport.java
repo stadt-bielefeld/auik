@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
@@ -421,6 +422,7 @@ public class AnalyseImport extends AbstractModul {
     public AnalyseImport() {
         this.importer = new AnalyseImporter();
         this.table = new JTable(this.importer);
+        this.table.setGridColor(new Color(230, 230, 230));
 
         this.dateiButton = new JButton("Datei wählen");
         this.dateiLabel = new JLabel();

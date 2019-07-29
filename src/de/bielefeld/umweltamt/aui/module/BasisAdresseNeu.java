@@ -439,6 +439,7 @@ public class BasisAdresseNeu extends AbstractModul
 
             if (this.standorteTabelle == null) {
                 this.standorteTabelle = new JTable(this.standorteModel);
+                this.standorteTabelle.setGridColor(new Color(230, 230, 230));
 
                 this.standorteTabelle.getColumnModel().getColumn(0)
                         .setPreferredWidth(10);

@@ -1,5 +1,6 @@
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -193,6 +194,7 @@ class SielhautChooser extends OkCancelDialog {
     private JTable getErgebnisTabelle() {
         if (this.ergebnisTabelle == null) {
             this.ergebnisTabelle = new JTable();
+            this.ergebnisTabelle.setGridColor(new Color(230, 230, 230));
 
             Action submitAction = new AbstractAction("Auswählen") {
                 private static final long serialVersionUID = 5609569229635452436L;

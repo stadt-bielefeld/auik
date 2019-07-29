@@ -46,6 +46,8 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Color;
+
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
@@ -126,6 +128,7 @@ public class VawsKontrollenAuswertung extends AbstractQueryModul {
         JTable resultTable = getResultTable();
 
         resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+        resultTable.setGridColor(new Color(230, 230, 230));
 
         TableColumnModel model = resultTable.getColumnModel();
         model.getColumn(0).setPreferredWidth(a);

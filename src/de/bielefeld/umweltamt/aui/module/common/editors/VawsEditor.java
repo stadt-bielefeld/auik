@@ -59,6 +59,7 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Point;
@@ -468,6 +469,7 @@ public class VawsEditor extends AbstractBaseEditor {
         // Daten für die Anlagenchronologie-Tabelle:
         anlagenChronoModel = new VawsAnlagenChronoModel();
         anlagenChronoTabelle = new JTable(anlagenChronoModel);
+        anlagenChronoTabelle.setGridColor(new Color(230, 230, 230));
         anlagenChronoTabelle.getColumnModel().getColumn(0).setPreferredWidth(50);
         anlagenChronoTabelle.getColumnModel().getColumn(1).setPreferredWidth(250);
         anlagenChronoTabelle.getColumnModel().getColumn(2).setPreferredWidth(50);
@@ -616,6 +618,7 @@ public class VawsEditor extends AbstractBaseEditor {
         // Sachverständigenprüfung
         svPruefungModel = new VawsKontrollenModel();
         svPruefungTabelle = new JTable(svPruefungModel);
+        svPruefungTabelle.setGridColor(new Color(230, 230, 230));
         svPruefungTabelle.getColumnModel().getColumn(0).setPreferredWidth(50);
         svPruefungTabelle.getColumnModel().getColumn(1).setPreferredWidth(50);
         svPruefungTabelle.getColumnModel().getColumn(2).setPreferredWidth(200);
@@ -672,6 +675,7 @@ public class VawsEditor extends AbstractBaseEditor {
         // Verwaltungsverfahren
         verwVerfahrenModel = new VerwVerfahrenModel();
         verwVerfahrenTabelle = new JTable(verwVerfahrenModel);
+        verwVerfahrenTabelle.setGridColor(new Color(230, 230, 230));
         verwVerfahrenTabelle.getColumnModel().getColumn(0).setPreferredWidth(50);
         verwVerfahrenTabelle.getColumnModel().getColumn(1).setPreferredWidth(200);
         verwVerfahrenTabelle.getColumnModel().getColumn(2).setPreferredWidth(50);
@@ -708,6 +712,7 @@ public class VawsEditor extends AbstractBaseEditor {
         // Verwaltungsgebuehren
         verwGebuehrenModel = new VerwGebuehrenModel();
         verwGebuehrenTabelle = new JTable(verwGebuehrenModel);
+        verwGebuehrenTabelle.setGridColor(new Color(230, 230, 230));
         verwGebuehrenTabelle.getColumnModel().getColumn(0).setPreferredWidth(50);
         verwGebuehrenTabelle.getColumnModel().getColumn(1).setPreferredWidth(200);
         verwGebuehrenTabelle.getColumnModel().getColumn(2).setPreferredWidth(50);

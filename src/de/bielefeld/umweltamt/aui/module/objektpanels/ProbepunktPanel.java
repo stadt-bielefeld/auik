@@ -25,6 +25,7 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -159,7 +160,7 @@ public class ProbepunktPanel extends JPanel {
         eigenschaften.addComponent(getSachbearbeiterBox(), "SachbearbeiterIn:", true, true);
         eigenschaften.addComponent(getBrancheFeld(), "Branche:", true, true);
 
-        builder.setPreferedSize(650, 750);
+        builder.setMinimumSize(650, 750);
         builder.addSeparator("Fachdaten", true);
         builder.setAnchor(PanelBuilder.NORTHEAST);
         builder.addComponent(eigenschaften.getPanel(), true);
@@ -179,7 +180,6 @@ public class ProbepunktPanel extends JPanel {
         builder.setWeightY(0.3);
         builder.addComponent(objektverknuepfungScroller, true);
         builder.setWeight(0, 0);
-        builder.fillRow();
         builder.fillRow();
         builder.setInsets(0, 0, 0, 5);
         builder.addComponent(PanelBuilder.buildRightAlignedButtonToolbar(
@@ -442,6 +442,7 @@ public class ProbepunktPanel extends JPanel {
                 .setPreferredWidth(100);
             this.probenahmeTabelle.getColumnModel().getColumn(4)
                 .setPreferredWidth(100);
+            this.probenahmeTabelle.setGridColor(new Color(230, 230, 230));
             this.probenahmeTabelle
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             this.probenahmeTabelle.setColumnSelectionAllowed(false);
@@ -631,6 +632,7 @@ public class ProbepunktPanel extends JPanel {
                 .setPreferredWidth(100);
             this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
                 .setPreferredWidth(250);
+            this.objektverknuepfungTabelle.setGridColor(new Color(230, 230, 230));
 
             this.objektverknuepfungTabelle
                 .addMouseListener(new java.awt.event.MouseAdapter() {

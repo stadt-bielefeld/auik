@@ -49,6 +49,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
@@ -593,6 +594,7 @@ public class SielhautImport extends AbstractModul {
                 this.fileImporter = new FileImporter();
             }
             this.importTabelle = new JTable(this.fileImporter);
+            this.importTabelle.setGridColor(new Color(230, 230, 230));
             // Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
             this.importTabelle.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {

@@ -25,6 +25,7 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Point;
@@ -373,6 +374,7 @@ private static final long serialVersionUID = -4030805403749508467L;
             if (this.objektverknuepfungTabelle == null) {
                 this.objektverknuepfungTabelle = new JTable(
                     this.objektVerknuepfungModel);
+                    this.objektverknuepfungTabelle.setGridColor(new Color(230, 230, 230));
             } else {
                 this.objektverknuepfungTabelle
                     .setModel(this.objektVerknuepfungModel);

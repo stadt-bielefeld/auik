@@ -61,6 +61,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -1958,6 +1959,7 @@ class ParameterChooser extends OkCancelApplyDialog {
     private JTable getErgebnisTabelle() {
         if (this.ergebnisTabelle == null) {
             this.ergebnisTabelle = new SelectTable();
+            this.ergebnisTabelle.setGridColor(new Color(230, 230, 230));
 
             Action submitAction = new AbstractAction("Auswählen") {
                 private static final long serialVersionUID = -6645922378885851686L;

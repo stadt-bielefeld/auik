@@ -802,6 +802,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
             if (this.standorteTabelle == null) {
                 this.standorteTabelle = new JTable(this.standorteModel);
+                this.standorteTabelle.setGridColor(new Color(230, 230, 230));
 
                 this.standorteTabelle.getColumnModel().getColumn(0).setPreferredWidth(100);
                 this.standorteTabelle.getColumnModel().getColumn(1).setPreferredWidth(10);

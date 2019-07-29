@@ -61,6 +61,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
@@ -393,6 +394,7 @@ public class LaborProbeSuchen extends AbstractModul {
     private JTable getProbeTabelle() {
         if (this.probeTabelle == null) {
             this.probeTabelle = new JTable(this.probeModel);
+            this.probeTabelle.setGridColor(new Color(230, 230, 230));
 
             this.probeTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
             this.probeTabelle.getColumnModel().getColumn(0)

@@ -24,6 +24,8 @@
  */
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.awt.Font;
+
 import javax.swing.JTextArea;
 import javax.swing.text.AbstractDocument;
 
@@ -37,6 +39,8 @@ public class LimitedTextArea extends JTextArea {
 
     public LimitedTextArea(int maxLength) {
         this(maxLength, null);
+        Font font = new Font("Tahoma", Font.PLAIN, 11);
+        this.setFont(font);
     }
 
     public LimitedTextArea(int maxLength, String text) {
