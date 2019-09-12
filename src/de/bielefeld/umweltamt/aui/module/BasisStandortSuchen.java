@@ -1022,7 +1022,27 @@ public class BasisStandortSuchen extends AbstractModul
 				else if (i == 3)
 				{
 					// column.setMaxWidth(70);
-					column.setPreferredWidth(200);
+					column.setPreferredWidth(80);
+				}
+				else if (i == 4)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(80);
+				}
+				else if (i == 5)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(80);
+				}
+				else if (i == 6)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(80);
+				}
+				else if (i == 7)
+				{
+					// column.setMaxWidth(70);
+					column.setPreferredWidth(80);
 				}
 			}
 
