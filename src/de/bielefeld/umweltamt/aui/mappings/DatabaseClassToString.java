@@ -175,18 +175,8 @@ public class DatabaseClassToString {
      */
     public static String toStringForClass(Standort clazz) {
 	    String zusatz = "";
-	    
-	    //If all name fields are empty, the instance must be a Standort
-	    if(clazz.getAdresse().getBetrname() == null){
-	        return clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr();
-	    }
-	    //Else return a Betreiber string
-	    if (clazz.getAdresse().getBetrvorname() != null) {
-	        zusatz = ", " + clazz.getAdresse().getBetrvorname();
-	    } else if (clazz.getAdresse().getBetrnamezus() != null) {
-	        zusatz = ", " + clazz.getAdresse().getBetrnamezus();
-	    }        
-	    return clazz.getAdresse().getBetrname() + zusatz;
+	       
+	    return clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr();
 	}
 
 	/** @return Gemarkung.toGuiString() */
