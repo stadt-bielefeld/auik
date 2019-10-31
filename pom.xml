@@ -114,9 +114,19 @@
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
-      <artifactId>jersey-server</artifactId>
-      <version>${jersey.version}</version>
+	  <artifactId>jersey-server</artifactId>
+	  <version>${jersey.version}</version>
     </dependency>
+    <dependency>
+	  <groupId>javax.xml.bind</groupId>
+	  <artifactId>jaxb-api</artifactId>
+	  <version>2.4.0-b180830.0359</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.glassfish.jaxb</groupId>
+	  <artifactId>jaxb-runtime</artifactId>
+	  <version>2.4.0-b180830.0438</version>
+	</dependency>
     <dependency>
       <groupId>javax.persistence</groupId>
       <artifactId>persistence-api</artifactId>
@@ -132,20 +142,15 @@
       <artifactId>hk2-utils</artifactId>
       <version>2.5.0-b16</version>
     </dependency>
-    <dependency>
-      <groupId>javax.xml.bind</groupId>
-      <artifactId>jaxb-api</artifactId>
-	<version>2.2.7</version>
-    </dependency>
 	<dependency>
 		<groupId>com.sun.xml.bind</groupId>
 		<artifactId>jaxb-core</artifactId>
-		<version>2.2.11</version>
+		<version>2.3.0</version>
 	</dependency>
 	<dependency>
 		<groupId>com.sun.xml.bind</groupId>
 		<artifactId>jaxb-impl</artifactId>
-		<version>2.2.11</version>
+		<version>2.3.0</version>
 	</dependency>
 	<dependency>
 		<groupId>javax.activation</groupId>
@@ -237,40 +242,32 @@
       <artifactId>groovy</artifactId>
       <version>2.4.6</version>
     </dependency>
-    <!--
-    <dependency>
+    
+	<dependency>
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports</artifactId>
-      <version>6.2.2</version>
-    </dependency>
-    <dependency>
+      <version>6.10.0</version>
+	</dependency>
+	<dependency>
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports-fonts</artifactId>
-      <version>6.0.0</version>
+      <version>6.10.0</version>
 	</dependency>
-     -->
+    
     <!-- A repacked jasperreports jar file with necessary fonts included, workaround for font problems on Windows systems-->
+    <!--
     <dependency>
         <groupId>de.bielefeld.umweltamt.aui</groupId>
         <artifactId>jasperreports-auik-font-repack</artifactId>
         <version>1.0.0</version>
     </dependency>
+    -->
     <dependency>
       <groupId>org.jfree</groupId>
       <artifactId>jfreechart</artifactId>
       <version>1.0.19</version>
     </dependency> 
-    <!-- 
-	<dependency>
-      <groupId>org.hibernate.common</groupId>
-      <artifactId>hibernate-commons-annotations</artifactId>
-      <version>5.0.0.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>5.0.0.Final</version>
-    </dependency> -->
+
     <dependency>
       <groupId>org.hibernate.javax.persistence</groupId>
       <artifactId>hibernate-jpa-2.1-api</artifactId>
@@ -432,6 +429,16 @@
       <artifactId>commons-codec</artifactId>
       <version>1.10</version>
     </dependency>
+    <dependency>
+      <groupId>com.jgoodies</groupId>
+      <artifactId>jgoodies-looks</artifactId>
+      <version>2.7.0</version>
+	</dependency>
+	<dependency>
+      <groupId>com.jgoodies</groupId>
+      <artifactId>jgoodies-forms</artifactId>
+      <version>1.9.0</version>
+	</dependency>    
  </dependencies>
 
   <!-- jboss public repository-->
@@ -471,7 +478,7 @@
        </plugin>
 	   <plugin>
          <artifactId>maven-assembly-plugin</artifactId>
-         <version>2.5.5</version>
+         <version>3.1.1</version>
          <configuration>
            <descriptorRefs>
              <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -500,22 +507,7 @@
           <artifactId>maven-install-plugin</artifactId>
       	  <version>2.5.1</version>    	  
   		  <executions>
-      	  <execution>
-         	<id>install-jgoodies</id>
-            <goals>
-              <goal>install-file</goal>
-         	</goals>
-         	<phase>validate</phase>
-            <configuration>
-              <groupId>com.jgoodies</groupId>
-              <artifactId>uif_lite</artifactId>
-      	      <version>1.0</version>
-      	      <packaging>jar</packaging>
-      	      <file>${project.basedir}/lib/com.jgoodies.uif_lite.jar</file>
-      	      <generatePom>true</generatePom>
-    	    </configuration>
-      	  </execution>
-          <!-- Install local repacked jasperreports jar file-->
+      	  <!-- Install local repacked jasperreports jar file-->
           <execution>
             <id>install-fonts</id>
             <goals>
