@@ -88,7 +88,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -201,7 +201,7 @@ public class LaborProbeSuchen extends AbstractModul {
             builder.add(probeScroller, cc.xyw(1, 3, 5));
 
             this.panel = builder.getPanel();
-            this.panel.setBorder(Borders.DIALOG);
+            this.panel.setBorder(Paddings.DIALOG);
         }
         return this.panel;
     }

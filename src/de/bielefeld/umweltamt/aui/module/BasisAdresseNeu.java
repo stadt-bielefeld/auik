@@ -77,7 +77,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -444,7 +444,7 @@ public class BasisAdresseNeu extends AbstractModul
 			strassenBox.addActionListener(dialogListener);
 
 			panel = builder.getPanel();
-			panel.setBorder(Borders.DIALOG);
+			panel.setBorder(Paddings.DIALOG);
 		}
 		return panel;
 	}

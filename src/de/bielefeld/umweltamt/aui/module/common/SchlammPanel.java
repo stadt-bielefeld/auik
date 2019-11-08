@@ -72,7 +72,7 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
@@ -137,7 +137,7 @@ public class SchlammPanel extends JPanel {
         this.art = art;
         this.frame = frame;
 
-        setBorder(Borders.DIALOG);
+        setBorder(Paddings.DIALOG);
 
         probeModel = new ProbenahmenModel();
 

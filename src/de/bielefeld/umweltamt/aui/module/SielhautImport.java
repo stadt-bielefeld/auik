@@ -72,7 +72,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
@@ -479,7 +479,7 @@ public class SielhautImport extends AbstractModul {
             builder.append(getStepThreeLabel(), getImportButton());
 
             this.panel = builder.getPanel();
-            this.panel.setBorder(Borders.DIALOG);
+            this.panel.setBorder(Paddings.DIALOG);
         }
         return this.panel;
     }

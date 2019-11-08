@@ -96,7 +96,7 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 
@@ -763,7 +763,7 @@ public class VawsEditor extends AbstractBaseEditor {
         topBuilder.append(gefStufeBox, wgkBox);
 
         topPanel = topBuilder.getPanel();
-        topPanel.setBorder(Borders.DLU2);
+        topPanel.setBorder(Paddings.DLU2);
         // Panel bauen:
         JPanel panel = new JPanel(new BorderLayout());
 
@@ -1486,7 +1486,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
 
             datenVAWSAbscheiderTab = builder.getPanel();
-            datenVAWSAbscheiderTab.setBorder(Borders.DIALOG);
+            datenVAWSAbscheiderTab.setBorder(Paddings.DIALOG);
         }
         return datenVAWSAbscheiderTab;
     }
@@ -1539,7 +1539,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.nextLine();
 
             ausfuehrungVAWSAbscheiderTab = builder.getPanel();
-            ausfuehrungVAWSAbscheiderTab.setBorder(Borders.DIALOG);
+            ausfuehrungVAWSAbscheiderTab.setBorder(Paddings.DIALOG);
         }
         return ausfuehrungVAWSAbscheiderTab;
     }
@@ -1569,7 +1569,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.nextLine();
 
             schutzvorkehrungenVAWSAbscheiderTab = builder.getPanel();
-            schutzvorkehrungenVAWSAbscheiderTab.setBorder(Borders.DIALOG);
+            schutzvorkehrungenVAWSAbscheiderTab.setBorder(Paddings.DIALOG);
         }
         return schutzvorkehrungenVAWSAbscheiderTab;
     }
@@ -1626,7 +1626,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(this.tabellenSplit, 8);
 
             datenLageranlagenTab = builder.getPanel();
-            datenLageranlagenTab.setBorder(Borders.DIALOG);
+            datenLageranlagenTab.setBorder(Paddings.DIALOG);
         }
         return datenLageranlagenTab;
     }
@@ -1659,7 +1659,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(new JScrollPane(beschreibungAFeld), 7);
 
             schutzLageranlagenTab = builder.getPanel();
-            schutzLageranlagenTab.setBorder(Borders.DIALOG);
+            schutzLageranlagenTab.setBorder(Paddings.DIALOG);
         }
         return schutzLageranlagenTab;
     }
@@ -1682,7 +1682,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(new JScrollPane(beschreibungRFeld), 5);
 
             leitungenLageranlagenTab = builder.getPanel();
-            leitungenLageranlagenTab.setBorder(Borders.DIALOG);
+            leitungenLageranlagenTab.setBorder(Paddings.DIALOG);
         }
         return leitungenLageranlagenTab;
     }
@@ -1738,7 +1738,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(this.tabellenSplit, 8);
 
             datenRohrleitungenTab = builder.getPanel();
-            datenRohrleitungenTab.setBorder(Borders.DIALOG);
+            datenRohrleitungenTab.setBorder(Paddings.DIALOG);
         }
         return datenRohrleitungenTab;
     }
@@ -1797,7 +1797,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(this.tabellenSplit, 7);
 
             datenAbfuellflaechenTab = builder.getPanel();
-            datenAbfuellflaechenTab.setBorder(Borders.DIALOG);
+            datenAbfuellflaechenTab.setBorder(Paddings.DIALOG);
         }
         return datenAbfuellflaechenTab;
     }
@@ -1853,7 +1853,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(bemerkungScroller, 7);
 
             datenAbfuellflaechenJgsTab = builder.getPanel();
-            datenAbfuellflaechenJgsTab.setBorder(Borders.DIALOG);
+            datenAbfuellflaechenJgsTab.setBorder(Paddings.DIALOG);
         }
         return datenAbfuellflaechenJgsTab;
     }
@@ -1904,7 +1904,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(chronoScroller, 7);
 
             datenJgsTab = builder.getPanel();
-            datenJgsTab.setBorder(Borders.DIALOG);
+            datenJgsTab.setBorder(Paddings.DIALOG);
         }
         return datenJgsTab;
     }
@@ -1948,7 +1948,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(new JScrollPane(beschrAblNiederschlArea),7);
 
             ausfuehrungAbfuellflaechenTab = builder.getPanel();
-            ausfuehrungAbfuellflaechenTab.setBorder(Borders.DIALOG);
+            ausfuehrungAbfuellflaechenTab.setBorder(Paddings.DIALOG);
         }
         return ausfuehrungAbfuellflaechenTab;
     }
@@ -1964,7 +1964,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(new JScrollPane(svPruefungTabelle));//,7);
 
             svPruefungTab = builder.getPanel();
-            svPruefungTab.setBorder(Borders.DIALOG);
+            svPruefungTab.setBorder(Paddings.DIALOG);
         }
         return svPruefungTab;
     }
@@ -1980,7 +1980,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(new JScrollPane(verwVerfahrenTabelle));//,7);
 
             verwVerfahrenTab = builder.getPanel();
-            verwVerfahrenTab.setBorder(Borders.DIALOG);
+            verwVerfahrenTab.setBorder(Paddings.DIALOG);
         }
         return verwVerfahrenTab;
     }
@@ -1996,7 +1996,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(new JScrollPane(verwGebuehrenTabelle));//,7);
 
             verwGebuehrenTab = builder.getPanel();
-            verwGebuehrenTab.setBorder(Borders.DIALOG);
+            verwGebuehrenTab.setBorder(Paddings.DIALOG);
         }
         return verwGebuehrenTab;
     }

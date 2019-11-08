@@ -61,7 +61,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
@@ -106,10 +106,10 @@ public abstract class SimpleDialog extends JDialog {
         }
 
         JPanel tmp = new JPanel(new BorderLayout());
-        tmp.setBorder(Borders.DIALOG);
+        tmp.setBorder(Paddings.DIALOG);
 
         buttonBar = createButtonBar();
-        buttonBar.setBorder(Borders.BUTTON_BAR_PAD);
+        buttonBar.setBorder(Paddings.BUTTON_BAR_PAD);
 
         JComponent content = buildContentArea();
         tmp.add(content, BorderLayout.CENTER);

@@ -72,7 +72,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
@@ -454,7 +454,7 @@ public class ProbepktAuswPanel extends JPanel {
             JComponent buttonBar = ComponentFactory.buildOKCancelApplyBar(
                 this.speichernButton, this.printButton, this.abbrechenButton);
             tmp.add(buttonBar, BorderLayout.SOUTH);
-            tmp.setBorder(Borders.TABBED_DIALOG);
+            tmp.setBorder(Paddings.TABBED_DIALOG);
 
             this.setContentPane(tmp);
             this.pack();
@@ -481,7 +481,7 @@ public class ProbepktAuswPanel extends JPanel {
             }
 
             this.chartPanel = new ChartPanel(chart, false);
-            this.chartPanel.setBorder(Borders.DIALOG);
+            this.chartPanel.setBorder(Paddings.DIALOG);
 
             return this.chartPanel;
         }
@@ -530,7 +530,7 @@ public class ProbepktAuswPanel extends JPanel {
             JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            tabellenScroller.setBorder(Borders.DIALOG);
+            tabellenScroller.setBorder(Paddings.DIALOG);
 
             return tabellenScroller;
         }

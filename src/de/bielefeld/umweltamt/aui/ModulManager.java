@@ -66,7 +66,7 @@ import javax.swing.JToggleButton;
 
 
 
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.l2fprod.common.swing.JButtonBar;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -90,7 +90,7 @@ public class ModulManager {
             this.module = new ArrayList<Modul>();
             this.buttonBar = new JButtonBar(JButtonBar.VERTICAL);
 
-            buttonBar.setBorder(Borders.EMPTY);
+            buttonBar.setBorder(Paddings.EMPTY);
             buttonBar.setBackground(frame.getLeftFrame().getBackground());
         }
 

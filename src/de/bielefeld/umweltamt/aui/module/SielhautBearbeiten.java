@@ -142,7 +142,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -825,7 +825,7 @@ public class SielhautBearbeiten extends AbstractModul {
             builder.add(getKartenRtPanel(), cc.xyw(1, 9, 5, "f, f"));
 
             this.panel = builder.getPanel();
-            this.panel.setBorder(Borders.DIALOG);
+            this.panel.setBorder(Paddings.DIALOG);
         }
 
         return this.panel;
@@ -1011,7 +1011,7 @@ public class SielhautBearbeiten extends AbstractModul {
             // builder.getPanel().setBackground(Color.WHITE);
             // builder.getPanel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
             this.datenPanel = builder.getPanel();
-            this.datenPanel.setBorder(Borders.DIALOG);
+            this.datenPanel.setBorder(Paddings.DIALOG);
         }
         return this.datenPanel;
     }
@@ -1115,7 +1115,7 @@ public class SielhautBearbeiten extends AbstractModul {
             builder.append(getAuswertungPanel());
 
             JPanel probenPanel = builder.getPanel();
-            probenPanel.setBorder(Borders.DIALOG);
+            probenPanel.setBorder(Paddings.DIALOG);
             this.probenRtPanel = new RetractablePanel(DefaultComponentFactory
                 .getInstance().createSeparator("Probenahmen"), probenPanel,
                 false, null) {
@@ -1196,7 +1196,7 @@ public class SielhautBearbeiten extends AbstractModul {
             builder.add(getSubmitButton(), cc.xy(27, 1));
 
             this.auswertungPanel = builder.getPanel();
-            this.auswertungPanel.setBorder(Borders.DIALOG);
+            this.auswertungPanel.setBorder(Paddings.DIALOG);
         }
         return this.auswertungPanel;
     }
@@ -1479,7 +1479,7 @@ public class SielhautBearbeiten extends AbstractModul {
             JComponent buttonBar = ComponentFactory.buildOKCancelBar(
                 this.speichernButton, this.abbrechenButton);
             tmp.add(buttonBar, BorderLayout.SOUTH);
-            tmp.setBorder(Borders.TABBED_DIALOG);
+            tmp.setBorder(Paddings.TABBED_DIALOG);
 
             this.setContentPane(tmp);
             this.pack();
@@ -1506,7 +1506,7 @@ public class SielhautBearbeiten extends AbstractModul {
             }
 
             this.chartPanel = new ChartPanel(chart, false);
-            this.chartPanel.setBorder(Borders.DIALOG);
+            this.chartPanel.setBorder(Paddings.DIALOG);
 
             return this.chartPanel;
         }
@@ -1555,7 +1555,7 @@ public class SielhautBearbeiten extends AbstractModul {
             JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            tabellenScroller.setBorder(Borders.DIALOG);
+            tabellenScroller.setBorder(Paddings.DIALOG);
 
             return tabellenScroller;
         }

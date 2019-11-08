@@ -118,7 +118,7 @@ import javax.swing.UIManager;
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.looks.HeaderStyle;
@@ -1086,7 +1086,7 @@ public class HauptFrame extends JFrame {
             builder.add(passwortFeld, cc.xy(3, 5));
             builder.add(loginButton, cc.xy(5, 5));
             JPanel panel = builder.getPanel();
-            panel.setBorder(Borders.DIALOG);
+            panel.setBorder(Paddings.DIALOG);
             this.setContentPane(panel);
             this.pack();
 

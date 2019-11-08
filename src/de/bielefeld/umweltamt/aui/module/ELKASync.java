@@ -62,7 +62,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -671,7 +671,7 @@ public class ELKASync extends AbstractModul {
             builder.add(progress, cc.xy(7, 5));
             builder.add(this.progressCounter, cc.xy(9, 5));
             this.panel = builder.getPanel();
-            this.panel.setBorder(Borders.DIALOG);
+            this.panel.setBorder(Paddings.DIALOG);
         }
         return this.panel;
     }

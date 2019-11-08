@@ -61,7 +61,7 @@ import javax.swing.table.TableColumn;
 import org.hibernate.criterion.MatchMode;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -186,7 +186,7 @@ public class EditorStrassen extends AbstractModul
 			builder.add(getTableScroller(), cc.xyw(1, 3, 3));
 
 			panel = builder.getPanel();
-			panel.setBorder(Borders.DIALOG);
+			panel.setBorder(Paddings.DIALOG);
 		}
 
 		return panel;

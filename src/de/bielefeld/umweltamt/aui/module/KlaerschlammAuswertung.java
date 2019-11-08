@@ -125,7 +125,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
@@ -452,7 +452,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			JComponent buttonBar = ComponentFactory.buildOKCancelBar(
 					this.speichernButton, this.abbrechenButton);
 			tmp.add(buttonBar, BorderLayout.SOUTH);
-			tmp.setBorder(Borders.TABBED_DIALOG);
+			tmp.setBorder(Paddings.TABBED_DIALOG);
 
 			this.setContentPane(tmp);
 			this.pack();
@@ -484,7 +484,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			}
 
 			this.chartPanel = new ChartPanel(chart, false);
-			this.chartPanel.setBorder(Borders.DIALOG);
+			this.chartPanel.setBorder(Paddings.DIALOG);
 
 			return this.chartPanel;
 		}
@@ -541,7 +541,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
 					JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 					JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-			tabellenScroller.setBorder(Borders.DIALOG);
+			tabellenScroller.setBorder(Paddings.DIALOG);
 			/*
 			 * FormLayout layout = new FormLayout(
 			 * "pref:grow",
@@ -791,7 +791,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			builder.add(buttonPanel, cc.xyw(1, 13, 9, "fill, fill"));
 
 			this.panel = builder.getPanel();
-			this.panel.setBorder(Borders.DIALOG);
+			this.panel.setBorder(Paddings.DIALOG);
 		}
 		return this.panel;
 	}

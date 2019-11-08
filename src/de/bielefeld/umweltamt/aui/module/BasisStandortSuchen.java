@@ -117,7 +117,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
@@ -308,7 +308,7 @@ public class BasisStandortSuchen extends AbstractModul
 			builder.add(restrictPanel, cc.xyw(1, 5, 13));
 
 			this.panel = builder.getPanel();
-			this.panel.setBorder(Borders.DIALOG);
+			this.panel.setBorder(Paddings.DIALOG);
 		}
 		return this.panel;
 	}

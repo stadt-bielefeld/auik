@@ -37,7 +37,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -165,7 +165,7 @@ public class CredentialsDialog extends JDialog {
         builder.add(passwortFeld, cc.xy(3, 7));
         builder.add(loginButton, cc.xy(1, 9));
         JPanel panel = builder.getPanel();
-        panel.setBorder(Borders.DIALOG);
+        panel.setBorder(Paddings.DIALOG);
         this.setContentPane(panel);
         this.pack();
 

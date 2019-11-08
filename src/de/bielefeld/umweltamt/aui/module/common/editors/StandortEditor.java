@@ -46,7 +46,7 @@ import javax.swing.JTextField;
 import org.hibernate.criterion.MatchMode;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -305,7 +305,7 @@ public class StandortEditor extends AbstractBaseEditor
 		});
 
 		JPanel panel = builder.getPanel();
-		panel.setBorder(Borders.DIALOG);
+		panel.setBorder(Paddings.DIALOG);
 		return panel;
 	}
 
