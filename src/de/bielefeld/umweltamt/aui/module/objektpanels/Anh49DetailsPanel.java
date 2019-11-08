@@ -130,7 +130,7 @@ import javax.swing.table.TableColumn;
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.uif_lite.component.Factory;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -425,7 +425,7 @@ public class Anh49DetailsPanel extends JPanel {
         ta.addComp(getAbscheiderTabelle());
         ta.addComp(getOrtsterminTabelle());
 
-        JSplitPane tabellenSplit = Factory.createStrippedSplitPane(
+        JSplitPane tabellenSplit = ComponentFactory.createStrippedSplitPane(
             JSplitPane.VERTICAL_SPLIT, abscheiderScroller, ortsterminScroller,
             0.5);
 
@@ -433,7 +433,6 @@ public class Anh49DetailsPanel extends JPanel {
             "100dlu:grow, 3dlu, pref"); // Zeilen
 
         PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
 
         builder.add(tabellenSplit, cc.xyw(1, 1, 2));

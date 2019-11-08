@@ -96,7 +96,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -109,6 +108,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -204,7 +204,6 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 "pref"); // Buttons
 
         PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
 
         /* Left column */
@@ -248,7 +247,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xyw(labelCol,
             row, cols));
         row += 2;
-        builder.add(ButtonBarFactory.buildRightAlignedBar(
+        builder.add(ComponentFactory.buildRightAlignedBar(
             getSelectObjektButton(), getSaveAnh49Button()), cc.xyw(labelCol,
             row, cols));
 

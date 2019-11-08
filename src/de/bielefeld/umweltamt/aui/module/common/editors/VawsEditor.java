@@ -98,7 +98,7 @@ import javax.swing.ScrollPaneConstants;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.uif_lite.component.Factory;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
@@ -750,10 +750,9 @@ public class VawsEditor extends AbstractBaseEditor {
                 "p:g, 3dlu:g, p:g, 3dlu:g, p:g, 3dlu:g, p:g, 3dlu:g, p:g"
         );
         DefaultFormBuilder topBuilder = new DefaultFormBuilder(topLayout);
-        topBuilder.setBorder(Borders.DLU2_BORDER);
 
         topBuilder.append(header, 9);
-//        topBuilder.append(ButtonBarFactory.buildRightAlignedBar(reportButton), 7);
+//        topBuilder.append(ComponentFactory.buildRightAlignedBar(reportButton), 7);
 //        topBuilder.append(subHeader, 9);
         /*hnrLabel =*/ topBuilder.append("Bezeichnung / Zuordnung:");
         topBuilder.append("Flüssigkeit:");
@@ -764,7 +763,7 @@ public class VawsEditor extends AbstractBaseEditor {
         topBuilder.append(gefStufeBox, wgkBox);
 
         topPanel = topBuilder.getPanel();
-
+        topPanel.setBorder(Borders.DLU2);
         // Panel bauen:
         JPanel panel = new JPanel(new BorderLayout());
 
@@ -1438,7 +1437,7 @@ public class VawsEditor extends AbstractBaseEditor {
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         	
-			this.tabellenSplit = Factory.createStrippedSplitPane(
+			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
 					chronoScroller, 0.3);
         	
@@ -1448,7 +1447,6 @@ public class VawsEditor extends AbstractBaseEditor {
             );
             layout.setColumnGroups(new int[][]{{1,5}, {3,7}});
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.appendSeparator("Stammdaten");
             builder.append("Baujahr:", baujahrFeld);
@@ -1488,6 +1486,7 @@ public class VawsEditor extends AbstractBaseEditor {
 
 
             datenVAWSAbscheiderTab = builder.getPanel();
+            datenVAWSAbscheiderTab.setBorder(Borders.DIALOG);
         }
         return datenVAWSAbscheiderTab;
     }
@@ -1499,8 +1498,6 @@ public class VawsEditor extends AbstractBaseEditor {
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"
             );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
 
             builder.appendSeparator("Schlammfang");
             builder.append("Hersteller:", schlammHerstField);
@@ -1542,6 +1539,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.nextLine();
 
             ausfuehrungVAWSAbscheiderTab = builder.getPanel();
+            ausfuehrungVAWSAbscheiderTab.setBorder(Borders.DIALOG);
         }
         return ausfuehrungVAWSAbscheiderTab;
     }
@@ -1552,7 +1550,6 @@ public class VawsEditor extends AbstractBaseEditor {
             FormLayout layout = new FormLayout("p:g");
             //layout.setColumnGroups(new int[][]{{1}});
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.appendSeparator("Stammdaten");
             builder.append(ueberCheck);
@@ -1572,6 +1569,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.nextLine();
 
             schutzvorkehrungenVAWSAbscheiderTab = builder.getPanel();
+            schutzvorkehrungenVAWSAbscheiderTab.setBorder(Borders.DIALOG);
         }
         return schutzvorkehrungenVAWSAbscheiderTab;
     }
@@ -1588,7 +1586,7 @@ public class VawsEditor extends AbstractBaseEditor {
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         	
-			this.tabellenSplit = Factory.createStrippedSplitPane(
+			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
 					chronoScroller, 0.3);
         	
@@ -1598,7 +1596,6 @@ public class VawsEditor extends AbstractBaseEditor {
             );
             layout.setColumnGroups(new int[][]{{1,5}, {3,7}});
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.appendSeparator("Stammdaten");
             builder.append("Baujahr:", baujahrFeld);
@@ -1627,9 +1624,9 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.nextLine(2);
 
             builder.append(this.tabellenSplit, 8);
-            
 
             datenLageranlagenTab = builder.getPanel();
+            datenLageranlagenTab.setBorder(Borders.DIALOG);
         }
         return datenLageranlagenTab;
     }
@@ -1639,7 +1636,6 @@ public class VawsEditor extends AbstractBaseEditor {
             FormLayout layout = new FormLayout("p, 3dlu:g, p, 3dlu:g, p, 3dlu:g, p");
             layout.setColumnGroups(new int[][]{{1,3,5,7}});
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.append(doppelWandigCheck, leckAnzeigeCheck);
             builder.append(leckSchutzAuskleidungCheck, schutzSensorCheck);
@@ -1663,6 +1659,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(new JScrollPane(beschreibungAFeld), 7);
 
             schutzLageranlagenTab = builder.getPanel();
+            schutzLageranlagenTab.setBorder(Borders.DIALOG);
         }
         return schutzLageranlagenTab;
     }
@@ -1672,7 +1669,6 @@ public class VawsEditor extends AbstractBaseEditor {
             FormLayout layout = new FormLayout("p, 3dlu:g, p, 3dlu:g, p");
             layout.setColumnGroups(new int[][]{{1,3,5}});
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.append(oberIrdischCheck, ausKupferCheck, saugLeitungCheck);
             builder.append(unterIrdischCheck, ausStahlCheck, rohrKathSchCheck);
@@ -1686,6 +1682,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(new JScrollPane(beschreibungRFeld), 5);
 
             leitungenLageranlagenTab = builder.getPanel();
+            leitungenLageranlagenTab.setBorder(Borders.DIALOG);
         }
         return leitungenLageranlagenTab;
     }
@@ -1702,7 +1699,7 @@ public class VawsEditor extends AbstractBaseEditor {
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         	
-			this.tabellenSplit = Factory.createStrippedSplitPane(
+			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
 					chronoScroller, 0.3);
         	
@@ -1711,7 +1708,6 @@ public class VawsEditor extends AbstractBaseEditor {
                     "r:p, 3dlu, p, 10dlu, r:p, 3dlu, p, 0:g"
             );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.appendSeparator("Stammdaten");
             builder.append("Baujahr:", baujahrFeld);
@@ -1740,10 +1736,9 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.nextLine(2);
 
             builder.append(this.tabellenSplit, 8);
-            
-
 
             datenRohrleitungenTab = builder.getPanel();
+            datenRohrleitungenTab.setBorder(Borders.DIALOG);
         }
         return datenRohrleitungenTab;
     }
@@ -1760,7 +1755,7 @@ public class VawsEditor extends AbstractBaseEditor {
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         	
-			this.tabellenSplit = Factory.createStrippedSplitPane(
+			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
 					chronoScroller, 0.3);
         	
@@ -1770,7 +1765,6 @@ public class VawsEditor extends AbstractBaseEditor {
             );
             layout.setColumnGroups(new int[][]{{1,5},{3,7}});
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.appendSeparator("Stammdaten");
             builder.append("Baujahr:", baujahrFeld);
@@ -1801,10 +1795,9 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.nextLine(2);
 
             builder.append(this.tabellenSplit, 7);
-            
-
 
             datenAbfuellflaechenTab = builder.getPanel();
+            datenAbfuellflaechenTab.setBorder(Borders.DIALOG);
         }
         return datenAbfuellflaechenTab;
     }
@@ -1824,8 +1817,6 @@ public class VawsEditor extends AbstractBaseEditor {
             );
             layout.setColumnGroups(new int[][]{{1,5},{3,7}});
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
 
             builder.appendSeparator("Ausführung");
 
@@ -1861,8 +1852,8 @@ public class VawsEditor extends AbstractBaseEditor {
 
             builder.append(bemerkungScroller, 7);
 
-
             datenAbfuellflaechenJgsTab = builder.getPanel();
+            datenAbfuellflaechenJgsTab.setBorder(Borders.DIALOG);
         }
         return datenAbfuellflaechenJgsTab;
     }
@@ -1881,7 +1872,6 @@ public class VawsEditor extends AbstractBaseEditor {
             );
             layout.setColumnGroups(new int[][]{{1,5},{3,7}});
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.appendSeparator("Stammdaten");
             builder.append("Baujahr:", baujahrFeld);
@@ -1912,10 +1902,9 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.nextLine(2);
 
             builder.append(chronoScroller, 7);
-            
-
 
             datenJgsTab = builder.getPanel();
+            datenJgsTab.setBorder(Borders.DIALOG);
         }
         return datenJgsTab;
     }
@@ -1927,7 +1916,6 @@ public class VawsEditor extends AbstractBaseEditor {
             );
             layout.setColumnGroups(new int[][]{{1,5},{3,7}});
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.appendSeparator("Daten");
             builder.append("Bodenflächenausführung:", bodenflaechenAusfBox);
@@ -1960,6 +1948,7 @@ public class VawsEditor extends AbstractBaseEditor {
             builder.append(new JScrollPane(beschrAblNiederschlArea),7);
 
             ausfuehrungAbfuellflaechenTab = builder.getPanel();
+            ausfuehrungAbfuellflaechenTab.setBorder(Borders.DIALOG);
         }
         return ausfuehrungAbfuellflaechenTab;
     }
@@ -1970,12 +1959,12 @@ public class VawsEditor extends AbstractBaseEditor {
                     "f:p:g"
             );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.appendRow("fill:25dlu:grow");
             builder.append(new JScrollPane(svPruefungTabelle));//,7);
 
             svPruefungTab = builder.getPanel();
+            svPruefungTab.setBorder(Borders.DIALOG);
         }
         return svPruefungTab;
     }
@@ -1986,12 +1975,12 @@ public class VawsEditor extends AbstractBaseEditor {
                     "f:p:g"
             );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.appendRow("fill:25dlu:grow");
             builder.append(new JScrollPane(verwVerfahrenTabelle));//,7);
 
             verwVerfahrenTab = builder.getPanel();
+            verwVerfahrenTab.setBorder(Borders.DIALOG);
         }
         return verwVerfahrenTab;
     }
@@ -2002,12 +1991,12 @@ public class VawsEditor extends AbstractBaseEditor {
                     "f:p:g"
             );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.appendRow("fill:25dlu:grow");
             builder.append(new JScrollPane(verwGebuehrenTabelle));//,7);
 
             verwGebuehrenTab = builder.getPanel();
+            verwGebuehrenTab.setBorder(Borders.DIALOG);
         }
         return verwGebuehrenTab;
     }

@@ -40,6 +40,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
@@ -506,8 +507,6 @@ public class AnalyseImport extends AbstractModul {
         FormLayout layout = new FormLayout("40px,5dlu,65dlu,5dlu,175dlu:g", "");
         DefaultFormBuilder b = new DefaultFormBuilder(layout);
 
-        b.setDefaultDialogBorder();
-
         b.append(getParseLabel(), getDateiButton(), getDateiLabel());
         b.appendRelatedComponentsGapRow();
         b.appendRow("f:50dlu:g");
@@ -526,6 +525,7 @@ public class AnalyseImport extends AbstractModul {
         b.append(getImportLabel(), getImportButton());
 
         this.panel = b.getPanel();
+        this.panel.setBorder(Borders.DIALOG);
 
         return this.panel;
     }

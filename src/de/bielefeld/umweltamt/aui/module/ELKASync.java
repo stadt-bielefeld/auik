@@ -62,6 +62,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -654,7 +655,6 @@ public class ELKASync extends AbstractModul {
                 "pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu:grow(1.0)",
                 "pref, 3dlu, 150dlu:grow(2.0), 3dlu, pref");
             PanelBuilder builder = new PanelBuilder(layout);
-            builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
             JScrollPane dbScroller = new JScrollPane(this.dbTable,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -671,6 +671,7 @@ public class ELKASync extends AbstractModul {
             builder.add(progress, cc.xy(7, 5));
             builder.add(this.progressCounter, cc.xy(9, 5));
             this.panel = builder.getPanel();
+            this.panel.setBorder(Borders.DIALOG);
         }
         return this.panel;
     }

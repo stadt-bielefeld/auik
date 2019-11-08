@@ -33,11 +33,6 @@
       <version>1.6.1</version>
     </dependency>
     <dependency>
-      <groupId>jgoodies</groupId>
-      <artifactId>forms</artifactId>
-      <version>1.0.5</version>
-    </dependency>
-    <dependency>
       <groupId>com.toedter</groupId>
       <artifactId>jcalendar</artifactId>
       <version>1.2.2</version>
@@ -76,11 +71,6 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
-    </dependency>
-    <dependency>
-      <groupId>jgoodies</groupId>
-      <artifactId>looks</artifactId>
-      <version>1.2.2</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
@@ -242,7 +232,7 @@
       <artifactId>groovy</artifactId>
       <version>2.4.6</version>
     </dependency>
-    
+
 	<dependency>
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports</artifactId>
@@ -253,7 +243,7 @@
       <artifactId>jasperreports-fonts</artifactId>
       <version>6.10.0</version>
 	</dependency>
-    
+
     <!-- A repacked jasperreports jar file with necessary fonts included, workaround for font problems on Windows systems-->
     <!--
     <dependency>
@@ -266,7 +256,7 @@
       <groupId>org.jfree</groupId>
       <artifactId>jfreechart</artifactId>
       <version>1.0.19</version>
-    </dependency> 
+    </dependency>
 
     <dependency>
       <groupId>org.hibernate.javax.persistence</groupId>
@@ -415,11 +405,6 @@
       <version>1.1-rev-1</version>
     </dependency>
     <dependency>
-      <groupId>com.jgoodies</groupId>
-      <artifactId>uif_lite</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
       <groupId>com.l2fprod.common</groupId>
       <artifactId>l2fprod-common-buttonbar</artifactId>
       <version>6.9.1</version>
@@ -438,7 +423,7 @@
       <groupId>com.jgoodies</groupId>
       <artifactId>jgoodies-forms</artifactId>
       <version>1.9.0</version>
-	</dependency>    
+	</dependency>
  </dependencies>
 
   <!-- jboss public repository-->
@@ -448,81 +433,89 @@
       <name>JBoss.org Maven repository</name>
       <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
     </repository>
-  </repositories>  
+  </repositories>
 
   <build>
     <sourceDirectory>src</sourceDirectory>
-	<resources>
-	  <resource>
-	    <directory>src</directory>
-		<excludes>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <excludes>
           <exclude>**/*.java</exclude>
-		</excludes>
-	  </resource>
-      <!-- If needed: include log4j config -->
-	  <resource>
-		<directory>src/de/bielefeld/umweltamt/aui/resources/config/</directory>
-	    <includes>
-		  <include>log4j2.xml</include>
-		</includes>
-	  </resource>
-     </resources>
-     <plugins>
-       <plugin>
-         <artifactId>maven-compiler-plugin</artifactId>
-         <version>3.1</version>
-         <configuration>
-		   <source>1.6</source>
-           <target>1.6</target>
-         </configuration>
-       </plugin>
-	   <plugin>
-         <artifactId>maven-assembly-plugin</artifactId>
-         <version>3.1.1</version>
-         <configuration>
-           <descriptorRefs>
-             <descriptorRef>jar-with-dependencies</descriptorRef>
-           </descriptorRefs>
-           <archive>
-             <manifest>
-               <mainClass>de.bielefeld.umweltamt.aui.AUIKataster</mainClass>
-             </manifest>
-           </archive>
-         </configuration>
-         <executions>
-           <execution>
-             <id>make-assembly</id>
-             <phase>package</phase>
-             <goals>
-               <goal>single</goal>
-             </goals>
-           </execution>
-         </executions>
+        </excludes>
+      </resource>
+        <!-- If needed: include log4j config -->
+      <resource>
+        <directory>src/de/bielefeld/umweltamt/aui/resources/config/</directory>
+        <includes>
+          <include>log4j2.xml</include>
+        </includes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <configuration>
+          <mainClass>de.bielefeld.umweltamt.aui.AUIKataster</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+	    <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>de.bielefeld.umweltamt.aui.AUIKataster</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
 	  <!--install local jars via install plugin,
 		  use "mvn validate" before compiling -->
 	  <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-      	  <version>2.5.1</version>    	  
-  		  <executions>
-      	  <!-- Install local repacked jasperreports jar file-->
-          <execution>
-            <id>install-fonts</id>
-            <goals>
-              <goal>install-file</goal>
-            </goals>
-            <phase>validate</phase>
-            <configuration>
-              <groupId>de.bielefeld.umweltamt.aui</groupId>
-              <artifactId>jasperreports-auik-font-repack</artifactId>
-              <version>1.0.0</version>
-      	      <packaging>jar</packaging>
-      	      <file>${project.basedir}/lib/jasperreports-auik-font-repack.jar</file>
-      	      <generatePom>true</generatePom>
-    	    </configuration>
-      	  </execution>          
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-install-plugin</artifactId>
+      <version>2.5.1</version>
+      <executions>
+        <!-- Install local repacked jasperreports jar file-->
+        <execution>
+          <id>install-fonts</id>
+          <goals>
+            <goal>install-file</goal>
+          </goals>
+          <phase>validate</phase>
+          <configuration>
+            <groupId>de.bielefeld.umweltamt.aui</groupId>
+            <artifactId>jasperreports-auik-font-repack</artifactId>
+            <version>1.0.0</version>
+            <packaging>jar</packaging>
+            <file>${project.basedir}/lib/jasperreports-auik-font-repack.jar</file>
+            <generatePom>true</generatePom>
+        </configuration>
+        </execution>
    		</executions>
 	  </plugin>
 	  <plugin>
@@ -549,13 +542,13 @@
 				<taskdef name="hibernatetool"
                   classname="org.hibernate.tool.ant.HibernateToolTask"
                 	  classpathref="hibernatetool.path" />
-                
+
                 <hibernatetool destdir="src">
                   <jdbcconfiguration
                     propertyfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.properties"
                     revengfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.reveng.xml">
                   </jdbcconfiguration>
-                  <hbm2hbmxml /> 
+                  <hbm2hbmxml />
                   <hbm2cfgxml destdir="src/de/bielefeld/umweltamt/aui/resources/config/generated" />
 				  <hbm2java />
                 </hibernatetool>
@@ -585,8 +578,7 @@
               <goal>run</goal>
             </goals>
           </execution>
-          
-		</executions>		
+        </executions>
       </plugin>
     </plugins>
      <pluginManagement>

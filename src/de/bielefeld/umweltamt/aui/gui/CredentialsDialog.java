@@ -32,10 +32,12 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -152,7 +154,6 @@ public class CredentialsDialog extends JDialog {
         layout.setRowGroups(new int[][] {{3, 5}});
 
         PanelBuilder builder = new PanelBuilder(layout);
-        builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
 
         builder.add(textLabel, cc.xyw(1, 1, 5));
@@ -163,8 +164,9 @@ public class CredentialsDialog extends JDialog {
         builder.addLabel("Passwort:", cc.xy(1, 7));
         builder.add(passwortFeld, cc.xy(3, 7));
         builder.add(loginButton, cc.xy(1, 9));
-
-        this.setContentPane(builder.getPanel());
+        JPanel panel = builder.getPanel();
+        panel.setBorder(Borders.DIALOG);
+        this.setContentPane(panel);
         this.pack();
 
         /* Set the focus to the password field */

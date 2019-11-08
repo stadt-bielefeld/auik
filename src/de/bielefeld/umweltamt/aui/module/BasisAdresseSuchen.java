@@ -81,9 +81,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.uif_lite.component.Factory;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -220,7 +221,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             ta.addComp(getBetreiberTabelle());
             ta.addComp(getObjektTabelle());
 
-            this.tabellenSplit = Factory.createStrippedSplitPane(
+            this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
                 JSplitPane.VERTICAL_SPLIT, betreiberScroller, objektScroller,
                 0.7);
 
@@ -229,7 +230,6 @@ public class BasisAdresseSuchen extends AbstractModul {
 					"pref, 3dlu, pref, 3dlu, 150dlu:grow"); // zeilen
 
             PanelBuilder builder = new PanelBuilder(layout);
-            builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
             builder.add(getSuchBox(), cc.xy(1, 1));
@@ -246,6 +246,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             builder.add(this.tabellenSplit, cc.xyw(1, 5, 15));
 
             this.panel = builder.getPanel();
+            this.panel.setBorder(Borders.DIALOG);
         }
         return this.panel;
     }

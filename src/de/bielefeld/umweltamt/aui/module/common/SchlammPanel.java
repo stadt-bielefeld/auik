@@ -137,7 +137,7 @@ public class SchlammPanel extends JPanel {
         this.art = art;
         this.frame = frame;
 
-        setBorder(Borders.DIALOG_BORDER);
+        setBorder(Borders.DIALOG);
 
         probeModel = new ProbenahmenModel();
 

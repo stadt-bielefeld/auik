@@ -176,8 +176,6 @@ public class VawsPanel extends JPanel {
                 "f:100dlu:g, 3dlu, pref"
         );
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
         builder.append(vawsScroller,9);
         builder.nextLine(2);
         builder.append("Neue(n)", anlagenartBox, anlegenButton);

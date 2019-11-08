@@ -65,6 +65,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -76,7 +77,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -95,6 +96,7 @@ import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandorteModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
@@ -267,7 +269,7 @@ public class BasisAdresseNeu extends AbstractModul
 			wirtschaftszweigBox = new JComboBox();
 			wirtschaftszweigBox.setRenderer(new LongNameComboBoxRenderer());
 
-			JPanel buttonBar = ButtonBarFactory.buildOKBar(speichernButton);
+			JComponent buttonBar = ComponentFactory.buildOKBar(speichernButton);
 
 			// Der folgende KeyListener wird benutzt um bei Enter
 			// im Handzeichen-Feld (wenn das Feld nicht leer ist)
@@ -334,7 +336,6 @@ public class BasisAdresseNeu extends AbstractModul
 					37 } });
 
 			PanelBuilder builder = new PanelBuilder(layout);
-			builder.setDefaultDialogBorder();
 			CellConstraints cc = new CellConstraints();
 
 			// Stamdaten ------------------------------------
@@ -443,6 +444,7 @@ public class BasisAdresseNeu extends AbstractModul
 			strassenBox.addActionListener(dialogListener);
 
 			panel = builder.getPanel();
+			panel.setBorder(Borders.DIALOG);
 		}
 		return panel;
 	}

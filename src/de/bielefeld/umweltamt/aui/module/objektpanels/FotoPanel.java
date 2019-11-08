@@ -52,17 +52,17 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  */
 public class FotoPanel extends JPanel {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -9086697143957142239L;
-	/** Logging */
+     *
+     */
+    private static final long serialVersionUID = -9086697143957142239L;
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     protected JPanel panel = null;
     private String name;
     private BasisObjektBearbeiten hauptModul;
     private JPanel imagePanel;
     protected ModulManager manager;
-  
+
     // Widgets für Fotopanel
     private JLabel fotoLabel;
 
@@ -71,32 +71,27 @@ public class FotoPanel extends JPanel {
      * @param hauptModul Das ObjektBearbeiten-Hauptmodul.
      */
     public FotoPanel(BasisObjektBearbeiten hauptModul) {
-    	
-    	this.name = "Foto";
+
+        this.name = "Foto";
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
             "pref");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-        
-
         builder.append(getImagePanel());
-
-    	
     }
 
     // Foto
     private JPanel getImagePanel() {
-        	imagePanel = new JPanel();
+            imagePanel = new JPanel();
 
             imagePanel.setBackground(Color.WHITE);
             imagePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
                     if (hauptModul.getObjekt() != null) {
-                        String imgPath = "X:/Applikationen/Anlagenkataster/Fotos/" + 
-                        		hauptModul.getObjekt().getId() + ".jpg";
+                        String imgPath = "X:/Applikationen/Anlagenkataster/Fotos/" +
+                                hauptModul.getObjekt().getId() + ".jpg";
                         File imgFile = new File(imgPath);
                         if (imgFile.canRead()) {
                             ImageIcon imgIcon = new ImageIcon(
@@ -113,14 +108,14 @@ public class FotoPanel extends JPanel {
                         } else {
                             getFotoLabel().setIcon(null);
                             getFotoLabel().setText(
-                                "<html><b>-  Foto " + 
-                        		hauptModul.getObjekt().getId() + ".jpg nicht gefunden!  -</b></html>");
+                                "<html><b>-  Foto " +
+                                hauptModul.getObjekt().getId() + ".jpg nicht gefunden!  -</b></html>");
                         }
                     }
 
                     imagePanel.add(getFotoLabel());
-                
-			
+
+
         return this.imagePanel;
     }
 

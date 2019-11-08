@@ -72,6 +72,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
@@ -460,10 +461,7 @@ public class SielhautImport extends AbstractModul {
                 ""); // Zeilen werden dynamisch erzeugt
 
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
-            builder
-                .append(getStepOneLabel(), getDateiButton(), getDateiLabel());
+            builder.append(getStepOneLabel(), getDateiButton(), getDateiLabel());
             builder.appendRelatedComponentsGapRow();
             builder.appendRow("f:50dlu:g");
             builder.nextLine(2);
@@ -481,6 +479,7 @@ public class SielhautImport extends AbstractModul {
             builder.append(getStepThreeLabel(), getImportButton());
 
             this.panel = builder.getPanel();
+            this.panel.setBorder(Borders.DIALOG);
         }
         return this.panel;
     }

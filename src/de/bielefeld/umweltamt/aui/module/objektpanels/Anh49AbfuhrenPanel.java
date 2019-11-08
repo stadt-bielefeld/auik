@@ -94,7 +94,7 @@ import javax.swing.table.TableColumn;
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.uif_lite.component.Factory;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -435,7 +435,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
             getKontrollenTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        JSplitPane tabellenSplit = Factory.createStrippedSplitPane(
+        JSplitPane tabellenSplit = ComponentFactory.createStrippedSplitPane(
             JSplitPane.VERTICAL_SPLIT, abfuhrScroller, kontrollenScroller,
             0.5);
 
@@ -443,7 +443,6 @@ public class Anh49AbfuhrenPanel extends JPanel {
             "f:100dlu:grow, 3dlu, pref"); // Zeilen
 
         PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
 
         builder.add(tabellenSplit, cc.xyw(1, 1, 2));

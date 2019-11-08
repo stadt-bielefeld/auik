@@ -101,8 +101,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.plaf.Options;
+import com.jgoodies.looks.Options;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -266,11 +267,11 @@ public class BasisObjektBearbeiten extends AbstractModul {
         if (topPanel == null) {
             FormLayout layout = new FormLayout("100dlu:g");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.append(getHeaderLabel());
 
             topPanel = builder.getPanel();
+            topPanel.setBorder(Borders.DIALOG);
         }
 
         return topPanel;
@@ -287,6 +288,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public BasisPanel getBasisTab() {
         if (basisTab == null) {
             basisTab = new BasisPanel(this);
+            basisTab.setOpaque(false);
         }
         return basisTab;
     }

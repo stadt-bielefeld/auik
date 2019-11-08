@@ -163,10 +163,9 @@ public class ChronoPanel extends JPanel {
 
         JScrollPane chronoScroller = new JScrollPane(getChronoTable());
 
-        FormLayout layout = new FormLayout("pref 3dlu, pref, 3dlu, pref, 3dlu, pref:g",
+        FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref:g",
             "f:80dlu:g, 3dlu, pref");
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
 
         builder.append(chronoScroller, 7);
         builder.nextLine(2);

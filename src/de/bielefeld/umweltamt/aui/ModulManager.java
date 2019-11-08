@@ -90,7 +90,7 @@ public class ModulManager {
             this.module = new ArrayList<Modul>();
             this.buttonBar = new JButtonBar(JButtonBar.VERTICAL);
 
-            buttonBar.setBorder(Borders.EMPTY_BORDER);
+            buttonBar.setBorder(Borders.EMPTY);
             buttonBar.setBackground(frame.getLeftFrame().getBackground());
         }
 

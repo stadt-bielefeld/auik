@@ -73,7 +73,6 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
@@ -89,6 +88,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -172,7 +172,6 @@ public class ProbepktAuswPanel extends JPanel {
                 "pref"); // 27
 
         PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
         CellConstraints cc2 = (CellConstraints) cc.clone();
 
@@ -452,10 +451,10 @@ public class ProbepktAuswPanel extends JPanel {
             JPanel tmp = new JPanel(new BorderLayout(0, 7));
 
             tmp.add(initializeContent(), BorderLayout.CENTER);
-            JPanel buttonBar = ButtonBarFactory.buildOKCancelApplyBar(
+            JComponent buttonBar = ComponentFactory.buildOKCancelApplyBar(
                 this.speichernButton, this.printButton, this.abbrechenButton);
             tmp.add(buttonBar, BorderLayout.SOUTH);
-            tmp.setBorder(Borders.TABBED_DIALOG_BORDER);
+            tmp.setBorder(Borders.TABBED_DIALOG);
 
             this.setContentPane(tmp);
             this.pack();
@@ -482,7 +481,7 @@ public class ProbepktAuswPanel extends JPanel {
             }
 
             this.chartPanel = new ChartPanel(chart, false);
-            this.chartPanel.setBorder(Borders.DIALOG_BORDER);
+            this.chartPanel.setBorder(Borders.DIALOG);
 
             return this.chartPanel;
         }
@@ -531,7 +530,7 @@ public class ProbepktAuswPanel extends JPanel {
             JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            tabellenScroller.setBorder(Borders.DIALOG_BORDER);
+            tabellenScroller.setBorder(Borders.DIALOG);
 
             return tabellenScroller;
         }

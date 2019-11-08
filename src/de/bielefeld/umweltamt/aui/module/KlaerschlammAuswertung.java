@@ -126,7 +126,6 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
@@ -144,6 +143,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -449,10 +449,10 @@ public class KlaerschlammAuswertung extends AbstractModul
 			JPanel tmp = new JPanel(new BorderLayout(0, 7));
 
 			tmp.add(initializeContent(), BorderLayout.CENTER);
-			JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(
-																	this.speichernButton, this.abbrechenButton);
+			JComponent buttonBar = ComponentFactory.buildOKCancelBar(
+					this.speichernButton, this.abbrechenButton);
 			tmp.add(buttonBar, BorderLayout.SOUTH);
-			tmp.setBorder(Borders.TABBED_DIALOG_BORDER);
+			tmp.setBorder(Borders.TABBED_DIALOG);
 
 			this.setContentPane(tmp);
 			this.pack();
@@ -484,7 +484,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			}
 
 			this.chartPanel = new ChartPanel(chart, false);
-			this.chartPanel.setBorder(Borders.DIALOG_BORDER);
+			this.chartPanel.setBorder(Borders.DIALOG);
 
 			return this.chartPanel;
 		}
@@ -541,7 +541,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
 					JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 					JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-			tabellenScroller.setBorder(Borders.DIALOG_BORDER);
+			tabellenScroller.setBorder(Borders.DIALOG);
 			/*
 			 * FormLayout layout = new FormLayout(
 			 * "pref:grow",
@@ -549,7 +549,6 @@ public class KlaerschlammAuswertung extends AbstractModul
 			 * );
 			 * 
 			 * PanelBuilder builder = new PanelBuilder(layout);
-			 * builder.setDefaultDialogBorder();
 			 * 
 			 * CellConstraints cc = new CellConstraints();
 			 * 
@@ -774,7 +773,6 @@ public class KlaerschlammAuswertung extends AbstractModul
 			gesamtLayout.setRowGroups(new int[][] { { 3, 5 } });
 
 			PanelBuilder builder = new PanelBuilder(gesamtLayout);
-			builder.setDefaultDialogBorder();
 			CellConstraints cc = new CellConstraints();
 			CellConstraints cc2 = (CellConstraints) cc.clone();
 			builder.addSeparator("Kläranlagen / Art", cc.xyw(1, 1, 5));
@@ -789,10 +787,11 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 			builder.addSeparator("Parameter", cc.xyw(1, 9, 9));
 			builder.add(getParameterPanel(), cc.xyw(1, 11, 9, "fill, fill"));
-			JPanel buttonPanel = ButtonBarFactory.buildOKBar(getSubmitButton());
+			JComponent buttonPanel = ComponentFactory.buildOKBar(getSubmitButton());
 			builder.add(buttonPanel, cc.xyw(1, 13, 9, "fill, fill"));
 
 			this.panel = builder.getPanel();
+			this.panel.setBorder(Borders.DIALOG);
 		}
 		return this.panel;
 	}

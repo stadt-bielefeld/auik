@@ -61,6 +61,7 @@ import javax.swing.table.TableColumn;
 import org.hibernate.criterion.MatchMode;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -179,13 +180,13 @@ public class EditorStrassen extends AbstractModul
 			FormLayout layout = new FormLayout("pref, 4dlu, pref:grow", "pref, 3dlu, f:150dlu:grow");
 			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-			builder.setDefaultDialogBorder();
 			CellConstraints cc = new CellConstraints();
 
 			builder.add(submitButton, cc.xy(1, 1));
 			builder.add(getTableScroller(), cc.xyw(1, 3, 3));
 
 			panel = builder.getPanel();
+			panel.setBorder(Borders.DIALOG);
 		}
 
 		return panel;
