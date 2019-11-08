@@ -90,6 +90,7 @@ public final class GUIManager
 		//UIManager.getLookAndFeelDefaults().put("PopupMenu.background", Color.WHITE);
 
 		UIManager.put("MenuItem.selectionForeground", Color.BLUE);
+		UIManager.put("TabbedPane.contentOpaque", false);
 	}
 
 	/** Get the GUIManager instance */
