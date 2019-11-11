@@ -80,7 +80,6 @@ import java.awt.HeadlessException;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -98,7 +97,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -238,7 +236,7 @@ public class HauptFrame extends JFrame {
 
             // Look & Feel umschalten
             UIManager
-                    .setLookAndFeel("com.jgoodies.looks.windows.ExtWindowsLookAndFeel");
+                    .setLookAndFeel(Options.getSystemLookAndFeelClassName());
 
             /*
              * Falls mal ein Wechsel auf Linux anstehen sollte, wird der
