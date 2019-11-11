@@ -93,8 +93,7 @@ public class AbaVerfahrenPanel extends JPanel {
 				"20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 300dlu, 3dlu, 20dlu"); // zeilen
 		
         DefaultFormBuilder builder = new DefaultFormBuilder(verfahrenLayout, this);
-        builder.setDefaultDialogBorder();
-        
+
         CellConstraints cc = new CellConstraints();
 		
         builder.add(new JScrollPane(getLeftList()), cc.xywh(1, 3, 1,9));
@@ -103,11 +102,6 @@ public class AbaVerfahrenPanel extends JPanel {
         builder.add(entfernenButton, cc.xy(3, 7));
         builder.add(saveAbaverfButton, cc.xy(3, 13));
         builder.nextLine();
-        
-
-
-        builder.setDefaultDialogBorder();
-
 
     }
 

@@ -35,6 +35,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -45,7 +46,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -56,6 +56,7 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
@@ -106,8 +107,6 @@ public class SuevPanel extends JPanel {
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-
         builder.appendSeparator("Fachdaten");
         builder.append("Datum Anschreiben:", getDatAnschreibenDatum());
         builder.append("", getSanierungskonzeptCheck());
@@ -139,10 +138,10 @@ public class SuevPanel extends JPanel {
         builder.append(objektverknuepfungScroller, 7);
         builder.nextLine();
 
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(
+        JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSelectObjektButton(), getSaveSuevButton());
 
-        // JPanel buttonBar = ButtonBarFactory.buildOKBar(getSaveSuevButton());
+        // JPanel buttonBar = ComponentFactory.buildOKBar(getSaveSuevButton());
         builder.append(buttonBar, 7);
     }
 

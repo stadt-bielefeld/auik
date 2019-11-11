@@ -142,8 +142,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.factories.ButtonBarFactory;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -171,6 +170,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautProbeModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -816,8 +816,6 @@ public class SielhautBearbeiten extends AbstractModul {
             PanelBuilder builder = new PanelBuilder(layout);
             CellConstraints cc = new CellConstraints();
 
-            builder.setDefaultDialogBorder();
-
             builder.addLabel("Messstelle:", cc.xy(1, 1));
             builder.add(getPunktFeld(), cc.xy(3, 1));
             builder.add(getPunktToolBar(), cc.xy(5, 1));
@@ -827,6 +825,7 @@ public class SielhautBearbeiten extends AbstractModul {
             builder.add(getKartenRtPanel(), cc.xyw(1, 9, 5, "f, f"));
 
             this.panel = builder.getPanel();
+            this.panel.setBorder(Paddings.DIALOG);
         }
 
         return this.panel;
@@ -982,7 +981,6 @@ public class SielhautBearbeiten extends AbstractModul {
                     "pref, " // 15
             );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
             JScrollPane bemerkungsScroller = new JScrollPane(
                 getSpBemerkungsArea(),
@@ -1013,6 +1011,7 @@ public class SielhautBearbeiten extends AbstractModul {
             // builder.getPanel().setBackground(Color.WHITE);
             // builder.getPanel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
             this.datenPanel = builder.getPanel();
+            this.datenPanel.setBorder(Paddings.DIALOG);
         }
         return this.datenPanel;
     }
@@ -1102,8 +1101,6 @@ public class SielhautBearbeiten extends AbstractModul {
             FormLayout layout = new FormLayout(
                 "p:g");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
             builder.appendRow("f:65dlu:g");
             builder.append(new JScrollPane(getPrTabelle()));
 
@@ -1118,6 +1115,7 @@ public class SielhautBearbeiten extends AbstractModul {
             builder.append(getAuswertungPanel());
 
             JPanel probenPanel = builder.getPanel();
+            probenPanel.setBorder(Paddings.DIALOG);
             this.probenRtPanel = new RetractablePanel(DefaultComponentFactory
                 .getInstance().createSeparator("Probenahmen"), probenPanel,
                 false, null) {
@@ -1158,8 +1156,6 @@ public class SielhautBearbeiten extends AbstractModul {
             CellConstraints cc2 = (CellConstraints) cc.clone();
 
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
             builder.add(new JLabel("Kennummer:"), cc.xy(1, 1),
                 getPrNummerFeld(), cc2.xyw(3, 1, 20));
             builder.add(new JLabel("Datum:"), cc.xy(25, 1), getPrDateChooser(),
@@ -1185,8 +1181,6 @@ public class SielhautBearbeiten extends AbstractModul {
             CellConstraints cc2 = (CellConstraints) cc.clone();
 
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
-
             builder.add(new JLabel("Von:"), cc.xy(1, 1), getVonDateChooser(),
                 cc2.xy(3, 1));
             builder.add(new JLabel("Bis:"), cc.xy(5, 1), getBisDateChooser(),
@@ -1202,7 +1196,7 @@ public class SielhautBearbeiten extends AbstractModul {
             builder.add(getSubmitButton(), cc.xy(27, 1));
 
             this.auswertungPanel = builder.getPanel();
-
+            this.auswertungPanel.setBorder(Paddings.DIALOG);
         }
         return this.auswertungPanel;
     }
@@ -1482,10 +1476,10 @@ public class SielhautBearbeiten extends AbstractModul {
             JPanel tmp = new JPanel(new BorderLayout(0, 7));
 
             tmp.add(initializeContent(), BorderLayout.CENTER);
-            JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(
+            JComponent buttonBar = ComponentFactory.buildOKCancelBar(
                 this.speichernButton, this.abbrechenButton);
             tmp.add(buttonBar, BorderLayout.SOUTH);
-            tmp.setBorder(Borders.TABBED_DIALOG_BORDER);
+            tmp.setBorder(Paddings.TABBED_DIALOG);
 
             this.setContentPane(tmp);
             this.pack();
@@ -1512,7 +1506,7 @@ public class SielhautBearbeiten extends AbstractModul {
             }
 
             this.chartPanel = new ChartPanel(chart, false);
-            this.chartPanel.setBorder(Borders.DIALOG_BORDER);
+            this.chartPanel.setBorder(Paddings.DIALOG);
 
             return this.chartPanel;
         }
@@ -1561,7 +1555,7 @@ public class SielhautBearbeiten extends AbstractModul {
             JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            tabellenScroller.setBorder(Borders.DIALOG_BORDER);
+            tabellenScroller.setBorder(Paddings.DIALOG);
 
             return tabellenScroller;
         }

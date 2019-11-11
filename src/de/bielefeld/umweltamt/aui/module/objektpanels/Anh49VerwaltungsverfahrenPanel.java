@@ -95,7 +95,6 @@ public class Anh49VerwaltungsverfahrenPanel extends JPanel {
                 "f:100dlu:grow, 3dlu, pref"); // Zeilen
 
         PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
 
         CellConstraints cc = new CellConstraints();
 

@@ -101,8 +101,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.plaf.Options;
+import com.jgoodies.looks.Options;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -116,7 +117,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaVerfahrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AnfallstellePanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AbfuhrenPanel;
@@ -266,11 +266,11 @@ public class BasisObjektBearbeiten extends AbstractModul {
         if (topPanel == null) {
             FormLayout layout = new FormLayout("100dlu:g");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            builder.setDefaultDialogBorder();
 
             builder.append(getHeaderLabel());
 
             topPanel = builder.getPanel();
+            topPanel.setBorder(Paddings.DIALOG);
         }
 
         return topPanel;
@@ -287,6 +287,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public BasisPanel getBasisTab() {
         if (basisTab == null) {
             basisTab = new BasisPanel(this);
+            basisTab.setOpaque(false);
+            basisTab.setBorder(Paddings.DIALOG);
+            basisTab.setBackground(new JPanel().getBackground());
         }
         return basisTab;
     }
@@ -294,6 +297,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public ProbepunktPanel getProbepunktTab() {
         if (probepunktTab == null) {
             probepunktTab = new ProbepunktPanel(this);
+            probepunktTab.setBorder(Paddings.DIALOG);
         }
         return probepunktTab;
     }
@@ -301,6 +305,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public ProbepktAuswPanel getProbepktAuswTab() {
         if (probeauswTab == null) {
             probeauswTab = new ProbepktAuswPanel(this);
+            probeauswTab.setBorder(Paddings.DIALOG);
         }
         return probeauswTab;
     }
@@ -308,6 +313,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public BWKPanel getBWKTab() {
         if (bwkTab == null) {
             bwkTab = new BWKPanel(this);
+            bwkTab.setBorder(Paddings.DIALOG);
         }
         return bwkTab;
     }
@@ -315,6 +321,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh50Panel getZahnarztTab() {
         if (zahnarztTab == null) {
             zahnarztTab = new Anh50Panel(this);
+            zahnarztTab.setBorder(Paddings.DIALOG);
         }
         return zahnarztTab;
     }
@@ -322,13 +329,15 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh49Panel getAnhang49Tab() {
         if (anhang49Tab == null) {
             anhang49Tab = new Anh49Panel(this);
+            anhang49Tab.setBorder(Paddings.DIALOG);
         }
         return anhang49Tab;
     }
 
     public Anh49AnalysenPanel getAnh49AnalyseTab() {
         if (anh49analyseTab == null) {
-        	anh49analyseTab = new Anh49AnalysenPanel(this);
+            anh49analyseTab = new Anh49AnalysenPanel(this);
+            anh49analyseTab.setBorder(Paddings.DIALOG);
         }
         return anh49analyseTab;
     }
@@ -336,6 +345,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh49DetailsPanel getAnh49DetailTab() {
         if (anh49detailTab == null) {
             anh49detailTab = new Anh49DetailsPanel(this);
+            anh49detailTab.setBorder(Paddings.DIALOG);
         }
         return anh49detailTab;
     }
@@ -343,6 +353,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh49AbfuhrenPanel getAnh49AbfuhrTab() {
         if (anh49abfuhrTab == null) {
             anh49abfuhrTab = new Anh49AbfuhrenPanel(this);
+            anh49abfuhrTab.setBorder(Paddings.DIALOG);
         }
         return anh49abfuhrTab;
     }
@@ -351,6 +362,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         if (anh49VerwaltungsverfahrenTab == null) {
             anh49VerwaltungsverfahrenTab =
                 new Anh49VerwaltungsverfahrenPanel();
+            anh49VerwaltungsverfahrenTab.setBorder(Paddings.DIALOG);
         }
         return anh49VerwaltungsverfahrenTab;
     }
@@ -358,20 +370,23 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public SuevPanel getSuevTab() {
         if (suevTab == null) {
             suevTab = new SuevPanel(this);
+            suevTab.setBorder(Paddings.DIALOG);
         }
         return suevTab;
     }
 
     public AbaPanel getAbaTab() {
         if (abaTab == null) {
-        	abaTab = new AbaPanel(this);
+            abaTab = new AbaPanel(this);
+            abaTab.setBorder(Paddings.DIALOG);
         }
         return abaTab;
     }
 
     public AbaVerfahrenPanel getAbaVerfahrenTab() {
         if (abaVerfahrenTab == null) {
-        	abaVerfahrenTab = new AbaVerfahrenPanel(this);
+            abaVerfahrenTab = new AbaVerfahrenPanel(this);
+            abaVerfahrenTab.setBorder(Paddings.DIALOG);
         }
         return abaVerfahrenTab;
     }
@@ -379,6 +394,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh40Panel getAnh40Tab() {
         if (anhang40Tab == null) {
             anhang40Tab = new Anh40Panel(this);
+            anhang40Tab.setBorder(Paddings.DIALOG);
         }
         return anhang40Tab;
     }
@@ -386,6 +402,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh55Panel getAnh55Tab() {
         if (anhang55Tab == null) {
             anhang55Tab = new Anh55Panel(this);
+            anhang55Tab.setBorder(Paddings.DIALOG);
         }
         return anhang55Tab;
     }
@@ -393,6 +410,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh56Panel getAnh56Tab() {
         if (anhang56Tab == null) {
             anhang56Tab = new Anh56Panel(this);
+            anhang56Tab.setBorder(Paddings.DIALOG);
         }
         return anhang56Tab;
     }
@@ -400,6 +418,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh52Panel getAnh52Tab() {
         if (anhang52Tab == null) {
             anhang52Tab = new Anh52Panel(this);
+            anhang52Tab.setBorder(Paddings.DIALOG);
         }
         return anhang52Tab;
     }
@@ -407,6 +426,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh53Panel getAnh53Tab() {
         if (anhang53Tab == null) {
             anhang53Tab = new Anh53Panel(this);
+            anhang53Tab.setBorder(Paddings.DIALOG);
         }
         return anhang53Tab;
     }
@@ -414,12 +434,14 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public ChronoPanel getChronoTab() {
         if (chronoTab == null) {
             chronoTab = new ChronoPanel(this);
+            chronoTab.setBorder(Paddings.DIALOG);
         }
         return chronoTab;
     }
 
     public FotoPanel getFotoTab(){
         fotoTab = new FotoPanel(this);
+        fotoTab.setBorder(Paddings.DIALOG);
 
         return fotoTab;
     }
@@ -427,6 +449,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public GenehmigungPanel getGenehmigungTab() {
         if (genehmigungTab == null) {
             genehmigungTab = new GenehmigungPanel(this);
+            genehmigungTab.setBorder(Paddings.DIALOG);
         }
         return genehmigungTab;
     }
@@ -434,34 +457,39 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public VawsPanel getVawsTab() {
         if (vawsTab == null) {
             vawsTab = new VawsPanel(this);
+            vawsTab.setBorder(Paddings.DIALOG);
         }
         return vawsTab;
     }
 
     public EinleitungsstellePanel getEinleitungsstelleTab() {
         if (einleitungsstelleTab == null) {
-        	einleitungsstelleTab = new EinleitungsstellePanel(this);
+            einleitungsstelleTab = new EinleitungsstellePanel(this);
+            einleitungsstelleTab.setBorder(Paddings.DIALOG);
         }
         return einleitungsstelleTab;
     }
     
     public AnfallstellePanel getAnfallstelleTab() {
     	if (anfallstelleTab == null) {
-    		anfallstelleTab = new AnfallstellePanel(this);
+            anfallstelleTab = new AnfallstellePanel(this);
+            anfallstelleTab.setBorder(Paddings.DIALOG);
     	}
     	return anfallstelleTab;
     }
     
     public SonderbauwerkPanel getSonderbauwerkTab() {
     	if (sonderbauwerkTab == null) {
-    		sonderbauwerkTab = new SonderbauwerkPanel(this);
+            sonderbauwerkTab = new SonderbauwerkPanel(this);
+            sonderbauwerkTab.setBorder(Paddings.DIALOG);
     	}
     	return sonderbauwerkTab;
     }
     
     public EntwaesserungsgrundstueckPanel getEntwaesserungsgrundstueckTab() {
     	if (entwaesserungsgrundstueckTab == null) {
-    		entwaesserungsgrundstueckTab = new EntwaesserungsgrundstueckPanel(this);
+            entwaesserungsgrundstueckTab = new EntwaesserungsgrundstueckPanel(this);
+            entwaesserungsgrundstueckTab.setBorder(Paddings.DIALOG);
     	}
     	return entwaesserungsgrundstueckTab;
     }

@@ -26,38 +26,82 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
-import java.awt.Paint;
 
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 /**
  * A panel with a horizontal gradient background.
- * @author Karsten Lentzsch
+ * Based on the uif_lite GradientPanel, see https://github.com/JabRef/com.jgoodies.uif_lite/
  */
 public class GradientPanel extends JPanel {
+
     private static final long serialVersionUID = -3777558294138807738L;
 
-    public GradientPanel(LayoutManager lm, Color background) {
-        super(lm);
-        setBackground(background);
+    /**
+     * Default gradient start color
+     */
+    private static final Color DEFAULT_START_COLOR = new Color(186, 211, 237);
+
+    /**
+     * Default gradient end color
+     */
+    private static final Color DEFAULT_END_COLOR = new JPanel().getBackground();
+
+    /**
+     * Defines the anchor of the second color in relation to the panel width
+     */
+    private static final float SECOND_COLOR_ANCHOR_RATIO = 0.9f;
+
+    /**
+     * Gradient start color
+     */
+    private Color startColor;
+
+    /**
+     * Gradient end color
+     */
+    private Color endColor;
+
+    /**
+     * Constructor with default Color
+     * @param lm Panel layout manager
+     */
+    public GradientPanel(LayoutManager lm) {
+        this(lm, DEFAULT_START_COLOR , DEFAULT_END_COLOR);
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (!isOpaque()) {
-            return;
-        }
-        Color control = UIManager.getColor("control");
-        int width  = getWidth();
-        int height = getHeight();
+    /**
+     * Constructor with start color. Endcolor will be set to default panel background
+     * @param lm Panel layout manager
+     * @param startColor Color to start width
+     */
+    public GradientPanel(LayoutManager lm, Color startColor) {
+        this(lm, startColor, DEFAULT_END_COLOR);
+    }
 
-        Graphics2D g2 = (Graphics2D) g;
-        Paint storedPaint = g2.getPaint();
-        g2.setPaint(
-            new GradientPaint(0, 0, getBackground(), width, 0, control));
-        g2.fillRect(0, 0, width, height);
-        g2.setPaint(storedPaint);
+    /**
+     * Constructor
+     * @param lm Panel layout manager
+     * @param startColor Color to start with
+     * @param endColor Color to end with
+     */
+    public GradientPanel(LayoutManager lm, Color startColor, Color endColor) {
+        super(lm);
+        this.startColor = startColor;
+        this.endColor = endColor;
+    }
+
+    @Override protected void paintComponent( Graphics g ) {
+        super.paintComponent( g );
+        int panelHeight = getHeight();
+        int panelWidth = getWidth();
+        GradientPaint gradientPaint = new GradientPaint(
+                0, panelHeight, startColor,
+                panelWidth * SECOND_COLOR_ANCHOR_RATIO, panelHeight, endColor );
+        if( g instanceof Graphics2D ) {
+            Graphics2D graphics2D = (Graphics2D)g;
+            graphics2D.setPaint( gradientPaint );
+            graphics2D.fillRect( 0 , 0 , panelWidth , panelHeight );
+        }
     }
 }

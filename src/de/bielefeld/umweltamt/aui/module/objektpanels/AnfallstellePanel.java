@@ -30,18 +30,19 @@ import java.util.Date;
 
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -84,8 +85,6 @@ public class AnfallstellePanel extends JPanel {
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.setDefaultDialogBorder();
-        
         builder.appendSeparator("Anfallstelle");
         builder.append("SeqId: ", getSeqIdFeld());
         builder.nextLine();
@@ -105,7 +104,7 @@ public class AnfallstellePanel extends JPanel {
         builder.nextLine();
         builder.append("betriebsweiseOpt: ", getBetriebsweiseOptFeld());
         builder.nextLine();
-        JPanel buttonBar = ButtonBarFactory.buildRightAlignedBar(getSaveAnfallstelleButton());
+        JComponent buttonBar = ComponentFactory.buildRightAlignedBar(getSaveAnfallstelleButton());
         builder.append(buttonBar,6);
   
     }

@@ -73,6 +73,7 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -121,13 +122,13 @@ public abstract class AbstractQueryModul extends AbstractModul {
                     "pref, 3dlu, f:150dlu:grow"
             );
             PanelBuilder builder = new PanelBuilder(layout);
-            builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
             builder.add(getQueryOptionsPanel(),    cc.xy(1,1));
             builder.add(getTableScroller(),        cc.xy(1,3));
 
             panel = builder.getPanel();
+            panel.setBorder(Paddings.DIALOG);
         }
 
         return panel;

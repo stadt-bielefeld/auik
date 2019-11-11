@@ -59,6 +59,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -157,14 +158,14 @@ public class EditorEinheiten extends AbstractModul {
             // Noch etwas Layout...
             FormLayout layout = new FormLayout("pref, 4dlu, pref:grow", "pref, 3dlu, f:150dlu:grow");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-            
-            builder.setDefaultDialogBorder();
+
             CellConstraints cc = new CellConstraints();
 
             builder.add(submitButton, cc.xy(1, 1));
             builder.add(getTableScroller(), cc.xyw(1, 3, 3));
 
             panel = builder.getPanel();
+            panel.setBorder(Paddings.DIALOG);
         }
 
         return panel;

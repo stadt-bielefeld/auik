@@ -45,6 +45,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -56,6 +57,7 @@ import org.ehcache.core.statistics.LowerCachingTierOperationsOutcome.GetAndRemov
 import org.hibernate.criterion.MatchMode;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -274,7 +276,6 @@ public class BetreiberEditor extends AbstractBaseEditor {
 				{ 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45 } });
 
 		PanelBuilder builder = new PanelBuilder(layout);
-		builder.setDefaultDialogBorder();
 		CellConstraints cc = new CellConstraints();
 
 		// Stamdaten ------------------------------------
@@ -385,7 +386,9 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		strasseFeld.addActionListener(dialogListener);
 		strassenBox.addActionListener(dialogListener);
 
-		return builder.getPanel();
+		JPanel panel =  builder.getPanel();
+		panel.setBorder(Paddings.DIALOG);
+		return panel;
 	}
 
 	@Override

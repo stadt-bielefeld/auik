@@ -99,6 +99,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -116,10 +117,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.uif_lite.component.Factory;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -266,12 +267,10 @@ public class BasisStandortSuchen extends AbstractModul
 
 			JPanel restrictPanel = new JPanel(new BorderLayout());
 
-			JPanel restrictButtonBar = ButtonBarFactory.buildLeftAlignedBar(
-																			getDreiButton(),
-																			getVierButton(),
-																			getProbepktButton());
-			JPanel restrictButtonBar2 = ButtonBarFactory
-					.buildRightAlignedBar(getReportListeButton());
+			JComponent restrictButtonBar = ComponentFactory.buildLeftAlignedBar(
+							getDreiButton(),getVierButton(),getProbepktButton());
+			JComponent restrictButtonBar2 =
+					ComponentFactory.buildRightAlignedBar(getReportListeButton());
 
 			restrictPanel.add(new Label("Objekte einschränken:"),
 								BorderLayout.WEST);
@@ -286,7 +285,7 @@ public class BasisStandortSuchen extends AbstractModul
 			ta.addComp(getStandortTabelle());
 			ta.addComp(getObjektTabelle());
 
-			this.tabellenSplit = Factory.createStrippedSplitPane(
+			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 																	JSplitPane.VERTICAL_SPLIT, standortScroller,
 																	objektScroller, 0.6);
 
@@ -296,7 +295,6 @@ public class BasisStandortSuchen extends AbstractModul
 			layout.setColumnGroups(new int[][] { { 1, 5 } });
 
 			PanelBuilder builder = new PanelBuilder(layout);
-			builder.setDefaultDialogBorder();
 			CellConstraints cc = new CellConstraints();
 
 			builder.addLabel("Straße:", cc.xy(1, 1));
@@ -310,7 +308,7 @@ public class BasisStandortSuchen extends AbstractModul
 			builder.add(restrictPanel, cc.xyw(1, 5, 13));
 
 			this.panel = builder.getPanel();
-
+			this.panel.setBorder(Paddings.DIALOG);
 		}
 		return this.panel;
 	}

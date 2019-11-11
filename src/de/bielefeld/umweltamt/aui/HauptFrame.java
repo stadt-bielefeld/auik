@@ -98,6 +98,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -117,19 +118,19 @@ import javax.swing.UIManager;
 import org.hibernate.HibernateException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.plaf.FontSizeHints;
-import com.jgoodies.plaf.HeaderStyle;
-import com.jgoodies.plaf.Options;
-import com.jgoodies.uif_lite.component.Factory;
-import com.jgoodies.uif_lite.panel.SimpleInternalFrame;
+import com.jgoodies.looks.HeaderStyle;
+import com.jgoodies.looks.Options;
 
 import de.bielefeld.umweltamt.aui.module.common.editors.EinstellungenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.GradientPanel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
+import de.bielefeld.umweltamt.aui.utils.TitledPanel;
 
 /**
  * Das Hauptfenster des AUI-K. Dieses Fenster beinhaltet alle weiteren
@@ -188,11 +189,11 @@ public class HauptFrame extends JFrame {
 
     private JSplitPane splitPane = null;
 
-    private SimpleInternalFrame leftFrame = null;
+    private TitledPanel leftFrame = null;
     private JScrollPane leftScroller = null;
     private JPanel leftCardPanel = null;
 
-    private SimpleInternalFrame rightFrame = null;
+    private TitledPanel rightFrame = null;
     private JPanel rightCardPanel = null;
 
     // Das Kategorien-Menü
@@ -237,7 +238,7 @@ public class HauptFrame extends JFrame {
 
             // Look & Feel umschalten
             UIManager
-                    .setLookAndFeel("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
+                    .setLookAndFeel("com.jgoodies.looks.windows.ExtWindowsLookAndFeel");
 
             /*
              * Falls mal ein Wechsel auf Linux anstehen sollte, wird der
@@ -246,7 +247,7 @@ public class HauptFrame extends JFrame {
              * haben möchte. Dann einfach statt der Zeile oben die folgende
              * nehmen:
              */
-            // UIManager.setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
+            // UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
 
             // Erleichert das Finden von manchen Layout-Fehlern
             // ClearLookManager.setMode(ClearLookMode.DEBUG);
@@ -397,8 +398,9 @@ public class HauptFrame extends JFrame {
                         }
                     });
 
-            viewMenuButton
-                    .setForeground(getLeftFrame().getTextForeground(true));
+            //TODO:
+            // viewMenuButton
+            //         .setForeground(getLeftFrame().getTextForeground(true));
             viewMenuButton.setOpaque(false);
             viewMenuButton.setHorizontalTextPosition(JButton.LEADING);
             viewMenuButton
@@ -433,8 +435,9 @@ public class HauptFrame extends JFrame {
                 new JButton(AuikUtils.getIcon(16, "back.png", desc));
 
             modulBackButton.setToolTipText(desc);
-            modulBackButton.setForeground(
-                    getRightFrame().getTextForeground(true));
+            //TODO:
+            // modulBackButton.setForeground(
+            //         getRightFrame().getTextForeground(true));
             modulBackButton.setOpaque(false);
 
             modulBackButton.addActionListener(new ActionListener() {
@@ -459,8 +462,10 @@ public class HauptFrame extends JFrame {
                 new JButton(AuikUtils.getIcon(16, "forward.png", desc));
 
             modulFwdButton.setToolTipText(desc);
-            modulFwdButton.setForeground(
-                    getRightFrame().getTextForeground(true));
+
+            //TODO:
+            // modulFwdButton.setForeground(
+            //         getRightFrame().getTextForeground(true));
             modulFwdButton.setOpaque(false);
 
             modulFwdButton.addActionListener(new ActionListener() {
@@ -738,7 +743,7 @@ public class HauptFrame extends JFrame {
      */
     private JSplitPane getSplitPane() {
         if (splitPane == null) {
-            splitPane = Factory.createStrippedSplitPane(
+            splitPane = ComponentFactory.createStrippedSplitPane(
                     JSplitPane.HORIZONTAL_SPLIT, getLeftFrame(),
                     getRightFrame(), 0.08f);
         }
@@ -748,13 +753,13 @@ public class HauptFrame extends JFrame {
     /**
      * This method initializes leftFrame
      *
-     * @return com.jgoodies.uif_life.panel.SimpleInternalFrame
+     * @return com.jgoodies.uif_life.panel.JInternalFrame
      */
-    protected SimpleInternalFrame getLeftFrame() {
+    protected TitledPanel getLeftFrame() {
         if (leftFrame == null) {
-            leftFrame = new SimpleInternalFrame(" ");
+            leftFrame = new TitledPanel(" ");
 
-            leftFrame.setMinimumSize(new Dimension(100, 0));
+            leftFrame.setMinimumSize(new Dimension(100, 100));
             leftFrame.setPreferredSize(leftFrame.getMinimumSize());
 
             leftFrame.setToolBar(getViewMenuBar());
@@ -766,13 +771,13 @@ public class HauptFrame extends JFrame {
     /**
      * This method initializes rightFrame
      *
-     * @return com.jgoodies.uif_life.panel.SimpleInternalFrame
+     * @return com.jgoodies.uif_life.panel.JInternalFrame
      */
-    protected SimpleInternalFrame getRightFrame() {
+    protected TitledPanel getRightFrame() {
         if (rightFrame == null) {
-            rightFrame = new SimpleInternalFrame(" ");
+            rightFrame = new TitledPanel(" ");
 
-            rightFrame.setMinimumSize(new Dimension(250, 0));
+            rightFrame.setMinimumSize(new Dimension(250, 100));
 
             rightFrame.setToolBar(getModulBar());
             rightFrame.setContent(getRightCardPanel());
@@ -1072,7 +1077,6 @@ public class HauptFrame extends JFrame {
             layout.setRowGroups(new int[][]{{3, 5}});
 
             PanelBuilder builder = new PanelBuilder(layout);
-            builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
 
             builder.add(textLabel, cc.xyw(1, 1, 5));
@@ -1081,8 +1085,9 @@ public class HauptFrame extends JFrame {
             builder.addLabel("Passwort:", cc.xy(1, 5));
             builder.add(passwortFeld, cc.xy(3, 5));
             builder.add(loginButton, cc.xy(5, 5));
-
-            this.setContentPane(builder.getPanel());
+            JPanel panel = builder.getPanel();
+            panel.setBorder(Paddings.DIALOG);
+            this.setContentPane(panel);
             this.pack();
 
             /* Set the focus to the password field */

@@ -40,11 +40,13 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.hibernate.criterion.MatchMode;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -233,7 +235,6 @@ public class StandortEditor extends AbstractBaseEditor
 						"bottom:pref:grow"); //25
 
 		PanelBuilder builder = new PanelBuilder(layout);
-		builder.setDefaultDialogBorder();
 		CellConstraints cc = new CellConstraints();
 
 		// Adresse
@@ -303,7 +304,9 @@ public class StandortEditor extends AbstractBaseEditor
 			}
 		});
 
-		return builder.getPanel();
+		JPanel panel = builder.getPanel();
+		panel.setBorder(Paddings.DIALOG);
+		return panel;
 	}
 
 	/**

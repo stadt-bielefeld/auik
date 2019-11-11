@@ -40,6 +40,7 @@ import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -54,7 +55,6 @@ import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
@@ -77,6 +77,7 @@ import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -162,7 +163,6 @@ public class ProbepunktPanel extends JPanel {
                 "pref"); // 27
 
         PanelBuilder builder = new PanelBuilder(layout, this);
-        builder.setDefaultDialogBorder();
         CellConstraints cc = new CellConstraints();
 
         builder.addSeparator("Eigenschaften", cc.xyw(1, 1, 6));
@@ -177,7 +177,7 @@ public class ProbepunktPanel extends JPanel {
         builder.addLabel("Branche:", cc.xy(1, 9));
         builder.add(getBrancheFeld(), cc.xy(3, 9));
 
-        JPanel buttonBar = ButtonBarFactory.buildOKBar(getSavePktButton());
+        JComponent buttonBar = ComponentFactory.buildOKBar(getSavePktButton());
         builder.add(buttonBar, cc.xyw(1, 11, 6));
 
         builder.addSeparator("Beschreibung", cc.xyw(1, 13, 6));
@@ -202,7 +202,7 @@ public class ProbepunktPanel extends JPanel {
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.add(objektverknuepfungScroller, cc.xyw(1, 25, 6));
 
-        JPanel buttonBarOv = ButtonBarFactory
+        JComponent buttonBarOv = ComponentFactory
             .buildRightAlignedBar(getPrintDeckblattButton(), getSelectObjektButton());
 
         builder.add(buttonBarOv, cc.xyw(1, 27, 6));

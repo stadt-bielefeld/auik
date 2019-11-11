@@ -114,7 +114,6 @@ import javax.swing.table.TableColumn;
 import net.sf.jasperreports.engine.JRDataSource;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -135,6 +134,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
@@ -656,15 +656,15 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
     /**
-     * Diese Methode erstellt das {@link javax..swing.JPanel} mit
+     * Diese Methode erstellt das {@link javax..swing.JComponent} mit
      * {@link javax.swing.JButton}s. Hier werden f&uuml;nf Kn&ouml;pfe
      * hinzugef&uuml;gt, die das Erstellt des Probenahmeauftrags und
      * Geb&uuml;hrenbescheids starten, sowie die Kn&ouml;pfe zum Speichern,
      * Abbrechen und zur Parameterauswahl.
-     * @return ein {@link javax.swing.JPanel} mit {@link javax.swing.JButton}s.
+     * @return ein {@link javax.swing.JComponent} mit {@link javax.swing.JButton}s.
      */
     @Override
-    protected JPanel createButtonBar() {
+    protected JComponent createButtonBar() {
         this.bescheidDrucken = new JButton("Bescheid erzeugen");
         this.auftragDrucken = new JButton("Auftrag erzeugen");
 
@@ -838,9 +838,9 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
         });
 
-        return ButtonBarFactory.buildRightAlignedBar(new JButton[] {
+        return ComponentFactory.buildRightAlignedBar(
                 this.button1, this.button2, this.button3, this.auftragDrucken,
-                this.bescheidDrucken}, true);
+                this.bescheidDrucken);
     }
 
     @Override
