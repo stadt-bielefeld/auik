@@ -250,7 +250,7 @@ public class VawsEditor extends AbstractBaseEditor {
     private JCheckBox schutzrohrCheck;
     private JCheckBox ausHdpeCheck;
     private JCheckBox druckleitungCheck;
-    private LimitedTextArea beschreibungRFeld;
+    private TextArea beschreibungRFeld;
 
     // Daten (Rohrleitungen)
     private JPanel datenRohrleitungenTab;
@@ -560,7 +560,7 @@ public class VawsEditor extends AbstractBaseEditor {
         schutzrohrCheck = new JCheckBox("Mit Schutzrohr");
         ausHdpeCheck = new JCheckBox("Aus HDPE");
         druckleitungCheck = new JCheckBox("Druckleitung");
-        beschreibungRFeld = new LimitedTextArea(255);
+        beschreibungRFeld = new TextArea();
 
         // Ausführung (Abfüllflächen)
         bodenflaechenAusfBox = new JComboBox(

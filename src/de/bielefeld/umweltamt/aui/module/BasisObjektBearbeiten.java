@@ -608,6 +608,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                         case DatabaseConstants.BASIS_OBJEKTART_ID_SONDERBAUWERK:
                             getChronoTab().fetchFormData();
                             getSonderbauwerkTab().fetchFormData();
+                            break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ENTWAESSERUNGSGRUNDSTUECK:
                             getChronoTab().fetchFormData();
                             getEntwaesserungsgrundstueckTab().fetchFormData();

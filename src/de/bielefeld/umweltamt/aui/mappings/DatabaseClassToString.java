@@ -152,11 +152,6 @@ public class DatabaseClassToString {
         String vorname = "";
         String hausnrzus = "";
         
-        //If all name fields are empty, the instance must be a Standort
-        if(clazz.getBetrname() == null){
-            return clazz.getStrasse() + " " + clazz.getHausnr() + " " + clazz.getHausnrzus();
-        }
-        //Else return a Betreiber string
         if (clazz.getBetrvorname() != null) {
         	vorname = clazz.getBetrvorname() + " ";
         } else if (clazz.getBetrnamezus() != null) {
@@ -170,13 +165,20 @@ public class DatabaseClassToString {
     
     /**
      * Custom Standort.toString()
-     * Liefert einen String der Form "Name, Zusatz" falls ein Zusatz vorhanden
-     * ist, sonst nur den Namen.
+     * Liefert einen String der Form "Straße, Hausnummer, Zusatz" falls 
+     * der Standort eine Adresse besitzt.
      */
-    public static String toStringForClass(Standort clazz) {
-	    String zusatz = "";
-	       
-	    return clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr();
+	public static String toStringForClass(Standort clazz) {
+		String hausnrzus = "";
+
+		if (clazz.getAdresse() != null) {
+			if (clazz.getAdresse().getHausnrzus() != null) {
+				hausnrzus = clazz.getAdresse().getHausnrzus();
+			}
+			return clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr() + hausnrzus;
+		} else {
+			return "Dieser Standort hat keine Adresse";
+		}
 	}
 
 	/** @return Gemarkung.toGuiString() */

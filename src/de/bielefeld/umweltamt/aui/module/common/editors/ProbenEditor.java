@@ -1438,6 +1438,11 @@ public class ProbenEditor extends AbstractApplyEditor {
         } else {
             probe.setBemerkung(null);
         }
+        
+        probe.setEnabled(true);
+        probe.setDeleted(false);
+        if (probe.getQbAusschliessen() == null)
+        	probe.setQbAusschliessen(false);
 
         boolean success = true;
 
