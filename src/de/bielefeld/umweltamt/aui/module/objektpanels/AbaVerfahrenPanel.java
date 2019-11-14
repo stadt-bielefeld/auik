@@ -243,7 +243,9 @@ public class AbaVerfahrenPanel extends JPanel {
     public void applyEntries(List<Abaverfahren> verfahrens) {
         verfahrens.forEach((verfahren) -> {
             Abaverfahren header = getHeaderForVerfahren(verfahren);
-            if (header != null && verfahrens.indexOf(header) < 0) {
+            if (header != null
+                    && verfahrens.indexOf(header) < 0
+                    && this.leftData.indexOf(header) > -1) {
                 this.rightData.add(header);
                 this.leftData.remove(header);
             }
@@ -280,9 +282,9 @@ public class AbaVerfahrenPanel extends JPanel {
         leftData.sort((v1, v2) -> {
             return v1.getNr() - v2.getNr();
         });
-        this.leftList.removeAll();
+        this.leftListModel.clear();
         this.leftData.forEach(element -> this.leftListModel.addElement(element));
-        this.rightList.removeAll();
+        this.rightListModel.clear();
         this.rightData.forEach(element -> this.rightListModel.addElement(element));
     }
 }
