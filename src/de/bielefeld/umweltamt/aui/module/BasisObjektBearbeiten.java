@@ -138,6 +138,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.GenehmigungPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepktAuswPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepunktPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SonderbauwerkPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.SonderbauwerkTypTab;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SuevPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.VawsPanel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -183,6 +184,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private EinleitungsstellePanel einleitungsstelleTab;
     private AnfallstellePanel anfallstelleTab;
     private SonderbauwerkPanel sonderbauwerkTab;
+    private SonderbauwerkTypTab sonderbauwerkTypTab;
     private EntwaesserungsgrundstueckPanel entwaesserungsgrundstueckTab;
 
     // Daten
@@ -480,10 +482,20 @@ public class BasisObjektBearbeiten extends AbstractModul {
     
     public SonderbauwerkPanel getSonderbauwerkTab() {
     	if (sonderbauwerkTab == null) {
-            sonderbauwerkTab = new SonderbauwerkPanel(this);
+            sonderbauwerkTab = new SonderbauwerkPanel(this, this.getSonderbauwerkTypTab());
             sonderbauwerkTab.setBorder(Paddings.DIALOG);
+            sonderbauwerkTab.setBackground(new JPanel().getBackground());
+            sonderbauwerkTab.setOpaque(false);
     	}
     	return sonderbauwerkTab;
+    }
+
+    public SonderbauwerkTypTab getSonderbauwerkTypTab() {
+        if (sonderbauwerkTypTab == null) {
+            this.sonderbauwerkTypTab = new SonderbauwerkTypTab(this);
+            sonderbauwerkTypTab.setBorder(Paddings.DIALOG);
+        }
+        return this.sonderbauwerkTypTab;
     }
     
     public EntwaesserungsgrundstueckPanel getEntwaesserungsgrundstueckTab() {
@@ -500,6 +512,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         if (tabbedPane == null) {
             tabbedPane = new JTabbedPane();
 
+            tabbedPane.setOpaque(false);
             tabbedPane.putClientProperty(Options.NO_CONTENT_BORDER_KEY, Boolean.TRUE);
             tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
@@ -817,7 +830,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             	break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_SONDERBAUWERK:
                             	getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            	getTabbedPane().addTab(getSonderbauwerkTab().getName(), getSonderbauwerkTab());
+                                getTabbedPane().addTab(getSonderbauwerkTab().getName(), getSonderbauwerkTab());
+                                getTabbedPane().addTab(getSonderbauwerkTypTab().getContentName(), getSonderbauwerkTypTab());
                             	getChronoTab().updateForm();
                             	getSonderbauwerkTab().updateForm();
                             	getTabbedPane().setSelectedComponent(getSonderbauwerkTab());

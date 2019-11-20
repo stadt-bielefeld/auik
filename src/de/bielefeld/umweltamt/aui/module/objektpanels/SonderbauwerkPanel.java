@@ -30,6 +30,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -86,6 +88,7 @@ public class SonderbauwerkPanel extends JPanel {
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
+    private SonderbauwerkTypTab typePanel;
 
     // Widgets
     private JTextField bezeichnungFeld = null;
@@ -112,9 +115,10 @@ public class SonderbauwerkPanel extends JPanel {
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
 
-    public SonderbauwerkPanel(BasisObjektBearbeiten hauptModul) {
+    public SonderbauwerkPanel(BasisObjektBearbeiten hauptModul, SonderbauwerkTypTab typePanel) {
         this.name = "Sonderbauwerk";
         this.hauptModul = hauptModul;
+        this.typePanel = typePanel;
 
         FormLayout layout = new FormLayout(
         		"r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
@@ -165,16 +169,16 @@ public class SonderbauwerkPanel extends JPanel {
         builder.nextLine();
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
         		getSelectObjektButton(), getSaveSonderbauwerkButton());
-        builder.append(buttonBar, 7);
-
+		builder.append(buttonBar, 7);
+		
+        this.typBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                typePanel.switchTypDetailPanel((String) typBox.getSelectedItem());
+            }
+        });
     }
-    
-	/**
-	 * @return the hauptModul
-	 */
-	public BasisObjektBearbeiten getHauptModul() {
-		return hauptModul;
-	}
+
 
 	/**
 	 * @return the kurzbezeichnungFeld
@@ -294,7 +298,8 @@ public class SonderbauwerkPanel extends JPanel {
      */
     public void fetchFormData() throws RuntimeException {
     	this.sonderbauwerk = Sonderbauwerk.findByObjektId(
-    			this.hauptModul.getObjekt().getId());
+                this.hauptModul.getObjekt().getId());
+        this.typePanel.setData(this.sonderbauwerk);
     	log.debug("Sonderbauwerk aus DB geholt: " + this.sonderbauwerk);
     	
 
