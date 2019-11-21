@@ -135,15 +135,7 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
         schutzgueterChooser = new ZuordnungChooser<String>("Schutzgüter");
     }
 
-    public List<JComponent> getFields() {
+    public Object getFieldValue(String fieldName) {
         return null;
-    }
-
-    public void save() {
-
-    }
-
-    public void setData(Sonderbauwerk sonderbauwerk) {
-
     }
 }

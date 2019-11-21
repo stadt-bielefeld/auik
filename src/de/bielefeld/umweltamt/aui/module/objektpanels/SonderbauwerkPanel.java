@@ -372,6 +372,10 @@ public class SonderbauwerkPanel extends JPanel {
         } else {
             this.sonderbauwerk.setBezeichnung(bezeichnung);
         }
+
+        //Save subpanel data to record
+        this.typePanel.getContent().save();
+
         success = this.sonderbauwerk.merge();
         if (success) {
             log.debug("Sonderbauwerk"

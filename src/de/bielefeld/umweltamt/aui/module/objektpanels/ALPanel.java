@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -83,17 +84,35 @@ public class ALPanel extends AbstractSonderbauwerkTypPanel {
         ueberlaufHaeufigkeitLabel = new JLabel("Jährliche Überlaufhäufigkeit");
         entleerungsZeitField = new JTextField();
         entleerungsZeitLabel = new JLabel("Entleerungszeit");
+        createMappings();
     }
 
-    public List<JComponent> getFields() {
-        return null;
+    /**
+     * Create a mapping for field values and record fields
+     */
+    private void createMappings() {
+        this.fieldMapping = new HashMap<String, RecordMap>();
+        this.fieldMapping.put("drossabflussField", new RecordMap("drosselabfluss", "java.math.BigDecimal"));
+        this.fieldMapping.put("volumenField", new RecordMap("speichervolumen", "java.lang.Integer"));
+        this.fieldMapping.put("ueberlaufhaeufigkeitField", new RecordMap("rjahrUeh", "java.math.BigDecimal"));
+        this.fieldMapping.put("entleerungsZeitField", new RecordMap("entleerungszeit", "java.math.BigDecimal"));
     }
 
-    public void save() {
-
-    }
-
-    public void setData(Sonderbauwerk sonderbauwerk) {
-
+    /**
+     * Get value for a field by name
+     * @param fieldName Field name as String
+     */
+    public Object getFieldValue(String fieldName) {
+        switch(fieldName) {
+            case "drossabflussField":
+                return parseBigDecimalFromString(drossabflussField.getText());
+            case "volumenField":
+                return parseIntegerFromString(volumenField.getText());
+            case "ueberlaufhaeufigkeitField":
+                return parseBigDecimalFromString(ueberlaufhaeufigkeitField.getText());
+            case "entleerungsZeitField":
+                return parseBigDecimalFromString(entleerungsZeitField.getText());
+            default: throw new IllegalArgumentException("Unkown field name: " + fieldName);
+        }
     }
 }

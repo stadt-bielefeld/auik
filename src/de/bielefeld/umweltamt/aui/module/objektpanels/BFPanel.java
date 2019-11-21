@@ -108,15 +108,7 @@ public class BFPanel extends AbstractSonderbauwerkTypPanel {
         ueberlaufhaufigkeitLabel = new JLabel("Überlaufhäufigkeit");
     }
 
-    public List<JComponent> getFields() {
+    public Object getFieldValue(String name) {
         return null;
-    }
-
-    public void save() {
-
-    }
-
-    public void setData(Sonderbauwerk sonderbauwerk) {
-
     }
 }

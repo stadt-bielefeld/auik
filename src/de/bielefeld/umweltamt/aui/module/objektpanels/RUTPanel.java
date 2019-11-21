@@ -92,15 +92,7 @@ public class RUTPanel extends AbstractSonderbauwerkTypPanel {
         minDrosselabflussLabel = new JLabel("Mindestdrosselabfluss");
     }
 
-    public List<JComponent> getFields() {
+    public Object getFieldValue(String fieldName) {
         return null;
-    }
-
-    public void save() {
-
-    }
-
-    public void setData(Sonderbauwerk sonderbauwerk) {
-
     }
 }

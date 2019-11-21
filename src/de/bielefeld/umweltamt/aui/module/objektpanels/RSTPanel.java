@@ -67,15 +67,7 @@ public class RSTPanel extends AbstractSonderbauwerkTypPanel {
         speicherVolumenLabel = new JLabel("Vorhandenes Speichervolumen");
     }
 
-    public List<JComponent> getFields() {
+    public Object getFieldValue(String fieldName) {
         return null;
-    }
-
-    public void save() {
-
-    }
-
-    public void setData(Sonderbauwerk sonderbauwerk) {
-
     }
 }

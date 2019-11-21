@@ -21,22 +21,22 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.HashMap;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
+/**
+ * Panel containing a form to edit RRB infos.
+ */
 public class RRBPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
 
@@ -45,8 +45,8 @@ public class RRBPanel extends AbstractSonderbauwerkTypPanel {
 
     private BasisObjektBearbeiten parentModule;
 
-    private JComboBox<String> funktionenBox;
-    private DefaultComboBoxModel<String> funktionenModel;
+    private JComboBox<CBoxItem> funktionenBox;
+    private DefaultComboBoxModel<CBoxItem> funktionenModel;
     private JTextField drosselabflussField;
     private JTextField volumenField;
     private JTextField ueberlaufhaeufigkeitField;
@@ -74,34 +74,54 @@ public class RRBPanel extends AbstractSonderbauwerkTypPanel {
         builder.append("Entleerungszeit", entleerungszeit);
     }
 
+    /**
+     * Create fields for this panel
+     */
     private void createFields() {
-
-        funktionenModel = new DefaultComboBoxModel<String>(new String[]{
-                "-", "Rückhaltung vor Einleitung",
-                "Rückhalt im Kanalnetz", "Rücknahme für Brauchwasser im Betrieb",
-                "nur für Störfälle"});
-        funktionenBox = new JComboBox<String>(funktionenModel);
+        funktionenModel = new DefaultComboBoxModel<CBoxItem>(new CBoxItem[]{
+            new CBoxItem(null, "-"),
+            new CBoxItem(4, "Rückhaltung vor Einleitung"),
+            new CBoxItem(5, "Rückhalt im Kanalnetz"),
+            new CBoxItem(3, "Rücknahme für Brauchwasser im Betrieb"),
+            new CBoxItem(2, "nur für Störfälle")
+        });
+        funktionenBox = new JComboBox<CBoxItem>(funktionenModel);
         drosselabflussField = new JTextField();
         volumenField = new JTextField();
         ueberlaufhaeufigkeitField = new JTextField();
         entleerungszeit = new JTextField();
+        createMappings();
     }
 
-    public void save() {
-        
+    /**
+     * Create a mapping for field values and record fields
+     */
+    private void createMappings() {
+        this.fieldMapping = new HashMap<String, RecordMap>();
+        this.fieldMapping.put("funktionenBox", new RecordMap("funktionOpt", "java.lang.Integer"));
+        this.fieldMapping.put("drosselabflussField", new RecordMap("drossAbflussOpt", "java.lang.Integer"));
+        this.fieldMapping.put("volumenField", new RecordMap("speichervolumen", "java.lang.Integer"));
+        this.fieldMapping.put("ueberlaufhaeufigkeitField", new RecordMap("rjahrUeh", "java.math.BigDecimal"));
+        this.fieldMapping.put("entleerungszeit", new RecordMap("entleerungszeit", "java.math.BigDecimal"));
     }
 
-    public List<JComponent> getFields() {
-        List<JComponent> list = new ArrayList<JComponent>();
-        list.add(funktionenBox);
-        list.add(drosselabflussField);
-        list.add(volumenField);
-        list.add(ueberlaufhaeufigkeitField);
-        list.add(entleerungszeit);
-        return list;
-    }
-
-    public void setData(Sonderbauwerk sonderbauwerk) {
-
+    /**
+     * Get value for a field by name
+     * @param fieldName Field name as String
+     */
+    public Object getFieldValue(String fieldName) {
+        switch (fieldName) {
+            case "funktionenBox":
+                return ((CBoxItem)funktionenBox.getSelectedItem()).getId();
+            case "drosselabflussField":
+                return parseIntegerFromString(drosselabflussField.getText());
+            case "volumenField":
+                return parseIntegerFromString(volumenField.getText());
+            case "ueberlaufhaeufigkeitField":
+                return parseBigDecimalFromString(ueberlaufhaeufigkeitField.getText());
+            case "entleerungszeit":
+                return parseBigDecimalFromString(entleerungszeit.getText());
+            default: throw new IllegalArgumentException("Unkown field name: " + fieldName);
+        }
     }
 }

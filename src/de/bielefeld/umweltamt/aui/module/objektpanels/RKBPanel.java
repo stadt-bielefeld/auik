@@ -23,20 +23,16 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -275,15 +271,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         }
     }
 
-    public List<JComponent> getFields() {
+    public Object getFieldValue(String fieldName) {
         return null;
-    }
-
-    public void save() {
-
-    }
-
-    public void setData(Sonderbauwerk sonderbauwerk) {
-
     }
 }

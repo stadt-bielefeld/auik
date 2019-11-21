@@ -83,37 +83,37 @@ public class SonderbauwerkTypTab extends JPanel {
         switch ((String) type) {
             case "RRB":
                 this.setContentPanel(getRRBPanel());
-                getRRBPanel().setData(this.sonderbauwerk);
+                getRRBPanel().setRecord(this.sonderbauwerk);
                 this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RKB":
                 this.setContentPanel(getRKBPanel());
-                getRKBPanel().setData(this.sonderbauwerk);
+                getRKBPanel().setRecord(this.sonderbauwerk);
                 this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RBF":
                 this.setContentPanel(getRBFPanel());
-                getRBFPanel().setData(this.sonderbauwerk);
+                getRBFPanel().setRecord(this.sonderbauwerk);
                 this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "BF":
                 this.setContentPanel(getBFPanel());
-                getBFPanel().setData(this.sonderbauwerk);
+                getBFPanel().setRecord(this.sonderbauwerk);
                 this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RÜT":
                 this.setContentPanel(getRUTPanel());
-                getRUTPanel().setData(this.sonderbauwerk);
+                getRUTPanel().setRecord(this.sonderbauwerk);
                 this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RST":
                 this.setContentPanel(getRSTPanel());
-                getRSTPanel().setData(this.sonderbauwerk);
+                getRSTPanel().setRecord(this.sonderbauwerk);
                 this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "AL":
                 this.setContentPanel(getALPanel());
-                getALPanel().setData(this.sonderbauwerk);
+                getALPanel().setRecord(this.sonderbauwerk);
                 this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             default:
@@ -127,13 +127,13 @@ public class SonderbauwerkTypTab extends JPanel {
      */
     public void setData(Sonderbauwerk sonderbauwerk) {
         this.sonderbauwerk = sonderbauwerk;
-        this.getRRBPanel().setData(sonderbauwerk);
-        this.getRKBPanel().setData(sonderbauwerk);
-        this.getRBFPanel().setData(sonderbauwerk);
-        this.getBFPanel().setData(sonderbauwerk);
-        this.getRUTPanel().setData(sonderbauwerk);
-        this.getRSTPanel().setData(sonderbauwerk);
-        this.getALPanel().setData(sonderbauwerk);
+        this.getRRBPanel().setRecord(sonderbauwerk);
+        this.getRKBPanel().setRecord(sonderbauwerk);
+        this.getRBFPanel().setRecord(sonderbauwerk);
+        this.getBFPanel().setRecord(sonderbauwerk);
+        this.getRUTPanel().setRecord(sonderbauwerk);
+        this.getRSTPanel().setRecord(sonderbauwerk);
+        this.getALPanel().setRecord(sonderbauwerk);
     }
 
     /**
@@ -143,7 +143,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public RRBPanel getRRBPanel() {
         if (this.rrbPanel == null) {
             this.rrbPanel = new RRBPanel(this.parentModule);
-            this.rrbPanel.setData(sonderbauwerk);
+            this.rrbPanel.setRecord(sonderbauwerk);
         }
         return this.rrbPanel;
     }
@@ -155,7 +155,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public RKBPanel getRKBPanel() {
         if (this.rkbPanel == null) {
             this.rkbPanel = new RKBPanel(this.parentModule);
-            this.rkbPanel.setData(sonderbauwerk);
+            this.rkbPanel.setRecord(sonderbauwerk);
         }
         return this.rkbPanel;
     }
@@ -167,7 +167,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public RBFPanel getRBFPanel() {
         if (this.rbfPanel == null) {
             this.rbfPanel = new RBFPanel(this.parentModule);
-            this.rbfPanel.setData(sonderbauwerk);
+            this.rbfPanel.setRecord(sonderbauwerk);
         }
         return this.rbfPanel;
     }
@@ -179,7 +179,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public BFPanel getBFPanel() {
         if (this.bfPanel == null) {
             this.bfPanel = new BFPanel(this.parentModule);
-            this.bfPanel.setData(sonderbauwerk);
+            this.bfPanel.setRecord(sonderbauwerk);
         }
         return this.bfPanel;
     }
@@ -191,7 +191,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public RUTPanel getRUTPanel() {
         if (this.rutPanel == null) {
             this.rutPanel = new RUTPanel(this.parentModule);
-            this.rutPanel.setData(sonderbauwerk);
+            this.rutPanel.setRecord(sonderbauwerk);
         }
         return this.rutPanel;
     }
@@ -203,7 +203,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public RSTPanel getRSTPanel() {
         if (this.rstPanel == null) {
             this.rstPanel = new RSTPanel(this.parentModule);
-            this.rstPanel.setData(sonderbauwerk);
+            this.rstPanel.setRecord(sonderbauwerk);
         }
         return this.rstPanel;
     }
@@ -215,7 +215,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public ALPanel getALPanel() {
         if (this.alPanel == null) {
             this.alPanel = new ALPanel(this.parentModule);
-            this.alPanel.setData(sonderbauwerk);
+            this.alPanel.setRecord(sonderbauwerk);
         }
         return this.alPanel;
     }
