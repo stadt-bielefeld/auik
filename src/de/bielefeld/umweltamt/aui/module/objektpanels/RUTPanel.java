@@ -21,10 +21,13 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.Graphics;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
@@ -33,7 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
-public class RUTPanel extends SonderbauwerkTypPanel {
+public class RUTPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
 
     /** Logging */
@@ -41,15 +44,52 @@ public class RUTPanel extends SonderbauwerkTypPanel {
 
     private BasisObjektBearbeiten parentModule;
 
+    //Fields and labels
+    private JTextField behandlungsFlaecheField;
+    private JTextField nichtBehandlungsFlaecheField;
+    private JTextField kritRegenspendeField;
+    private JTextField drossabflussTatField;
+    private JTextField minDrosselabflussField;
+
+    private JLabel behandlungsFlaecheLabel;
+    private JLabel nichtBehandlungsFlaecheLabel;
+    private JLabel kritRegenspendeLabel;
+    private JLabel drossabflussTatLabel;
+    private JLabel minDrosselabflussLabel;
+
     public RUTPanel (BasisObjektBearbeiten parentModule) {
         this.name = "RÜT";
         this.parentModule = parentModule;
+
+        createFields();
 
         FormLayout layout = new FormLayout(
                 "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        builder.append(behandlungsFlaecheLabel, behandlungsFlaecheField);
+        builder.nextLine();
+        builder.append(nichtBehandlungsFlaecheLabel, nichtBehandlungsFlaecheField);
+        builder.nextLine();
+        builder.append(kritRegenspendeLabel, kritRegenspendeField);
+        builder.nextLine();
+        builder.append(drossabflussTatLabel, drossabflussTatField);
+        builder.nextLine();
+        builder.append(minDrosselabflussLabel, minDrosselabflussField);
+    }
+
+    private void createFields() {
+        behandlungsFlaecheField = new JTextField();
+        behandlungsFlaecheLabel = new JLabel("Behandlungsbedürftige Fläche");
+        nichtBehandlungsFlaecheField = new JTextField();
+        nichtBehandlungsFlaecheLabel = new JLabel("Nicht behandlungsbedürftige Fläche");
+        kritRegenspendeField = new JTextField();
+        kritRegenspendeLabel = new JLabel("Kritische Regenspende");
+        drossabflussTatField = new JTextField();
+        drossabflussTatLabel = new JLabel("Drosselabfluss tatsächlich");
+        minDrosselabflussField = new JTextField();
+        minDrosselabflussLabel = new JLabel("Mindestdrosselabfluss");
     }
 
     public List<JComponent> getFields() {

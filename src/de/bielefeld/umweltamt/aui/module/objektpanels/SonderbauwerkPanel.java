@@ -300,8 +300,6 @@ public class SonderbauwerkPanel extends JPanel {
                 this.hauptModul.getObjekt().getId());
         this.typePanel.setData(this.sonderbauwerk);
         log.debug("Sonderbauwerk aus DB geholt: " + this.sonderbauwerk);
-        
-
     }
     
     /**
@@ -326,7 +324,7 @@ public class SonderbauwerkPanel extends JPanel {
             if (this.sonderbauwerk.getErstellDat() != null) {
                 getErstellDatDatum().setDate(this.sonderbauwerk.getErstellDat());
             }
-            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());            
+            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
             this.typePanel.switchTypDetailPanel((String) typBox.getSelectedItem());
         }
     }

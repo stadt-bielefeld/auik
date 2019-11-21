@@ -24,7 +24,9 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
@@ -33,7 +35,7 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
-public class ALPanel extends SonderbauwerkTypPanel {
+public class ALPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
 
     /** Logging */
@@ -41,15 +43,46 @@ public class ALPanel extends SonderbauwerkTypPanel {
 
     private BasisObjektBearbeiten parentModule;
 
+    //Fields and labels
+    private JTextField drossabflussField;
+    private JTextField volumenField;
+    private JTextField ueberlaufhaeufigkeitField;
+    private JTextField entleerungsZeitField;
+
+    private JLabel drosselabflussLabel;
+    private JLabel volumenLabel;
+    private JLabel ueberlaufHaeufigkeitLabel;
+    private JLabel entleerungsZeitLabel;
+
     public ALPanel (BasisObjektBearbeiten parentModule) {
         this.name = "AL";
         this.parentModule = parentModule;
+
+        createFields();
 
         FormLayout layout = new FormLayout(
                 "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        builder.append(drosselabflussLabel, drossabflussField);
+        builder.nextLine();
+        builder.append(volumenLabel, volumenField);
+        builder.nextLine();
+        builder.append(ueberlaufHaeufigkeitLabel, ueberlaufhaeufigkeitField);
+        builder.nextLine();
+        builder.append(entleerungsZeitLabel, entleerungsZeitField);
+    }
+
+    public void createFields() {
+        drossabflussField = new JTextField();
+        drosselabflussLabel = new JLabel("Drossabfluss tatsächlich");
+        volumenField = new JTextField();
+        volumenLabel = new JLabel("Becken- bzw. Speichervolumen");
+        ueberlaufhaeufigkeitField = new JTextField();
+        ueberlaufHaeufigkeitLabel = new JLabel("Jährliche Überlaufhäufigkeit");
+        entleerungsZeitField = new JTextField();
+        entleerungsZeitLabel = new JLabel("Entleerungszeit");
     }
 
     public List<JComponent> getFields() {

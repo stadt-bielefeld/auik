@@ -21,23 +21,38 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-import java.util.List;
-
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
-import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 
-public abstract class SonderbauwerkTypPanel extends JPanel{
+/**
+ * Abstract class used as base for every Sonderbauwerk type panel
+ */
+public abstract class AbstractSonderbauwerkTypPanel extends JPanel{
 
+    private static final long serialVersionUID = 0L;
+
+    /**
+     * Panel name
+     */
     protected String name;
 
+    /**
+     * Save data to model
+     */
     public abstract void save();
 
+    /**
+     * Get the panel name
+     * @return Panel name as String
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Set the record for this panel
+     * @param data Sonderbauwerk record
+     */
     public abstract void setData(Sonderbauwerk data);
 }

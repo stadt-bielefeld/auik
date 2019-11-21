@@ -37,7 +37,7 @@ public class SonderbauwerkTypTab extends JPanel {
     /**
      * Panel to show as content
      */
-    private SonderbauwerkTypPanel content;
+    private AbstractSonderbauwerkTypPanel content;
 
     /**
      * Parent module
@@ -127,6 +127,13 @@ public class SonderbauwerkTypTab extends JPanel {
      */
     public void setData(Sonderbauwerk sonderbauwerk) {
         this.sonderbauwerk = sonderbauwerk;
+        this.getRRBPanel().setData(sonderbauwerk);
+        this.getRKBPanel().setData(sonderbauwerk);
+        this.getRBFPanel().setData(sonderbauwerk);
+        this.getBFPanel().setData(sonderbauwerk);
+        this.getRUTPanel().setData(sonderbauwerk);
+        this.getRSTPanel().setData(sonderbauwerk);
+        this.getALPanel().setData(sonderbauwerk);
     }
 
     /**
@@ -136,6 +143,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public RRBPanel getRRBPanel() {
         if (this.rrbPanel == null) {
             this.rrbPanel = new RRBPanel(this.parentModule);
+            this.rrbPanel.setData(sonderbauwerk);
         }
         return this.rrbPanel;
     }
@@ -147,6 +155,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public RKBPanel getRKBPanel() {
         if (this.rkbPanel == null) {
             this.rkbPanel = new RKBPanel(this.parentModule);
+            this.rkbPanel.setData(sonderbauwerk);
         }
         return this.rkbPanel;
     }
@@ -158,6 +167,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public RBFPanel getRBFPanel() {
         if (this.rbfPanel == null) {
             this.rbfPanel = new RBFPanel(this.parentModule);
+            this.rbfPanel.setData(sonderbauwerk);
         }
         return this.rbfPanel;
     }
@@ -169,6 +179,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public BFPanel getBFPanel() {
         if (this.bfPanel == null) {
             this.bfPanel = new BFPanel(this.parentModule);
+            this.bfPanel.setData(sonderbauwerk);
         }
         return this.bfPanel;
     }
@@ -180,6 +191,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public RUTPanel getRUTPanel() {
         if (this.rutPanel == null) {
             this.rutPanel = new RUTPanel(this.parentModule);
+            this.rutPanel.setData(sonderbauwerk);
         }
         return this.rutPanel;
     }
@@ -191,6 +203,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public RSTPanel getRSTPanel() {
         if (this.rstPanel == null) {
             this.rstPanel = new RSTPanel(this.parentModule);
+            this.rstPanel.setData(sonderbauwerk);
         }
         return this.rstPanel;
     }
@@ -202,6 +215,7 @@ public class SonderbauwerkTypTab extends JPanel {
     public ALPanel getALPanel() {
         if (this.alPanel == null) {
             this.alPanel = new ALPanel(this.parentModule);
+            this.alPanel.setData(sonderbauwerk);
         }
         return this.alPanel;
     }
@@ -210,7 +224,7 @@ public class SonderbauwerkTypTab extends JPanel {
      * Get the content panel
      * @return The content panel
      */
-    public SonderbauwerkTypPanel getContent() {
+    public AbstractSonderbauwerkTypPanel getContent() {
         return this.content;
     }
 
@@ -218,7 +232,7 @@ public class SonderbauwerkTypTab extends JPanel {
      * Set the content panel
      * @param comp The new content panel
      */
-    public void setContentPanel(SonderbauwerkTypPanel comp) {
+    public void setContentPanel(AbstractSonderbauwerkTypPanel comp) {
         this.removeAll();
         this.content = comp;
         this.add(comp);

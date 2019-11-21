@@ -24,7 +24,9 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
@@ -33,7 +35,7 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
-public class RSTPanel extends SonderbauwerkTypPanel {
+public class RSTPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
 
     /** Logging */
@@ -41,15 +43,28 @@ public class RSTPanel extends SonderbauwerkTypPanel {
 
     private BasisObjektBearbeiten parentModule;
 
+    //Fields and labels
+    private JTextField speicherVolumenField;
+
+    private JLabel speicherVolumenLabel;
+
     public RSTPanel (BasisObjektBearbeiten parentModule) {
         this.name = "RST";
         this.parentModule = parentModule;
+
+        createFields();
 
         FormLayout layout = new FormLayout(
                 "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        builder.append(speicherVolumenLabel, speicherVolumenField);
+    }
+
+    public void createFields() {
+        speicherVolumenField = new JTextField();
+        speicherVolumenLabel = new JLabel("Vorhandenes Speichervolumen");
     }
 
     public List<JComponent> getFields() {

@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -36,7 +37,7 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
-public class RRBPanel extends SonderbauwerkTypPanel {
+public class RRBPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
 
     /** Logging */
@@ -44,7 +45,8 @@ public class RRBPanel extends SonderbauwerkTypPanel {
 
     private BasisObjektBearbeiten parentModule;
 
-    private JComboBox funktionenBox;
+    private JComboBox<String> funktionenBox;
+    private DefaultComboBoxModel<String> funktionenModel;
     private JTextField drosselabflussField;
     private JTextField volumenField;
     private JTextField ueberlaufhaeufigkeitField;
@@ -54,14 +56,10 @@ public class RRBPanel extends SonderbauwerkTypPanel {
         this.name = "RRB";
         this.parentModule = parentModule;
 
-        funktionenBox = new JComboBox<String>();
-        drosselabflussField = new JTextField();
-        volumenField = new JTextField();
-        ueberlaufhaeufigkeitField = new JTextField();
-        entleerungszeit = new JTextField();
+        createFields();
 
         FormLayout layout = new FormLayout(
-                "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
+                "r:130dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
@@ -74,6 +72,19 @@ public class RRBPanel extends SonderbauwerkTypPanel {
         builder.append("Jährlicher Überlaufhäufigkeit", ueberlaufhaeufigkeitField);
         builder.nextLine();
         builder.append("Entleerungszeit", entleerungszeit);
+    }
+
+    private void createFields() {
+
+        funktionenModel = new DefaultComboBoxModel<String>(new String[]{
+                "-", "Rückhaltung vor Einleitung",
+                "Rückhalt im Kanalnetz", "Rücknahme für Brauchwasser im Betrieb",
+                "nur für Störfälle"});
+        funktionenBox = new JComboBox<String>(funktionenModel);
+        drosselabflussField = new JTextField();
+        volumenField = new JTextField();
+        ueberlaufhaeufigkeitField = new JTextField();
+        entleerungszeit = new JTextField();
     }
 
     public void save() {
