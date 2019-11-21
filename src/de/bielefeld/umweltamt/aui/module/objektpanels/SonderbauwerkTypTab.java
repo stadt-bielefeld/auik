@@ -34,7 +34,14 @@ public class SonderbauwerkTypTab extends JPanel {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
+    /**
+     * Panel to show as content
+     */
     private SonderbauwerkTypPanel content;
+
+    /**
+     * Parent module
+     */
     private BasisObjektBearbeiten parentModule;
 
     /**
@@ -51,56 +58,81 @@ public class SonderbauwerkTypTab extends JPanel {
     private RSTPanel rstPanel;
     private ALPanel alPanel;
 
+    /**
+     * Constructor
+     */
     public SonderbauwerkTypTab (BasisObjektBearbeiten parentModule) {
         this.parentModule = parentModule;
     }
 
+    /**
+     * Switch the panel content according to the given type string
+     * @param type New panel content type
+     */
     public void switchTypDetailPanel(String type) {
-        int typePanelIndex = this.parentModule.getTabbedPane().indexOfComponent(this);
-        if (typePanelIndex == -1) {
-            log.error("SonderbauwerkTypPanel index not set");
+        if (type == null) {
+            this.parentModule.setSonderbauwerkTypPanelEnabled(false);
             return;
         }
-        this.setVisible(true);
+
+        int typePanelIndex = this.parentModule.getTabbedPane().indexOfComponent(this);
+        if (typePanelIndex == -1) {
+            this.parentModule.setSonderbauwerkTypPanelEnabled(true);
+            typePanelIndex = this.parentModule.getTabbedPane().indexOfComponent(this);
+        }
         switch ((String) type) {
             case "RRB":
                 this.setContentPanel(getRRBPanel());
                 getRRBPanel().setData(this.sonderbauwerk);
+                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RKB":
                 this.setContentPanel(getRKBPanel());
                 getRKBPanel().setData(this.sonderbauwerk);
+                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RBF":
                 this.setContentPanel(getRBFPanel());
                 getRBFPanel().setData(this.sonderbauwerk);
+                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "BF":
                 this.setContentPanel(getBFPanel());
                 getBFPanel().setData(this.sonderbauwerk);
+                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RÜT":
                 this.setContentPanel(getRUTPanel());
                 getRUTPanel().setData(this.sonderbauwerk);
+                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RST":
                 this.setContentPanel(getRSTPanel());
                 getRSTPanel().setData(this.sonderbauwerk);
+                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             case "AL":
                 this.setContentPanel(getALPanel());
                 getALPanel().setData(this.sonderbauwerk);
+                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
                 break;
             default:
-                this.parentModule.getSonderbauwerkTypTab().setVisible(false);
+                this.parentModule.setSonderbauwerkTypPanelEnabled(false);
         }
-        this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
     }
 
+    /**
+     * Set data record
+     * @param sonderbauwerk Record
+     */
     public void setData(Sonderbauwerk sonderbauwerk) {
         this.sonderbauwerk = sonderbauwerk;
     }
 
+    /**
+     * Get the RBBPanel
+     * @return The RBBPanel
+     */
     public RRBPanel getRRBPanel() {
         if (this.rrbPanel == null) {
             this.rrbPanel = new RRBPanel(this.parentModule);
@@ -108,6 +140,10 @@ public class SonderbauwerkTypTab extends JPanel {
         return this.rrbPanel;
     }
 
+    /**
+     * Get the RKBPanel
+     * @return The RKBPanel
+     */
     public RKBPanel getRKBPanel() {
         if (this.rkbPanel == null) {
             this.rkbPanel = new RKBPanel(this.parentModule);
@@ -115,6 +151,10 @@ public class SonderbauwerkTypTab extends JPanel {
         return this.rkbPanel;
     }
 
+    /**
+     * Get the RBFPanel
+     * @return The RBFPanel
+     */
     public RBFPanel getRBFPanel() {
         if (this.rbfPanel == null) {
             this.rbfPanel = new RBFPanel(this.parentModule);
@@ -122,6 +162,10 @@ public class SonderbauwerkTypTab extends JPanel {
         return this.rbfPanel;
     }
 
+    /**
+     * Get the BFPanel
+     * @return The BFPanel
+     */
     public BFPanel getBFPanel() {
         if (this.bfPanel == null) {
             this.bfPanel = new BFPanel(this.parentModule);
@@ -129,6 +173,10 @@ public class SonderbauwerkTypTab extends JPanel {
         return this.bfPanel;
     }
 
+    /**
+     * Get the RUTPanel
+     * @return The RUTPanel
+     */
     public RUTPanel getRUTPanel() {
         if (this.rutPanel == null) {
             this.rutPanel = new RUTPanel(this.parentModule);
@@ -136,6 +184,10 @@ public class SonderbauwerkTypTab extends JPanel {
         return this.rutPanel;
     }
 
+    /**
+     * Get the RSTPanel
+     * @return The RSTPanel
+     */
     public RSTPanel getRSTPanel() {
         if (this.rstPanel == null) {
             this.rstPanel = new RSTPanel(this.parentModule);
@@ -143,6 +195,10 @@ public class SonderbauwerkTypTab extends JPanel {
         return this.rstPanel;
     }
 
+    /**
+     * Get the ALPanel
+     * @return The ALPanel
+     */
     public ALPanel getALPanel() {
         if (this.alPanel == null) {
             this.alPanel = new ALPanel(this.parentModule);
@@ -150,16 +206,28 @@ public class SonderbauwerkTypTab extends JPanel {
         return this.alPanel;
     }
 
+    /**
+     * Get the content panel
+     * @return The content panel
+     */
     public SonderbauwerkTypPanel getContent() {
         return this.content;
     }
 
+    /**
+     * Set the content panel
+     * @param comp The new content panel
+     */
     public void setContentPanel(SonderbauwerkTypPanel comp) {
         this.removeAll();
         this.content = comp;
         this.add(comp);
     }
 
+    /**
+     * Get the content panel name
+     * @return The name as string
+     */
     public String getContentName() {
         if (this.content != null) {
             return this.content.getName();
@@ -168,6 +236,10 @@ public class SonderbauwerkTypTab extends JPanel {
         }
     }
 
+    /**
+     * Set the content panels name
+     * @param name The new name
+     */
     public void setContentName(String name) {
         this.content.setName(name);
     }

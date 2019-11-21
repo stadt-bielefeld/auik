@@ -870,6 +870,20 @@ public class BasisObjektBearbeiten extends AbstractModul {
         worker.start();
     }
 
+    /**
+     * Enabled/Disable the sonderbauwerktyp tab
+     * @param enabled True to enable, else false
+     */
+    public void setSonderbauwerkTypPanelEnabled (boolean enabled) {
+        int tabIndex = getTabbedPane().indexOfComponent(getSonderbauwerkTypTab());
+        if (enabled == true && tabIndex == -1) {
+            getTabbedPane().addTab(getSonderbauwerkTypTab().getContentName(), getSonderbauwerkTypTab());
+        }
+        if (enabled == false && tabIndex > -1) {
+            getTabbedPane().remove(getSonderbauwerkTypTab());
+        }
+    }
+
     private void clearAll() {
         log.debug("Leere alle Felder");
 
