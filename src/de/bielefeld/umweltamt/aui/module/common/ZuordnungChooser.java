@@ -76,7 +76,7 @@ public class ZuordnungChooser<T> extends JPanel{
         addButton = new JButton("Hinzufügen >");
         removeButton = new JButton("< Entfernen");
 
-        FormLayout chooserLayout = new FormLayout("150dlu, 5dlu, 90dlu, 5dlu, 150dlu", // Spalten
+        FormLayout chooserLayout = new FormLayout("150dlu, 5dlu, 65dlu, 5dlu, 150dlu", // Spalten
                 "20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 200dlu, 3dlu, 20dlu"); // zeilen
 
         @SuppressWarnings("deprecation")

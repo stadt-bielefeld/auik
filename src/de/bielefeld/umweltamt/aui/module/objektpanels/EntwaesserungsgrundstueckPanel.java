@@ -34,8 +34,12 @@ import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -51,12 +55,15 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
+import de.bielefeld.umweltamt.aui.module.common.ZuordnungChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -88,34 +95,119 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
     private JTable objektverknuepfungTabelle = null;
     private JButton selectObjektButton = null;
     private Action verknuepfungLoeschAction;
-    private JPopupMenu verknuepfungPopup;
+	private JPopupMenu verknuepfungPopup;
+	
+	//Fields and Labels and Models
+	JComboBox<CBoxItem> einleitungsbereich;
+	JTextField gebName;
+	JTextField konzeptNr;
+	JTextField gebGroesse;
+	JTextField regenspende;
+	JTextField regenhaufigkeit;
+	JTextField regendauer;
+	JCheckBox erlaubnisfrei;
+	JComboBox<CBoxItem> einbauart;
+	ZuordnungChooser<Abaverfahren> abaverfahrens;
+
+	JLabel einleitungsbereichLabel;
+	JLabel gebNameLabel;
+	JLabel konzeptNrLabel;
+	JLabel gebGroesseLabel;
+	JLabel regenspendeLabel;
+	JLabel regenhaufigkeitLabel;
+	JLabel regendauerLabel;
+	JLabel erlaubnisfreiLabel;
+	JLabel einbauartLabel;
+	JLabel abaverfahrensLabel;
+
+	DefaultComboBoxModel<CBoxItem> einleitungsbereichModel;
+	DefaultComboBoxModel<CBoxItem> einbauartModel;
 
     public EntwaesserungsgrundstueckPanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Einleitungsstelle";
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-        		"r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
-            "");
+        		"r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu, 100dlu", // Spalten
+			"");
+			
+		createFields();
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
 
         builder.appendSeparator("ELKA");
         builder.append("Erstellung:", getErstellDatDatum());
-        builder.append("Bezeichnung:", getBezeichnungFeld());
-        builder.nextLine();
+		builder.append("Bezeichnung:", getBezeichnungFeld());
+		builder.nextLine();
+
+		builder.append(einleitungsbereichLabel, einleitungsbereich);
+		builder.nextLine();
+		builder.append(gebNameLabel, gebName);
+		builder.nextLine();
+		builder.append(regenspendeLabel, regenspende);
+		builder.append(regenhaufigkeitLabel, regenhaufigkeit);
+		builder.append(regendauerLabel, regendauer);
+		builder.nextLine();
+		builder.append(erlaubnisfreiLabel, erlaubnisfrei);
+		builder.nextLine();
+		builder.append(einbauartLabel, einbauart);
+		builder.nextLine();
+		builder.appendSeparator(abaverfahrensLabel.getText());
+		builder.append(abaverfahrens, 8);
+
+		builder.nextLine();
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
+        builder.append(objektverknuepfungScroller, 8);
         builder.nextLine();
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
         		getSelectObjektButton(), getSaveEntwaesserungsgrundstueckButton());
         builder.append(buttonBar, 7);
 
-    }
+	}
+	
+	public void createFields() {
+		//CboxModels
+		einleitungsbereichModel = new DefaultComboBoxModel<CBoxItem>(new CBoxItem[]{
+			new CBoxItem(null, "-"),
+			new CBoxItem(0, "Einleitungs aus nicht öffentlichem Bereich"),
+			new CBoxItem(1, "Einleitung aus öffentlichem Bereich"),
+			new CBoxItem(2, "Einleitung aus außerörtlichen Straßen")
+		});
+
+		einbauartModel = new DefaultComboBoxModel<CBoxItem>(new CBoxItem[]{
+			new CBoxItem(null, "-"),
+			new CBoxItem(1, "Einbau im bestehenden Straßenablauf"),
+			new CBoxItem(2, "baulicher Ersatz des Straßenablaufs"),
+			new CBoxItem(3, "separates Schachtbauwerk")
+		});
+
+		//Fields and Labels
+		einleitungsbereich = new JComboBox<CBoxItem>(einleitungsbereichModel);
+		gebName = new JTextField();
+		konzeptNr = new JTextField();
+		gebGroesse = new JTextField();
+		regenspende = new JTextField();
+		regenhaufigkeit = new JTextField();
+		regendauer = new JTextField();
+		erlaubnisfrei = new JCheckBox();
+		einbauart = new JComboBox<CBoxItem>(einbauartModel);
+		abaverfahrens = new ZuordnungChooser<Abaverfahren>();
+
+		einleitungsbereichLabel = new JLabel("Einleitungsbereich");
+		gebNameLabel = new JLabel("Name des Entwässerungsgebiet");
+		konzeptNrLabel = new JLabel("Abwasserbeseitigungskonzept");
+		gebGroesseLabel = new JLabel("Größe des Entwässerungsgebiet");
+		regenspendeLabel = new JLabel("Regenspende");
+		regenhaufigkeitLabel = new JLabel("Regenhäufigkeit");
+		regendauerLabel = new JLabel("Regendauer");
+		erlaubnisfreiLabel = new JLabel("Erlaubnisfreie Einleitung");
+		einbauartLabel = new JLabel("Einbauart");
+		abaverfahrensLabel = new JLabel("Abwasserbehandlungsverfahren");
+	}
     
 	/**
      * Methode verknüpft das lokal erstelle Objekt einleitungstelle
