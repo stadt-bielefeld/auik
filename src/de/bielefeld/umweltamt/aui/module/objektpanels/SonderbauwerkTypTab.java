@@ -21,6 +21,8 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.FlowLayout;
+
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -63,6 +65,7 @@ public class SonderbauwerkTypTab extends JPanel {
      */
     public SonderbauwerkTypTab (BasisObjektBearbeiten parentModule) {
         this.parentModule = parentModule;
+        this.setLayout(new FlowLayout(FlowLayout.LEFT));
     }
 
     /**

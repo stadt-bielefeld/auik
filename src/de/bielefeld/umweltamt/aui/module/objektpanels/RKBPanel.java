@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
@@ -35,6 +36,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 
 public class RKBPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
@@ -45,11 +47,11 @@ public class RKBPanel extends AbstractSonderbauwerkTypPanel {
     private BasisObjektBearbeiten parentModule;
 
     //Fields
-    JComboBox<String> betriebsartBox;
-    JComboBox<String> beckenartBox;
-    JComboBox<String> entlastungsartBox;
-    JComboBox<String> anordungBox;
-    JComboBox<String> drosselabflussBox;
+    JComboBox<CBoxItem> betriebsartBox;
+    JComboBox<CBoxItem> beckenartBox;
+    JComboBox<CBoxItem> entlastungsartBox;
+    JComboBox<CBoxItem> anordungBox;
+    JComboBox<CBoxItem> drosselabflussBox;
     JCheckBox drosselschluss;
 
     JTextField behandFlaeche;
@@ -78,17 +80,18 @@ public class RKBPanel extends AbstractSonderbauwerkTypPanel {
     JLabel minDrosselabflussLabel;
 
     //Models
-    DefaultComboBoxModel<String> betriebsartModel;
-    DefaultComboBoxModel<String> beckenartModel;
-    DefaultComboBoxModel<String> entlastungsartModel;
-    DefaultComboBoxModel<String> anordnungModel;
-    DefaultComboBoxModel<String> drosselabflussModel;
+    DefaultComboBoxModel<CBoxItem> betriebsartModel;
+    DefaultComboBoxModel<CBoxItem> beckenartModel;
+    DefaultComboBoxModel<CBoxItem> entlastungsartModel;
+    DefaultComboBoxModel<CBoxItem> anordnungModel;
+    DefaultComboBoxModel<CBoxItem> drosselabflussModel;
 
 public RKBPanel (BasisObjektBearbeiten parentModule) {
         this.name = "RKB";
         this.parentModule = parentModule;
 
         createFields();
+        createMappings();
 
         FormLayout layout = new FormLayout(
                 "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
@@ -143,23 +146,39 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
 
     private void createFields() {
         //Initialize Models
-        betriebsartModel = new DefaultComboBoxModel<String>(new String[]{
-                "-", "ständig gefüllt", "nicht ständig gefüllt"});
-        beckenartModel = new DefaultComboBoxModel<String>(new String[]{
-                "-", "Fangbecken", "Durchlaufbecken", "Verbundbecken"});
-        entlastungsartModel = new DefaultComboBoxModel<String>(new String[]{
-                "-", "Entlasung oben", "Entlastung unten", "Entlastung mittig"});
-        anordnungModel = new DefaultComboBoxModel<String>(new String[]{
-                "-", "im Hauptschluss", "im Nebenschluss"});
-        drosselabflussModel = new DefaultComboBoxModel<String>(new String[]{
-                "-", "mit ständigem Drosselabfluss", "mit zeitweiligem Drosselabfluss"});
-
+        betriebsartModel = new DefaultComboBoxModel<CBoxItem>(new CBoxItem[]{
+            new CBoxItem(null, "-"),
+            new CBoxItem(1, "ständig gefüllt"),
+            new CBoxItem(0, "nicht ständig gefüllt")
+        });
+        beckenartModel = new DefaultComboBoxModel<CBoxItem>(new CBoxItem[]{
+            new CBoxItem(null, "-"),
+            new CBoxItem(0, "Fangbecken"),
+            new CBoxItem(1, "Durchlaufbecken"),
+            new CBoxItem(2, "Verbundbecken")
+        });
+        entlastungsartModel = new DefaultComboBoxModel<CBoxItem>(new CBoxItem[]{
+            new CBoxItem(null, "-"),
+            new CBoxItem(0, "Entlastung oben"),
+            new CBoxItem(1, "Entlastung unten"),
+            new CBoxItem(2, "Entlastung mittig")
+        });
+        anordnungModel = new DefaultComboBoxModel<CBoxItem>(new CBoxItem[]{
+            new CBoxItem(null, "-"),
+            new CBoxItem(0, "im Hauptschluss"),
+            new CBoxItem(1, "im Nebenschluss")
+        });
+        drosselabflussModel = new DefaultComboBoxModel<>(new CBoxItem[]{
+            new CBoxItem(null, "-"),
+            new CBoxItem(0, "mit ständigem Drosselabfluss"),
+            new CBoxItem(1, "mit zweiteiligem Drosselabfluss")
+        });
         //Initialize fields
-        betriebsartBox = new JComboBox<String>(betriebsartModel);
-        beckenartBox = new JComboBox<String>(beckenartModel);
-        entlastungsartBox = new JComboBox<String>(entlastungsartModel);
-        anordungBox = new JComboBox<String>(anordnungModel);
-        drosselabflussBox = new JComboBox<String>(drosselabflussModel);
+        betriebsartBox = new JComboBox<CBoxItem>(betriebsartModel);
+        beckenartBox = new JComboBox<CBoxItem>(beckenartModel);
+        entlastungsartBox = new JComboBox<CBoxItem>(entlastungsartModel);
+        anordungBox = new JComboBox<CBoxItem>(anordnungModel);
+        drosselabflussBox = new JComboBox<CBoxItem>(drosselabflussModel);
         drosselschluss = new JCheckBox();
 
         behandFlaeche = new JTextField();
@@ -194,6 +213,73 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
                 setBetriebsArt((String) betriebsartBox.getSelectedItem());
             }
         });
+    }
+
+    private void createMappings() {
+        //TODO: create Mappings for
+        //drosselschluss
+        //nBehandFlaeche
+        //vorhandVolumen
+        //minDrosselabfluss
+        //flaechenbeschickung
+        //beckenvolumen
+        //minVolumen
+        //spezVolumen
+        this.fieldMapping = new HashMap<String, RecordMap>();
+        this.fieldMapping.put("betriebsartBox", new RecordMap("betriebsartOpt", "java.lang.Integer"));
+        this.fieldMapping.put("beckenartBox", new RecordMap("beckenartOpt", "java.lang.Integer"));
+        this.fieldMapping.put("entlastungsartBox", new RecordMap("entlastungsartOpt", "java.lang.Integer"));
+        this.fieldMapping.put("anordungBox", new RecordMap("anordnungOpt", "java.lang.Integer"));
+        this.fieldMapping.put("drosselabfluss", new RecordMap("drossAbflussOpt", "java.lang.Integer"));
+        this.fieldMapping.put("kritRegenspende", new RecordMap("qrkrit", "java.math.BigDecimal"));
+        this.fieldMapping.put("beckentiefe", new RecordMap("beckentiefe", "java.math.BigDecimal"));
+        this.fieldMapping.put("beckenoberfl", new RecordMap("WOberflaeche", "java.lang.Integer"));
+        this.fieldMapping.put("drosselabflussTat", new RecordMap("drosselabfluss", "java.math.BigDecimal"));
+    }
+
+    public Object getFieldValue(String fieldName) {
+        //TODO: add missing field return values
+        switch(fieldName) {
+            case "betriebsartBox":
+                return ((CBoxItem) betriebsartBox.getSelectedItem()).getId();
+            case "beckenartBox":
+                return ((CBoxItem) beckenartBox.getSelectedItem()).getId();
+            case "entlastungsartBox":
+                return ((CBoxItem) entlastungsartBox.getSelectedItem()).getId();
+            case "anordungBox":
+                return ((CBoxItem) anordungBox.getSelectedItem()).getId();
+            case "drosselabflussBox":
+                return ((CBoxItem) drosselabflussBox.getSelectedItem()).getId();
+            case "drosselschluss":
+                return drosselschluss.isSelected();
+            case "behandFlaeche":
+                return parseBigDecimalFromString(behandFlaeche.getText());
+            case "nBehandFlaeche":
+                //TODO: Field
+                return null;
+            case "kritRegenspende":
+                return parseBigDecimalFromString(kritRegenspende.getText());
+            case "vorhandVolumen":
+                //TODO: Field
+                return null;
+            case "beckentiefe":
+                return parseBigDecimalFromString(beckentiefe.getText());
+            case "beckenoberfl":
+                return parseIntegerFromString(beckenoberfl.getText());
+            case "drosselabflussTat":
+                return parseBigDecimalFromString(drosselabflussTat.getText());
+            case "spezVolumen":
+                return null;
+            case "minVolumen":
+                return null;
+            case "beckenvolumen":
+                return null;
+            case "flaechenbeschickung":
+                return null;
+            case "minDrosselabfluss":
+                return null;
+            default: throw new IllegalArgumentException("Unkown field name: " + fieldName);
+        }
     }
 
     private void setBetriebsArt(String betriebsart) {
@@ -269,9 +355,5 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
                 drosselschluss.setEnabled(false);
                 break;
         }
-    }
-
-    public Object getFieldValue(String fieldName) {
-        return null;
     }
 }

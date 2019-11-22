@@ -33,6 +33,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 
 /**
  * Panel containing a form to edit RRB infos.
@@ -57,6 +58,7 @@ public class RRBPanel extends AbstractSonderbauwerkTypPanel {
         this.parentModule = parentModule;
 
         createFields();
+        createMappings();
 
         FormLayout layout = new FormLayout(
                 "r:130dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten

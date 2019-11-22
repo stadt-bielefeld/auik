@@ -169,31 +169,4 @@ public abstract class AbstractSonderbauwerkTypPanel extends JPanel{
             return type;
         }
     }
-
-    /**
-     * Item class containing key and displayValue for a combobox
-     */
-    protected class CBoxItem {
-
-        private Integer id;
-
-        private String value;
-
-        public CBoxItem(Integer id, String value) {
-            this.id = id;
-            this.value = value;
-        }
-
-        public Integer getId() {
-            return this.id;
-        }
-
-        public String getValue() {
-            return this.value;
-        }
-
-        public String toString() {
-            return this.value;
-        }
-    }
 }

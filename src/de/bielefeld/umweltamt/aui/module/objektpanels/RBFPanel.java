@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -133,9 +134,20 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
         filterVolumenLabel = new JLabel("Spetifisches Filtervolumen");
 
         schutzgueterChooser = new ZuordnungChooser<String>("Schutzgüter");
+
+        createMappings();
+    }
+
+    private void createMappings() {
+        this.fieldMapping = new HashMap<String, RecordMap>();
     }
 
     public Object getFieldValue(String fieldName) {
         return null;
+    }
+
+    public void save() {
+        super.save();
+        //TODO: save schutgueter
     }
 }

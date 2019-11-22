@@ -90,6 +90,11 @@ public class RUTPanel extends AbstractSonderbauwerkTypPanel {
         drossabflussTatLabel = new JLabel("Drosselabfluss tatsächlich");
         minDrosselabflussField = new JTextField();
         minDrosselabflussLabel = new JLabel("Mindestdrosselabfluss");
+        createMappings();
+    }
+
+    private void createMappings() {
+        
     }
 
     public Object getFieldValue(String fieldName) {

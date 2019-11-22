@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -67,7 +68,17 @@ public class RSTPanel extends AbstractSonderbauwerkTypPanel {
         speicherVolumenLabel = new JLabel("Vorhandenes Speichervolumen");
     }
 
+    private void createMappings() {
+        this.fieldMapping = new HashMap<String, RecordMap>();
+        this.fieldMapping.put("speicherVolumenField", new RecordMap("speichervolumen", "java.lang.Integer"));
+    }
+
     public Object getFieldValue(String fieldName) {
-        return null;
+                switch (fieldName) {
+            case "speicherVolumenField":
+                return parseIntegerFromString(speicherVolumenField.getText());
+            default: throw new IllegalArgumentException("Unkown field name: " + fieldName);
+        }
+
     }
 }
