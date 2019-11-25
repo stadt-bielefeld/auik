@@ -97,6 +97,10 @@ public class RUTPanel extends AbstractSonderbauwerkTypPanel {
         
     }
 
+    public void fetchFormData() {
+        
+    }
+
     public Object getFieldValue(String fieldName) {
         return null;
     }

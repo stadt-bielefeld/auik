@@ -30,6 +30,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.swing.AbstractAction;
@@ -146,6 +147,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 		builder.nextLine();
 		builder.append(regenspendeLabel, regenspende);
 		builder.append(regenhaufigkeitLabel, regenhaufigkeit);
+		builder.nextLine();
 		builder.append(regendauerLabel, regendauer);
 		builder.nextLine();
 		builder.append(erlaubnisfreiLabel, erlaubnisfrei);
@@ -269,11 +271,38 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
      * @return boolean
      */
     private boolean saveEntwaesserungsgrundstueckDaten() {
-    	boolean success;
-    	
+		boolean success;
+		if (this.entwaesserungsgrundstueck == null) {
+			this.entwaesserungsgrundstueck = new Entwaesserungsgrundstueck();
+			this.entwaesserungsgrundstueck.setObjekt(this.hauptModul.getObjekt());
+		}
+		if (((CBoxItem) einleitungsbereich.getSelectedItem()).getId() != null) {
+			this.entwaesserungsgrundstueck.setEinlBereichOpt(
+				((CBoxItem) einleitungsbereich.getSelectedItem()).getId());
+		}
+		if (gebName.getText() != null  && !gebName.getText().isEmpty()) {
+			this.entwaesserungsgrundstueck.setNameEtwGebiet(gebName.getText());
+		}
+		if (konzeptNr.getText() != null && !konzeptNr.getText().isEmpty()) {
+			this.entwaesserungsgrundstueck.setAbwbeskonNr(konzeptNr.getText());
+		}
+		if (gebGroesse.getText() != null && !gebGroesse.getText().isEmpty()) {
+			this.entwaesserungsgrundstueck.setGrEntwGebiet(Integer.parseInt(gebGroesse.getText()));
+		}
+		if (regenspende.getText() != null && !regenspende.getText().isEmpty()) {
+			this.entwaesserungsgrundstueck.setRegenspende(new BigDecimal(regenspende.getText()));
+		}
+		if (regenhaufigkeit.getText() != null && !regenhaufigkeit.getText().isEmpty()) {
+			this.entwaesserungsgrundstueck.setRegenhaeufigkeit(new BigDecimal(regenhaufigkeit.getText()));
+		}
+		this.entwaesserungsgrundstueck.setErlFreiElTog(erlaubnisfrei.isSelected());
+		if (((CBoxItem) einbauart.getSelectedItem()).getId() != null) {
+			this.entwaesserungsgrundstueck.setEinbauartOpt(((CBoxItem) einbauart.getSelectedItem()).getId());
+		}
+
     	this.entwaesserungsgrundstueck.setAktualDat(new Date());
     	
-    	Date erstellDat = this.erstellDatDatum.getDate();
+    	Date erstellDat = this.erstellDatDatum.getDate() != null? this.erstellDatDatum.getDate(): new Date();
     	this.entwaesserungsgrundstueck.setErstellDat(erstellDat);
     
     	success = this.entwaesserungsgrundstueck.merge();

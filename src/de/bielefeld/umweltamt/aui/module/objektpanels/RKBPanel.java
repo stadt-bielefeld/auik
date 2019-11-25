@@ -237,6 +237,10 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         this.fieldMapping.put("drosselabflussTat", new RecordMap("drosselabfluss", "java.math.BigDecimal"));
     }
 
+    public void fetchFormData() {
+        
+    }
+
     public Object getFieldValue(String fieldName) {
         //TODO: add missing field return values
         switch(fieldName) {

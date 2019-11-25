@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -59,6 +60,8 @@ public abstract class AbstractSonderbauwerkTypPanel extends JPanel{
      * Underlying sonderbauwerk record
      */
     protected Sonderbauwerk record;
+
+    public abstract void fetchFormData();
 
     /**
      * Get value of a field by field name
@@ -138,6 +141,18 @@ public abstract class AbstractSonderbauwerkTypPanel extends JPanel{
      */
     public void setRecord(Sonderbauwerk record) {
         this.record = record;
+    }
+
+    /**
+     * Set the value of a textfield
+     * @param textfield Textfield to set
+     * @param value Object which will be set as value
+     */
+    public void setTextFieldContent(JTextField textfield, Object value) {
+        if (value == null) {
+            return;
+        }
+        textfield.setText(value.toString());
     }
 
     /**

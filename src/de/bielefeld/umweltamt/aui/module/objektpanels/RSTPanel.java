@@ -73,6 +73,10 @@ public class RSTPanel extends AbstractSonderbauwerkTypPanel {
         this.fieldMapping.put("speicherVolumenField", new RecordMap("speichervolumen", "java.lang.Integer"));
     }
 
+    public void fetchFormData() {
+        
+    }
+
     public Object getFieldValue(String fieldName) {
                 switch (fieldName) {
             case "speicherVolumenField":

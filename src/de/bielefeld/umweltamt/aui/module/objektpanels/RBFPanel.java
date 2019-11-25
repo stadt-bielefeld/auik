@@ -142,6 +142,10 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
         this.fieldMapping = new HashMap<String, RecordMap>();
     }
 
+    public void fetchFormData() {
+        
+    }
+
     public Object getFieldValue(String fieldName) {
         return null;
     }

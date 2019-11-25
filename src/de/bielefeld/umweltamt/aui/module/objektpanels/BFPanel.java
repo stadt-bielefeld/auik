@@ -108,6 +108,10 @@ public class BFPanel extends AbstractSonderbauwerkTypPanel {
         ueberlaufhaufigkeitLabel = new JLabel("Überlaufhäufigkeit");
     }
 
+    public void fetchFormData() {
+        
+    }
+
     public Object getFieldValue(String name) {
         return null;
     }

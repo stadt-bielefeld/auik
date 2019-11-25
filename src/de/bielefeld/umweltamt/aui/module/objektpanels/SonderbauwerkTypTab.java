@@ -122,6 +122,9 @@ public class SonderbauwerkTypTab extends JPanel {
             default:
                 this.parentModule.setSonderbauwerkTypPanelEnabled(false);
         }
+        if (this.getContent() != null) {
+            this.getContent().fetchFormData();
+        }
     }
 
     /**

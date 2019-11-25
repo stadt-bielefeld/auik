@@ -48,6 +48,7 @@ public class RRBPanel extends AbstractSonderbauwerkTypPanel {
 
     private JComboBox<CBoxItem> funktionenBox;
     private DefaultComboBoxModel<CBoxItem> funktionenModel;
+    private CBoxItem[] funktionen;
     private JTextField drosselabflussField;
     private JTextField volumenField;
     private JTextField ueberlaufhaeufigkeitField;
@@ -80,13 +81,14 @@ public class RRBPanel extends AbstractSonderbauwerkTypPanel {
      * Create fields for this panel
      */
     private void createFields() {
-        funktionenModel = new DefaultComboBoxModel<CBoxItem>(new CBoxItem[]{
+        this.funktionen = new CBoxItem[]{
             new CBoxItem(null, "-"),
             new CBoxItem(4, "Rückhaltung vor Einleitung"),
             new CBoxItem(5, "Rückhalt im Kanalnetz"),
             new CBoxItem(3, "Rücknahme für Brauchwasser im Betrieb"),
             new CBoxItem(2, "nur für Störfälle")
-        });
+        };
+        funktionenModel = new DefaultComboBoxModel<CBoxItem>(this.funktionen);
         funktionenBox = new JComboBox<CBoxItem>(funktionenModel);
         drosselabflussField = new JTextField();
         volumenField = new JTextField();
@@ -105,6 +107,21 @@ public class RRBPanel extends AbstractSonderbauwerkTypPanel {
         this.fieldMapping.put("volumenField", new RecordMap("speichervolumen", "java.lang.Integer"));
         this.fieldMapping.put("ueberlaufhaeufigkeitField", new RecordMap("rjahrUeh", "java.math.BigDecimal"));
         this.fieldMapping.put("entleerungszeit", new RecordMap("entleerungszeit", "java.math.BigDecimal"));
+    }
+
+    public void fetchFormData() {
+        //Select funktionenBox value
+        Integer funktionenOpt = this.record.getFunktionOpt();
+        for (CBoxItem item : this.funktionen) {
+            if (item.getId() != null && item.getId().equals(funktionenOpt)) {
+                this.funktionenBox.setSelectedItem(item);
+                break;
+            }
+        }
+        setTextFieldContent(drosselabflussField, this.record.getDrossAbflussOpt());
+        setTextFieldContent(volumenField, this.record.getSpeichervolumen());
+        setTextFieldContent(ueberlaufhaeufigkeitField, this.record.getRjahrUeh());
+        setTextFieldContent(entleerungszeit, this.record.getEntleerungszeit());
     }
 
     /**
