@@ -74,7 +74,7 @@ public class RSTPanel extends AbstractSonderbauwerkTypPanel {
     }
 
     public void fetchFormData() {
-        
+        this.setTextFieldContent(this.speicherVolumenField, this.record.getSpeichervolumen());
     }
 
     public Object getFieldValue(String fieldName) {

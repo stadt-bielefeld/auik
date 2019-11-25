@@ -102,10 +102,10 @@ public class ALPanel extends AbstractSonderbauwerkTypPanel {
      * Fetch record data an fill form
      */
     public void fetchFormData() {
-        this.drossabflussField.setText(this.record.getDrosselabfluss().toString());
-        this.volumenField.setText(this.record.getSpeichervolumen().toString());
-        this.ueberlaufhaeufigkeitField.setText(this.record.getRjahrUeh().toString());
-        this.entleerungsZeitField.setText(this.record.getEntleerungszeit().toString());
+        setTextFieldContent(this.drossabflussField, record.getDrosselabfluss());
+        setTextFieldContent(this.volumenField, record.getSpeichervolumen());
+        setTextFieldContent(this.ueberlaufhaeufigkeitField, record.getRjahrUeh());
+        this.setTextFieldContent(this.entleerungsZeitField, this.record.getEntleerungszeit());
     }
 
     /**
