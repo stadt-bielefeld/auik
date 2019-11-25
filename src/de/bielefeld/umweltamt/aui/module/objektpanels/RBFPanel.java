@@ -131,7 +131,7 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
         hydWirkungsgradLabel = new JLabel("Hydraulischer Wirkungsgrad");
         filterStaerkeLabel = new JLabel("Stärke des Filtersubstrats");
         ueberlaufHaeufLabel = new JLabel("Überlaufhäufigkeit");
-        filterVolumenLabel = new JLabel("Spetifisches Filtervolumen");
+        filterVolumenLabel = new JLabel("Spezifisches Filtervolumen");
 
         schutzgueterChooser = new ZuordnungChooser<String>("Schutzgüter");
 

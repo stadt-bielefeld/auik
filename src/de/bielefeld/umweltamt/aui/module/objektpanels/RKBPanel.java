@@ -210,7 +210,8 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         betriebsartBox.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                setBetriebsArt((String) betriebsartBox.getSelectedItem());
+                CBoxItem selectedItem = (CBoxItem) betriebsartBox.getSelectedItem();
+                setBetriebsArt((String) selectedItem.getValue());
             }
         });
     }
