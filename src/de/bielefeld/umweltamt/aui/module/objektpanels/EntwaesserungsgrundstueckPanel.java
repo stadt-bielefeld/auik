@@ -31,7 +31,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -55,10 +58,12 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.ZuordnungChooser;
@@ -199,6 +204,11 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 		einbauart = new JComboBox<CBoxItem>(einbauartModel);
 		abaverfahrens = new ZuordnungChooser<Abaverfahren>();
 
+		abaverfahrens.setSort(true);
+        abaverfahrens.setSortComparator((v1, v2) -> {
+			return v1.getNr() - v2.getNr();
+        });
+
 		einleitungsbereichLabel = new JLabel("Einleitungsbereich");
 		gebNameLabel = new JLabel("Name des Entwässerungsgebiet");
 		konzeptNrLabel = new JLabel("Abwasserbeseitigungskonzept");
@@ -220,9 +230,18 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
     public void fetchFormData() throws RuntimeException {
     	this.entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findByObjektId(
     			this.hauptModul.getObjekt().getId());
-    	log.debug("Entwaesserungsgrundstueck aus DB geholt: " + this.entwaesserungsgrundstueck);
-    	
-
+		log.debug("Entwaesserungsgrundstueck aus DB geholt: " + this.entwaesserungsgrundstueck);
+		this.abaverfahrens.setData(Abaverfahren.getAll());
+		List<Abaverfahren> selected = new ArrayList<Abaverfahren>();
+		if (this.entwaesserungsgrundstueck != null) {
+			Set<ZEntwaessgrAbwasbehverf> verfs = this.entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs();
+			if (verfs != null) {
+				verfs.forEach(element -> {
+					selected.add(element.getAbaverfahren());
+				});
+			}
+			this.abaverfahrens.applyEntries(selected);
+		}
     }
     
     /**

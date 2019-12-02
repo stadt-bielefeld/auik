@@ -21,8 +21,11 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -33,10 +36,15 @@ import javax.swing.JTextField;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
+import org.apache.commons.collections.iterators.ArrayListIterator;
+
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueterId;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ZuordnungChooser;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 
 public class RBFPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
@@ -68,7 +76,7 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
     private JLabel ueberlaufHaeufLabel;
     private JLabel filterVolumenLabel;
 
-    private ZuordnungChooser<String> schutzgueterChooser;
+    private ZuordnungChooser<CBoxItem> schutzgueterChooser;
 
     private BasisObjektBearbeiten parentModule;
 
@@ -133,7 +141,7 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
         ueberlaufHaeufLabel = new JLabel("Überlaufhäufigkeit");
         filterVolumenLabel = new JLabel("Spezifisches Filtervolumen");
 
-        schutzgueterChooser = new ZuordnungChooser<String>("Schutzgüter");
+        schutzgueterChooser = new ZuordnungChooser<CBoxItem>("Schutzgüter");
 
         createMappings();
     }
@@ -143,7 +151,22 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
     }
 
     public void fetchFormData() {
-        
+        List<CBoxItem> schutzgueter = new ArrayList<CBoxItem>();
+        schutzgueter.add(new CBoxItem(1, "Trinkwassergewinnung"));
+        schutzgueter.add(new CBoxItem(2, "EU-Badegewässer"));
+        schutzgueter.add(new CBoxItem(3, "Laichhabitate"));
+        schutzgueter.add(new CBoxItem(4, "Stillgewässer"));
+        schutzgueter.add(new CBoxItem(5, "Quellbereich"));
+        schutzgueter.add(new CBoxItem(6, "sonstiges"));
+        List<CBoxItem> selected = new ArrayList<CBoxItem>();
+        Set<ZRbfSchutzgueter> zuordnungen = this.record.getZRbfSchutzgueters();
+        if (zuordnungen != null) {
+            zuordnungen.forEach(item -> {
+                selected.add(schutzgueter.get(item.getId().getSchutzgueterOpt() - 1));
+            });
+        }
+        this.schutzgueterChooser.setData(schutzgueter);
+        this.schutzgueterChooser.applyEntries(selected);
     }
 
     public Object getFieldValue(String fieldName) {
@@ -151,7 +174,34 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
     }
 
     public void save() {
+        schutzgueterChooser.getSelected().forEach(item -> {
+            AtomicBoolean found = new AtomicBoolean(false);
+            //Check if chosen schutzgut is already saved
+            this.record.getZRbfSchutzgueters().forEach(z -> {
+                if (z.getId().getSchutzgueterOpt().equals(item.getId())) {
+                    found.set(true);
+                }
+            });
+            //If not, add
+            if (!found.get()) {
+                ZRbfSchutzgueter newRec = new ZRbfSchutzgueter(
+                        new ZRbfSchutzgueterId(this.record.getNr(), item.getId()), this.record);
+                newRec.merge();
+                this.record.getZRbfSchutzgueters().add(newRec);
+            }
+        });
+        List<ZRbfSchutzgueter> removed = new ArrayList<>();
+        //Remove unselected schutzgueter from record
+        schutzgueterChooser.getUnselected().forEach(item -> {
+            this.record.getZRbfSchutzgueters().forEach(z -> {
+                if (item.getId().equals(z.getId().getSchutzgueterOpt())) {
+                    removed.add(z);
+                    z.delete();
+                }
+            });
+        });
+        this.record.getZRbfSchutzgueters().removeAll(removed);
+        this.record.merge();
         super.save();
-        //TODO: save schutgueter
     }
 }

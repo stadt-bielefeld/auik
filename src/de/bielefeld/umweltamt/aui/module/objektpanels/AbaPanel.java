@@ -539,4 +539,8 @@ private static final long serialVersionUID = -4030805403749508467L;
         }
         return this.selectObjektButton;
     }
+
+    public Aba getFachdaten() {
+        return this.fachdaten;
+    }
 }

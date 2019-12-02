@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.module.common;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -57,6 +58,9 @@ public class ZuordnungChooser<T> extends JPanel{
     private JButton addButton;
     private JButton removeButton;
 
+    private boolean sort;
+    private Comparator<T> sortComparator;
+
     private String title;
 
     public ZuordnungChooser() {
@@ -65,6 +69,8 @@ public class ZuordnungChooser<T> extends JPanel{
 
     public ZuordnungChooser(String title) {
         this.title = title;
+
+        this.sort = false;
 
         leftData = new ArrayList<T>();
         rightData = new ArrayList<T>();
@@ -111,6 +117,10 @@ public class ZuordnungChooser<T> extends JPanel{
      */
     public void setData(List<T> data) {
         this.data = data;
+        this.leftData.clear();
+        this.rightData.clear();
+        this.leftData.addAll(this.data);
+        this.updateLists();
     }
 
     /**
@@ -143,11 +153,41 @@ public class ZuordnungChooser<T> extends JPanel{
      * Updates both list views using the underlying lists.
      */
     private void updateLists() {
+        if (this.sort == true) {
+            if (rightData.size() > 1) {
+                rightData.sort(this.sortComparator);
+            }
+            leftData.sort(this.sortComparator);
+        }
+
         this.leftListModel.clear();
         this.leftData.forEach(element -> this.leftListModel.addElement(element));
         this.rightListModel.clear();
         this.rightData.forEach(element -> this.rightListModel.addElement(element));
     }
 
+    public List<T> getSelected() {
+        return this.rightData;
+    }
+
+    public List<T> getUnselected() {
+        return this.leftData;
+    }
+
+    public boolean getSort() {
+        return this.sort;
+    }
+
+    public void setSort(boolean sort) {
+        this.sort = sort;
+    }
+
+    public Comparator<T> getSortCompator() {
+        return this.sortComparator;
+    }
+
+    public void setSortComparator(Comparator<T> sortComparator) {
+        this.sortComparator = sortComparator;
+    }
 
 }

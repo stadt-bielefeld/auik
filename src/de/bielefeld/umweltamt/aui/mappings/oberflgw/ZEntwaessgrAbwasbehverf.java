@@ -29,6 +29,8 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -231,7 +231,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         this.fieldMapping.put("beckenartBox", new RecordMap("beckenartOpt", "java.lang.Integer"));
         this.fieldMapping.put("entlastungsartBox", new RecordMap("entlastungsartOpt", "java.lang.Integer"));
         this.fieldMapping.put("anordungBox", new RecordMap("anordnungOpt", "java.lang.Integer"));
-        this.fieldMapping.put("drosselabfluss", new RecordMap("drossAbflussOpt", "java.lang.Integer"));
+        this.fieldMapping.put("drosselabflussBox", new RecordMap("drossAbflussOpt", "java.lang.Integer"));
         this.fieldMapping.put("kritRegenspende", new RecordMap("qrkrit", "java.math.BigDecimal"));
         this.fieldMapping.put("beckentiefe", new RecordMap("beckentiefe", "java.math.BigDecimal"));
         this.fieldMapping.put("beckenoberfl", new RecordMap("WOberflaeche", "java.lang.Integer"));
