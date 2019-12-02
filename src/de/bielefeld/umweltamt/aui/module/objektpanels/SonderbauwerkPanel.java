@@ -96,7 +96,7 @@ public class SonderbauwerkPanel extends JPanel {
     private JCheckBox stillgelegtCheck = null;
     private TextFieldDateChooser stillegdatDatum = null;
     private JComboBox verfahrenBox = null;
-    private JComboBox typBox = null;
+    private JComboBox<String> typBox = null;
     private JFormattedTextField inbetriebnahmeFeld = null;
     private TextFieldDateChooser wiederinebetriebdatDatum = null;
     private JFormattedTextField e32Feld = null;
@@ -325,6 +325,9 @@ public class SonderbauwerkPanel extends JPanel {
                 getErstellDatDatum().setDate(this.sonderbauwerk.getErstellDat());
             }
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
+            
+            this.typBox.setSelectedItem(
+                   Sonderbauwerk.getTypDescriptionFromInteger(this.sonderbauwerk.getTypOpt()));
             this.typePanel.switchTypDetailPanel((String) typBox.getSelectedItem());
         }
     }
@@ -362,7 +365,10 @@ public class SonderbauwerkPanel extends JPanel {
         boolean success;
         
         this.sonderbauwerk.setAktualDat(new Date());
-        
+
+        this.sonderbauwerk.setTypOpt(
+                Sonderbauwerk.getTypIdFromDescription((String) typBox.getSelectedItem()));
+
         Date erstellDat = this.stillegdatDatum.getDate();
         this.sonderbauwerk.setErstellDat(erstellDat);
                 
@@ -626,6 +632,5 @@ public class SonderbauwerkPanel extends JPanel {
             });
         }
         return this.selectObjektButton;
-    }    
-    
+    }
 }

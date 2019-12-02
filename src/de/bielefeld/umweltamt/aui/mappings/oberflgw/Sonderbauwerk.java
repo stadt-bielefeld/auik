@@ -1607,4 +1607,73 @@ public class Sonderbauwerk  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+    /**
+     * Helper method to translate Sonderbauwerk typ description to id
+     * @param description Description string
+     * @return Id as integer
+     */
+    public static Integer getTypIdFromDescription(String description) {
+        if (description == null) {
+            return null;
+        }
+        switch (description) {
+            case "RRB": return 1;
+            case "RKB": return 2;
+            case "RBF": return 3;
+            case "BF": return 4;
+            case "RÜT": return 5;
+            case "RÜM": return 6;
+            case "RÜB": return 7;
+            case "SK": return 8;
+            case "RST": return 9;
+            case "AL": return 10;
+            default: return null;
+        }
+    }
+
+    /**
+     * Helper methods to translate sonderbauwerk typ id to description
+     * @param id Id to translate
+     * @return description as string
+     */
+    public static String getTypDescriptionFromInteger(Integer id) {
+        if (id == null) {
+            return "-";
+        }
+        switch (id) {
+            case 1: return "RRB";
+            case 2: return "RKB";
+            case 3: return "RBF";
+            case 4: return "BF";
+            case 5: return "RÜT";
+            case 6: return "RÜM";
+            case 7: return "RÜB";
+            case 8: return "SK";
+            case 9: return "RST";
+            case 10: return "AL";
+            default: return "-";
+        }
+    }
+
+    public static Integer getVerfahrenIdFromDescription(String description) {
+        if (description == null) {
+            return null;
+        }
+        switch (description) {
+            case "Trennverfahren": return 0;
+            case "Mischverfahren": return 1;
+            default: return null;
+        }
+    }
+
+    public static String getVerfahrenDescriptionFromId(Integer id) {
+        if (id == null) {
+            return "-";
+        }
+        switch (id) {
+            case 0: return "Trennverfahren";
+            case 1: return "Mischverfahren";
+            default: return "-";
+        }
+    }
 }
