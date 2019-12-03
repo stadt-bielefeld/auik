@@ -28,6 +28,8 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -170,7 +172,7 @@ public class SonderbauwerkPanel extends JPanel {
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
                 getSelectObjektButton(), getSaveSonderbauwerkButton());
         builder.append(buttonBar, 7);
-        
+
         this.typBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -195,6 +197,12 @@ public class SonderbauwerkPanel extends JPanel {
     private JCheckBox getStillgelegtCheck() {
         if (this.stillgelegtCheck == null) {
             this.stillgelegtCheck = new JCheckBox("stillgelegt");
+            this.stillgelegtCheck.addItemListener(new ItemListener(){
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    getStillegdatDatum().setEnabled(e.getStateChange() == ItemEvent.SELECTED);
+                }
+            });
         }
         return stillgelegtCheck;
     }
@@ -301,29 +309,31 @@ public class SonderbauwerkPanel extends JPanel {
         this.typePanel.setData(this.sonderbauwerk);
         log.debug("Sonderbauwerk aus DB geholt: " + this.sonderbauwerk);
     }
-    
+
     /**
-     * Methode setzt die Attribute des Sonderbauwerkes aus der Datenbank 
+     * Methode setzt die Attribute des Sonderbauwerkes aus der Datenbank
      * auf die des lokalen Sonderbauwerkes und die Verknüpfung mit
      * der Kläranlage über die Tabelle referenz
      * @throws RuntimeException
      */
     public void updateForm() throws RuntimeException {
         if (this.sonderbauwerk != null) {
-        
+
             if (this.sonderbauwerk.getBezeichnung() != null) {
                 getBezeichnungFeld().setText(this.sonderbauwerk.getBezeichnung());
             }
-            
+
             String[] verfahren = {"-", "Trennverfahren", "Mischverfahren"};
             getVerfahrenBox().setModel(new DefaultComboBoxModel(verfahren));
-            
+
             String[] typ = {"-", "RRB", "RKB", "RBF", "BF", "RÜT", "RST", "AL"};
             getTypBox().setModel(new DefaultComboBoxModel(typ));
-            
+
             if (this.sonderbauwerk.getErstellDat() != null) {
                 getErstellDatDatum().setDate(this.sonderbauwerk.getErstellDat());
             }
+            getErstellDatDatum().setEnabled(this.getStillgelegtCheck().isSelected());
+
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
 
             this.verfahrenBox.setSelectedItem(
@@ -333,16 +343,16 @@ public class SonderbauwerkPanel extends JPanel {
             this.typePanel.switchTypDetailPanel((String) typBox.getSelectedItem());
         }
     }
-  
+
     /**
      * Methode die alle Eingabefelder des Panels auf den Standard zurücksetzt.
      */
     public void clearForm() {
         getErstellDatDatum().setDate(null);
         getBezeichnungFeld().setText(null);
-        
+
     }
-    
+
     /**
      * Methode die je nach Eingabewert alles Eingabefelder des Panels aktiviert oder
      * deaktiviert.
@@ -357,7 +367,7 @@ public class SonderbauwerkPanel extends JPanel {
     public String getName() {
         return this.name;
     }
-    
+
     /**
      * Methode die, die Eingabefelder des Panels welche einen Wert haben
      * in das Sonderbauwerk der Datenbank schreibt.
@@ -365,7 +375,7 @@ public class SonderbauwerkPanel extends JPanel {
      */
     private boolean saveSonderbauwerkDaten() {
         boolean success;
-        
+
         this.sonderbauwerk.setAktualDat(new Date());
 
         this.sonderbauwerk.setTypOpt(
@@ -374,7 +384,7 @@ public class SonderbauwerkPanel extends JPanel {
                 Sonderbauwerk.getVerfahrenIdFromDescription((String) verfahrenBox.getSelectedItem()));
         Date erstellDat = this.stillegdatDatum.getDate();
         this.sonderbauwerk.setErstellDat(erstellDat);
-                
+
         String bezeichnung = this.bezeichnungFeld.getText();
         if("".equals(bezeichnung)) {
             this.sonderbauwerk.setBezeichnung(null);
@@ -412,7 +422,7 @@ public class SonderbauwerkPanel extends JPanel {
             log.debug("Neues Sonderbauwerk " + this.sonderbauwerk + " gespeichert.");
         }
     }
-    
+
     /**
      * Get-Methode die das ErstellDatDatum des Panels zurückgibt:
      * @return {@link TextFieldDateChooser}
@@ -423,7 +433,7 @@ public class SonderbauwerkPanel extends JPanel {
         }
         return this.stillegdatDatum;
     }
-    
+
     /**
      * Get-Methode die das Bezeichnungsfeld des Panels zurückgibt:
      * @return {@link JTextField}
@@ -434,13 +444,13 @@ public class SonderbauwerkPanel extends JPanel {
         }
         return this.bezeichnungFeld;
     }
-    
+
     private JTable getObjektverknuepungTabelle() {
-    
+
         if (this.objektVerknuepfungModel == null) {
             this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
                 this.hauptModul.getObjekt());
-    
+
             if (this.objektverknuepfungTabelle == null) {
                 this.objektverknuepfungTabelle = new JTable(
                     this.objektVerknuepfungModel);
@@ -454,7 +464,7 @@ public class SonderbauwerkPanel extends JPanel {
                 .setPreferredWidth(100);
             this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
                 .setPreferredWidth(250);
-    
+
             this.objektverknuepfungTabelle
                 .addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
@@ -463,7 +473,7 @@ public class SonderbauwerkPanel extends JPanel {
                             Point origin = e.getPoint();
                             int row = getObjektverknuepungTabelle().rowAtPoint(
                                 origin);
-    
+
                             if (row != -1) {
                                 Objektverknuepfung obj = SonderbauwerkPanel.this.objektVerknuepfungModel
                                     .getRow(row);
@@ -492,18 +502,18 @@ public class SonderbauwerkPanel extends JPanel {
                             }
                         }
                     }
-    
+
                     @Override
                     public void mousePressed(MouseEvent e) {
                         showVerknuepfungPopup(e);
                     }
-    
+
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         showVerknuepfungPopup(e);
                     }
                 });
-    
+
             this.objektverknuepfungTabelle.getInputMap().put(
                 (KeyStroke) getVerknuepfungLoeschAction().getValue(
                     Action.ACCELERATOR_KEY),
@@ -512,9 +522,9 @@ public class SonderbauwerkPanel extends JPanel {
                 getVerknuepfungLoeschAction().getValue(Action.NAME),
                 getVerknuepfungLoeschAction());
         }
-    
+
         return this.objektverknuepfungTabelle;
-    
+
     }
 
     private void showVerknuepfungPopup(MouseEvent e) {
@@ -523,11 +533,11 @@ public class SonderbauwerkPanel extends JPanel {
             JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
             this.verknuepfungPopup.add(loeschItem);
         }
-    
+
         if (e.isPopupTrigger()) {
             Point origin = e.getPoint();
             int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
-    
+
             if (row != -1) {
                 this.objektverknuepfungTabelle
                     .setRowSelectionInterval(row, row);
@@ -542,25 +552,25 @@ public class SonderbauwerkPanel extends JPanel {
      * ansonsten wird ein neuer erstellt und diesem einen {@link ActionListener} hinzugefügt,
      * der bei einem Klick die Methoden <code>saveSonderbauwerkDaten</code> und
      *<code>saveKlaeranlageDaten</code> ausführt.
-     * @see #saveSonderbauwerk() 
+     * @see #saveSonderbauwerk()
      * @see #saveKlaeranlageDaten()
      * @return {@link JButton}
      */
     private JButton getSaveSonderbauwerkButton() {
         if (this.saveSonderbauwerkButton == null) {
             this.saveSonderbauwerkButton = new JButton("Speichern");
-            
+
             this.saveSonderbauwerkButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     String status = "";
                     if(saveSonderbauwerkDaten()) {
-                        status = "Einleitungsstelle " + 
+                        status = "Einleitungsstelle " +
                     SonderbauwerkPanel.this.sonderbauwerk.getNr()
                     + " erfolgreich gespeichert.";
                     } else {
-                        status = "Fehler beim Speichern der Einleitungsstelle!";				
+                        status = "Fehler beim Speichern der Einleitungsstelle!";
                     }
                     if(status.startsWith("Sonderbauwerk")) {
                         SonderbauwerkPanel.this.hauptModul.getFrame().changeStatus(status,
@@ -570,8 +580,8 @@ public class SonderbauwerkPanel extends JPanel {
                             HauptFrame.ERROR_COLOR);
                     }
                     SonderbauwerkPanel.this.hauptModul.fillForm();
-            }	
-            });		
+            }
+            });
         }
         return this.saveSonderbauwerkButton;
     }
@@ -579,7 +589,7 @@ public class SonderbauwerkPanel extends JPanel {
     private Action getVerknuepfungLoeschAction() {
         if (this.verknuepfungLoeschAction == null) {
             this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
-    
+
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int row = getObjektverknuepungTabelle().getSelectedRow();
@@ -615,14 +625,14 @@ public class SonderbauwerkPanel extends JPanel {
             this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
-    
+
         return this.verknuepfungLoeschAction;
     }
 
     private JButton getSelectObjektButton() {
         if (this.selectObjektButton == null) {
             this.selectObjektButton = new JButton("Objekt auswählen");
-    
+
             this.selectObjektButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
