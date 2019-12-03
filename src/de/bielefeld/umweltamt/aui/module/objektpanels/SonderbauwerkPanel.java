@@ -325,7 +325,9 @@ public class SonderbauwerkPanel extends JPanel {
                 getErstellDatDatum().setDate(this.sonderbauwerk.getErstellDat());
             }
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
-            
+
+            this.verfahrenBox.setSelectedItem(
+                Sonderbauwerk.getVerfahrenDescriptionFromId(this.sonderbauwerk.getEntwEinzugsgebOpt()));
             this.typBox.setSelectedItem(
                    Sonderbauwerk.getTypDescriptionFromInteger(this.sonderbauwerk.getTypOpt()));
             this.typePanel.switchTypDetailPanel((String) typBox.getSelectedItem());
@@ -368,7 +370,8 @@ public class SonderbauwerkPanel extends JPanel {
 
         this.sonderbauwerk.setTypOpt(
                 Sonderbauwerk.getTypIdFromDescription((String) typBox.getSelectedItem()));
-
+        this.sonderbauwerk.setEntwEinzugsgebOpt(
+                Sonderbauwerk.getVerfahrenIdFromDescription((String) verfahrenBox.getSelectedItem()));
         Date erstellDat = this.stillegdatDatum.getDate();
         this.sonderbauwerk.setErstellDat(erstellDat);
                 
