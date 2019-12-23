@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -51,6 +52,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
@@ -163,9 +166,9 @@ public class Anh53Panel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.fachdaten = Anh53Fachdaten.findByObjektId(
-            this.hauptModul.getObjekt().getId());
-        log.debug("Objekt aus DB geholt: " + this.fachdaten);
+    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+		this.fachdaten = Anh53Fachdaten.findByAnfallstelleId(
+				list.iterator().next().getId());
     }
 
     public void updateForm() throws RuntimeException {

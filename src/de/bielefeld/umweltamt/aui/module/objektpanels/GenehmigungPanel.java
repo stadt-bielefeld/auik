@@ -111,7 +111,7 @@ public class GenehmigungPanel extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-            "r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
+            "r:80dlu, 5dlu, 90dlu, 5dlu, r:20dlu, 5dlu, 100dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
@@ -132,8 +132,7 @@ public class GenehmigungPanel extends JPanel {
         builder.append("Genehmigte Menge [m³]:", getGenMengeFeld());
         builder.append("", getEsaCheckBox());
         builder.nextLine();
-        builder.append("", getBefCheckBox());
-        builder.append("");
+        builder.append("Genehmigung befristet:", getBefCheckBox());
         builder.append("bis:", getBefristetDatum());
         builder.nextLine();
         builder.appendSeparator("Übergabestelle");
@@ -466,7 +465,7 @@ public class GenehmigungPanel extends JPanel {
 
     private JCheckBox getBefCheckBox() {
         if (this.befristetCheck == null) {
-            this.befristetCheck = new JCheckBox("Genehmigung befristet");
+            this.befristetCheck = new JCheckBox();
         }
         return this.befristetCheck;
     }

@@ -93,6 +93,7 @@ package de.bielefeld.umweltamt.aui.module;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -113,6 +114,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaVerfahrenPanel;
@@ -138,6 +140,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.GenehmigungPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepktAuswPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepunktPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SonderbauwerkPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.SonderbauwerkTypTab;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SuevPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.VawsPanel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -161,21 +164,14 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private BasisPanel basisTab;
     private ProbepunktPanel probepunktTab;
     private ProbepktAuswPanel probeauswTab;
-    private BWKPanel bwkTab;
-    private Anh50Panel zahnarztTab;
     private SuevPanel suevTab;
     private AbaPanel abaTab;
     private AbaVerfahrenPanel abaVerfahrenTab;
-    private Anh40Panel anhang40Tab;
     private Anh49Panel anhang49Tab;
     private Anh49AbfuhrenPanel anh49abfuhrTab;
     private Anh49DetailsPanel anh49detailTab;
     private Anh49AnalysenPanel anh49analyseTab;
     private Anh49VerwaltungsverfahrenPanel anh49VerwaltungsverfahrenTab;
-    private Anh52Panel anhang52Tab;
-    private Anh53Panel anhang53Tab;
-    private Anh55Panel anhang55Tab;
-    private Anh56Panel anhang56Tab;
     private ChronoPanel chronoTab;
     private FotoPanel fotoTab;
     private GenehmigungPanel genehmigungTab;
@@ -183,11 +179,13 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private EinleitungsstellePanel einleitungsstelleTab;
     private AnfallstellePanel anfallstelleTab;
     private SonderbauwerkPanel sonderbauwerkTab;
+    private SonderbauwerkTypTab sonderbauwerkTypTab;
     private EntwaesserungsgrundstueckPanel entwaesserungsgrundstueckTab;
 
     // Daten
     private Objekt objekt;
     private boolean isNew = true;
+    private Anfallstelle anfallstelle;
 
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getIcon()
@@ -310,23 +308,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return probeauswTab;
     }
 
-    public BWKPanel getBWKTab() {
-        if (bwkTab == null) {
-            bwkTab = new BWKPanel(this);
-            bwkTab.setBorder(Paddings.DIALOG);
-        }
-        return bwkTab;
-    }
-
-    public Anh50Panel getZahnarztTab() {
-        if (zahnarztTab == null) {
-            zahnarztTab = new Anh50Panel(this);
-            zahnarztTab.setBorder(Paddings.DIALOG);
-        }
-        return zahnarztTab;
-    }
-
-    public Anh49Panel getAnhang49Tab() {
+    public Anh49Panel getAnh49Tab() {
         if (anhang49Tab == null) {
             anhang49Tab = new Anh49Panel(this);
             anhang49Tab.setBorder(Paddings.DIALOG);
@@ -391,46 +373,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return abaVerfahrenTab;
     }
 
-    public Anh40Panel getAnh40Tab() {
-        if (anhang40Tab == null) {
-            anhang40Tab = new Anh40Panel(this);
-            anhang40Tab.setBorder(Paddings.DIALOG);
-        }
-        return anhang40Tab;
-    }
-
-    public Anh55Panel getAnh55Tab() {
-        if (anhang55Tab == null) {
-            anhang55Tab = new Anh55Panel(this);
-            anhang55Tab.setBorder(Paddings.DIALOG);
-        }
-        return anhang55Tab;
-    }
-
-    public Anh56Panel getAnh56Tab() {
-        if (anhang56Tab == null) {
-            anhang56Tab = new Anh56Panel(this);
-            anhang56Tab.setBorder(Paddings.DIALOG);
-        }
-        return anhang56Tab;
-    }
-
-    public Anh52Panel getAnh52Tab() {
-        if (anhang52Tab == null) {
-            anhang52Tab = new Anh52Panel(this);
-            anhang52Tab.setBorder(Paddings.DIALOG);
-        }
-        return anhang52Tab;
-    }
-
-    public Anh53Panel getAnh53Tab() {
-        if (anhang53Tab == null) {
-            anhang53Tab = new Anh53Panel(this);
-            anhang53Tab.setBorder(Paddings.DIALOG);
-        }
-        return anhang53Tab;
-    }
-
     public ChronoPanel getChronoTab() {
         if (chronoTab == null) {
             chronoTab = new ChronoPanel(this);
@@ -480,10 +422,20 @@ public class BasisObjektBearbeiten extends AbstractModul {
     
     public SonderbauwerkPanel getSonderbauwerkTab() {
     	if (sonderbauwerkTab == null) {
-            sonderbauwerkTab = new SonderbauwerkPanel(this);
+            sonderbauwerkTab = new SonderbauwerkPanel(this, this.getSonderbauwerkTypTab());
             sonderbauwerkTab.setBorder(Paddings.DIALOG);
+            sonderbauwerkTab.setBackground(new JPanel().getBackground());
+            sonderbauwerkTab.setOpaque(false);
     	}
     	return sonderbauwerkTab;
+    }
+
+    public SonderbauwerkTypTab getSonderbauwerkTypTab() {
+        if (sonderbauwerkTypTab == null) {
+            this.sonderbauwerkTypTab = new SonderbauwerkTypTab(this);
+            sonderbauwerkTypTab.setBorder(Paddings.DIALOG);
+        }
+        return this.sonderbauwerkTypTab;
     }
     
     public EntwaesserungsgrundstueckPanel getEntwaesserungsgrundstueckTab() {
@@ -500,6 +452,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         if (tabbedPane == null) {
             tabbedPane = new JTabbedPane();
 
+            tabbedPane.setOpaque(false);
             tabbedPane.putClientProperty(Options.NO_CONTENT_BORDER_KEY, Boolean.TRUE);
             tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
@@ -550,6 +503,11 @@ public class BasisObjektBearbeiten extends AbstractModul {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 getBasisTab().fetchFormData();
+                
+				if (objekt.getAnfallstelles().size() > 0) {
+					Set<Anfallstelle> list = objekt.getAnfallstelles();
+					anfallstelle = list.iterator().next();
+				}
 
                 // Daten für verschiedene Objektarten holen
                 if (objekt.getObjektarten() != null) {
@@ -559,62 +517,24 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             getChronoTab().fetchFormData();
                             getProbepunktTab().fetchFormData();
                             break;
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_BWK:
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_BHKW:
-                            getChronoTab().fetchFormData();
-                            getBWKTab().fetchFormData();
-                            break;
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
-                            getChronoTab().fetchFormData();
-                            getZahnarztTab().fetchFormData();
-                            break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                             getChronoTab().fetchFormData();
                             getAbaTab().fetchFormData();
                             getAbaVerfahrenTab().fetchFormData();
                             break;
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER_ES:
                             getChronoTab().fetchFormData();
-                            getAnhang49Tab().fetchFormData();
+                            getAnh49Tab().fetchFormData();
                             getAnh49DetailTab().setFachdaten(
-                                getAnhang49Tab().getFachdaten());
+                            	getAnh49Tab().getFachdaten());
                             getAnh49AnalyseTab().setFachdaten(
-                                getAnhang49Tab().getFachdaten());
+                            	getAnh49Tab().getFachdaten());
                             getAnh49VerwaltungsverfahrenTab().setFachdaten(
-                                getAnhang49Tab().getFachdaten());
-                            break;
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
-                            getChronoTab().fetchFormData();
-                            getAnhang49Tab().fetchFormData();
-                            getAnh49DetailTab().setFachdaten(
-                                getAnhang49Tab().getFachdaten());
-                            getAnh49AbfuhrTab().setFachdaten(
-                                    getAnhang49Tab().getFachdaten());
-                            getAnh49VerwaltungsverfahrenTab().setFachdaten(
-                                getAnhang49Tab().getFachdaten());
+                            	getAnh49Tab().getFachdaten());
                             break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                             getChronoTab().fetchFormData();
                             getSuevTab().fetchFormData();
-                            break;
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_40:
-                            getChronoTab().fetchFormData();
-                            getAnh40Tab().fetchFormData();
-                            break;
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_55:
-                            getChronoTab().fetchFormData();
-                            getAnh55Tab().fetchFormData();
-                            break;
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_56:
-                            getChronoTab().fetchFormData();
-                            getAnh56Tab().fetchFormData();
-                            break;
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
-                            getChronoTab().fetchFormData();
-                            getAnh52Tab().fetchFormData();
                             break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
                             getChronoTab().fetchFormData();
@@ -624,11 +544,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                         	getChronoTab().fetchFormData();
                         	getAnfallstelleTab().fetchFormData();
                         	break;
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
-                            getChronoTab().fetchFormData();
-                            getAnh53Tab().fetchFormData();
-                            break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
                             getChronoTab().fetchFormData();
                             getGenehmigungTab().fetchFormData();
@@ -698,21 +613,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                 getProbepunktTab().updateForm();
                                 getTabbedPane().setSelectedComponent(getProbepunktTab());
                                 break;
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_BWK:
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_BHKW:
-                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                                getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
-                                getChronoTab().updateForm();
-                                getBWKTab().updateForm();
-                                getTabbedPane().setSelectedComponent(getBWKTab());
-                                break;
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
-                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                                getTabbedPane().addTab(getZahnarztTab().getName(), getZahnarztTab());
-                                getChronoTab().updateForm();
-                                getZahnarztTab().updateForm();
-                                getTabbedPane().setSelectedComponent(getZahnarztTab());
-                                break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                                 getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                 getTabbedPane().addTab(getAbaTab().getName(), getAbaTab());
@@ -722,77 +622,13 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                 getAbaVerfahrenTab().updateForm();
                                 getTabbedPane().setSelectedComponent(getAbaTab());
                                 break;
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER_ES:
-                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                                getTabbedPane().addTab(getAnhang49Tab().getName(), getAnhang49Tab());
-                                getTabbedPane().addTab(getAnh49DetailTab().getName(), getAnh49DetailTab());
-                                getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
-                                getTabbedPane().addTab(getAnh49VerwaltungsverfahrenTab().getName(), getAnh49VerwaltungsverfahrenTab());
-                                getChronoTab().updateForm();
-                                getAnhang49Tab().updateForm();
-                                getAnh49DetailTab().updateForm();
-                                getAnh49AnalyseTab().updateForm();
-                                getAnh49VerwaltungsverfahrenTab().updateForm();
-                                getTabbedPane().setSelectedComponent(getAnhang49Tab());
-                                break;
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
-                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                                getTabbedPane().addTab("Fettabscheider", getAnhang49Tab());
-                                getTabbedPane().addTab(getAnh49DetailTab().getName(), getAnh49DetailTab());
-                                getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
-                                getTabbedPane().addTab(getAnh49VerwaltungsverfahrenTab().getName(), getAnh49VerwaltungsverfahrenTab());
-                                getChronoTab().updateForm();
-                                getAnhang49Tab().updateForm();
-                                getAnh49DetailTab().updateForm();
-                                getAnh49AbfuhrTab().updateForm();
-                                getAnh49VerwaltungsverfahrenTab().updateForm();
-                                getTabbedPane().setSelectedComponent(getAnhang49Tab());
-                                break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                                 getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                 getTabbedPane().addTab(getSuevTab().getName(), getSuevTab());
                                 getChronoTab().updateForm();
                                 getSuevTab().updateForm();
                                 getTabbedPane().setSelectedComponent(getSuevTab());
-                                break;
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_40:
-                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                                getTabbedPane().addTab(getAnh40Tab().getName(), getAnh40Tab());
-                                getChronoTab().updateForm();
-                                getAnh40Tab().updateForm();
-                                getTabbedPane().setSelectedComponent(getAnh40Tab());
-                                break;
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_55:
-                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                                getTabbedPane().addTab(getAnh55Tab().getName(), getAnh55Tab());
-                                getChronoTab().updateForm();
-                                getAnh55Tab().updateForm();
-                                getTabbedPane().setSelectedComponent(getAnh55Tab());
-                                break;
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_56:
-                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                                getTabbedPane().addTab(getAnh56Tab().getName(), getAnh56Tab());
-                                getChronoTab().updateForm();
-                                getAnh56Tab().updateForm();
-                                getTabbedPane().setSelectedComponent(getAnh56Tab());
-                                break;
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
-                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                                getTabbedPane().addTab(getAnh52Tab().getName(), getAnh52Tab());
-                                getChronoTab().updateForm();
-                                getAnh52Tab().updateForm();
-                                getTabbedPane().setSelectedComponent(getAnh52Tab());
-                                break;
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
-                            case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
-                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                                getTabbedPane().addTab(getAnh53Tab().getName(), getAnh53Tab());
-                                getChronoTab().updateForm();
-                                getAnh53Tab().updateForm();
-                                getTabbedPane().setSelectedComponent(getAnh53Tab());
                                 break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
                                 getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
@@ -811,6 +647,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                             	getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                             	getTabbedPane().addTab(getAnfallstelleTab().getName(), getAnfallstelleTab());
+                            	
                             	getChronoTab().updateForm();
                             	getAnfallstelleTab().updateForm();
                             	getTabbedPane().setSelectedComponent(getAnfallstelleTab());
@@ -818,6 +655,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_SONDERBAUWERK:
                             	getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                             	getTabbedPane().addTab(getSonderbauwerkTab().getName(), getSonderbauwerkTab());
+                                getTabbedPane().addTab(getSonderbauwerkTypTab().getContentName(), getSonderbauwerkTypTab());
                             	getChronoTab().updateForm();
                             	getSonderbauwerkTab().updateForm();
                             	getTabbedPane().setSelectedComponent(getSonderbauwerkTab());
@@ -856,6 +694,20 @@ public class BasisObjektBearbeiten extends AbstractModul {
         worker.start();
     }
 
+    /**
+     * Enabled/Disable the sonderbauwerktyp tab
+     * @param enabled True to enable, else false
+     */
+    public void setSonderbauwerkTypPanelEnabled (boolean enabled) {
+        int tabIndex = getTabbedPane().indexOfComponent(getSonderbauwerkTypTab());
+        if (enabled == true && tabIndex == -1) {
+            getTabbedPane().addTab(getSonderbauwerkTypTab().getContentName(), getSonderbauwerkTypTab());
+        }
+        if (enabled == false && tabIndex > -1) {
+            getTabbedPane().remove(getSonderbauwerkTypTab());
+        }
+    }
+
     private void clearAll() {
         log.debug("Leere alle Felder");
 
@@ -868,22 +720,12 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getProbepunktTab().clearForm();
                     getProbepktAuswTab().clearForm();
                     break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_BWK:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_BHKW:
-                    getBWKTab().clearForm();
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
-                    getZahnarztTab().clearForm();
-                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                     getAbaTab().clearForm();
                     getAbaVerfahrenTab().clearForm();
                     break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
-                    getAnhang49Tab().clearForm();
+                	getAnh49Tab().clearForm();
                     getAnh49DetailTab().clearForm();
                     getAnh49AnalyseTab().clearForm();
                     getAnh49VerwaltungsverfahrenTab().clearForm();
@@ -891,20 +733,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                     getSuevTab().clearForm();
                     break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_40:
-                    getAnh40Tab().clearForm();
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_55:
-                    getAnh55Tab().clearForm();
-                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
                     getGenehmigungTab().clearForm();
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_56:
-                    getAnh56Tab().clearForm();
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
-                    getAnh52Tab().clearForm();
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
                     getEinleitungsstelleTab().clearForm();
@@ -912,10 +742,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                 	getAnfallstelleTab().clearForm();
                 	break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
-                    getAnh53Tab().clearForm();
-                    break;
                 default:
                     log.debug("Unknown Objektart: "
                         + objekt.getObjektarten());
@@ -933,22 +759,12 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                     getProbepunktTab().enableAll(enabled);
                     break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_BWK:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_BHKW:
-                    getBWKTab().enableAll(enabled);
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
-                    getZahnarztTab().enableAll(enabled);
-                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                     getAbaTab().enableAll(enabled);
                     getAbaVerfahrenTab().enableAll(enabled);
                     break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
-                    getAnhang49Tab().enableAll(enabled);
+                	getAnh49Tab().enableAll(enabled);
                     getAnh49DetailTab().enableAll(enabled);
                     getAnh49AnalyseTab().enableAll(enabled);
                     getAnh49VerwaltungsverfahrenTab().enableAll(enabled);
@@ -956,28 +772,12 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                     getSuevTab().enableAll(enabled);
                     break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_40:
-                    getAnh40Tab().enableAll(enabled);
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_55:
-                    getAnh55Tab().enableAll(enabled);
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_56:
-                    getAnh56Tab().enableAll(enabled);
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
-                    getAnh52Tab().enableAll(enabled);
-                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
                     getEinleitungsstelleTab().enableAll(enabled);
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                 	getAnfallstelleTab().enableAll(enabled);
                 	break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
-                    getAnh53Tab().enableAll(enabled);
-                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
                     getGenehmigungTab().enableAll(enabled);
                     break;
@@ -1005,42 +805,18 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                     getProbepunktTab().completeObjekt();
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_BWK:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_BHKW:
-                    getBWKTab().completeObjekt();
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_50:
-                    getZahnarztTab().completeObjekt();
-                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                     getAbaTab().completeObjekt();
                     getAbaVerfahrenTab().completeObjekt();
                     break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_49:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER:
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER_ES:
-                    getAnhang49Tab().completeObjekt();
+                	getAnh49Tab().completeObjekt();
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                     getSuevTab().completeObjekt();
                     break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_40:
-                    getAnh40Tab().completeObjekt();
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_55:
-                    getAnh55Tab().completeObjekt();
-                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
                     getGenehmigungTab().completeObjekt();
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_56:
-                    getAnh56Tab().completeObjekt();
-                    break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_52:
-                    getAnh52Tab().completeObjekt();
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
                     getEinleitungsstelleTab().completeObjekt();
@@ -1048,10 +824,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                 	getAnfallstelleTab().completeObjekt();
                 	break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_GROSS:
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN:
-                    getAnh53Tab().completeObjekt();
-                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SONDERBAUWERK:
                 	getSonderbauwerkTab().completeObjekt();
                 	break;

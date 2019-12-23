@@ -10,7 +10,7 @@
         <property name="hibernate.c3p0.min_size">5</property>
         <property name="hibernate.c3p0.timeout">1800</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5433/fisumwelt_neu</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/fisumwelt</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.connection.username">BI005380</property>
 		<property name="hibernate.connection.password">genial</property>
@@ -66,6 +66,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Aba.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Abaverfahren.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Anfallstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Anhang.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Einleitungsstelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/MapElkaAnhang.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/MapElkaEinheit.hbm.xml" />

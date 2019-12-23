@@ -29,6 +29,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.HashSet;
@@ -780,7 +781,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
 
 
     /* Custom code goes below here! */
-    public static Anh49Fachdaten findByObjektId(java.lang.Integer id){
+    public static Anh49Fachdaten findByAnfallstelleId(java.lang.Integer id){
         log.debug("Found no Anh49Fachdaten with BasisObjekt id: " + id);
         /*List<Anh49Fachdaten> list = Anh49Fachdaten.getAll();
         for(Anh49Fachdaten i : list){
@@ -790,9 +791,9 @@ public class Anh49Fachdaten  implements java.io.Serializable {
             }
         }
         return null;*/
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
+        Anfallstelle anfallstelle = (Anfallstelle) HibernateSessionFactory.currentSession().createQuery("from Anfallstelle where id= " + id).list().get(0);
         //BasisObjekt.findById(id);
-        Set<Anh49Fachdaten> list = objekt.getAnh49Fachdatens();
+        Set<Anh49Fachdaten> list = anfallstelle.getAnh49Fachdatens();
         return list.iterator().next();
     }
 }

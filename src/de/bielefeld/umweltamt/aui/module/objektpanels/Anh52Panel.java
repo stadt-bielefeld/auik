@@ -51,6 +51,7 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -64,6 +65,8 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -268,10 +271,10 @@ public class Anh52Panel extends JPanel{
 
 
     public void fetchFormData() throws RuntimeException {
-        fachdaten = Anh52Fachdaten.findByObjektId(
-            this.hauptModul.getObjekt().getId());
-        log.debug("(Anh52Panel.fetchFormData) "
-        		+ "Anhang 52 Objekt aus DB geholt: ID" + fachdaten);
+    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+		this.fachdaten = Anh52Fachdaten.findByAnfallstelleId(
+				list.iterator().next().getId());
+        this.log.debug("Anhang 52 Objekt aus DB geholt: " + this.fachdaten);
     }
 
     @Override

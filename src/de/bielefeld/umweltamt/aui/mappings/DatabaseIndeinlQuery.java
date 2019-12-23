@@ -167,8 +167,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .createAlias("objekt", "objekt")
                 .createAlias("objekt.objektarten", "art")
                 .createAlias("objekt.betreiberid", "adresse")
-                .add(Restrictions.eq("art.id",
-                    DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
+//                .add(Restrictions.eq("art.id",
+//                    DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
                 .add(Restrictions.eq("objekt.deleted", false))
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("adresse.betrname")),
@@ -252,8 +252,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 Restrictions.eq("obj.sachbearbeiter", sachbearbeiter));
         }
 
-        criteria.add(Restrictions.ne("art.id",
-                DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER));
+//        criteria.add(Restrictions.ne("art.id",
+//                DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER));
 
         criteria.addOrder(Order.asc("obj.inaktiv"));
 

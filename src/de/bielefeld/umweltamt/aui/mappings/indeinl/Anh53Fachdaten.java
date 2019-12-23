@@ -29,6 +29,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.List;
@@ -549,18 +550,10 @@ public class Anh53Fachdaten  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
-    public static Anh53Fachdaten findByObjektId(java.lang.Integer id){
-        log.debug("Getting Anh53Fachdaten instance with connected BasisObjekt with id: " + id);
-        /*List<Anh53Fachdaten> all = Anh53Fachdaten.getAll();
-        for(Anh53Fachdaten i : all){
-            if(i.getBasisObjekt().getId().equals(id)){
-                return (Anh53Fachdaten) new DatabaseAccess().get(Anh53Fachdaten.class, i.getId());
-            }
-        }
-        return null;*/
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
-        //BasisObjekt.findById(id);
-        Set<Anh53Fachdaten> list = objekt.getAnh53Fachdatens();
+    public static Anh53Fachdaten findByAnfallstelleId(java.lang.Integer id){
+        log.debug("Getting Anh53Fachdaten instance with connected Anfallstelle with id: " + id);
+        Anfallstelle anfallstelle = (Anfallstelle) HibernateSessionFactory.currentSession().createQuery("from Anfallstelle where id= " + id).list().get(0);
+        Set<Anh53Fachdaten> list = anfallstelle.getAnh53Fachdatens();
         return list.iterator().next();
     }
 }

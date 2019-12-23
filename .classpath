@@ -6,45 +6,12 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/connector.jar"/>
-	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/jdbc2_0-stdext.jar"/>
-	<classpathentry kind="lib" path="lib/forms-1.0.5.jar"/>
-	<classpathentry kind="lib" path="lib/l2fprod-common-all.jar"/>
-	<classpathentry kind="lib" path="lib/jcalendar.jar"/>
-	<classpathentry kind="lib" path="lib/jta.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/jaxrpc.jar"/>
-	<classpathentry kind="lib" path="lib/axis.jar"/>
-	<classpathentry kind="lib" path="lib/commons-digester-1.7.jar"/>
-	<classpathentry kind="lib" path="lib/iText-2.1.7.jar"/>
-	<classpathentry kind="lib" path="lib/commons-discovery-0.5.jar"/>
-	<classpathentry kind="lib" path="lib/axis-wsdl4j-1.5.1.jar"/>
-	<classpathentry kind="lib" path="lib/junit-4.10.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="lib/looks-1.2.2.jar"/>
-	<classpathentry kind="lib" path="lib/com.jgoodies.uif_lite.jar"/>
-	<classpathentry kind="lib" path="lib/jersey-client.jar"/>
-	<classpathentry kind="lib" path="lib/jersey-common.jar"/>
-	<classpathentry kind="lib" path="lib/jersey-container-servlet-core.jar"/>
-	<classpathentry kind="lib" path="lib/jersey-container-servlet.jar"/>
-	<classpathentry kind="lib" path="lib/jersey-media-jaxb.jar"/>
-	<classpathentry kind="lib" path="lib/jersey-media-json-jackson-2.22.1.jar"/>
-	<classpathentry kind="lib" path="lib/jersey-server.jar"/>
-	<classpathentry kind="lib" path="lib/persistence-api-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/validation-api-1.1.0.Final.jar"/>
-	<classpathentry kind="lib" path="lib/jaxb-api-2.2.7.jar"/>
-	<classpathentry kind="lib" path="lib/javassist-3.18.1-GA.jar"/>
-	<classpathentry kind="lib" path="lib/javax.annotation-api-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/javax.servlet-api-3.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/javax.ws.rs-api-2.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/osgi-resource-locator-1.0.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -54,13 +21,20 @@
 	<classpathentry kind="lib" path="lib/aopalliance-repackaged-2.4.0-b34.jar"/>
 	<classpathentry kind="lib" path="lib/asm-5.1.jar"/>
 	<classpathentry kind="lib" path="lib/asm-debug-all-5.1.jar"/>
+	<classpathentry kind="lib" path="lib/axis-wsdl4j-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/axis.jar"/>
 	<classpathentry kind="lib" path="lib/c3p0-0.9.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/cglib-3.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.9.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-cli-1.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="lib/commons-discovery-0.5.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/concurrent-1.3.4.jar"/>
+	<classpathentry kind="lib" path="lib/connector.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/ehcache-3.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/groovy-2.4.6.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-commons-annotations-5.0.0.Final.jar"/>
@@ -70,8 +44,10 @@
 	<classpathentry kind="lib" path="lib/hibernate-search-orm-5.4.0.Final.jar"/>
 	<classpathentry kind="lib" path="lib/hk2-api-2.4.0-b34.jar"/>
 	<classpathentry kind="lib" path="lib/hk2-locator-2.4.0-b34.jar"/>
+	<classpathentry kind="lib" path="lib/hk2-utils-2.4.0-b31.jar"/>
 	<classpathentry kind="lib" path="lib/hk2-utils-2.4.0-b34.jar"/>
 	<classpathentry kind="lib" path="lib/icu4j-57_1.jar"/>
+	<classpathentry kind="lib" path="lib/iText-2.1.7.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-annotations-2.7.0.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-2.7.4.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-databind-2.7.4.jar"/>
@@ -81,12 +57,32 @@
 	<classpathentry kind="lib" path="lib/jasperreports-6.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/jasperreports-auik-font-repack.jar"/>
 	<classpathentry kind="lib" path="lib/jasperreports-fonts-6.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/javassist-3.18.1-GA.jar"/>
+	<classpathentry kind="lib" path="lib/javax.annotation-api-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/javax.inject-2.4.0-b34.jar"/>
+	<classpathentry kind="lib" path="lib/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/javax.ws.rs-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jaxb-api-2.2.7.jar"/>
+	<classpathentry kind="lib" path="lib/jaxrpc.jar"/>
 	<classpathentry kind="lib" path="lib/jboss-logging-3.3.0.Final.jar"/>
+	<classpathentry kind="lib" path="lib/jcalendar.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="lib/jdbc2_0-stdext.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-client.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-common.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-container-servlet-core.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-container-servlet.jar"/>
 	<classpathentry kind="lib" path="lib/jersey-entity-filtering-2.22.1.jar"/>
 	<classpathentry kind="lib" path="lib/jersey-guava-2.22.2.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-media-jaxb.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-media-json-jackson-2.22.1.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-server.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="lib/jgoodies-forms-1.9.0.jar"/>
+	<classpathentry kind="lib" path="lib/jgoodies-looks-2.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/jta.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="lib/l2fprod-common-all.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2-api-2.5.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-api-2.5.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-core-2.5.jar"/>
@@ -94,9 +90,12 @@
 	<classpathentry kind="lib" path="lib/lucene-core-4.10.4.jar"/>
 	<classpathentry kind="lib" path="lib/org.osgi.core-4.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/oscache-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/osgi-resource-locator-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/persistence-api-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/postgresql-9.4.1208.jre7.jar"/>
 	<classpathentry kind="lib" path="lib/proxool-0.9.1.jar"/>
 	<classpathentry kind="lib" path="lib/sac-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/validation-api-1.1.0.Final.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis-1.3.03.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

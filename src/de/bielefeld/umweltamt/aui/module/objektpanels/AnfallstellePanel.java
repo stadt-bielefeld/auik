@@ -24,22 +24,29 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
+import java.util.List;
 
-
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
@@ -60,14 +67,18 @@ public class AnfallstellePanel extends JPanel {
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
+    private Anhang anhang;
 
     // Widgets
-    private JFormattedTextField seqIdFeld = null;
     private TextFieldDateChooser erstellDatDatum = null;
+    private JComboBox betriebsweiseBox = null;
+    private JComboBox beschaffenheitBox = null;
+    private JComboBox anlagenartBox = null;
+    private JComboBox anhangBox = null;
     private JTextField anhangIdFeld = null;
     private JTextField herkunftFeld = null;
     private JTextField anwendungsbereichFeld = null;
-    private JTextField bezeichnungFeld = null;
+    private JFormattedTextField bezeichnungFeld = null;
     private TextFieldDateChooser stillgelegtAmDatum = null;
     private JFormattedTextField abwaBeschaffOptFeld = null;
     private JFormattedTextField betriebsweiseOptFeld = null;
@@ -75,37 +86,62 @@ public class AnfallstellePanel extends JPanel {
     
     // Daten
     private Anfallstelle anfallstelle = null;
+    private Anh40Panel anhang40Tab;
+    private Anh49Panel anhang49Tab;
+    private Anh49AbfuhrenPanel anh49abfuhrTab;
+    private Anh49DetailsPanel anh49detailTab;
+    private Anh49AnalysenPanel anh49analyseTab;
+    private Anh49VerwaltungsverfahrenPanel anh49VerwaltungsverfahrenTab;
+    private Anh50Panel anhang50Tab;
+    private Anh52Panel anhang52Tab;
+    private Anh53Panel anhang53Tab;
+    private Anh55Panel anhang55Tab;
+    private Anh56Panel anhang56Tab;
+    private BWKPanel bwkTab;
 
     public AnfallstellePanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Anfallstelle";
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-            "r:70dlu, 5dlu, 90dlu, r:90dlu, 5dlu, 20dlu", // Spalten
+            "r:90dlu, 5dlu, 50dlu, 150dlu, 5dlu, 20dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
         builder.appendSeparator("Anfallstelle");
-        builder.append("SeqId: ", getSeqIdFeld());
+        builder.append("Bezeichnung:");
+        builder.append(getBezeichnungFeld(), 4);
         builder.nextLine();
-        builder.append("erstellDat: ", getErstellDatDatum());
+        builder.append("Betriebsweise:");
+        builder.append(getBetriebsweiseBox(), 4);
         builder.nextLine();
-        builder.append("anhangId: ", getAnhangIdFeld());
+        builder.append("Abwasserbeschaffenheit:");
+        builder.append(getBeschaffenheitBox(), 4);
         builder.nextLine();
-        builder.append("herkunft: ", getHerkunftFeld());
+        builder.append("Anhang AbwV:");
+        builder.append(getAnhangBox(), 4);
         builder.nextLine();
-        builder.append("anwendungssbereich: ", getAnwendungsbereichFeld());
+        builder.append("Anlagenart:");
+        builder.append(getAnlagenartBox(), 4);
         builder.nextLine();
-        builder.append("bezeichnung: ", getBezeichnungFeld());
+        builder.append("Anwendungssbereich:");
+        builder.append(getAnwendungsbereichFeld(), 4);
         builder.nextLine();
-        builder.append("stillgelegtam: ", getStillgelegtAmDatum());
+        builder.append("Erstelldatum:", getErstellDatDatum());
         builder.nextLine();
-        builder.append("abwaBeschaffOpt: ", getAbwaBeschaffOptFeld());
-        builder.nextLine();
-        builder.append("betriebsweiseOpt: ", getBetriebsweiseOptFeld());
+        builder.append("Stilllegedatum:", getStillgelegtAmDatum());
         builder.nextLine();
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(getSaveAnfallstelleButton());
-        builder.append(buttonBar,6);
+        builder.append(buttonBar,2);
+        
+        this.anhangBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	Anhang  anh = (Anhang) anhangBox.getSelectedItem();
+            	String anlagenart = anlagenartBox.getSelectedItem().toString();
+                switchAnhangPanel(anh.getAnhangId(), anlagenart);
+            }
+        });
   
     }
 
@@ -126,17 +162,37 @@ public class AnfallstellePanel extends JPanel {
      * @throws RuntimeException
      */
     public void updateForm() throws RuntimeException {
-    	if(this.anfallstelle != null) {
-    		if(this.anfallstelle.getSeqId() != null) {
-    			getSeqIdFeld().setText(this.anfallstelle.getSeqId().toString());
-    		}
-    		
+    	if(this.anfallstelle != null) {    		
     		if(this.anfallstelle.getErstellDat() != null) {
     			getErstellDatDatum().setDate(this.anfallstelle.getErstellDat());
     		}
-    		
+
+            String[] betriebsweise = {"-", "Chargenbetrieb", "Durchlaufbetrieb", "Kampagnebetrieb"};
+            getBetriebsweiseBox().setModel(new DefaultComboBoxModel(betriebsweise));
+            
+            getBetriebsweiseBox().setSelectedItem(anfallstelle.getBetriebsweiseDescriptionFromId(this.anfallstelle.getBetriebsweiseOpt()));
+            
+            String[] beschaffenheit = {"Produktionsabwasser",  "Kühlwasser", "Sanitärwasser", 
+            		"Niederschlagswasser mit Sonderbauwerk", "Niederschlagswasser ohne Sonderbauwerk", 
+            		"Grubenwasser", "Fischteiche", "sonstiges Wasser"};
+            getBeschaffenheitBox().setModel(new DefaultComboBoxModel(beschaffenheit));
+            
+            getBeschaffenheitBox().setSelectedItem(anfallstelle.getBeschaffenheitDescriptionFromId(this.anfallstelle.getAbwaBeschaffOpt()));
+            
+            String[] anlagenart = {"-", "Aufbereitung Medizinprodukte", "Brennwertkessel", "Blockheizkraftwerk", 
+            		"Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor", 
+            		"RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
+            getAnlagenartBox().setModel(new DefaultComboBoxModel(anlagenart));
+            
+            if (this.anfallstelle.getAnlagenart() != null) {
+            	getAnlagenartBox().setSelectedItem(this.anfallstelle.getAnlagenart());
+            }
+            
+            List<Anhang> anhang = Anhang.getAll();
+            getAnhangBox().setModel(new DefaultComboBoxModel(anhang.toArray()));
+                        
     		if(this.anfallstelle.getAnhangId() != null) {
-    			getAnhangIdFeld().setText(this.anfallstelle.getAnhangId());
+    			getAnhangBox().setSelectedItem(Anhang.findByAnhangId(this.anfallstelle.getAnhangId()));
     		}
     		
     		if(this.anfallstelle.getHerkunft() != null) {
@@ -169,7 +225,6 @@ public class AnfallstellePanel extends JPanel {
      * Methode die alle Eingabefelder des Panels auf den Standard zurücksetzt.
      */
     public void clearForm() {
-    	getSeqIdFeld().setText(null);
     	getErstellDatDatum().setDate(null);
     	getAnhangIdFeld().setText(null);
     	getHerkunftFeld().setText(null);
@@ -186,7 +241,6 @@ public class AnfallstellePanel extends JPanel {
      * @param enabled
      */
     public void enableAll(boolean enabled) {
-        getSeqIdFeld().setEnabled(enabled);
         getErstellDatDatum().setEnabled(enabled);
         getAnhangIdFeld().setEnabled(enabled);
         getHerkunftFeld().setEnabled(enabled);
@@ -207,17 +261,27 @@ public class AnfallstellePanel extends JPanel {
         
         this.anfallstelle.setAktualDat(new Date());
         
-        Integer seqId = ((IntegerField)this.seqIdFeld).getIntValue();
-        this.anfallstelle.setSeqId(seqId);
-        
         Date erstellDat = this.erstellDatDatum.getDate();
         this.anfallstelle.setErstellDat(erstellDat);
         
-        String anhangId = this.anhangIdFeld.getText();
-        if("".equals(anhangId)) {
+                
+        anhang = (Anhang) this.anhangBox.getSelectedItem();
+        if(getAnhangBox().getSelectedItem() == null) {
         	this.anfallstelle.setAnhangId(null);
         } else {
-        	this.anfallstelle.setAnhangId(anhangId);
+        	this.anfallstelle.setAnhangId(anhang.getAnhangId());
+        }
+        
+        this.anfallstelle.setAbwaBeschaffOpt(
+                anfallstelle.getBeschaffenheitIdFromDescription((String) getBeschaffenheitBox().getSelectedItem()));
+        
+        this.anfallstelle.setBetriebsweiseOpt(
+                anfallstelle.getBetriebsweiseIdFromDescription((String) getBetriebsweiseBox().getSelectedItem()));
+  
+        if (getAnlagenartBox().getSelectedItem() == null) {
+        	this.anfallstelle.setAnlagenart(null);
+        } else {
+        	this.anfallstelle.setAnlagenart((String) getAnlagenartBox().getSelectedItem());
         }
         
         String herkunft = this.herkunftFeld.getText();
@@ -265,25 +329,14 @@ public class AnfallstellePanel extends JPanel {
 
     public void completeObjekt() {
     	if (this.hauptModul.isNew() || this.anfallstelle == null) {
-    		// Neue Einleitungsstelle erzeugen
+    		// Neue Anfallstelle erzeugen
     		this.anfallstelle = new Anfallstelle();
     		// Objekt_Id setzen
     		this.anfallstelle.setObjekt(this.hauptModul.getObjekt());
-    		// Einleitungsstelle speichern
+    		// Anfallstelle speichern
     		this.anfallstelle.merge();
     		log.debug("Neue Anfallstelle " + this.anfallstelle + " gespeichert.");
     	}
-    }
-    
-    /**
-     * Get-Methode die das seqIdFeld des Panels zurückgibt:
-     * @return {@link JFormattedTextField}
-     */
-    private JFormattedTextField getSeqIdFeld() {
-    	if (this.seqIdFeld == null) {
-    		this.seqIdFeld = new IntegerField();
-    	}
-    	return this.seqIdFeld;
     }
     
     /**
@@ -295,6 +348,47 @@ public class AnfallstellePanel extends JPanel {
     		this.erstellDatDatum = new TextFieldDateChooser();
     	}
     	return this.erstellDatDatum;
+    }
+
+    /**
+     * @return the betriebsweiseBox
+     */
+    private JComboBox getBetriebsweiseBox() {
+        if (this.betriebsweiseBox == null) {
+            this.betriebsweiseBox = new JComboBox();
+        }
+        return betriebsweiseBox;
+    }
+
+    /**
+     * @return the beschaffenheitBox
+     */
+    private JComboBox getBeschaffenheitBox() {
+        if (this.beschaffenheitBox == null) {
+            this.beschaffenheitBox = new JComboBox();
+        }
+        return beschaffenheitBox;
+    }
+
+    /**
+     * @return the anhangBox
+     */
+    private JComboBox getAnhangBox() {
+        if (this.anhangBox == null) {
+            this.anhangBox = new JComboBox();
+        }
+        return anhangBox;
+    }
+
+    /**
+     * @return the anhangBox
+     */
+    private JComboBox getAnlagenartBox() {
+        if (this.anlagenartBox == null) {
+            this.anlagenartBox = new JComboBox();
+            this.anlagenartBox.setEditable(false);
+        }
+        return anlagenartBox;
     }
     
     /**
@@ -332,7 +426,7 @@ public class AnfallstellePanel extends JPanel {
      */
     private JTextField getBezeichnungFeld() {
     	if (this.bezeichnungFeld == null) {
-    		this.bezeichnungFeld = new LimitedTextField(50);
+    		this.bezeichnungFeld = new JFormattedTextField();
     	}
     	return this.bezeichnungFeld;
     }
@@ -402,5 +496,168 @@ public class AnfallstellePanel extends JPanel {
     	}
     	return this.saveAnfallstelleButton;
     }
+
+    /**
+     * Switch the panel content according to the given type string
+     * @param type New panel content type
+     */
+	public void switchAnhangPanel(String type, String anlagenart) {
+		if (type == null) {
+			return;
+		}
+
+
+		switch ((String) type) {
+		case "40":
+			hauptModul.getTabbedPane().addTab(getAnh40Tab().getName(), getAnh40Tab());
+			getAnh40Tab().updateForm();
+			break;
+		case "49":
+			hauptModul.getTabbedPane().addTab(getAnh49Tab().getName(), getAnh49Tab());
+			hauptModul.getTabbedPane().addTab(getAnh49DetailTab().getName(), getAnh49DetailTab());
+			hauptModul.getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
+			hauptModul.getTabbedPane().addTab(getAnh49VerwaltungsverfahrenTab().getName(), getAnh49VerwaltungsverfahrenTab());
+			getAnh49Tab().updateForm();
+			getAnh49DetailTab().updateForm();
+			getAnh49AnalyseTab().updateForm();
+			getAnh49VerwaltungsverfahrenTab().updateForm();
+			break;
+		case "50":
+			hauptModul.getTabbedPane().addTab(getAnh50Tab().getName(), getAnh50Tab());
+			getAnh50Tab().updateForm();
+			break;
+		case "52":
+			hauptModul.getTabbedPane().addTab(getAnh52Tab().getName(), getAnh52Tab());
+			getAnh52Tab().updateForm();
+			break;
+		case "53":
+			hauptModul.getTabbedPane().addTab(getAnh53Tab().getName(), getAnh53Tab());
+			getAnh53Tab().updateForm();
+			break;
+		case "55":
+			hauptModul.getTabbedPane().addTab(getAnh55Tab().getName(), getAnh55Tab());
+			getAnh55Tab().updateForm();
+			break;
+		case "56":
+			hauptModul.getTabbedPane().addTab(getAnh56Tab().getName(), getAnh56Tab());
+			getAnh56Tab().updateForm();
+			break;
+		case "99":
+			switch ((String) anlagenart) {
+			case "Brennwertkessel":
+				hauptModul.getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
+				getBWKTab().updateForm();
+			break;
+			case "Blockheizkraftwerk":
+				hauptModul.getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
+				getBWKTab().updateForm();
+			break;
+			case "Fettabscheider":
+				hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
+				getAnh49AbfuhrTab().updateForm();
+			break;
+			}
+		}
+	}
+	
+
+
+    public Anh40Panel getAnh40Tab() {
+        if (anhang40Tab == null) {
+            anhang40Tab = new Anh40Panel(hauptModul);
+            anhang40Tab.setBorder(Paddings.DIALOG);
+        }
+        return anhang40Tab;
+    }
+
+    public Anh49Panel getAnh49Tab() {
+		if (anhang49Tab == null) {
+            anhang49Tab = new Anh49Panel(hauptModul);
+            anhang49Tab.setBorder(Paddings.DIALOG);
+        }
+        return anhang49Tab;
+    }
+
+    public Anh49AnalysenPanel getAnh49AnalyseTab() {
+        if (anh49analyseTab == null) {
+            anh49analyseTab = new Anh49AnalysenPanel(hauptModul);
+            anh49analyseTab.setBorder(Paddings.DIALOG);
+        }
+        return anh49analyseTab;
+    }
+
+    public Anh49DetailsPanel getAnh49DetailTab() {
+        if (anh49detailTab == null) {
+            anh49detailTab = new Anh49DetailsPanel(hauptModul);
+            anh49detailTab.setBorder(Paddings.DIALOG);
+        }
+        return anh49detailTab;
+    }
+
+    public Anh49AbfuhrenPanel getAnh49AbfuhrTab() {
+        if (anh49abfuhrTab == null) {
+            anh49abfuhrTab = new Anh49AbfuhrenPanel(hauptModul);
+            anh49abfuhrTab.setBorder(Paddings.DIALOG);
+        }
+        return anh49abfuhrTab;
+    }
+
+    public Anh49VerwaltungsverfahrenPanel getAnh49VerwaltungsverfahrenTab() {
+        if (anh49VerwaltungsverfahrenTab == null) {
+            anh49VerwaltungsverfahrenTab =
+                new Anh49VerwaltungsverfahrenPanel();
+            anh49VerwaltungsverfahrenTab.setBorder(Paddings.DIALOG);
+        }
+        return anh49VerwaltungsverfahrenTab;
+    }
+
+    public Anh50Panel getAnh50Tab() {
+        if (anhang50Tab == null) {
+            anhang50Tab = new Anh50Panel(hauptModul);
+            anhang50Tab.setBorder(Paddings.DIALOG);
+        }
+        return anhang50Tab;
+    }
+
+    public Anh52Panel getAnh52Tab() {
+        if (anhang52Tab == null) {
+            anhang52Tab = new Anh52Panel(hauptModul);
+            anhang52Tab.setBorder(Paddings.DIALOG);
+        }
+        return anhang52Tab;
+    }
+
+    public Anh53Panel getAnh53Tab() {
+        if (anhang53Tab == null) {
+            anhang53Tab = new Anh53Panel(hauptModul);
+            anhang53Tab.setBorder(Paddings.DIALOG);
+        }
+        return anhang53Tab;
+    }
+
+    public Anh55Panel getAnh55Tab() {
+        if (anhang55Tab == null) {
+            anhang55Tab = new Anh55Panel(hauptModul);
+            anhang55Tab.setBorder(Paddings.DIALOG);
+        }
+        return anhang55Tab;
+    }
+
+    public Anh56Panel getAnh56Tab() {
+        if (anhang56Tab == null) {
+            anhang56Tab = new Anh56Panel(hauptModul);
+            anhang56Tab.setBorder(Paddings.DIALOG);
+        }
+        return anhang56Tab;
+    }
+
+    public BWKPanel getBWKTab() {
+        if (bwkTab == null) {
+        	bwkTab = new BWKPanel(hauptModul);
+        	bwkTab.setBorder(Paddings.DIALOG);
+        }
+        return bwkTab;
+    }
+
 
 }

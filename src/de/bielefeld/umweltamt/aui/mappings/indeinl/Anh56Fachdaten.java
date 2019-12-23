@@ -23,14 +23,17 @@
 
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class that represents a row in the Anh56Fachdaten database table.<br>
@@ -427,15 +430,10 @@ public class Anh56Fachdaten  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
-    public static Anh56Fachdaten findByObjektId(java.lang.Integer id){
-        List<Anh56Fachdaten> list = Anh56Fachdaten.getAll();
-        for(Anh56Fachdaten i : list){
-            if(i.getObjekt().getId().equals(id)){
-                log.debug("Returning Anh56Fachdaten with BasisObjekt id: " + id);
-                return (Anh56Fachdaten) new DatabaseAccess().get(Anh56Fachdaten.class, i.getId());
-            }
-        }
-        log.debug("Found no Anh56Fachdaten with BasisObjekt id: " + id);
-        return null;
+    public static Anh56Fachdaten findByAnfallstelleId(java.lang.Integer id){
+        log.debug("Getting Anh56Fachdaten instance with connected Anfallstelle with id: " + id);
+        Anfallstelle anfallstelle = (Anfallstelle) HibernateSessionFactory.currentSession().createQuery("from Anfallstelle where id= " + id).list().get(0);
+        Set<Anh56Fachdaten> list = anfallstelle.getAnh56Fachdatens();
+        return list.iterator().next();
     }
 }

@@ -55,6 +55,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.PrioritaetId;
 import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
 import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnhang;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaEinheit;
@@ -810,6 +811,10 @@ public class DatabaseClassToString {
 	public static String toStringForClass(EZElsWasserrecht ezElsWasserrecht) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public static String toStringForClass(Anhang clazz) {
+        return clazz.toGuiString();
 	}
 	
 }

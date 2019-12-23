@@ -29,6 +29,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.List;
@@ -464,7 +465,15 @@ public class BwkFachdaten  implements java.io.Serializable {
         return null;*/
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         //BasisObjekt.findById(id);
-        Set<BwkFachdaten> list = objekt.getBwkFachdatens();
+//        Set<BwkFachdaten> list = objekt.getBwkFachdatens();
+        return null;
+    }
+    
+    public static BwkFachdaten findByAnfallstelleId(java.lang.Integer id) {
+        log.debug("Getting AnhBwkFachdaten instance with connected Objekt with id: " + id);
+
+        Anfallstelle anfallstelle = (Anfallstelle) HibernateSessionFactory.currentSession().createQuery("from Anfallstelle where id= " + id).list().get(0);
+        Set<BwkFachdaten> list = anfallstelle.getBwkFachdatens();
         return list.iterator().next();
     }
 }

@@ -59,14 +59,6 @@ public class Anh53Model extends ListTableModel {
                 tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
                 break;
             case 2:
-                if (fd.getObjekt().getObjektarten().getId().equals(
-                    DatabaseConstants.BASIS_OBJEKTART_ID_ANHANG_53_KLEIN)) {
-                    tmp = "kleiner 3000";
-                } else {
-                    tmp = "größer 3000";
-                }
-                break;
-            case 3:
                 tmp = fd.getObjekt().getBeschreibung();
                 break;
 

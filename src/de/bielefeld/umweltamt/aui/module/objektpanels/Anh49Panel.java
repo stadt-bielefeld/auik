@@ -102,7 +102,9 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -279,8 +281,9 @@ public class Anh49Panel extends AbstractAnhangPanel {
     }
 
     public void fetchFormData() {
-		this.fachdaten = Anh49Fachdaten.findByObjektId(
-            this.hauptModul.getObjekt().getId());
+    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+		this.fachdaten = Anh49Fachdaten.findByAnfallstelleId(
+				list.iterator().next().getId());
         this.log.debug("Anhang 49 Objekt aus DB geholt: " + this.fachdaten);
     }
 

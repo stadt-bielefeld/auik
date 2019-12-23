@@ -30,6 +30,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Date;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -54,6 +55,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
@@ -111,7 +114,7 @@ public class BWKPanel extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-            "r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 70dlu, , 70dlu, 70dlu", // Spalten
+            "r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 70dlu, 5dlu, 70dlu, 70dlu", // Spalten
             "pref, " + // 1
                 "3dlu, " + // 2
                 "pref, " + // 3
@@ -196,13 +199,15 @@ public class BWKPanel extends JPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-        this.bwk = BwkFachdaten.findByObjektId(
-            this.hauptModul.getObjekt().getId());
+    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+		this.bwk = BwkFachdaten.findByAnfallstelleId(
+				list.iterator().next().getId());
         log.debug("Brennwertkessel aus DB geholt: " + this.bwk);
     }
 
     public void updateForm() throws RuntimeException {
-
+    	
+    	fetchFormData();
         if (this.bwk != null) {
             if (this.bwk.getKHersteller() != null) {
                 getHerstellerFeld().setText(this.bwk.getKHersteller());

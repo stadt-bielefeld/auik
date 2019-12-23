@@ -156,8 +156,8 @@ public class DatabaseConstants {
     public static final int BASIS_OBJEKTART_ID_ANFALLSTELLE = 65;
     public static final int BASIS_OBJEKTART_ID_ENTWAESSERUNGSGRUNDSTUECK = 69;
     public static final int BASIS_OBJEKTART_ID_SONDERBAUWERK = 68;
-    public static final String BASIS_OBJEKTART_ABTEILUNG_33 = "360.33";
-    public static final String BASIS_OBJEKTART_ABTEILUNG_34 = "360.34";
+    public static final String BASIS_OBJEKTART_ABTEILUNG_33 = "IE";
+    public static final String BASIS_OBJEKTART_ABTEILUNG_34 = "AwSV";
     
 
     /* ********************************************************************** */

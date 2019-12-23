@@ -22,6 +22,8 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.hibernate.NullPrecedence;
@@ -51,6 +53,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
@@ -284,7 +287,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		if (hausnrzus != null) {
 			filter += " AND a.hausnrzus = '" + hausnrzus + "' ";
 		}else {
-			filter += " AND a.hausnrzus is null";
+			filter += " AND a.hausnrzus is null ";
 		}
 		if (abteilung != null) {
 			filter += " AND art.abteilung = '" + abteilung + "' ";
@@ -1269,6 +1272,20 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				DetachedCriteria.forClass(Wassereinzugsgebiet.class).setProjection(Property.forName("id").max()),
 				new Integer(0));
 		return id + 1;
+	}
+	
+	/**
+	 * Get all Anhangs and sort them by their anhang_id as integer
+	 * 
+	 * @return <code>Eine Liste aller Anhangs</code>
+	 */
+
+	public static List<Anhang> allActiveAnhangs() {
+
+		String query = "FROM Anhang WHERE anh_gueltig_bis IS NULL " + 
+				"ORDER BY CAST (NULLIF(regexp_replace(anhang_id, '\\D', '', 'g'), '') as int) asc";
+
+		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
 
 }
