@@ -48,7 +48,7 @@ public class Anh53Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Objekt objekt;
+    private Anfallstelle anfallstelle;
     private String branche;
     private String verfahren;
     private Date antragsdatum;
@@ -87,18 +87,18 @@ public class Anh53Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh53Fachdaten(
-        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh53Fachdaten(
-        Integer id, Objekt objekt, String branche, String verfahren, Date antragsdatum, Boolean bagatell, Date bagatelldatum, Date genehmigungsdatum, Date genehmigungaufgehoben, Date abnahmedatum, String genehmigungstitel, Boolean genehmigung, Integer durchsatz, Integer gesamtmengeEb, Boolean onlineentsilberung, Boolean abwasser, Date abwasserfrei, Date kleiner200qm, Boolean betriebAbgemeldet, String bemerkungen, Boolean betriebstagebuch, Boolean wasseruhr, Integer spuelwassermenge, Integer spuelwasserverbrauch, Boolean wartungsvertrag, Boolean grgen, String genart, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, String branche, String verfahren, Date antragsdatum, Boolean bagatell, Date bagatelldatum, Date genehmigungsdatum, Date genehmigungaufgehoben, Date abnahmedatum, String genehmigungstitel, Boolean genehmigung, Integer durchsatz, Integer gesamtmengeEb, Boolean onlineentsilberung, Boolean abwasser, Date abwasserfrei, Date kleiner200qm, Boolean betriebAbgemeldet, String bemerkungen, Boolean betriebstagebuch, Boolean wasseruhr, Integer spuelwassermenge, Integer spuelwasserverbrauch, Boolean wartungsvertrag, Boolean grgen, String genart, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.branche = branche;
         this.verfahren = verfahren;
         this.antragsdatum = antragsdatum;
@@ -137,12 +137,12 @@ public class Anh53Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Objekt getObjekt() {
-        return this.objekt;
+    public Anfallstelle getAnfallstelle() {
+        return this.anfallstelle;
     }
 
-    public void setObjekt(Objekt objekt) {
-        this.objekt = objekt;
+    public void setAnfallstelle(Anfallstelle anfallstelle) {
+        this.anfallstelle = anfallstelle;
     }
 
     public String getBranche() {
@@ -382,7 +382,7 @@ public class Anh53Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
         buffer.append("branche").append("='").append(getBranche()).append("' ");			
         buffer.append("verfahren").append("='").append(getVerfahren()).append("' ");			
         buffer.append("antragsdatum").append("='").append(getAntragsdatum()).append("' ");			
@@ -476,7 +476,7 @@ public class Anh53Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh53Fachdaten copy) {
         this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
+        this.anfallstelle = copy.getAnfallstelle();            
         this.branche = copy.getBranche();            
         this.verfahren = copy.getVerfahren();            
         this.antragsdatum = copy.getAntragsdatum();            

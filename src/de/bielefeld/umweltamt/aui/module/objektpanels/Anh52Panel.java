@@ -88,6 +88,7 @@ public class Anh52Panel extends JPanel{
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
+    private Anfallstelle anfallstelle;
 
     // Widgets
     private JFormattedTextField nrbetriebsstaetteFeld = null;
@@ -103,9 +104,10 @@ public class Anh52Panel extends JPanel{
     // Daten
     private Anh52Fachdaten fachdaten = null;
 
-    public Anh52Panel(BasisObjektBearbeiten hauptModul) {
+    public Anh52Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
         name = "Chemische Wäscherei";
         this.hauptModul = hauptModul;
+        this.anfallstelle = anfallstelle;
 
         FormLayout layout = new FormLayout (
                 "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
@@ -145,17 +147,15 @@ public class Anh52Panel extends JPanel{
 
     }
 
-    public void completeObjekt() {
-        if (hauptModul.isNew() || fachdaten == null) {
+    public void completeObjekt(Anfallstelle anfallstelle) {
+        if (fachdaten == null) {
             // Neues Anhang 52 Objekt erzeugen
-            fachdaten = new Anh52Fachdaten();
-            // Objekt_Id setzen
-            fachdaten.setObjekt(hauptModul.getObjekt());
-
-            // Anhang 52 Objekt speichern
-            fachdaten.merge();
-            log.debug("Neues Anh 52 Objekt " + fachdaten + " gespeichert.");
+            this.fachdaten = new Anh52Fachdaten();
         }
+            // Anfallstelle setzen
+        this.anfallstelle = anfallstelle;
+        this.fachdaten.setAnfallstelle(this.anfallstelle);
+
     }
 
     private boolean saveAnh52Daten() {
@@ -202,7 +202,8 @@ public class Anh52Panel extends JPanel{
             fachdaten.setFirmenname(firmennameString);
         }
 
-        success = fachdaten.merge();
+        Anfallstelle.merge(this.anfallstelle);
+        success = this.fachdaten.merge();
         if (success) {
             log.debug("Anh 52 Objekt " + fachdaten.getId()
             		+ " gespeichert.");
@@ -234,8 +235,10 @@ public class Anh52Panel extends JPanel{
         getBemerkungenArea().setText(null);
     }
 
-    public void updateForm() throws RuntimeException {
+    public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
 
+    this.fachdaten = anfallstelle.getAnh52Fachdatens().iterator().next();
+    	
     if (fachdaten != null) {
         if (fachdaten.getBemerkungen() != null) {
             getBemerkungenArea().setText(fachdaten.getBemerkungen());
@@ -289,7 +292,7 @@ public class Anh52Panel extends JPanel{
             saveAnh52Button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    enableAll(false);
+//                    enableAll(false);
                     if (saveAnh52Daten()) {
                         hauptModul.getFrame().changeStatus("Anh 52 Objekt "+fachdaten.getId()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
                     } else {

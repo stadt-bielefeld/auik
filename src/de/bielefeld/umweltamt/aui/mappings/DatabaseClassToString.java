@@ -82,8 +82,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
@@ -364,7 +362,7 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "[Anhang 40:ID]"
      */
     public static String toStringForClass(Anh40Fachdaten clazz) {
-        return "[Anhang 40:" + clazz.getObjekt() + "]";
+        return "[Anhang 40:" + clazz.getAnfallstelle().getObjekt() + "]";
     }
 
     /**
@@ -386,7 +384,7 @@ public class DatabaseClassToString {
 
     /** @return Custom Anh49Fachdaten.toString() */
     public static String toStringForClass(Anh49Fachdaten clazz) {
-        return "[Anh49:" + clazz.getObjekt() + "]";
+        return "[Anh49:" + clazz.getAnfallstelle() + "]";
     }
 
     /**
@@ -407,26 +405,6 @@ public class DatabaseClassToString {
         return "[Abfuhrdatum: "
             + AuikUtils.getStringFromDate(clazz.getAbfuhrdatum())
             + ", Entsorger: " + clazz.getEntsorger() + "]";
-    }
-
-    /**
-     * @return Custom Anh49Ortstermine.toString()
-     * Liefert einen String der Form "[Datum: DATUM und SACHBEARBEITER]".
-     */
-    public static String toStringForClass(Anh49Ortstermine clazz) {
-        return "[Datum: " + AuikUtils.getStringFromDate(clazz.getDatum())
-            + ", SachbearbeiterIn: " + clazz.getSachbearbeiterIn() + "]";
-    }
-
-    /** @return Custom Anh49Verwaltungsverf.toString() */
-    public static String toStringForClass(Anh49Verwaltungsverf clazz) {
-        return "[Datum: " + AuikUtils.getStringFromDate(clazz.getDatum())
-            + ", Maßnahme: " + clazz.getMassnahme() + " ("
-            + ((clazz.getAbgeschlossen() != null && clazz.getAbgeschlossen()) ?
-                "" : "nicht ") + "abgeschlossen)"
-            + ", SachbearbeiterIn: " + clazz.getSachbearbeiterIn()
-            + (clazz.getWiedervorlage() == null ? "" : ", Wiedervorlage: "
-            + AuikUtils.getStringFromDate(clazz.getWiedervorlage())) + "]";
     }
 
     /** @return Custom Anh50Fachdaten.toString() */

@@ -94,6 +94,7 @@ public class Objekt  implements java.io.Serializable {
     private Set<Objektverknuepfung> objektverknuepfungsForObjekt = new HashSet<Objektverknuepfung>(0);
     private Set<Fachdaten> fachdatens = new HashSet<Fachdaten>(0);
     private Set<Anfallstelle> Anfallstelles = new HashSet<Anfallstelle>(0);
+    private Set<Anh49Fachdaten> anh49Fachdatens = new HashSet<Anh49Fachdaten>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -401,6 +402,14 @@ public class Objekt  implements java.io.Serializable {
 	public void setAnfallstelles(Set<Anfallstelle> anfallstelles) {
 		Anfallstelles = anfallstelles;
 	}
+
+    public Set<Anh49Fachdaten> getAnh49Fachdatens() {
+        return this.anh49Fachdatens;
+    }
+
+    public void setAnh49Fachdatens(Set<Anh49Fachdaten> anh49Fachdatens) {
+        this.anh49Fachdatens = anh49Fachdatens;
+    }
 
 	/**
      * To implement custom toString methods, jump to not generated code.<br>

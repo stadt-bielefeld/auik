@@ -124,7 +124,6 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AbfuhrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49DetailsPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49Panel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49VerwaltungsverfahrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh50Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh52Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh53Panel;
@@ -171,7 +170,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private Anh49AbfuhrenPanel anh49abfuhrTab;
     private Anh49DetailsPanel anh49detailTab;
     private Anh49AnalysenPanel anh49analyseTab;
-    private Anh49VerwaltungsverfahrenPanel anh49VerwaltungsverfahrenTab;
     private ChronoPanel chronoTab;
     private FotoPanel fotoTab;
     private GenehmigungPanel genehmigungTab;
@@ -338,15 +336,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
             anh49abfuhrTab.setBorder(Paddings.DIALOG);
         }
         return anh49abfuhrTab;
-    }
-
-    public Anh49VerwaltungsverfahrenPanel getAnh49VerwaltungsverfahrenTab() {
-        if (anh49VerwaltungsverfahrenTab == null) {
-            anh49VerwaltungsverfahrenTab =
-                new Anh49VerwaltungsverfahrenPanel();
-            anh49VerwaltungsverfahrenTab.setBorder(Paddings.DIALOG);
-        }
-        return anh49VerwaltungsverfahrenTab;
     }
 
     public SuevPanel getSuevTab() {
@@ -529,8 +518,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             	getAnh49Tab().getFachdaten());
                             getAnh49AnalyseTab().setFachdaten(
                             	getAnh49Tab().getFachdaten());
-                            getAnh49VerwaltungsverfahrenTab().setFachdaten(
-                            	getAnh49Tab().getFachdaten());
                             break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                             getChronoTab().fetchFormData();
@@ -623,6 +610,15 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                 getTabbedPane().setSelectedComponent(getAbaTab());
                                 break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+                                getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
+                                getTabbedPane().addTab(getAnh49Tab().getName(), getAnh49Tab());
+                                getTabbedPane().addTab(getAnh49DetailTab().getName(), getAnh49DetailTab());
+                                getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
+                                getChronoTab().updateForm();
+                                getAnh49Tab().updateForm();
+                                getAnh49AnalyseTab().updateForm(getAnh49Tab().getFachdaten());
+                                getTabbedPane().setSelectedComponent(getAnh49Tab());
+                                break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                                 getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                 getTabbedPane().addTab(getSuevTab().getName(), getSuevTab());
@@ -647,7 +643,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                             	getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                             	getTabbedPane().addTab(getAnfallstelleTab().getName(), getAnfallstelleTab());
-                            	
                             	getChronoTab().updateForm();
                             	getAnfallstelleTab().updateForm();
                             	getTabbedPane().setSelectedComponent(getAnfallstelleTab());
@@ -728,7 +723,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 	getAnh49Tab().clearForm();
                     getAnh49DetailTab().clearForm();
                     getAnh49AnalyseTab().clearForm();
-                    getAnh49VerwaltungsverfahrenTab().clearForm();
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                     getSuevTab().clearForm();
@@ -767,7 +761,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 	getAnh49Tab().enableAll(enabled);
                     getAnh49DetailTab().enableAll(enabled);
                     getAnh49AnalyseTab().enableAll(enabled);
-                    getAnh49VerwaltungsverfahrenTab().enableAll(enabled);
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                     getSuevTab().enableAll(enabled);
@@ -809,9 +802,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getAbaTab().completeObjekt();
                     getAbaVerfahrenTab().completeObjekt();
                     break;
-                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
-                	getAnh49Tab().completeObjekt();
-                    break;
+//                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+//                	getAnh49Tab().completeObjekt();
+//                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                     getSuevTab().completeObjekt();
                     break;

@@ -48,7 +48,7 @@ public class Anh56Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Objekt objekt;
+    private Anfallstelle anfallstelle;
     private String druckverfahren;
     private String verbrauch;
     private String sachbearbeiterrav;
@@ -77,18 +77,18 @@ public class Anh56Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh56Fachdaten(
-        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh56Fachdaten(
-        Integer id, Objekt objekt, String druckverfahren, String verbrauch, String sachbearbeiterrav, String sachbearbeiterheepen, String entsorgung, Boolean abwasseranfall, Boolean genpflicht, Boolean aba, Date gen58, Date gen59, String bemerkungen, Boolean abfallrechtlentsorg, Boolean spuelwasser, Boolean leimabwasser, Date erfasstam, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, String druckverfahren, String verbrauch, String sachbearbeiterrav, String sachbearbeiterheepen, String entsorgung, Boolean abwasseranfall, Boolean genpflicht, Boolean aba, Date gen58, Date gen59, String bemerkungen, Boolean abfallrechtlentsorg, Boolean spuelwasser, Boolean leimabwasser, Date erfasstam, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.druckverfahren = druckverfahren;
         this.verbrauch = verbrauch;
         this.sachbearbeiterrav = sachbearbeiterrav;
@@ -117,12 +117,12 @@ public class Anh56Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Objekt getObjekt() {
-        return this.objekt;
+    public Anfallstelle getAnfallstelle() {
+        return this.anfallstelle;
     }
 
-    public void setObjekt(Objekt objekt) {
-        this.objekt = objekt;
+    public void setAnfallstelle(Anfallstelle anfallstelle) {
+        this.anfallstelle = anfallstelle;
     }
 
     public String getDruckverfahren() {
@@ -282,7 +282,7 @@ public class Anh56Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
         buffer.append("druckverfahren").append("='").append(getDruckverfahren()).append("' ");			
         buffer.append("verbrauch").append("='").append(getVerbrauch()).append("' ");			
         buffer.append("sachbearbeiterrav").append("='").append(getSachbearbeiterrav()).append("' ");			
@@ -366,7 +366,7 @@ public class Anh56Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh56Fachdaten copy) {
         this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
+        this.anfallstelle = copy.getAnfallstelle();            
         this.druckverfahren = copy.getDruckverfahren();            
         this.verbrauch = copy.getVerbrauch();            
         this.sachbearbeiterrav = copy.getSachbearbeiterrav();            

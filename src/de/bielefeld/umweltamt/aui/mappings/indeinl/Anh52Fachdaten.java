@@ -48,7 +48,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Objekt objekt;
+    private Anfallstelle anfallstelle;
     private Integer nrbetriebsstaette;
     private String firmenname;
     private String telefon;
@@ -69,18 +69,18 @@ public class Anh52Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh52Fachdaten(
-        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh52Fachdaten(
-        Integer id, Objekt objekt, Integer nrbetriebsstaette, String firmenname, String telefon, String telefax, String ansprechpartner, Date datumgenehmigung, String bemerkungen, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, Integer nrbetriebsstaette, String firmenname, String telefon, String telefax, String ansprechpartner, Date datumgenehmigung, String bemerkungen, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.nrbetriebsstaette = nrbetriebsstaette;
         this.firmenname = firmenname;
         this.telefon = telefon;
@@ -101,12 +101,12 @@ public class Anh52Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Objekt getObjekt() {
-        return this.objekt;
+    public Anfallstelle getAnfallstelle() {
+        return this.anfallstelle;
     }
 
-    public void setObjekt(Objekt objekt) {
-        this.objekt = objekt;
+    public void setAnfallstelle(Anfallstelle anfallstelle) {
+        this.anfallstelle = anfallstelle;
     }
 
     public Integer getNrbetriebsstaette() {
@@ -202,7 +202,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
         buffer.append("nrbetriebsstaette").append("='").append(getNrbetriebsstaette()).append("' ");			
         buffer.append("firmenname").append("='").append(getFirmenname()).append("' ");			
         buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
@@ -278,7 +278,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh52Fachdaten copy) {
         this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
+        this.anfallstelle = copy.getAnfallstelle();            
         this.nrbetriebsstaette = copy.getNrbetriebsstaette();            
         this.firmenname = copy.getFirmenname();            
         this.telefon = copy.getTelefon();            

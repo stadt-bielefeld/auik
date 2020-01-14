@@ -862,8 +862,8 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.dreiButton == null)
 		{
-			this.dreiButton = new JButton("360.33");
-			this.dreiButton.setToolTipText("nur 33er Objekt");
+			this.dreiButton = new JButton("IE");
+			this.dreiButton.setToolTipText("nur Indirekteinleiter Objekt");
 			this.dreiButton.addActionListener(new ActionListener()
 			{
 				@Override
@@ -892,8 +892,8 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.vierButton == null)
 		{
-			this.vierButton = new JButton("360.34");
-			this.vierButton.setToolTipText("nur 34er Objekte");
+			this.vierButton = new JButton("AwSV");
+			this.vierButton.setToolTipText("nur AwSV Objekte");
 			this.vierButton.addActionListener(new ActionListener()
 			{
 				@Override

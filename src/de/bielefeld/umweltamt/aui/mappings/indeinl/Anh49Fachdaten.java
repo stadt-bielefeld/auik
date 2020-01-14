@@ -49,7 +49,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Objekt objekt;
+    private Anfallstelle anfallstelle;
     private String klaeranlage;
     private String name;
     private String bemerkungen;
@@ -93,9 +93,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
     private boolean deleted;
     private Set<Anh49Abfuhr> anh49Abfuhrs = new HashSet<Anh49Abfuhr>(0);
     private Set<Anh49Analysen> anh49Analysens = new HashSet<Anh49Analysen>(0);
-    private Set<Anh49Ortstermine> anh49Ortstermines = new HashSet<Anh49Ortstermine>(0);
     private Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses = new HashSet<Anh49Abscheiderdetails>(0);
-    private Set<Anh49Verwaltungsverf> anh49Verwaltungsverfs = new HashSet<Anh49Verwaltungsverf>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -107,18 +105,18 @@ public class Anh49Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh49Fachdaten(
-        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh49Fachdaten(
-        Integer id, Objekt objekt, String klaeranlage, String name, String bemerkungen, String planquadrat, Boolean abgemeldet, String technikAnh49, String technikAnh49Nr, String sachkundelfa, Boolean werkstatt, Boolean bodeneinlaeufe, Boolean waschanlagen, String sonstiges, String analysemonat, Boolean abwasserfrei, String anredeantragst, String nameantragst, String zusantragst, String strasseantragst, Integer hausnrantragst, String hausnrzusantragst, String plzantragst, String ortantragst, String sachbearbeiterIn, String ansprechpartnerIn, Date antragvom, Date genehmigung, Date wiedervorlage, Date aenderungsgenehmigung, Date letztesAnschreiben, String anschreiben, Boolean waschanlage, Boolean ESatzung, Date seitwann, String sonstigestechnik, Boolean maengel, Boolean behoben, Date frist, Integer durchgefuehrt, Date dekraTuevDatum, boolean enabled, boolean deleted, Set<Anh49Abfuhr> anh49Abfuhrs, Set<Anh49Analysen> anh49Analysens, Set<Anh49Ortstermine> anh49Ortstermines, Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses, Set<Anh49Verwaltungsverf> anh49Verwaltungsverfs) {
+        Integer id, Anfallstelle anfallstelle, String klaeranlage, String name, String bemerkungen, String planquadrat, Boolean abgemeldet, String technikAnh49, String technikAnh49Nr, String sachkundelfa, Boolean werkstatt, Boolean bodeneinlaeufe, Boolean waschanlagen, String sonstiges, String analysemonat, Boolean abwasserfrei, String anredeantragst, String nameantragst, String zusantragst, String strasseantragst, Integer hausnrantragst, String hausnrzusantragst, String plzantragst, String ortantragst, String sachbearbeiterIn, String ansprechpartnerIn, Date antragvom, Date genehmigung, Date wiedervorlage, Date aenderungsgenehmigung, Date letztesAnschreiben, String anschreiben, Boolean waschanlage, Boolean ESatzung, Date seitwann, String sonstigestechnik, Boolean maengel, Boolean behoben, Date frist, Integer durchgefuehrt, Date dekraTuevDatum, boolean enabled, boolean deleted, Set<Anh49Abfuhr> anh49Abfuhrs, Set<Anh49Analysen> anh49Analysens, Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.klaeranlage = klaeranlage;
         this.name = name;
         this.bemerkungen = bemerkungen;
@@ -162,9 +160,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.deleted = deleted;
         this.anh49Abfuhrs = anh49Abfuhrs;
         this.anh49Analysens = anh49Analysens;
-        this.anh49Ortstermines = anh49Ortstermines;
         this.anh49Abscheiderdetailses = anh49Abscheiderdetailses;
-        this.anh49Verwaltungsverfs = anh49Verwaltungsverfs;
     }
 
     /* Setter and getter methods */
@@ -176,12 +172,12 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Objekt getObjekt() {
-        return this.objekt;
+    public Anfallstelle getAnfallstelle() {
+        return this.anfallstelle;
     }
 
-    public void setObjekt(Objekt objekt) {
-        this.objekt = objekt;
+    public void setAnfallstelle(Anfallstelle anfallstelle) {
+        this.anfallstelle = anfallstelle;
     }
 
     public String getKlaeranlage() {
@@ -528,28 +524,12 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.anh49Analysens = anh49Analysens;
     }
 
-    public Set<Anh49Ortstermine> getAnh49Ortstermines() {
-        return this.anh49Ortstermines;
-    }
-
-    public void setAnh49Ortstermines(Set<Anh49Ortstermine> anh49Ortstermines) {
-        this.anh49Ortstermines = anh49Ortstermines;
-    }
-
     public Set<Anh49Abscheiderdetails> getAnh49Abscheiderdetailses() {
         return this.anh49Abscheiderdetailses;
     }
 
     public void setAnh49Abscheiderdetailses(Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses) {
         this.anh49Abscheiderdetailses = anh49Abscheiderdetailses;
-    }
-
-    public Set<Anh49Verwaltungsverf> getAnh49Verwaltungsverfs() {
-        return this.anh49Verwaltungsverfs;
-    }
-
-    public void setAnh49Verwaltungsverfs(Set<Anh49Verwaltungsverf> anh49Verwaltungsverfs) {
-        this.anh49Verwaltungsverfs = anh49Verwaltungsverfs;
     }
 
     /**
@@ -573,7 +553,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("objekt").append("='").append(getAnfallstelle()).append("' ");			
         buffer.append("klaeranlage").append("='").append(getKlaeranlage()).append("' ");			
         buffer.append("name").append("='").append(getName()).append("' ");			
         buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
@@ -616,10 +596,8 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("anh49Abfuhrs").append("='").append(getAnh49Abfuhrs()).append("' ");			
-        buffer.append("anh49Analysens").append("='").append(getAnh49Analysens()).append("' ");			
-        buffer.append("anh49Ortstermines").append("='").append(getAnh49Ortstermines()).append("' ");			
-        buffer.append("anh49Abscheiderdetailses").append("='").append(getAnh49Abscheiderdetailses()).append("' ");			
-        buffer.append("anh49Verwaltungsverfs").append("='").append(getAnh49Verwaltungsverfs()).append("' ");			
+        buffer.append("anh49Analysens").append("='").append(getAnh49Analysens()).append("' ");					
+        buffer.append("anh49Abscheiderdetailses").append("='").append(getAnh49Abscheiderdetailses()).append("' ");						
         buffer.append("]");
 
         return buffer.toString();
@@ -686,7 +664,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh49Fachdaten copy) {
         this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
+        this.anfallstelle = copy.getAnfallstelle();            
         this.klaeranlage = copy.getKlaeranlage();            
         this.name = copy.getName();            
         this.bemerkungen = copy.getBemerkungen();            
@@ -729,10 +707,8 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
         this.anh49Abfuhrs = copy.getAnh49Abfuhrs();            
-        this.anh49Analysens = copy.getAnh49Analysens();            
-        this.anh49Ortstermines = copy.getAnh49Ortstermines();            
-        this.anh49Abscheiderdetailses = copy.getAnh49Abscheiderdetailses();            
-        this.anh49Verwaltungsverfs = copy.getAnh49Verwaltungsverfs();            
+        this.anh49Analysens = copy.getAnh49Analysens();                  
+        this.anh49Abscheiderdetailses = copy.getAnh49Abscheiderdetailses();              
     }    
 
     /**
@@ -796,4 +772,12 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         Set<Anh49Fachdaten> list = anfallstelle.getAnh49Fachdatens();
         return list.iterator().next();
     }
+
+	public static Anh49Fachdaten findByObjektId(java.lang.Integer id) {
+		Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id)
+				.list().get(0);
+		// BasisObjekt.findById(id);
+		Set<Anh49Fachdaten> list = objekt.getAnh49Fachdatens();
+		return list.iterator().next();
+	}
 }

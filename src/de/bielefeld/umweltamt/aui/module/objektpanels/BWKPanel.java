@@ -80,6 +80,7 @@ public class BWKPanel extends JPanel {
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
+    private Anfallstelle anfallstelle;
 
     // Widgets
     private JTextField herstellerFeld = null;
@@ -102,16 +103,11 @@ public class BWKPanel extends JPanel {
     // Daten
     private BwkFachdaten bwk = null;
 
-    // Objektverknuepfer
-    private ObjektVerknuepfungModel objektVerknuepfungModel;
-    private JTable objektverknuepfungTabelle = null;
-    private JButton selectObjektButton = null;
-    private Action verknuepfungLoeschAction;
-    private JPopupMenu verknuepfungPopup;
 
-    public BWKPanel(BasisObjektBearbeiten hauptModul) {
+    public BWKPanel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
         this.name = "Brennwertkessel";
         this.hauptModul = hauptModul;
+        this.anfallstelle = anfallstelle;
 
         FormLayout layout = new FormLayout(
             "r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 70dlu, 5dlu, 70dlu, 70dlu", // Spalten
@@ -183,18 +179,9 @@ public class BWKPanel extends JPanel {
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh(5, 15, 3,
             5));
 
-        builder.addSeparator("Verknüpfte Objekte", cc.xyw(1, 21, 7));
-        JScrollPane objektverknuepfungScroller = new JScrollPane(
-            getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.add(objektverknuepfungScroller, cc.xyw(1, 23, 7));
-        builder.nextLine();
-
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveBwkButton());
-        builder.add(buttonBar, cc.xyw(1, 25, 7));
+            getSaveBwkButton());
+        builder.add(buttonBar, cc.xyw(1, 21, 7));
 
     }
 
@@ -262,7 +249,6 @@ public class BWKPanel extends JPanel {
                     getgenehmpflichtCheck().setSelected(false);
                 }
             }
-            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         }
 
     }
@@ -408,6 +394,7 @@ public class BWKPanel extends JPanel {
             this.bwk.setBemerkungen(beschreibung);
         }
 
+        Anfallstelle.merge(this.anfallstelle);
         success = this.bwk.merge();
 
         if (success) {
@@ -420,19 +407,14 @@ public class BWKPanel extends JPanel {
         return success;
     }
 
-    public void completeObjekt() {
+    public void completeObjekt(Anfallstelle anfallstelle) {
         if (this.hauptModul.isNew() || this.bwk == null) {
             // Neuen Brennwertkessel erzeugen
             this.bwk = new BwkFachdaten();
-            // Objekt_Id setzen
-            this.bwk.setObjekt(this.hauptModul.getObjekt());
-
-            // Brennwertkessel speichern
-            if (this.bwk.merge()) {
-                log.debug("Neuer Brennwertkessel " + this.bwk
-                    + " gespeichert.");
-            }
         }
+        // Anfallstelle setzen
+        	this.anfallstelle = anfallstelle;
+        	this.bwk.setAnfallstelle(this.anfallstelle);
     }
 
     private JCheckBox getAbaCheck() {
@@ -566,169 +548,5 @@ public class BWKPanel extends JPanel {
             });
         }
         return this.saveBwkButton;
-    }
-
-    private JTable getObjektverknuepungTabelle() {
-
-        if (this.objektVerknuepfungModel == null) {
-            this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
-                this.hauptModul.getObjekt());
-
-            if (this.objektverknuepfungTabelle == null) {
-                this.objektverknuepfungTabelle = new JTable(
-                    this.objektVerknuepfungModel);
-            } else {
-                this.objektverknuepfungTabelle
-                    .setModel(this.objektVerknuepfungModel);
-            }
-            this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
-                .setPreferredWidth(5);
-            this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
-                .setPreferredWidth(100);
-            this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
-                .setPreferredWidth(250);
-
-            this.objektverknuepfungTabelle
-                .addMouseListener(new java.awt.event.MouseAdapter() {
-                    @Override
-                    public void mouseClicked(java.awt.event.MouseEvent e) {
-                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                            Point origin = e.getPoint();
-                            int row = getObjektverknuepungTabelle().rowAtPoint(
-                                origin);
-
-                            if (row != -1) {
-                                Objektverknuepfung obj = BWKPanel.this.objektVerknuepfungModel
-                                    .getRow(row);
-                                if (obj.getObjektByIstVerknuepftMit()
-                                    .getId().intValue() != BWKPanel.this.hauptModul
-                                    .getObjekt().getId().intValue())
-                                    BWKPanel.this.hauptModul
-                                        .getManager()
-                                        .getSettingsManager()
-                                        .setSetting(
-                                            "auik.imc.edit_object",
-                                            obj.getObjektByIstVerknuepftMit()
-                                                .getId().intValue(),
-                                            false);
-                                else
-                                    BWKPanel.this.hauptModul
-                                        .getManager()
-                                        .getSettingsManager()
-                                        .setSetting(
-                                            "auik.imc.edit_object",
-                                            obj.getObjektByObjekt()
-                                                .getId().intValue(),
-                                            false);
-                                BWKPanel.this.hauptModul.getManager()
-                                    .switchModul("m_objekt_bearbeiten");
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        showVerknuepfungPopup(e);
-                    }
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        showVerknuepfungPopup(e);
-                    }
-                });
-
-            this.objektverknuepfungTabelle.getInputMap().put(
-                (KeyStroke) getVerknuepfungLoeschAction().getValue(
-                    Action.ACCELERATOR_KEY),
-                getVerknuepfungLoeschAction().getValue(Action.NAME));
-            this.objektverknuepfungTabelle.getActionMap().put(
-                getVerknuepfungLoeschAction().getValue(Action.NAME),
-                getVerknuepfungLoeschAction());
-        }
-
-        return this.objektverknuepfungTabelle;
-
-    }
-
-    private void showVerknuepfungPopup(MouseEvent e) {
-        if (this.verknuepfungPopup == null) {
-            this.verknuepfungPopup = new JPopupMenu("Objekt");
-            JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-            this.verknuepfungPopup.add(loeschItem);
-        }
-
-        if (e.isPopupTrigger()) {
-            Point origin = e.getPoint();
-            int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
-
-            if (row != -1) {
-                this.objektverknuepfungTabelle
-                    .setRowSelectionInterval(row, row);
-                this.verknuepfungPopup.show(e.getComponent(), e.getX(),
-                    e.getY());
-            }
-        }
-    }
-
-    private Action getVerknuepfungLoeschAction() {
-        if (this.verknuepfungLoeschAction == null) {
-            this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
-                private static final long serialVersionUID = -7075711379257351951L;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int row = getObjektverknuepungTabelle().getSelectedRow();
-                    if (row != -1
-                        && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        Objektverknuepfung verknuepfung = BWKPanel.this.objektVerknuepfungModel
-                            .getRow(row);
-                        if (GUIManager.getInstance().showQuestion(
-                            "Soll die Verknüpfung wirklich gelöscht werden?\n"
-                                + "Hinweis: Die Aktion betrifft nur die "
-                                + "Verknüpfung, die Objekte bleiben erhalten "
-                                + "und können jederzeit neu verknüpft werden.",
-                            "Löschen bestätigen")) {
-                            if (BWKPanel.this.objektVerknuepfungModel
-                                .removeRow(row)) {
-                                BWKPanel.this.hauptModul.getFrame()
-                                    .changeStatus("Objekt gelöscht.",
-                                        HauptFrame.SUCCESS_COLOR);
-                                log.debug("Objekt " + verknuepfung.getId()
-                                    + " wurde gelöscht!");
-                            } else {
-                                BWKPanel.this.hauptModul.getFrame()
-                                    .changeStatus(
-                                        "Konnte das Objekt nicht löschen!",
-                                        HauptFrame.ERROR_COLOR);
-                            }
-                        }
-                    }
-                }
-            };
-            this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
-                new Integer(KeyEvent.VK_L));
-            this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
-                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
-        }
-
-        return this.verknuepfungLoeschAction;
-    }
-
-    private JButton getSelectObjektButton() {
-        if (this.selectObjektButton == null) {
-            this.selectObjektButton = new JButton("Objekt auswählen");
-
-            this.selectObjektButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ObjektChooser chooser = new ObjektChooser(
-                        BWKPanel.this.hauptModul.getFrame(), BWKPanel.this.bwk
-                            .getObjekt(),
-                        BWKPanel.this.objektVerknuepfungModel);
-                    chooser.setVisible(true);
-                }
-            });
-        }
-        return this.selectObjektButton;
     }
 }

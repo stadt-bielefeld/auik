@@ -48,7 +48,7 @@ public class Anh50Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Objekt objekt;
+    private Anfallstelle anfallstelle;
     private Entsorger entsorger;
     private String telefon;
     private Boolean erloschen;
@@ -70,18 +70,18 @@ public class Anh50Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh50Fachdaten(
-        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh50Fachdaten(
-        Integer id, Objekt objekt, Entsorger entsorger, String telefon, Boolean erloschen, Date datumantrag, String bemerkungen, Date genehmigung, Date wiedervorlage, String gefaehrdungsklasse, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, Entsorger entsorger, String telefon, Boolean erloschen, Date datumantrag, String bemerkungen, Date genehmigung, Date wiedervorlage, String gefaehrdungsklasse, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.entsorger = entsorger;
         this.telefon = telefon;
         this.erloschen = erloschen;
@@ -103,12 +103,12 @@ public class Anh50Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Objekt getObjekt() {
-        return this.objekt;
+    public Anfallstelle getAnfallstelle() {
+        return this.anfallstelle;
     }
 
-    public void setObjekt(Objekt objekt) {
-        this.objekt = objekt;
+    public void setAnfallstelle(Anfallstelle anfallstelle) {
+        this.anfallstelle = anfallstelle;
     }
 
     public Entsorger getEntsorger() {
@@ -212,7 +212,7 @@ public class Anh50Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
         buffer.append("entsorger").append("='").append(getEntsorger()).append("' ");			
         buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
         buffer.append("erloschen").append("='").append(getErloschen()).append("' ");			
@@ -289,7 +289,7 @@ public class Anh50Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh50Fachdaten copy) {
         this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
+        this.anfallstelle = copy.getAnfallstelle();            
         this.entsorger = copy.getEntsorger();            
         this.telefon = copy.getTelefon();            
         this.erloschen = copy.getErloschen();            

@@ -73,10 +73,10 @@ public class Anh50Model extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = fd.getObjekt().getBetreiberid().toString();
+            tmp = fd.getAnfallstelle().getObjekt().getBetreiberid().toString();
             break;
         case 1:
-            tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
+            tmp = DatabaseQuery.getStandortString(fd.getAnfallstelle().getObjekt().getStandortid());
             break;
         case 2:
             tmp = fd.getWiedervorlage();

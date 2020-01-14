@@ -130,6 +130,12 @@
         	</key>
         	<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" />
         </set>
+        <set name="anh49Fachdatens" table="anh_49_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="objektid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" />
+        </set>
         <set name="abas" table="aba" inverse="true" lazy="true" fetch="select">
         	<key>
         		<column name="objektid" not-null="true"/>

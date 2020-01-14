@@ -45,8 +45,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
@@ -305,42 +303,6 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package INDEINL: class Anh49Ortstermine                    */
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-
-    /**
-     * Get all Anh49Ortstermine for an Anh49Fachdaten and sort them by date
-     * @param fachdaten Anh49Fachdaten
-     * @return <code>List&lt;Anh49Ortstermine&gt;</code>
-     */
-    public static List<Anh49Ortstermine> getOrtstermine(
-        Anh49Fachdaten fachdaten) {
-        return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anh49Ortstermine.class)
-                .add(Restrictions.eq("anh49Fachdaten", fachdaten))
-                .addOrder(Order.asc("datum")),
-            new Anh49Ortstermine());
-    }
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package INDEINL: class Anh49Verwaltungsverfahren           */
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-
-    /**
-     * Get all Anh49Verwaltungsverfahren for an Anh49Fachdaten and sort them by date
-     * @param fachdaten Anh49Fachdaten
-     * @return <code>List&lt;Anh49Verwaltungsverfahren&gt;</code>
-     */
-    public static List<Anh49Verwaltungsverf> getVerwaltungsverfahren(
-        Anh49Fachdaten fachdaten) {
-        return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anh49Verwaltungsverf.class)
-                .add(Restrictions.eq("anh49Fachdaten", fachdaten))
-                .addOrder(Order.asc("datum")),
-            new Anh49Verwaltungsverf());
-    }
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class Anh50Fachdaten                      */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
@@ -380,8 +342,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
     public static List<Anh52Fachdaten> getAnhang52() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh52Fachdaten.class)
-                .createAlias("objekt", "objekt")
-                .addOrder(Order.asc("objekt.inaktiv"))
+                .createAlias("anfallstelle", "anfallstelle")
+                .addOrder(Order.asc("anfallstelle.objekt.inaktiv"))
                 .addOrder(Order.asc("id")),
             new Anh52Fachdaten());
     }

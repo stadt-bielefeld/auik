@@ -137,7 +137,6 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.AbscheiderEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -234,7 +233,8 @@ public class Anh49DetailsPanel extends JPanel {
         @Override
         public void updateList() {
             if (fachdaten != null) {
-                setList(DatabaseQuery.getAbscheiderDetails(fachdaten));
+            	List<Anh49Abscheiderdetails>  x = DatabaseQuery.getAbscheiderDetails(fachdaten);
+                setList(x);
             }
             fireTableDataChanged();
         }
@@ -244,142 +244,12 @@ public class Anh49DetailsPanel extends JPanel {
         }
     }
 
-    /**
-     * Ein TableModel für eine Tabelle mit Abscheider-Ortsterminen.
-     * @author David Klotz, Gerhard Genuit
-     */
-    private class Anh49OrtsterminModel extends EditableListTableModel {
-        private static final long serialVersionUID = -4508993239949998786L;
-        private Anh49Fachdaten fachdaten;
-
-        /**
-         * Erzeugt ein neues Ortstermin-TableModel. Dieses hat die Spalten
-         * "Datum", "SachbearbeiterIn" und "Bemerkung".
-         */
-        public Anh49OrtsterminModel() {
-            super(new String[] {"Datum", "SachbearbeiterIn", "Bemerkung"},
-                false, true);
-        }
-
-        /**
-         * Setzt das Fachdatenobjekt, nach dessen Abscheider-Details gesucht
-         * werden soll.
-         * @param fachdaten Das Anhang49-Fachdatenobjekt
-         */
-        private void setFachdaten(Anh49Fachdaten fachdaten) {
-            this.fachdaten = fachdaten;
-            updateList();
-        }
-
-        @Override
-        public Object getColumnValue(Object objectAtRow, int columnIndex) {
-            Anh49Ortstermine ot = (Anh49Ortstermine) objectAtRow;
-
-            Object tmp;
-
-            switch (columnIndex) {
-                case 0:
-                    tmp = AuikUtils.getStringFromDate(ot.getDatum());
-                    break;
-                case 1:
-                    tmp = ot.getSachbearbeiterIn();
-                    break;
-                case 2:
-                    tmp = ot.getBemerkungen();
-                    break;
-                default:
-                    tmp = null;
-            }
-
-            return tmp;
-        }
-
-        @Override
-        public boolean objectRemoved(Object objectAtRow) {
-            Anh49Ortstermine removedOt = (Anh49Ortstermine) objectAtRow;
-            boolean removed;
-
-            if (removedOt.getId() != null) {
-                removed = Anh49Ortstermine.delete(removedOt);
-            } else {
-                removed = true;
-            }
-
-            return removed;
-        }
-
-        @Override
-        public void updateList() {
-            if (fachdaten != null) {
-                setList(DatabaseQuery.getOrtstermine(fachdaten));
-            }
-            fireTableDataChanged();
-        }
-
-        @Override
-        public void editObject(Object objectAtRow, int columnIndex,
-            Object newValue) {
-            Anh49Ortstermine ot = (Anh49Ortstermine) objectAtRow;
-
-            String tmp = (String) newValue;
-
-            switch (columnIndex) {
-                case 0:
-                    DateFormat format = DateFormat
-                        .getDateInstance(DateFormat.SHORT);
-                    try {
-                        Date tmpDate = format.parse(tmp);
-                        ot.setDatum(tmpDate);
-                    } catch (ParseException e) {
-                        hauptModul
-                            .getFrame()
-                            .changeStatus(
-                                "Bitte geben Sie das Datum in der Form MM.TT.JJJJ ein!",
-                                HauptFrame.ERROR_COLOR);
-                    }
-                    break;
-                case 1:
-                    // Auf 50 Zeichen kürzen, da die Datenbank-Spalte nur 50
-                    // Zeichen breit ist
-                    if (tmp.length() > 50) {
-                        tmp = tmp.substring(0, 50);
-                    }
-                    ot.setSachbearbeiterIn(tmp);
-                    break;
-                case 2:
-                    // Auf 255 Zeichen kürzen, da die Datenbank-Spalte nur 255
-                    // Zeichen breit ist
-                    if (tmp.length() > 255) {
-                        tmp = tmp.substring(0, 255);
-                    }
-                    ot.setBemerkungen(tmp);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        @Override
-        public Object newObject() {
-            Anh49Ortstermine ot = new Anh49Ortstermine();
-            ot.setAnh49Fachdaten(fachdaten);
-            ot.setDatum(new Date());
-            return ot;
-        }
-
-        public Anh49Ortstermine getRow(int rowIndex) {
-            return (Anh49Ortstermine) getObjectAtRow(rowIndex);
-        }
-    }
-
     private String name;
 
     private BasisObjektBearbeiten hauptModul;
 
     private Anh49Fachdaten fachdaten;
     private Anh49AbscheiderModel abscheiderModel;
-    private Anh49OrtsterminModel ortsterminModel;
 
     private JTable abscheiderTabelle;
     private Action abscheiderLoeschAction;
@@ -397,16 +267,12 @@ public class Anh49DetailsPanel extends JPanel {
         this.hauptModul = hauptModul;
 
         abscheiderModel = new Anh49AbscheiderModel();
-        ortsterminModel = new Anh49OrtsterminModel();
 
         TableFocusListener tfl = TableFocusListener.getInstance();
         getAbscheiderTabelle().addFocusListener(tfl);
 
         JScrollPane abscheiderScroller = new JScrollPane(
             getAbscheiderTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        JScrollPane ortsterminScroller = new JScrollPane(
-            getOrtsterminTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         abscheiderScroller.addMouseListener(new MouseAdapter() {
@@ -423,11 +289,6 @@ public class Anh49DetailsPanel extends JPanel {
 
         TabAction ta = new TabAction();
         ta.addComp(getAbscheiderTabelle());
-        ta.addComp(getOrtsterminTabelle());
-
-        JSplitPane tabellenSplit = ComponentFactory.createStrippedSplitPane(
-            JSplitPane.VERTICAL_SPLIT, abscheiderScroller, ortsterminScroller,
-            0.5);
 
         FormLayout layout = new FormLayout("150dlu:grow, 100dlu", // Spalten
             "100dlu:grow, 3dlu, pref"); // Zeilen
@@ -435,8 +296,7 @@ public class Anh49DetailsPanel extends JPanel {
         PanelBuilder builder = new PanelBuilder(layout, this);
         CellConstraints cc = new CellConstraints();
 
-        builder.add(tabellenSplit, cc.xyw(1, 1, 2));
-        builder.add(getSpeichernButton(), cc.xy(2, 3));
+        builder.add(abscheiderScroller, cc.xyw(1, 1, 2));
     }
 
     private Action getAbscheiderLoeschAction() {
@@ -554,69 +414,6 @@ public class Anh49DetailsPanel extends JPanel {
         }
     }
 
-    private Action getOrtsterminLoeschAction() {
-        if (ortsterminLoeschenAction == null) {
-            ortsterminLoeschenAction = new AbstractAction("Löschen") {
-                private static final long serialVersionUID = -7021406986316938685L;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int row = getOrtsterminTabelle().getSelectedRow();
-                    if (row != -1
-                        && getOrtsterminTabelle().getEditingRow() == -1) {
-                        Anh49Ortstermine ot = ortsterminModel.getRow(row);
-
-                        if (ot != null) {
-                            if (GUIManager.getInstance()
-                                .showQuestion(
-                                    "Soll der Ortstermin " + ot
-                                        + " gelöscht werden?",
-                                    "Löschen bestätigen")) {
-                                ortsterminModel.removeRow(row);
-                                log.debug("Ortstermin " + ot.getId()
-                                    + " wurde gelöscht!");
-                            } else {
-                                log.debug("Löschen von " + ot.getId()
-                                    + " wurde abgebrochen!");
-                            }
-                        }
-                    }
-                }
-            };
-            ortsterminLoeschenAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                KeyEvent.VK_L));
-            ortsterminLoeschenAction.putValue(Action.ACCELERATOR_KEY,
-                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
-        }
-
-        return ortsterminLoeschenAction;
-    }
-
-    private void showOrtsterminPopup(MouseEvent e) {
-        if (ortsterminPopup == null) {
-            ortsterminPopup = new JPopupMenu("Ortstermin");
-            JMenuItem loeschItem = new JMenuItem(getOrtsterminLoeschAction());
-            ortsterminPopup.add(loeschItem);
-        }
-
-        if (e.isPopupTrigger()) {
-            Point origin = e.getPoint();
-            int row = ortsterminTabelle.rowAtPoint(origin);
-
-            if (row != -1) {
-                ortsterminTabelle.setRowSelectionInterval(row, row);
-                // Die letzte (leere) Zeile kann natürlich nicht gelöscht
-                // werden:
-                if (row < ortsterminModel.getList().size()) {
-                    getOrtsterminLoeschAction().setEnabled(true);
-                } else {
-                    getOrtsterminLoeschAction().setEnabled(false);
-                }
-                ortsterminPopup.show(e.getComponent(), e.getX(), e.getY());
-            }
-        }
-    }
-
     private JTable getAbscheiderTabelle() {
         if (abscheiderTabelle == null) {
             abscheiderTabelle = new JTable(abscheiderModel);
@@ -696,104 +493,31 @@ public class Anh49DetailsPanel extends JPanel {
         return abscheiderTabelle;
     }
 
-    private JTable getOrtsterminTabelle() {
-        if (ortsterminTabelle == null) {
-            ortsterminTabelle = new SelectTable(ortsterminModel);
-
-            // Wenn die Spaltengröße sich verändert, verändert sich nur die
-            // Nachbarspalte mit
-            ortsterminTabelle.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-
-            // Die Größen der Spalten werden angepasst
-            TableColumn column = null;
-            for (int i = 0; i < ortsterminTabelle.getColumnCount(); i++) {
-                column = ortsterminTabelle.getColumnModel().getColumn(i);
-                if (i == 0) {
-                    column.setMaxWidth(100);
-                    column.setPreferredWidth(75);
-                }
-            }
-
-            ortsterminTabelle
-                .addMouseListener(new java.awt.event.MouseAdapter() {
-
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        showOrtsterminPopup(e);
-                    }
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        showOrtsterminPopup(e);
-                    }
-                });
-
-            ortsterminTabelle.getInputMap().put(
-                (KeyStroke) getOrtsterminLoeschAction().getValue(
-                    Action.ACCELERATOR_KEY),
-                getOrtsterminLoeschAction().getValue(Action.NAME));
-            ortsterminTabelle.getActionMap().put(
-                getOrtsterminLoeschAction().getValue(Action.NAME),
-                getOrtsterminLoeschAction());
-
-        }
-        return ortsterminTabelle;
-    }
-
-    public void speichernOrtstermin() {
-        List<?> otListe = ortsterminModel.getList();
-        for (int i = 0; i < otListe.size(); i++) {
-            Anh49Ortstermine ot = (Anh49Ortstermine) otListe.get(i);
-            Anh49Ortstermine.merge((Anh49Ortstermine) ot);
-        }
-        ortsterminModel.updateList();
-    }
-
     public void setFachdaten(Anh49Fachdaten fachdaten) {
         this.fachdaten = fachdaten;
     }
 
-    public void updateForm() {
+    public void updateForm(Anh49Fachdaten fachdaten) {
         if (fachdaten != null) {
             abscheiderModel.setFachdaten(fachdaten);
-            ortsterminModel.setFachdaten(fachdaten);
         }
     }
 
     public void clearForm() {
         // Hier füllen wir das Abscheider-TableModel mit einer leeren Liste
         abscheiderModel.setList(new ArrayList<Anh49Abscheiderdetails>());
-        ortsterminModel.setList(new ArrayList<Anh49Ortstermine>());
     }
 
     public void enableAll(boolean enabled) {
         if (!(enabled && (fachdaten == null))) {
             getAbscheiderTabelle().setEnabled(enabled);
-            getOrtsterminTabelle().setEnabled(enabled);
-            getSpeichernButton().setEnabled(enabled);
             getAbscheiderLoeschAction().setEnabled(enabled);
             getAbscheiderNeuAction().setEnabled(enabled);
-            getOrtsterminLoeschAction().setEnabled(enabled);
         }
     }
 
     @Override
     public String getName() {
         return name;
-    }
-
-    private JButton getSpeichernButton() {
-        if (speichernButton == null) {
-            speichernButton = new JButton("Ortstermine speichern");
-
-            speichernButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    speichernOrtstermin();
-                }
-            });
-        }
-
-        return speichernButton;
     }
 }
