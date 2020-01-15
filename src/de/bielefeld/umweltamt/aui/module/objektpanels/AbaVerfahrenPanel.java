@@ -29,7 +29,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.DefaultListModel;
@@ -144,7 +146,7 @@ public class AbaVerfahrenPanel extends JPanel {
     }
 
     public void clearForm() {
-
+    	rightData.clear();
     }
 
     public void enableAll(boolean enabled) {
@@ -198,7 +200,7 @@ public class AbaVerfahrenPanel extends JPanel {
                             HauptFrame.SUCCESS_COLOR);
                     } else {
                         AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
-                            "Fehler beim Speichern des Zahnarztes!",
+                            "Fehler beim Speichern des Behandlungsverfahrens!",
                             HauptFrame.ERROR_COLOR);
                     }
 
@@ -206,8 +208,19 @@ public class AbaVerfahrenPanel extends JPanel {
                 }
 
                 private boolean saveAbaverf() {
-                    // TODO Auto-generated method stub
-                    return false;
+                	
+                    boolean success;
+                    
+                    success = fachdaten.merge();
+                    if (success) {
+                        log.debug("Abwasserbehandlungsanlage "
+                            + fachdaten.getObjekt().getBetreiberid()
+                                .getBetrname() + " gespeichert.");
+                    } else {
+                        log.debug("Abwasserbehandlungsanlage " + fachdaten
+                            + " konnte nicht gespeichert werden!");
+                    }
+                    return success;
                 }
             });
         }
@@ -254,6 +267,9 @@ public class AbaVerfahrenPanel extends JPanel {
         });
         this.updateLists();
         leftList.clearSelection();
+        Set set = new HashSet(rightData);
+        fachdaten.setAbaverfahrens(null);
+        fachdaten.setAbaverfahrens((Set<Abaverfahren>) set);
     }
 
     /**
@@ -267,6 +283,9 @@ public class AbaVerfahrenPanel extends JPanel {
         });
         this.updateLists();
         rightList.clearSelection();
+        Set set = new HashSet(rightData);
+        fachdaten.setAbaverfahrens(null);
+        fachdaten.setAbaverfahrens((Set<Abaverfahren>) set);
     }
 
     /**

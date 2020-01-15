@@ -100,7 +100,6 @@ private static final long serialVersionUID = -4030805403749508467L;
     private IntegerField abaE32Field = null;
     private IntegerField abaN32Field = null;
     private JButton saveAbaButton = null;
-    private JComboBox verfahrenBox = null;
 
     // Daten
     private Aba fachdaten = null;
@@ -137,8 +136,6 @@ private static final long serialVersionUID = -4030805403749508467L;
         builder.append("", getWartungsvertragCheck());
         builder.nextLine();
         builder.append("", getEinzelabnahmeCheck());
-        builder.nextLine();
-        builder.append("Verfahren:", getVerfahrenBox(), 2);
         builder.nextLine();
 
         builder.appendSeparator("Bemerkungen");
@@ -178,9 +175,6 @@ private static final long serialVersionUID = -4030805403749508467L;
     }
 
     public void updateForm() throws RuntimeException {
-        if (this.verfahren != null) {
-            getVerfahrenBox().setModel(new DefaultComboBoxModel(this.verfahren));
-        }
 
         if (this.fachdaten != null) {
             if (this.fachdaten.getAktualDat() != null) {
@@ -271,11 +265,11 @@ private static final long serialVersionUID = -4030805403749508467L;
         
         success = this.fachdaten.merge();
         if (success) {
-            log.debug("Zahnarzt "
+            log.debug("Abwasserbehandlungsanlage "
                 + this.fachdaten.getObjekt().getBetreiberid()
                     .getBetrname() + " gespeichert.");
         } else {
-            log.debug("Zahnarzt " + this.fachdaten
+            log.debug("Abwasserbehandlungsanlage " + this.fachdaten
                 + " konnte nicht gespeichert werden!");
         }
         return success;
@@ -338,14 +332,6 @@ private static final long serialVersionUID = -4030805403749508467L;
             this.einzelabnahmeCheck = new JCheckBox("Einzelabnahme");
         }
         return this.einzelabnahmeCheck;
-    }
-
-    private JComboBox getVerfahrenBox() {
-        if (this.verfahrenBox == null) {
-            this.verfahrenBox = new JComboBox();
-
-        }
-        return this.verfahrenBox;
     }
 
     private JButton getSaveAbaButton() {
