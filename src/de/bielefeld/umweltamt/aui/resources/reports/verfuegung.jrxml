@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="25" uuid="64078b94-0af8-4f19-a992-4e90f5a9f28f">
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neu" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="25" bottomMargin="25" uuid="64078b94-0af8-4f19-a992-4e90f5a9f28f">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="88"/>
 	<property name="ireport.y" value="158"/>
@@ -260,7 +261,7 @@
 				<textElement textAlignment="Justified">
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 42. Änderungssatzung vom 11.12.2018 (KdS)]]></text>
+				<text><![CDATA[Bescheid über die Gebühr für Abwasseruntersuchungen gem. § 10 der Satzung über die Kostendeckung der Grundstücksentwässerung und der Abwasseruntersuchungen in der Stadt Bielefeld vom 22.11.1973 in der Fassung der 43. Änderungssatzung vom 11.12.2019 (KdS)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="20" y="51" width="360" height="15" uuid="7a000f5a-0201-4d0a-aa7b-2c470330095d"/>
@@ -292,7 +293,7 @@
 			</textField>
 		</band>
 		<band height="54" splitType="Stretch">
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="20" y="42" width="400" height="12" uuid="d14ec260-d70d-4bc1-9b32-36d3b971402e"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
