@@ -115,7 +115,7 @@ public class DatabaseConstants {
     public static final int BASIS_BETREIBER_ID_Umweltamt_360x33 = 3;
 
     /* BasisStandort */
-    public static final int BASIS_STANDORT_KEIN_STANDORT = 50610;
+    public static final int BASIS_STANDORT_KEIN_STANDORT = 3;
 
     /* BasisObjektarten */
     public static final int BASIS_OBJEKTART_ID_SUEV = 13;

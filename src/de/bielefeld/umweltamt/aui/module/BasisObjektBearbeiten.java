@@ -126,7 +126,6 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49DetailsPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh50Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh52Panel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.Anh53Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh55Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh56Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.BWKPanel;
@@ -576,6 +575,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 }
                 else {
                     log.debug("Bearbeite Objekt: " + objekt);
+                    String betr = objekt.getBetreiberid().toString();
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
                     getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getStandortid()) +
                     		"; " + objekt.getBetreiberid()+"; "+objekt.getObjektarten().getObjektart());
@@ -802,9 +802,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getAbaTab().completeObjekt();
                     getAbaVerfahrenTab().completeObjekt();
                     break;
-//                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
-//                	getAnh49Tab().completeObjekt();
-//                    break;
+                case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+                	getAnh49Tab().completeObjekt();
+                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                     getSuevTab().completeObjekt();
                     break;

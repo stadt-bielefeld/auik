@@ -92,7 +92,7 @@
         <property name="datenschutzWhg" type="boolean">
             <column name="datenschutz_whg" not-null="true" />
         </property>
-        <set name="standorts" table="objekt" inverse="true" lazy="true" fetch="select">
+        <set name="standorts" table="objekt" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="adresseid" />
             </key>

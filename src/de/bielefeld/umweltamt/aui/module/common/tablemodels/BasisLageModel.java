@@ -182,17 +182,11 @@ public class BasisLageModel extends ListTableModel
 					value = "";
 				break;
 			case 5:
-				if (bsta.getLage() != null && bsta.getLage().getStandortgghwsg() != null)
+				if (bsta.getLage() != null && bsta.getLage().isUeberschgeb() == true)
 				{
-					Integer sggh = bsta.getLage().getStandortgghwsg().getId();
-					if (sggh.equals(6))
-					{
-						value = new Boolean(true);
-					}
-					else
-					{
-						value = new Boolean(false);
-					}
+
+					value = new Boolean(true);
+
 				}
 				else
 				{

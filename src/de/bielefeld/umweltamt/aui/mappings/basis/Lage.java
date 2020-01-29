@@ -67,6 +67,7 @@ public class Lage  implements java.io.Serializable {
     private String sachbe33rav;
     private String sachbe33hee;
     private Serializable theGeom;
+    private boolean ueberschgeb;
     private boolean enabled;
     private boolean deleted;
     private Set<Standort> standorts = new HashSet<Standort>(0);
@@ -89,7 +90,7 @@ public class Lage  implements java.io.Serializable {
 
     /** Full constructor */
     public Lage(
-        Integer id, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Gemarkung gemarkung, String plz, Float e32, Float n32, String flur, String flurstueck, String entgebid, String strasseeigent, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, Serializable theGeom, boolean enabled, boolean deleted, Set<Standort> standorts) {
+        Integer id, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Gemarkung gemarkung, String plz, Float e32, Float n32, String flur, String flurstueck, String entgebid, String strasseeigent, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, boolean ueberschgeb, Serializable theGeom, boolean enabled, boolean deleted, Set<Standort> standorts) {
         this.id = id;
         this.standortgghwsg = standortgghwsg;
         this.wassereinzugsgebiet = wassereinzugsgebiet;
@@ -107,6 +108,7 @@ public class Lage  implements java.io.Serializable {
         this.sachbe33rav = sachbe33rav;
         this.sachbe33hee = sachbe33hee;
         this.theGeom = theGeom;
+        this.ueberschgeb = ueberschgeb;
         this.enabled = enabled;
         this.deleted = deleted;
         this.standorts = standorts;
@@ -242,6 +244,14 @@ public class Lage  implements java.io.Serializable {
         this.sachbe33hee = sachbe33hee;
     }
 
+    public Boolean isUeberschgeb() {
+        return this.ueberschgeb;
+    }
+
+    public void setUeberschgeb(boolean ueberschgeb) {
+        this.ueberschgeb = ueberschgeb;
+    }
+
     public Serializable getTheGeom() {
         return this.theGeom;
     }
@@ -312,6 +322,7 @@ public class Lage  implements java.io.Serializable {
         buffer.append("sachbe33rav").append("='").append(getSachbe33rav()).append("' ");			
         buffer.append("sachbe33hee").append("='").append(getSachbe33hee()).append("' ");			
         buffer.append("theGeom").append("='").append(getTheGeom()).append("' ");			
+        buffer.append("ueberschgeb").append("='").append(isUeberschgeb()).append("' ");				
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("objekts").append("='").append(getStandorts()).append("' ");			
@@ -396,7 +407,8 @@ public class Lage  implements java.io.Serializable {
         this.wassermenge = copy.getWassermenge();            
         this.sachbe33rav = copy.getSachbe33rav();            
         this.sachbe33hee = copy.getSachbe33hee();            
-        this.theGeom = copy.getTheGeom();            
+        this.theGeom = copy.getTheGeom();          
+        this.ueberschgeb = copy.isUeberschgeb();            
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
         this.standorts = copy.getStandorts();            

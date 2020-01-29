@@ -84,7 +84,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
@@ -153,9 +152,9 @@ public class DatabaseClassToString {
         
         if (clazz.getBetrvorname() != null) {
         	vorname = clazz.getBetrvorname() + " ";
-        } else if (clazz.getBetrnamezus() != null) {
+        } if (clazz.getBetrnamezus() != null) {
             zusatz = ", " + clazz.getBetrnamezus();
-        } else if (clazz.getHausnrzus() != null) {
+        } if (clazz.getHausnrzus() != null) {
         	hausnrzus = clazz.getHausnrzus();
         }       
         return vorname + clazz.getBetrname() + zusatz + ", " + clazz.getStrasse()
@@ -414,11 +413,6 @@ public class DatabaseClassToString {
 
     /** @return Custom Anh52Fachdaten.toString() */
     public static String toStringForClass(Anh52Fachdaten clazz) {
-        return "[ID:" + clazz.getId() + "]";
-    }
-
-    /** @return Custom Anh53Fachdaten.toString() */
-    public static String toStringForClass(Anh53Fachdaten clazz) {
         return "[ID:" + clazz.getId() + "]";
     }
 
