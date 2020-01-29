@@ -33,7 +33,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
@@ -77,11 +76,11 @@ public class Anfallstelle  implements java.io.Serializable {
     private Integer volJahr;
     private String externalNr;
     private String anlagenart;
+    private String bemerkungen;
     private Set<AfsStoffe> afsStoffes = new HashSet<AfsStoffe>(0);
     private Set<Referenz> referenzsForZAfsNr = new HashSet<Referenz>(0);
     private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
     private Set<Referenz> referenzsForQAfsNr = new HashSet<Referenz>(0);
-    private Set<Anh53Fachdaten> anh53Fachdatens = new HashSet<Anh53Fachdaten>(0);
     private Set<Anh40Fachdaten> anh40Fachdatens = new HashSet<Anh40Fachdaten>(0);
     private Set<BwkFachdaten> bwkFachdatens = new HashSet<BwkFachdaten>(0);
     private Set<Anh49Fachdaten> anh49Fachdatens = new HashSet<Anh49Fachdaten>(0);
@@ -106,7 +105,7 @@ public class Anfallstelle  implements java.io.Serializable {
 
     /** Full constructor */
     public Anfallstelle(
-        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, BigDecimal maxVolTag, BigDecimal maxVolStunde, Integer volJahr, String externalNr, String anlagenart, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr) {
+        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, BigDecimal maxVolTag, BigDecimal maxVolStunde, Integer volJahr, String externalNr, String anlagenart, String bemerkungen, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr) {
         this.id = id;
         this.objekt = objekt;
         this.seqId = seqId;
@@ -126,11 +125,11 @@ public class Anfallstelle  implements java.io.Serializable {
         this.volJahr = volJahr;
         this.externalNr = externalNr;
         this.anlagenart = anlagenart;
+        this.bemerkungen = bemerkungen;
         this.afsStoffes = afsStoffes;
         this.referenzsForZAfsNr = referenzsForZAfsNr;
         this.afsNiederschlagswassers = afsNiederschlagswassers;
         this.referenzsForQAfsNr = referenzsForQAfsNr;
-        this.anh53Fachdatens = anh53Fachdatens;
         this.anh40Fachdatens = anh40Fachdatens;
         this.bwkFachdatens = bwkFachdatens;
         this.anh52Fachdatens = anh52Fachdatens;
@@ -292,6 +291,14 @@ public class Anfallstelle  implements java.io.Serializable {
         this.anlagenart = anlagenart;
     }
 
+    public String getBemerkungen() {
+        return this.bemerkungen;
+    }
+
+    public void setBemerkungen(String bemerkungen) {
+        this.bemerkungen = bemerkungen;
+    }
+
     public Set<AfsStoffe> getAfsStoffes() {
         return this.afsStoffes;
     }
@@ -322,14 +329,6 @@ public class Anfallstelle  implements java.io.Serializable {
 
     public void setReferenzsForQAfsNr(Set<Referenz> referenzsForQAfsNr) {
         this.referenzsForQAfsNr = referenzsForQAfsNr;
-    }
-
-    public Set<Anh53Fachdaten> getAnh53Fachdatens() {
-        return this.anh53Fachdatens;
-    }
-
-    public void setAnh53Fachdatens(Set<Anh53Fachdaten> anh53Fachdatens) {
-        this.anh53Fachdatens = anh53Fachdatens;
     }
 
     public Set<Anh40Fachdaten> getAnh40Fachdatens() {
@@ -430,7 +429,6 @@ public class Anfallstelle  implements java.io.Serializable {
         buffer.append("referenzsForZAfsNr").append("='").append(getReferenzsForZAfsNr()).append("' ");			
         buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");			
         buffer.append("referenzsForQAfsNr").append("='").append(getReferenzsForQAfsNr()).append("' ");
-        buffer.append("anh53Fachdatens").append("='").append(getAnh53Fachdatens()).append("' ");
         buffer.append("anh40Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
         buffer.append("bwkFachdatens").append("='").append(getBwkFachdatens()).append("' ");
         buffer.append("anh49Fachdatens").append("='").append(getAnh49Fachdatens()).append("' ");
@@ -524,7 +522,6 @@ public class Anfallstelle  implements java.io.Serializable {
         this.referenzsForZAfsNr = copy.getReferenzsForZAfsNr();            
         this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();            
         this.referenzsForQAfsNr = copy.getReferenzsForQAfsNr();     
-        this.anh53Fachdatens = copy.getAnh53Fachdatens();
         this.anh40Fachdatens = copy.getAnh40Fachdatens();
         this.bwkFachdatens = copy.getBwkFachdatens();
         this.anh49Fachdatens = copy.getAnh49Fachdatens();

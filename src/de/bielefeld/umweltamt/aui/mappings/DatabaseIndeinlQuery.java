@@ -26,6 +26,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -37,6 +39,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
@@ -47,7 +50,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
@@ -101,7 +103,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 		DetachedCriteria detachedCriteria = DetachedCriteria
 				.forClass(Objekt.class)
 				.add(Restrictions.eq("sachbearbeiter",
-						DatabaseQuery.getCurrentSachbearbeiter()))
+						DatabaseBasisQuery.getCurrentSachbearbeiter()))
 				.add(Restrictions.isNotNull("wiedervorlage"))
                 .addOrder(Order.asc("basisObjektarten"))
                 .addOrder(Order.asc("wiedervorlage"));
@@ -112,6 +114,36 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
 		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
 				new Objekt());
 
+	}
+    
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /* Queries for package INDEINL: class Anfallstelle                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /**
+     * Get a list of all Anfallstelle
+     * @return <code>List&lt;Anfallstelle&gt;</code>
+     */
+	public static List<Anfallstelle> getAnfallstelle(String anh, String art) {
+
+		DetachedCriteria criteria = 
+				DetachedCriteria.forClass(Anfallstelle.class)
+						.createAlias("objekt", "objekt")
+						.add(Restrictions.eq("objekt.deleted", false))
+						.add(Restrictions.eq("objekt.inaktiv", false));
+
+		        if (!anh.equals("99")) {
+		            criteria.add(Restrictions.eq("anhangId", anh));
+		        } else if (!art.equals("-")) {
+		            criteria.add(Restrictions.eq("anlagenart", art));
+		        } else {
+		        	JOptionPane.showMessageDialog(null, "Sie müssen mindestens einen Anhang oder eine Anlagenart auswählen");
+		        	return null;
+		        }
+		        
+		        
+        return new DatabaseAccess().executeCriteriaToList(
+                criteria, new Anfallstelle());
 	}
     
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
@@ -346,27 +378,6 @@ abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
                 .addOrder(Order.asc("anfallstelle.objekt.inaktiv"))
                 .addOrder(Order.asc("id")),
             new Anh52Fachdaten());
-    }
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package INDEINL: class Anh53Fachdaten                      */
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-
-    /**
-     * Liefert eine Liste mit allen Anhang53 Objekten.
-     * @return <code>List&lt;Anh53Fachdaten&gt;</code>
-     */
-    public static List<Anh53Fachdaten> getAnhang53() {
-        return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anh53Fachdaten.class)
-                .createAlias("objekt", "objekt")
-                .createAlias("objekt.objektarten", "art")
-                .createAlias("objekt.adresseByStandortid", "standort")
-                .addOrder(Order.asc("objekt.inaktiv"))
-                .addOrder(Order.asc("art.id"))
-                .addOrder(Order.asc("standort.strasse"))
-                .addOrder(Order.asc("standort.hausnr")),
-            new Anh53Fachdaten());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

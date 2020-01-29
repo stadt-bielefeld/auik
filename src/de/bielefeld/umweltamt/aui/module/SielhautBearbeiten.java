@@ -933,8 +933,7 @@ public class SielhautBearbeiten extends AbstractModul {
             this.punktNeuButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    SielhautBearbeiten.this.manager
-                    .switchModul("m_objekt_bearbeiten");
+                    neuerSielhautPunkt();
                 }
             });
         }

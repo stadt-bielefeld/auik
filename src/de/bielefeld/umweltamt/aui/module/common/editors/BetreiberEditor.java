@@ -132,6 +132,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 	private JCheckBox daten_awsvCheck;
 	private JCheckBox daten_esatzungCheck;
 	private JCheckBox daten_whgCheck;
+	private JCheckBox ueberschgebCheck;
 
 	private Lage lage = null;
 	private Standort standort = null;
@@ -194,6 +195,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		daten_awsvCheck = new JCheckBox("AwSV");
 		daten_esatzungCheck = new JCheckBox("E-Satzung");
 		daten_whgCheck = new JCheckBox("WHG");
+		ueberschgebCheck = new JCheckBox();
 
 		revdatumsFeld = new JTextField();
 		revdatumsFeld.setEditable(false);
@@ -361,25 +363,27 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		builder.add(standortGgBox, cc.xyw(3, 31, 8));
 		builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 33));
 		builder.add(wEinzugsGebBox, cc.xyw(3, 33, 8));
+		builder.addLabel("Überschwemmungsgebiet:", cc.xy(1, 35));
+		builder.add(ueberschgebCheck, cc.xyw(3, 35, 8));
 
 		// Bemerkungen ----------------------------------
-		builder.addSeparator("Bemerkungen", cc.xyw(1, 35, 10));
-		builder.add(bemerkungsScroller, cc.xywh(1, 37, 10, 7));
+		builder.addSeparator("Bemerkungen", cc.xyw(1, 37, 10));
+		builder.add(bemerkungsScroller, cc.xywh(1, 39, 10, 7));
 
 		// Letzte Revision -------------------------------------
-		builder.addSeparator("Letzte Revision", cc.xyw(12, 35, 5));
+		builder.addSeparator("Letzte Revision", cc.xyw(12, 37, 5));
 		// Datum
-		builder.addLabel("Datum:", cc.xy(12, 37));
-		builder.add(revdatumsFeld, cc.xyw(14, 37, 3));
+		builder.addLabel("Datum:", cc.xy(12, 39));
+		builder.add(revdatumsFeld, cc.xyw(14, 39, 3));
 		// Handzeichen alt
-		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 39));
-		builder.add(handzeichenAltFeld, cc.xyw(14, 39, 3));
+		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 41));
+		builder.add(handzeichenAltFeld, cc.xyw(14, 41, 3));
 
 		// Neue Revision -------------------------------------
-		builder.addSeparator("Neue Revision", cc.xyw(12, 41, 5));
+		builder.addSeparator("Neue Revision", cc.xyw(12, 43, 5));
 		// Handzeichen neu
-		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 43));
-		builder.add(handzeichenNeuFeld, cc.xyw(14, 43, 3));
+		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 45));
+		builder.add(handzeichenNeuFeld, cc.xyw(14, 45, 3));
 
 		BetreiberListener dialogListener = new BetreiberListener();
 
@@ -515,6 +519,11 @@ public class BetreiberEditor extends AbstractBaseEditor {
 					if (standort.getLage().getWassereinzugsgebiet() != null) {
 						wEinzugsGebBox.setSelectedItem(lage.getWassereinzugsgebiet());
 					}
+
+					if (standort.getLage().isUeberschgeb() != null)
+						ueberschgebCheck.setSelected(standort.getLage().isUeberschgeb());
+					else
+						ueberschgebCheck.setSelected(false);
 				}
 
 				frame.clearStatus();
@@ -727,6 +736,9 @@ public class BetreiberEditor extends AbstractBaseEditor {
 				ezgb = ezgb.trim();
 			}
 			lage.setEntgebid(ezgb);
+
+			// Überschwemmungsgebiet
+			lage.setUeberschgeb(ueberschgebCheck.isSelected());
 
 			// VAWS-Einzugsgebiet
 			Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();

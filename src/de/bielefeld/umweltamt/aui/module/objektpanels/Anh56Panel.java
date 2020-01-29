@@ -235,17 +235,7 @@ public class Anh56Panel extends JPanel {
     }
 
     public void enableAll(boolean enabled) {
-        getBemerkungenArea().setEnabled(enabled);
-        getDruckverfahrenFeld().setEnabled(enabled);
-        getVerbrauchFeld().setEnabled(enabled);
-        getEntsorgungFeld().setEnabled(enabled);
-
-        getGen58Datum().setEnabled(enabled);
-        getGen59Datum().setEnabled(enabled);
-
-        getAbaCheck().setEnabled(enabled);
-        getGenpflichtCheck().setEnabled(enabled);
-        getAbwasseranfallCheck().setEnabled(enabled);
+		// This is intentionally left blank
     }
 
     public void clearForm() {

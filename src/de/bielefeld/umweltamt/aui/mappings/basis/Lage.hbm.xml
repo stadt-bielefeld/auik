@@ -52,6 +52,9 @@
         <property name="sachbe33hee" type="java.lang.String">
             <column name="sachbe33hee" />
         </property>
+        <property name="ueberschgeb" type="boolean">
+            <column name="ueberschgeb" />
+        </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
         </property>

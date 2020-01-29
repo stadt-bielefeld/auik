@@ -99,7 +99,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh49Kontrollen.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh50Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh52Fachdaten.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh53Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh55Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Anh56Fachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/BwkFachdaten.hbm.xml" />

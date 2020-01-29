@@ -84,7 +84,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 				Map<Parameter, Analyseposition>>();
 		Map<Parameter, Analyseposition> parameterMap;
 		// For each Probe add an empty parameterMap to the probeMap
-		List<Probenahme> proben = DatabaseQuery.findProbenahme(probepkt);
+		List<Probenahme> proben = DatabaseAtlQuery.findProbenahme(probepkt);
 		for (Probenahme probe : proben)
 		{
 			parameterMap = new HashMap<Parameter, Analyseposition>();
@@ -432,7 +432,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	public static boolean isCompleteParameterGroup(
 		int id, List<Parameter> group)
 	{
-		List<Parameter> complete = DatabaseQuery.getParameterInGroup(id);
+		List<Parameter> complete = getParameterInGroup(id);
 		// First simply check the size
 		// As we use List and not Set the size is not a good criteria...
 		//        if (group.size() != complete.size()) {
@@ -649,7 +649,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	public static JRMapDataSource getBescheidDataSource(Probenahme probe)
 	{
 		List<Analyseposition> sorted =
-				DatabaseQuery.getSortedAnalysepositionen(probe);
+				getSortedAnalysepositionen(probe);
 		List<Parameter> params = new ArrayList<Parameter>();
 		for (Analyseposition pos : sorted)
 		{
@@ -722,7 +722,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 			Parametergruppen gr = parameter.getParametergruppen();
 			int groupId = gr != null ? gr.getId() : -1;
 
-			boolean inGroup = DatabaseQuery.isCompleteParameterGroup(
+			boolean inGroup = isCompleteParameterGroup(
 																		groupId, params);
 
 			//            if (inGroup) {
@@ -1068,7 +1068,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		List<Analyseposition> result = new ArrayList<Analyseposition>();
 		for (ViewAtlAnalysepositionAll viewPos : viewResult)
 		{
-			result.add(DatabaseQuery.getAnalysepositionFromView(viewPos));
+			result.add(getAnalysepositionFromView(viewPos));
 		}
 		return result;
 	}

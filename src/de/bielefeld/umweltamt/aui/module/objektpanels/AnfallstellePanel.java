@@ -47,6 +47,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
@@ -71,6 +72,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungMo
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
+import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -104,6 +106,7 @@ public class AnfallstellePanel extends JPanel {
     private TextFieldDateChooser stillgelegtAmDatum = null;
     private JFormattedTextField abwaBeschaffOptFeld = null;
     private JFormattedTextField betriebsweiseOptFeld = null;
+    private JTextArea bemerkungenArea = null;
     private JButton saveAnfallstelleButton = null;
     
     // Daten
@@ -114,7 +117,6 @@ public class AnfallstellePanel extends JPanel {
     private Anh49AnalysenPanel anh49analyseTab;
     private Anh50Panel anhang50Tab;
     private Anh52Panel anhang52Tab;
-    private Anh53Panel anhang53Tab;
     private Anh55Panel anhang55Tab;
     private Anh56Panel anhang56Tab;
     private BWKPanel bwkTab;
@@ -157,6 +159,15 @@ public class AnfallstellePanel extends JPanel {
         builder.append("Erstelldatum:", getErstellDatDatum());
         builder.nextLine();
         builder.append("Stilllegedatum:", getStillgelegtAmDatum());
+        builder.nextLine();
+        builder.appendSeparator("Bemerkungen");
+        builder.appendRow("3dlu");
+        builder.nextLine(2);
+        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        builder.appendRow("fill:30dlu");
+        builder.append(bemerkungsScroller, 6);
         builder.nextLine();
         
         builder.appendSeparator("Verknüpfte Objekte");
@@ -264,6 +275,10 @@ public class AnfallstellePanel extends JPanel {
     			getAbwaBeschaffOptFeld().setText(this.anfallstelle.getAbwaBeschaffOpt().toString());
     		}
     		
+    		if(this.anfallstelle.getBemerkungen() != null) {
+    			getBemerkungenArea().setText(this.anfallstelle.getBemerkungen());
+    		}
+    		
     		if(this.anfallstelle.getBetriebsweiseOpt() != null) {
     			getBetriebsweiseOptFeld().setText(this.anfallstelle.getBetriebsweiseOpt().toString());
     		}
@@ -289,6 +304,7 @@ public class AnfallstellePanel extends JPanel {
 		getStillgelegtAmDatum().setDate(null);
 		getAbwaBeschaffOptFeld().setText(null);
 		getBetriebsweiseOptFeld().setText(null);
+		getBemerkungenArea().setText(null);
 
 		if (anfallstelle != null) {
 			switch (anfallstelle.getAnhangId()) {
@@ -305,9 +321,6 @@ public class AnfallstellePanel extends JPanel {
 			case "52":
 				getAnh52Tab().clearForm();
 				break;
-			case "53":
-				getAnh53Tab().clearForm();
-				break;
 			case "55":
 				getAnh55Tab().clearForm();
 				break;
@@ -315,20 +328,22 @@ public class AnfallstellePanel extends JPanel {
 				getAnh56Tab().clearForm();
 				break;
 			case "99":
-				switch ((String) anlagenart) {
-				case "Brennwertkessel":
-					getBWKTab().clearForm();
-					break;
-				case "BHKW":
-					getBWKTab().clearForm();
-					break;
-				case "Fettabscheider":
-					getAnh49Tab().clearForm();
-					getAnh49AbfuhrTab().clearForm();
-					break;
-				default:
-					log.debug("Unknown Anfallstelle: " + anfallstelle);
+				if (anlagenart != null) {
+					switch ((String) anlagenart) {
+					case "Brennwertkessel":
+						getBWKTab().clearForm();
+						break;
+					case "BHKW":
+						getBWKTab().clearForm();
+						break;
+					case "Fettabscheider":
+						getAnh49Tab().clearForm();
+						getAnh49AbfuhrTab().clearForm();
+						break;
+					}
 				}
+			default:
+				log.debug("Unknown Anfallstelle: " + anfallstelle);
 			}
 		}
 	}
@@ -347,6 +362,7 @@ public class AnfallstellePanel extends JPanel {
         getStillgelegtAmDatum().setEnabled(enabled);
         getAbwaBeschaffOptFeld().setEnabled(enabled);
         getBetriebsweiseOptFeld().setEnabled(enabled);
+        getBemerkungenArea().setEnabled(enabled);
     }
 
     @Override
@@ -406,11 +422,12 @@ public class AnfallstellePanel extends JPanel {
         Date stillgelegtAm = this.stillgelegtAmDatum.getDate();
         this.anfallstelle.setStillgelegtAm(stillgelegtAm);
         
-        Integer abwaBeschaffOpt = ((IntegerField)this.abwaBeschaffOptFeld).getIntValue();
-        this.anfallstelle.setAbwaBeschaffOpt(abwaBeschaffOpt);
-        
-        Integer betriebsweiseOpt = ((IntegerField)this.betriebsweiseOptFeld).getIntValue();
-        this.anfallstelle.setBetriebsweiseOpt(betriebsweiseOpt);
+        String bemerkungen = this.bemerkungenArea.getText();
+        if("".equals(bemerkungen)) {
+        	this.anfallstelle.setBemerkungen(null);
+        } else {
+        	this.anfallstelle.setBemerkungen(bemerkungen);
+        }
         
         if (anfallstelle.getAnh40Fachdatens().size() > 0) {
         	anfallstelle.getAnh40Fachdatens().iterator().next().merge();
@@ -565,6 +582,19 @@ public class AnfallstellePanel extends JPanel {
     		this.betriebsweiseOptFeld = new IntegerField();
     	}
     	return this.betriebsweiseOptFeld;
+    }
+    
+    /**
+     * Get-Methode die das bemerkungenFeld des Panels zurückgibt:
+     * @return {@link JTextField}
+     */
+    private JTextArea getBemerkungenArea() {
+    	if (this.bemerkungenArea == null) {
+    		this.bemerkungenArea = new LimitedTextArea(150);
+            this.bemerkungenArea.setLineWrap(true);
+            this.bemerkungenArea.setWrapStyleWord(true);
+    	}
+    	return this.bemerkungenArea;
     }
     
     /**
@@ -787,6 +817,8 @@ public class AnfallstellePanel extends JPanel {
 		}
 		
 
+		this.anlagenartBox.enable(false);
+
 		switch ((String) type) {
 		case "40":
 			hauptModul.getTabbedPane().addTab(getAnh40Tab().getName(), getAnh40Tab());
@@ -805,6 +837,7 @@ public class AnfallstellePanel extends JPanel {
 			hauptModul.getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
 			if (anfallstelle.getAnh49Fachdatens().size() > 0) {
 				getAnh49Tab().clearForm();
+				getAnh49Tab().enable(true);
 				getAnh49Tab().updateForm(anfallstelle);
 				getAnh49AnalyseTab().clearForm();
 				getAnh49AnalyseTab().updateForm(getAnh49Tab().getFachdaten());
@@ -812,6 +845,7 @@ public class AnfallstellePanel extends JPanel {
 				anfallstelle.setAnhangId("49");
 				getAnh49Tab().clearForm();
 				getAnh49Tab().completeObjekt(anfallstelle);
+				getAnh49AnalyseTab().clearForm();
 				hauptModul.getTabbedPane().setSelectedIndex(3);
 			}
 			break;
@@ -836,18 +870,6 @@ public class AnfallstellePanel extends JPanel {
 				anfallstelle.setAnhangId("52");
 				getAnh52Tab().clearForm();
 				getAnh52Tab().completeObjekt(anfallstelle);
-				hauptModul.getTabbedPane().setSelectedIndex(3);
-			}
-			break;
-		case "53":
-			hauptModul.getTabbedPane().addTab(getAnh53Tab().getName(), getAnh53Tab());
-			if (anfallstelle.getAnh53Fachdatens().size() > 0) {
-				getAnh53Tab().clearForm();
-				getAnh53Tab().updateForm(anfallstelle);
-			} else {
-				anfallstelle.setAnhangId("53");
-				getAnh53Tab().clearForm();
-				getAnh53Tab().completeObjekt(anfallstelle);
 				hauptModul.getTabbedPane().setSelectedIndex(3);
 			}
 			break;
@@ -876,6 +898,7 @@ public class AnfallstellePanel extends JPanel {
 			}
 			break;
 		case "99":
+			this.anlagenartBox.enable(true);
 			switch ((String) anlagenart) {
 			case "Brennwertkessel":
 				hauptModul.getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
@@ -891,7 +914,7 @@ public class AnfallstellePanel extends JPanel {
 				}
 			break;
 			case "Blockheizkraftwerk":
-				hauptModul.getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
+				hauptModul.getTabbedPane().addTab("Blockheizkraftwerk", getBWKTab());
 				if (anfallstelle.getBwkFachdatens().size() > 0) {
 					getBWKTab().clearForm();
 					getBWKTab().updateForm();
@@ -904,7 +927,7 @@ public class AnfallstellePanel extends JPanel {
 				}
 			break;
 			case "Fettabscheider":
-				hauptModul.getTabbedPane().addTab(getAnh49Tab().getName(), getAnh49Tab());
+				hauptModul.getTabbedPane().addTab("Fettabscheider", getAnh49Tab());
 				hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
 				if (anfallstelle.getAnh49Fachdatens().size() > 0) {
 					getAnh49Tab().clearForm();
@@ -971,14 +994,6 @@ public class AnfallstellePanel extends JPanel {
             anhang52Tab.setBorder(Paddings.DIALOG);
         }
         return anhang52Tab;
-    }
-
-    public Anh53Panel getAnh53Tab() {
-        if (anhang53Tab == null) {
-            anhang53Tab = new Anh53Panel(hauptModul, anfallstelle);
-            anhang53Tab.setBorder(Paddings.DIALOG);
-        }
-        return anhang53Tab;
     }
 
     public Anh55Panel getAnh55Tab() {

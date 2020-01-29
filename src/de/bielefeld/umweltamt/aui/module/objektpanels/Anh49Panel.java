@@ -79,6 +79,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -255,7 +256,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
     }
 
     public Anh49Panel(BasisObjektBearbeiten hauptModul) {
-        super("Anhang 49", hauptModul);
+        super("Abscheider", hauptModul);
         
         abscheiderModel = new Anh49AbscheiderModel();
         abscheiderModel.setFachdaten(fachdaten);
@@ -475,13 +476,13 @@ public class Anh49Panel extends AbstractAnhangPanel {
             abscheiderModel.updateList();
 
             // Den bearbeiteten Abscheider wieder in der Tabelle auswählen
-//            Anh49Abscheiderdetails details = editDialog.getDetails();
-//            int row = abscheiderModel.getList().indexOf(details);
-//            if (row != -1) {
-//                getAbscheiderTabelle().setRowSelectionInterval(row, row);
-//                getAbscheiderTabelle().scrollRectToVisible(
-//                    getAbscheiderTabelle().getCellRect(row, 0, true));
-//            }
+            Anh49Abscheiderdetails details = editDialog.getDetails();
+            int row = abscheiderModel.getList().indexOf(details);
+            if (row != -1) {
+                getAbscheiderTabelle().setRowSelectionInterval(row, row);
+                getAbscheiderTabelle().scrollRectToVisible(
+                    getAbscheiderTabelle().getCellRect(row, 0, true));
+            }
         }
     }
 
@@ -677,6 +678,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
     public void clearForm() {
         super.clearAllComponents();
+//        abscheiderModel.setList(new ArrayList<Anh49Abscheiderdetails>());
     }
 
     public void enableAll(boolean enabled) {
@@ -740,6 +742,15 @@ public class Anh49Panel extends AbstractAnhangPanel {
         }
     }
 
+    public void completeObjekt() {
+        if (this.hauptModul.isNew() || this.fachdaten == null) {
+            // Neues Anhang49-Objekt erzeugen
+            this.fachdaten = new Anh49Fachdaten();
+
+
+        }
+    }
+
     private JButton getSaveAnh49Button() {
         if (this.saveAnh49Button == null) {
             this.saveAnh49Button = new JButton("Speichern");
@@ -747,7 +758,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
             this.saveAnh49Button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    enableAll(false);
+//                    enableAll(false);
                     if (saveAnh49Daten()) {
                         Anh49Panel.this.hauptModul.getFrame().changeStatus(
                             "Anhang 49-Objekt erfolgreich gespeichert.",

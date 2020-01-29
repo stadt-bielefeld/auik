@@ -531,7 +531,7 @@ public class BWKPanel extends JPanel {
             this.saveBwkButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    enableAll(false);
+//                    enableAll(false);
                     if (saveBwkDaten()) {
                         BWKPanel.this.hauptModul.getFrame().changeStatus(
                             "Brennwertkessel " + BWKPanel.this.bwk.getId()
