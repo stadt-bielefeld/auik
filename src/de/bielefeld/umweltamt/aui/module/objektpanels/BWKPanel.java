@@ -133,7 +133,7 @@ public class BWKPanel extends JPanel {
                 "3dlu, " + // 20
                 "pref, " + // 21
                 "3dlu, " + // 22
-                "fill:100dlu, " + // 23
+                "pref, " + // 23
                 "3dlu, " + // 24
                 "pref"); // 25
 
@@ -150,15 +150,16 @@ public class BWKPanel extends JPanel {
         builder.add(getBrennmittelFeld(), cc.xy(3, 7));
         builder.addLabel("Leistung:", cc.xy(1, 9));
         builder.add(getLeistungFeld(), cc.xy(3, 9));
-        builder.addSeparator("Werkstoffe", cc.xyw(1, 11, 3));
-        builder.addLabel("Brenner:", cc.xy(1, 13));
-        builder.add(getBrennerFeld(), cc.xy(3, 13));
-        builder.addLabel("Tauscher:", cc.xy(1, 15));
-        builder.add(getWaermetauscherFeld(), cc.xy(3, 15));
-        builder.addLabel("Abgasleitung:", cc.xy(1, 17));
-        builder.add(getAbgasleitungFeld(), cc.xy(3, 17));
-        builder.addLabel("Kondensatabl.:", cc.xy(1, 19));
-        builder.add(getKondensatltgFeld(), cc.xy(3, 19));
+        builder.addSeparator("Werkstoffe", cc.xyw(1, 15, 3));
+        builder.addLabel("Brenner:", cc.xy(1, 17));
+        builder.add(getBrennerFeld(), cc.xy(3, 17));
+        builder.addLabel("Tauscher:", cc.xy(1, 19));
+        builder.add(getWaermetauscherFeld(), cc.xy(3, 19));
+        builder.addLabel("Abgasleitung:", cc.xy(1, 21));
+        builder.add(getAbgasleitungFeld(), cc.xy(3, 21));
+        builder.addLabel("Kondensatabl.:", cc.xy(1, 23));
+        builder.add(getKondensatltgFeld(), cc.xy(3, 23));
+       
 
         // rechte Seite
         builder.addSeparator("Erfassung", cc.xyw(5, 1, 3));
@@ -172,16 +173,16 @@ public class BWKPanel extends JPanel {
         builder.add(getGenehmigungDatum(), cc.xy(7, 9));
         // builder.addLabel("ABA:", cc.xy( 5, 11));
         builder.add(getgenehmpflichtCheck(), cc.xyw(5, 11, 3));
-        builder.add(getAbaCheck(), cc.xy(8, 11));
-        builder.addSeparator("Bemerkungen", cc.xyw(5, 13, 3));
+        builder.add(getAbaCheck(), cc.xyw(5, 13, 3));
+        builder.addSeparator("Bemerkungen", cc.xyw(5, 15, 3));
         builder.add(new JScrollPane(getBwkBeschreibungsArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh(5, 15, 3,
-            5));
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh(5, 17, 3,
+            7));
 
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSaveBwkButton());
-        builder.add(buttonBar, cc.xyw(1, 21, 7));
+        builder.add(buttonBar, cc.xyw(1, 25, 7));
 
     }
 
@@ -419,7 +420,7 @@ public class BWKPanel extends JPanel {
 
     private JCheckBox getAbaCheck() {
         if (this.abaCheck == null) {
-            this.abaCheck = new JCheckBox("ABA");
+            this.abaCheck = new JCheckBox("Abwasserbehandlungsanlage");
         }
         return this.abaCheck;
     }
