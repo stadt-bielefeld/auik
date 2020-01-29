@@ -94,7 +94,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         createMappings();
 
         FormLayout layout = new FormLayout(
-                "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
+                "r:pref, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
@@ -110,7 +110,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         builder.nextLine();
         builder.append("Drosselabfluss zur Behandlung", drosselabflussBox);
         builder.nextLine();
-        builder.append("Drosselschluss bei Überschreiten dess Füllstandes oder eines Maximalzuflusses",
+        builder.append("Drosselschluss bei Überschreiten des Füllstandes oder eines Maximalzuflusses",
                 drosselschluss);
         builder.nextLine();
 

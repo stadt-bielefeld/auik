@@ -117,11 +117,11 @@ public class Anh40Panel extends JPanel {
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
 
         builder.appendSeparator("Fachdaten");
-        builder.append("SachbearbeiterIn Rav.-Str.:",
+        builder.append("SachbearbeiterIn ABS:",
             getSachbearbeiterravFeld());
         builder.append("", getWsgCheck());
         builder.nextLine();
-        builder.append("SachbearbeiterIn Heepen.:",
+        builder.append("SachbearbeiterIn ATL.:",
             getSachbearbeiterheepenFeld());
         builder.append("", getGenehmigungspflichtCheck());
         builder.nextLine();

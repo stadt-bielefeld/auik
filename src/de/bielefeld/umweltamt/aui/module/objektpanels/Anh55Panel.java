@@ -242,10 +242,6 @@ public class Anh55Panel extends JPanel {
         builder.appendRow("fill:30dlu");
         builder.append(bemerkungsScroller, 7);
 
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSaveAnh55Button());
 

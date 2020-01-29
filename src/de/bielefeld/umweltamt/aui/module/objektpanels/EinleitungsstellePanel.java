@@ -129,48 +129,75 @@ public class EinleitungsstellePanel extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-        		"r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
+        		"r:80dlu, 5dlu, 100dlu, 5dlu, r:80dlu, 5dlu, 100dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+builder.nextLine();
+	    builder.appendRow("fill:15dlu");
+    builder.appendSeparator("Art der Einleitung");
 
-        builder.appendSeparator("ELKA");
-        builder.append("Erstellung:", getErstellDatDatum());
-        builder.append("Stationierungns3: ", getStationierungNs3Feld());
-        builder.nextLine();
-        builder.append("Herkunft:", getHerkunftFeld());
-        builder.append("Einzugsgebiet:", getEinzugsgebietFeld());
-        builder.nextLine();
-        builder.append("Bezeichnung:", getBezeichnungFeld());
-        builder.append("Stationierungst3", getStationierungSt3Feld());
-        builder.nextLine();
-        builder.append("Gewässernamealias3:", getGewaessernameAlias3Feld());
-        builder.append("Abgabe einleitung: ", getAbgaberelEinlFeld());
-        builder.nextLine();
-        builder.append("GewässernameNs: ", getGewaessernameNsFeld());
-        builder.append("Kanal Art Opt:", getKanalArtOptFeld());
-        builder.nextLine();
-        builder.append("NadiaId:", getNadiaIdFeld());
-        builder.append("E32:", getE32Feld());
-        builder.nextLine();
-        builder.append("Datum:", getStillgelegtAmDatum());
-        builder.append("N32:",  getN32Feld());
-        builder.nextLine();
-        builder.append("", getTypIndirektCheck());
-        builder.append("Stationierung:", getStationierung3OptFeld());
-        builder.nextLine();
-        builder.append("", getTypIndGewDirektCheck());
-        builder.append("Schutzzone:", getSchutzzoneOptFeld());
-        builder.nextLine();
-        builder.append("", getTypKommTrennCheck());
-        builder.append("Kläranlage: ", getKlaeranlageBox());
-        builder.nextLine();
-        builder.append("", getTypPrivatTrennCheck());
-        builder.nextLine();
-        builder.append("", getTypSonstigeCheck());
-        builder.nextLine();
-        builder.append("", getTypAusserortStrasseneinlCheck());
-        builder.nextLine();
+builder.nextLine();
+	builder.append("", getTypIndirektCheck(), 5);
+	
+builder.nextLine();
+	builder.append("", getTypIndGewDirektCheck(), 5);
+	
+builder.nextLine();
+	builder.append("", getTypKommTrennCheck(), 5);
+	
+builder.nextLine();	
+	builder.append("", getTypPrivatTrennCheck(), 5);
+	
+builder.nextLine();
+	builder.append("", getTypSonstigeCheck(), 5);
+	
+builder.nextLine();
+	builder.append("", getTypAusserortStrasseneinlCheck(), 5);
+	builder.appendRow("fill:20dlu");
+	
+builder.appendSeparator("Details");
+	builder.append("Erstellung:", getErstellDatDatum());
+	builder.append("Stationierungst3", getStationierungSt3Feld());
+
+builder.nextLine();
+	builder.append("Herkunft:", getHerkunftFeld());
+	builder.append("Abgabe einleitung: ", getAbgaberelEinlFeld());
+
+
+builder.nextLine();
+	builder.append("Bezeichnung:", getBezeichnungFeld());
+	builder.append("Kanal Art Opt:", getKanalArtOptFeld());
+
+builder.nextLine();
+	builder.append("Gewässername ", getGewaessernameNsFeld());
+	builder.append("Ostwert:", getE32Feld());
+
+builder.nextLine();
+	builder.append("Aliasname:", getGewaessernameAlias3Feld());
+	builder.append("Nordwert:", getN32Feld());
+
+builder.nextLine();
+	builder.append("NadiaId:", getNadiaIdFeld());
+	builder.append("Stationierung [km]:", getStationierung3OptFeld());
+
+builder.nextLine();
+	builder.append("Datum:", getStillgelegtAmDatum());
+	builder.append("Schutzzone:", getSchutzzoneOptFeld());
+
+builder.nextLine();
+	builder.append("Stationierungns3: ", getStationierungNs3Feld());	
+	builder.append("Kläranlage: ", getKlaeranlageBox());
+
+builder.nextLine();
+	builder.append("Einzugsgebiet:", getEinzugsgebietFeld());
+
+        
+builder.nextLine();
+        builder.appendRow("fill:15dlu");
+        builder.appendSeparator("Verknüpfungen");
+        
+builder.nextLine();
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -631,7 +658,7 @@ public class EinleitungsstellePanel extends JPanel {
      */
     private JCheckBox getTypIndirektCheck() {
     	if (this.typIndirektCheck == null) {
-    		this.typIndirektCheck = new JCheckBox("Typ");
+    		this.typIndirektCheck = new JCheckBox("Indirekteinleitung");
     	}
     	return this.typIndirektCheck;
     }
@@ -642,7 +669,7 @@ public class EinleitungsstellePanel extends JPanel {
      */
     private JCheckBox getTypIndGewDirektCheck() {
     	if (this.typIndGewDirektCheck == null) {
-    		this.typIndGewDirektCheck = new JCheckBox("TypIndGewDirek");
+    		this.typIndGewDirektCheck = new JCheckBox("industrielle Direkteinleitung");
     	}
     	return this.typIndGewDirektCheck;
     }
@@ -653,7 +680,7 @@ public class EinleitungsstellePanel extends JPanel {
      */
     private JCheckBox getTypKommTrennCheck() {
     	if (this.typKommTrennCheck == null) {
-    		this.typKommTrennCheck =  new JCheckBox("TypKommTrenn");
+    		this.typKommTrennCheck =  new JCheckBox("kommunales Nierderschlagswasser (Trennverfahren)");
     	}
     	return this.typKommTrennCheck;
     }
@@ -664,7 +691,7 @@ public class EinleitungsstellePanel extends JPanel {
      */
     private JCheckBox getTypPrivatTrennCheck() {
     	if (this.typPrivatTrennCheck == null) {
-    		this.typPrivatTrennCheck = new JCheckBox("TypPrivatTren");
+    		this.typPrivatTrennCheck = new JCheckBox("Niederschlagswassser aus dem privaten Bereich (Trennverfahren)");
     	}
     	return this.typPrivatTrennCheck;
     }
@@ -675,7 +702,7 @@ public class EinleitungsstellePanel extends JPanel {
      */
     private JCheckBox getTypSonstigeCheck() {
     	if (this.typSonstigeCheck == null) {
-    		this.typSonstigeCheck = new JCheckBox("TypSonstige");
+    		this.typSonstigeCheck = new JCheckBox("sonstige Direkteinleitung");
     	}
     	return this.typSonstigeCheck;
     }
@@ -686,7 +713,7 @@ public class EinleitungsstellePanel extends JPanel {
      */
     private JCheckBox getTypAusserortStrasseneinlCheck() {
     	if (this.typAusserortStrasseneinlCheck  == null) {
-    		this.typAusserortStrasseneinlCheck = new JCheckBox("TypAusserortStrasseneinl");
+    		this.typAusserortStrasseneinlCheck = new JCheckBox("außerörtliche Straßeneinleitung");
     	}
     	return this.typAusserortStrasseneinlCheck;
     }

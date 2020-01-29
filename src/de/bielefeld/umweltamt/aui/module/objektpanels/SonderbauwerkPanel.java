@@ -140,7 +140,7 @@ public class SonderbauwerkPanel extends JPanel {
         builder.nextLine();
         builder.append("Wiederinbetriebnahme:", getWiederinebetriebdatDatum());
         builder.nextLine();
-        builder.append("stillgelegt:", getStillgelegtCheck());
+        builder.append("", getStillgelegtCheck());
         builder.append("am:", getStillegdatDatum());
         builder.nextLine();
         builder.append("Ostwert:", getE32Feld());
