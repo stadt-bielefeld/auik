@@ -64,6 +64,7 @@ import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -149,7 +150,11 @@ public class BasisAdresseNeu extends AbstractModul
 	private JComboBox entwGebBox;
 	private JComboBox standortGgBox;
 	private JComboBox wEinzugsGebBox;
-	
+	private JCheckBox daten_awsvCheck= null;
+	private JCheckBox daten_whgCheck= null;
+	private JCheckBox daten_esatzungCheck = null;
+	private JCheckBox ueberschgebCheck = null;
+		
 	private Gemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;
 	private Standortgghwsg[] standortggs = null;
@@ -251,11 +256,19 @@ public class BasisAdresseNeu extends AbstractModul
 			entwGebBox.setEditable(true);
 			standortGgBox = new JComboBox();
 			wEinzugsGebBox = new JComboBox();
-
+			daten_awsvCheck = new JCheckBox("AwSV");
+			daten_esatzungCheck = new JCheckBox("E-Satzung");
+			daten_whgCheck = new JCheckBox("WHG");
+			ueberschgebCheck = new JCheckBox("Überschwemmungsgebiet");
+			
+			
+			
 			revdatumsFeld = new JTextField();
 			revdatumsFeld.setEditable(false);
 			revdatumsFeld.setFocusable(false);
 			revdatumsFeld.setToolTipText("Wird automatisch gesetzt.");
+			
+					
 
 			handzeichenNeuFeld = new LimitedTextField(10, "");
 			handzeichenNeuFeld.setToolTipText("Handzeichen obligatorisch!");
@@ -304,136 +317,114 @@ public class BasisAdresseNeu extends AbstractModul
 			//            TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
 
 			FormLayout layout = new FormLayout(
-					"right:pref, 3dlu, 20dlu, 70dlu, 5dlu, right:pref, 3dlu, 27dlu, 3dlu, 30dlu, 10dlu, 60dlu, 3dlu, 60dlu, 3dlu, 20dlu", // Spalten
-					"pref, 3dlu, " + //1 - Stammdaten
-							"pref, 3dlu, " + //3
-							"pref, 3dlu, " + //5
-							"pref, 3dlu, " + //7
-							"pref, 3dlu, " + //9
-							"pref, 3dlu, " + //11
-							"pref, 3dlu, " + //13
+					"right:pref, 3dlu, 20dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 10dlu, right:pref, 5dlu, 50dlu, 40dlu", //Spalten
+					"pref, 3dlu, " + //-Adresse 
+					"pref, 3dlu, " + //3
+					"pref, 3dlu, " + //5
+					"pref, 3dlu, " + //7
+					"pref, 3dlu, " + //9
+					"pref, 3dlu, " + //11
+					"pref, 3dlu, " + //13
+					"pref, 3dlu, " + //15 -Ansprechpartner 
+					"pref, 3dlu, " + //17
+					"pref, 3dlu, " + //19 -DSGVO
+					"pref, 3dlu, " + //21
+					"pref, 3dlu, " + //23
+					"pref, 3dlu, " + //25
+					"pref, 3dlu, " + //27 -Lage
+					"pref, 3dlu, " + //29
+					"pref, 3dlu, " + //31 
+					"pref, 3dlu, " + //33
+					"pref, 3dlu, " + //35
+					"pref, 3dlu, " + //37 -Bermerkung
+					"pref, 3dlu, " + //39
+					"pref, 3dlu, " + //41
+					"pref, 3dlu, " + //43- Button
+					"pref, 3dlu, " + //45 
+					"pref, 3dlu, " ); //47 - Button
+			 
+layout.setRowGroups(new int[][] { { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35,
+								37, 39, 41, 43 } });
 
-							"pref, 3dlu, " + //15 - Adresse
-							"pref, 3dlu, " + //17
-							"pref, 3dlu, " + //19
-							"pref, 3dlu, " + //21
-							"pref, 3dlu, " + //23
-							"pref, 3dlu, " + //25
+						PanelBuilder builder = new PanelBuilder(layout);
+						CellConstraints cc = new CellConstraints();
 
-							"pref, 3dlu, " + //27 - Betriebsbeauftrager
-							"pref, 3dlu, " + //29
+	//Links oben
 
-							"pref, 3dlu, " + //31 - Bemerkungen
-							"pref, 3dlu, " + //33
-							"pref, 3dlu, " + //35
+			builder.addSeparator("Adresse", cc.xyw(1,1,13));				//Adresse----
+			namenLabel = builder.addLabel("Firma/Name:", cc.xy(1, 3));		//Name
+						builder.add(namenFeld, cc.xyw(3, 3, 6));
+			builder.addLabel("Anrede:", cc.xy(1,5));						//Anrede
+						builder.add(anredeFeld, cc.xyw(3, 5, 6));
+			builder.addLabel("Vorname:", cc.xy(1,7));						//Vorname
+						builder.add(vornamenFeld, cc.xyw(3, 7, 6));		
+			builder.addLabel("Zusatz", cc.xy(1,9));							//Zusatz
+						builder.add(nameZusFeld, cc.xyw(3, 9, 6));					
+			builder.addLabel("Stadt", cc.xy(1,11));
+						builder.add(plzZsFeld, cc.xy(3, 11));				//PLZ-Zusatz
+						builder.add(plzFeld, cc.xy(4, 11));					//PLZ
+						builder.add(ortFeld, cc.xyw(6, 11, 3));				//Stadt					
+			builder.addLabel("Straße", cc.xy(1,13));						//Straße
+						builder.add(strasseFeld, cc.xyw(3, 13, 2));		
+						builder.add(hausnrFeld, cc.xy(6, 13));				//Hausnr
+						builder.add(hausnrZusFeld, cc.xy(8, 13));			//HausnrZusatz
+			builder.addSeparator("Ansprechpartner", cc.xyw(1,15,8));		//Ansprechpartner--					
+			builder.addLabel("Vorname", cc.xy(1,17));						//Vorname
+						builder.add(betrBeaufVornameFeld, cc.xyw(3, 17, 6));		
+			builder.addLabel("Nachname", cc.xy(1,19));						//Nachname
+						builder.add(betrBeaufNachnameFeld, cc.xyw(3, 19, 6));		
+			builder.addLabel("Telefon", cc.xy(1, 21));						//Telefon
+						builder.add(telefonFeld, cc.xyw(3, 21, 6));				
+			builder.addLabel("Telefax", cc.xy(1,23));						//Telefax
+						builder.add(telefaxFeld, cc.xyw(3, 23, 6));		
+			builder.addLabel("Email", cc.xy(1,25));							//Email
+						builder.add(emailFeld, cc.xyw(3, 25, 6));	
 
-							"pref, 3dlu, " + //37 - Revision
-							"pref, 3dlu, " + //39
-							"pref, 10dlu, " + //41
+	//Rechts oben
+						
+			builder.addLabel("Kassenzeichen", cc.xy(10,3));					//Kassenzeichen
+						builder.add(kassenzeichenFeld, cc.xyw(12, 3, 2));	
+			builder.addLabel("Wirtschaftszweig", cc.xy(10, 5));				//Wirtscahftszweig
+						builder.add(wirtschaftszweigBox, cc.xyw(12, 5, 2));	
+			builder.addSeparator("Adresse auswählen", cc.xyw(10, 7, 4)); 	//Adresse auswählen--
+			builder.add(getStrassenBox(), cc.xyw(10, 9, 4));				//Drop Straßen
+			builder.add(getStandorteScroller(), cc.xywh(10, 11, 4, 7)); 	//Straßen Scroller		
+			builder.addSeparator("Datenschutzhinweis", cc.xyw(10, 19, 4));	//DSGVO
+			builder.add(daten_awsvCheck, cc.xyw(10, 21, 2));				//AWSV Check
+			builder.add(daten_esatzungCheck, cc.xyw(10, 23, 2));			//ESatzung Check
+			builder.add(daten_whgCheck, cc.xyw(10, 25, 2));					//WHG Check
+				
+						
+	//Links unten
 
-							"top:pref:grow");//43 - Buttons
-			layout.setRowGroups(new int[][] { { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35,
-					37 } });
+			builder.addSeparator("Lage", cc.xyw(1, 27, 13));				//Lage----
+			builder.addLabel("E32", cc.xy(1,29));							//Ostwert
+						builder.add(e32Feld, cc.xyw(3, 29, 2));		
+			builder.addLabel("N32", cc.xy(1,31));							//Nordwert
+						builder.add(n32Feld, cc.xyw(3, 31, 2));							
+			builder.add(getAusAblageButton(), cc.xywh(6, 29, 3, 3));		//GISButton						
+			builder.addLabel("Standortgegebenheit:", cc.xy(1, 33));			//Satndortgegebenheiten
+						builder.add(standortGgBox, cc.xyw(3, 33, 6));		
+			builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 35));				//W._Einzugsgebiet
+						builder.add(wEinzugsGebBox, cc.xyw(3, 35, 6));
+			builder.addSeparator("Bemerkungen", cc.xyw(1, 37, 8));			//BemerkungenScroller
+						builder.add(bemerkungsScroller, cc.xywh(1, 39, 8, 3));
 
-			PanelBuilder builder = new PanelBuilder(layout);
-			CellConstraints cc = new CellConstraints();
 
-			// Stamdaten ------------------------------------
-			builder.addSeparator("Stammdaten", cc.xyw(1, 1, 16));
-			// Name
-			namenLabel = builder.addLabel("Name:", cc.xy(1, 3));
-			builder.add(namenFeld, cc.xyw(3, 3, 6));
-			// Telefon
-			builder.addLabel("Telefon:", cc.xy(10, 3));
-			builder.add(telefonFeld, cc.xyw(12, 3, 5));
-			// Anrede
-			builder.addLabel("Anrede:", cc.xy(1, 5));
-			builder.add(anredeFeld, cc.xyw(3, 5, 6));
-			// Telefax
-			builder.addLabel("Telefax:", cc.xy(10, 5));
-			builder.add(telefaxFeld, cc.xyw(12, 5, 5));
-			// Vorname
-			builder.addLabel("Vorname:", cc.xy(1, 7));
-			builder.add(vornamenFeld, cc.xyw(3, 7, 6));
-			// eMail
-			builder.addLabel("E-Mail:", cc.xy(10, 7));
-			builder.add(emailFeld, cc.xyw(12, 7, 5));
-			// Zusatz
-			builder.addLabel("Zusatz:", cc.xy(1, 9));
-			builder.add(nameZusFeld, cc.xyw(3, 9, 6));
-			
-			// Ansprechpartner -------------------------
-			builder.addSeparator("Ansprechpartner", cc.xyw(10, 9, 7));
-			// Vorname
-			builder.addLabel("Vorname:", cc.xy(10, 11));
-			builder.add(betrBeaufVornameFeld, cc.xyw(12, 11, 5));
-			// Nachname
-			builder.addLabel("Name:", cc.xy(10, 13));
-			builder.add(betrBeaufNachnameFeld, cc.xyw(12, 13, 5));
-			// Kassenzeichen
-			builder.addLabel("Kassenzeichen:", cc.xy(1, 11));
-			builder.add(kassenzeichenFeld, cc.xyw(3, 11, 6));
-			// Wirtschaftszweig
-			builder.addLabel("Wirtschaftszweig:", cc.xy(1, 13));
-			builder.add(wirtschaftszweigBox, cc.xyw(3, 13, 6));
+	//Rechts unten
 
-			// Adresse --------------------------------------
-			builder.addSeparator("Adresse", cc.xyw(1, 15, 10));
-			// auswählen --------------------------------------
-			builder.addSeparator("auswählen", cc.xyw(12, 15, 5));
-			// Ort
-			builder.addLabel("Ort:", cc.xy(1, 17));
-			builder.add(plzZsFeld, cc.xy(3, 17));
-			builder.add(plzFeld, cc.xy(4, 17));
-			builder.add(ortFeld, cc.xyw(6, 17, 5));
-			// Straße
-			builder.addLabel("Straße:", cc.xy(1, 19));
-			builder.add(strasseFeld, cc.xyw(3, 19, 4));
-			builder.add(hausnrFeld, cc.xy(8, 19));
-			builder.add(hausnrZusFeld, cc.xy(10, 19));
-			builder.add(getStrassenBox(), cc.xyw(12, 17, 5));
+			builder.addLabel("Entw.-gebiet:", cc.xy(10, 29));		//Entwässerungsgebiet
+						builder.add(entwGebBox, cc.xyw(12, 29, 2));
+			builder.addLabel("Gemarkung:", cc.xy(10, 31));					//Gemarkung	
+						builder.add(gemarkungBox, cc.xyw(12, 31, 2));
+			builder.add(ueberschgebCheck, cc.xyw(10, 33, 3));				//Überschwemmungsgebiet
+			builder.addSeparator("Revision", cc.xyw(10, 37, 4));			//Revison		
+				builder.addLabel("Datum:", cc.xy(10, 39));					
+						builder.add(revdatumsFeld, cc.xy(12, 39));
+			handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 41));
+						builder.add(handzeichenNeuFeld, cc.xy(12, 41));					
+			builder.add(buttonBar, cc.xy(12, 43));
 
-			builder.add(getStandorteScroller(), cc.xywh(12, 19, 5, 15));
-
-			// Lage --------------------------------------
-			builder.addSeparator("Lage", cc.xyw(1, 21, 10));
-			
-			// Koordinaten
-			builder.addLabel("E32:", cc.xy(1, 23));
-			builder.add(e32Feld, cc.xyw(3, 23, 3));
-			builder.add(getAusAblageButton(), cc.xywh(8, 23, 3, 3));
-			builder.addLabel("N32:", cc.xy(1, 25));
-			builder.add(n32Feld, cc.xyw(3, 25, 3));
-			builder.addLabel("Entwässerungsgebiet:", cc.xy(1, 27));
-			builder.add(entwGebBox, cc.xyw(3, 27, 3));
-			
-			//
-			builder.addLabel("Gemarkung:", cc.xy(1, 29));
-			builder.add(gemarkungBox, cc.xyw(3, 29, 8));
-			
-			//VAwS
-			builder.addLabel("Standortgegebenheit:", cc.xy(1, 31));
-			builder.add(standortGgBox, cc.xyw(3, 31, 8));
-			builder.addLabel("W.Einzugsgebiet:", cc.xy(1, 33));
-			builder.add(wEinzugsGebBox, cc.xyw(3, 33, 8));
-
-			
-
-			// Bemerkungen ----------------------------------
-			builder.addSeparator("Bemerkungen", cc.xyw(1, 35, 10));
-			builder.add(bemerkungsScroller, cc.xywh(1, 37, 10, 3));
-
-			// Revision -------------------------------------
-			builder.addSeparator("Revision", cc.xyw(12, 35, 5));
-			// Datum
-			builder.addLabel("Datum:", cc.xy(12, 37));
-			builder.add(revdatumsFeld, cc.xyw(14, 37, 3));
-			// Handzeichen
-			handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(12, 39));
-			builder.add(handzeichenNeuFeld, cc.xyw(14, 39, 3));
-
-			// Buttons
-			builder.add(buttonBar, cc.xyw(14, 43, 3));
 
 			BetreiberNeuListener dialogListener = new BetreiberNeuListener();
 
@@ -513,7 +504,8 @@ public class BasisAdresseNeu extends AbstractModul
 		
 		return strassenBox;
 	}
-
+	 
+	
 	@Override
 	public void show()
 	{
