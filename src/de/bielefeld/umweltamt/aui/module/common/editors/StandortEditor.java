@@ -54,7 +54,6 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
@@ -397,24 +396,24 @@ public class StandortEditor extends AbstractBaseEditor
 				if (gemarkungen != null)
 				{
 					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
-					gemarkungBox.setSelectedItem(getStandort().getLage().getGemarkung());
+					gemarkungBox.setSelectedItem(getStandort().getGemarkung());
 				}
 				if (standortggs != null)
 				{
 					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
-					standortGgBox.setSelectedItem(getStandort().getLage().getStandortgghwsg());
+					standortGgBox.setSelectedItem(getStandort().getStandortgghwsg());
 				}
 
 				if (entwgebiete != null)
 				{
 					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
-					entwGebBox.setSelectedItem(getStandort().getLage().getEntgebid());
+					entwGebBox.setSelectedItem(getStandort().getEntgebid());
 				}
 
 				if (wEinzugsgebiete != null)
 				{
 					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
-					wEinzugsGebBox.setSelectedItem(getStandort().getLage().getWassereinzugsgebiet());
+					wEinzugsGebBox.setSelectedItem(getStandort().getWassereinzugsgebiet());
 				}
 
 				if (!StringUtils.isNullOrEmpty(getStandort().getAdresse().getPlz()))
@@ -432,15 +431,15 @@ public class StandortEditor extends AbstractBaseEditor
                 if (getStandort().getAdresse().getPlz() != null) {
                     plzFeld.setText(getStandort().getAdresse().getPlz());
                 }
-				flurFeld.setText(getStandort().getLage().getFlur());
-				flurStkFeld.setText(getStandort().getLage().getFlurstueck());
-				e32Feld.setValue(getStandort().getLage().getE32());
-				n32Feld.setValue(getStandort().getLage().getN32());
+				flurFeld.setText(getStandort().getFlur());
+				flurStkFeld.setText(getStandort().getFlurstueck());
+				e32Feld.setValue(getStandort().getE32());
+				n32Feld.setValue(getStandort().getN32());
 				Date datum = getStandort().getAdresse().getRevidatum();
 				datumFeld.setText(AuikUtils.getStringFromDate(datum));
 				handzeichenAltFeld.setText(getStandort().getAdresse().getRevihandz());
-				sachbeFeld.setText(getStandort().getLage().getSachbe33rav());
-				wassermengeFeld.setValue(getStandort().getLage().getWassermenge());
+				sachbeFeld.setText(getStandort().getSachbe33rav());
+				wassermengeFeld.setValue(getStandort().getWassermenge());
 
 				frame.clearStatus();
 			}
@@ -521,11 +520,11 @@ public class StandortEditor extends AbstractBaseEditor
 
 		// Gemarkung
 		Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
-		getStandort().getLage().setGemarkung(bgem);
+		getStandort().setGemarkung(bgem);
 
 		// Standortgg
 		Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
-		getStandort().getLage().setStandortgghwsg(stgg);
+		getStandort().setStandortgghwsg(stgg);
 
 		// Entwässerungsgebiet
 		String entgb = (String) entwGebBox.getSelectedItem();
@@ -537,16 +536,16 @@ public class StandortEditor extends AbstractBaseEditor
 		}
 		if ("".equals(entgb))
 		{
-			getStandort().getLage().setEntgebid(null);
+			getStandort().setEntgebid(null);
 		}
 		else
 		{
-			getStandort().getLage().setEntgebid(entgb);
+			getStandort().setEntgebid(entgb);
 		}
 
 		// VAWS-Einzugsgebiet
 		Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
-		getStandort().getLage().setWassereinzugsgebiet(wezg);
+		getStandort().setWassereinzugsgebiet(wezg);
 
 		// Flur
 		String flur = flurFeld.getText();
@@ -555,11 +554,11 @@ public class StandortEditor extends AbstractBaseEditor
 			flur = flur.trim();
 			if (flur.equals(""))
 			{
-				getStandort().getLage().setFlur(null);
+				getStandort().setFlur(null);
 			}
 			else
 			{
-				getStandort().getLage().setFlur(flur);
+				getStandort().setFlur(flur);
 			}
 		}
 
@@ -569,27 +568,27 @@ public class StandortEditor extends AbstractBaseEditor
 		{
 			if (flurstk.equals(""))
 			{
-				getStandort().getLage().setFlurstueck(null);
+				getStandort().setFlurstueck(null);
 			}
 			else
 			{
-				getStandort().getLage().setFlurstueck(flurstk);
+				getStandort().setFlurstueck(flurstk);
 			}
 		}
 
 		// E32
 		Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
-		getStandort().getLage().setE32(e32Wert);
+		getStandort().setE32(e32Wert);
 
 		// N32
 		Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
-		getStandort().getLage().setN32(n32Wert);
+		getStandort().setN32(n32Wert);
 
 		// Handzeichen
 		String handzeichen = handzeichenNeuFeld.getText().trim();
-		getStandort().getLage().setRevihandz(handzeichen);
+		getStandort().setRevihandz(handzeichen);
 
-		getStandort().getLage().setRevidatum(new Date());
+		getStandort().setRevidatum(new Date());
 
 		// Indirekteinleiter
 		String sach = sachbeFeld.getText();
@@ -597,17 +596,17 @@ public class StandortEditor extends AbstractBaseEditor
 		{
 			if (sach.equals(""))
 			{
-				getStandort().getLage().setSachbe33rav(null);
+				getStandort().setSachbe33rav(null);
 			}
 			else
 			{
-				getStandort().getLage().setSachbe33rav(sach);
+				getStandort().setSachbe33rav(sach);
 			}
 		}
 
 		// Wassermenge:
 		Integer wassermng = ((IntegerField) wassermengeFeld).getIntValue();
-		getStandort().getLage().setWassermenge(wassermng);
+		getStandort().setWassermenge(wassermng);
 
 		Standort bsta = Standort.merge(getStandort());
 		if (bsta != null)

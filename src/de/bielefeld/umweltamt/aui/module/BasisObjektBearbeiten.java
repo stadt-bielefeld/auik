@@ -115,7 +115,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaVerfahrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AnfallstellePanel;
@@ -465,10 +464,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
             if (manager.getSettingsManager().getSetting("auik.imc.use_standort") != null) {
                 Standort sta = Standort.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
                 log.debug("Standort: " + sta.getAdresse().getStrasse() + " " + sta.getAdresse().getHausnr() + ", " +sta.getId());
-                Lage lage = Lage.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_lage")));
-                log.debug("Creating new Objekt " + lage + sta);
                 objekt.setStandortid(sta);
-//                objekt.setLage(lage);
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
                 manager.getSettingsManager().removeSetting("auik.imc.use_lage");
             }
@@ -510,14 +506,14 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             getAbaTab().fetchFormData();
                             getAbaVerfahrenTab().fetchFormData();
                             break;
-                        case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
-                            getChronoTab().fetchFormData();
-                            getAnh49Tab().fetchFormData();
-                            getAnh49DetailTab().setFachdaten(
-                            	getAnh49Tab().getFachdaten());
-                            getAnh49AnalyseTab().setFachdaten(
-                            	getAnh49Tab().getFachdaten());
-                            break;
+//                        case DatabaseConstants.BASIS_OBJEKTART_ID_ABSCHEIDER34:
+//                            getChronoTab().fetchFormData();
+//                            getAnh49Tab().fetchFormData();
+//                            getAnh49DetailTab().setFachdaten(
+//                            	getAnh49Tab().getFachdaten());
+//                            getAnh49AnalyseTab().setFachdaten(
+//                            	getAnh49Tab().getFachdaten());
+//                            break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_SUEV:
                             getChronoTab().fetchFormData();
                             getSuevTab().fetchFormData();
@@ -567,7 +563,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     getHeaderLabel().setForeground(Color.RED);
                     getHeaderLabel().setText("Neues Objekt");
                 }
-                else if (objekt.getStandortid().getId()== 3) {
+                else if (objekt.getStandortid().getAdresse() == null) {
                     log.debug("Bearbeite Objekt: " + objekt);
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
                     getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getStandortid()) +

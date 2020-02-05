@@ -109,7 +109,6 @@ import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
@@ -650,7 +649,7 @@ public class BasisPanel extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-            "r:70dlu, 5dlu, 15dlu, 3dlu, 165dlu, 3dlu, l:min(55dlu;p)", ""
+            "r:70dlu, 5dlu, 100dlu, 3dlu, 165dlu, 3dlu, l:min(55dlu;p)", ""
             // Zeilen werden dynamisch erzeugt
         );
 
@@ -661,14 +660,11 @@ public class BasisPanel extends JPanel {
         builder.append(getBetreiberToolBar());
         builder.nextLine();
 
-        builder.append("Standort-Adresse:", getStandortFeld(), 3);
+        builder.append("Standort / Lage:", getStandortFeld(), 3);
         builder.append(getStandortToolBar());
         builder.nextLine();
 
-        builder.append("Lage:", getLageFeld(), 3);
-        builder.nextLine();
-
-        builder.append("Art:", getArtBox(), 3);
+        builder.append("Art:", getArtBox());
         builder.nextLine();
 
         builder.append("Sachbearbeiter:", getSachbearbeiterBox(), 3);
@@ -802,37 +798,35 @@ public class BasisPanel extends JPanel {
             }
             if (this.hauptModul.getObjekt().getStandortid() != null) {
 
-                Standort standort = (Standort) Standort
-                        .findByAdresse(this.hauptModul.getObjekt()
-                                .getStandortid().getAdresse());
+                Standort standort = this.hauptModul.getObjekt().getStandortid();
                 if (standort != null) {
+                	if (standort.getAdresse() != null ) {
                     Adresse adr = standort.getAdresse();
                     log.debug("Set standort field to: " + adr
                             + this.hauptModul.getObjekt().getStandortid()
-                            + " " + this.hauptModul.getObjekt().getStandortid().getLage());
+                            + " " + this.hauptModul.getObjekt().getStandortid());
                     String toolTip = "<html>" + adr + "<br>";
                     if (adr.getPlz() != null) {
                         toolTip += "<b>PLZ:</b> " + adr.getPlz() + "<br>";
                     }
                     toolTip += "<b>Gemarkung:</b> "
-                            + standort.getLage().getGemarkung()
-                            + ((standort.getLage().getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
-                                    + standort.getLage().getEntgebid()
+                            + standort.getGemarkung()
+                            + ((standort.getEntgebid() != null) ? "<br><b>Entw.gebiet:</b> "
+                                    + standort.getEntgebid()
                                     : "") + "</html>";
                     getStandortFeld().setToolTipText(toolTip);
+                	}
                     getStandortFeld().setText(
-                            standort.getAdresse().toString());
+                            standort.getN32().intValue() + ", " + standort.getE32().intValue());
 
-                    if (this.hauptModul.getObjekt().getStandortid().getLage() == null) {
+                    if (this.hauptModul.getObjekt().getStandortid() == null) {
                         standort = (Standort) Standort
                                 .findByAdresse(this.hauptModul.getObjekt()
                                         .getStandortid().getAdresse());
-                        this.hauptModul.getObjekt().getStandortid().setLage(
-                                standort.getLage());
                     }
-                    getLageFeld().setText(standort.getLage().toString());
+                    getLageFeld().setText(standort.toString());
                 }else {
-                    getLageFeld().setText(this.hauptModul.getObjekt().getStandortid().getLage().toString());
+                    getLageFeld().setText(this.hauptModul.getObjekt().getStandortid().toString());
                 }
             }
 

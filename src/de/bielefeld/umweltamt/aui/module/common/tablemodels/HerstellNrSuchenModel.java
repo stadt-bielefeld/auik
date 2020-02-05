@@ -75,7 +75,7 @@ public class HerstellNrSuchenModel extends ListTableModel {
             break;
         //Standort
         case 2:
-            tmp = fachdaten.getObjekt().getStandortid().getLage();
+            tmp = fachdaten.getObjekt().getStandortid();
             break;
         // Anlagenart:
         case 3:

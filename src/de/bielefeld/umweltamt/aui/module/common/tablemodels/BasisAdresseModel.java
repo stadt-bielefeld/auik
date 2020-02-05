@@ -133,10 +133,10 @@ public class BasisAdresseModel extends ListTableModel {
 					}
 					break;
 				case 5:
-					value = map.getLage().getE32();
+					value = map.getE32();
 					break;
 				case 6:
-					value = map.getLage().getN32();
+					value = map.getN32();
 					break;
 				default:
 					value = null;

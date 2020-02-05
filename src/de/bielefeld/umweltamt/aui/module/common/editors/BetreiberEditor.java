@@ -65,7 +65,6 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
@@ -134,7 +133,6 @@ public class BetreiberEditor extends AbstractBaseEditor {
 	private JCheckBox daten_whgCheck;
 	private JCheckBox ueberschgebCheck;
 
-	private Lage lage = null;
 	private Standort standort = null;
 	private Gemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;
@@ -288,18 +286,21 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		// Telefon
 		builder.addLabel("Telefon:", cc.xy(10, 3));
 		builder.add(telefonFeld, cc.xyw(12, 3, 5));
+		
 		// Anrede
 		builder.addLabel("Anrede:", cc.xy(1, 5));
 		builder.add(anredeFeld, cc.xyw(3, 5, 6));
 		// Telefax
 		builder.addLabel("Telefax:", cc.xy(10, 5));
 		builder.add(telefaxFeld, cc.xyw(12, 5, 5));
+		
 		// Vorname
 		builder.addLabel("Vorname:", cc.xy(1, 7));
 		builder.add(vornamenFeld, cc.xyw(3, 7, 6));
 		// eMail
 		builder.addLabel("E-Mail:", cc.xy(10, 7));
 		builder.add(emailFeld, cc.xyw(12, 7, 5));
+		
 		// Zusatz
 		builder.addLabel("Zusatz:", cc.xy(1, 9));
 		builder.add(nameZusFeld, cc.xyw(3, 9, 6));
@@ -501,27 +502,26 @@ public class BetreiberEditor extends AbstractBaseEditor {
 				}
 
 				if (standort != null) {
-					lage = standort.getLage();
-					e32Feld.setValue(standort.getLage().getE32());
-					n32Feld.setValue(standort.getLage().getN32());
+					e32Feld.setValue(standort.getE32());
+					n32Feld.setValue(standort.getN32());
 
-					if (standort.getLage().getGemarkung() != null) {
-						gemarkungBox.setSelectedItem(lage.getGemarkung());
+					if (standort.getGemarkung() != null) {
+						gemarkungBox.setSelectedItem(standort.getGemarkung());
 					}
-					if (standort.getLage().getStandortgghwsg() != null) {
-						standortGgBox.setSelectedItem(lage.getStandortgghwsg());
-					}
-
-					if (standort.getLage().getEntgebid() != null) {
-						entwGebBox.setSelectedItem(lage.getEntgebid());
+					if (standort.getStandortgghwsg() != null) {
+						standortGgBox.setSelectedItem(standort.getStandortgghwsg());
 					}
 
-					if (standort.getLage().getWassereinzugsgebiet() != null) {
-						wEinzugsGebBox.setSelectedItem(lage.getWassereinzugsgebiet());
+					if (standort.getEntgebid() != null) {
+						entwGebBox.setSelectedItem(standort.getEntgebid());
 					}
 
-					if (standort.getLage().isUeberschgeb() != null)
-						ueberschgebCheck.setSelected(standort.getLage().isUeberschgeb());
+					if (standort.getWassereinzugsgebiet() != null) {
+						wEinzugsGebBox.setSelectedItem(standort.getWassereinzugsgebiet());
+					}
+
+					if (standort.isUeberschgeb() != null)
+						ueberschgebCheck.setSelected(standort.isUeberschgeb());
 					else
 						ueberschgebCheck.setSelected(false);
 				}
@@ -709,17 +709,15 @@ public class BetreiberEditor extends AbstractBaseEditor {
 			
 			if (standort == null) {
 			standort = new Standort();
-			lage = new Lage();
 			standort.setAdresse(getBetreiber());
-			standort.setLage(lage);
 			}
 			// Gemarkung
 			Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
-			lage.setGemarkung(bgem);
+			standort.setGemarkung(bgem);
 
 			// Standortgg
 			Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
-			lage.setStandortgghwsg(stgg);
+			standort.setStandortgghwsg(stgg);
 
 			// Einzugsgebiet
 			String ezgb = (String) entwGebBox.getSelectedItem();
@@ -735,38 +733,38 @@ public class BetreiberEditor extends AbstractBaseEditor {
 				}
 				ezgb = ezgb.trim();
 			}
-			lage.setEntgebid(ezgb);
+			standort.setEntgebid(ezgb);
 
 			// Überschwemmungsgebiet
-			lage.setUeberschgeb(ueberschgebCheck.isSelected());
+			standort.setUeberschgeb(ueberschgebCheck.isSelected());
 
 			// VAWS-Einzugsgebiet
 			Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
-			lage.setWassereinzugsgebiet(wezg);
+			standort.setWassereinzugsgebiet(wezg);
 
 			// Flur
 			String flur = flurFeld.getText().trim();
 			if (flur.equals("")) {
-				lage.setFlur(null);
+				standort.setFlur(null);
 			} else {
-				lage.setFlur(flur);
+				standort.setFlur(flur);
 			}
 
 			// Flurstueck
 			String flurstk = flurStkFeld.getText().trim();
 			if (flurstk.equals("")) {
-				lage.setFlurstueck(null);
+				standort.setFlurstueck(null);
 			} else {
-				lage.setFlurstueck(flurstk);
+				standort.setFlurstueck(flurstk);
 			}
 
 			// Rechtswert
 			Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
-			lage.setE32(e32Wert);
+			standort.setE32(e32Wert);
 
 			// Hochwert
 			Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
-			lage.setN32(n32Wert);
+			standort.setN32(n32Wert);
 		}
 
 		// Bemerkungen
@@ -891,17 +889,14 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		log.debug("Start updateAdresse()");
 		ListSelectionModel lsm = getStandorteTabelle().getSelectionModel();
 		if (!lsm.isSelectionEmpty()) {
-			if (lage == null) {
-				lage = new Lage();
 				standort = new Standort();
 				standort.setAdresse(getBetreiber());
-				standort.setLage(lage);
 
 				gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
 				standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
 				entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
 				wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
-			}
+			
 
 			int selectedRow = lsm.getMinSelectionIndex();
 			TabStreets bts = this.standorteModel.getRow(selectedRow);

@@ -45,7 +45,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
@@ -143,6 +142,19 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String zusatz = standort.getAdresse().getHausnrzus();
 		return (strasse != null ? strasse + " " : "") + (hausnr != null ? hausnr.toString() : "")
 				+ (zusatz != null ? zusatz : "");
+	}
+
+	/**
+	 * Get a formatted string for a StandortAdresse
+	 * 
+	 * @param standort
+	 *            Standort
+	 * @return String
+	 */
+	public static String getStandortString1(Standort standort) {
+		Float n32 = standort.getN32();
+		Float e32 = standort.getE32();
+		return (n32.toString() + ", " + e32.toString());
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -960,7 +972,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	public static String[] getEntwaesserungsgebiete() {
 		if (DatabaseBasisQuery.entwaesserungsgebiete == null) {
 			DatabaseBasisQuery.entwaesserungsgebiete = new DatabaseAccess().executeCriteriaToArray(DetachedCriteria
-					.forClass(Lage.class).setProjection(Projections.distinct(Projections.property("entgebid")))
+					.forClass(Standort.class).setProjection(Projections.distinct(Projections.property("entgebid")))
 					.addOrder(Order.asc("entgebid")), new String[0]);
 		}
 		return DatabaseBasisQuery.entwaesserungsgebiete;

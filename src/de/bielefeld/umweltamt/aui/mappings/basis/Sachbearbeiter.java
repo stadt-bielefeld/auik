@@ -356,6 +356,15 @@ public class Sachbearbeiter  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Sachbearbeiter());
     }
 
+    /**
+     * Get a list of all <code>Sachbearbeiter</code>
+     * @return <code>List&lt;Sachbearbeiter&gt;</code>
+     *         all <code>Sachbearbeiter</code>
+     */
+    public static List<Sachbearbeiter> getOrderedAll() {
+        return DatabaseQuery.getOrderedAll(new Sachbearbeiter(), "name");
+    }
+
     /* Custom code goes below here! */
     
 	public static Sachbearbeiter findByKennummer(String nr){

@@ -22,6 +22,7 @@
 
 package de.bielefeld.umweltamt.aui.mappings.basis;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +53,22 @@ public class Standort  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Adresse adresse;
-    private Lage lage;
+    private Standortgghwsg standortgghwsg;
+    private Wassereinzugsgebiet wassereinzugsgebiet;
+    private Gemarkung gemarkung;
+    private Float e32;
+    private Float n32;
+    private String flur;
+    private String flurstueck;
+    private String entgebid;
+    private String strasseeigent;
+    private Date revidatum;
+    private String revihandz;
+    private Integer wassermenge;
+    private String sachbe33rav;
+    private String sachbe33hee;
+    private Serializable theGeom;
+    private boolean ueberschgeb;
     private boolean enabled;
     private boolean deleted;
     private Set<Objekt> objektsForStandortid = new HashSet<Objekt>(0);
@@ -68,9 +84,8 @@ public class Standort  implements java.io.Serializable {
 
     /** Full constructor */
     public Standort(
-    	Adresse adresse, Lage lage, boolean enabled, boolean deleted, Set<Objekt> objektsForStandortid, Set<ZBetriebMassnahme> zBetriebMassnahmes) {
+    	Adresse adresse, boolean enabled, boolean deleted, Set<Objekt> objektsForStandortid, Set<ZBetriebMassnahme> zBetriebMassnahmes) {
     	this.adresse = adresse;
-        this.lage = lage;
         this.enabled = enabled;
         this.deleted = deleted;
         this.objektsForStandortid = objektsForStandortid;
@@ -92,14 +107,6 @@ public class Standort  implements java.io.Serializable {
 
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
-    }
-
-    public Lage getLage() {
-        return this.lage;
-    }
-
-    public void setLage(Lage lage) {
-        this.lage = lage;
     }
 
     public boolean isEnabled() {
@@ -155,7 +162,6 @@ public class Standort  implements java.io.Serializable {
 
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("Adresse").append("='").append(getAdresse()).append("' ");
-        buffer.append("Lage").append("='").append(getLage()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("objektsForStandortid").append("='").append(getObjektsForStandortid()).append("' ");
@@ -225,7 +231,6 @@ public class Standort  implements java.io.Serializable {
      */
     private void copy(Standort copy) {
         this.adresse = copy.getAdresse();
-        this.lage = copy.getLage();
         this.enabled = copy.isEnabled();
         this.deleted = copy.isDeleted();
         this.objektsForStandortid = copy.getObjektsForStandortid();
@@ -291,49 +296,45 @@ public class Standort  implements java.io.Serializable {
         return adresse.getHausnrzus();
     }
 
-    public String getPlz(){
-        return adresse.getPlz();
-    }
-
     public String getOrt(){
         return adresse.getOrt();
     }
 
     public Gemarkung getGemarkung(){
-        return lage.getGemarkung();
+        return this.gemarkung;
     }
 
     public String getEntgebid(){
-        return lage.getEntgebid();
+        return this.entgebid;
     }
 
     public Float getE32(){
-        return lage.getE32();
+        return this.e32;
     }
 
     public Float getN32(){
-        return lage.getN32();
+        return this.n32;
     }
 
     public Standortgghwsg getStandortgghwsg(){
-        return lage.getStandortgghwsg();
+        return this.standortgghwsg;
     }
 
     public Wassereinzugsgebiet getWassereinzugsgebiet(){
-        return lage.getWassereinzugsgebiet();
+        return this.wassereinzugsgebiet;
     }
 
     public String getFlur(){
-        return lage.getFlur();
+        return this.flur;
     }
 
     public String getFlurstueck(){
-        return lage.getFlurstueck();
+        return this.flurstueck;
     }
 
     public String getRevihandz(){
-        if(lage.getRevihandz() != null){
-            return lage.getRevihandz();
+        if(this.revihandz != null){
+            return this.revihandz;
         }
         else{
             return adresse.getRevihandz();
@@ -341,8 +342,8 @@ public class Standort  implements java.io.Serializable {
     }
 
     public Date getRevidatum(){
-        if(lage.getRevidatum() != null){
-            return lage.getRevidatum();
+        if(this.revidatum != null){
+            return this.revidatum;
         }
         else{
             return adresse.getRevidatum();
@@ -350,11 +351,11 @@ public class Standort  implements java.io.Serializable {
     }
 
     public String getSachbe33rav(){
-        return lage.getSachbe33rav();
+        return this.sachbe33rav;
     }
 
     public Integer getWassermenge(){
-        return lage.getWassermenge();
+        return this.wassermenge;
     }
 
     //Setter
@@ -371,80 +372,96 @@ public class Standort  implements java.io.Serializable {
         this.adresse.setStrasse(strasse);
     }
 
-    public void setPlz(String plz){
-        this.adresse.setPlz(plz);
-    }
-
     public void setOrt(String ort){
         this.adresse.setOrt(ort);
     }
 
-    public void setStandortgghwsg(Standortgghwsg vaws){
-        this.lage.setStandortgghwsg(vaws);
+    public void setStandortgghwsg(Standortgghwsg standortgghwsg){
+        this.standortgghwsg  = standortgghwsg;
     }
 
     public void setEntgebid(String entgebid){
-        this.lage.setEntgebid(entgebid);
+        this.entgebid = entgebid;
     }
 
-    public void setWassereinzugsgebiet(Wassereinzugsgebiet geb){
-        this.lage.setWassereinzugsgebiet(geb);
+    public void setWassereinzugsgebiet(Wassereinzugsgebiet wassereinzugsgebiet){
+        this.wassereinzugsgebiet = wassereinzugsgebiet;
     }
 
     public void setGemarkung(Gemarkung gemarkung){
-        this.lage.setGemarkung(gemarkung);
+        this.gemarkung = gemarkung;
     }
 
     public void setFlur(String flur){
-        this.lage.setFlur(flur);
+        this.flur = flur;
     }
 
     public void setFlurstueck(String flurstueck){
-        this.lage.setFlurstueck(flurstueck);
+        this.flurstueck = flurstueck;
+    }
+
+    public String getStrasseeigent() {
+        return this.strasseeigent;
+    }
+
+    public void setStrasseeigent(String strasseeigent) {
+        this.strasseeigent = strasseeigent;
     }
 
     public void setE32(Float e32){
-        this.lage.setE32(e32);
+        this.e32 = e32;
     }
 
     public void setN32(Float n32){
-        this.lage.setN32(n32);
+        this.n32 = n32;
     }
 
-    public void setRevidatum(Date date){
-        this.lage.setRevidatum(date);
-        this.adresse.setRevidatum(date);
+    public void setRevidatum(Date revidatum){
+        this.revidatum = revidatum;
+        this.adresse.setRevidatum(revidatum);
     }
 
-    public void setRevihandz(String handz){
-        this.lage.setRevihandz(handz);
-        this.adresse.setRevihandz(handz);
+    public void setRevihandz(String revihandz){
+        this.revihandz = revihandz;
+        this.adresse.setRevihandz(revihandz);
     }
 
-    public void setSachbe33rav(String sachbe33rav){
-    	lage.setSachbe33rav(sachbe33rav);
+    public Serializable getTheGeom() {
+		return theGeom;
+	}
+
+	public void setTheGeom(Serializable theGeom) {
+		this.theGeom = theGeom;
+	}
+
+	public void setSachbe33rav(String sachbe33rav){
+    	this.sachbe33rav = sachbe33rav;
     }
 
-    public void setWassermenge(Integer wassermenge){
-    	lage.setWassermenge(wassermenge);
+    public String getSachbe33hee() {
+		return sachbe33hee;
+	}
+
+	public void setSachbe33hee(String sachbe33hee) {
+		this.sachbe33hee = sachbe33hee;
+	}
+
+	public void setWassermenge(Integer wassermenge){
+    	this.wassermenge = wassermenge;
+    }
+
+    public Boolean isUeberschgeb() {
+        return this.ueberschgeb;
+    }
+
+    public void setUeberschgeb(boolean ueberschgeb) {
+        this.ueberschgeb = ueberschgeb;
     }
 
     /* Custom code goes below here! */
 	public Integer getObjektid(){
 		return getId();
 	}
-
-    public static Standort findByLageId(Integer id){
-        List<Standort> all = Standort.getAll();
-        for(Standort i : all){
-            log.debug("Comparing " + i.getLage().getId() + " " + id);
-            if(i.getLage().getId().equals(id)){
-                log.debug("Returning Objekt: " + i.getId());
-                return (Standort) new DatabaseAccess().get(Standort.class, i.getId());
-            }
-        }
-        return null;
-    }
 
     public static Standort findByAdresseId(Integer id){
 

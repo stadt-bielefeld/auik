@@ -44,7 +44,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Onlinekartendienst;
 import de.bielefeld.umweltamt.aui.mappings.basis.OnlinekartendienstId;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
@@ -146,19 +145,16 @@ public class DatabaseClassToString {
      * falls ein Zusatz vorhanden ist.
      */
     public static String toStringForClass(Adresse clazz) {
-        String zusatz = "";
         String vorname = "";
         String hausnrzus = "";
         
         if (clazz.getBetrvorname() != null) {
         	vorname = clazz.getBetrvorname() + " ";
-        } if (clazz.getBetrnamezus() != null) {
-            zusatz = ", " + clazz.getBetrnamezus();
         } if (clazz.getHausnrzus() != null) {
         	hausnrzus = clazz.getHausnrzus();
         }       
-        return vorname + clazz.getBetrname() + zusatz + ", " + clazz.getStrasse()
-        	+ " " + clazz.getHausnr() + hausnrzus;
+        return vorname + clazz.getBetrname() + ", " + clazz.getStrasse()
+        	+ " " + clazz.getHausnr() + hausnrzus + ", " + clazz.getOrt();
     }
     
     /**
@@ -236,30 +232,6 @@ public class DatabaseClassToString {
         String kennnummer = clazz.getKennummer();
 
         return ((name != null) ? name + " (" + kennnummer + ")" : kennnummer);
-    }
-
-    /**
-     * Custom BasisLage.toString()<br>
-     * Liefert die komplette Strassen, wenn vorhanden inklusive der Hausnummer
-     * und deren Zusatz.<br>
-     * <br>
-     * Formatierung: &quot;&lt;Strassen&gt; &lt;HausNr&gt;&lt;HausNrzus&gt;&quot;<br>
-     * <br>
-     * Beispiele: &quot;Ravensberger Straße 77&quot;, &quot;Apfelstraße
-     * 23b&quot;, &quot;Jahnplatz 41-42&quot;
-     * @return Komplette, formatierte Strassen inkl. Hausnr
-     */
-    public static String toStringForClass(Lage clazz) {
-        return "" 
-            + (clazz.getEntgebid() != null ? "" + clazz.getEntgebid() : "")
-            + (clazz.getWassereinzugsgebiet() != null ? ", " + clazz.getWassereinzugsgebiet() : "")
-            + (clazz.getE32() != null ? ", " + clazz.getE32() : "")
-            + (clazz.getN32() != null ? ", " + clazz.getN32() : "");
-    }
-
-    /** @return Strassen.toGuiString() */
-    public static String toStringForClass(Strassen clazz) {
-        return clazz.toGuiString();
     }
 
 
@@ -787,6 +759,11 @@ public class DatabaseClassToString {
 
 	public static String toStringForClass(Anhang clazz) {
         return clazz.toGuiString();
+	}
+
+	public static String toStringForClass(Strassen strassen) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

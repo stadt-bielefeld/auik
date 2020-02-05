@@ -233,6 +233,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
     private final String ABGEMELDET = "abgemeldet";
     private final String ABWASSERFREI = "abwasserfrei";
     private final String E_SATZUNG = "E-Satzung";
+    private final String SICHERHEITSABSCHEIDER = "Sicherheitsabscheider";
     private final String WIEDERVORLAGEDATUM = "Wiedervorlagedatum:";
     /* Widgets - bottom */
     private final String SPEICHERN = "Speichern";
@@ -297,6 +298,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         super.addComponent(this.ABGEMELDET, new JCheckBox(this.ABGEMELDET));
         super.addComponent(this.ABWASSERFREI, new JCheckBox(this.ABWASSERFREI));
         super.addComponent(this.E_SATZUNG, new JCheckBox(this.E_SATZUNG));
+        super.addComponent(this.SICHERHEITSABSCHEIDER, new JCheckBox(this.SICHERHEITSABSCHEIDER));
         super.addComponent(this.WIEDERVORLAGEDATUM, new TextFieldDateChooser());
         super.addComponent(this.SPEICHERN, getSaveAnh49Button());
 
@@ -388,6 +390,8 @@ public class Anh49Panel extends AbstractAnhangPanel {
         row += 2;
         builder.add(super.getComponent(this.ABWASSERFREI),
             cc.xy(labelCol, row, "l,d"));
+        builder.add(super.getComponent(this.SICHERHEITSABSCHEIDER),
+                cc.xy(fieldCol, row, "l,d"));
         row += 2;
 
         builder.addSeparator("Wiedervorlage", cc.xyw(labelCol, row, colWidth));
@@ -628,6 +632,8 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 this.fachdaten.getAbwasserfrei());
             super.setComponentValue(this.E_SATZUNG,
                 this.fachdaten.getESatzung());
+            super.setComponentValue(this.SICHERHEITSABSCHEIDER,
+                    this.fachdaten.getSicherheitsabscheider());
             super.setComponentValue(this.WIEDERVORLAGEDATUM,
                 this.fachdaten.getWiedervorlage());
 
@@ -663,6 +669,8 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 this.fachdaten.getAbwasserfrei());
             super.setComponentValue(this.E_SATZUNG,
                 this.fachdaten.getESatzung());
+            super.setComponentValue(this.SICHERHEITSABSCHEIDER,
+                    this.fachdaten.getSicherheitsabscheider());
             super.setComponentValue(this.WIEDERVORLAGEDATUM,
                 this.fachdaten.getWiedervorlage());
 
@@ -717,6 +725,8 @@ public class Anh49Panel extends AbstractAnhangPanel {
             .getComponentValue(this.E_SATZUNG));
         this.fachdaten.setWiedervorlage((Date) super
             .getComponentValue(this.WIEDERVORLAGEDATUM));
+        this.fachdaten.setSicherheitsabscheider((Boolean) super
+                .getComponentValue(this.SICHERHEITSABSCHEIDER));
 
         Anfallstelle.merge(this.anfallstelle);
         success = this.fachdaten.merge();

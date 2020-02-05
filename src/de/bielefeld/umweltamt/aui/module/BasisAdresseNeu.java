@@ -86,7 +86,6 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
@@ -117,8 +116,7 @@ public class BasisAdresseNeu extends AbstractModul
 
 	private JButton speichernButton;
 	private Standort standort;
-	private Lage lage;
-
+	
 	private JLabel handzeichenLabel;
 	private JLabel namenLabel;
 
@@ -567,7 +565,6 @@ public class BasisAdresseNeu extends AbstractModul
             	plzFeld.setText(stra.getPlz());
             }
             
-            Lage vorhandeneLage = null;
             String i;
             if (bts.getHausnrZusatz() == null) {
         	i = "";
@@ -582,31 +579,25 @@ public class BasisAdresseNeu extends AbstractModul
                 } else  {
             	f = firma.getHausnrzus();
                 }
-        	if (i.equals(f) || f.contains("-") ) {
-            	Set<Standort> verk = firma.getStandorts();
-            	for (Standort ver : verk) {
-            	    vorhandeneLage = ver.getLage();
-            	}   
-        	}
             }
-            if (vorhandeneLage != null) {
+            if (standort != null) {
         	List<Gemarkung> gemarkungen = DatabaseQuery.getGemarkungenlist();
         	for (Gemarkung gemarkung : gemarkungen) {
-        	  if (gemarkung.getGemarkung().equals(vorhandeneLage.getGemarkung().getGemarkung())) {
+        	  if (gemarkung.getGemarkung().equals(standort.getGemarkung().getGemarkung())) {
         	      this.gemarkungBox.setSelectedItem(gemarkung);
         	  }
         	}
-        	for (Standortgghwsg standort : standortggs) {
-        	    if (standort.getStandortgg().equals(vorhandeneLage.getStandortgghwsg().getStandortgg())) {
+        	for (Standortgghwsg std : standortggs) {
+        	    if (std.getStandortgg().equals(standort.getStandortgghwsg().getStandortgg())) {
         		this.standortGgBox.setSelectedItem(standort);
         	    }
         	}
         	for (Wassereinzugsgebiet wEinzugsgebiet : wEinzugsgebiete) {
-        	    if (wEinzugsgebiet.getEzgbname().equals(vorhandeneLage.getWassereinzugsgebiet().getEzgbname())) {
+        	    if (wEinzugsgebiet.getEzgbname().equals(standort.getWassereinzugsgebiet().getEzgbname())) {
         		this.wEinzugsGebBox.setSelectedItem(wEinzugsgebiet);
         	    }
         	}
-        	this.entwGebBox.setSelectedItem(vorhandeneLage.getEntgebid());
+        	this.entwGebBox.setSelectedItem(standort.getEntgebid());
             } else {
         	this.gemarkungBox.setSelectedIndex(0);
         	this.standortGgBox.setSelectedIndex(0);
@@ -781,63 +772,58 @@ public class BasisAdresseNeu extends AbstractModul
 			}
 			if ((Float) e32Feld.getValue() != 0.0 || (Float) n32Feld.getValue() != 0.0) {
 				standort = new Standort();
-				lage = new Lage();
 				standort.setAdresse(adrn);
-				standort.setLage(lage);
+				// Gemarkung
+				Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
+				standort.setGemarkung(bgem);
 
-				if (lage != null) {
-					// Gemarkung
-					Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
-					standort.getLage().setGemarkung(bgem);
+				// Standortgg
+//					Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
+//					standort.setStandortgghwsg(stgg);
 
-					// Standortgg
-					Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
-					standort.getLage().setStandortgghwsg(stgg);
-
-					// Einzugsgebiet
-					String ezgb = (String) entwGebBox.getSelectedItem();
-					// Nötig, weil getSelectedItem bei editierbarer ComboBox auch
-					// NULL
-					// liefern kann
-					if (ezgb != null) {
-						// Weil ich bis jetzt noch keine LimitedComboBox oder so
-						// habe...
-						if (ezgb.length() > 10) {
-							// ... kürze ich hier den String auf 10 Zeichen
-							ezgb = ezgb.substring(0, 10);
-						}
-						ezgb = ezgb.trim();
+				// Einzugsgebiet
+				String ezgb = (String) entwGebBox.getSelectedItem();
+				// Nötig, weil getSelectedItem bei editierbarer ComboBox auch
+				// NULL
+				// liefern kann
+				if (ezgb != null) {
+					// Weil ich bis jetzt noch keine LimitedComboBox oder so
+					// habe...
+					if (ezgb.length() > 10) {
+						// ... kürze ich hier den String auf 10 Zeichen
+						ezgb = ezgb.substring(0, 10);
 					}
-					standort.getLage().setEntgebid(ezgb);
-
-					// VAWS-Einzugsgebiet
-					Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
-					standort.getLage().setWassereinzugsgebiet(wezg);
-
-					// Flur
-					String flur = flurFeld.getText().trim();
-					if (flur.equals("")) {
-						standort.getLage().setFlur(null);
-					} else {
-						standort.getLage().setFlur(flur);
-					}
-
-					// Flurstueck
-					String flurstk = flurStkFeld.getText().trim();
-					if (flurstk.equals("")) {
-						standort.getLage().setFlurstueck(null);
-					} else {
-						standort.getLage().setFlurstueck(flurstk);
-					}
-
-					// Rechtswert
-					Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
-					standort.getLage().setE32(e32Wert);
-
-					// Hochwert
-					Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
-					standort.getLage().setN32(n32Wert);
+					ezgb = ezgb.trim();
 				}
+				standort.setEntgebid(ezgb);
+
+				// VAWS-Einzugsgebiet
+				Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
+				standort.setWassereinzugsgebiet(wezg);
+
+				// Flur
+				String flur = flurFeld.getText().trim();
+				if (flur.equals("")) {
+					standort.setFlur(null);
+				} else {
+					standort.setFlur(flur);
+				}
+
+				// Flurstueck
+				String flurstk = flurStkFeld.getText().trim();
+				if (flurstk.equals("")) {
+					standort.setFlurstueck(null);
+				} else {
+					standort.setFlurstueck(flurstk);
+				}
+
+				// Rechtswert
+				Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
+				standort.setE32(e32Wert);
+
+				// Hochwert
+				Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
+				standort.setN32(n32Wert);
 			}
 
 			adrn.setRevidatum(Calendar.getInstance().getTime());
@@ -866,10 +852,7 @@ public class BasisAdresseNeu extends AbstractModul
 					} else if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_standort")) {
 						manager.getSettingsManager().setSetting("auik.imc.use_standort",
 								persistentAL.getId().intValue(), false);
-						manager.getSettingsManager().setSetting("auik.imc.use_lage",
-								persistentAL.getLage().getId().intValue(), false);
 						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_standort");
-						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_lage");
 						// ... kehren wir direkt dorthin zurück:
 						manager.switchModul("m_objekt_bearbeiten");
 					} else {
@@ -896,10 +879,7 @@ public class BasisAdresseNeu extends AbstractModul
 					} else if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_standort")) {
 						manager.getSettingsManager().setSetting("auik.imc.use_standort",
 								persistentAdrn.getId().intValue(), false);
-						manager.getSettingsManager().setSetting("auik.imc.use_lage",
-								persistentAdrn.getStandort().getLage().getId().intValue(), false);
 						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_standort");
-						manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_lage");
 						// ... kehren wir direkt dorthin zurück:
 						manager.switchModul("m_objekt_bearbeiten");
 					} else {

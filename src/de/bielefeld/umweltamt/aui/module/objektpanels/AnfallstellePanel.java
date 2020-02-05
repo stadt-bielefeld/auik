@@ -240,7 +240,7 @@ public class AnfallstellePanel extends JPanel {
             getBeschaffenheitBox().setSelectedItem(anfallstelle.getBeschaffenheitDescriptionFromId(this.anfallstelle.getAbwaBeschaffOpt()));
             
             String[] arten = {"-", "Aufbereitung Medizinprodukte", "Brennwertkessel", "Blockheizkraftwerk", 
-            		"Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor", 
+            		"Fettabscheider", "Abscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor", 
             		"RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
             getAnlagenartBox().setModel(new DefaultComboBoxModel(arten));
             
@@ -941,6 +941,21 @@ public class AnfallstellePanel extends JPanel {
 					getAnh49Tab().completeObjekt(anfallstelle);
 					hauptModul.getTabbedPane().setSelectedIndex(3);
 				}
+				case "Abscheider":
+					hauptModul.getTabbedPane().addTab("Abscheider", getAnh49Tab());
+					hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
+					if (anfallstelle.getAnh49Fachdatens().size() > 0) {
+						getAnh49Tab().clearForm();
+						getAnh49Tab().updateForm(anfallstelle);
+						getAnh49AbfuhrTab().clearForm();
+						getAnh49AbfuhrTab().updateForm(getAnh49Tab().getFachdaten());
+					} else {
+						anfallstelle.setAnhangId("99");
+						anfallstelle.setAnlagenart("Abscheider");
+						getBWKTab().clearForm();
+						getAnh49Tab().completeObjekt(anfallstelle);
+						hauptModul.getTabbedPane().setSelectedIndex(3);
+					}
 			break;
 			}
 		}

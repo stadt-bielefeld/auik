@@ -127,6 +127,9 @@
         <property name="dekraTuevDatum" type="java.util.Date">
             <column name="dekra_tuev_datum" length="29" />
         </property>
+        <property name="sicherheitsabscheider" type="java.lang.Boolean">
+            <column name="sicherheitsabscheider" />
+        </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
         </property>

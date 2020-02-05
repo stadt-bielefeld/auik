@@ -89,6 +89,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
     private Date frist;
     private Integer durchgefuehrt;
     private Date dekraTuevDatum;
+    private Boolean sicherheitsabscheider;
     private boolean enabled;
     private boolean deleted;
     private Set<Anh49Abfuhr> anh49Abfuhrs = new HashSet<Anh49Abfuhr>(0);
@@ -114,7 +115,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
 
     /** Full constructor */
     public Anh49Fachdaten(
-        Integer id, Anfallstelle anfallstelle, String klaeranlage, String name, String bemerkungen, String planquadrat, Boolean abgemeldet, String technikAnh49, String technikAnh49Nr, String sachkundelfa, Boolean werkstatt, Boolean bodeneinlaeufe, Boolean waschanlagen, String sonstiges, String analysemonat, Boolean abwasserfrei, String anredeantragst, String nameantragst, String zusantragst, String strasseantragst, Integer hausnrantragst, String hausnrzusantragst, String plzantragst, String ortantragst, String sachbearbeiterIn, String ansprechpartnerIn, Date antragvom, Date genehmigung, Date wiedervorlage, Date aenderungsgenehmigung, Date letztesAnschreiben, String anschreiben, Boolean waschanlage, Boolean ESatzung, Date seitwann, String sonstigestechnik, Boolean maengel, Boolean behoben, Date frist, Integer durchgefuehrt, Date dekraTuevDatum, boolean enabled, boolean deleted, Set<Anh49Abfuhr> anh49Abfuhrs, Set<Anh49Analysen> anh49Analysens, Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses) {
+        Integer id, Anfallstelle anfallstelle, String klaeranlage, String name, String bemerkungen, String planquadrat, Boolean abgemeldet, String technikAnh49, String technikAnh49Nr, String sachkundelfa, Boolean werkstatt, Boolean bodeneinlaeufe, Boolean waschanlagen, String sonstiges, String analysemonat, Boolean abwasserfrei, String anredeantragst, String nameantragst, String zusantragst, String strasseantragst, Integer hausnrantragst, String hausnrzusantragst, String plzantragst, String ortantragst, String sachbearbeiterIn, String ansprechpartnerIn, Date antragvom, Date genehmigung, Date wiedervorlage, Date aenderungsgenehmigung, Date letztesAnschreiben, String anschreiben, Boolean waschanlage, Boolean ESatzung, Boolean sicherheitsabscheider, Date seitwann, String sonstigestechnik, Boolean maengel, Boolean behoben, Date frist, Integer durchgefuehrt, Date dekraTuevDatum, boolean enabled, boolean deleted, Set<Anh49Abfuhr> anh49Abfuhrs, Set<Anh49Analysen> anh49Analysens, Set<Anh49Abscheiderdetails> anh49Abscheiderdetailses) {
         this.id = id;
         this.anfallstelle = anfallstelle;
         this.klaeranlage = klaeranlage;
@@ -149,6 +150,7 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.anschreiben = anschreiben;
         this.waschanlage = waschanlage;
         this.ESatzung = ESatzung;
+        this.sicherheitsabscheider = sicherheitsabscheider;
         this.seitwann = seitwann;
         this.sonstigestechnik = sonstigestechnik;
         this.maengel = maengel;
@@ -436,6 +438,14 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.ESatzung = ESatzung;
     }
 
+    public Boolean getSicherheitsabscheider() {
+        return this.sicherheitsabscheider;
+    }
+
+    public void setSicherheitsabscheider(Boolean sicherheitsabscheider) {
+        this.sicherheitsabscheider = sicherheitsabscheider;
+    }
+
     public Date getSeitwann() {
         return this.seitwann;
     }
@@ -592,7 +602,8 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         buffer.append("behoben").append("='").append(getBehoben()).append("' ");			
         buffer.append("frist").append("='").append(getFrist()).append("' ");			
         buffer.append("durchgefuehrt").append("='").append(getDurchgefuehrt()).append("' ");			
-        buffer.append("dekraTuevDatum").append("='").append(getDekraTuevDatum()).append("' ");			
+        buffer.append("dekraTuevDatum").append("='").append(getDekraTuevDatum()).append("' ");		
+        buffer.append("sicherheitsabscheider").append("='").append(getSicherheitsabscheider()).append("' ");			
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("anh49Abfuhrs").append("='").append(getAnh49Abfuhrs()).append("' ");			
@@ -703,7 +714,8 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         this.behoben = copy.getBehoben();            
         this.frist = copy.getFrist();            
         this.durchgefuehrt = copy.getDurchgefuehrt();            
-        this.dekraTuevDatum = copy.getDekraTuevDatum();            
+        this.dekraTuevDatum = copy.getDekraTuevDatum();              
+        this.sicherheitsabscheider = copy.getSicherheitsabscheider();          
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
         this.anh49Abfuhrs = copy.getAnh49Abfuhrs();            

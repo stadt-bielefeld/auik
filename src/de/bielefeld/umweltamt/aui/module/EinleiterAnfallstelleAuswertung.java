@@ -95,10 +95,7 @@ public class EinleiterAnfallstelleAuswertung extends AbstractQueryModul {
     private String anlagenart;
 
     // Widgets für die Abfrage
-    private JCheckBox abgemeldetCheck;
-    private JCheckBox abwasserfreiCheck;
-    private JCheckBox aktivCheck;
-    private JCheckBox wiedervorlageCheck;
+    private JComboBox sachbearbeiterBox;
     private JComboBox anhangBox;
     private JComboBox anlagenartBox;
     private JButton auswahlButton;
@@ -125,6 +122,17 @@ public class EinleiterAnfallstelleAuswertung extends AbstractQueryModul {
     }
 
     /**
+     * @return the sachbearbeiterBox
+     */
+    private JComboBox getSachbearbeiterBox() {
+        if (this.sachbearbeiterBox == null) {
+            this.sachbearbeiterBox = new JComboBox();
+        }
+        return sachbearbeiterBox;
+    }
+
+
+    /**
      * @return the anhangBox
      */
     private JComboBox getAnhangBox() {
@@ -135,7 +143,7 @@ public class EinleiterAnfallstelleAuswertung extends AbstractQueryModul {
     }
 
     /**
-     * @return the anhangBox
+     * @return the anlagenartBox
      */
     private JComboBox getAnlagenartBox() {
         if (this.anlagenartBox == null) {
@@ -151,16 +159,16 @@ public class EinleiterAnfallstelleAuswertung extends AbstractQueryModul {
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
-            wiedervorlageCheck = new JCheckBox("Nur abgelaufene Wiedervorlage");
-            abgemeldetCheck = new JCheckBox("Abgemeldet");
-            abwasserfreiCheck = new JCheckBox("Abwasserfrei");
-            aktivCheck = new JCheckBox("Inaktiv");
-            abgemeldetCheck.setSelected(false);
-            abwasserfreiCheck.setSelected(false);
-            aktivCheck.setSelected(false);
+            
+        	sachbearbeiterBox = new JComboBox();
+        	List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
+            getSachbearbeiterBox().setModel(new DefaultComboBoxModel(sachbearbeiter.toArray()));
+            getSachbearbeiterBox().setSelectedItem(null);
+            
             anhangBox = new JComboBox();
             List<Anhang> anhang = Anhang.getAll();
             getAnhangBox().setModel(new DefaultComboBoxModel(anhang.toArray()));
+            
             String[] arten = {"-", "Aufbereitung Medizinprodukte", "Blockheizkraftwerk", 
             		"Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor", 
             		"RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
@@ -172,9 +180,10 @@ public class EinleiterAnfallstelleAuswertung extends AbstractQueryModul {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     AnfallstelleModel model = (AnfallstelleModel) getTableModel();
+                    Sachbearbeiter sachbe = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
                     Anhang anh = (Anhang) anhangBox.getSelectedItem();
                     String art = (String) anlagenartBox.getSelectedItem();
-                    model.setList(DatabaseQuery.getAnfallstelle(anh.getAnhangId(), art));
+                    model.setList(DatabaseQuery.getAnfallstelle(anh.getAnhangId(), art, sachbe));
                     model.fireTableDataChanged();
                     frame.changeStatus("" + model.getRowCount()
                         + " Objekte gefunden");
@@ -183,18 +192,17 @@ public class EinleiterAnfallstelleAuswertung extends AbstractQueryModul {
 
             // Noch etwas Layout...
             FormLayout layout = new FormLayout(
-                "50dlu, 20dlu, 250dlu, 20dlu, pref, 3dlu, pref, 20dlu, pref");
+                "50dlu, 20dlu, 200dlu, 20dlu, pref, 3dlu, pref, 20dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append("Anhang:", anhangBox);
+            builder.append("Sachbearbeiter:", sachbearbeiterBox);
             builder.append(auswahlButton);
-            builder.append(abgemeldetCheck);
-            builder.append(aktivCheck);
             builder.nextLine();
             builder.append("Anlagenart:", anlagenartBox);
+            builder.append("");
+            builder.append("");
             builder.append(getTabelleExportButton());
-            builder.append(wiedervorlageCheck);
-            builder.append(abwasserfreiCheck);
 
             queryPanel = builder.getPanel();
             

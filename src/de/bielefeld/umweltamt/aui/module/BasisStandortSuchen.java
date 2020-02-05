@@ -609,7 +609,7 @@ public class BasisStandortSuchen extends AbstractModul
 				else
 				{
 					BasisStandortSuchen.this.standortModel
-							.filterList(Standort.findByLageId(SettingsManager.getInstance()
+							.filterList(Standort.findById(SettingsManager.getInstance()
 									.getStandort().getId()));
 					SettingsManager.getInstance().setStandort(null);
 					getStrassenFeld().setText("");
@@ -1361,8 +1361,8 @@ public class BasisStandortSuchen extends AbstractModul
 							proj);
 
 					Map<String, String> env = pb.environment();
-					env.put("RECHTS", bsta.getLage().getE32().toString());
-					env.put("HOCH", bsta.getLage().getN32().toString());
+					env.put("RECHTS", bsta.getE32().toString());
+					env.put("HOCH", bsta.getN32().toString());
 
 					try
 					{
