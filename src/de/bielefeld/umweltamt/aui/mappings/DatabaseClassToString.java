@@ -169,9 +169,11 @@ public class DatabaseClassToString {
 			if (clazz.getAdresse().getHausnrzus() != null) {
 				hausnrzus = clazz.getAdresse().getHausnrzus();
 			}
-			return clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr() + hausnrzus;
+			return clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr() + hausnrzus
+					+ ", " + clazz.getWassereinzugsgebiet() + ", " + clazz.getEntgebid()
+					+ ", " + clazz.getE32() + ", " + clazz.getN32();
 		} else {
-			return "Dieser Standort hat keine Adresse";
+			return "Standort ohne Adresse" + ", " + clazz.getE32() + ", " + clazz.getN32();
 		}
 	}
 

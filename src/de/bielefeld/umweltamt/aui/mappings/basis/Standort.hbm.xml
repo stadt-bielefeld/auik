@@ -55,6 +55,9 @@
         <property name="ueberschgeb" type="boolean">
             <column name="ueberschgeb" />
         </property>
+        <property name="bezeichnung" type="java.lang.String">
+            <column name="bezeichnung" />
+        </property>
         <property name="enabled" type="java.lang.Boolean">
             <column name="_enabled" />
         </property>

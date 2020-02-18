@@ -67,6 +67,7 @@ public class Standort  implements java.io.Serializable {
     private Integer wassermenge;
     private String sachbe33rav;
     private String sachbe33hee;
+    private String bezeichnung;
     private Serializable theGeom;
     private boolean ueberschgeb;
     private boolean enabled;
@@ -84,15 +85,30 @@ public class Standort  implements java.io.Serializable {
 
     /** Full constructor */
     public Standort(
-    	Adresse adresse, boolean enabled, boolean deleted, Set<Objekt> objektsForStandortid, Set<ZBetriebMassnahme> zBetriebMassnahmes) {
+    		Adresse adresse, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Gemarkung gemarkung, Float e32, Float n32, String flur, String flurstueck, String entgebid, String strasseeigent, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, String bezeichnung, boolean ueberschgeb, boolean enabled, boolean deleted, Set<Objekt> objektsForStandortid, Set<ZBetriebMassnahme> zBetriebMassnahmes) {
     	this.adresse = adresse;
+    	this.standortgghwsg = standortgghwsg;
+    	this.wassereinzugsgebiet = wassereinzugsgebiet;
+    	this.gemarkung = gemarkung;
+    	this.e32 = e32;
+    	this.n32 = n32;
+    	this.flur = flur;
+    	this.flurstueck = flurstueck;
+    	this.entgebid = entgebid;
+    	this.strasseeigent = strasseeigent;
+    	this.revidatum = revidatum;
+    	this.revihandz = revihandz;
+    	this.wassermenge = wassermenge;
+    	this.sachbe33rav = sachbe33rav;
+    	this.sachbe33hee = sachbe33hee;
+    	this.bezeichnung = bezeichnung;
+    	this.ueberschgeb = ueberschgeb;
         this.enabled = enabled;
         this.deleted = deleted;
         this.objektsForStandortid = objektsForStandortid;
         this.ZBetriebMassnahmes = zBetriebMassnahmes;
     }
 
-    /* Setter and getter methods */
     public Integer getId() {
         return this.id;
     }
@@ -108,8 +124,186 @@ public class Standort  implements java.io.Serializable {
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
     }
+	
+	public String getStrasse(){
+	    return adresse.getStrasse();
+	}
+	
+	public void setStrasse(String strasse){
+	    this.adresse.setStrasse(strasse);
+	}
 
-    public boolean isEnabled() {
+	public Integer getHausnr(){
+	    return adresse.getHausnr();
+	}
+	
+	public void setHausnr(Integer hausnr){
+	    this.adresse.setHausnr(hausnr);
+	}
+
+	public String getHausnrzus(){
+	    return adresse.getHausnrzus();
+	}
+	
+	public void setHausnrzus(String hausnrzus){
+	    this.adresse.setHausnrzus(hausnrzus);
+	}
+
+	public String getOrt(){
+	    return adresse.getOrt();
+	}
+	
+	public void setOrt(String ort){
+	    this.adresse.setOrt(ort);
+	}
+
+	public Gemarkung getGemarkung(){
+	    return this.gemarkung;
+	}
+
+	public void setGemarkung(Gemarkung gemarkung){
+	    this.gemarkung = gemarkung;
+	}
+
+	public String getEntgebid(){
+	    return this.entgebid;
+	}
+
+	public void setEntgebid(String entgebid){
+	    this.entgebid = entgebid;
+	}
+
+	public Float getE32(){
+	    return this.e32;
+	}
+
+	public void setE32(Float e32){
+	    this.e32 = e32;
+	}
+
+	public Float getN32(){
+	    return this.n32;
+	}
+
+	public void setN32(Float n32){
+	    this.n32 = n32;
+	}
+
+	public Standortgghwsg getStandortgghwsg(){
+	    return this.standortgghwsg;
+	}
+	
+	public void setStandortgghwsg(Standortgghwsg standortgghwsg){
+	    this.standortgghwsg  = standortgghwsg;
+	}
+
+	public Wassereinzugsgebiet getWassereinzugsgebiet(){
+	    return this.wassereinzugsgebiet;
+	}
+	
+	public void setWassereinzugsgebiet(Wassereinzugsgebiet wassereinzugsgebiet){
+	    this.wassereinzugsgebiet = wassereinzugsgebiet;
+	}
+
+	public String getFlur(){
+	    return this.flur;
+	}
+	
+	public void setFlur(String flur){
+	    this.flur = flur;
+	}
+
+	public String getFlurstueck(){
+	    return this.flurstueck;
+	}
+	
+	public void setFlurstueck(String flurstueck){
+	    this.flurstueck = flurstueck;
+	}
+
+	public String getRevihandz(){
+	    if(this.revihandz != null){
+	        return this.revihandz;
+	    }
+	    else{
+	        return null;
+	    }
+	}
+
+	public void setRevihandz(String revihandz){
+	    this.revihandz = revihandz;
+	}
+
+	public Date getRevidatum(){
+	    if(this.revidatum != null){
+	        return this.revidatum;
+	    }
+	    else{
+	        return null;
+	    }
+	}
+
+	public void setRevidatum(Date revidatum){
+	    this.revidatum = revidatum;
+	}
+
+	public String getSachbe33rav(){
+	    return this.sachbe33rav;
+	}
+
+	public void setSachbe33rav(String sachbe33rav){
+		this.sachbe33rav = sachbe33rav;
+	}
+
+	public String getSachbe33hee() {
+		return sachbe33hee;
+	}
+
+	public void setSachbe33hee(String sachbe33hee) {
+		this.sachbe33hee = sachbe33hee;
+	}
+
+	public Integer getWassermenge(){
+	    return this.wassermenge;
+	}
+	
+	public void setWassermenge(Integer wassermenge){
+		this.wassermenge = wassermenge;
+	}
+
+	public String getStrasseeigent() {
+	    return this.strasseeigent;
+	}
+
+	public void setStrasseeigent(String strasseeigent) {
+	    this.strasseeigent = strasseeigent;
+	}
+
+	public Serializable getTheGeom() {
+		return theGeom;
+	}
+
+	public void setTheGeom(Serializable theGeom) {
+		this.theGeom = theGeom;
+	}
+
+	public String getBezeichnung() {
+		return bezeichnung;
+	}
+
+	public void setBezeichnung(String bezeichnung) {
+		this.bezeichnung = bezeichnung;
+	}
+
+	public Boolean isUeberschgeb() {
+	    return this.ueberschgeb;
+	}
+
+	public void setUeberschgeb(boolean ueberschgeb) {
+	    this.ueberschgeb = ueberschgeb;
+	}
+
+	public boolean isEnabled() {
         return this.enabled;
     }
 
@@ -231,6 +425,22 @@ public class Standort  implements java.io.Serializable {
      */
     private void copy(Standort copy) {
         this.adresse = copy.getAdresse();
+        this.standortgghwsg = copy.getStandortgghwsg();
+        this.wassereinzugsgebiet = copy.getWassereinzugsgebiet();
+        this.gemarkung = copy.getGemarkung();
+        this.e32 = copy.getE32();
+        this.n32 = copy.getN32();
+        this.flur = copy.getFlur();
+        this.flurstueck = copy.getFlurstueck();
+        this.entgebid = copy.getEntgebid();
+        this.strasseeigent = copy.getStrasseeigent();
+        this.revidatum = copy.getRevidatum();
+        this.revihandz = copy.getRevihandz();
+        this.wassermenge = copy.getWassermenge();
+        this.sachbe33rav = copy.getSachbe33rav();
+        this.sachbe33hee = copy.getSachbe33hee();
+        this.bezeichnung = copy.getBezeichnung();
+        this.ueberschgeb = copy.isUeberschgeb();
         this.enabled = copy.isEnabled();
         this.deleted = copy.isDeleted();
         this.objektsForStandortid = copy.getObjektsForStandortid();
@@ -284,179 +494,9 @@ public class Standort  implements java.io.Serializable {
     /* Setter and getter for lage and adresse fields*/
     //Getter
 
-    public String getStrasse(){
-        return adresse.getStrasse();
-    }
-
-    public Integer getHausnr(){
-        return adresse.getHausnr();
-    }
-
-    public String getHausnrzus(){
-        return adresse.getHausnrzus();
-    }
-
-    public String getOrt(){
-        return adresse.getOrt();
-    }
-
-    public Gemarkung getGemarkung(){
-        return this.gemarkung;
-    }
-
-    public String getEntgebid(){
-        return this.entgebid;
-    }
-
-    public Float getE32(){
-        return this.e32;
-    }
-
-    public Float getN32(){
-        return this.n32;
-    }
-
-    public Standortgghwsg getStandortgghwsg(){
-        return this.standortgghwsg;
-    }
-
-    public Wassereinzugsgebiet getWassereinzugsgebiet(){
-        return this.wassereinzugsgebiet;
-    }
-
-    public String getFlur(){
-        return this.flur;
-    }
-
-    public String getFlurstueck(){
-        return this.flurstueck;
-    }
-
-    public String getRevihandz(){
-        if(this.revihandz != null){
-            return this.revihandz;
-        }
-        else{
-            return adresse.getRevihandz();
-        }
-    }
-
-    public Date getRevidatum(){
-        if(this.revidatum != null){
-            return this.revidatum;
-        }
-        else{
-            return adresse.getRevidatum();
-        }
-    }
-
-    public String getSachbe33rav(){
-        return this.sachbe33rav;
-    }
-
-    public Integer getWassermenge(){
-        return this.wassermenge;
-    }
+    
 
     //Setter
-
-    public void setHausnr(Integer hausnr){
-        this.adresse.setHausnr(hausnr);
-    }
-
-    public void setHausnrzus(String hausnrzus){
-        this.adresse.setHausnrzus(hausnrzus);
-    }
-
-    public void setStrasse(String strasse){
-        this.adresse.setStrasse(strasse);
-    }
-
-    public void setOrt(String ort){
-        this.adresse.setOrt(ort);
-    }
-
-    public void setStandortgghwsg(Standortgghwsg standortgghwsg){
-        this.standortgghwsg  = standortgghwsg;
-    }
-
-    public void setEntgebid(String entgebid){
-        this.entgebid = entgebid;
-    }
-
-    public void setWassereinzugsgebiet(Wassereinzugsgebiet wassereinzugsgebiet){
-        this.wassereinzugsgebiet = wassereinzugsgebiet;
-    }
-
-    public void setGemarkung(Gemarkung gemarkung){
-        this.gemarkung = gemarkung;
-    }
-
-    public void setFlur(String flur){
-        this.flur = flur;
-    }
-
-    public void setFlurstueck(String flurstueck){
-        this.flurstueck = flurstueck;
-    }
-
-    public String getStrasseeigent() {
-        return this.strasseeigent;
-    }
-
-    public void setStrasseeigent(String strasseeigent) {
-        this.strasseeigent = strasseeigent;
-    }
-
-    public void setE32(Float e32){
-        this.e32 = e32;
-    }
-
-    public void setN32(Float n32){
-        this.n32 = n32;
-    }
-
-    public void setRevidatum(Date revidatum){
-        this.revidatum = revidatum;
-        this.adresse.setRevidatum(revidatum);
-    }
-
-    public void setRevihandz(String revihandz){
-        this.revihandz = revihandz;
-        this.adresse.setRevihandz(revihandz);
-    }
-
-    public Serializable getTheGeom() {
-		return theGeom;
-	}
-
-	public void setTheGeom(Serializable theGeom) {
-		this.theGeom = theGeom;
-	}
-
-	public void setSachbe33rav(String sachbe33rav){
-    	this.sachbe33rav = sachbe33rav;
-    }
-
-    public String getSachbe33hee() {
-		return sachbe33hee;
-	}
-
-	public void setSachbe33hee(String sachbe33hee) {
-		this.sachbe33hee = sachbe33hee;
-	}
-
-	public void setWassermenge(Integer wassermenge){
-    	this.wassermenge = wassermenge;
-    }
-
-    public Boolean isUeberschgeb() {
-        return this.ueberschgeb;
-    }
-
-    public void setUeberschgeb(boolean ueberschgeb) {
-        this.ueberschgeb = ueberschgeb;
-    }
 
     /* Custom code goes below here! */
 	public Integer getObjektid(){
@@ -470,7 +510,7 @@ public class Standort  implements java.io.Serializable {
     }
 
 
-	public static Standort findByAdresse(Adresse adresse) {
+	public static List <Standort> findByAdresse(Adresse adresse) {
 		Standort standort = new Standort();
 		Integer id = adresse.getId();
 		List standorte = HibernateSessionFactory
@@ -478,11 +518,7 @@ public class Standort  implements java.io.Serializable {
 				.createQuery(
 						"from Standort where adresseid= " + id)
 				.list();
-		if (standorte.size() != 0) {
-			standort = (Standort) standorte
-					.get(0);
-			return standort;
-		}
-		return null;
+
+		return standorte;
 	}
 }

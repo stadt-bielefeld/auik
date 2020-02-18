@@ -137,11 +137,26 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return String
 	 */
 	public static String getStandortString(Standort standort) {
-		String strasse = standort.getAdresse().getStrasse();
-		Integer hausnr = standort.getAdresse().getHausnr();
-		String zusatz = standort.getAdresse().getHausnrzus();
-		return (strasse != null ? strasse + " " : "") + (hausnr != null ? hausnr.toString() : "")
-				+ (zusatz != null ? zusatz : "");
+		String std = new String("");
+		if (standort.getAdresse() != null) {
+			String strasse = standort.getAdresse().getStrasse();
+			Integer hausnr = standort.getAdresse().getHausnr();
+			String zusatz = standort.getAdresse().getHausnrzus();
+			std = (strasse != null ? strasse + " " : "") + (hausnr != null ? hausnr.toString() : "")
+					+ (zusatz != null ? zusatz : "");
+		} else {
+			if (standort.getE32() != null && standort.getN32() != null) {
+
+				Float e32 = standort.getE32();
+				Float n32 = standort.getN32();
+				std = "Standort: " + (e32 != null ? e32 + " " : "") + (n32 != null ? n32.toString() : "");
+				
+			}else {
+				std = "keine Standortdaten vorhanden";
+			}
+		}
+
+		return std;
 	}
 
 	/**
@@ -225,6 +240,27 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			detachedCriteria.add(Restrictions.eq("art.abteilung", abteilung));
 		}
 		return new DatabaseAccess().executeCriteriaToList(detachedCriteria, new Objekt());
+	}
+
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	/* Queries for package BASIS : class Objekt */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+	/**
+	 * Liefert eine Liste von Objekten, die einem bestimmten Betreiber zugeordnet
+	 * sind.
+	 * 
+	 * @param betreiber
+	 *            Der Betreiber.
+	 * @param abteilung
+	 *            Die Abteilung, wenn nach ihr gefiltert werden soll, sonst
+	 *            <code>null</code>.
+	 * @return Eine Liste von Objekten dieses Betreibers.
+	 */
+	public static List<Standort> getStadorteByAdresse(Adresse adresse) {
+		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Standort.class)
+				.add(Restrictions.eq("adresse", adresse));
+		return new DatabaseAccess().executeCriteriaToList(detachedCriteria, new Standort());
 	}
 
 	/**
@@ -1075,11 +1111,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 		DetachedCriteria dc = DetachedCriteria.forClass(Strassen.class).addOrder(Order.asc("strasse"));
 
-		// if (!StringUtils.isNullOrEmpty(plz))
-		// {
-		// dc = dc.add(Restrictions.like("plz", plz, mm));
-		// }
-
 		if (!StringUtils.isNullOrEmpty(ort)) {
 			dc = dc.add(Restrictions.like("ort", ort, mm));
 		}
@@ -1142,10 +1173,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		if (orte == null) {
 			DetachedCriteria dc = DetachedCriteria.forClass(Strassen.class).setProjection(
 					Projections.distinct(Projections.projectionList().add(Projections.property("ort"), "ort")
-					// .add(Projections.property("plz"), "plz")
 					)).setResultTransformer(Transformers.aliasToBean(Orte.class)).addOrder(Order.asc("ort"))
-			// .addOrder(Order.asc("plz"))
-			;
+					;
 
 			orte = new DatabaseAccess().executeCriteriaToList(dc, new Orte());
 		}
@@ -1167,11 +1196,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		{
 			DetachedCriteria dc = DetachedCriteria.forClass(Strassen.class).setProjection(
 					Projections.distinct(Projections.projectionList().add(Projections.property("ort"), "ort")
-					// .add(Projections.property("plz"), "plz")
 					)).setResultTransformer(Transformers.aliasToBean(Orte.class))
 					.add(Restrictions.ilike("strasse", street, MatchMode.START)).addOrder(Order.asc("ort"))
-			// .addOrder(Order.asc("plz"))
-			;
+					;
 
 			ort = new DatabaseAccess().executeCriteriaToUniqueResult(dc, new Orte());
 		}

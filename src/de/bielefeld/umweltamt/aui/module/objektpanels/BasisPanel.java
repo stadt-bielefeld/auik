@@ -118,6 +118,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
+import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -816,24 +817,19 @@ public class BasisPanel extends JPanel {
                                     : "") + "</html>";
                     getStandortFeld().setToolTipText(toolTip);
                 	}
-                    getStandortFeld().setText(
-                            standort.getN32().intValue() + ", " + standort.getE32().intValue());
+//                    getStandortFeld().setText(
+//                            standort.getN32().intValue() + ", " + standort.getE32().intValue());
 
                     if (this.hauptModul.getObjekt().getStandortid() == null) {
                         standort = (Standort) Standort
                                 .findByAdresse(this.hauptModul.getObjekt()
                                         .getStandortid().getAdresse());
                     }
-                    getLageFeld().setText(standort.toString());
+                    getStandortFeld().setText(standort.toString());
                 }else {
                     getLageFeld().setText(this.hauptModul.getObjekt().getStandortid().toString());
                 }
             }
-
-//			if (this.hauptModul.getObjekt().getStandortid().getId() == 3) {
-//
-//				getLageFeld().setText(this.hauptModul.getObjekt().getStandortid().getLage().toString());
-//			}
 
             if (this.hauptModul.getObjekt().getObjektarten() != null) {
                 getArtBox().setSelectedItem(
@@ -1019,18 +1015,23 @@ public class BasisPanel extends JPanel {
                             .setBetreiberid(editDialog.getBetreiber());
 
                     } else if ("standort_edit".equals(action)
-                        && standort != null) {
-                        BetreiberEditor editDialog = new BetreiberEditor(
-                                standort.getAdresse(), BasisPanel.this.hauptModul.getFrame());
-                            editDialog
-                                .setLocationRelativeTo(BasisPanel.this.hauptModul
-                                    .getFrame());
+							&& standort != null) {
+						if (standort.getAdresse() != null) {
+							BetreiberEditor editDialog = new BetreiberEditor(standort.getAdresse(),
+									BasisPanel.this.hauptModul.getFrame());
+							editDialog.setLocationRelativeTo(BasisPanel.this.hauptModul.getFrame());
 
-                        editDialog.setVisible(true);
+							editDialog.setVisible(true);
 
-                        BasisPanel.this.hauptModul.getObjekt()
-                            .setStandortid(editDialog.getBetreiber().getStandort());
-                    }
+							BasisPanel.this.hauptModul.getObjekt()
+									.setStandortid(editDialog.getBetreiber().getStandort());
+						} else {
+							StandortEditor editDialog = new StandortEditor(standort,
+									BasisPanel.this.hauptModul.getFrame());
+
+							editDialog.setVisible(true);
+						}
+					}
 
                     updateForm();
                 }
