@@ -600,10 +600,12 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 */
 	public static Boolean isKlaerschlammProbe(Probenahme probe)
 	{
-		return (probe.getMessstelle().getProbeart().getId().equals(
-																		DatabaseConstants.ATL_PROBEART_ID_FAULSCHLAMM) || probe
-				.getMessstelle().getProbeart().getId().equals(
-																	DatabaseConstants.ATL_PROBEART_ID_ROHRSCHLAMM));
+		if (probe.getMessstelle().getProbeart() != null) {
+			return (probe.getMessstelle().getProbeart().getId().equals(DatabaseConstants.ATL_PROBEART_ID_FAULSCHLAMM)
+					|| probe.getMessstelle().getProbeart().getId()
+							.equals(DatabaseConstants.ATL_PROBEART_ID_ROHRSCHLAMM));
+		}
+		else return false;
 	}
 
 	public static JRMapDataSource getAuftragDataSource(Probenahme probe)

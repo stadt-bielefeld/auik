@@ -49,8 +49,6 @@ public class Sielhaut  implements java.io.Serializable {
     private String haltungsnr;
     private String alarmplannr;
     private String entgeb;
-    private Double e32;
-    private Double n32;
     private String lage;
     private String bemerkungen;
     private String twabfluss;
@@ -84,15 +82,13 @@ public class Sielhaut  implements java.io.Serializable {
 
     /** Full constructor */
     public Sielhaut(
-        Integer id, Messstelle messstelle, String bezeichnung, String haltungsnr, String alarmplannr, String entgeb, Double e32, Double n32, String lage, String bemerkungen, String twabfluss, String bsb, String ew, String gebiet, Boolean PSielhaut, Boolean PAlarmplan, Boolean PNachprobe, Boolean schlammprobe, Boolean PFirmenprobe, Serializable theGeom, boolean enabled, boolean deleted) {
+        Integer id, Messstelle messstelle, String bezeichnung, String haltungsnr, String alarmplannr, String entgeb, String lage, String bemerkungen, String twabfluss, String bsb, String ew, String gebiet, Boolean PSielhaut, Boolean PAlarmplan, Boolean PNachprobe, Boolean schlammprobe, Boolean PFirmenprobe, Serializable theGeom, boolean enabled, boolean deleted) {
         this.id = id;
         this.messstelle = messstelle;
         this.bezeichnung = bezeichnung;
         this.haltungsnr = haltungsnr;
         this.alarmplannr = alarmplannr;
         this.entgeb = entgeb;
-        this.e32 = e32;
-        this.n32 = n32;
         this.lage = lage;
         this.bemerkungen = bemerkungen;
         this.twabfluss = twabfluss;
@@ -156,22 +152,6 @@ public class Sielhaut  implements java.io.Serializable {
 
     public void setEntgeb(String entgeb) {
         this.entgeb = entgeb;
-    }
-
-    public Double getE32() {
-        return this.e32;
-    }
-
-    public void setE32(Double e32) {
-        this.e32 = e32;
-    }
-
-    public Double getN32() {
-        return this.n32;
-    }
-
-    public void setN32(Double n32) {
-        this.n32 = n32;
     }
 
     public String getLage() {
@@ -311,10 +291,8 @@ public class Sielhaut  implements java.io.Serializable {
         buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
         buffer.append("haltungsnr").append("='").append(getHaltungsnr()).append("' ");			
         buffer.append("alarmplannr").append("='").append(getAlarmplannr()).append("' ");			
-        buffer.append("entgeb").append("='").append(getEntgeb()).append("' ");			
-        buffer.append("e32").append("='").append(getE32()).append("' ");			
-        buffer.append("n32").append("='").append(getN32()).append("' ");			
-        buffer.append("lage").append("='").append(getLage()).append("' ");			
+        buffer.append("entgeb").append("='").append(getEntgeb()).append("' ");				
+        buffer.append("lage").append("='").append(getLage()).append("' ");	
         buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
         buffer.append("twabfluss").append("='").append(getTwabfluss()).append("' ");			
         buffer.append("bsb").append("='").append(getBsb()).append("' ");			
@@ -399,9 +377,7 @@ public class Sielhaut  implements java.io.Serializable {
         this.haltungsnr = copy.getHaltungsnr();            
         this.alarmplannr = copy.getAlarmplannr();            
         this.entgeb = copy.getEntgeb();            
-        this.e32 = copy.getE32();            
-        this.n32 = copy.getN32();            
-        this.lage = copy.getLage();            
+        this.lage = copy.getLage();                  
         this.bemerkungen = copy.getBemerkungen();            
         this.twabfluss = copy.getTwabfluss();            
         this.bsb = copy.getBsb();            

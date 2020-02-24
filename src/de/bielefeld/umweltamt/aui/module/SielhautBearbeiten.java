@@ -286,23 +286,23 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	public void setSielhautPunkt(Sielhaut sp) {
 		this.spunkt = sp;
-		if (this.spunkt.getId() != null) {
-			this.sprobePkt = this.spunkt.getMessstelle();
-			this.objekt = sprobePkt.getObjekt();
+		if (spunkt.getId() != null) {
+			sprobePkt = spunkt.getMessstelle();
+			objekt = sprobePkt.getObjekt();
 			getPrAnlegenButton().setEnabled(true);
 			getTabelleExportButton().setEnabled(true);
 		} else {
-			this.objekt = new Objekt();
-			this.standort = new Standort();
-			this.betreiber = Adresse.findById(DatabaseConstants.BASIS_BETREIBER_ID_Umweltamt_360x33);
-			this.art = Objektarten.findById(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE);
-			this.objekt.setBetreiberid(this.betreiber);
-			this.objekt.setStandortid(this.standort);
-			this.objekt.setObjektarten(this.art);
-			this.objekt.setInaktiv(false);
-			this.objekt.setAbwasserfrei(true);
-			this.sprobePkt = new Messstelle();
-			this.sprobePkt.setProbeart(Probeart.findById(DatabaseConstants.ATL_PROBEART_ID_SIELHAUT));
+			objekt = new Objekt();
+			standort = new Standort();
+			betreiber = Adresse.findById(DatabaseConstants.BASIS_BETREIBER_ID_Umweltamt_360x33);
+			art = Objektarten.findById(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE);
+			objekt.setBetreiberid(this.betreiber);
+			objekt.setStandortid(this.standort);
+			objekt.setObjektarten(this.art);
+			objekt.setInaktiv(false);
+			objekt.setAbwasserfrei(true);
+			sprobePkt = new Messstelle();
+			sprobePkt.setProbeart(Probeart.findById(DatabaseConstants.ATL_PROBEART_ID_SIELHAUT));
 			getPrAnlegenButton().setEnabled(false);
 			getTabelleExportButton().setEnabled(false);
 
@@ -312,38 +312,47 @@ public class SielhautBearbeiten extends AbstractModul {
 			getKartenLabel().setText("<html><b>- Keine Karte verfügbar! -</b></html>");
 		}
 
-		String titel = this.spunkt.getBezeichnung();
-		if (this.spunkt.getLage() != null) {
-			titel += " \"" + this.spunkt.getLage() + "\"";
+		String titel = spunkt.getBezeichnung();
+		if (spunkt.getLage() != null) {
+			titel += " \"" + spunkt.getLage() + "\"";
 		}
 		getPunktFeld().setText(titel);
 
-		getSpNamenFeld().setText(this.spunkt.getBezeichnung());
-		getSpEntgebFeld().setText(this.spunkt.getEntgeb());
-		getSpLageFeld().setText(this.spunkt.getLage());
+		getSpNamenFeld().setText(spunkt.getBezeichnung());
+		getSpEntgebFeld().setText(spunkt.getEntgeb());
+		getSpLageFeld().setText(spunkt.getLage());
 
-		getSpBemerkungsArea().setText(this.spunkt.getBemerkungen());
+		getSpBemerkungsArea().setText(spunkt.getBemerkungen());
 
-		getSpE32Feld().setValue(this.spunkt.getE32());
-		getSpN32Feld().setValue(this.spunkt.getN32());
+		if (spunkt.getId() != null) {
+			getSpE32Feld().setValue(spunkt.getMessstelle().getObjekt().getStandortid().getE32());
+		}else {
+			getSpE32Feld().setValue(0);
+		}
 
-		getSpHaltungsnrFeld().setText(this.spunkt.getHaltungsnr());
-		getSpAlarmplannrFeld().setText(this.spunkt.getAlarmplannr());
+		if (spunkt.getId() != null) {
+			getSpN32Feld().setValue(spunkt.getMessstelle().getObjekt().getStandortid().getN32());
+		}else {
+			getSpN32Feld().setValue(0);
+		}
+		
+		getSpHaltungsnrFeld().setText(spunkt.getHaltungsnr());
+		getSpAlarmplannrFeld().setText(spunkt.getAlarmplannr());
 
-		if (this.spunkt.getPSielhaut() == null) {
+		if (spunkt.getPSielhaut() == null) {
 			getSpSielhautCheck().setSelected(false);
 		} else
-			getSpSielhautCheck().setSelected(this.spunkt.getPSielhaut());
+			getSpSielhautCheck().setSelected(spunkt.getPSielhaut());
 
-		if (this.spunkt.getPNachprobe() == null) {
+		if (spunkt.getPNachprobe() == null) {
 			getSpNachprobeCheck().setSelected(false);
 		} else
-			getSpNachprobeCheck().setSelected(this.spunkt.getPNachprobe());
+			getSpNachprobeCheck().setSelected(spunkt.getPNachprobe());
 
-		if (this.spunkt.getPFirmenprobe() == null) {
+		if (spunkt.getPFirmenprobe() == null) {
 			getSpFirmenprobeCheck().setSelected(false);
 		} else
-			getSpFirmenprobeCheck().setSelected(this.spunkt.getPFirmenprobe());
+			getSpFirmenprobeCheck().setSelected(spunkt.getPFirmenprobe());
 
 		this.probeModel.setMessstelle(this.sprobePkt);
 
@@ -364,7 +373,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 		getPunktSaveButton().setEnabled(true);
 		getPunktEditButton().setEnabled(true);
-		this.punktPrintButton.setEnabled(true);
+		punktPrintButton.setEnabled(true);
 	}
 
 	/**
@@ -372,8 +381,6 @@ public class SielhautBearbeiten extends AbstractModul {
 	 */
 	public void neuerSielhautPunkt() {
 		Sielhaut neuerPunkt = new Sielhaut();
-		neuerPunkt.setE32(new Double(0.0));
-		neuerPunkt.setN32(new Double(0.0));
 		neuerPunkt.setBezeichnung("Neuer Sielhaut-Punkt");
 		setSielhautPunkt(neuerPunkt);
 
@@ -406,8 +413,8 @@ public class SielhautBearbeiten extends AbstractModul {
 			objekt.setStandortid(standort);
 		}
 		if (objekt.getId() == null) {
-			objekt = Objekt.merge(objekt);
 			objekt.setElkarelevant(false);
+			objekt = Objekt.merge(objekt);
 			sprobePkt.setObjekt(this.objekt);
 		}
 		sprobePkt = Messstelle.merge(sprobePkt);
@@ -427,67 +434,61 @@ public class SielhautBearbeiten extends AbstractModul {
 			getSpNamenFeld().requestFocus();
 		} else {
 			// Bezeichnung
-			this.spunkt.setBezeichnung(getSpNamenFeld().getText());
+			spunkt.setBezeichnung(getSpNamenFeld().getText());
 
 			// Entwässerungsgebiet
 			if ("".equals(getSpEntgebFeld().getText())) {
-				this.spunkt.setEntgeb(null);
+				spunkt.setEntgeb(null);
 			} else {
-				this.spunkt.setEntgeb(getSpEntgebFeld().getText());
-			}
-
-			// Lage
-			if ("".equals(getSpLageFeld().getText())) {
-				this.spunkt.setLage(null);
-			} else {
-				this.spunkt.setLage(getSpLageFeld().getText());
+				spunkt.setEntgeb(getSpEntgebFeld().getText());
 			}
 
 			// Bemerkungen
 			if ("".equals(getSpBemerkungsArea().getText())) {
-				this.spunkt.setBemerkungen(null);
+				spunkt.setBemerkungen(null);
 			} else {
-				this.spunkt.setBemerkungen(getSpBemerkungsArea().getText());
+				spunkt.setBemerkungen(getSpBemerkungsArea().getText());
 			}
 
 			// Rechts- und Hochwert
-			this.spunkt.setE32(getSpE32Feld().getDoubleValue());
-			this.spunkt.setN32(getSpN32Feld().getDoubleValue());
-
+			if (spunkt.getId() != null) {
+				spunkt.getMessstelle().getObjekt().getStandortid().setE32(getSpE32Feld().getFloatValue());
+				spunkt.getMessstelle().getObjekt().getStandortid().setN32(getSpN32Feld().getFloatValue());
+			}
 			// Haltungs-Nr.
 			if ("".equals(getSpHaltungsnrFeld().getText())) {
-				this.spunkt.setHaltungsnr(null);
+				spunkt.setHaltungsnr(null);
 			} else {
-				this.spunkt.setHaltungsnr(getSpHaltungsnrFeld().getText());
+				spunkt.setHaltungsnr(getSpHaltungsnrFeld().getText());
 			}
 
 			// Alarmplan-Nr.
 			if ("".equals(getSpAlarmplannrFeld().getText())) {
-				this.spunkt.setAlarmplannr(null);
+				spunkt.setAlarmplannr(null);
 			} else {
-				this.spunkt.setAlarmplannr(getSpAlarmplannrFeld().getText());
+				spunkt.setAlarmplannr(getSpAlarmplannrFeld().getText());
 			}
 
 			// SielhautBearbeiten, Nachprobe & Alarmplan
-			this.spunkt.setPSielhaut(getSpSielhautCheck().isSelected());
-			this.spunkt.setPNachprobe(getSpNachprobeCheck().isSelected());
-			this.spunkt.setPFirmenprobe(getSpFirmenprobeCheck().isSelected());
-			this.spunkt.setMessstelle(this.sprobePkt);			
+			spunkt.setPSielhaut(getSpSielhautCheck().isSelected());
+			spunkt.setPNachprobe(getSpNachprobeCheck().isSelected());
+			spunkt.setPFirmenprobe(getSpFirmenprobeCheck().isSelected());			
 
-			if (this.spunkt.getId() == null) {
-				saveNeuenProbepunkt(spunkt.getE32().floatValue(), spunkt.getN32().floatValue());
-				this.spunkt.setMessstelle(this.sprobePkt);
+			if (spunkt.getId() == null) {
+				saveNeuenProbepunkt(spE32Feld.getFloatValue(), spN32Feld.getFloatValue());
+				spunkt.setMessstelle(sprobePkt);
 			}
 		
 
-			
-			this.spunkt = Sielhaut.merge(this.spunkt);
+			Standort std = spunkt.getMessstelle().getObjekt().getStandortid();
+			std = Standort.merge(std);
+			spunkt = Sielhaut.merge(spunkt);
 
-			if (this.spunkt != null) {
-				this.spunkt = Sielhaut.findById(this.spunkt.getId());
+			if (spunkt != null) {
+				spunkt = Sielhaut.findById(spunkt.getId());
 
-				this.frame.changeStatus("Sielhaut-Messpunkt erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
-				setSielhautPunkt(this.spunkt);
+				frame.changeStatus("Sielhaut-Messpunkt erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
+				setSielhautPunkt(spunkt);
 			}
 		}
 
@@ -642,8 +643,8 @@ public class SielhautBearbeiten extends AbstractModul {
 	}
 
 	private Action getProbeEditAction() {
-		if (this.probeEditAction == null) {
-			this.probeEditAction = new AbstractAction("Bearbeiten") {
+		if (probeEditAction == null) {
+			probeEditAction = new AbstractAction("Bearbeiten") {
 				private static final long serialVersionUID = -4363530282004004696L;
 
 				@Override
@@ -657,16 +658,16 @@ public class SielhautBearbeiten extends AbstractModul {
 					}
 				}
 			};
-			this.probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
-			this.probeEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+			probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
+			probeEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
 		}
 
-		return this.probeEditAction;
+		return probeEditAction;
 	}
 
 	private Action getProbeLoeschAction() {
-		if (this.probeLoeschAction == null) {
-			this.probeLoeschAction = new AbstractAction("Löschen") {
+		if (probeLoeschAction == null) {
+			probeLoeschAction = new AbstractAction("Löschen") {
 				private static final long serialVersionUID = -3208582919995701684L;
 
 				@Override
@@ -688,21 +689,21 @@ public class SielhautBearbeiten extends AbstractModul {
 					}
 				}
 			};
-			this.probeLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
-			this.probeLoeschAction.putValue(Action.ACCELERATOR_KEY,
+			probeLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
+			probeLoeschAction.putValue(Action.ACCELERATOR_KEY,
 					KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
 		}
 
-		return this.probeLoeschAction;
+		return probeLoeschAction;
 	}
 
 	private void showProbePopup(MouseEvent e) {
-		if (this.probePopup == null) {
-			this.probePopup = new JPopupMenu("Probe");
+		if (probePopup == null) {
+			probePopup = new JPopupMenu("Probe");
 			JMenuItem bearbItem = new JMenuItem(getProbeEditAction());
 			JMenuItem loeschItem = new JMenuItem(getProbeLoeschAction());
-			this.probePopup.add(bearbItem);
-			this.probePopup.add(loeschItem);
+			probePopup.add(bearbItem);
+			probePopup.add(loeschItem);
 		}
 
 		if (e.isPopupTrigger()) {
@@ -711,7 +712,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 			if (row != -1) {
 				getPrTabelle().setRowSelectionInterval(row, row);
-				this.probePopup.show(e.getComponent(), e.getX(), e.getY());
+				probePopup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		}
 	}
@@ -747,7 +748,7 @@ public class SielhautBearbeiten extends AbstractModul {
 	}
 
 	public HauptFrame getFrame() {
-		return this.frame;
+		return frame;
 	}
 
 	/*
@@ -758,7 +759,7 @@ public class SielhautBearbeiten extends AbstractModul {
 	@Override
 	public JPanel getPanel() {
 		if (this.panel == null) {
-			this.probeModel = new SielhautProbeModel();
+			probeModel = new SielhautProbeModel();
 
 			RetractablePanel datenRP = new RetractablePanel(
 					DefaultComponentFactory.getInstance().createSeparator("Stammdaten"), getDatenPanel(), true, null);
@@ -776,43 +777,43 @@ public class SielhautBearbeiten extends AbstractModul {
 			builder.add(getFotoRtPanel(), cc.xyw(1, 7, 5, "f, f"));
 			builder.add(getKartenRtPanel(), cc.xyw(1, 9, 5, "f, f"));
 
-			this.panel = builder.getPanel();
-			this.panel.setBorder(Paddings.DIALOG);
+			panel = builder.getPanel();
+			panel.setBorder(Paddings.DIALOG);
 		}
 
-		return this.panel;
+		return panel;
 	}
 
 	private JTextField getPunktFeld() {
-		if (this.punktFeld == null) {
-			this.punktFeld = new JTextField();
-			this.punktFeld.setEditable(false);
+		if (punktFeld == null) {
+			punktFeld = new JTextField();
+			punktFeld.setEditable(false);
 		}
-		return this.punktFeld;
+		return punktFeld;
 	}
 
 	private JToolBar getPunktToolBar() {
-		if (this.punktToolBar == null) {
-			this.punktToolBar = new JToolBar();
-			this.punktToolBar.setFloatable(false);
-			this.punktToolBar.setRollover(true);
+		if (punktToolBar == null) {
+			punktToolBar = new JToolBar();
+			punktToolBar.setFloatable(false);
+			punktToolBar.setRollover(true);
 
-			this.punktToolBar.add(getPunktChooseButton());
-			this.punktToolBar.add(getPunktEditButton());
-			this.punktToolBar.add(getPunktNeuButton());
-			this.punktToolBar.add(getPunktSaveButton());
-			this.punktToolBar.add(getPunktPrintButton());
+			punktToolBar.add(getPunktChooseButton());
+			punktToolBar.add(getPunktEditButton());
+			punktToolBar.add(getPunktNeuButton());
+			punktToolBar.add(getPunktSaveButton());
+			punktToolBar.add(getPunktPrintButton());
 		}
-		return this.punktToolBar;
+		return punktToolBar;
 	}
 
 	private JButton getPunktChooseButton() {
-		if (this.punktChooseButton == null) {
-			this.punktChooseButton = new JButton(AuikUtils.getIcon(16, "reload.png"));
+		if (punktChooseButton == null) {
+			punktChooseButton = new JButton(AuikUtils.getIcon(16, "reload.png"));
 			// punktChooseButton.setHorizontalAlignment(JButton.CENTER);
-			this.punktChooseButton.setToolTipText("Messpunkt auswählen");
+			punktChooseButton.setToolTipText("Messpunkt auswählen");
 
-			this.punktChooseButton.addActionListener(new ActionListener() {
+			punktChooseButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					SielhautChooser chooser = new SielhautChooser(SielhautBearbeiten.this.frame);
@@ -826,16 +827,16 @@ public class SielhautBearbeiten extends AbstractModul {
 				}
 			});
 		}
-		return this.punktChooseButton;
+		return punktChooseButton;
 	}
 
 	private JButton getPunktEditButton() {
-		if (this.punktEditButton == null) {
-			this.punktEditButton = new JButton(AuikUtils.getIcon(16, "edit.png"));
-			this.punktEditButton.setToolTipText("Bearbeiten");
-			this.punktEditButton.setEnabled(false);
+		if (punktEditButton == null) {
+			punktEditButton = new JButton(AuikUtils.getIcon(16, "edit.png"));
+			punktEditButton.setToolTipText("Bearbeiten");
+			punktEditButton.setEnabled(false);
 
-			this.punktEditButton.addActionListener(new ActionListener() {
+			punktEditButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					SielhautBearbeiten.this.manager.getSettingsManager().setSetting("auik.imc.edit_object",
@@ -844,17 +845,17 @@ public class SielhautBearbeiten extends AbstractModul {
 				}
 			});
 		}
-		return this.punktEditButton;
+		return punktEditButton;
 	}
 
 	private JButton getPunktPrintButton() {
-		if (this.punktPrintButton == null) {
-			this.punktPrintButton = new JButton(AuikUtils.getIcon(16, "fileprint.png"));
+		if (punktPrintButton == null) {
+			punktPrintButton = new JButton(AuikUtils.getIcon(16, "fileprint.png"));
 			// punktChooseButton.setHorizontalAlignment(JButton.CENTER);
-			this.punktPrintButton.setToolTipText("Drucken");
-			this.punktPrintButton.setEnabled(false);
+			punktPrintButton.setToolTipText("Drucken");
+			punktPrintButton.setEnabled(false);
 
-			this.punktPrintButton.addActionListener(new ActionListener() {
+			punktPrintButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
@@ -865,31 +866,31 @@ public class SielhautBearbeiten extends AbstractModul {
 				}
 			});
 		}
-		return this.punktPrintButton;
+		return punktPrintButton;
 	}
 
 	private JButton getPunktNeuButton() {
-		if (this.punktNeuButton == null) {
-			this.punktNeuButton = new JButton(AuikUtils.getIcon(16, "filenew.png"));
+		if (punktNeuButton == null) {
+			punktNeuButton = new JButton(AuikUtils.getIcon(16, "filenew.png"));
 			// punktNeuButton.setHorizontalAlignment(JButton.CENTER);
-			this.punktNeuButton.setToolTipText("Neuer Messpunkt");
-			this.punktNeuButton.addActionListener(new ActionListener() {
+			punktNeuButton.setToolTipText("Neuer Messpunkt");
+			punktNeuButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					neuerSielhautPunkt();
 				}
 			});
 		}
-		return this.punktNeuButton;
+		return punktNeuButton;
 	}
 
 	private JButton getPunktSaveButton() {
-		if (this.punktSaveButton == null) {
-			this.punktSaveButton = new JButton(AuikUtils.getIcon(16, "filesave.png"));
+		if (punktSaveButton == null) {
+			punktSaveButton = new JButton(AuikUtils.getIcon(16, "filesave.png"));
 			// punktSaveButton.setHorizontalAlignment(JButton.CENTER);
-			this.punktSaveButton.setToolTipText("Speichern");
-			this.punktSaveButton.setEnabled(false);
-			this.punktSaveButton.addActionListener(new ActionListener() {
+			punktSaveButton.setToolTipText("Speichern");
+			punktSaveButton.setEnabled(false);
+			punktSaveButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (SielhautBearbeiten.this.spunkt != null) {
@@ -955,82 +956,82 @@ public class SielhautBearbeiten extends AbstractModul {
 	}
 
 	private JTextField getSpAlarmplannrFeld() {
-		if (this.spAlarmplannrFeld == null) {
-			this.spAlarmplannrFeld = new LimitedTextField(50);
+		if (spAlarmplannrFeld == null) {
+			spAlarmplannrFeld = new LimitedTextField(50);
 		}
-		return this.spAlarmplannrFeld;
+		return spAlarmplannrFeld;
 	}
 
 	private JTextArea getSpBemerkungsArea() {
-		if (this.spBemerkungsArea == null) {
-			this.spBemerkungsArea = new LimitedTextArea(255);
-			this.spBemerkungsArea.setLineWrap(true);
-			this.spBemerkungsArea.setWrapStyleWord(true);
+		if (spBemerkungsArea == null) {
+			spBemerkungsArea = new LimitedTextArea(255);
+			spBemerkungsArea.setLineWrap(true);
+			spBemerkungsArea.setWrapStyleWord(true);
 		}
-		return this.spBemerkungsArea;
+		return spBemerkungsArea;
 	}
 
 	private JTextField getSpEntgebFeld() {
-		if (this.spEntgebFeld == null) {
-			this.spEntgebFeld = new LimitedTextField(50);
+		if (spEntgebFeld == null) {
+			spEntgebFeld = new LimitedTextField(50);
 		}
 		return this.spEntgebFeld;
 	}
 
 	private JTextField getSpHaltungsnrFeld() {
-		if (this.spHaltungsnrFeld == null) {
-			this.spHaltungsnrFeld = new LimitedTextField(50);
+		if (spHaltungsnrFeld == null) {
+			spHaltungsnrFeld = new LimitedTextField(50);
 		}
-		return this.spHaltungsnrFeld;
+		return spHaltungsnrFeld;
 	}
 
 	private DoubleField getSpN32Feld() {
-		if (this.spN32Feld == null) {
-			this.spN32Feld = new DoubleField(0, 0);
+		if (spN32Feld == null) {
+			spN32Feld = new DoubleField(0, 0);
 		}
-		return this.spN32Feld;
+		return spN32Feld;
 	}
 
 	private JTextField getSpLageFeld() {
-		if (this.spLageFeld == null) {
-			this.spLageFeld = new LimitedTextField(50);
+		if (spLageFeld == null) {
+			spLageFeld = new LimitedTextField(50);
 		}
-		return this.spLageFeld;
+		return spLageFeld;
 	}
 
 	private JCheckBox getSpNachprobeCheck() {
-		if (this.spNachprobeCheck == null) {
-			this.spNachprobeCheck = new JCheckBox("Nachprobe");
+		if (spNachprobeCheck == null) {
+			spNachprobeCheck = new JCheckBox("Nachprobe");
 		}
-		return this.spNachprobeCheck;
+		return spNachprobeCheck;
 	}
 
 	private JCheckBox getSpFirmenprobeCheck() {
-		if (this.spFirmenprobeCheck == null) {
-			this.spFirmenprobeCheck = new JCheckBox("Firmenprobe");
+		if (spFirmenprobeCheck == null) {
+			spFirmenprobeCheck = new JCheckBox("Firmenprobe");
 		}
-		return this.spFirmenprobeCheck;
+		return spFirmenprobeCheck;
 	}
 
 	private JTextField getSpNamenFeld() {
-		if (this.spNamenFeld == null) {
-			this.spNamenFeld = new LimitedTextField(50);
+		if (spNamenFeld == null) {
+			spNamenFeld = new LimitedTextField(50);
 		}
-		return this.spNamenFeld;
+		return spNamenFeld;
 	}
 
 	private DoubleField getSpE32Feld() {
-		if (this.spE32Feld == null) {
-			this.spE32Feld = new DoubleField(0, 0);
+		if (spE32Feld == null) {
+			spE32Feld = new DoubleField(0, 0);
 		}
-		return this.spE32Feld;
+		return spE32Feld;
 	}
 
 	private JCheckBox getSpSielhautCheck() {
-		if (this.spSielhautCheck == null) {
-			this.spSielhautCheck = new JCheckBox("Routinekontrolle");
+		if (spSielhautCheck == null) {
+			spSielhautCheck = new JCheckBox("Routinekontrolle");
 		}
-		return this.spSielhautCheck;
+		return spSielhautCheck;
 	}
 
 	// Proben
@@ -1131,21 +1132,21 @@ public class SielhautBearbeiten extends AbstractModul {
 	}
 
 	private JTable getPrTabelle() {
-		if (this.prTabelle == null) {
-			this.prTabelle = new JTable(this.probeModel);
-			this.prTabelle.getColumnModel().getColumn(0).setWidth(10);
+		if (prTabelle == null) {
+			prTabelle = new JTable(this.probeModel);
+			prTabelle.getColumnModel().getColumn(0).setWidth(10);
 
-			this.prTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			prTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-			this.prTabelle.getInputMap().put((KeyStroke) getProbeEditAction().getValue(Action.ACCELERATOR_KEY),
+			prTabelle.getInputMap().put((KeyStroke) getProbeEditAction().getValue(Action.ACCELERATOR_KEY),
 					getProbeEditAction().getValue(Action.NAME));
-			this.prTabelle.getActionMap().put(getProbeEditAction().getValue(Action.NAME), getProbeEditAction());
+			prTabelle.getActionMap().put(getProbeEditAction().getValue(Action.NAME), getProbeEditAction());
 
-			this.prTabelle.getInputMap().put((KeyStroke) getProbeLoeschAction().getValue(Action.ACCELERATOR_KEY),
+			prTabelle.getInputMap().put((KeyStroke) getProbeLoeschAction().getValue(Action.ACCELERATOR_KEY),
 					getProbeLoeschAction().getValue(Action.NAME));
-			this.prTabelle.getActionMap().put(getProbeLoeschAction().getValue(Action.NAME), getProbeLoeschAction());
+			prTabelle.getActionMap().put(getProbeLoeschAction().getValue(Action.NAME), getProbeLoeschAction());
 
-			this.prTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+			prTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
 				@Override
 				public void mouseClicked(java.awt.event.MouseEvent e) {
 					if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
@@ -1168,14 +1169,14 @@ public class SielhautBearbeiten extends AbstractModul {
 				}
 			});
 		}
-		return this.prTabelle;
+		return prTabelle;
 	}
 
 	private JButton getSubmitButton() {
-		if (this.submitButton == null) {
-			this.submitButton = new JButton("Abschicken");
+		if (submitButton == null) {
+			submitButton = new JButton("Abschicken");
 
-			this.submitButton.addActionListener(new ActionListener() {
+			submitButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					showResultOneAxis();
@@ -1183,7 +1184,7 @@ public class SielhautBearbeiten extends AbstractModul {
 			});
 		}
 
-		return this.submitButton;
+		return submitButton;
 	}
 
 	private class AuswertungsDialog extends JDialog {
@@ -1227,7 +1228,7 @@ public class SielhautBearbeiten extends AbstractModul {
 			public ExportTableModel(TimeSeriesCollection col1, TimeSeriesCollection col2) {
 				this.col1 = col1;
 				this.col2 = col2;
-				this.dateList = new ArrayList<Minute>();
+				dateList = new ArrayList<Minute>();
 
 				initializeData();
 			}
@@ -1276,12 +1277,12 @@ public class SielhautBearbeiten extends AbstractModul {
 
 			@Override
 			public int getColumnCount() {
-				return this.col1.getSeriesCount() + ((this.col2 != null) ? this.col2.getSeriesCount() : 0) + 1;// 2;
+				return col1.getSeriesCount() + ((col2 != null) ? col2.getSeriesCount() : 0) + 1;// 2;
 			}
 
 			@Override
 			public int getRowCount() {
-				return this.dateList.size();// + 1;
+				return dateList.size();// + 1;
 			}
 
 			@Override
@@ -1373,15 +1374,15 @@ public class SielhautBearbeiten extends AbstractModul {
 			this.leftDataset = leftDataset;
 			this.rightDataset = rightDataset;
 
-			this.listener = new DialogListener();
+			listener = new DialogListener();
 
-			this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-			this.addWindowListener(this.listener);
+			setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+			addWindowListener(listener);
 
-			this.speichernButton = new JButton("Speichern");
-			this.speichernButton.addActionListener(this.listener);
-			this.abbrechenButton = new JButton("Schließen");
-			this.abbrechenButton.addActionListener(this.listener);
+			speichernButton = new JButton("Speichern");
+			speichernButton.addActionListener(listener);
+			abbrechenButton = new JButton("Schließen");
+			abbrechenButton.addActionListener(listener);
 
 			JPanel tmp = new JPanel(new BorderLayout(0, 7));
 
@@ -1396,34 +1397,34 @@ public class SielhautBearbeiten extends AbstractModul {
 		}
 
 		private JComponent initializeContent() {
-			this.tabbedPane = new JTabbedPane();
+			tabbedPane = new JTabbedPane();
 
-			this.tabbedPane.addTab("Diagramm", createDiagrammPanel());
-			this.tabbedPane.addTab("Tabelle", createTabellenPanel());
+			tabbedPane.addTab("Diagramm", createDiagrammPanel());
+			tabbedPane.addTab("Tabelle", createTabellenPanel());
 
-			return this.tabbedPane;
+			return tabbedPane;
 		}
 
 		private JPanel createDiagrammPanel() {
 			JFreeChart chart;
-			if (this.rightDataset == null) {
-				chart = Charts.createDefaultTimeSeriesChart(this.title, this.leftDataset);
+			if (rightDataset == null) {
+				chart = Charts.createDefaultTimeSeriesChart(title, leftDataset);
 			} else {
-				chart = Charts.createDefaultTimeSeriesChart(this.title, this.leftDataset, this.rightDataset);
+				chart = Charts.createDefaultTimeSeriesChart(title, leftDataset, rightDataset);
 			}
 
-			this.chartPanel = new ChartPanel(chart, false);
-			this.chartPanel.setBorder(Paddings.DIALOG);
+			chartPanel = new ChartPanel(chart, false);
+			chartPanel.setBorder(Paddings.DIALOG);
 
 			return this.chartPanel;
 		}
 
 		private JComponent createTabellenPanel() {
-			this.exportTable = new JTable(new ExportTableModel(this.leftDataset, this.rightDataset));
-			this.exportTable.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-			this.exportTable.setColumnSelectionAllowed(true);
-			this.exportTable.setRowSelectionAllowed(true);
-			this.exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			exportTable = new JTable(new ExportTableModel(leftDataset, rightDataset));
+			exportTable.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+			exportTable.setColumnSelectionAllowed(true);
+			exportTable.setRowSelectionAllowed(true);
+			exportTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 			this.exportTable.addMouseListener(new MouseAdapter() {
 				@Override
@@ -1444,8 +1445,8 @@ public class SielhautBearbeiten extends AbstractModul {
 			rechtsBuendigRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
 
 			TableColumn column = null;
-			for (int i = 0; i < this.exportTable.getColumnCount(); i++) {
-				column = this.exportTable.getColumnModel().getColumn(i);
+			for (int i = 0; i < exportTable.getColumnCount(); i++) {
+				column = exportTable.getColumnModel().getColumn(i);
 				if (i == 0) {// || i == 1) {
 					column.setCellRenderer(zentrierterRenderer);
 					column.setPreferredWidth(75);
@@ -1455,7 +1456,7 @@ public class SielhautBearbeiten extends AbstractModul {
 				}
 			}
 
-			JScrollPane tabellenScroller = new JScrollPane(this.exportTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			JScrollPane tabellenScroller = new JScrollPane(exportTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 					JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			tabellenScroller.setBorder(Paddings.DIALOG);
 
@@ -1467,7 +1468,7 @@ public class SielhautBearbeiten extends AbstractModul {
 			File exportDatei;
 			String[] csv = new String[] { "csv" };
 
-			exportDatei = this.owner.saveFile(csv);
+			exportDatei = owner.saveFile(csv);
 
 			if (exportDatei != null) {
 				String ext = AuikUtils.getExtension(exportDatei);
@@ -1510,8 +1511,8 @@ public class SielhautBearbeiten extends AbstractModul {
 		}
 
 		private void showTabellenPopup(MouseEvent e) {
-			if (this.tabellenMenu == null) {
-				this.tabellenMenu = new JPopupMenu("Tabelle");
+			if (tabellenMenu == null) {
+				tabellenMenu = new JPopupMenu("Tabelle");
 				JMenuItem speichernItem = new JMenuItem(new AbstractAction("Speichern") {
 					private static final long serialVersionUID = 2096747421254651035L;
 
@@ -1520,36 +1521,36 @@ public class SielhautBearbeiten extends AbstractModul {
 						saveTabelle();
 					}
 				});
-				this.tabellenMenu.add(speichernItem);
+				tabellenMenu.add(speichernItem);
 			}
 
 			if (e.isPopupTrigger()) {
 				Point origin = e.getPoint();
-				int row = this.exportTable.rowAtPoint(origin);
-				int col = this.exportTable.columnAtPoint(origin);
+				int row = exportTable.rowAtPoint(origin);
+				int col = exportTable.columnAtPoint(origin);
 
 				if (row != -1) {
-					this.exportTable.setRowSelectionInterval(row, row);
-					this.exportTable.setColumnSelectionInterval(col, col);
-					this.tabellenMenu.show(e.getComponent(), e.getX(), e.getY());
+					exportTable.setRowSelectionInterval(row, row);
+					exportTable.setColumnSelectionInterval(col, col);
+					tabellenMenu.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
 		}
 
 		public void doAbbrechen() {
 			SielhautBearbeiten.this.frame.clearStatus();
-			this.dispose();
+			dispose();
 		}
 
 		public void doSpeichern() {
 			SielhautBearbeiten.this.frame.clearStatus();
-			if (this.tabbedPane.getSelectedIndex() == 0) {
+			if (tabbedPane.getSelectedIndex() == 0) {
 				try {
-					this.chartPanel.doSaveAs();
+					chartPanel.doSaveAs();
 				} catch (IOException e) {
 					log.debug("Konnte Datei nicht speichern!");
 				}
-			} else if (this.tabbedPane.getSelectedIndex() == 1) {
+			} else if (tabbedPane.getSelectedIndex() == 1) {
 				saveTabelle();
 			}
 		}
@@ -1643,91 +1644,91 @@ public class SielhautBearbeiten extends AbstractModul {
 	}
 
 	private JDateChooser getVonDateChooser() {
-		if (this.vonDateChooser == null) {
-			this.vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+		if (vonDateChooser == null) {
+			vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
 		}
 
-		return this.vonDateChooser;
+		return vonDateChooser;
 	}
 
 	private JDateChooser getBisDateChooser() {
 
-		if (this.bisDateChooser == null) {
-			this.bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+		if (bisDateChooser == null) {
+			bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
 		}
 
-		return this.bisDateChooser;
+		return bisDateChooser;
 	}
 
 	private JCheckBox getBleiCheck() {
-		if (this.BleiCheck == null) {
-			this.BleiCheck = new JCheckBox("Blei", false);
+		if (BleiCheck == null) {
+			BleiCheck = new JCheckBox("Blei", false);
 		}
-		return this.BleiCheck;
+		return BleiCheck;
 	}
 
 	private JCheckBox getCadmiumCheck() {
-		if (this.CadmiumCheck == null) {
-			this.CadmiumCheck = new JCheckBox("Cadmium", false);
+		if (CadmiumCheck == null) {
+			CadmiumCheck = new JCheckBox("Cadmium", false);
 		}
-		return this.CadmiumCheck;
+		return CadmiumCheck;
 	}
 
 	private JCheckBox getChromCheck() {
-		if (this.ChromCheck == null) {
-			this.ChromCheck = new JCheckBox("Chrom", false);
+		if (ChromCheck == null) {
+			ChromCheck = new JCheckBox("Chrom", false);
 		}
-		return this.ChromCheck;
+		return ChromCheck;
 	}
 
 	private JCheckBox getKupferCheck() {
-		if (this.KupferCheck == null) {
-			this.KupferCheck = new JCheckBox("Kupfer", false);
+		if (KupferCheck == null) {
+			KupferCheck = new JCheckBox("Kupfer", false);
 		}
-		return this.KupferCheck;
+		return KupferCheck;
 	}
 
 	private JCheckBox getNickelCheck() {
-		if (this.NickelCheck == null) {
-			this.NickelCheck = new JCheckBox("Nickel", false);
+		if (NickelCheck == null) {
+			NickelCheck = new JCheckBox("Nickel", false);
 		}
-		return this.NickelCheck;
+		return NickelCheck;
 	}
 
 	private JCheckBox getQuecksilberCheck() {
-		if (this.QuecksilberCheck == null) {
-			this.QuecksilberCheck = new JCheckBox("Quecksilber", false);
+		if (QuecksilberCheck == null) {
+			QuecksilberCheck = new JCheckBox("Quecksilber", false);
 		}
-		return this.QuecksilberCheck;
+		return QuecksilberCheck;
 	}
 
 	private JCheckBox getZinkCheck() {
-		if (this.ZinkCheck == null) {
-			this.ZinkCheck = new JCheckBox("Zink", false);
+		if (ZinkCheck == null) {
+			ZinkCheck = new JCheckBox("Zink", false);
 		}
-		return this.ZinkCheck;
+		return ZinkCheck;
 	}
 
 	private JTextField getPrNummerFeld() {
-		if (this.prNummerFeld == null) {
-			this.prNummerFeld = new LimitedTextField(50, "");
+		if (prNummerFeld == null) {
+			prNummerFeld = new LimitedTextField(50, "");
 		}
-		return this.prNummerFeld;
+		return prNummerFeld;
 	}
 
 	private JDateChooser getPrDateChooser() {
-		if (this.prDateChooser == null) {
-			this.prDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+		if (prDateChooser == null) {
+			prDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
 		}
-		return this.prDateChooser;
+		return prDateChooser;
 	}
 
 	private JButton getPrAnlegenButton() {
-		if (this.prAnlegenButton == null) {
-			this.prAnlegenButton = new JButton("Anlegen");
-			this.prAnlegenButton.setEnabled(false);
+		if (prAnlegenButton == null) {
+			prAnlegenButton = new JButton("Anlegen");
+			prAnlegenButton.setEnabled(false);
 
-			this.prAnlegenButton.addActionListener(new ActionListener() {
+			prAnlegenButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					neueProbenahme();
@@ -1735,15 +1736,15 @@ public class SielhautBearbeiten extends AbstractModul {
 			});
 		}
 
-		return this.prAnlegenButton;
+		return prAnlegenButton;
 	}
 
 	private JButton getTabelleExportButton() {
-		if (this.tabelleExportButton == null) {
-			this.tabelleExportButton = new JButton("Tabelle speichern");
-			this.tabelleExportButton.setEnabled(false);
+		if (tabelleExportButton == null) {
+			tabelleExportButton = new JButton("Tabelle speichern");
+			tabelleExportButton.setEnabled(false);
 
-			this.tabelleExportButton.addActionListener(new ActionListener() {
+			tabelleExportButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					saveTabelle();
@@ -1751,18 +1752,18 @@ public class SielhautBearbeiten extends AbstractModul {
 			});
 		}
 
-		return this.tabelleExportButton;
+		return tabelleExportButton;
 	}
 
 	// Foto
 	private RetractablePanel getFotoRtPanel() {
-		if (this.fotoRtPanel == null) {
+		if (fotoRtPanel == null) {
 			JPanel fotoPanel = new JPanel();
 
 			fotoPanel.add(getFotoLabel());
 			fotoPanel.setBackground(Color.WHITE);
 			fotoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			this.fotoRtPanel = new RetractablePanel(DefaultComponentFactory.getInstance().createSeparator("Foto"),
+			fotoRtPanel = new RetractablePanel(DefaultComponentFactory.getInstance().createSeparator("Foto"),
 					fotoPanel, false, null) {
 				private static final long serialVersionUID = 6505102322099919490L;
 
@@ -1791,20 +1792,20 @@ public class SielhautBearbeiten extends AbstractModul {
 				}
 			};
 		}
-		return this.fotoRtPanel;
+		return fotoRtPanel;
 	}
 
 	private JLabel getFotoLabel() {
-		if (this.fotoLabel == null) {
-			this.fotoLabel = new JLabel("<html><b>- Kein Foto verfügbar! -</b></html>");
+		if (fotoLabel == null) {
+			fotoLabel = new JLabel("<html><b>- Kein Foto verfügbar! -</b></html>");
 		}
 
-		return this.fotoLabel;
+		return fotoLabel;
 	}
 
 	// Kartenausschnitt
 	private RetractablePanel getKartenRtPanel() {
-		if (this.kartenRtPanel == null) {
+		if (kartenRtPanel == null) {
 			JPanel kartenPanel = new JPanel();
 			kartenPanel.add(getKartenLabel());
 			kartenPanel.setBackground(Color.WHITE);
@@ -1840,16 +1841,16 @@ public class SielhautBearbeiten extends AbstractModul {
 				}
 			};
 		}
-		this.kartenRtPanel.repaint();
-		return this.kartenRtPanel;
+		kartenRtPanel.repaint();
+		return kartenRtPanel;
 	}
 
 	private JLabel getKartenLabel() {
-		if (this.kartenLabel == null) {
-			this.kartenLabel = new JLabel("<html><b>- Keine Karte verfügbar -</b></html>");
+		if (kartenLabel == null) {
+			kartenLabel = new JLabel("<html><b>- Keine Karte verfügbar -</b></html>");
 		}
 
-		return this.kartenLabel;
+		return kartenLabel;
 	}
 
 	private void readClipboard() {
@@ -1874,8 +1875,8 @@ public class SielhautBearbeiten extends AbstractModul {
 				if (tmp.length == 4) {
 					String e32AusZeile = tmp[2];
 					String n32AusZeile = tmp[3];
-					this.spE32Feld.setText(e32AusZeile.substring(0, 7));
-					this.spN32Feld.setText(n32AusZeile.substring(0, 7));
+					spE32Feld.setText(e32AusZeile.substring(0, 7));
+					spN32Feld.setText(n32AusZeile.substring(0, 7));
 					this.frame.changeStatus("Rechts- und Hochwert eingetragen", HauptFrame.SUCCESS_COLOR);
 				} else {
 					this.frame.changeStatus("Zwischenablage enthält keine verwertbaren Daten", HauptFrame.ERROR_COLOR);
@@ -1886,11 +1887,11 @@ public class SielhautBearbeiten extends AbstractModul {
 	}
 
 	public JButton getAusAblageButton() {
-		if (this.ausAblageButton == null) {
+		if (ausAblageButton == null) {
 
-			this.ausAblageButton = new JButton("aus QGis");
-			this.ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
-			this.ausAblageButton.addActionListener(new ActionListener() {
+			ausAblageButton = new JButton("aus QGis");
+			ausAblageButton.setToolTipText("Rechts- und Hochwert aus Zwischenablage einfügen");
+			ausAblageButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					readClipboard();
@@ -1898,6 +1899,6 @@ public class SielhautBearbeiten extends AbstractModul {
 			});
 		}
 
-		return this.ausAblageButton;
+		return ausAblageButton;
 	}
 }
