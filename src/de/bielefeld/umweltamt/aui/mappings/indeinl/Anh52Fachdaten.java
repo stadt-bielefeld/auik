@@ -335,7 +335,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
     /* Custom code goes below here! */
     public static Anh52Fachdaten findByAnfallstelleId(java.lang.Integer id){
         log.debug("Getting Anh52Fachdaten instance with connected Anfallstelle with id: " + id);
-        Anfallstelle anfallstelle = (Anfallstelle) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
+        Anfallstelle anfallstelle = (Anfallstelle) HibernateSessionFactory.currentSession().createQuery("from Anfallstelle where id= " + id).list().get(0);
         Set<Anh52Fachdaten> list = anfallstelle.getAnh52Fachdatens();
         return list.iterator().next();
     }

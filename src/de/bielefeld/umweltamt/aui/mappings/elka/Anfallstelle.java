@@ -81,13 +81,13 @@ public class Anfallstelle  implements java.io.Serializable {
     private Set<Referenz> referenzsForZAfsNr = new HashSet<Referenz>(0);
     private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
     private Set<Referenz> referenzsForQAfsNr = new HashSet<Referenz>(0);
-    private Set<Anh40Fachdaten> anh40Fachdatens = new HashSet<Anh40Fachdaten>(0);
     private Set<BwkFachdaten> bwkFachdatens = new HashSet<BwkFachdaten>(0);
+    private Set<Anh40Fachdaten> anh40Fachdatens = new HashSet<Anh40Fachdaten>(0);
     private Set<Anh49Fachdaten> anh49Fachdatens = new HashSet<Anh49Fachdaten>(0);
     private Set<Anh50Fachdaten> anh50Fachdatens = new HashSet<Anh50Fachdaten>(0);
     private Set<Anh52Fachdaten> anh52Fachdatens = new HashSet<Anh52Fachdaten>(0);
-    private Set<Anh56Fachdaten> anh56Fachdatens = new HashSet<Anh56Fachdaten>(0);
     private Set<Anh55Fachdaten> anh55Fachdatens = new HashSet<Anh55Fachdaten>(0);
+    private Set<Anh56Fachdaten> anh56Fachdatens = new HashSet<Anh56Fachdaten>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -105,7 +105,7 @@ public class Anfallstelle  implements java.io.Serializable {
 
     /** Full constructor */
     public Anfallstelle(
-        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, BigDecimal maxVolTag, BigDecimal maxVolStunde, Integer volJahr, String externalNr, String anlagenart, String bemerkungen, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr) {
+        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, BigDecimal maxVolTag, BigDecimal maxVolStunde, Integer volJahr, String externalNr, String anlagenart, String bemerkungen, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr, Set<BwkFachdaten> bwkFachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
         this.id = id;
         this.objekt = objekt;
         this.seqId = seqId;
@@ -130,12 +130,13 @@ public class Anfallstelle  implements java.io.Serializable {
         this.referenzsForZAfsNr = referenzsForZAfsNr;
         this.afsNiederschlagswassers = afsNiederschlagswassers;
         this.referenzsForQAfsNr = referenzsForQAfsNr;
-        this.anh40Fachdatens = anh40Fachdatens;
         this.bwkFachdatens = bwkFachdatens;
-        this.anh52Fachdatens = anh52Fachdatens;
-        this.anh56Fachdatens = anh56Fachdatens;
-        this.anh55Fachdatens = anh55Fachdatens;
+        this.anh40Fachdatens = anh40Fachdatens;
         this.anh49Fachdatens = anh49Fachdatens;
+        this.anh50Fachdatens = anh50Fachdatens;
+        this.anh52Fachdatens = anh52Fachdatens;
+        this.anh55Fachdatens = anh55Fachdatens;
+        this.anh56Fachdatens = anh56Fachdatens;
     }
 
     /* Setter and getter methods */
@@ -331,20 +332,20 @@ public class Anfallstelle  implements java.io.Serializable {
         this.referenzsForQAfsNr = referenzsForQAfsNr;
     }
 
-    public Set<Anh40Fachdaten> getAnh40Fachdatens() {
-        return this.anh40Fachdatens;
-    }
-
-    public void setAnh40Fachdatens(Set<Anh40Fachdaten> anh40Fachdatens) {
-        this.anh40Fachdatens = anh40Fachdatens;
-    }
-
     public Set<BwkFachdaten> getBwkFachdatens() {
         return this.bwkFachdatens;
     }
 
     public void setBwkFachdatens(Set<BwkFachdaten> bwkFachdatens) {
         this.bwkFachdatens = bwkFachdatens;
+    }
+
+    public Set<Anh40Fachdaten> getAnh40Fachdatens() {
+        return this.anh40Fachdatens;
+    }
+
+    public void setAnh40Fachdatens(Set<Anh40Fachdaten> anh40Fachdatens) {
+        this.anh40Fachdatens = anh40Fachdatens;
     }
 
     public Set<Anh49Fachdaten> getAnh49Fachdatens() {
@@ -371,20 +372,20 @@ public class Anfallstelle  implements java.io.Serializable {
         this.anh52Fachdatens = anh52Fachdatens;
     }
 
-    public Set<Anh56Fachdaten> getAnh56Fachdatens() {
-        return this.anh56Fachdatens;
-    }
-
-    public void setAnh56Fachdatens(Set<Anh56Fachdaten> anh56Fachdatens) {
-        this.anh56Fachdatens = anh56Fachdatens;
-    }
-
     public Set<Anh55Fachdaten> getAnh55Fachdatens() {
         return this.anh55Fachdatens;
     }
 
     public void setAnh55Fachdatens(Set<Anh55Fachdaten> anh55Fachdatens) {
         this.anh55Fachdatens = anh55Fachdatens;
+    }
+
+    public Set<Anh56Fachdaten> getAnh56Fachdatens() {
+        return this.anh56Fachdatens;
+    }
+
+    public void setAnh56Fachdatens(Set<Anh56Fachdaten> anh56Fachdatens) {
+        this.anh56Fachdatens = anh56Fachdatens;
     }
 
     /**
@@ -429,11 +430,12 @@ public class Anfallstelle  implements java.io.Serializable {
         buffer.append("referenzsForZAfsNr").append("='").append(getReferenzsForZAfsNr()).append("' ");			
         buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");			
         buffer.append("referenzsForQAfsNr").append("='").append(getReferenzsForQAfsNr()).append("' ");
-        buffer.append("anh40Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
         buffer.append("bwkFachdatens").append("='").append(getBwkFachdatens()).append("' ");
+        buffer.append("anh40Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
         buffer.append("anh49Fachdatens").append("='").append(getAnh49Fachdatens()).append("' ");
-        buffer.append("anh55Fachdatens").append("='").append(getAnh55Fachdatens()).append("' ");
+        buffer.append("anh50Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
         buffer.append("anh52Fachdatens").append("='").append(getAnh52Fachdatens()).append("' ");
+        buffer.append("anh55Fachdatens").append("='").append(getAnh55Fachdatens()).append("' ");
         buffer.append("anh56Fachdatens").append("='").append(getAnh56Fachdatens()).append("' ");			
         buffer.append("]");
 
@@ -522,9 +524,10 @@ public class Anfallstelle  implements java.io.Serializable {
         this.referenzsForZAfsNr = copy.getReferenzsForZAfsNr();            
         this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();            
         this.referenzsForQAfsNr = copy.getReferenzsForQAfsNr();     
-        this.anh40Fachdatens = copy.getAnh40Fachdatens();
         this.bwkFachdatens = copy.getBwkFachdatens();
+        this.anh40Fachdatens = copy.getAnh40Fachdatens();
         this.anh49Fachdatens = copy.getAnh49Fachdatens();
+        this.anh50Fachdatens = copy.getAnh50Fachdatens();
         this.anh55Fachdatens = copy.getAnh55Fachdatens();
         this.anh52Fachdatens = copy.getAnh52Fachdatens();
         this.anh56Fachdatens = copy.getAnh56Fachdatens();       
