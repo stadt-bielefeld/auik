@@ -63,9 +63,9 @@ import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Kontrollen;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
-import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
+import de.bielefeld.umweltamt.aui.module.common.editors.AwsvEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh50Model;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.VawsAnlagenchronoModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.AwsvAnlagenchronoModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -73,7 +73,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches Auswertungs-Modul für Anhang 50-Datensätze.
  * @author David Klotz
  */
-public class VawsChronologieAuswertung extends AbstractQueryModul {
+public class AwsvChronologieAuswertung extends AbstractQueryModul {
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
 
@@ -91,7 +91,7 @@ public class VawsChronologieAuswertung extends AbstractQueryModul {
         if (row != -1) {
             Fachdaten fd = ((Anlagenchrono)tmodel.getObjectAtRow(row)).getFachdaten();
 
-            VawsEditor editor = new VawsEditor(fd, frame, "Daten");
+            AwsvEditor editor = new AwsvEditor(fd, frame, "Daten");
 
             editor.setVisible(true);
 
@@ -104,13 +104,13 @@ public class VawsChronologieAuswertung extends AbstractQueryModul {
     }
 
     /** Das TableModel für die Ergebnis-Tabelle */
-    private VawsAnlagenchronoModel tmodel;
+    private AwsvAnlagenchronoModel tmodel;
 
     public void updateListe() {
         SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(250, 250, 50, 100, 50)) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                ((VawsAnlagenchronoModel)getTableModel()).updateList();
+                ((AwsvAnlagenchronoModel)getTableModel()).updateList();
             }
 
             @Override
@@ -181,11 +181,11 @@ public class VawsChronologieAuswertung extends AbstractQueryModul {
             submitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ((VawsAnlagenchronoModel)getTableModel()).setList(
+                    ((AwsvAnlagenchronoModel)getTableModel()).setList(
                         DatabaseQuery.getAnlagenchrono(
                         		wiedervorlageCheck.isSelected(), 
                         		abgeschlossenCheck.isSelected()));
-                    ((VawsAnlagenchronoModel)getTableModel()).fireTableDataChanged();
+                    ((AwsvAnlagenchronoModel)getTableModel()).fireTableDataChanged();
                     frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                 }
             });
@@ -208,7 +208,7 @@ public class VawsChronologieAuswertung extends AbstractQueryModul {
     @Override
     public ListTableModel getTableModel() {
         if (tmodel == null) {
-            tmodel = new VawsAnlagenchronoModel();
+            tmodel = new AwsvAnlagenchronoModel();
         }
         return tmodel;
     }

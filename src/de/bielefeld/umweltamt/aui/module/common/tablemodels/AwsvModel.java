@@ -58,13 +58,13 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Vaws-Fachdaten.
  * @author David Klotz
  */
-public class VawsModel extends ListTableModel {
+public class AwsvModel extends ListTableModel {
     private static final long serialVersionUID = -2723711304275935781L;
 
     /**
      * Erzeugt ein einfaches TableModel für Vaws-Fachdaten.
      */
-    public VawsModel() {
+    public AwsvModel() {
         super(new String[]{
                 "Anlagenart",
                 "Bezeichnung/Zuordnung",

@@ -42,10 +42,10 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Vaws Anlagenchronologien.
  * @author Gerd Genuit
  */
-public class VawsAnlagenchronoModel extends ListTableModel {
+public class AwsvAnlagenchronoModel extends ListTableModel {
 	private static final long serialVersionUID = 5854006303057335338L;
 
-	public VawsAnlagenchronoModel() {
+	public AwsvAnlagenchronoModel() {
         super(new String[]{
                 "Betreiber",
                 "Standort",

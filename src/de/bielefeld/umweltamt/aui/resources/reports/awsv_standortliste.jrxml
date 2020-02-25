@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vaws_standortliste" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="48" bottomMargin="42" uuid="bb16e809-8cfa-44f5-8373-13d589070031">
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.10.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="awsv_standortliste" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="48" bottomMargin="42" uuid="bb16e809-8cfa-44f5-8373-13d589070031">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -62,7 +63,7 @@ where standort.id = $P{StandortId} and fachdaten.objektid > 0;]]>
 					<font size="15" isBold="true"/>
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<text><![CDATA[VAwS-Liste von Standort]]></text>
+				<text><![CDATA[AwSV-Liste von Standort]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="1" y="77" width="483" height="20" uuid="baec4638-ebab-4849-a431-c6786712d126"/>
@@ -89,7 +90,7 @@ where standort.id = $P{StandortId} and fachdaten.objektid > 0;]]>
 					<subreportParameterExpression><![CDATA[$P{StandortId}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("de/bielefeld/umweltamt/aui/resources/reports/vaws_standortliste_details.jasper"))]]></subreportExpression>
+				<subreportExpression><![CDATA[net.sf.jasperreports.engine.util.JRLoader.loadObject(getClass().getResource("de/bielefeld/umweltamt/aui/resources/reports/awsv_standortliste_details.jasper"))]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

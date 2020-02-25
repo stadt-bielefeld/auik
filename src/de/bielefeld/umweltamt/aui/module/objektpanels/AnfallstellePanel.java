@@ -71,6 +71,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.AnhBwkModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
+import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -428,10 +429,6 @@ public class AnfallstellePanel extends JPanel {
         } else {
         	this.anfallstelle.setBemerkungen(bemerkungen);
         }
-        
-        if (anfallstelle.getAnh40Fachdatens().size() > 0) {
-        	anfallstelle.getAnh40Fachdatens().iterator().next().merge();
-        }
 
         success = this.anfallstelle.merge();
         
@@ -451,6 +448,7 @@ public class AnfallstellePanel extends JPanel {
     		// Neue Anfallstelle erzeugen
     		this.anfallstelle = new Anfallstelle();
     		this.anfallstelle.setAnhangId("99");
+    		this.anfallstelle.setErstellDat(new Date());
     		// Objekt_Id setzen
     		this.anfallstelle.setObjekt(this.hauptModul.getObjekt());
     		// Anfallstelle speichern
@@ -795,11 +793,12 @@ public class AnfallstellePanel extends JPanel {
         return this.selectObjektButton;
     }
 
-    /**
-     * Switch the panel content according to the given type and anlagenart string
-     * @param type New panel content type
-     * @param anlagenart New panel content anlagenart
-     */
+	/**
+	 * Switch the panel content according to the given type and anlagenart string
+	 * 
+	 * @param type       New panel content type
+	 * @param anlagenart New panel content anlagenart
+	 */
 	public void switchAnhangPanel(String type, String anlagenart) {
 		if (type == null) {
 			return;
@@ -815,7 +814,6 @@ public class AnfallstellePanel extends JPanel {
 		if (i > 3) {
 			hauptModul.getTabbedPane().removeTabAt(3);
 		}
-		
 
 		this.anlagenartBox.enable(false);
 
@@ -823,7 +821,8 @@ public class AnfallstellePanel extends JPanel {
 		case "40":
 			hauptModul.getTabbedPane().addTab(getAnh40Tab().getName(), getAnh40Tab());
 			if (anfallstelle.getAnh40Fachdatens().size() > 0) {
-				getAnh40Tab().clearForm();
+				getAnh40Tab().fetchFormData();
+				getAnh40Tab().enableAll(true);
 				getAnh40Tab().updateForm(anfallstelle);
 			} else {
 				anfallstelle.setAnhangId("40");
@@ -836,8 +835,8 @@ public class AnfallstellePanel extends JPanel {
 			hauptModul.getTabbedPane().addTab(getAnh49Tab().getName(), getAnh49Tab());
 			hauptModul.getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
 			if (anfallstelle.getAnh49Fachdatens().size() > 0) {
-				getAnh49Tab().clearForm();
-				getAnh49Tab().enable(true);
+				getAnh49Tab().fetchFormData();
+				getAnh49Tab().enableAll(true);
 				getAnh49Tab().updateForm(anfallstelle);
 				getAnh49AnalyseTab().clearForm();
 				getAnh49AnalyseTab().updateForm(getAnh49Tab().getFachdaten());
@@ -852,7 +851,8 @@ public class AnfallstellePanel extends JPanel {
 		case "50":
 			hauptModul.getTabbedPane().addTab(getAnh50Tab().getName(), getAnh50Tab());
 			if (anfallstelle.getAnh50Fachdatens().size() > 0) {
-				getAnh50Tab().clearForm();
+				getAnh50Tab().fetchFormData();
+				getAnh50Tab().enableAll(true);
 				getAnh50Tab().updateForm(anfallstelle);
 			} else {
 				anfallstelle.setAnhangId("50");
@@ -864,7 +864,8 @@ public class AnfallstellePanel extends JPanel {
 		case "52":
 			hauptModul.getTabbedPane().addTab(getAnh52Tab().getName(), getAnh52Tab());
 			if (anfallstelle.getAnh52Fachdatens().size() > 0) {
-				getAnh52Tab().clearForm();
+				getAnh52Tab().fetchFormData();
+				getAnh52Tab().enableAll(true);
 				getAnh52Tab().updateForm(anfallstelle);
 			} else {
 				anfallstelle.setAnhangId("52");
@@ -876,7 +877,8 @@ public class AnfallstellePanel extends JPanel {
 		case "55":
 			hauptModul.getTabbedPane().addTab(getAnh55Tab().getName(), getAnh55Tab());
 			if (anfallstelle.getAnh55Fachdatens().size() > 0) {
-				getAnh55Tab().clearForm();
+				getAnh55Tab().fetchFormData();
+				getAnh55Tab().enableAll(true);
 				getAnh55Tab().updateForm(anfallstelle);
 			} else {
 				anfallstelle.setAnhangId("55");
@@ -888,7 +890,8 @@ public class AnfallstellePanel extends JPanel {
 		case "56":
 			hauptModul.getTabbedPane().addTab(getAnh56Tab().getName(), getAnh56Tab());
 			if (anfallstelle.getAnh56Fachdatens().size() > 0) {
-				getAnh56Tab().clearForm();
+				getAnh56Tab().fetchFormData();
+				getAnh56Tab().enableAll(true);
 				getAnh56Tab().updateForm(anfallstelle);
 			} else {
 				anfallstelle.setAnhangId("56");
@@ -903,7 +906,8 @@ public class AnfallstellePanel extends JPanel {
 			case "Brennwertkessel":
 				hauptModul.getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
 				if (anfallstelle.getBwkFachdatens().size() > 0) {
-					getBWKTab().clearForm();
+					getBWKTab().fetchFormData();
+					getBWKTab().enableAll(true);
 					getBWKTab().updateForm();
 				} else {
 					anfallstelle.setAnhangId("99");
@@ -912,11 +916,12 @@ public class AnfallstellePanel extends JPanel {
 					getBWKTab().completeObjekt(anfallstelle);
 					hauptModul.getTabbedPane().setSelectedIndex(3);
 				}
-			break;
+				break;
 			case "Blockheizkraftwerk":
 				hauptModul.getTabbedPane().addTab("Blockheizkraftwerk", getBWKTab());
 				if (anfallstelle.getBwkFachdatens().size() > 0) {
-					getBWKTab().clearForm();
+					getBWKTab().fetchFormData();
+					getBWKTab().enableAll(true);
 					getBWKTab().updateForm();
 				} else {
 					anfallstelle.setAnhangId("99");
@@ -925,38 +930,42 @@ public class AnfallstellePanel extends JPanel {
 					getBWKTab().completeObjekt(anfallstelle);
 					hauptModul.getTabbedPane().setSelectedIndex(3);
 				}
-			break;
+				break;
 			case "Fettabscheider":
 				hauptModul.getTabbedPane().addTab("Fettabscheider", getAnh49Tab());
 				hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
 				if (anfallstelle.getAnh49Fachdatens().size() > 0) {
-					getAnh49Tab().clearForm();
+					getAnh49Tab().fetchFormData();
+					getAnh49Tab().enableAll(true);
 					getAnh49Tab().updateForm(anfallstelle);
 					getAnh49AbfuhrTab().clearForm();
 					getAnh49AbfuhrTab().updateForm(getAnh49Tab().getFachdaten());
 				} else {
 					anfallstelle.setAnhangId("99");
 					anfallstelle.setAnlagenart("Fettabscheider");
+					getAnh49Tab().clearForm();
+					getAnh49Tab().enableAll(true);
+					getAnh49Tab().completeObjekt(anfallstelle);
+					hauptModul.getTabbedPane().setSelectedIndex(3);
+				}
+				break;
+			case "Abscheider":
+				hauptModul.getTabbedPane().addTab("Abscheider", getAnh49Tab());
+				hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
+				if (anfallstelle.getAnh49Fachdatens().size() > 0) {
+					getAnh49Tab().fetchFormData();
+					getAnh49Tab().enableAll(true);
+					getAnh49Tab().updateForm(anfallstelle);
+					getAnh49AbfuhrTab().clearForm();
+					getAnh49AbfuhrTab().updateForm(getAnh49Tab().getFachdaten());
+				} else {
+					anfallstelle.setAnhangId("99");
+					anfallstelle.setAnlagenart("Abscheider");
 					getBWKTab().clearForm();
 					getAnh49Tab().completeObjekt(anfallstelle);
 					hauptModul.getTabbedPane().setSelectedIndex(3);
 				}
-				case "Abscheider":
-					hauptModul.getTabbedPane().addTab("Abscheider", getAnh49Tab());
-					hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
-					if (anfallstelle.getAnh49Fachdatens().size() > 0) {
-						getAnh49Tab().clearForm();
-						getAnh49Tab().updateForm(anfallstelle);
-						getAnh49AbfuhrTab().clearForm();
-						getAnh49AbfuhrTab().updateForm(getAnh49Tab().getFachdaten());
-					} else {
-						anfallstelle.setAnhangId("99");
-						anfallstelle.setAnlagenart("Abscheider");
-						getBWKTab().clearForm();
-						getAnh49Tab().completeObjekt(anfallstelle);
-						hauptModul.getTabbedPane().setSelectedIndex(3);
-					}
-			break;
+				break;
 			}
 		}
 	}

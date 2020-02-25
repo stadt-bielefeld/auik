@@ -57,6 +57,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
@@ -157,6 +158,13 @@ public class Anh40Panel extends JPanel {
         		getSaveAnh40Button());
         builder.append(buttonBar,7);
 
+    }
+
+    public void fetchFormData() throws RuntimeException {
+    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+		this.fachdaten = Anh40Fachdaten.findByAnfallstelleId(
+				list.iterator().next().getId());
+        log.debug("Anhang 40 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
     public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
@@ -387,10 +395,23 @@ public class Anh40Panel extends JPanel {
             this.saveAnh40Button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-//                    enableAll(false);
+                    enableAll(false);
+                    
                     saveAnh40Daten();
+                    if (saveAnh40Daten()) {
+                        Anh40Panel.this.hauptModul.getFrame().changeStatus(
+                            "Anh 40 Objekt "
+                                + Anh40Panel.this.fachdaten.getId()
+                                + " erfolgreich gespeichert.",
+                            HauptFrame.SUCCESS_COLOR);
+                    } else {
+                    	Anh40Panel.this.hauptModul.getFrame().changeStatus(
+                            "Fehler beim Speichern des Anh 40 Objekt!",
+                            HauptFrame.ERROR_COLOR);
+                    }
 
-//                    Anh40Panel.fillForm();
+
+                    Anh40Panel.this.hauptModul.fillForm();
                 }
             });
         }

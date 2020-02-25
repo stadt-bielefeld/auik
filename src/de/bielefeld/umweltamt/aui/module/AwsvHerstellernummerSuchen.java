@@ -44,7 +44,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
-import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
+import de.bielefeld.umweltamt.aui.module.common.editors.AwsvEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.HerstellNrSuchenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -53,7 +53,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches Such-Modul fÃ¼r Vaws-Anlagen anhand der Herstellnummer.
  * @author Sebastian Geller
  */
-public class VawsHerstellernummerSuchen extends AbstractQueryModul {
+public class AwsvHerstellernummerSuchen extends AbstractQueryModul {
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -154,7 +154,7 @@ public class VawsHerstellernummerSuchen extends AbstractQueryModul {
         if (row != -1) {
             Fachdaten fachdaten = ((Fachdaten)ergebnisModel.getObjectAtRow(row));
 
-            VawsEditor editor = new VawsEditor(fachdaten, frame, "Herstellnummer");
+            AwsvEditor editor = new AwsvEditor(fachdaten, frame, "Herstellnummer");
 
             editor.setVisible(true);
         }

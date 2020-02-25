@@ -112,6 +112,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -598,17 +599,10 @@ public class Anh49Panel extends AbstractAnhangPanel {
     }
 
     public void fetchFormData() {
-    	if(this.hauptModul.getObjekt().getObjektarten().getId() == 58)
-    	{
-    		this.fachdaten = Anh49Fachdaten.findByObjektId(
-    	            this.hauptModul.getObjekt().getId());
-    	        this.log.debug("Anhang 49 Objekt aus DB geholt: " + this.fachdaten);
-    	} else {
-    		Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
-    		this.fachdaten = Anh49Fachdaten.findByAnfallstelleId(
-    				list.iterator().next().getId());
-            this.log.debug("Anhang 49 Objekt aus DB geholt: " + this.fachdaten);
-    	}
+    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+		this.fachdaten = Anh49Fachdaten.findByAnfallstelleId(
+				list.iterator().next().getId());
+        log.debug("Anhang 40 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
     public void updateForm() {
@@ -727,6 +721,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
             .getComponentValue(this.WIEDERVORLAGEDATUM));
         this.fachdaten.setSicherheitsabscheider((Boolean) super
                 .getComponentValue(this.SICHERHEITSABSCHEIDER));
+        this.fachdaten.getAnfallstelle().setObjekt(this.hauptModul.getObjekt());
 
         Anfallstelle.merge(this.anfallstelle);
         success = this.fachdaten.merge();
@@ -740,7 +735,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
     }
 
     public void completeObjekt(Anfallstelle anfallstelle) {
-        if (this.hauptModul.isNew() || this.fachdaten == null) {
+        if (anfallstelle.getAnh49Fachdatens().size() == 0) {
             // Neues Anhang49-Objekt erzeugen
             this.fachdaten = new Anh49Fachdaten();
 

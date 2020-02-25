@@ -668,10 +668,10 @@ public class BasisStandortSuchen extends AbstractModul
 		params.put("StandortId", standort.getId());
 		try
 		{
-			File pdfFile = File.createTempFile("VAwS_StandortListe", ".pdf");
+			File pdfFile = File.createTempFile("AwSV_StandortListe", ".pdf");
 			pdfFile.deleteOnExit();
 			PDFExporter.getInstance().exportReport(params,
-													PDFExporter.VAWS_STANDORTLISTE, pdfFile.getAbsolutePath());
+													PDFExporter.AWSV_STANDORTLISTE, pdfFile.getAbsolutePath());
 		}
 		catch (Exception ex)
 		{
@@ -955,7 +955,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 			this.reportStandortListeButton = new JButton("PDF-Liste generieren");
 			this.reportStandortListeButton
-					.setToolTipText("Liste der VAwS-Objekte am Standort");
+					.setToolTipText("Liste der AwSV-Objekte am Standort");
 			this.reportStandortListeButton
 					.addActionListener(new ActionListener()
 					{

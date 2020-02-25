@@ -126,7 +126,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Ein Editor für VAWS-Datensätze.
  * @author David Klotz
  */
-public class VawsEditor extends AbstractBaseEditor {
+public class AwsvEditor extends AbstractBaseEditor {
     private static final long serialVersionUID = -6239513794286892981L;
 
     /** Logging */
@@ -323,7 +323,7 @@ public class VawsEditor extends AbstractBaseEditor {
     /**
      * Erzeugt einen neuen Dialog zum Bearbeiten von VAWS-Fachdaten.
      */
-    public VawsEditor(Fachdaten fachdaten, HauptFrame owner) {
+    public AwsvEditor(Fachdaten fachdaten, HauptFrame owner) {
         //super("VAwS-Einzelanlage (" + fachdaten + ")", fachdaten, owner);
         super("VAwS-Einzelanlage " + (fachdaten.getBehaelterid() == null ? "(Neu)" : fachdaten.getBehaelterid().toString()), fachdaten, owner);
     }
@@ -333,7 +333,7 @@ public class VawsEditor extends AbstractBaseEditor {
      * Schaltet zu einem bestimmten Tab um.
      * @param tab "Sachverständigenprüfung", "Verwaltungsverfahren" oder "Herstellnummer"
      */
-    public VawsEditor(Fachdaten fachdaten, HauptFrame owner, String tab) {
+    public AwsvEditor(Fachdaten fachdaten, HauptFrame owner, String tab) {
         this(fachdaten, owner);
         if ("Sachverständigenprüfung".equals(tab)) {
             tabbedPane.setSelectedComponent(getSvPruefungTab());

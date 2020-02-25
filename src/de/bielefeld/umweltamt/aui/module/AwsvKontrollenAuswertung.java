@@ -21,7 +21,7 @@
 
 /*
  * Datei:
- * $Id: VawsVerwaltungsverfAuswertung.java,v 1.1.2.1 2010-11-23 10:25:55 u633d Exp $
+ * $Id: VawsKontrollenAuswertung.java,v 1.1.2.1 2010-11-23 10:25:53 u633d Exp $
  *
  * Erstellt am 27.09.2005 von David Klotz
  *
@@ -33,7 +33,7 @@
  * Revision 1.2  2009/03/24 12:35:20  u633d
  * Umstellung auf UTF8
  *
- * Revision 1.1  2008/06/05 11:38:32  u633d
+ * Revision 1.1  2008/06/05 11:38:33  u633d
  * Start AUIK auf Informix und Postgresql
  *
  * Revision 1.2  2005/10/13 13:00:26  u633d
@@ -52,9 +52,9 @@ import javax.swing.table.TableColumnModel;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsverf;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Kontrollen;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
-import de.bielefeld.umweltamt.aui.module.common.editors.VawsEditor;
+import de.bielefeld.umweltamt.aui.module.common.editors.AwsvEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -63,18 +63,18 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein Modul um noch ausstehende Prüfungen anzeigen zu lassen.
  * @author David Klotz
  */
-public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
-    private WiedervorlageVVModel model;
+public class AwsvKontrollenAuswertung extends AbstractQueryModul {
+    private WiedervorlageSVModel model;
 
     /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getBasisObjektFromFachdaten(Object)
+     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#editObject(int)
      */
     @Override
     protected void editObject(int row) {
         if (row != -1) {
-            Fachdaten fd = ((Verwaltungsverf)model.getObjectAtRow(row)).getFachdaten();
+            Fachdaten fd = ((Kontrollen)model.getObjectAtRow(row)).getFachdaten();
 
-            VawsEditor editor = new VawsEditor(fd, frame, "Verwaltungsverfahren");
+            AwsvEditor editor = new AwsvEditor(fd, frame, "Sachverständigenprüfung");
 
             editor.setVisible(true);
 
@@ -100,17 +100,16 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
     @Override
     public ListTableModel getTableModel() {
         if (model == null) {
-            model = new WiedervorlageVVModel();
+            model = new WiedervorlageSVModel();
         }
         return model;
     }
 
     public void updateListe() {
-        SwingWorkerVariant worker = new SwingWorkerVariant(
-            getResultTable(10, 250, 150, 25, 250)) {
+        SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(10, 10, 15, 250, 250)) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                ((WiedervorlageVVModel)getTableModel()).updateList();
+                ((WiedervorlageSVModel)getTableModel()).updateList();
             }
 
             @Override
@@ -138,6 +137,7 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
         return resultTable;
     }
 
+
     @Override
     public void show() {
         super.show();
@@ -149,7 +149,7 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
      */
     @Override
     public String getName() {
-        return "Wiedervorlage Verwaltungs - Verfahren";
+        return "Wiedervorlage Sachverständigen - Prüfung";
     }
 
     /* (non-Javadoc)
@@ -161,17 +161,17 @@ public class VawsVerwaltungsverfAuswertung extends AbstractQueryModul {
     }
 }
 
-class WiedervorlageVVModel extends ListTableModel {
-    private static final long serialVersionUID = -325284569406149762L;
+class WiedervorlageSVModel extends ListTableModel {
+    private static final long serialVersionUID = 8869570451383123968L;
 
-    public WiedervorlageVVModel() {
+    public WiedervorlageSVModel() {
         super(
                 new String[]{
                         "Behälter",
+                        "Nächste Prüfung",
+                        "Anlagenart",
                         "Betreiber",
-                        "Standort",
-                        "Wiedervorlage",
-                        "Maßnahmen der Verwaltung"
+                        "Standort"
                 },
                 false
         );
@@ -180,28 +180,28 @@ class WiedervorlageVVModel extends ListTableModel {
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object tmp;
-        Verwaltungsverf vf = (Verwaltungsverf) objectAtRow;
+        Kontrollen vk = (Kontrollen) objectAtRow;
 
         switch (columnIndex) {
-        case 0:
-            tmp = vf.getFachdaten().getBehaelterid();
-            break;
-        case 1:
-            tmp = vf.getFachdaten().getObjekt().getBetreiberid().getBetrname();
-            break;
-        case 2:
-            tmp = DatabaseQuery.getStandortString(vf.getFachdaten().getObjekt().getStandortid());
-            break;
-        case 3:
-            tmp = AuikUtils.getStringFromDate(vf.getWiedervorlage());
-            break;
-        case 4:
-            tmp = vf.getMassnahme();
-            break;
+            case 0:
+                tmp = vk.getFachdaten().getBehaelterid();
+                break;
+            case 1:
+                tmp = AuikUtils.getStringFromDate(vk.getNaechstepruefung());
+                break;
+            case 2:
+                tmp = vk.getFachdaten().getAnlagenart();
+                break;
+            case 3:
+                tmp = vk.getFachdaten().getObjekt().getBetreiberid().getBetrname();
+                break;
+            case 4:
+                tmp = DatabaseQuery.getStandortString(vk.getFachdaten().getObjekt().getStandortid());
+                break;
 
-        default:
-            tmp = "FEHLER!";
-            break;
+            default:
+                tmp = "FEHLER!";
+                break;
         }
 
         return tmp;
@@ -209,7 +209,7 @@ class WiedervorlageVVModel extends ListTableModel {
 
     @Override
     public void updateList() {
-        setList(DatabaseQuery.getWiedervorlageVerwaltungsverf());
+        setList(DatabaseQuery.getWiedervorlageKontrollen());
 //        fireTableDataChanged();
     }
 }

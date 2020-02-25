@@ -186,16 +186,10 @@ public class BWKPanel extends JPanel {
 
     }
 
-    public void fetchFormData() throws RuntimeException {
-    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
-		this.bwk = BwkFachdaten.findByAnfallstelleId(
-				list.iterator().next().getId());
-        log.debug("Brennwertkessel aus DB geholt: " + this.bwk);
-    }
-
     public void updateForm() throws RuntimeException {
+
+    	this.bwk = anfallstelle.getBwkFachdatens().iterator().next();
     	
-    	fetchFormData();
         if (this.bwk != null) {
             if (this.bwk.getKHersteller() != null) {
                 getHerstellerFeld().setText(this.bwk.getKHersteller());
@@ -254,7 +248,14 @@ public class BWKPanel extends JPanel {
 
     }
 
-    public void clearForm() {
+    public void fetchFormData() throws RuntimeException {
+		Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+		this.bwk = BwkFachdaten.findByAnfallstelleId(
+				list.iterator().next().getId());
+	    log.debug("Brennwertkessel aus DB geholt: " + this.bwk);
+	}
+
+	public void clearForm() {
         getHerstellerFeld().setText(null);
         getTypFeld().setText(null);
         getBrennmittelFeld().setText(null);
@@ -297,119 +298,9 @@ public class BWKPanel extends JPanel {
         return this.name;
     }
 
-    private boolean saveBwkDaten() {
-        boolean success;
-
-        String hersteller = this.herstellerFeld.getText();
-        if ("".equals(hersteller)) {
-            this.bwk.setKHersteller(null);
-        } else {
-            this.bwk.setKHersteller(hersteller);
-        }
-
-        String typ = this.typFeld.getText();
-        if ("".equals(typ)) {
-            this.bwk.setKTyp(null);
-        } else {
-            this.bwk.setKTyp(typ);
-        }
-
-        String brennmittel = this.brennmittelFeld.getText();
-        if ("".equals(brennmittel)) {
-            this.bwk.setKBrennmittel(null);
-        } else {
-            this.bwk.setKBrennmittel(brennmittel);
-        }
-
-        Integer leistung = ((IntegerField) this.leistungFeld).getIntValue();
-        this.bwk.setKLeistung(leistung);
-
-        String brenner = this.brennerFeld.getText();
-        if ("".equals(brenner)) {
-            this.bwk.setWBrenner(null);
-        } else {
-            this.bwk.setWBrenner(brenner);
-        }
-
-        String tauscher = this.waermetauscherFeld.getText();
-        if ("".equals(tauscher)) {
-            this.bwk.setWWaermetauscher(null);
-        } else {
-            this.bwk.setWWaermetauscher(tauscher);
-        }
-
-        String abgasleitung = this.abgasleitungFeld.getText();
-        if ("".equals(abgasleitung)) {
-            this.bwk.setWAbgasleitung(null);
-        } else {
-            this.bwk.setWAbgasleitung(abgasleitung);
-        }
-
-        String kondensatabl = this.kondensatltgFeld.getText();
-        if ("".equals(kondensatabl)) {
-            this.bwk.setWKondensableitung(null);
-        } else {
-            this.bwk.setWKondensableitung(kondensatabl);
-        }
-
-        Integer jahrgang = ((IntegerField) this.jahrgangFeld).getIntValue();
-        this.bwk.setErfassung(jahrgang);
-
-        String abnahme = this.abnahmeFeld.getText();
-        if ("".equals(abnahme)) {
-            this.bwk.setAbnahme(null);
-        } else {
-            this.bwk.setAbnahme(abnahme);
-        }
-
-        Date anschreiben = this.anschreibenFeld.getDate();
-        if ("".equals(anschreiben)) {
-            this.bwk.setAnschreiben(null);
-        } else {
-            this.bwk.setAnschreiben(anschreiben);
-        }
-
-        Date genehmigung = this.genehmigungDatum.getDate();
-        this.bwk.setDatumG(genehmigung);
-
-        Boolean aba;
-        if (getAbaCheck().isSelected()) {
-            aba = true;
-        } else {
-            aba = false;
-        }
-        this.bwk.setAba(new Boolean(aba));
-
-        Boolean genehmpflicht;
-        if (getgenehmpflichtCheck().isSelected()) {
-            genehmpflicht = true;
-        } else {
-            genehmpflicht = false;
-        }
-        this.bwk.setGenehmigungspflicht(new Boolean(genehmpflicht));
-
-        String beschreibung = this.bwkBeschreibungsArea.getText();
-        if ("".equals(beschreibung)) {
-            this.bwk.setBemerkungen(null);
-        } else {
-            this.bwk.setBemerkungen(beschreibung);
-        }
-
-        Anfallstelle.merge(this.anfallstelle);
-        success = this.bwk.merge();
-
-        if (success) {
-            log.debug("Brennwertkessel " + this.bwk + " gespeichert.");
-        } else {
-            log.debug("Brennwertkessel " + this.bwk
-                + " konnte nicht gespeichert werden!");
-        }
-
-        return success;
-    }
-
     public void completeObjekt(Anfallstelle anfallstelle) {
-        if (this.hauptModul.isNew() || this.bwk == null) {
+    	
+        if (this.bwk == null) {
             // Neuen Brennwertkessel erzeugen
             this.bwk = new BwkFachdaten();
         }
@@ -418,7 +309,118 @@ public class BWKPanel extends JPanel {
         	this.bwk.setAnfallstelle(this.anfallstelle);
     }
 
-    private JCheckBox getAbaCheck() {
+    private boolean saveBwkDaten() {
+	    boolean success;
+	
+	    String hersteller = this.herstellerFeld.getText();
+	    if ("".equals(hersteller)) {
+	        this.bwk.setKHersteller(null);
+	    } else {
+	        this.bwk.setKHersteller(hersteller);
+	    }
+	
+	    String typ = this.typFeld.getText();
+	    if ("".equals(typ)) {
+	        this.bwk.setKTyp(null);
+	    } else {
+	        this.bwk.setKTyp(typ);
+	    }
+	
+	    String brennmittel = this.brennmittelFeld.getText();
+	    if ("".equals(brennmittel)) {
+	        this.bwk.setKBrennmittel(null);
+	    } else {
+	        this.bwk.setKBrennmittel(brennmittel);
+	    }
+	
+	    Integer leistung = ((IntegerField) this.leistungFeld).getIntValue();
+	    this.bwk.setKLeistung(leistung);
+	
+	    String brenner = this.brennerFeld.getText();
+	    if ("".equals(brenner)) {
+	        this.bwk.setWBrenner(null);
+	    } else {
+	        this.bwk.setWBrenner(brenner);
+	    }
+	
+	    String tauscher = this.waermetauscherFeld.getText();
+	    if ("".equals(tauscher)) {
+	        this.bwk.setWWaermetauscher(null);
+	    } else {
+	        this.bwk.setWWaermetauscher(tauscher);
+	    }
+	
+	    String abgasleitung = this.abgasleitungFeld.getText();
+	    if ("".equals(abgasleitung)) {
+	        this.bwk.setWAbgasleitung(null);
+	    } else {
+	        this.bwk.setWAbgasleitung(abgasleitung);
+	    }
+	
+	    String kondensatabl = this.kondensatltgFeld.getText();
+	    if ("".equals(kondensatabl)) {
+	        this.bwk.setWKondensableitung(null);
+	    } else {
+	        this.bwk.setWKondensableitung(kondensatabl);
+	    }
+	
+	    Integer jahrgang = ((IntegerField) this.jahrgangFeld).getIntValue();
+	    this.bwk.setErfassung(jahrgang);
+	
+	    String abnahme = this.abnahmeFeld.getText();
+	    if ("".equals(abnahme)) {
+	        this.bwk.setAbnahme(null);
+	    } else {
+	        this.bwk.setAbnahme(abnahme);
+	    }
+	
+	    Date anschreiben = this.anschreibenFeld.getDate();
+	    if ("".equals(anschreiben)) {
+	        this.bwk.setAnschreiben(null);
+	    } else {
+	        this.bwk.setAnschreiben(anschreiben);
+	    }
+	
+	    Date genehmigung = this.genehmigungDatum.getDate();
+	    this.bwk.setDatumG(genehmigung);
+	
+	    Boolean aba;
+	    if (getAbaCheck().isSelected()) {
+	        aba = true;
+	    } else {
+	        aba = false;
+	    }
+	    this.bwk.setAba(new Boolean(aba));
+	
+	    Boolean genehmpflicht;
+	    if (getgenehmpflichtCheck().isSelected()) {
+	        genehmpflicht = true;
+	    } else {
+	        genehmpflicht = false;
+	    }
+	    this.bwk.setGenehmigungspflicht(new Boolean(genehmpflicht));
+	
+	    String beschreibung = this.bwkBeschreibungsArea.getText();
+	    if ("".equals(beschreibung)) {
+	        this.bwk.setBemerkungen(null);
+	    } else {
+	        this.bwk.setBemerkungen(beschreibung);
+	    }
+	
+	    Anfallstelle.merge(this.anfallstelle);
+	    success = this.bwk.merge();
+	
+	    if (success) {
+	        log.debug("Brennwertkessel " + this.bwk + " gespeichert.");
+	    } else {
+	        log.debug("Brennwertkessel " + this.bwk
+	            + " konnte nicht gespeichert werden!");
+	    }
+	
+	    return success;
+	}
+
+	private JCheckBox getAbaCheck() {
         if (this.abaCheck == null) {
             this.abaCheck = new JCheckBox("Abwasserbehandlungsanlage");
         }

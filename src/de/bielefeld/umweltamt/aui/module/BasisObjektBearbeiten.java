@@ -139,7 +139,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepunktPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SonderbauwerkPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SonderbauwerkTypTab;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SuevPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.VawsPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.AwsvPanel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
@@ -171,7 +171,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private ChronoPanel chronoTab;
     private FotoPanel fotoTab;
     private GenehmigungPanel genehmigungTab;
-    private VawsPanel vawsTab;
+    private AwsvPanel vawsTab;
     private EinleitungsstellePanel einleitungsstelleTab;
     private AnfallstellePanel anfallstelleTab;
     private SonderbauwerkPanel sonderbauwerkTab;
@@ -383,9 +383,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return genehmigungTab;
     }
 
-    public VawsPanel getVawsTab() {
+    public AwsvPanel getVawsTab() {
         if (vawsTab == null) {
-            vawsTab = new VawsPanel(this);
+            vawsTab = new AwsvPanel(this);
             vawsTab.setBorder(Paddings.DIALOG);
         }
         return vawsTab;
