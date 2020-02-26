@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vaws_liste" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="48" bottomMargin="42" uuid="bb16e809-8cfa-44f5-8373-13d589070031">
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.10.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="awsv_liste" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="48" bottomMargin="42" uuid="bb16e809-8cfa-44f5-8373-13d589070031">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="table" mode="Opaque" fill="Solid">
 		<pen lineWidth="2.5" lineColor="#B9B9B9"/>
 		<box>
@@ -111,7 +113,7 @@ order by stillegungsdatum ASC]]>
 					<font size="15" isBold="true"/>
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<text><![CDATA[VAwS-Liste von Betreiber]]></text>
+				<text><![CDATA[AwSV-Liste von Betreiber]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -197,7 +199,7 @@ order by stillegungsdatum ASC]]>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[© Copyright 2016 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am:]]></text>
+				<text><![CDATA[© Copyright 2020 Umweltamt Bielefeld - Alle Rechte vorbehalten. Generiert am:]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
