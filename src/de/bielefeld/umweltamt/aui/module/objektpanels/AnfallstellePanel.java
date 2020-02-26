@@ -207,8 +207,8 @@ public class AnfallstellePanel extends JPanel {
     }
 
     /**
-     * Methode verknüpft das lokal erstellte Objekt Anfallstelle
-     * mit der ElkaAnfallstelle aus der Datenbank.
+     * Methode verknüpft das lokal erstellte Objekt
+     * mit der Anfallstelle aus der Datenbank.
      * @throws RuntimeException
      */
     public void fetchFormData() throws RuntimeException {
@@ -241,7 +241,7 @@ public class AnfallstellePanel extends JPanel {
             getBeschaffenheitBox().setSelectedItem(anfallstelle.getBeschaffenheitDescriptionFromId(this.anfallstelle.getAbwaBeschaffOpt()));
             
             String[] arten = {"-", "Aufbereitung Medizinprodukte", "Brennwertkessel", "Blockheizkraftwerk", 
-            		"Fettabscheider", "Abscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor", 
+            		"Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor", 
             		"RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
             getAnlagenartBox().setModel(new DefaultComboBoxModel(arten));
             
@@ -821,7 +821,6 @@ public class AnfallstellePanel extends JPanel {
 		case "40":
 			hauptModul.getTabbedPane().addTab(getAnh40Tab().getName(), getAnh40Tab());
 			if (anfallstelle.getAnh40Fachdatens().size() > 0) {
-				getAnh40Tab().fetchFormData();
 				getAnh40Tab().enableAll(true);
 				getAnh40Tab().updateForm(anfallstelle);
 			} else {
@@ -835,7 +834,6 @@ public class AnfallstellePanel extends JPanel {
 			hauptModul.getTabbedPane().addTab(getAnh49Tab().getName(), getAnh49Tab());
 			hauptModul.getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
 			if (anfallstelle.getAnh49Fachdatens().size() > 0) {
-				getAnh49Tab().fetchFormData();
 				getAnh49Tab().enableAll(true);
 				getAnh49Tab().updateForm(anfallstelle);
 				getAnh49AnalyseTab().clearForm();
@@ -851,7 +849,6 @@ public class AnfallstellePanel extends JPanel {
 		case "50":
 			hauptModul.getTabbedPane().addTab(getAnh50Tab().getName(), getAnh50Tab());
 			if (anfallstelle.getAnh50Fachdatens().size() > 0) {
-				getAnh50Tab().fetchFormData();
 				getAnh50Tab().enableAll(true);
 				getAnh50Tab().updateForm(anfallstelle);
 			} else {
@@ -864,7 +861,6 @@ public class AnfallstellePanel extends JPanel {
 		case "52":
 			hauptModul.getTabbedPane().addTab(getAnh52Tab().getName(), getAnh52Tab());
 			if (anfallstelle.getAnh52Fachdatens().size() > 0) {
-				getAnh52Tab().fetchFormData();
 				getAnh52Tab().enableAll(true);
 				getAnh52Tab().updateForm(anfallstelle);
 			} else {
@@ -877,7 +873,6 @@ public class AnfallstellePanel extends JPanel {
 		case "55":
 			hauptModul.getTabbedPane().addTab(getAnh55Tab().getName(), getAnh55Tab());
 			if (anfallstelle.getAnh55Fachdatens().size() > 0) {
-				getAnh55Tab().fetchFormData();
 				getAnh55Tab().enableAll(true);
 				getAnh55Tab().updateForm(anfallstelle);
 			} else {
@@ -890,7 +885,6 @@ public class AnfallstellePanel extends JPanel {
 		case "56":
 			hauptModul.getTabbedPane().addTab(getAnh56Tab().getName(), getAnh56Tab());
 			if (anfallstelle.getAnh56Fachdatens().size() > 0) {
-				getAnh56Tab().fetchFormData();
 				getAnh56Tab().enableAll(true);
 				getAnh56Tab().updateForm(anfallstelle);
 			} else {
@@ -906,9 +900,8 @@ public class AnfallstellePanel extends JPanel {
 			case "Brennwertkessel":
 				hauptModul.getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
 				if (anfallstelle.getBwkFachdatens().size() > 0) {
-					getBWKTab().fetchFormData();
 					getBWKTab().enableAll(true);
-					getBWKTab().updateForm();
+					getBWKTab().updateForm(anfallstelle);
 				} else {
 					anfallstelle.setAnhangId("99");
 					anfallstelle.setAnlagenart("Brennwertkessel");
@@ -920,9 +913,8 @@ public class AnfallstellePanel extends JPanel {
 			case "Blockheizkraftwerk":
 				hauptModul.getTabbedPane().addTab("Blockheizkraftwerk", getBWKTab());
 				if (anfallstelle.getBwkFachdatens().size() > 0) {
-					getBWKTab().fetchFormData();
 					getBWKTab().enableAll(true);
-					getBWKTab().updateForm();
+					getBWKTab().updateForm(anfallstelle);
 				} else {
 					anfallstelle.setAnhangId("99");
 					anfallstelle.setAnlagenart("Blockheizkraftwerk");
@@ -935,7 +927,6 @@ public class AnfallstellePanel extends JPanel {
 				hauptModul.getTabbedPane().addTab("Fettabscheider", getAnh49Tab());
 				hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
 				if (anfallstelle.getAnh49Fachdatens().size() > 0) {
-					getAnh49Tab().fetchFormData();
 					getAnh49Tab().enableAll(true);
 					getAnh49Tab().updateForm(anfallstelle);
 					getAnh49AbfuhrTab().clearForm();

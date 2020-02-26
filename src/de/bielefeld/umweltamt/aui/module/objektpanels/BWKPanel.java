@@ -30,6 +30,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -186,9 +188,10 @@ public class BWKPanel extends JPanel {
 
     }
 
-    public void updateForm() throws RuntimeException {
+    public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
 
-    	this.bwk = anfallstelle.getBwkFachdatens().iterator().next();
+    	this.anfallstelle = anfallstelle;
+    	this.bwk = this.anfallstelle.getBwkFachdatens().iterator().next();
     	
         if (this.bwk != null) {
             if (this.bwk.getKHersteller() != null) {
@@ -303,6 +306,9 @@ public class BWKPanel extends JPanel {
         if (this.bwk == null) {
             // Neuen Brennwertkessel erzeugen
             this.bwk = new BwkFachdaten();
+            Set<BwkFachdaten> fachdaten = new HashSet<BwkFachdaten>();
+    	    fachdaten.add(bwk);
+    	    this.anfallstelle.setBwkFachdatens(fachdaten);
         }
         // Anfallstelle setzen
         	this.anfallstelle = anfallstelle;

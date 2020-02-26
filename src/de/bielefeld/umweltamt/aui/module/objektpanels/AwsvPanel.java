@@ -286,7 +286,7 @@ public class AwsvPanel extends JPanel {
         } catch (Exception ex) {
             GUIManager.getInstance().showErrorMessage(
                 "PDF-Liste generieren fehlgeschlagen."
-                    + "\n" + ex.getLocalizedMessage(),
+                    + "\n" + ex,
                 "PDF-Liste generieren fehlgeschlagen");
         }
     }

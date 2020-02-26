@@ -678,10 +678,10 @@ public class Anh49Panel extends AbstractAnhangPanel {
         }
     }
 
-    public void clearForm() {
-        super.clearAllComponents();
-//        abscheiderModel.setList(new ArrayList<Anh49Abscheiderdetails>());
-    }
+	public void clearForm() {
+		super.clearAllComponents();
+		abscheiderModel.setList(new ArrayList<Anh49Abscheiderdetails>());
+	}
 
     public void enableAll(boolean enabled) {
         // Wenn das Fachdaten-Objekt null ist,
