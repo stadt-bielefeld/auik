@@ -111,7 +111,7 @@ public class BWKPanel extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-            "r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 70dlu, , 70dlu, 70dlu", // Spalten
+            "r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 70dlu, 5dlu, 70dlu, 70dlu", // Spalten
             "pref, " + // 1
                 "3dlu, " + // 2
                 "pref, " + // 3

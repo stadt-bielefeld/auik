@@ -1048,6 +1048,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         String rechnungsbetrag = cd.toString();
         rechnungsbetrag = rechnungsbetrag.replace("€", "");
         rechnungsbetrag = rechnungsbetrag.replace(",", "");
+        rechnungsbetrag = rechnungsbetrag.substring(0, rechnungsbetrag.length()-1);
         rechnungsbetrag = rechnungsbetrag.trim();
 
         String kasseDatum = DateUtils.format(rechnungsdatum,
