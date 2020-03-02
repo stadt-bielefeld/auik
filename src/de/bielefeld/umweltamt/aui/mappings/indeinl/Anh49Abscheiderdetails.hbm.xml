@@ -22,8 +22,8 @@
         <property name="nenngroesse" type="java.lang.Integer">
             <column name="nenngroesse" />
         </property>
-        <property name="tankstelle" type="java.lang.Boolean">
-            <column name="tankstelle" />
+        <property name="rueckhalt" type="java.lang.Boolean">
+            <column name="rueckhalt" />
         </property>
         <property name="waschplatzHalle" type="java.lang.Boolean">
             <column name="waschplatz_halle" />
@@ -43,20 +43,29 @@
         <property name="produktionsabwasser" type="java.lang.Boolean">
             <column name="produktionsabwasser" />
         </property>
+        <property name="vorschlamm" type="java.lang.Boolean">
+            <column name="vorschlamm" />
+        </property>
         <property name="schlammfang" type="java.lang.Boolean">
             <column name="schlammfang" />
         </property>
-        <property name="benzinOelabscheider" type="java.lang.Boolean">
-            <column name="benzin_oelabscheider" />
+        <property name="benzinabscheider" type="java.lang.Boolean">
+            <column name="benzinabscheider" />
         </property>
-        <property name="koaleszenzfilter" type="java.lang.Boolean">
-            <column name="koaleszenzfilter" />
+        <property name="koaabscheider" type="java.lang.Boolean">
+            <column name="koaabscheider" />
         </property>
-        <property name="integriert" type="java.lang.Boolean">
-            <column name="integriert" />
+        <property name="kompakt" type="java.lang.Boolean">
+            <column name="kompakt" />
         </property>
         <property name="emulsionsspaltanlage" type="java.lang.Boolean">
             <column name="emulsionsspaltanlage" />
+        </property>
+        <property name="kreis" type="java.lang.Boolean">
+            <column name="kreis" />
+         </property>
+        <property name="probe" type="java.lang.Boolean">
+            <column name="pn_stelle" />
         </property>
         <property name="fettabscheider" type="java.lang.Boolean">
             <column name="fettabscheider" />
@@ -70,8 +79,11 @@
         <property name="bauartzulassungsnummer" type="java.lang.String">
             <column name="bauartzulassungsnummer" />
         </property>
-        <property name="ngSf" type="java.lang.Integer">
-            <column name="ng_sf" />
+        <property name="vsf1" type="java.lang.Integer">
+            <column name="vsf1" />
+        </property>
+        <property name="vsf2" type="java.lang.Integer">
+            <column name="vsf2" />
         </property>
         <property name="ngBa" type="java.lang.Integer">
             <column name="ng_ba" />
@@ -99,6 +111,9 @@
         </property>
         <property name="hersteller" type="java.lang.String">
             <column name="hersteller" />
+        </property>
+        <property name="typ" type="java.lang.String">
+            <column name="typ" />
         </property>
         <property name="schmutzwasserkanal" type="java.lang.Boolean">
             <column name="schmutzwasserkanal" />

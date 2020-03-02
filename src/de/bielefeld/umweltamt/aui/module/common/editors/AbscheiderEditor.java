@@ -94,21 +94,19 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     private JTextField herstellerFeld;
     private JFormattedTextField nrFeld;
     private JFormattedTextField vonFeld;
-    private JFormattedTextField ngsfFeld;
-    private JFormattedTextField ngkaFeld;
-    private JFormattedTextField ngfaFeld;
-    private JFormattedTextField v1Feld;
-    private JFormattedTextField v2Feld;
-    private JCheckBox tankstelleCheck; //Rückhaltefunktion gemäß AwSV
+    private JFormattedTextField nenngroesseFeld;
+    private JFormattedTextField vsf1Feld;
+    private JFormattedTextField vsf2Feld;
+    private JCheckBox rueckhaltCheck; //Rückhaltefunktion gemäß AwSV
     private JCheckBox schlammfangCheck;
     private JCheckBox benzinabscheiderCheck;
-    private JCheckBox koalenszenzfilterCheck;
-    private JCheckBox integriertCheck; //KOmpaktanlage
+    private JCheckBox koaabscheiderCheck;
+    private JCheckBox kompaktCheck; //KOmpaktanlage
     private JCheckBox emulsionCheck;
     private JCheckBox schwimmerCheck;
     private JCheckBox wohnhausCheck;
-       private JCheckBox kreisCheck; 
-    private JCheckBox vorSchlammCheck;
+    private JCheckBox kreisCheck; 
+    private JCheckBox vorschlammCheck;
     private JCheckBox probeCheck;
     
     
@@ -152,7 +150,9 @@ public class AbscheiderEditor extends AbstractBaseEditor{
                 "pref, 3dlu, " +    //25
                 "pref, 3dlu, " +    //27
                 "pref, 3dlu, " +    //27
-                "40dlu:g");         //31
+                "pref, 3dlu, " +    //29
+                "pref, 3dlu, " +    //31
+                "40dlu:g");         //33
         //layout.setRowGroups(new int[][]{{1,3,5,7,9,}});
 
         PanelBuilder builder = new PanelBuilder(layout);
@@ -175,35 +175,35 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     // Komponenten   	
        	builder.addSeparator("Komponenten",     	cc.xyw(1, 9, 7));
         
-        builder.add(getIntegriertCheck(),       		cc.xyw(1,11,3));
-        builder.add(getVorSchlammCheck(),   		cc.xyw(1, 13, 3));
+        builder.add(getKompaktCheck(),       		cc.xyw(1,11,3));
+        builder.add(getVorschlammCheck(),   		cc.xyw(1, 13, 3));
         builder.addLabel("Volumen:",				cc.xy(5, 13, "right, center"));
-        builder.add(getV1Feld(), 					cc.xy(7, 13));
+        builder.add(getVsf1Feld(), 					cc.xy(7, 13));
         builder.addLabel("L",						cc.xy(9, 13));
         builder.add(getSchlammfangCheck(), 			cc.xy(1, 15));
         builder.addLabel("Volumen:",				cc.xy(5, 15, "right, center"));
-        builder.add(getV2Feld(), 					cc.xy(7, 15));
+        builder.add(getVsf2Feld(), 					cc.xy(7, 15));
         builder.addLabel("L",						cc.xy(9, 15));
         builder.addLabel("Abscheider:", 			cc.xy( 1, 17, "left, center"));
         builder.add(getBenzinabscheiderCheck(),    	cc.xy(1, 19, "left, center"));
-        builder.add(getKoalenszenzfilterCheck(), 	cc.xy( 3 , 19));
+        builder.add(getKoaabscheiderCheck(), 		cc.xy( 3 , 19));
         builder.addLabel("NG:",            			cc.xy( 5, 19, "right, center")); 
-        builder.add(getNgkaFeld(),            		cc.xy( 7, 19));
+        builder.add(getNenngroesseFeld(),            	cc.xy( 7, 19));
         builder.add(getProbeCheck(), 				cc.xyw(1, 21, 5));
-        builder.add(getKreisCheck(),		 		cc.xyw(1, 21, 3));
-        builder.add(getEmulsionCheck(),             cc.xyw(1, 23, 3));
-        builder.add(getSchwimmerCheck(),    		cc.xyw(1, 25, 3));
-        builder.add(getTankstelleCheck(),			cc.xyw(1, 27, 5));
+        builder.add(getKreisCheck(),		 		cc.xyw(1, 23, 3));
+        builder.add(getEmulsionCheck(),             cc.xyw(1, 25, 3));
+        builder.add(getSchwimmerCheck(),    		cc.xyw(1, 27, 3));
+        builder.add(getRueckhaltCheck(),			cc.xyw(1, 29, 5));
        
     // Bemerkungen:
-        builder.addSeparator("Bemerkungen",    cc.xyw(1, 29, 7));
+        builder.addSeparator("Bemerkungen",    cc.xyw(1, 31, 7));
         JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(bemerkungsScroller,        cc.xyw(1,31,7, "fill, fill"));
+        builder.add(bemerkungsScroller,        cc.xyw(1,33,7, "fill, fill"));
         
 
 //        builder.add(getNgfaFeld(),         cc.xy( 3, 9));
  
-//        builder.addLabel("NG SF:",            cc.xy( 1, 13));
+//        builder.addLabel("NG sf:",            cc.xy( 1, 13));
 //        builder.add(getNgsfFeld(),             cc.xy( 3,13));        
     	
         return builder.getPanel();
@@ -223,20 +223,22 @@ public class AbscheiderEditor extends AbstractBaseEditor{
             getHerstellerFeld().setText(details.getHersteller());
             getNrFeld().setValue(details.getAbscheidernr());
             getVonFeld().setValue(details.getVon());
-            getNgsfFeld().setValue(details.getNgSf());
-            getNgkaFeld().setValue(details.getNgKa());
-            getNgfaFeld().setValue(details.getNenngroesse());
+            getVsf1Feld().setValue(details.getVsf1());
+            getVsf2Feld().setValue(details.getVsf2());
+            getNenngroesseFeld().setValue(details.getNenngroesse());
             getBemerkungsArea().setText(details.getBemerkung());
-
-            getTankstelleCheck().setSelected(details.getTankstelle());
+            getRueckhaltCheck().setSelected(details.getRueckhalt());
             getSchlammfangCheck().setSelected(details.getSchlammfang());
-            getBenzinabscheiderCheck().setSelected(
-            		details.getBenzinOelabscheider());
-            getKoalenszenzfilterCheck().setSelected(details.getKoaleszenzfilter());
-            getIntegriertCheck().setSelected(details.getIntegriert());
+            getBenzinabscheiderCheck().setSelected(details.getBenzinabscheider());
+            getKoaabscheiderCheck().setSelected(details.getKoaabscheider());
+            getKompaktCheck().setSelected(details.getKompakt());
             getEmulsionCheck().setSelected(details.getEmulsionsspaltanlage());
             getSchwimmerCheck().setSelected(details.getSchwimmer());
-            getWohnhausCheck().setSelected(details.getWohnhaus());
+            getTypFeld().setText(details.getTyp());
+            getKreisCheck().setSelected(details.getKreis());
+            getProbeCheck().setSelected(details.getProbe());
+            getVorschlammCheck().setSelected(details.getVorschlamm());
+            
     	}
     }
 
@@ -259,7 +261,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         details.setLage(lageFeld.getText());
         
         //Typ:
-       
+        details.setTyp(typFeld.getText());
 
         // Hersteller:
         details.setHersteller(herstellerFeld.getText());
@@ -273,42 +275,48 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         Integer von = ((IntegerField)vonFeld).getIntValue();
         details.setVon(von);
 
-        // Nenngroesse Sandfang:
-        Integer ngsf = ((IntegerField)ngsfFeld).getIntValue();
-        details.setNgSf(ngsf);
+        //Volumen vorgeschaltetet Schlammfang:
+        Integer vsf1 = ((IntegerField)vsf1Feld).getIntValue();
+        details.setVsf1(vsf1);
+        
+        // Volumen Schlammfang:
+        Integer vsf2 = ((IntegerField)vsf2Feld).getIntValue();
+        details.setVsf2(vsf2);
 
-        // Nenngroesse Koaleszenzabscheider:
-        Integer ngka = ((IntegerField)ngkaFeld).getIntValue();
-        details.setNgKa(ngka);
-
-        // Nenngroesse Fettabscheider:
-        Integer ngfa = ((IntegerField)ngfaFeld).getIntValue();
-        details.setNenngroesse(ngfa);
-
+        // Nenngroesse Abscheider:
+        Integer nenngroesse = ((IntegerField)nenngroesseFeld).getIntValue();
+        details.setNenngroesse(nenngroesse);
+        
         //Tankstelle ja/nein
-        details.setTankstelle(getTankstelleCheck().isSelected());
+        details.setRueckhalt(getRueckhaltCheck().isSelected());
 
+        //vorgeschalteter Schlammfang ja/nein
+        details.setVorschlamm(getVorschlammCheck().isSelected());
+        
         //Schlammfang ja/nein
         details.setSchlammfang(getSchlammfangCheck().isSelected());
-
+        
+        //Probenahmemöglichkeit ja/nein
+        details.setProbe(getProbeCheck().isSelected());
+        
         //Benzinabscheider ja/nein
-        details.setBenzinOelabscheider(getBenzinabscheiderCheck().isSelected());
+        details.setBenzinabscheider(getBenzinabscheiderCheck().isSelected());
 
         //Koaleszenzabscheider ja/nein
-        details.setKoaleszenzfilter(getKoalenszenzfilterCheck().isSelected());
+        details.setKoaabscheider(getKoaabscheiderCheck().isSelected());
 
-        //Integriert ja/nein
-        details.setIntegriert(getIntegriertCheck().isSelected());
+        //Kompaktanlage ja/nein
+        details.setKompakt(getKompaktCheck().isSelected());
 
         //Emulsionsspaltung ja/nein
         details.setEmulsionsspaltanlage(getEmulsionCheck().isSelected());
 
         //Schwimmer ja/nein
         details.setSchwimmer(getSchwimmerCheck().isSelected());
-
-        //Wohnhaus ja/nein
-        details.setWohnhaus(getWohnhausCheck().isSelected());
-
+        
+        //Kreislaufanlage ja/nein
+        details.setKreis(getKreisCheck().isSelected());
+        
         // Bemerkungen:
         details.setBemerkung(bemerkungsArea.getText());
 
@@ -342,17 +350,17 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         }
         return herstellerFeld;
     }
-    private JCheckBox getIntegriertCheck() {
-        if (integriertCheck == null) {
-            integriertCheck = new JCheckBox("Kompaktanlage");
+    private JCheckBox getKompaktCheck() {
+        if (kompaktCheck == null) {
+            kompaktCheck = new JCheckBox("Kompaktanlage");
         }
-        return integriertCheck;
+        return kompaktCheck;
     }
-    private JCheckBox getKoalenszenzfilterCheck() {
-        if (koalenszenzfilterCheck == null) {
-            koalenszenzfilterCheck = new JCheckBox("Kl. I");
+    private JCheckBox getKoaabscheiderCheck() {
+        if (koaabscheiderCheck == null) {
+            koaabscheiderCheck = new JCheckBox("Kl. I");
         }
-        return koalenszenzfilterCheck;
+        return koaabscheiderCheck;
     }
     private JTextField getLageFeld() {
         if (lageFeld == null) {
@@ -367,23 +375,25 @@ public class AbscheiderEditor extends AbstractBaseEditor{
             }
             return typFeld;
     }
-    private JFormattedTextField getNgkaFeld() {
-        if (ngkaFeld == null) {
-            ngkaFeld = new IntegerField();
+    private JFormattedTextField getNenngroesseFeld() {
+        if (nenngroesseFeld == null) {
+            nenngroesseFeld = new IntegerField();
         }
-        return ngkaFeld;
+        return nenngroesseFeld;
+        
     }
-    private JFormattedTextField getNgfaFeld() {
-        if (ngfaFeld == null) {
-            ngfaFeld = new IntegerField();
+    private JFormattedTextField getVsf2Feld() {
+        if (vsf2Feld == null) {
+            vsf2Feld = new IntegerField();
         }
-        return ngfaFeld;
+        return vsf2Feld;
     }
-    private JFormattedTextField getNgsfFeld() {
-        if (ngsfFeld == null) {
-            ngsfFeld = new IntegerField();
+    
+    private JFormattedTextField getVsf1Feld() {
+        if (vsf1Feld == null) {
+            vsf1Feld = new IntegerField();
         }
-        return ngsfFeld;
+        return vsf1Feld;
     }
     private JFormattedTextField getNrFeld() {
         if (nrFeld == null) {
@@ -396,13 +406,13 @@ public class AbscheiderEditor extends AbstractBaseEditor{
             schlammfangCheck = new JCheckBox("Schlammfang");
         }
         return schlammfangCheck;
-   
     }
-    private JCheckBox getVorSchlammCheck() {
-        if (vorSchlammCheck == null) {
-            vorSchlammCheck = new JCheckBox(" vorg. Schlammfang");
+    private JCheckBox getVorschlammCheck() {
+        if (vorschlammCheck == null) {
+        	vorschlammCheck = new JCheckBox("vorg.Schlammfang");
         }
-        return vorSchlammCheck;
+        return vorschlammCheck;
+
     }
     private JCheckBox getSchwimmerCheck() {
         if (schwimmerCheck == null) {
@@ -410,11 +420,11 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         }
         return schwimmerCheck;
     }
-    private JCheckBox getTankstelleCheck() {
-        if (tankstelleCheck == null) {
-            tankstelleCheck = new JCheckBox("Rückhaltefunktion gemäß AwSV");
+    private JCheckBox getRueckhaltCheck() {
+        if (rueckhaltCheck == null) {
+            rueckhaltCheck = new JCheckBox("Rückhaltefunktion gemäß AwSV");
         }
-        return tankstelleCheck;
+        return rueckhaltCheck;
     }
     private JFormattedTextField getVonFeld() {
         if (vonFeld == null) {
@@ -450,19 +460,10 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     return probeCheck;
 	}
 
-    private JFormattedTextField getV1Feld() {
-        if (v1Feld == null) {
-            v1Feld = new IntegerField();
-        }
-        return v1Feld;
-    }
     
-    private JFormattedTextField getV2Feld() {
-        if (v2Feld == null) {
-            v2Feld = new IntegerField();
-        }
-        return v2Feld;
+    
+ 
     }
-}
+
 
 
