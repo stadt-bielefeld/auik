@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -108,11 +109,20 @@ public class BFPanel extends AbstractSonderbauwerkTypPanel {
         ueberlaufhaufigkeitLabel = new JLabel("Überlaufhäufigkeit");
     }
 
-    public void fetchFormData() {
-        
+    public void createMappings() {
+        this.fieldMapping = new HashMap<String, RecordMap>();
     }
 
-    public Object getFieldValue(String name) {
-        return null;
+    public void fetchFormData() {
+
+    }
+
+    /**
+     * Get field value by field name.
+     * @param fieldName Field name
+     * @return Field value
+     */
+    public Object getFieldValue(String fieldName) {
+        return getFieldValue(fieldName, this);
     }
 }

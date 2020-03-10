@@ -21,16 +21,20 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 
 /**
  * Abstract class used as base for every Sonderbauwerk type panel
@@ -45,7 +49,7 @@ public abstract class AbstractSonderbauwerkTypPanel extends JPanel{
     /**
      * Map instance, mapping fields and model records
      * String key: variable name of the form field
-     * RecordMap: 
+     * RecordMap:
      *   name: Variable name of the record field to map
      *   type: Fully qualified class name of the field to map
      */
@@ -61,6 +65,16 @@ public abstract class AbstractSonderbauwerkTypPanel extends JPanel{
      */
     protected Sonderbauwerk record;
 
+    /**
+     * Add a new mapping for formfields and model attributes
+     * @param fieldName Form field name
+     * @param modelAttributeName Model attribute field name
+     * @param modelAttributeDatatype Model attribute field data type
+     */
+    protected void addMapping(String fieldName, String modelAttributeName, String modelAttributeDatatype) {
+        this.fieldMapping.put(fieldName, new RecordMap(modelAttributeName, modelAttributeDatatype));
+    }
+
     public abstract void fetchFormData();
 
     /**
@@ -69,6 +83,55 @@ public abstract class AbstractSonderbauwerkTypPanel extends JPanel{
      * @return Object containing field name
      */
     public abstract Object getFieldValue(String fieldName);
+
+    /**
+     * Get value of a field by field name using the given class.
+     * Note: This method relies on the existence of a getter method for the
+     * field.
+     * @param fieldName Field name as String
+     * @param context Panel subclass containing the fields.
+     * @return Object containing field value
+     */
+    protected Object getFieldValue(String fieldName, AbstractSonderbauwerkTypPanel context) {
+        Object returnValue = null;
+        String methodName = "";
+        try {
+            log.debug(context);
+            methodName = "get"
+                    + fieldName.substring(0, 1).toUpperCase()
+                    + fieldName.substring(1);
+            Method getMethod = context.getClass().getMethod(methodName);
+            Object field = getMethod.invoke(context);
+            if (field.getClass() == JComboBox.class) {
+                JComboBox<CBoxItem> combo = (JComboBox<CBoxItem>) field;
+                returnValue = ((CBoxItem) combo.getSelectedItem()).getId();
+            } else if (field.getClass() == JCheckBox.class) {
+                JCheckBox check = (JCheckBox) field;
+                returnValue = check.isSelected();
+            } else {
+                String type = this.fieldMapping.get(fieldName).getType();
+                String stringValue = (String) ((JTextField)field).getText();
+                switch (type) {
+                    case "java.lang.Integer":
+                    returnValue = parseIntegerFromString(stringValue);
+                        break;
+                    case "java.math.BigDecimal":
+                    returnValue = parseBigDecimalFromString(stringValue);
+                        break;
+                    default:
+                    returnValue = stringValue;
+                }
+            }
+        } catch (NoSuchMethodException nsme) {
+            throw new IllegalArgumentException("Can not find getter method for field " + fieldName
+                                               + ". Expected method name: " + methodName);
+        } catch (InvocationTargetException ite) {
+            log.error(ite.getStackTrace());
+        } catch (IllegalAccessException iae) {
+            log.error(iae.getStackTrace());
+        }
+        return returnValue;
+    }
 
     /**
      * Parses a string as a BigDecimal value
@@ -106,7 +169,7 @@ public abstract class AbstractSonderbauwerkTypPanel extends JPanel{
             String recordType = recordMap.getType();
             try {
                 //Guess setter name and get method instance
-                String methodName = "set" 
+                String methodName = "set"
                         + recordName.substring(0, 1).toUpperCase()
                         + recordName.substring(1);
                 Class setParam = Class.forName(recordType);

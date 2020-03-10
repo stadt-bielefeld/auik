@@ -61,6 +61,8 @@ public class RSTPanel extends AbstractSonderbauwerkTypPanel {
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
         builder.append(speicherVolumenLabel, speicherVolumenField);
+
+        createMappings();
     }
 
     public void createFields() {
@@ -70,19 +72,23 @@ public class RSTPanel extends AbstractSonderbauwerkTypPanel {
 
     private void createMappings() {
         this.fieldMapping = new HashMap<String, RecordMap>();
-        this.fieldMapping.put("speicherVolumenField", new RecordMap("speichervolumen", "java.lang.Integer"));
+        addMapping("speicherVolumenField", "speichervolumen", "java.lang.Integer");
     }
 
     public void fetchFormData() {
         this.setTextFieldContent(this.speicherVolumenField, this.record.getSpeichervolumen());
     }
 
+    /**
+     * Get field value by field name.
+     * @param fieldName Field name
+     * @return Field value
+     */
     public Object getFieldValue(String fieldName) {
-                switch (fieldName) {
-            case "speicherVolumenField":
-                return parseIntegerFromString(speicherVolumenField.getText());
-            default: throw new IllegalArgumentException("Unkown field name: " + fieldName);
-        }
+        return getFieldValue(fieldName, this);
+    }
 
+    public JTextField getSpeicherVolumenField() {
+        return this.speicherVolumenField;
     }
 }
