@@ -104,11 +104,10 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     private JCheckBox kompaktCheck; //KOmpaktanlage
     private JCheckBox emulsionCheck;
     private JCheckBox schwimmerCheck;
-    private JCheckBox wohnhausCheck;
     private JCheckBox kreisCheck; 
     private JCheckBox vorschlammCheck;
     private JCheckBox probeCheck;
-    
+    private JCheckBox warnanlageCheck;
     
 
     private JTextArea bemerkungsArea;
@@ -127,7 +126,8 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     }
 
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     protected JComponent buildContentArea() {
 
         String columnString = "right:pref, 3dlu, 40dlu, 3dlu, 30dlu, 3dlu, 40dlu, 3dlu, 30dlu";
@@ -149,10 +149,10 @@ public class AbscheiderEditor extends AbstractBaseEditor{
                 "pref, 3dlu, " +    //23
                 "pref, 3dlu, " +    //25
                 "pref, 3dlu, " +    //27
-                "pref, 3dlu, " +    //27
                 "pref, 3dlu, " +    //29
                 "pref, 3dlu, " +    //31
-                "40dlu:g");         //33
+                "pref, 3dlu, " +    //33
+                "40dlu:g");         //35
         //layout.setRowGroups(new int[][]{{1,3,5,7,9,}});
 
         PanelBuilder builder = new PanelBuilder(layout);
@@ -174,8 +174,8 @@ public class AbscheiderEditor extends AbstractBaseEditor{
        	builder.add(getTypFeld(), 					cc.xy(7, 7));
     // Komponenten   	
        	builder.addSeparator("Komponenten",     	cc.xyw(1, 9, 7));
-        
-        builder.add(getKompaktCheck(),       		cc.xyw(1,11,3));
+     
+        builder.add(getKompaktCheck(),       		cc.xyw(1, 11, 3));
         builder.add(getVorschlammCheck(),   		cc.xyw(1, 13, 3));
         builder.addLabel("Volumen:",				cc.xy(5, 13, "right, center"));
         builder.add(getVsf1Feld(), 					cc.xy(7, 13));
@@ -188,24 +188,20 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         builder.add(getBenzinabscheiderCheck(),    	cc.xy(1, 19, "left, center"));
         builder.add(getKoaabscheiderCheck(), 		cc.xy( 3 , 19));
         builder.addLabel("NG:",            			cc.xy( 5, 19, "right, center")); 
-        builder.add(getNenngroesseFeld(),            	cc.xy( 7, 19));
-        builder.add(getProbeCheck(), 				cc.xyw(1, 21, 5));
-        builder.add(getKreisCheck(),		 		cc.xyw(1, 23, 3));
-        builder.add(getEmulsionCheck(),             cc.xyw(1, 25, 3));
-        builder.add(getSchwimmerCheck(),    		cc.xyw(1, 27, 3));
-        builder.add(getRueckhaltCheck(),			cc.xyw(1, 29, 5));
+        builder.add(getNenngroesseFeld(),           cc.xy( 7, 19));
+        builder.add(getProbeCheck(), 				cc.xyw( 1, 21, 7));
+        builder.add(getWarnanlageCheck(),			cc.xyw( 1, 23, 3));
+        builder.add(getKreisCheck(),		 		cc.xyw( 1, 25, 3));
+        builder.add(getEmulsionCheck(),             cc.xyw( 1, 27, 3));
+        builder.add(getSchwimmerCheck(),    		cc.xyw( 1, 29, 3));
+        builder.add(getRueckhaltCheck(),			cc.xyw( 1, 31, 5));
        
     // Bemerkungen:
-        builder.addSeparator("Bemerkungen",    cc.xyw(1, 31, 7));
+        builder.addSeparator("Bemerkungen",    cc.xyw(1, 33, 7));
         JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(bemerkungsScroller,        cc.xyw(1,33,7, "fill, fill"));
+        builder.add(bemerkungsScroller,        cc.xyw(1, 35, 7, "fill, fill"));
         
 
-//        builder.add(getNgfaFeld(),         cc.xy( 3, 9));
- 
-//        builder.addLabel("NG sf:",            cc.xy( 1, 13));
-//        builder.add(getNgsfFeld(),             cc.xy( 3,13));        
-    	
         return builder.getPanel();
     	
     }
@@ -218,7 +214,8 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         
         Anh49Abscheiderdetails details = this.getDetails();
     	// Nur für vorhandene Abscheider Werte laden.
-    	if (details.getId() != null) {
+
+if (details.getId() != null) {
             getLageFeld().setText(details.getLage());
             getHerstellerFeld().setText(details.getHersteller());
             getNrFeld().setValue(details.getAbscheidernr());
@@ -237,6 +234,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
             getTypFeld().setText(details.getTyp());
             getKreisCheck().setSelected(details.getKreis());
             getProbeCheck().setSelected(details.getProbe());
+            getWarnanlageCheck().setSelected(details.getWarnanlage());
             getVorschlammCheck().setSelected(details.getVorschlamm());
             
     	}
@@ -298,6 +296,9 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         
         //Probenahmemöglichkeit ja/nein
         details.setProbe(getProbeCheck().isSelected());
+        
+      //Warnanlage ja/nein
+        details.setWarnanlage(getWarnanlageCheck().isSelected());
         
         //Benzinabscheider ja/nein
         details.setBenzinabscheider(getBenzinabscheiderCheck().isSelected());
@@ -431,12 +432,28 @@ public class AbscheiderEditor extends AbstractBaseEditor{
             vonFeld = new IntegerField();
         }
         return vonFeld;
+    } 
+    private JCheckBox getProbeCheck() {
+    	if (probeCheck == null) {
+    		probeCheck = new JCheckBox("Probenahmestelle/-möglichkeit");
+       }
+    return probeCheck;
+    
+    } 
+    private JCheckBox getWarnanlageCheck() {
+    	if (warnanlageCheck == null) {
+    		warnanlageCheck = new JCheckBox("Warnanlage");
     }
-    private JCheckBox getWohnhausCheck() {
-        if (wohnhausCheck == null) {
-            wohnhausCheck = new JCheckBox("Wohnhaus");
+    return warnanlageCheck;
+   
+  
+    }
+    private JCheckBox getKreisCheck() {
+        if (kreisCheck == null) {
+        	kreisCheck = new JCheckBox("Kreislaufanlage");
         }
-        return wohnhausCheck;
+        return kreisCheck;
+ 
     }
     private JTextArea getBemerkungsArea() {
         if (bemerkungsArea == null) {
@@ -445,19 +462,6 @@ public class AbscheiderEditor extends AbstractBaseEditor{
             bemerkungsArea.setWrapStyleWord(true);
         }
         return bemerkungsArea;
-  
-    }
-    private JCheckBox getKreisCheck() {
-        if (kreisCheck == null) {
-        	kreisCheck = new JCheckBox("Kreislaufanlage");
-        }
-        return kreisCheck;
-    } 
-    private JCheckBox getProbeCheck() {
-    	if (probeCheck == null) {
-    		probeCheck = new JCheckBox("Probenahmestelle/-möglichkeit");
-    }
-    return probeCheck;
 	}
 
     

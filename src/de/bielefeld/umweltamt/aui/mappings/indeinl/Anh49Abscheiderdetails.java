@@ -47,16 +47,13 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
     private Anh49Fachdaten anh49Fachdaten;
     private Integer abscheidernr;
     private Integer von;
+    private String hersteller;
     private String lage;
+    private String typ;
+    private String bemerkung;
     private Integer nenngroesse;
     private Boolean rueckhalt;
     private Boolean kreis;
-    private Boolean waschplatzHalle;
-    private Boolean kfzBetrieb;
-    private Boolean lebensmittelbetrieb;
-    private Boolean wohnhaus;
-    private Boolean oberflaechenentwaesserung;
-    private Boolean produktionsabwasser;
     private Boolean schlammfang;
     private Boolean vorschlamm;
     private Boolean probe;
@@ -64,33 +61,10 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
     private Boolean koaabscheider;
     private Boolean kompakt;
     private Boolean emulsionsspaltanlage;
-    private Boolean fettabscheider;
-    private String baujahr;
-    private Boolean din1999;
-    private String bauartzulassungsnummer;
+    private Boolean schwimmer;
+    private Boolean warnanlage;
     private Integer vsf2;
     private Integer vsf1;
-    private Integer ngBa;
-    private Integer ngKa;
-    private Boolean schwimmer;
-    private Boolean warnsignal;
-    private Boolean wartungsvertrag;
-    private String vertragspartner;
-    private String letzteWartung;
-    private String letzteLeerung;
-    private String hersteller;
-    private String typ;
-    private Boolean schmutzwasserkanal;
-    private Boolean regenwasserkanal;
-    private Boolean mischwasserkanal;
-    private Boolean direkteinleiter;
-    private String entsorgungnachweis;
-    private String entsorgungsvertrag;
-    private String entsorgungsintervalle;
-    private Integer flaeche;
-    private String bemerkung;
-    private Date entsorgungsnachweis;
-    private String entsorgungsnachweisDurch;
     private boolean enabled;
     private boolean deleted;
 
@@ -119,12 +93,6 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
         this.nenngroesse = nenngroesse;
         this.rueckhalt = rueckhalt;
         this.kreis = kreis;
-        this.waschplatzHalle = waschplatzHalle;
-        this.kfzBetrieb = kfzBetrieb;
-        this.lebensmittelbetrieb = lebensmittelbetrieb;
-        this.wohnhaus = wohnhaus;
-        this.oberflaechenentwaesserung = oberflaechenentwaesserung;
-        this.produktionsabwasser = produktionsabwasser;
         this.schlammfang = schlammfang;
         this.vorschlamm = vorschlamm;
         this.probe = probe;
@@ -132,33 +100,13 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
         this.koaabscheider = koaabscheider;
         this.kompakt = kompakt;
         this.emulsionsspaltanlage = emulsionsspaltanlage;
-        this.fettabscheider = fettabscheider;
-        this.baujahr = baujahr;
-        this.din1999 = din1999;
-        this.bauartzulassungsnummer = bauartzulassungsnummer;
         this.vsf2 = vsf2;
         this.vsf1 = vsf1;
-        this.ngBa = ngBa;
-        this.ngKa = ngKa;
         this.schwimmer = schwimmer;
-        this.warnsignal = warnsignal;
-        this.wartungsvertrag = wartungsvertrag;
-        this.vertragspartner = vertragspartner;
-        this.letzteWartung = letzteWartung;
-        this.letzteLeerung = letzteLeerung;
+        this.warnanlage = warnanlage;
         this.hersteller = hersteller;
         this.typ = typ;
-        this.schmutzwasserkanal = schmutzwasserkanal;
-        this.regenwasserkanal = regenwasserkanal;
-        this.mischwasserkanal = mischwasserkanal;
-        this.direkteinleiter = direkteinleiter;
-        this.entsorgungnachweis = entsorgungnachweis;
-        this.entsorgungsvertrag = entsorgungsvertrag;
-        this.entsorgungsintervalle = entsorgungsintervalle;
-        this.flaeche = flaeche;
         this.bemerkung = bemerkung;
-        this.entsorgungsnachweis = entsorgungsnachweis;
-        this.entsorgungsnachweisDurch = entsorgungsnachweisDurch;
         this.enabled = enabled;
         this.deleted = deleted;
     }
@@ -228,55 +176,7 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
         this.kreis = kreis;
     }
 
-    public Boolean getWaschplatzHalle() {
-        return this.waschplatzHalle;
-    }
-
-    public void setWaschplatzHalle(Boolean waschplatzHalle) {
-        this.waschplatzHalle = waschplatzHalle;
-    }
-
-    public Boolean getKfzBetrieb() {
-        return this.kfzBetrieb;
-    }
-
-    public void setKfzBetrieb(Boolean kfzBetrieb) {
-        this.kfzBetrieb = kfzBetrieb;
-    }
-
-    public Boolean getLebensmittelbetrieb() {
-        return this.lebensmittelbetrieb;
-    }
-
-    public void setLebensmittelbetrieb(Boolean lebensmittelbetrieb) {
-        this.lebensmittelbetrieb = lebensmittelbetrieb;
-    }
-
-    public Boolean getWohnhaus() {
-        return this.wohnhaus;
-    }
-
-    public void setWohnhaus(Boolean wohnhaus) {
-        this.wohnhaus = wohnhaus;
-    }
-
-    public Boolean getOberflaechenentwaesserung() {
-        return this.oberflaechenentwaesserung;
-    }
-
-    public void setOberflaechenentwaesserung(Boolean oberflaechenentwaesserung) {
-        this.oberflaechenentwaesserung = oberflaechenentwaesserung;
-    }
-
-    public Boolean getProduktionsabwasser() {
-        return this.produktionsabwasser;
-    }
-
-    public void setProduktionsabwasser(Boolean produktionsabwasser) {
-        this.produktionsabwasser = produktionsabwasser;
-    }
-
-    public Boolean getSchlammfang() {
+     public Boolean getSchlammfang() {
         return this.schlammfang;
     }
 
@@ -332,38 +232,6 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
         this.emulsionsspaltanlage = emulsionsspaltanlage;
     }
 
-    public Boolean getFettabscheider() {
-        return this.fettabscheider;
-    }
-
-    public void setFettabscheider(Boolean fettabscheider) {
-        this.fettabscheider = fettabscheider;
-    }
-
-    public String getBaujahr() {
-        return this.baujahr;
-    }
-
-    public void setBaujahr(String baujahr) {
-        this.baujahr = baujahr;
-    }
-
-    public Boolean getDin1999() {
-        return this.din1999;
-    }
-
-    public void setDin1999(Boolean din1999) {
-        this.din1999 = din1999;
-    }
-
-    public String getBauartzulassungsnummer() {
-        return this.bauartzulassungsnummer;
-    }
-
-    public void setBauartzulassungsnummer(String bauartzulassungsnummer) {
-        this.bauartzulassungsnummer = bauartzulassungsnummer;
-    }
-
     public Integer getVsf2() {
         return this.vsf2;    
     }
@@ -380,22 +248,6 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
         this.vsf1 = vsf1;   
     }
 
-    public Integer getNgBa() {
-        return this.ngBa;
-    }
-
-    public void setNgBa(Integer ngBa) {
-        this.ngBa = ngBa;
-    }
-
-    public Integer getNgKa() {
-        return this.ngKa;
-    }
-
-    public void setNgKa(Integer ngKa) {
-        this.ngKa = ngKa;
-    }
-
     public Boolean getSchwimmer() {
         return this.schwimmer;
     }
@@ -404,45 +256,14 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
         this.schwimmer = schwimmer;
     }
 
-    public Boolean getWarnsignal() {
-        return this.warnsignal;
+    public Boolean getWarnanlage() {
+        return this.warnanlage;
     }
 
-    public void setWarnsignal(Boolean warnsignal) {
-        this.warnsignal = warnsignal;
+    public void setWarnanlage(Boolean warnanlage) {
+        this.warnanlage = warnanlage;
     }
 
-    public Boolean getWartungsvertrag() {
-        return this.wartungsvertrag;
-    }
-
-    public void setWartungsvertrag(Boolean wartungsvertrag) {
-        this.wartungsvertrag = wartungsvertrag;
-    }
-
-    public String getVertragspartner() {
-        return this.vertragspartner;
-    }
-
-    public void setVertragspartner(String vertragspartner) {
-        this.vertragspartner = vertragspartner;
-    }
-
-    public String getLetzteWartung() {
-        return this.letzteWartung;
-    }
-
-    public void setLetzteWartung(String letzteWartung) {
-        this.letzteWartung = letzteWartung;
-    }
-
-    public String getLetzteLeerung() {
-        return this.letzteLeerung;
-    }
-
-    public void setLetzteLeerung(String letzteLeerung) {
-        this.letzteLeerung = letzteLeerung;
-    }
 
     public String getHersteller() {
         return this.hersteller;
@@ -459,92 +280,12 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
     public void setTyp(String typ) {
         this.typ = typ;
     }
-    public Boolean getSchmutzwasserkanal() {
-        return this.schmutzwasserkanal;
-    }
-
-    public void setSchmutzwasserkanal(Boolean schmutzwasserkanal) {
-        this.schmutzwasserkanal = schmutzwasserkanal;
-    }
-
-    public Boolean getRegenwasserkanal() {
-        return this.regenwasserkanal;
-    }
-
-    public void setRegenwasserkanal(Boolean regenwasserkanal) {
-        this.regenwasserkanal = regenwasserkanal;
-    }
-
-    public Boolean getMischwasserkanal() {
-        return this.mischwasserkanal;
-    }
-
-    public void setMischwasserkanal(Boolean mischwasserkanal) {
-        this.mischwasserkanal = mischwasserkanal;
-    }
-
-    public Boolean getDirekteinleiter() {
-        return this.direkteinleiter;
-    }
-
-    public void setDirekteinleiter(Boolean direkteinleiter) {
-        this.direkteinleiter = direkteinleiter;
-    }
-
-    public String getEntsorgungnachweis() {
-        return this.entsorgungnachweis;
-    }
-
-    public void setEntsorgungnachweis(String entsorgungnachweis) {
-        this.entsorgungnachweis = entsorgungnachweis;
-    }
-
-    public String getEntsorgungsvertrag() {
-        return this.entsorgungsvertrag;
-    }
-
-    public void setEntsorgungsvertrag(String entsorgungsvertrag) {
-        this.entsorgungsvertrag = entsorgungsvertrag;
-    }
-
-    public String getEntsorgungsintervalle() {
-        return this.entsorgungsintervalle;
-    }
-
-    public void setEntsorgungsintervalle(String entsorgungsintervalle) {
-        this.entsorgungsintervalle = entsorgungsintervalle;
-    }
-
-    public Integer getFlaeche() {
-        return this.flaeche;
-    }
-
-    public void setFlaeche(Integer flaeche) {
-        this.flaeche = flaeche;
-    }
-
     public String getBemerkung() {
         return this.bemerkung;
     }
 
     public void setBemerkung(String bemerkung) {
         this.bemerkung = bemerkung;
-    }
-
-    public Date getEntsorgungsnachweis() {
-        return this.entsorgungsnachweis;
-    }
-
-    public void setEntsorgungsnachweis(Date entsorgungsnachweis) {
-        this.entsorgungsnachweis = entsorgungsnachweis;
-    }
-
-    public String getEntsorgungsnachweisDurch() {
-        return this.entsorgungsnachweisDurch;
-    }
-
-    public void setEntsorgungsnachweisDurch(String entsorgungsnachweisDurch) {
-        this.entsorgungsnachweisDurch = entsorgungsnachweisDurch;
     }
 
     public boolean isEnabled() {
@@ -589,13 +330,7 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
         buffer.append("lage").append("='").append(getLage()).append("' ");			
         buffer.append("nenngroesse").append("='").append(getNenngroesse()).append("' ");			
         buffer.append("rueckhalt").append("='").append(getRueckhalt()).append("' ");		
-        buffer.append("kreis").append("='").append(getKreis()).append("' ");	
-        buffer.append("waschplatzHalle").append("='").append(getWaschplatzHalle()).append("' ");			
-        buffer.append("kfzBetrieb").append("='").append(getKfzBetrieb()).append("' ");			
-        buffer.append("lebensmittelbetrieb").append("='").append(getLebensmittelbetrieb()).append("' ");			
-        buffer.append("wohnhaus").append("='").append(getWohnhaus()).append("' ");			
-        buffer.append("oberflaechenentwaesserung").append("='").append(getOberflaechenentwaesserung()).append("' ");			
-        buffer.append("produktionsabwasser").append("='").append(getProduktionsabwasser()).append("' ");			
+        buffer.append("kreis").append("='").append(getKreis()).append("' ");						
         buffer.append("schlammfang").append("='").append(getSchlammfang()).append("' ");	
         buffer.append("vorschlamm").append("='").append(getVorschlamm()).append("' ");	
         buffer.append("probe").append("='").append(getProbe()).append("' ");	
@@ -603,33 +338,13 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
         buffer.append("koaabscheider").append("='").append(getKoaabscheider()).append("' ");			
         buffer.append("kompakt").append("='").append(getKompakt()).append("' ");			
         buffer.append("emulsionsspaltanlage").append("='").append(getEmulsionsspaltanlage()).append("' ");			
-        buffer.append("fettabscheider").append("='").append(getFettabscheider()).append("' ");			
-        buffer.append("baujahr").append("='").append(getBaujahr()).append("' ");			
-        buffer.append("din1999").append("='").append(getDin1999()).append("' ");			
-        buffer.append("bauartzulassungsnummer").append("='").append(getBauartzulassungsnummer()).append("' ");			
         buffer.append("vsf2").append("='").append(getVsf2()).append("' ");	
         buffer.append("vsf1").append("='").append(getVsf1()).append("' ");	
-        buffer.append("ngBa").append("='").append(getNgBa()).append("' ");			
-        buffer.append("ngKa").append("='").append(getNgKa()).append("' ");			
         buffer.append("schwimmer").append("='").append(getSchwimmer()).append("' ");			
-        buffer.append("warnsignal").append("='").append(getWarnsignal()).append("' ");			
-        buffer.append("wartungsvertrag").append("='").append(getWartungsvertrag()).append("' ");			
-        buffer.append("vertragspartner").append("='").append(getVertragspartner()).append("' ");			
-        buffer.append("letzteWartung").append("='").append(getLetzteWartung()).append("' ");			
-        buffer.append("letzteLeerung").append("='").append(getLetzteLeerung()).append("' ");			
+        buffer.append("warnanlage").append("='").append(getWarnanlage()).append("' ");			
         buffer.append("hersteller").append("='").append(getHersteller()).append("' ");	
         buffer.append("typ").append("='").append(getTyp()).append("' ");		
-        buffer.append("schmutzwasserkanal").append("='").append(getSchmutzwasserkanal()).append("' ");			
-        buffer.append("regenwasserkanal").append("='").append(getRegenwasserkanal()).append("' ");			
-        buffer.append("mischwasserkanal").append("='").append(getMischwasserkanal()).append("' ");			
-        buffer.append("direkteinleiter").append("='").append(getDirekteinleiter()).append("' ");			
-        buffer.append("entsorgungnachweis").append("='").append(getEntsorgungnachweis()).append("' ");			
-        buffer.append("entsorgungsvertrag").append("='").append(getEntsorgungsvertrag()).append("' ");			
-        buffer.append("entsorgungsintervalle").append("='").append(getEntsorgungsintervalle()).append("' ");			
-        buffer.append("flaeche").append("='").append(getFlaeche()).append("' ");			
         buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");			
-        buffer.append("entsorgungsnachweis").append("='").append(getEntsorgungsnachweis()).append("' ");			
-        buffer.append("entsorgungsnachweisDurch").append("='").append(getEntsorgungsnachweisDurch()).append("' ");			
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
         buffer.append("]");
@@ -697,53 +412,28 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
      * @param copy Anh49Abscheiderdetails
      */
     private void copy(Anh49Abscheiderdetails copy) {
+        this.id = copy.getId();  
         this.anh49Fachdaten = copy.getAnh49Fachdaten();            
         this.abscheidernr = copy.getAbscheidernr();            
         this.von = copy.getVon();            
         this.lage = copy.getLage();            
         this.nenngroesse = copy.getNenngroesse();            
         this.rueckhalt = copy.getRueckhalt();   
-        this.kreis= copy.getKreis();
-        this.waschplatzHalle = copy.getWaschplatzHalle();            
-        this.kfzBetrieb = copy.getKfzBetrieb();            
-        this.lebensmittelbetrieb = copy.getLebensmittelbetrieb();            
-        this.wohnhaus = copy.getWohnhaus();            
-        this.oberflaechenentwaesserung = copy.getOberflaechenentwaesserung();            
-        this.produktionsabwasser = copy.getProduktionsabwasser();            
+        this.kreis= copy.getKreis();                    
         this.schlammfang = copy.getSchlammfang();   
         this.vorschlamm = copy.getVorschlamm();
         this.probe = copy.getProbe();
         this.benzinabscheider = copy.getBenzinabscheider();            
         this.koaabscheider = copy.getKoaabscheider();            
         this.kompakt = copy.getKompakt();            
-        this.emulsionsspaltanlage = copy.getEmulsionsspaltanlage();            
-        this.fettabscheider = copy.getFettabscheider();            
-        this.baujahr = copy.getBaujahr();            
-        this.din1999 = copy.getDin1999();            
-        this.bauartzulassungsnummer = copy.getBauartzulassungsnummer();            
+        this.emulsionsspaltanlage = copy.getEmulsionsspaltanlage();         
         this.vsf2 = copy.getVsf2();  
-        this.vsf1 = copy.getVsf1(); 
-        this.ngBa = copy.getNgBa();            
-        this.ngKa = copy.getNgKa();            
+        this.vsf1 = copy.getVsf1();   
         this.schwimmer = copy.getSchwimmer();            
-        this.warnsignal = copy.getWarnsignal();            
-        this.wartungsvertrag = copy.getWartungsvertrag();            
-        this.vertragspartner = copy.getVertragspartner();            
-        this.letzteWartung = copy.getLetzteWartung();            
-        this.letzteLeerung = copy.getLetzteLeerung();            
+        this.warnanlage = copy.getWarnanlage();            
         this.hersteller = copy.getHersteller();     
         this.typ = copy.getTyp();   
-        this.schmutzwasserkanal = copy.getSchmutzwasserkanal();            
-        this.regenwasserkanal = copy.getRegenwasserkanal();            
-        this.mischwasserkanal = copy.getMischwasserkanal();            
-        this.direkteinleiter = copy.getDirekteinleiter();            
-        this.entsorgungnachweis = copy.getEntsorgungnachweis();            
-        this.entsorgungsvertrag = copy.getEntsorgungsvertrag();            
-        this.entsorgungsintervalle = copy.getEntsorgungsintervalle();            
-        this.flaeche = copy.getFlaeche();            
         this.bemerkung = copy.getBemerkung();            
-        this.entsorgungsnachweis = copy.getEntsorgungsnachweis();            
-        this.entsorgungsnachweisDurch = copy.getEntsorgungsnachweisDurch();            
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
     }    

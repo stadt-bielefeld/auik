@@ -25,24 +25,6 @@
         <property name="rueckhalt" type="java.lang.Boolean">
             <column name="rueckhalt" />
         </property>
-        <property name="waschplatzHalle" type="java.lang.Boolean">
-            <column name="waschplatz_halle" />
-        </property>
-        <property name="kfzBetrieb" type="java.lang.Boolean">
-            <column name="kfz_betrieb" />
-        </property>
-        <property name="lebensmittelbetrieb" type="java.lang.Boolean">
-            <column name="lebensmittelbetrieb" />
-        </property>
-        <property name="wohnhaus" type="java.lang.Boolean">
-            <column name="wohnhaus" />
-        </property>
-        <property name="oberflaechenentwaesserung" type="java.lang.Boolean">
-            <column name="oberflaechenentwaesserung" />
-        </property>
-        <property name="produktionsabwasser" type="java.lang.Boolean">
-            <column name="produktionsabwasser" />
-        </property>
         <property name="vorschlamm" type="java.lang.Boolean">
             <column name="vorschlamm" />
         </property>
@@ -67,47 +49,17 @@
         <property name="probe" type="java.lang.Boolean">
             <column name="pn_stelle" />
         </property>
-        <property name="fettabscheider" type="java.lang.Boolean">
-            <column name="fettabscheider" />
-        </property>
-        <property name="baujahr" type="java.lang.String">
-            <column name="baujahr" />
-        </property>
-        <property name="din1999" type="java.lang.Boolean">
-            <column name="din1999" />
-        </property>
-        <property name="bauartzulassungsnummer" type="java.lang.String">
-            <column name="bauartzulassungsnummer" />
-        </property>
         <property name="vsf1" type="java.lang.Integer">
             <column name="vsf1" />
         </property>
         <property name="vsf2" type="java.lang.Integer">
             <column name="vsf2" />
         </property>
-        <property name="ngBa" type="java.lang.Integer">
-            <column name="ng_ba" />
-        </property>
-        <property name="ngKa" type="java.lang.Integer">
-            <column name="ng_ka" />
-        </property>
         <property name="schwimmer" type="java.lang.Boolean">
             <column name="schwimmer" />
         </property>
-        <property name="warnsignal" type="java.lang.Boolean">
-            <column name="warnsignal" />
-        </property>
-        <property name="wartungsvertrag" type="java.lang.Boolean">
-            <column name="wartungsvertrag" />
-        </property>
-        <property name="vertragspartner" type="java.lang.String">
-            <column name="vertragspartner" />
-        </property>
-        <property name="letzteWartung" type="java.lang.String">
-            <column name="letzte_wartung" />
-        </property>
-        <property name="letzteLeerung" type="java.lang.String">
-            <column name="letzte_leerung" />
+        <property name="warnanlage" type="java.lang.Boolean">
+            <column name="warnanlage" />
         </property>
         <property name="hersteller" type="java.lang.String">
             <column name="hersteller" />
@@ -115,38 +67,8 @@
         <property name="typ" type="java.lang.String">
             <column name="typ" />
         </property>
-        <property name="schmutzwasserkanal" type="java.lang.Boolean">
-            <column name="schmutzwasserkanal" />
-        </property>
-        <property name="regenwasserkanal" type="java.lang.Boolean">
-            <column name="regenwasserkanal" />
-        </property>
-        <property name="mischwasserkanal" type="java.lang.Boolean">
-            <column name="mischwasserkanal" />
-        </property>
-        <property name="direkteinleiter" type="java.lang.Boolean">
-            <column name="direkteinleiter" />
-        </property>
-        <property name="entsorgungnachweis" type="java.lang.String">
-            <column name="entsorgungnachweis" />
-        </property>
-        <property name="entsorgungsvertrag" type="java.lang.String">
-            <column name="entsorgungsvertrag" />
-        </property>
-        <property name="entsorgungsintervalle" type="java.lang.String">
-            <column name="entsorgungsintervalle" />
-        </property>
-        <property name="flaeche" type="java.lang.Integer">
-            <column name="flaeche" />
-        </property>
         <property name="bemerkung" type="java.lang.String">
             <column name="bemerkung" />
-        </property>
-        <property name="entsorgungsnachweis" type="java.util.Date">
-            <column name="entsorgungsnachweis" length="29" />
-        </property>
-        <property name="entsorgungsnachweisDurch" type="java.lang.String">
-            <column name="entsorgungsnachweis_durch" />
         </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
