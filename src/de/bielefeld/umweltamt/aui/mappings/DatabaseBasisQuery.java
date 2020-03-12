@@ -45,6 +45,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
@@ -138,10 +139,10 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 */
 	public static String getStandortString(Standort standort) {
 		String std = new String("");
-		if (standort.getAdresse() != null) {
-			String strasse = standort.getAdresse().getStrasse();
-			Integer hausnr = standort.getAdresse().getHausnr();
-			String zusatz = standort.getAdresse().getHausnrzus();
+		if (standort.getInhaber().getAdresse() != null) {
+			String strasse = standort.getInhaber().getAdresse().getStrasse();
+			Integer hausnr = standort.getInhaber().getAdresse().getHausnr();
+			String zusatz = standort.getInhaber().getAdresse().getHausnrzus();
 			std = (strasse != null ? strasse + " " : "") + (hausnr != null ? hausnr.toString() : "")
 					+ (zusatz != null ? zusatz : "");
 		} else {
@@ -231,10 +232,15 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            <code>null</code>.
 	 * @return Eine Liste von Objekten dieses Betreibers.
 	 */
-	public static List<Objekt> getObjekteByBetreiber(Adresse betreiber, String abteilung) {
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Objekt.class).createAlias("standort", "lage")
-				.createAlias("objektarten", "art").add(Restrictions.eq("adresse", betreiber))
-				.addOrder(Order.asc("inaktiv")).addOrder(Order.asc("lage.strasse")).addOrder(Order.asc("lage.hausnr"))
+	public static List<Objekt> getObjekteByInhaber(Inhaber betreiber, String abteilung) {
+		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Objekt.class)
+				.createAlias("standortid", "std")
+				.createAlias("std.adresse", "adr")
+				.createAlias("objektarten", "art")
+				.add(Restrictions.eq("betreiberid", betreiber))
+				.addOrder(Order.asc("inaktiv"))
+				.addOrder(Order.asc("adr.strasse"))
+				.addOrder(Order.asc("adr.hausnr"))
 				.addOrder(Order.asc("art.objektart"));
 		if (abteilung != null) {
 			detachedCriteria.add(Restrictions.eq("art.abteilung", abteilung));
@@ -257,10 +263,19 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            <code>null</code>.
 	 * @return Eine Liste von Objekten dieses Betreibers.
 	 */
-	public static List<Standort> getStadorteByAdresse(Adresse adresse) {
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Standort.class)
-				.add(Restrictions.eq("adresse", adresse));
-		return new DatabaseAccess().executeCriteriaToList(detachedCriteria, new Standort());
+	public static List<Standort> getStandorteByAdresse(Adresse adresse) {
+		log.debug("Fetching objects at " + adresse);
+		// Find objects witch matching standortid
+		String query = "SELECT s.* FROM basis.standort s " 
+				+ " WHERE s.adresseid = " + adresse.getId()
+				+ " AND s._deleted = false";
+
+
+		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+
+		List<Standort> list = q.list();
+		
+		return q.list();
 	}
 
 	/**
@@ -317,15 +332,15 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		return q.list();
 	}
 
-	public static List<Objekt> getObjekteByStandort(Standort standort, String abteilung, Integer artid,
+	public static List<Objekt> getObjekteByStandort(Adresse adr, String abteilung, Integer artid,
 			Boolean matchArtId) {
-		String strasse = standort.getAdresse().getStrasse();
+		String strasse = adr.getStrasse();
 		strasse = strasse.replace("'", "''");
-		Integer hausnr = standort.getAdresse().getHausnr();
-		String hausnrzus = standort.getAdresse().getHausnrzus();
-		log.debug("Fetching objects at " + standort);
+		Integer hausnr = adr.getHausnr();
+		String hausnrzus = adr.getHausnrzus();
+		log.debug("Fetching objects at " + adr);
 		// Find objects with standortid of adresse with matching fields
-		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.adresse a, basis.objektarten art "
+		String query = "SELECT o.*, s.*, a.* from basis.objekt o, basis.standort s, basis.adresse a, basis.objektarten art "
 				+ " WHERE o.standortid = s.id AND s.adresseid = a.id AND o.objektartid = art.id"
 				+ " AND a.strasse = '" + strasse + "'"
 				+ " AND a.hausnr = " + hausnr
@@ -788,10 +803,11 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
 	
-		String query = "SELECT * FROM " + " (SELECT DISTINCT ON (a.strasse, a.hausnr, a.hausnrzus) m.*, a.* "
-				+ "FROM basis.standort m JOIN basis.adresse a ON a.id = m.adresseid";
+		String query = "SELECT s.*, a.*, o.* "
+				+ "FROM basis.standort s, basis.adresse a, basis.objekt o "
+				+ "WHERE o.standortid = a.id AND s.adresseid = a.id";
 		if (bStrasse || bHausnr || bOrt) {
-			query += " WHERE ";
+			query += " AND ";
 			if (bStrasse) {
 				query += " lower(a.strasse) like '" + str + "%' ";
 			}
@@ -809,10 +825,11 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			}
 			query += " AND a._deleted = false";
 		}
-		query += ") AS q ORDER BY q.strasse ASC, q.hausnr ASC, q.hausnrzus ASC NULLS FIRST;";
+		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC NULLS FIRST;";
 		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("a", Adresse.class);
 		q.addEntity("m", Standort.class);
+		q.addEntity("o", Objekt.class);
 		return q.list();
 	}
 
@@ -825,7 +842,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		str = str.replace("'", "''");
 
 		String query = "SELECT DISTINCT adresse "
-				+ "FROM Standort std JOIN std.adresse adresse";
+				+ "FROM Standort std JOIN std.adresse adresse ";
 		if (bStrasse || bHausnr || bOrt) {
 			query += " WHERE ";
 			if (bStrasse) {
@@ -845,7 +862,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			}
 			query += " AND adresse.deleted = false";
 		}
-		query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
+		query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC";
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
 
@@ -896,13 +913,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	public static List<Adresse> findAdressen(String search, String property) {
 
-		String query = "SELECT DISTINCT adresse " + "FROM Adresse adresse";
+		String query = "SELECT inh " + "FROM Adresse adresse, Inhaber inh";
 
-		query += " WHERE ";
+		query += " WHERE inh.adresse = adresse AND ";
 
-		query += "LOWER(adresse.betrname) like '" + search.toLowerCase() + "%' AND adresse.deleted = false";
+		query += "LOWER(inh.name) like '" + search.toLowerCase() + "%' AND adresse.deleted = false";
 
-		query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
+		query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, inh.name ASC";
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
 
@@ -918,44 +935,44 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */
 
-	public static List<Adresse> findAdressen(String name, String strasse, Integer hausnr, String ort, String property) {
+	public static List<Inhaber> findAdressen(String name, String strasse, Integer hausnr, String ort, String property) {
 
 		boolean bName = (name != null && name.length() > 0);
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
 		boolean bHausnr = (hausnr != null && hausnr != -1);
 		boolean bOrt = (ort != null && ort.length() > 0);
 
-		String query = "SELECT adresse " + "FROM Adresse adresse";
+		String query = "SELECT i FROM Adresse a, Inhaber i WHERE i.adresse = a";
 		if (bName || bStrasse || bHausnr || bOrt) {
-			query += " WHERE ";
+			query += " AND ";
 			if (bName && property == null) {
-				query += "(LOWER(adresse.betrname) like '" + name.toLowerCase() + "%' OR LOWER(betrvorname) like '"
-						+ name.toLowerCase() + "%' OR LOWER(betranrede) like '" + name.toLowerCase()
-						+ "%' OR LOWER(betrnamezus) like '" + name.toLowerCase() + "') AND ";
+				query += "(LOWER(i.betrname) like '" + name.toLowerCase() + "%' OR LOWER(i.vorname) like '"
+						+ name.toLowerCase() + "%' OR LOWER(inh.anrede) like '" + name.toLowerCase()
+						+ "%' OR LOWER(i.namezus) like '" + name.toLowerCase() + "') AND ";
 			} else if (bName && property.equals("anrede")) {
-				query += "LOWER(adresse.betranrede) like '" + name.toLowerCase() + "%' AND ";
+				query += "LOWER(i.anrede) like '" + name.toLowerCase() + "%' AND ";
 			} else if (bName && property.equals("vorname")) {
-				query += "LOWER(adresse.betrvorname) like '" + name.toLowerCase() + "%' AND ";
+				query += "LOWER(i.vorname) like '" + name.toLowerCase() + "%' AND ";
 			} else if (bName && property.equals("name")) {
-				query += "LOWER(adresse.betrname) like '" + name.toLowerCase() + "%' AND ";
+				query += "LOWER(i.name) like '" + name.toLowerCase() + "%' AND ";
 			}
 
 			else if (bName && property.equals("zusatz")) {
-				query += "LOWER(adresse.betrnamezus) like '" + name.toLowerCase() + "%' AND ";
+				query += "LOWER(i.namezus) like '" + name.toLowerCase() + "%' AND ";
 			}
 			if (bStrasse) {
-				query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' AND ";
+				query += "LOWER(a.strasse) like '" + strasse.toLowerCase() + "%' AND ";
 			}
 			if (bHausnr) {
-				query += "adresse.hausnr = " + hausnr + " AND ";
+				query += "a.hausnr = " + hausnr + " AND ";
 			}
 			if (bOrt) {
-				query += "LOWER(adresse.ort) like '" + ort.toLowerCase() + "%' AND ";
+				query += "LOWER(a.ort) like '" + ort.toLowerCase() + "%' AND ";
 			}
 
-			query += "adresse.deleted = false ";
+			query += "a.deleted = false ";
 
-			query += "ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
+			query += "ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC, i.name ASC";
 		}
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}

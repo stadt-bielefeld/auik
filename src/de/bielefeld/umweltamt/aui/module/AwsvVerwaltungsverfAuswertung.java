@@ -187,7 +187,7 @@ class WiedervorlageVVModel extends ListTableModel {
             tmp = vf.getFachdaten().getBehaelterid();
             break;
         case 1:
-            tmp = vf.getFachdaten().getObjekt().getBetreiberid().getBetrname();
+            tmp = vf.getFachdaten().getObjekt().getBetreiberid().getName();
             break;
         case 2:
             tmp = DatabaseQuery.getStandortString(vf.getFachdaten().getObjekt().getStandortid());

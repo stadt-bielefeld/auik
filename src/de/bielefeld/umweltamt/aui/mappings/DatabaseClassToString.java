@@ -36,6 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Bezeichnung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
@@ -145,16 +146,12 @@ public class DatabaseClassToString {
      * falls ein Zusatz vorhanden ist.
      */
     public static String toStringForClass(Adresse clazz) {
-        String vorname = "";
         String hausnrzus = "";
         
-        if (clazz.getBetrvorname() != null) {
-        	vorname = clazz.getBetrvorname() + " ";
-        } if (clazz.getHausnrzus() != null) {
+        if (clazz.getHausnrzus() != null) {
         	hausnrzus = clazz.getHausnrzus();
         }       
-        return vorname + clazz.getBetrname() + ", " + clazz.getStrasse()
-        	+ " " + clazz.getHausnr() + hausnrzus + ", " + clazz.getOrt();
+        return clazz.getStrasse() + " " + clazz.getHausnr() + hausnrzus + ", " + clazz.getOrt();
     }
     
     /**
@@ -169,12 +166,25 @@ public class DatabaseClassToString {
 			if (clazz.getAdresse().getHausnrzus() != null) {
 				hausnrzus = clazz.getAdresse().getHausnrzus();
 			}
-			return clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr() + hausnrzus
+			return clazz.getAdresse().getStrasse() + " " 
+					+ clazz.getAdresse().getHausnr() + hausnrzus
 					+ ", " + clazz.getWassereinzugsgebiet() + ", " + clazz.getEntgebid()
-					+ ", " + clazz.getE32() + ", " + clazz.getN32();
+					+ ", " + clazz.getBezeichnung();
 		} else {
-			return "Standort ohne Adresse" + ", " + clazz.getE32() + ", " + clazz.getN32();
+			return "Standort ohne Adresse" + ", " + clazz.getBezeichnung();
 		}
+	}
+
+	public static String toStringForClass(Inhaber clazz) {
+		String hausnrzus = "";
+		if (clazz.getAdresse() != null) {
+			if (clazz.getAdresse().getHausnrzus() != null) {
+				hausnrzus = clazz.getAdresse().getHausnrzus();
+			}
+		}
+		return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
+				+ clazz.getAdresse().getHausnr() + hausnrzus
+				+ ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
 	}
 
 	/** @return Gemarkung.toGuiString() */

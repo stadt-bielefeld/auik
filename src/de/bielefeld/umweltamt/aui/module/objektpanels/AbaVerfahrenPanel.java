@@ -215,7 +215,7 @@ public class AbaVerfahrenPanel extends JPanel {
                     if (success) {
                         log.debug("Abwasserbehandlungsanlage "
                             + fachdaten.getObjekt().getBetreiberid()
-                                .getBetrname() + " gespeichert.");
+                                .getName() + " gespeichert.");
                     } else {
                         log.debug("Abwasserbehandlungsanlage " + fachdaten
                             + " konnte nicht gespeichert werden!");

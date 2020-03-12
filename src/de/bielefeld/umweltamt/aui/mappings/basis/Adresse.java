@@ -49,35 +49,21 @@ public class Adresse  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Wirtschaftszweig wirtschaftszweig;
-    private String betranrede;
-    private String betrname;
-    private String betrnamezus;
-    private String namebetrbeauf;
-    private String vornamebetrbeauf;
     private String strasse;
     private Integer hausnr;
     private String hausnrzus;
     private String plzzs;
     private String plz;
     private String ort;
-    private String telefon;
-    private String telefax;
-    private String email;
     private String bemerkungen;
     private Date revidatum;
     private String revihandz;
-    private String kassenzeichen;
-    private String betrvorname;
     private boolean enabled;
     private boolean deleted;
-    private boolean datenschutzAwsv;
-    private boolean datenschutzEsatzung;
-    private boolean datenschutzWhg;
-    private String auikWzCode;
     private Date erstellDat;
     private Set<Objekt> objektsForBetreiberid = new HashSet<Objekt>(0);
     private Set<Standort> standorts = new HashSet<Standort>(0);
+    private Set<Inhaber> inhabers = new HashSet<Inhaber>(0);
     private Integer iglId;
 
     /** Logging */
@@ -98,38 +84,27 @@ public class Adresse  implements java.io.Serializable {
 
     /** Full constructor */
     public Adresse(
-            Integer id, Objekt objekt, Wirtschaftszweig wirtschaftszweig, String betranrede,
-            String betrname, String betrnamezus, String namebetrbeauf, String vornamebetrbeauf,
+            Integer id, Objekt objekt, 
             String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort,
-            String telefon, String telefax, String email, String bemerkungen, Date revidatum,
-            String revihandz, String kassenzeichen, String betrvorname, boolean enabled,
-            boolean deleted, String auikWzCode, Date erstellDat, Integer iglId, Set<Standort> standorts, Set<Objekt> objektsForBetreiberid) {
+           String bemerkungen, Date revidatum,
+            String revihandz, boolean enabled,
+            boolean deleted, Date erstellDat, Integer iglId, 
+            Set<Standort> standorts, Set<Inhaber> inhabers, Set<Objekt> objektsForBetreiberid) {
         this.id = id;
-        this.wirtschaftszweig = wirtschaftszweig;
-        this.betranrede = betranrede;
-        this.betrname = betrname;
-        this.betrnamezus = betrnamezus;
-        this.namebetrbeauf = namebetrbeauf;
-        this.vornamebetrbeauf = vornamebetrbeauf;
         this.strasse = strasse;
         this.hausnr = hausnr;
         this.hausnrzus = hausnrzus;
         this.plzzs = plzzs;
         this.plz = plz;
         this.ort = ort;
-        this.telefon = telefon;
-        this.telefax = telefax;
-        this.email = email;
         this.bemerkungen = bemerkungen;
         this.revidatum = revidatum;
         this.revihandz = revihandz;
-        this.kassenzeichen = kassenzeichen;
-        this.betrvorname = betrvorname;
         this.enabled = enabled;
         this.deleted = deleted;
-        this.auikWzCode = auikWzCode;
         this.erstellDat = erstellDat;
         this.standorts = standorts;
+        this.inhabers = inhabers;
         this.iglId = iglId;
         this.objektsForBetreiberid = objektsForBetreiberid;
     }
@@ -141,54 +116,6 @@ public class Adresse  implements java.io.Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Wirtschaftszweig getWirtschaftszweig() {
-        return this.wirtschaftszweig;
-    }
-
-    public void setWirtschaftszweig(Wirtschaftszweig wirtschaftszweig) {
-        this.wirtschaftszweig = wirtschaftszweig;
-    }
-
-    public String getBetranrede() {
-        return this.betranrede;
-    }
-
-    public void setBetranrede(String betranrede) {
-        this.betranrede = betranrede;
-    }
-
-    public String getBetrname() {
-        return this.betrname;
-    }
-
-    public void setBetrname(String betrname) {
-        this.betrname = betrname;
-    }
-
-    public String getBetrnamezus() {
-        return this.betrnamezus;
-    }
-
-    public void setBetrnamezus(String betrnamezus) {
-        this.betrnamezus = betrnamezus;
-    }
-
-    public String getNamebetrbeauf() {
-        return this.namebetrbeauf;
-    }
-
-    public void setNamebetrbeauf(String namebetrbeauf) {
-        this.namebetrbeauf = namebetrbeauf;
-    }
-
-    public String getVornamebetrbeauf() {
-        return this.vornamebetrbeauf;
-    }
-
-    public void setVornamebetrbeauf(String vornamebetrbeauf) {
-        this.vornamebetrbeauf = vornamebetrbeauf;
     }
 
     public String getStrasse() {
@@ -239,30 +166,6 @@ public class Adresse  implements java.io.Serializable {
         this.ort = ort;
     }
 
-    public String getTelefon() {
-        return this.telefon;
-    }
-
-    public void setTelefon(String telefon) {
-        this.telefon = telefon;
-    }
-
-    public String getTelefax() {
-        return this.telefax;
-    }
-
-    public void setTelefax(String telefax) {
-        this.telefax = telefax;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getBemerkungen() {
         return this.bemerkungen;
     }
@@ -287,22 +190,6 @@ public class Adresse  implements java.io.Serializable {
         this.revihandz = revihandz;
     }
 
-    public String getKassenzeichen() {
-        return this.kassenzeichen;
-    }
-
-    public void setKassenzeichen(String kassenzeichen) {
-        this.kassenzeichen = kassenzeichen;
-    }
-
-    public String getBetrvorname() {
-        return this.betrvorname;
-    }
-
-    public void setBetrvorname(String betrvorname) {
-        this.betrvorname = betrvorname;
-    }
-
     public boolean isEnabled() {
         return this.enabled;
     }
@@ -317,38 +204,6 @@ public class Adresse  implements java.io.Serializable {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public Boolean getDatenschutzAwsv() {
-	    return this.datenschutzAwsv;
-	}
-
-	public void setDatenschutzAwsv(boolean datenschutzAwsv) {
-	    this.datenschutzAwsv = datenschutzAwsv;
-	}
-
-	public Boolean getDatenschutzEsatzung() {
-	    return this.datenschutzEsatzung;
-	}
-
-	public void setDatenschutzEsatzung(boolean datenschutzEsatzung) {
-	    this.datenschutzEsatzung = datenschutzEsatzung;
-	}
-
-	public Boolean getDatenschutzWhg() {
-	    return this.datenschutzWhg;
-	}
-
-	public void setDatenschutzWhg(boolean datenschutzWhg) {
-	    this.datenschutzWhg = datenschutzWhg;
-	}
-
-	public String getAuikWzCode() {
-        return this.auikWzCode;
-    }
-
-    public void setAuikWzCode(String auikWzCode) {
-        this.auikWzCode = auikWzCode;
     }
 
     public Date getErstellDat() {
@@ -385,6 +240,15 @@ public class Adresse  implements java.io.Serializable {
 		this.standorts = standorts;
 	}
 
+    @JsonBackReference
+    public Set<Inhaber> getInhabers() {
+		return inhabers;
+	}
+
+	public void setInhabers(Set<Inhaber> inhabers) {
+		this.inhabers = inhabers;
+	}
+
 
 
     /**
@@ -407,32 +271,20 @@ public class Adresse  implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");				
-        buffer.append("wirtschaftszweig").append("='").append(getWirtschaftszweig()).append("' ");			
-        buffer.append("betranrede").append("='").append(getBetranrede()).append("' ");			
-        buffer.append("betrname").append("='").append(getBetrname()).append("' ");			
-        buffer.append("betrnamezus").append("='").append(getBetrnamezus()).append("' ");			
-        buffer.append("namebetrbeauf").append("='").append(getNamebetrbeauf()).append("' ");			
-        buffer.append("vornamebetrbeauf").append("='").append(getVornamebetrbeauf()).append("' ");			
-        buffer.append("strasse").append("='").append(getStrasse()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");							
         buffer.append("hausnr").append("='").append(getHausnr()).append("' ");			
         buffer.append("hausnrzus").append("='").append(getHausnrzus()).append("' ");			
         buffer.append("plzzs").append("='").append(getPlzzs()).append("' ");			
         buffer.append("plz").append("='").append(getPlz()).append("' ");			
-        buffer.append("ort").append("='").append(getOrt()).append("' ");			
-        buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
-        buffer.append("telefax").append("='").append(getTelefax()).append("' ");			
-        buffer.append("email").append("='").append(getEmail()).append("' ");			
+        buffer.append("ort").append("='").append(getOrt()).append("' ");					
         buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
         buffer.append("revidatum").append("='").append(getRevidatum()).append("' ");			
-        buffer.append("revihandz").append("='").append(getRevihandz()).append("' ");			
-        buffer.append("kassenzeichen").append("='").append(getKassenzeichen()).append("' ");			
-        buffer.append("betrvorname").append("='").append(getBetrvorname()).append("' ");			
+        buffer.append("revihandz").append("='").append(getRevihandz()).append("' ");				
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("auikWzCode").append("='").append(getAuikWzCode()).append("' ");			
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");					
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
         buffer.append("Standorts").append("='").append(getStandorts()).append("' ");			
+        buffer.append("Inhabers").append("='").append(getInhabers()).append("' ");	
         buffer.append("objektsForBetreiberid").append("='").append(getObjektsForBetreiberid()).append("' ");			
         buffer.append("iglId").append("='").append(getIglId()).append("' ");			
         buffer.append("]");
@@ -500,32 +352,21 @@ public class Adresse  implements java.io.Serializable {
      * @param copy Adresse
      */
     private void copy(Adresse copy) {
-        this.id = copy.getId();                    
-        this.wirtschaftszweig = copy.getWirtschaftszweig();            
-        this.betranrede = copy.getBetranrede();            
-        this.betrname = copy.getBetrname();            
-        this.betrnamezus = copy.getBetrnamezus();            
-        this.namebetrbeauf = copy.getNamebetrbeauf();            
-        this.vornamebetrbeauf = copy.getVornamebetrbeauf();            
+        this.id = copy.getId();                             
         this.strasse = copy.getStrasse();            
         this.hausnr = copy.getHausnr();            
         this.hausnrzus = copy.getHausnrzus();            
         this.plzzs = copy.getPlzzs();            
         this.plz = copy.getPlz();            
-        this.ort = copy.getOrt();            
-        this.telefon = copy.getTelefon();            
-        this.telefax = copy.getTelefax();            
-        this.email = copy.getEmail();            
+        this.ort = copy.getOrt();                    
         this.bemerkungen = copy.getBemerkungen();            
         this.revidatum = copy.getRevidatum();            
-        this.revihandz = copy.getRevihandz();            
-        this.kassenzeichen = copy.getKassenzeichen();            
-        this.betrvorname = copy.getBetrvorname();            
+        this.revihandz = copy.getRevihandz();                   
         this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.auikWzCode = copy.getAuikWzCode();            
+        this.deleted = copy.isDeleted();                     
         this.erstellDat = copy.getErstellDat();            
-        this.standorts = copy.getStandorts();            
+        this.standorts = copy.getStandorts();             
+        this.inhabers = copy.getInhabers();          
         this.iglId = copy.getIglId();            
         this.objektsForBetreiberid = copy.getObjektsForBetreiberid();            
     }    

@@ -83,9 +83,9 @@ public class BasisLageModel extends ListTableModel
 	 *            Die Zeile
 	 * @return Das Objekt bei rowIndex
 	 */
-	public Standort getRow(int rowIndex)
+	public Adresse getRow(int rowIndex)
 	{
-		return (Standort) getObjectAtRow(rowIndex);
+		return (Adresse) getObjectAtRow(rowIndex);
 	}
     
 	/**
@@ -99,17 +99,16 @@ public class BasisLageModel extends ListTableModel
 	 */
 	public void filterList(String strasse, int hausnr, String ort)
 	{
-        log.debug("Fetching Adresse and Lage Objects");
+        log.debug("Fetching Adresse Objects");
         //Fetch all BasisAdresse and BasisLage Objects
-        List<Object[]> list = DatabaseQuery.findStandorteAll(strasse, hausnr, ort);
+        List<Adresse> list = DatabaseQuery.findStandorte(strasse, hausnr, ort);
         log.debug("Fetched " + list.size() + " Objects");
         List<Standort> standorte = new ArrayList<Standort>();
         //Add fetched objects to a list of Standort
-        for(Object[] i: list){
-        	Standort adr = (Standort)i[1];
-            standorte.add(adr);
+        for(Adresse i: list){
+
         }
-        setList(standorte);
+        setList(list);
         log.debug("Created list");
 		lastOrt = ort;
 		lastStrasse = strasse;
@@ -145,7 +144,7 @@ public class BasisLageModel extends ListTableModel
 	public Object getColumnValue(Object objectAtRow, int columnIndex)
 	{
 		Object value = null;
-		Standort bsta = (Standort) objectAtRow;
+		Adresse bsta = (Adresse) objectAtRow;
 		if (bsta != null){
 		switch (columnIndex)
 		{
@@ -153,35 +152,35 @@ public class BasisLageModel extends ListTableModel
 		 * case 0: value = bsta.getStandortid(); break;
 		 */
 			case 0:
-				value = bsta.getAdresse().getStrasse();
+				value = bsta.getStrasse();
 				break;
 			case 1:
-				if (bsta.getAdresse().getHausnrzus() != null)
+				if (bsta.getHausnrzus() != null)
 				{
-					String tmp = bsta.getAdresse().getHausnr() + bsta.getAdresse().getHausnrzus();
+					String tmp = bsta.getHausnr() + bsta.getHausnrzus();
 					value = tmp;
 				}
 				else
 				{
-					value = bsta.getAdresse().getHausnr();
+					value = bsta.getHausnr();
 				}
 				break;
 			case 2:
-				value = bsta.getAdresse().getPlz();
+				value = bsta.getPlz();
 				break;
 			case 3:
-				value = bsta.getAdresse().getOrt();
+				value = bsta.getOrt();
 				break;
 			case 4:
-				if (bsta.getEntgebid() != null)
+				if (bsta.getStandort().getEntgebid() != null)
 				{
-					value = bsta.getEntgebid();
+					value = bsta.getStandort().getEntgebid();
 				}
 				else
 					value = "";
 				break;
 			case 5:
-				if (bsta.isUeberschgeb() == true)
+				if (bsta.getStandort().isUeberschgeb() == true)
 				{
 
 					value = new Boolean(true);
@@ -193,9 +192,9 @@ public class BasisLageModel extends ListTableModel
 				}
 				break;
 			case 6:
-				if (bsta.getStandortgghwsg() != null)
+				if (bsta.getStandort().getStandortgghwsg() != null)
 				{
-					Integer sggh = bsta.getStandortgghwsg().getId();
+					Integer sggh = bsta.getStandort().getStandortgghwsg().getId();
 					if (sggh.equals(1))
 					{
 						value = new String("Zone I");
@@ -219,8 +218,8 @@ public class BasisLageModel extends ListTableModel
 				}
 				break;
 			case 7:
-				if (bsta.getWassereinzugsgebiet() != null) {
-					value = bsta.getWassereinzugsgebiet();					
+				if (bsta.getStandort().getWassereinzugsgebiet() != null) {
+					value = bsta.getStandort().getWassereinzugsgebiet();					
 				}
 				break;
 			default:

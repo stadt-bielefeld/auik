@@ -531,7 +531,7 @@ builder.nextLine();
     	if (success) {
     		log.debug("Einleitungsstelle"
     				+ this.einleitungsstelle.getObjekt().getBetreiberid()
-    				.getBetrname() + " gespeichert.");
+    				.getName() + " gespeichert.");
     	} else {
     		log.debug("Einleitungsstelle" + this.einleitungsstelle
     				+ " konnte nicht gespeichert werden!");

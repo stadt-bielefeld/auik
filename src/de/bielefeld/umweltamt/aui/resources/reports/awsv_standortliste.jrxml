@@ -36,7 +36,7 @@
 inner join basis.objekt on objekt.standortid = standort.id
 inner join basis.adresse on adresse.id = objekt.betreiberid
 inner join awsv.fachdaten on fachdaten.objektid = objekt.id
-where standort.id = $P{StandortId} and fachdaten.objektid > 0;]]>
+where standort.id = $P{StandortId} and fachdaten.objektid > 0]]>
 	</queryString>
 	<field name="betreiberid" class="java.lang.Integer"/>
 	<field name="betrname" class="java.lang.String"/>

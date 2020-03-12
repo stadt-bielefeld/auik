@@ -161,6 +161,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
@@ -241,7 +242,7 @@ public class SielhautBearbeiten extends AbstractModul {
 	private Sielhaut spunkt;
 	private Messstelle sprobePkt;
 	private Objekt objekt;
-	private Adresse betreiber;
+	private Inhaber betreiber;
 	private Standort standort;
 	private Objektarten art;
 	private SielhautProbeModel probeModel;
@@ -294,7 +295,7 @@ public class SielhautBearbeiten extends AbstractModul {
 		} else {
 			objekt = new Objekt();
 			standort = new Standort();
-			betreiber = Adresse.findById(DatabaseConstants.BASIS_BETREIBER_ID_Umweltamt_360x33);
+			betreiber = Inhaber.findById(DatabaseConstants.BASIS_BETREIBER_ID_Umweltamt_360x33);
 			art = Objektarten.findById(DatabaseConstants.BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE);
 			objekt.setBetreiberid(this.betreiber);
 			objekt.setStandortid(this.standort);

@@ -193,7 +193,7 @@ class WiedervorlageSVModel extends ListTableModel {
                 tmp = vk.getFachdaten().getAnlagenart();
                 break;
             case 3:
-                tmp = vk.getFachdaten().getObjekt().getBetreiberid().getBetrname();
+                tmp = vk.getFachdaten().getObjekt().getBetreiberid().getName();
                 break;
             case 4:
                 tmp = DatabaseQuery.getStandortString(vk.getFachdaten().getObjekt().getStandortid());

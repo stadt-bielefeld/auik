@@ -267,7 +267,7 @@ private static final long serialVersionUID = -4030805403749508467L;
         if (success) {
             log.debug("Abwasserbehandlungsanlage "
                 + this.fachdaten.getObjekt().getBetreiberid()
-                    .getBetrname() + " gespeichert.");
+                    .getName() + " gespeichert.");
         } else {
             log.debug("Abwasserbehandlungsanlage " + this.fachdaten
                 + " konnte nicht gespeichert werden!");

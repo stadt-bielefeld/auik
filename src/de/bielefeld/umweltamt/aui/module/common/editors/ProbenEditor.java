@@ -130,6 +130,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
 import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
@@ -844,7 +845,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         icpDatum = new TextFieldDateChooser();
         bemerkungsArea = new LimitedTextArea(255);
         betrieb = new JLabel();
-        parameterTabelle = new SelectTable();
+        parameterTabelle = new JTable();
 
         vorgangsstatusBox.setModel(
             new DefaultComboBoxModel(DatabaseQuery.getStatus()));
@@ -1014,7 +1015,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         Probenahme probe = getProbe();
 
-        Adresse basisBetr =
+        Inhaber basisBetr =
             probe.getMessstelle().getObjekt().getBetreiberid();
 
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
@@ -1028,6 +1029,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         rechnungsbetrag = rechnungsbetrag.replace("€", "");
         rechnungsbetrag = rechnungsbetrag.replace(",", "");
         rechnungsbetrag = rechnungsbetrag.trim();
+        rechnungsbetrag = rechnungsbetrag.substring(0, rechnungsbetrag.length()-1);
 
         String kasseDatum = DateUtils.format(rechnungsdatum,
             DateUtils.FORMAT_KASSE);
@@ -1039,26 +1041,26 @@ public class ProbenEditor extends AbstractApplyEditor {
         fill -= rechnungsbetrag.length();
 
         sb.append(kassenzeichen);
-        if (basisBetr.getBetrname().length() > 28) {
-            sb.append(basisBetr.getBetrname().substring(0, 28));
+        if (basisBetr.getName().length() > 28) {
+            sb.append(basisBetr.getName().substring(0, 28));
         } else
-            sb.append(basisBetr.getBetrname());
+            sb.append(basisBetr.getName());
 
-        for (int i = 1; i <= 28 - basisBetr.getBetrname().length(); i++) {
+        for (int i = 1; i <= 28 - basisBetr.getName().length(); i++) {
             sb.append(" ");
         }
 
         int anrede = 0;
-        if (basisBetr.getBetranrede() != null) {
-            sb.append(basisBetr.getBetranrede());
-            anrede = basisBetr.getBetranrede().length();
+        if (basisBetr.getAnrede() != null) {
+            sb.append(basisBetr.getAnrede());
+            anrede = basisBetr.getAnrede().length();
         }
 
         for (int i = 1; i <= 28 - anrede; i++) {
             sb.append(" ");
         }
 
-        String addr = DatabaseQuery.getBetriebsgrundstueck(basisBetr);
+        String addr = DatabaseQuery.getBetriebsgrundstueck(basisBetr.getAdresse());
         if (addr.length()>28) {
         	addr = addr.substring(0, 28);
         }
@@ -1067,10 +1069,10 @@ public class ProbenEditor extends AbstractApplyEditor {
             sb.append(" ");
         }
 
-        sb.append(basisBetr.getPlz().toString());
-        sb.append(basisBetr.getOrt().toString());
+        sb.append(basisBetr.getAdresse().getPlz().toString());
+        sb.append(basisBetr.getAdresse().getOrt().toString());
 
-        for (int i = 1; i <= 23 - basisBetr.getOrt().length(); i++) {
+        for (int i = 1; i <= 23 - basisBetr.getAdresse().getOrt().length(); i++) {
             sb.append(" ");
         }
 
@@ -1128,7 +1130,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         });
 
         Probenahme probe = getProbe();
-        Adresse basisBetr =
+        Inhaber basisBetr =
             probe.getMessstelle().getObjekt().getBetreiberid();
 
         probenummer.setText(probe.getKennummer());
@@ -1157,8 +1159,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         if (basisBetr != null) {
-            String name = basisBetr.getBetrname();
-            String addr = DatabaseQuery.getBetriebsgrundstueck(basisBetr);
+            String name = basisBetr.getName();
+            String addr = DatabaseQuery.getBetriebsgrundstueck(basisBetr.getAdresse());
 
             StringBuilder sb = new StringBuilder();
 
@@ -1436,7 +1438,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      * @return die Variablen für den Probenahmeauftrag als Map.
      */
     public Map<String, Object> getAuftragDruckMap(Probenahme probe) {
-        Adresse betr = probe.getMessstelle().getObjekt()
+        Inhaber betr = probe.getMessstelle().getObjekt()
             .getBetreiberid();
         Adresse std = probe.getMessstelle().getObjekt()
             .getStandortid().getAdresse();
@@ -1450,7 +1452,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 			params.put(
 					"betriebsgrundstueck",
 					std.getStrasse() + " " + std.getHausnr()
-							+ betr.getHausnrzus());
+							+ betr.getAdresse().getHausnrzus());
 		} else {
 			params.put("betriebsgrundstueck",
 					std.getStrasse() + " " + std.getHausnr());
@@ -1498,7 +1500,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public Map<String, Object> getBescheidDruckMap(Probenahme probe)
         throws IllegalArgumentException {
-        Adresse betr =
+        Inhaber betr =
             probe.getMessstelle().getObjekt().getBetreiberid();
         Adresse basisStandort =
             probe.getMessstelle().getObjekt().getStandortid().getAdresse();
@@ -1528,15 +1530,15 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("kosten",
             Double.toString(PERSONAL_UND_SACHKOSTEN/100).replace(".", ","));
         params.put("kassenzeichen", betr.getKassenzeichen());
-        params.put("firmaAnrede", betr.getBetranrede());
-        if (betr.getBetrvorname() != null)
+        params.put("firmaAnrede", betr.getAnrede());
+        if (betr.getVorname() != null)
             params.put("firmaName",
-                betr.getBetrvorname() + " " + betr.getBetrname());
+                betr.getVorname() + " " + betr.getName());
         else
-            params.put("firmaName", betr.getBetrname());
-        params.put("firmaNameZus", betr.getBetrnamezus());
-        params.put("firmaStrasse", DatabaseQuery.getBetriebsgrundstueck(betr));
-        params.put("firmaOrt", betr.getPlz() + " " + betr.getOrt());
+            params.put("firmaName", betr.getName());
+        params.put("firmaNameZus", betr.getNamezus());
+        params.put("firmaStrasse", DatabaseQuery.getBetriebsgrundstueck(betr.getAdresse()));
+        params.put("firmaOrt", betr.getAdresse().getPlz() + " " + betr.getAdresse().getOrt());
 
         try {
             Integer anzahl = Integer.parseInt(this.beteiligte.getText());

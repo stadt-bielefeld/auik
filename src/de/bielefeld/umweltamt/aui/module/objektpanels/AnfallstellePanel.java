@@ -435,7 +435,7 @@ public class AnfallstellePanel extends JPanel {
         if(success) {
         	log.debug("Anfallstelle "
                   + this.anfallstelle.getObjekt().getBetreiberid()
-                      .getBetrname() + " gespeichert.");     	
+                      .getName() + " gespeichert.");     	
         } else {
         	log.debug("Anfallstelle " + this.anfallstelle
         			+ " konnte nicht gespeichert werden!");

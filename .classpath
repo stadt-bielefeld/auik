@@ -55,7 +55,6 @@
 	<classpathentry kind="lib" path="lib/jackson-module-jaxb-annotations-2.7.4.jar"/>
 	<classpathentry kind="lib" path="lib/jasperreports-6.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/jasperreports-auik-font-repack.jar"/>
-	<classpathentry kind="lib" path="lib/jasperreports-fonts-6.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/javassist-3.18.1-GA.jar"/>
 	<classpathentry kind="lib" path="lib/javax.annotation-api-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/javax.inject-2.4.0-b34.jar"/>

@@ -10,7 +10,7 @@
         <many-to-one name="standortid" class="de.bielefeld.umweltamt.aui.mappings.basis.Standort" fetch="select">
             <column name="standortid" />
         </many-to-one>
-        <many-to-one name="betreiberid" class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" fetch="select">
+        <many-to-one name="betreiberid" class="de.bielefeld.umweltamt.aui.mappings.basis.Inhaber" fetch="select">
             <column name="betreiberid" />
         </many-to-one>
         <many-to-one name="objektarten" class="de.bielefeld.umweltamt.aui.mappings.basis.Objektarten" fetch="select">

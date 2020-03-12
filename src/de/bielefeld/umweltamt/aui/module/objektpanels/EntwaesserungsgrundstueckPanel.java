@@ -188,7 +188,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
     	if (success) {
     		log.debug("Entwaesserungsgrundstueck"
     				+ this.entwaesserungsgrundstueck.getObjekt().getBetreiberid()
-    				.getBetrname() + " gespeichert.");
+    				.getName() + " gespeichert.");
     	} else {
     		log.debug("Entwaesserungsgrundstueck" + this.entwaesserungsgrundstueck
     				+ " konnte nicht gespeichert werden!");

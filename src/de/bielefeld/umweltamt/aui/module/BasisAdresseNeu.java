@@ -64,6 +64,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -73,14 +74,17 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.table.DefaultTableModel;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Paddings;
@@ -88,10 +92,12 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
@@ -101,8 +107,8 @@ import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdrStdModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandorteModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandortModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
@@ -124,7 +130,9 @@ public class BasisAdresseNeu extends AbstractModul {
 	private static final AuikLogger log = AuikLogger.getLogger();
 
 	private JButton speichernButton;
-	private Standort standort;
+	private Standort standort = new Standort();
+	private Inhaber inh = new Inhaber();
+	private Adresse adrn = new Adresse();
 
 	private JLabel handzeichenLabel;
 	private JLabel namenLabel;
@@ -156,8 +164,6 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JTextArea bemerkungsArea;
 
 	private JComboBox strassenBox;
-	private JTable standorteTabelle;
-	private BasisStandorteModel standorteModel;
 	private JComboBox wirtschaftszweigBox;
 
 	private Orte[] orte = null;
@@ -170,11 +176,10 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JPopupMenu standortPopup;
 
 	private JTable adressenTabelle;
-	private BasisStandorteModel adressenModel;
-	private JTable standortTabelle;
-	private BasisAdrStdModel adrStdModel;
+	private BasisAdresseModel adressenModel;
+	private JTable standorteTabelle;
+	private BasisStandortModel standorteModel;
 
-	private Adresse adrn = new Adresse();
 
 	/*
 	 * (non-Javadoc)
@@ -448,7 +453,7 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JTable getAdressenTabelle() {
 
 		if (this.adressenModel == null) {
-			this.adressenModel = new BasisStandorteModel();
+			this.adressenModel = new BasisAdresseModel();
 
 			if (this.adressenTabelle == null) {
 				this.adressenTabelle = new JTable(this.adressenModel);
@@ -488,28 +493,28 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	private JTable getStandorteTabelle() {
 
-		if (this.adrStdModel == null) {
-			this.adrStdModel = new BasisAdrStdModel();
+		if (this.standorteModel == null) {
+			this.standorteModel = new BasisStandortModel();
 
-			if (this.standortTabelle == null) {
-				this.standortTabelle = new JTable(this.adrStdModel);
+			if (this.standorteTabelle == null) {
+				this.standorteTabelle = new JTable(this.standorteModel);
 
-				this.standortTabelle.getColumnModel().getColumn(0).setPreferredWidth(100);
-				this.standortTabelle.getColumnModel().getColumn(1).setPreferredWidth(10);
-				this.standortTabelle.getColumnModel().getColumn(2).setPreferredWidth(7);
+				this.standorteTabelle.getColumnModel().getColumn(0).setPreferredWidth(100);
+				this.standorteTabelle.getColumnModel().getColumn(1).setPreferredWidth(10);
+				this.standorteTabelle.getColumnModel().getColumn(2).setPreferredWidth(7);
 
-				this.standortTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				this.standortTabelle.setColumnSelectionAllowed(false);
-				this.standortTabelle.setRowSelectionAllowed(true);
+				this.standorteTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				this.standorteTabelle.setColumnSelectionAllowed(false);
+				this.standorteTabelle.setRowSelectionAllowed(true);
 
-				this.standortTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+				this.standorteTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
 					@Override
 					public void mouseClicked(java.awt.event.MouseEvent e) {
 						if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
 							Point origin = e.getPoint();
 							int row = getStandorteTabelle().rowAtPoint(origin);
 
-							Standort std = BasisAdresseNeu.this.adrStdModel.getRow(row);
+							Standort std = BasisAdresseNeu.this.standorteModel.getRow(row);
 							log.debug("Doppelklick auf Zeile " + row);
 							editStandort(std);
 						}
@@ -518,6 +523,12 @@ public class BasisAdresseNeu extends AbstractModul {
 					@Override
 					public void mousePressed(MouseEvent e) {
 
+						if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+							Point origin = e.getPoint();
+							int row = getStandorteTabelle().rowAtPoint(origin);
+						}else if ((e.getButton() == 3)){
+							showStandortPopup(e);
+						}
 					}
 
 					@Override
@@ -528,7 +539,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 			}
 		}
-		return this.standortTabelle;
+		return this.standorteTabelle;
 	}
 
 	private JScrollPane getAdressenScroller() {
@@ -586,8 +597,6 @@ public class BasisAdresseNeu extends AbstractModul {
 				plzFeld.setText(stra.getPlz());
 			}
 
-			standort = new Standort();
-			standort.setAdresse(adrn);
 			Set<Standort> standorts = new HashSet<Standort>();
 			standorts.add(standort);
 			adrn.setStandorts(standorts);
@@ -597,10 +606,10 @@ public class BasisAdresseNeu extends AbstractModul {
 			List std = new ArrayList<Standort>();
 			for (Standort x : standorts)
 				std.add(x);
-			adrStdModel.setList(std);
+			standorteModel.setList(std);
 		}
 
-		this.adrStdModel.fireTableDataChanged();
+		this.standorteModel.fireTableDataChanged();
 
 		log.debug("End updateAdresse()");
 	}
@@ -633,37 +642,44 @@ public class BasisAdresseNeu extends AbstractModul {
 			// Anrede
 			String anrede = anredeFeld.getText();
 			if (anrede.equals("")) {
-				adrn.setBetranrede(null);
+				inh.setAnrede(null);
 			} else {
-				adrn.setBetranrede(anrede);
+				inh.setAnrede(anrede);
 			}
 			// Vorame
 			String vorname = vornamenFeld.getText();
 			if (vorname.equals("")) {
-				adrn.setBetrvorname(null);
+				inh.setVorname(null);
 			} else {
-				adrn.setBetrvorname(vorname);
+				inh.setVorname(vorname);
 			}
 			// Name
 			String name = namenFeld.getText();
 			if (name.equals("")) {
-				adrn.setBetrname(null);
+				inh.setName(null);
 			} else {
-				adrn.setBetrname(name);
+				inh.setName(name);
 			}
 			// Zusatz
 			String nameZusatz = nameZusFeld.getText();
 			if (nameZusatz.equals("")) {
-				adrn.setBetrnamezus(null);
+				inh.setNamezus(null);
 			} else {
-				adrn.setBetrnamezus(nameZusatz);
+				inh.setNamezus(nameZusatz);
 			}
 			// Kassenzeichen
 			String kassenzeichen = kassenzeichenFeld.getText();
 			if (kassenzeichen.equals("")) {
-				adrn.setKassenzeichen(null);
+				inh.setKassenzeichen(null);
 			} else {
-				adrn.setKassenzeichen(kassenzeichen);
+				inh.setKassenzeichen(kassenzeichen);
+			}
+
+			if (inh.getAdresse() != null) {				
+				adrn = inh.getAdresse();
+			} else {
+				adrn = new Adresse();
+				inh.setAdresse(adrn);
 			}
 
 			// Strasse:
@@ -714,44 +730,45 @@ public class BasisAdresseNeu extends AbstractModul {
 			} else {
 				adrn.setOrt(ort);
 			}
+		
 			// Telefon
 			String telefon = telefonFeld.getText().trim();
 			if (telefon.equals("")) {
-				adrn.setTelefon(null);
+				inh.setTelefon(null);
 			} else {
-				adrn.setTelefon(telefon);
+				inh.setTelefon(telefon);
 			}
 			// Telefax
 			String telefax = telefaxFeld.getText().trim();
 			if (telefax.equals("")) {
-				adrn.setTelefax(null);
+				inh.setTelefax(null);
 			} else {
-				adrn.setTelefax(telefax);
+				inh.setTelefax(telefax);
 			}
 			// eMail
 			String email = emailFeld.getText().trim();
 			if (email.equals("")) {
-				adrn.setEmail(null);
+				inh.setEmail(null);
 			} else {
-				adrn.setEmail(email);
+				inh.setEmail(email);
 			}
 			// Betriebsbeauftragter-Vorname
 			String betrBeaufVorname = betrBeaufVornameFeld.getText().trim();
 			if (betrBeaufVorname.equals("")) {
-				adrn.setVornamebetrbeauf(null);
+				inh.setVornamebetrbeauf(null);
 			} else {
-				adrn.setVornamebetrbeauf(betrBeaufVorname);
+				inh.setVornamebetrbeauf(betrBeaufVorname);
 			}
 			// Betriebsbeauftragter-Nachname
 			String betrBeaufNachname = betrBeaufNachnameFeld.getText().trim();
 			if (betrBeaufNachname.equals("")) {
-				adrn.setNamebetrbeauf(null);
+				inh.setNamebetrbeauf(null);
 			} else {
-				adrn.setNamebetrbeauf(betrBeaufNachname);
+				inh.setNamebetrbeauf(betrBeaufNachname);
 			}
 			// Wirtschaftszweig
 			Wirtschaftszweig wizw = (Wirtschaftszweig) wirtschaftszweigBox.getSelectedItem();
-			adrn.setWirtschaftszweig(wizw);
+			inh.setWirtschaftszweig(wizw);
 
 			// Bemerkungen
 			String bemerkungen = bemerkungsArea.getText().trim();
@@ -764,8 +781,6 @@ public class BasisAdresseNeu extends AbstractModul {
 			adrn.setRevidatum(Calendar.getInstance().getTime());
 			adrn.setRevihandz(handzeichenNeuFeld.getText().trim());
 
-			standort = Standort.merge(standort);
-
 			if (standort != null) {
 				frame.changeStatus("Neuer Betreiber " + standort.getId() + " erfolgreich gespeichert.",
 						HauptFrame.SUCCESS_COLOR);
@@ -773,7 +788,7 @@ public class BasisAdresseNeu extends AbstractModul {
 				// Wenn wir vom Objekt anlegen kommen,
 				if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_betreiber")) {
 					manager.getSettingsManager().setSetting("auik.imc.use_betreiber",
-							standort.getAdresse().getId().intValue(), false);
+							standort.getInhaber().getId().intValue(), false);
 					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_betreiber");
 					// ... kehren wir direkt dorthin zurück:
 					manager.switchModul("m_objekt_bearbeiten");
@@ -789,6 +804,15 @@ public class BasisAdresseNeu extends AbstractModul {
 				}
 			}
 
+			inh = Inhaber.merge(inh);
+			standort.setInhaber(inh);
+			standort = Standort.merge(standort);
+			Set<Inhaber> inhabers = new HashSet<Inhaber>();
+			inhabers.add(inh);
+			adrn.setInhabers(inhabers);
+			Set<Standort> standorts = new HashSet<Standort>();
+			standorts.add(standort);
+			adrn.setStandorts(standorts);
 			adrn = Adresse.merge(adrn);
 
 			if (adrn != null) {
@@ -828,9 +852,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 			@Override
 			protected void doNonUILogic() throws RuntimeException {
-				if (orte == null) {
-					orte = DatabaseQuery.getOrte();
-				}
+
 				if (wirtschaftszweige == null) {
 					wirtschaftszweige = DatabaseQuery.getWirtschaftszweig();
 				}
@@ -842,6 +864,9 @@ public class BasisAdresseNeu extends AbstractModul {
 
 			@Override
 			protected void doUIUpdateLogic() throws RuntimeException {
+				
+				
+				
 				if (wirtschaftszweige != null) {
 					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
 				}
@@ -850,7 +875,6 @@ public class BasisAdresseNeu extends AbstractModul {
 				}
 				if (standorteTabelle != null) {
 
-					standorteModel.setStrasse(null);
 					standorteModel.updateList();
 					standorteTabelle.setModel(standorteModel);
 
@@ -862,6 +886,7 @@ public class BasisAdresseNeu extends AbstractModul {
 				}
 
 				ortFeld.setText("Bielefeld");
+				strasseFeld.setText("");
 				hausnrFeld.setValue(null);
 				hausnrZusFeld.setText("");
 				plzZsFeld.setText("D");
@@ -947,7 +972,7 @@ public class BasisAdresseNeu extends AbstractModul {
 //				reloadStrassen();
 //			}
 			else if (e.getSource() == strassenBox) {
-				standorteModel.setStrasse(strassenBox.getSelectedItem().toString());
+//				standorteModel.setStrasse(strassenBox.getSelectedItem().toString());
 				standorteModel.updateList();
 
 			}
@@ -971,5 +996,96 @@ public class BasisAdresseNeu extends AbstractModul {
 
 			}
 		}
+
 	}
+	
+
+	private void showStandortPopup(MouseEvent e) {
+	    if (standortPopup == null) {
+	    	standortPopup = new JPopupMenu("Standort");
+	        JMenuItem loeschItem = new JMenuItem(getStandortLoeschAction());
+	        standortPopup.add(loeschItem);
+	        JMenuItem neuItem = new JMenuItem(getStandortNeuAction());
+	        standortPopup.add(neuItem);
+	    }
+	
+	    if (e != null) {
+	        Point origin = e.getPoint();
+	        int row = standorteTabelle.rowAtPoint(origin);
+	
+	        // Löschen ist natürlich nur möglich,
+	        // wenn wirklich eine Zeile ausgewählt ist:
+	        if (row != -1) {
+	            getStandortLoeschAction().setEnabled(true);
+	            standorteTabelle.setRowSelectionInterval(row, row);
+	        } else {
+	        	getStandortLoeschAction().setEnabled(false);
+	        }
+	
+	        // Das Menü zeigen wir aber immer an, zum neu Anlegen eines
+	        // Abscheiders
+	        standortPopup.show(e.getComponent(), e.getX(), e.getY());
+	    }
+	}
+
+    private Action getStandortLoeschAction() {
+        if (standortLoeschAction == null) {
+        	standortLoeschAction = new AbstractAction("Löschen") {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int row = getStandorteTabelle().getSelectedRow();
+                    if (row != -1
+                        && getStandorteTabelle().getEditingRow() == -1) {
+                    	Standort standort = standorteModel
+                            .getRow(row);
+
+                        if (GUIManager
+                            .getInstance()
+                            .showQuestion(
+                                "Soll der Standort "
+                                    + standort
+                                    + " wirklich gelöscht werden?",
+                                "Löschen bestätigen")) {
+                        	standorteModel.removeRow(row);
+                            log.debug("Standort " + standort
+                                + " wurde gelöscht!");
+                        } else {
+                            log.debug("Löschen von " + standort
+                                + " wurde abgebrochen!");
+                        }
+                    }
+                }
+            };
+            standortLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_L));
+            standortLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+        }
+
+        return standortLoeschAction;
+    }
+
+    private Action getStandortNeuAction() {
+        if (standortNeuAction == null) {
+        	standortNeuAction = new AbstractAction("Neuer Standort") {
+                private static final long serialVersionUID = 4388335905488653435L;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Standort neuerStandort = new Standort();
+                    neuerStandort.setAdresse(adrn);
+                    editStandort(neuerStandort);
+                }
+            };
+            standortNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_N));
+            // abscheiderNeuAction.putValue(Action.ACCELERATOR_KEY,
+            // KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+        }
+
+        return standortNeuAction;
+    }
+	
+	
 }

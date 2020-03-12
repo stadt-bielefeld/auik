@@ -399,7 +399,7 @@ public class SonderbauwerkPanel extends JPanel {
         if (success) {
             log.debug("Sonderbauwerk"
                     + this.sonderbauwerk.getObjekt().getBetreiberid()
-                    .getBetrname() + " gespeichert.");
+                    .getName() + " gespeichert.");
         } else {
             log.debug("Sonderbauwerk" + this.sonderbauwerk
                     + " konnte nicht gespeichert werden!");

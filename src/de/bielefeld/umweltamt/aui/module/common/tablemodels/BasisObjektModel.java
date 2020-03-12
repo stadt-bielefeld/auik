@@ -26,6 +26,7 @@ import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
@@ -86,7 +87,7 @@ public class BasisObjektModel extends ListTableModel {
                 if ("Standort".equals(secondColumn)) {
                     tmp = DatabaseQuery.getStandortString(bo.getStandortid());
                 } else if ("Betreiber".equals(secondColumn)) {
-                    tmp = bo.getBetreiberid();
+                    tmp = bo.getBetreiberid().getName();
                 } else {
                     tmp = secondColumn;
                 }
@@ -147,35 +148,26 @@ public class BasisObjektModel extends ListTableModel {
      * Durchsucht den Tabelleninhalt nach der Betreiber-Id.
      * @param betreiberId Die Betreiber-Id
      */
-    public void searchByBetreiber(Adresse betr) {
-        setList(DatabaseQuery.getObjekteByBetreiber(betr, abteilung));
+    public void searchByInhaber(Inhaber betr) {
+        setList(DatabaseQuery.getObjekteByInhaber(betr, abteilung));
     }
 
     /**
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(Standort standort) {
+    public void searchByStandort(Adresse adr, String abteilung) {
         setList(DatabaseQuery.getObjekteByStandort(
-            standort, abteilung, null, null));
+        		adr, abteilung, null, null));
     }
 
     /**
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(Adresse standort) {
-        setList(DatabaseQuery.getObjekteByAdresse(
-            standort, null, null, true));
-    }
-
-    /**
-     * Durchsucht den Tabelleninhalt nach der Standort-Id.
-     * @param standortId Die Standort-Id
-     */
-    public void searchByStandort(Standort standort, String abteilung) {
+    public void searchByStandort(Adresse adr) {
         setList(DatabaseQuery.getObjekteByStandort(
-            standort, abteilung, null, null));
+        		adr, null, null, null));
     }
 
     /**
@@ -183,18 +175,18 @@ public class BasisObjektModel extends ListTableModel {
      * @param standortId Die Standort-Id
      */
     public void searchByStandort(
-        Standort standort, String abteilung, Integer nichtartid) {
+        Adresse adr, String abteilung, Integer nichtartid) {
         setList(DatabaseQuery.getObjekteByStandort(
-            standort, abteilung, nichtartid, false));
+        		adr, abteilung, nichtartid, false));
     }
 
     /**
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
-    public void searchByStandort(Standort standort, Integer istartid) {
+    public void searchByStandort(Adresse adr, Integer istartid) {
         setList(DatabaseQuery.getObjekteByStandort(
-            standort, null, istartid, true));
+        		adr, null, istartid, true));
     }
 
     /**

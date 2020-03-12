@@ -49,6 +49,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/awsv/Wassereinzugsgebiet.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Adresse.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Bezeichnung.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Inhaber.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Gemarkung.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Standort.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Objekt.hbm.xml" />

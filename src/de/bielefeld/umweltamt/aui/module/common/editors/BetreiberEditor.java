@@ -76,6 +76,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
@@ -89,8 +90,8 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.module.BasisAdresseNeu;
 import de.bielefeld.umweltamt.aui.module.BasisAdresseSuchen;
 import de.bielefeld.umweltamt.aui.module.BasisStandortSuchen;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdrStdModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandorteModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandortModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
@@ -114,6 +115,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 	private static final AuikLogger log = AuikLogger.getLogger();
 
 	private Adresse adresse = null;
+	private Inhaber inhaber = null;
 
 	// Für die Comboboxen beim Bearbeiten
 
@@ -156,20 +158,22 @@ public class BetreiberEditor extends AbstractBaseEditor {
     private JPopupMenu standortPopup;
 	
 	private JTable adressenTabelle;
-	private BasisStandorteModel adressenModel;
-	private JTable standortTabelle;
-	private BasisAdrStdModel adrStdModel;
-
+	private BasisAdresseModel adressenModel;
+	private JTable standorteTabelle;
+	private BasisStandortModel standorteModel;
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Betreibers.
 	 */
-	public BetreiberEditor(Adresse adresse, HauptFrame owner) {
-		super("Betreiber (" + adresse.toString() + ")", adresse, owner);
-		this.adresse = adresse;
+	public BetreiberEditor(Inhaber betreiber, HauptFrame owner) {
+		super("Betreiber (" + betreiber.toString() + ")", betreiber, owner);
+		this.inhaber = betreiber;
+		this.adresse = betreiber.getAdresse();
 	}
 
-	public BetreiberEditor(Standort standort, HauptFrame owner) {
+	public BetreiberEditor(Standort standort, Inhaber inhaber, HauptFrame owner) {
 		super("Standort (" + standort.toString() + ")", standort, owner);
+		this.inhaber = inhaber;
+		this.adresse = inhaber.getAdresse();
 
 	}
 
@@ -356,7 +360,7 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
                     int row = getStandorteTabelle().getSelectedRow();
                     if (row != -1
                         && getStandorteTabelle().getEditingRow() == -1) {
-                    	Standort standort = adrStdModel
+                    	Standort standort = standorteModel
                             .getRow(row);
 
                         if (GUIManager
@@ -366,7 +370,7 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
                                     + standort
                                     + " wirklich gelöscht werden?",
                                 "Löschen bestätigen")) {
-                        	adrStdModel.removeRow(row);
+                        	standorteModel.removeRow(row);
                             log.debug("Standort " + standort
                                 + " wurde gelöscht!");
                         } else {
@@ -385,7 +389,7 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
         return standortLoeschAction;
     }
 
-    private Action getAbscheiderNeuAction() {
+    private Action getStandortNeuAction() {
         if (standortNeuAction == null) {
         	standortNeuAction = new AbstractAction("Neuer Standort") {
                 private static final long serialVersionUID = 4388335905488653435L;
@@ -431,25 +435,18 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 					adressenModel.setStrasse(null);
 					adressenModel.updateList();
 					adressenTabelle.setModel(adressenModel);
-
-					adressenTabelle.getColumnModel().getColumn(0).setPreferredWidth(10);
-					adressenTabelle.getColumnModel().getColumn(1).setPreferredWidth(100);
-					adressenTabelle.getColumnModel().getColumn(2).setPreferredWidth(10);
-					adressenTabelle.getColumnModel().getColumn(3).setPreferredWidth(7);
+					
+					getAdressenTabelle();
 
 				}
-				if (standortTabelle != null) {
+				if (standorteTabelle != null) {
 
-					adrStdModel.setAdresse(adresse);
-					adrStdModel.updateList();
-					standortTabelle.setModel(adrStdModel);
+					standorteModel.setAdresse(adresse);
+					standorteModel.updateList();
+					standorteTabelle.setModel(standorteModel);
 
-					standortTabelle.getColumnModel().getColumn(0).setPreferredWidth(40);
-					standortTabelle.getColumnModel().getColumn(1).setPreferredWidth(60);
-					standortTabelle.getColumnModel().getColumn(2).setPreferredWidth(60);
-					standortTabelle.getColumnModel().getColumn(3).setPreferredWidth(30);
-					standortTabelle.getColumnModel().getColumn(4).setPreferredWidth(30);
-
+					getStandorteTabelle();
+					
 				}
 
 				if (wirtschaftszweige != null) {
@@ -457,29 +454,29 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 					wirtschaftszweigBox.setSelectedItem(getBetreiber().getWirtschaftszweig());
 				}
 
-				anredeFeld.setText(getBetreiber().getBetranrede());
-				vornamenFeld.setText(getBetreiber().getBetrvorname());
-				namenFeld.setText(getBetreiber().getBetrname());
+				anredeFeld.setText(getBetreiber().getAnrede());
+				vornamenFeld.setText(getBetreiber().getVorname());
+				namenFeld.setText(getBetreiber().getName());
 				namenLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
 				namenFeld.setFont(new Font("SansSerif", Font.BOLD, 12));
-				nameZusFeld.setText(getBetreiber().getBetrnamezus());
+				nameZusFeld.setText(getBetreiber().getNamezus());
 				kassenzeichenFeld.setText(getBetreiber().getKassenzeichen());
 				kassenzeichenFeld.setFont(new Font("SansSerif", Font.BOLD, 12));
 				kassenzeichenLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
-				strasseFeld.setText(getBetreiber().getStrasse());
-				hausnrFeld.setValue(getBetreiber().getHausnr());
-				hausnrZusFeld.setText(getBetreiber().getHausnrzus());
-				String plzZs = getBetreiber().getPlzzs();
+				strasseFeld.setText(getBetreiber().getAdresse().getStrasse());
+				hausnrFeld.setValue(getBetreiber().getAdresse().getHausnr());
+				hausnrZusFeld.setText(getBetreiber().getAdresse().getHausnrzus());
+				String plzZs = getBetreiber().getAdresse().getPlzzs();
 				if (plzZs != null) {
 					plzZs = plzZs.trim();
 				}
 				plzZsFeld.setText(plzZs);
-				plzFeld.setText(getBetreiber().getPlz());
-				ortFeld.setText(getBetreiber().getOrt());
+				plzFeld.setText(getBetreiber().getAdresse().getPlz());
+				ortFeld.setText(getBetreiber().getAdresse().getOrt());
 				telefonFeld.setText(getBetreiber().getTelefon());
 				telefaxFeld.setText(getBetreiber().getTelefax());
 				emailFeld.setText(getBetreiber().getEmail());
-				strassenBox.setSelectedItem(getBetreiber().getStrasse());
+				strassenBox.setSelectedItem(getBetreiber().getAdresse().getStrasse());
 
 				if (getBetreiber().getDatenschutzAwsv() != null)
 					daten_awsvCheck.setSelected(getBetreiber().getDatenschutzAwsv());
@@ -545,30 +542,30 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 		// Anrede
 		String anrede = anredeFeld.getText();
 		if ("".equals(anrede)) {
-			getBetreiber().setBetranrede(null);
+			getBetreiber().setAnrede(null);
 		} else {
-			getBetreiber().setBetranrede(anrede);
+			getBetreiber().setAnrede(anrede);
 		}
 		// Vorname
 		String vorname = vornamenFeld.getText();
 		if ("".equals(vorname)) {
-			getBetreiber().setBetrvorname(null);
+			getBetreiber().setVorname(null);
 		} else {
-			getBetreiber().setBetrvorname(vorname);
+			getBetreiber().setVorname(vorname);
 		}
 		// Name
 		String name = namenFeld.getText();
 		if ("".equals(name)) {
-			getBetreiber().setBetrname(null);
+			getBetreiber().setName(null);
 		} else {
-			getBetreiber().setBetrname(name);
+			getBetreiber().setName(name);
 		}
 		// Zusatz
 		String nameZusatz = nameZusFeld.getText();
 		if ("".equals(nameZusatz)) {
-			getBetreiber().setBetrnamezus(null);
+			getBetreiber().setNamezus(null);
 		} else {
-			getBetreiber().setBetrnamezus(nameZusatz);
+			getBetreiber().setNamezus(nameZusatz);
 		}
 		// kassenzeichen
 		String kasse = kassenzeichenFeld.getText();
@@ -581,29 +578,29 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 		// Strasse:
 		String strasse = strasseFeld.getText();
 		if ("".equals(strasse)) {
-			getBetreiber().setStrasse(null);
+			getBetreiber().getAdresse().setStrasse(null);
 		} else {
-			getBetreiber().setStrasse(strasse);
+			getBetreiber().getAdresse().setStrasse(strasse);
 		}
 
 		// Hausnummer:
 		Integer hausnr = ((IntegerField) hausnrFeld).getIntValue();
-		getBetreiber().setHausnr(hausnr);
+		getBetreiber().getAdresse().setHausnr(hausnr);
 
 		// Hausnummer-Zusatz:
 		String hausnrZus = hausnrZusFeld.getText();
 		if ("".equals(hausnrZus)) {
-			getBetreiber().setHausnrzus(null);
+			getBetreiber().getAdresse().setHausnrzus(null);
 		} else {
-			getBetreiber().setHausnrzus(hausnrZus);
+			getBetreiber().getAdresse().setHausnrzus(hausnrZus);
 		}
 
 		// PLZ-Zusatz
 		String plzZs = plzZsFeld.getText();
 		if ("".equals(plzZs)) {
-			getBetreiber().setPlzzs(null);
+			getBetreiber().getAdresse().setPlzzs(null);
 		} else {
-			getBetreiber().setPlzzs(plzZs.toUpperCase().trim());
+			getBetreiber().getAdresse().setPlzzs(plzZs.toUpperCase().trim());
 		}
 
 		// PLZ:
@@ -611,9 +608,9 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 		if (plz != null) {
 			plz = plz.trim();
 			if (plz.equals("")) {
-				getBetreiber().setPlz(null);
+				getBetreiber().getAdresse().setPlz(null);
 			} else {
-				getBetreiber().setPlz(plz);
+				getBetreiber().getAdresse().setPlz(plz);
 			}
 		}
 		// Ort
@@ -621,9 +618,9 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 		if (ort != null) {
 			ort = ort.trim();
 			if (ort.equals("")) {
-				getBetreiber().setOrt(null);
+				getBetreiber().getAdresse().setOrt(null);
 			} else {
-				getBetreiber().setOrt(ort);
+				getBetreiber().getAdresse().setOrt(ort);
 			}
 		}
 		// Telefon
@@ -702,7 +699,7 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 
 		getBetreiber().setRevidatum(Calendar.getInstance().getTime());
 		
-		List<?> adrStdListe = this.adrStdModel.getList();
+		List<?> adrStdListe = this.standorteModel.getList();
 		boolean gespeichert = true;
 		for (int i = 0; i < adrStdListe.size(); i++) {
 
@@ -712,7 +709,7 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 
 		}
 		
-		Standort standort = (Standort) adrStdModel.getObjectAtRow(0);
+		Standort standort = (Standort) standorteModel.getObjectAtRow(0);
 		getBetreiber().merge();
 
 		return true;
@@ -747,21 +744,22 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 		return str;
 	}
 
-	public Adresse getBetreiber() {
-		return (Adresse) getEditedObject();
+	public Inhaber getBetreiber() {
+		return (Inhaber) getEditedObject();
 	}
 
 	private JTable getAdressenTabelle() {
 
 		if (this.adressenModel == null) {
-			this.adressenModel = new BasisStandorteModel();
+			this.adressenModel = new BasisAdresseModel();
 
 			if (this.adressenTabelle == null) {
 				this.adressenTabelle = new JTable(this.adressenModel);
-
-				this.adressenTabelle.getColumnModel().getColumn(0).setPreferredWidth(100);
-				this.adressenTabelle.getColumnModel().getColumn(1).setPreferredWidth(10);
-				this.adressenTabelle.getColumnModel().getColumn(2).setPreferredWidth(7);
+				
+				this.adressenTabelle.getColumnModel().getColumn(0).setPreferredWidth(10);
+				this.adressenTabelle.getColumnModel().getColumn(1).setPreferredWidth(100);
+				this.adressenTabelle.getColumnModel().getColumn(2).setPreferredWidth(10);
+				this.adressenTabelle.getColumnModel().getColumn(3).setPreferredWidth(7);
 
 				this.adressenTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				this.adressenTabelle.setColumnSelectionAllowed(false);
@@ -793,48 +791,53 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 
 	private JTable getStandorteTabelle() {
 
-		if (this.adrStdModel == null) {
-			this.adrStdModel = new BasisAdrStdModel();
+		if (this.standorteModel == null) {
+			this.standorteModel = new BasisStandortModel();
 
-			if (this.standortTabelle == null) {
-				this.standortTabelle = new JTable(this.adrStdModel);
+			if (this.standorteTabelle == null) {
+				this.standorteTabelle = new JTable(this.standorteModel);
 
-				this.standortTabelle.getColumnModel().getColumn(0).setPreferredWidth(100);
-				this.standortTabelle.getColumnModel().getColumn(1).setPreferredWidth(10);
-				this.standortTabelle.getColumnModel().getColumn(2).setPreferredWidth(7);
+				this.standorteTabelle.getColumnModel().getColumn(0).setPreferredWidth(40);
+				this.standorteTabelle.getColumnModel().getColumn(1).setPreferredWidth(60);
+				this.standorteTabelle.getColumnModel().getColumn(2).setPreferredWidth(60);
+				this.standorteTabelle.getColumnModel().getColumn(3).setPreferredWidth(30);
+				this.standorteTabelle.getColumnModel().getColumn(4).setPreferredWidth(30);
 
-				this.standortTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				this.standortTabelle.setColumnSelectionAllowed(false);
-				this.standortTabelle.setRowSelectionAllowed(true);
+				this.standorteTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				this.standorteTabelle.setColumnSelectionAllowed(false);
+				this.standorteTabelle.setRowSelectionAllowed(true);
 
-				this.standortTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+				this.standorteTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
+
 					@Override
 					public void mouseClicked(java.awt.event.MouseEvent e) {
-                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                            Point origin = e.getPoint();
-                            int row = getStandorteTabelle().rowAtPoint(origin);
 
-                            Standort std = BetreiberEditor.this.adrStdModel
-                                .getRow(row);
-                            log.debug("Doppelklick auf Zeile " + row);
-                            editStandort(std);
-                        }
-                    }
+					}
 
 					@Override
 					public void mousePressed(MouseEvent e) {
+						if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+							Point origin = e.getPoint();
+							int row = getStandorteTabelle().rowAtPoint(origin);
+
+							Standort std = BetreiberEditor.this.standorteModel.getRow(row);
+							log.debug("Doppelklick auf Zeile " + row);
+							editStandort(std);
+						}else if ((e.getButton() == 3)){
+							showStandortPopup(e);
+						}
 						
 					}
 
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						
+
 					}
 				});
 
 			}
 		}
-		return this.standortTabelle;
+		return this.standorteTabelle;
 	}
 
 	private JScrollPane getAdressenScroller() {
@@ -867,10 +870,10 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 			if (stra.getPlz() != null) {
 				plzFeld.setText(stra.getPlz());
 			}
-			int row = BetreiberEditor.this.standortTabelle
+			int row = BetreiberEditor.this.standorteTabelle
 					.getSelectedRow();
 			if (row != -1) {
-			Standort standort = BetreiberEditor.this.adrStdModel
+			Standort standort = BetreiberEditor.this.standorteModel
 					.getRow(row);
 			standort.setE32(bts.getX());
 			standort.setN32(bts.getY());
@@ -885,10 +888,10 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 				List std = new ArrayList<Standort>();
 				for (Standort x : standorts)
 					std.add(x);
-				adrStdModel.setList(std);
+				standorteModel.setList(std);
 			}
 
-			this.adrStdModel.fireTableDataChanged();
+			this.standorteModel.fireTableDataChanged();
 
 		}
 		log.debug("End updateAdresse()");
@@ -929,6 +932,10 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
         editDialog.setLocationRelativeTo(this.frame);
 
         editDialog.setVisible(true);
+        
+        if (editDialog.wasSaved()) {
+        	standorteModel.updateList();
+        }
 
     }
     private void showStandortPopup(MouseEvent e) {
@@ -936,19 +943,19 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
         	standortPopup = new JPopupMenu("Standort");
             JMenuItem loeschItem = new JMenuItem(getStandortLoeschAction());
             standortPopup.add(loeschItem);
-            JMenuItem neuItem = new JMenuItem(getAbscheiderNeuAction());
+            JMenuItem neuItem = new JMenuItem(getStandortNeuAction());
             standortPopup.add(neuItem);
         }
 
         if (e != null) {
             Point origin = e.getPoint();
-            int row = standortTabelle.rowAtPoint(origin);
+            int row = standorteTabelle.rowAtPoint(origin);
 
             // Löschen ist natürlich nur möglich,
             // wenn wirklich eine Zeile ausgewählt ist:
             if (row != -1) {
                 getStandortLoeschAction().setEnabled(true);
-                standortTabelle.setRowSelectionInterval(row, row);
+                standorteTabelle.setRowSelectionInterval(row, row);
             } else {
             	getStandortLoeschAction().setEnabled(false);
             }

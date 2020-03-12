@@ -4,6 +4,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NO_DATA_ADAPTER"/>
 	<style name="table" mode="Opaque" fill="Solid">
 		<pen lineWidth="2.5" lineColor="#B9B9B9"/>
 		<box>

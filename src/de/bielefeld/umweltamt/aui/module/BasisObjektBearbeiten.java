@@ -112,6 +112,7 @@ import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
@@ -469,7 +470,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 manager.getSettingsManager().removeSetting("auik.imc.use_lage");
             }
             if (manager.getSettingsManager().getSetting("auik.imc.use_betreiber") != null) {
-                Adresse betr = Adresse.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
+                Inhaber betr = Inhaber.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
                 objekt.setBetreiberid(betr);
                 manager.getSettingsManager().removeSetting("auik.imc.use_betreiber");
             }
