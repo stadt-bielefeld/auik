@@ -90,7 +90,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.module.BasisAdresseNeu;
 import de.bielefeld.umweltamt.aui.module.BasisAdresseSuchen;
 import de.bielefeld.umweltamt.aui.module.BasisStandortSuchen;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStandortModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStdModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -142,13 +142,26 @@ public class BetreiberEditor extends AbstractBaseEditor {
 	private JTextField revdatumsFeld;
 	private JTextField handzeichenAltFeld;
 	private JTextField handzeichenNeuFeld;
+	private JTextField flurFeld;
+	private JTextField flurStkFeld;
+	private JFormattedTextField wassermengeFeld;
 	private JTextArea bemerkungsArea;
 	private JCheckBox daten_awsvCheck;
 	private JCheckBox daten_esatzungCheck;
 	private JCheckBox daten_whgCheck;
+	private JCheckBox ueberschgebCheck;
 	private JComboBox strassenBox;
 	private JComboBox wirtschaftszweigBox;
+	private JComboBox gemarkungBox;
+	private JComboBox entwGebBox;
+	private JComboBox standortGgBox;
+	private JComboBox wEinzugsGebBox;
 
+	
+	private Gemarkung[] gemarkungen = null;
+	private String[] entwgebiete = null;
+	private Standortgghwsg[] standortggs = null;
+	private Wassereinzugsgebiet[] wEinzugsgebiete = null;
 	private Wirtschaftszweig[] wirtschaftszweige = null;
 	private String[] tabstreets = null;
 	private String street = null;
@@ -160,7 +173,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 	private JTable adressenTabelle;
 	private BasisAdresseModel adressenModel;
 	private JTable standorteTabelle;
-	private BasisStandortModel standorteModel;
+	private BasisStdModel standorteModel;
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Betreibers.
 	 */
@@ -194,12 +207,14 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		telefonFeld = new LimitedTextField(50);
 		telefaxFeld = new LimitedTextField(50);
 		emailFeld = new LimitedTextField(50);
+		wassermengeFeld = new IntegerField();
 		betrBeaufVornameFeld = new LimitedTextField(50);
 		betrBeaufNachnameFeld = new LimitedTextField(50);
 		
 		daten_awsvCheck = new JCheckBox("AwSV");
 		daten_esatzungCheck = new JCheckBox("E-Satzung");
 		daten_whgCheck = new JCheckBox("WHG");
+		ueberschgebCheck = new JCheckBox("Überschwemm.-gebiet");
 
 		revdatumsFeld = new JTextField();
 		revdatumsFeld.setEditable(false);
@@ -211,6 +226,14 @@ public class BetreiberEditor extends AbstractBaseEditor {
 
 		handzeichenNeuFeld = new LimitedTextField(10, "");
 		handzeichenNeuFeld.setToolTipText("Handzeichen obligatorisch!");
+		
+		flurFeld = new LimitedTextField(50);
+		flurStkFeld = new LimitedTextField(50);
+		gemarkungBox = new JComboBox();
+		entwGebBox = new JComboBox();
+//		entwGebBox.setEditable(true);
+		standortGgBox = new JComboBox();
+		wEinzugsGebBox = new JComboBox();
 
 		bemerkungsArea = new LimitedTextArea(2000);
 		bemerkungsArea.setLineWrap(true);
@@ -247,97 +270,132 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		// TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
 
 		FormLayout layout = new FormLayout(
-				"right:pref, 3dlu, 20dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 10dlu, right:pref, 5dlu, 50dlu, 40dlu", //Spalten
-				"pref, 3dlu, " + //-Adresse 
-				"pref, 3dlu, " + //3
-				"pref, 3dlu, " + //5
-				"pref, 3dlu, " + //7
-				"pref, 3dlu, " + //9
-				"pref, 3dlu, " + //11
-				"pref, 3dlu, " + //13
-				"pref, 3dlu, " + //15 -Ansprechpartner 
-				"pref, 3dlu, " + //17
-				"pref, 3dlu, " + //19 -DSGVO
-				"pref, 3dlu, " + //21
-				"pref, 3dlu, " + //23
-				"pref, 3dlu, " + //25
-				"pref, 3dlu, " + //27 -Lage
-				"pref, 3dlu, " + //29
-				"pref, 3dlu, " + //31 
-				"pref, 3dlu, " + //33
-				"pref, 3dlu, " + //35
-				"pref, 3dlu, " + //37 -Bermerkung
-				"pref, 3dlu, " + //39
-				"pref, 3dlu, " + //41
-				"pref, 3dlu, " + //43- Button
-				"pref, 3dlu, " + //45 
-				"pref, 3dlu, " ); //47 - Button
-		 
-layout.setRowGroups(new int[][] { { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35,
-							37, 39, 41, 43 } });
+				"right:pref, 3dlu, 20dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 10dlu, right:pref, 5dlu, 100dlu, 40dlu", // Spalten
+				"pref, 3dlu, " +
+						"pref, 3dlu, " + // 3
+						"pref, 3dlu, " + // 5
+						"pref, 3dlu, " + // 7
+						"pref, 3dlu, " + // 9
+						"pref, 3dlu, " + // 11
+						"pref, 3dlu, " + // 13
+						"pref, 3dlu, " + // 15
+						"pref, 3dlu, " + // 17
+						"pref, 3dlu, " + // 19
+						"pref, 3dlu, " + // 21
+						"pref, 3dlu, " + // 23
+						"pref, 3dlu, " + // 25
+						"pref, 3dlu, " + // 27
+						"pref, 3dlu, " + // 29
+						"pref, 3dlu, " + // 31
+						"pref, 3dlu, " + // 33
+						"pref, 3dlu, " + // 35
+						"pref, 3dlu, " + // 37
+						"pref, 3dlu, " + // 39
+						"pref, 3dlu, " + // 41
+						"pref, 3dlu, " + // 43
+						"pref, 3dlu, " + // 45
+						"pref, 3dlu, " + // 47
+						"pref, 3dlu, " + // 49
+						"pref, 3dlu, " + // 51
+						"pref, 3dlu, " + // 53
+						"pref, 3dlu, " + // 55
+						"pref, 3dlu, " + // 57
+						"pref, 3dlu, "); // 59
 
-					PanelBuilder builder = new PanelBuilder(layout);
-					CellConstraints cc = new CellConstraints();
+		layout.setRowGroups(new int[][] {
+				{ 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59 } });
 
-//Links oben
+		PanelBuilder builder = new PanelBuilder(layout);
+		CellConstraints cc = new CellConstraints();
 
-		builder.addSeparator("Adresse", cc.xyw(1,1,13));				//Adresse----
-		namenLabel = builder.addLabel("Firma/Name:", cc.xy(1, 3));		//Name
-					builder.add(namenFeld, cc.xyw(3, 3, 6));
-		builder.addLabel("Anrede:", cc.xy(1,5));						//Anrede
-					builder.add(anredeFeld, cc.xyw(3, 5, 6));
-		builder.addLabel("Vorname:", cc.xy(1,7));						//Vorname
-					builder.add(vornamenFeld, cc.xyw(3, 7, 6));		
-		builder.addLabel("Zusatz", cc.xy(1,9));							//Zusatz
-					builder.add(nameZusFeld, cc.xyw(3, 9, 6));					
-		builder.addLabel("Stadt", cc.xy(1,11));
-					builder.add(plzZsFeld, cc.xy(3, 11));				//PLZ-Zusatz
-					builder.add(plzFeld, cc.xy(4, 11));					//PLZ
-					builder.add(ortFeld, cc.xyw(6, 11, 3));				//Stadt					
-		builder.addLabel("Straße", cc.xy(1,13));						//Straße
-					builder.add(strasseFeld, cc.xyw(3, 13, 2));		
-					builder.add(hausnrFeld, cc.xy(6, 13));				//Hausnr
-					builder.add(hausnrZusFeld, cc.xy(8, 13));			//HausnrZusatz
-		builder.addSeparator("Ansprechpartner", cc.xyw(1,15,8));		//Ansprechpartner--					
-		builder.addLabel("Vorname", cc.xy(1,17));						//Vorname
-					builder.add(betrBeaufVornameFeld, cc.xyw(3, 17, 6));		
-		builder.addLabel("Nachname", cc.xy(1,19));						//Nachname
-					builder.add(betrBeaufNachnameFeld, cc.xyw(3, 19, 6));		
-		builder.addLabel("Telefon", cc.xy(1, 21));						//Telefon
-					builder.add(telefonFeld, cc.xyw(3, 21, 6));				
-		builder.addLabel("Telefax", cc.xy(1,23));						//Telefax
-					builder.add(telefaxFeld, cc.xyw(3, 23, 6));		
-		builder.addLabel("Email", cc.xy(1,25));							//Email
-					builder.add(emailFeld, cc.xyw(3, 25, 6));	
+		// Inhaber
+		// Links oben
 
-//Rechts oben
-					
-		kassenzeichenLabel = builder.addLabel("Kassenzeichen", cc.xy(10,3));	//Kassenzeichen
-					builder.add(kassenzeichenFeld, cc.xyw(12, 3, 2));	
-		builder.addLabel("Wirtschaftszweig", cc.xy(10, 5));				//Wirtscahftszweig
-					builder.add(wirtschaftszweigBox, cc.xyw(12, 5, 2));	
-		builder.addSeparator("Adresse auswählen", cc.xyw(10, 7, 4)); 	//Adresse auswählen--
-		builder.add(getStrassenBox(), cc.xyw(10, 9, 4));				//Drop Straßen
-		builder.add(getAdressenScroller(), cc.xywh(10, 11, 4, 7)); 		//Straßen Scroller		
-		builder.addSeparator("Datenschutzhinweis", cc.xyw(10, 19, 4));	//DSGVO
-		builder.add(daten_awsvCheck, cc.xyw(10, 21, 2));				//AWSV Check
-		builder.add(daten_esatzungCheck, cc.xyw(10, 23, 2));			//ESatzung Check
-		builder.add(daten_whgCheck, cc.xyw(10, 25, 2));					//WHG Check
-			
-					
-//unten
+		builder.addSeparator("Inhaber", cc.xyw(1, 1, 8)); // Adresse----
+		namenLabel = builder.addLabel("Firma/Name:", cc.xy(1, 3)); // Name
+		builder.add(namenFeld, cc.xyw(3, 3, 6));
+		builder.addLabel("Anrede:", cc.xy(1, 5)); // Anrede
+		builder.add(anredeFeld, cc.xyw(3, 5, 6));
+		builder.addLabel("Vorname:", cc.xy(1, 7)); // Vorname
+		builder.add(vornamenFeld, cc.xyw(3, 7, 6));
+		builder.addLabel("Zusatz", cc.xy(1, 9)); // Zusatz
+		builder.add(nameZusFeld, cc.xyw(3, 9, 6));
+		builder.addLabel("Wirtschaftszweig", cc.xy(1, 11)); // Wirtscahftszweig
+		builder.add(wirtschaftszweigBox, cc.xyw(3, 11, 6));
+		kassenzeichenLabel = builder.addLabel("Kassenzeichen", cc.xy(1, 13)); // Kassenzeichen
+		builder.add(kassenzeichenFeld, cc.xyw(3, 13, 6));
+		
+		// Rechts oben
+		
+		builder.addSeparator("Ansprechpartner", cc.xyw(10, 1, 4)); // Ansprechpartner--
+		builder.addLabel("Vorname", cc.xy(10, 3)); // Vorname
+		builder.add(betrBeaufVornameFeld, cc.xyw(12, 3, 2));
+		builder.addLabel("Nachname", cc.xy(10, 5)); // Nachname
+		builder.add(betrBeaufNachnameFeld, cc.xyw(12, 5, 2));
+		builder.addLabel("Telefon", cc.xy(10, 7)); // Telefon
+		builder.add(telefonFeld, cc.xyw(12, 7, 2));
+		builder.addLabel("Telefax", cc.xy(10, 9)); // Telefax
+		builder.add(telefaxFeld, cc.xyw(12, 9, 2));
+		builder.addLabel("Email", cc.xy(10, 11)); // Email
+		builder.add(emailFeld, cc.xyw(12, 11, 2));
+		builder.addLabel("Wassermenge", cc.xy(10, 13)); // Wassermenge
+		builder.add(wassermengeFeld, cc.xyw(12, 13, 2));
+		
+		
+		// Adresse
+		// Links
+		builder.addSeparator("Adresse", cc.xyw(1, 15, 8));
+		builder.addLabel("Stadt", cc.xy(1, 17));
+		builder.add(plzZsFeld, cc.xy(3, 17)); // PLZ-Zusatz
+		builder.add(plzFeld, cc.xy(4, 17)); // PLZ
+		builder.add(ortFeld, cc.xyw(6, 17, 3)); // Stadt
+		builder.addLabel("Straße", cc.xy(1, 19)); // Straße
+		builder.add(strasseFeld, cc.xyw(3, 19, 2));
+		builder.add(hausnrFeld, cc.xy(6, 19)); // Hausnr
+		builder.add(hausnrZusFeld, cc.xy(8, 19)); // HausnrZusatz
+		builder.addLabel("Standortgegebenheit", cc.xy(1, 21));
+		builder.add(standortGgBox, cc.xyw(3, 21, 6));
+		builder.addLabel("W.-Einzugsgebiet", cc.xy(1, 23));
+		builder.add(wEinzugsGebBox, cc.xyw(3, 23, 6));
+		builder.addLabel("Entwässerungsgebiet", cc.xy(1, 25));
+		builder.add(entwGebBox, cc.xyw(3, 25, 2));
+		builder.add(ueberschgebCheck, cc.xyw(6, 25, 3)); // Ueberschgeb Check
+		builder.addLabel("Gemarkung", cc.xy(1, 27));
+		builder.add(gemarkungBox, cc.xyw(3, 27, 6));
+		builder.addLabel("Flur/Flurstücke", cc.xy(1, 29));
+		builder.add(flurFeld, cc.xy(3, 29));
+		builder.add(flurStkFeld, cc.xyw(4, 29, 5));
 
-		builder.addSeparator("Standort / Lage", cc.xyw(1, 27, 13));			//Standorte----
-		builder.add(getStandorteScroller(), cc.xywh(1,29, 13, 10));		//Standortetabelle
 
-		builder.addSeparator("Letzte Revision", cc.xyw(1, 41, 8));		//Letzte Revision--
-		builder.addLabel("Datum:", cc.xy(1, 43));						//Datum
-					builder.add(revdatumsFeld, cc.xyw(3, 43, 4));
-handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(1, 45));		//Handzeichen
-		builder.add(handzeichenAltFeld, cc.xyw(3, 45, 4));
-		builder.addSeparator("Neue Revision", cc.xyw(10, 41, 4));		//Neue Revison--
-handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
-				builder.add(handzeichenNeuFeld, cc.xyw(12, 43, 2));					
+		// Rechts
+
+		builder.addSeparator("auswählen", cc.xyw(10, 15, 4)); // Adresse auswählen--
+		builder.add(getStrassenBox(), cc.xyw(10, 17, 4)); // Drop Straßen
+		builder.add(getAdressenScroller(), cc.xywh(10, 19, 4, 11)); // Straßen Scroller
+
+		// Standort/Lage
+
+		builder.addSeparator("Standort / Lage", cc.xyw(1, 31, 13)); // Standorte----
+		builder.add(getStandorteScroller(), cc.xywh(1, 33, 13, 7)); // Standortetabelle
+
+		// DSGVO
+
+		builder.addSeparator("Datenschutzhinweis", cc.xyw(1, 41, 13)); // DSGVO
+		builder.add(daten_awsvCheck, cc.xyw(1, 43, 2)); // AWSV Check
+		builder.add(daten_esatzungCheck, cc.xyw(5, 43, 2)); // ESatzung Check
+		builder.add(daten_whgCheck, cc.xyw(9, 43, 2)); // WHG Check
+		
+		builder.addSeparator("Bemerkungen", cc.xyw(1, 45, 13)); // Bemerkungen ---
+		builder.add(bemerkungsScroller, cc.xywh(1, 47, 13, 7)); // Bemerkungen Scroller
+
+		builder.addSeparator("Letzte Revision", cc.xyw(1, 55, 8));		//Letzte Revision--
+		builder.addLabel("Datum:", cc.xy(1, 57));						//Datum
+		builder.add(revdatumsFeld, cc.xyw(3, 57, 4));
+		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(1, 59));		//Handzeichen
+		builder.add(handzeichenAltFeld, cc.xyw(3, 59, 4));
+		builder.addSeparator("Neue Revision", cc.xyw(10, 55, 4));		//Neue Revison--
+		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 57));
+				builder.add(handzeichenNeuFeld, cc.xyw(12, 57, 2));					
 		
 
 
@@ -397,7 +455,7 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Standort neuerStandort = new Standort();
-                    neuerStandort.setAdresse(adresse);
+                    neuerStandort.setInhaber(inhaber);
                     editStandort(neuerStandort);
                 }
             };
@@ -422,6 +480,18 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 				if (tabstreets == null) {
 					tabstreets = DatabaseQuery.getTabStreets();
 				}
+				if (gemarkungen == null) {
+					gemarkungen = DatabaseQuery.getGemarkungen();
+				}
+				if (standortggs == null) {
+					standortggs = DatabaseQuery.getStandortgghwsg();
+				}
+				if (entwgebiete == null) {
+					entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
+				}
+				if (wEinzugsgebiete == null) {
+					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiet();
+				}
 			}
 
 			@Override
@@ -441,7 +511,7 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 				}
 				if (standorteTabelle != null) {
 
-					standorteModel.setAdresse(adresse);
+					standorteModel.setInhaber(inhaber);
 					standorteModel.updateList();
 					standorteTabelle.setModel(standorteModel);
 
@@ -452,6 +522,28 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 				if (wirtschaftszweige != null) {
 					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
 					wirtschaftszweigBox.setSelectedItem(getBetreiber().getWirtschaftszweig());
+				}
+				if (gemarkungen != null)
+				{
+					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
+					gemarkungBox.setSelectedItem(adresse.getGemarkung());
+				}
+				if (standortggs != null)
+				{
+					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
+					standortGgBox.setSelectedItem(adresse.getStandortgghwsg());
+				}
+
+				if (entwgebiete != null)
+				{
+					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+					entwGebBox.setSelectedItem(adresse.getEntgebid());
+				}
+
+				if (wEinzugsgebiete != null)
+				{
+					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
+					wEinzugsGebBox.setSelectedItem(adresse.getWassereinzugsgebiet());
 				}
 
 				anredeFeld.setText(getBetreiber().getAnrede());
@@ -476,7 +568,10 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 				telefonFeld.setText(getBetreiber().getTelefon());
 				telefaxFeld.setText(getBetreiber().getTelefax());
 				emailFeld.setText(getBetreiber().getEmail());
+				wassermengeFeld.setValue(getBetreiber().getWassermenge());
 				strassenBox.setSelectedItem(getBetreiber().getAdresse().getStrasse());
+				flurFeld.setText(adresse.getFlur());
+				flurStkFeld.setText(adresse.getFlurstueck());
 
 				if (getBetreiber().getDatenschutzAwsv() != null)
 					daten_awsvCheck.setSelected(getBetreiber().getDatenschutzAwsv());
@@ -492,6 +587,12 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 					daten_whgCheck.setSelected(getBetreiber().getDatenschutzWhg());
 				else
 					daten_whgCheck.setSelected(false);
+
+				if (adresse.isUeberschgeb() != null)
+					ueberschgebCheck.setSelected(adresse.isUeberschgeb());
+				else
+					ueberschgebCheck.setSelected(false);
+
 
 				betrBeaufVornameFeld.setText(getBetreiber().getVornamebetrbeauf());
 				betrBeaufNachnameFeld.setText(getBetreiber().getNamebetrbeauf());
@@ -653,6 +754,13 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 				getBetreiber().setEmail(email);
 			}
 		}
+		
+		adresse.setUeberschgeb(ueberschgebCheck.isSelected());
+
+		// Wassermenge:
+		Integer wassermenge = ((IntegerField) wassermengeFeld).getIntValue();
+		getBetreiber().setWassermenge(wassermenge);
+		
 		// Betriebsbeauftragter-Vorname
 		String betrBeaufVorname = betrBeaufVornameFeld.getText();
 		if (betrBeaufVorname != null) {
@@ -681,7 +789,54 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 		Wirtschaftszweig wizw = (Wirtschaftszweig) wirtschaftszweigBox.getSelectedItem();
 		getBetreiber().setWirtschaftszweig(wizw);
 
-		
+		if (adresse == null) {
+		adresse = new Adresse();
+		}
+		// Gemarkung
+		Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
+		adresse.setGemarkung(bgem);
+
+		// Standortgg
+		Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
+		adresse.setStandortgghwsg(stgg);
+
+		// Einzugsgebiet
+		String ezgb = (String) entwGebBox.getSelectedItem();
+		// Nötig, weil getSelectedItem bei editierbarer ComboBox auch
+		// NULL
+		// liefern kann
+		if (ezgb != null) {
+			// Weil ich bis jetzt noch keine LimitedComboBox oder so
+			// habe...
+			if (ezgb.length() > 10) {
+				// ... kürze ich hier den String auf 10 Zeichen
+				ezgb = ezgb.substring(0, 10);
+			}
+			ezgb = ezgb.trim();
+		}
+		adresse.setEntgebid(ezgb);
+
+		// VAWS-Einzugsgebiet
+		Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
+		adresse.setWassereinzugsgebiet(wezg);
+
+		// Flur
+		String flur = flurFeld.getText().trim();
+		if (flur.equals("")) {
+			adresse.setFlur(null);
+		} else {
+			adresse.setFlur(flur);
+		}
+
+		// Flurstueck
+		String flurstk = flurStkFeld.getText().trim();
+		if (flurstk.equals("")) {
+			adresse.setFlurstueck(null);
+		} else {
+			adresse.setFlurstueck(flurstk);
+		}
+
+	
 
 		// Bemerkungen
 		String bemerkungen = bemerkungsArea.getText();
@@ -792,16 +947,14 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 	private JTable getStandorteTabelle() {
 
 		if (this.standorteModel == null) {
-			this.standorteModel = new BasisStandortModel();
+			this.standorteModel = new BasisStdModel();
 
 			if (this.standorteTabelle == null) {
 				this.standorteTabelle = new JTable(this.standorteModel);
 
-				this.standorteTabelle.getColumnModel().getColumn(0).setPreferredWidth(40);
+				this.standorteTabelle.getColumnModel().getColumn(0).setPreferredWidth(60);
 				this.standorteTabelle.getColumnModel().getColumn(1).setPreferredWidth(60);
 				this.standorteTabelle.getColumnModel().getColumn(2).setPreferredWidth(60);
-				this.standorteTabelle.getColumnModel().getColumn(3).setPreferredWidth(30);
-				this.standorteTabelle.getColumnModel().getColumn(4).setPreferredWidth(30);
 
 				this.standorteTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				this.standorteTabelle.setColumnSelectionAllowed(false);
@@ -877,12 +1030,12 @@ handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 43));
 					.getRow(row);
 			standort.setE32(bts.getX());
 			standort.setN32(bts.getY());
-			} else if (adresse.getStandorts().size() == 0) {
+			} else if (inhaber.getStandorts().size() == 0) {
 				Standort standort = new Standort();
-				standort.setAdresse(adresse);
+				standort.setInhaber(inhaber);
 				Set<Standort> standorts = new HashSet<Standort>();
 				standorts.add(standort);
-				adresse.setStandorts(standorts);
+				inhaber.setStandorts(standorts);
 				standort.setE32(bts.getX());
 				standort.setN32(bts.getY());
 				List std = new ArrayList<Standort>();

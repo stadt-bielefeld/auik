@@ -105,9 +105,7 @@ public class BasisLageModel extends ListTableModel
         log.debug("Fetched " + list.size() + " Objects");
         List<Standort> standorte = new ArrayList<Standort>();
         //Add fetched objects to a list of Standort
-        for(Adresse i: list){
 
-        }
         setList(list);
         log.debug("Created list");
 		lastOrt = ort;
@@ -172,15 +170,15 @@ public class BasisLageModel extends ListTableModel
 				value = bsta.getOrt();
 				break;
 			case 4:
-				if (bsta.getStandort().getEntgebid() != null)
+				if (bsta.getEntgebid() != null)
 				{
-					value = bsta.getStandort().getEntgebid();
+					value = bsta.getEntgebid();
 				}
 				else
 					value = "";
 				break;
 			case 5:
-				if (bsta.getStandort().isUeberschgeb() == true)
+				if (bsta.isUeberschgeb() == true)
 				{
 
 					value = new Boolean(true);
@@ -192,9 +190,9 @@ public class BasisLageModel extends ListTableModel
 				}
 				break;
 			case 6:
-				if (bsta.getStandort().getStandortgghwsg() != null)
+				if (bsta.getStandortgghwsg() != null)
 				{
-					Integer sggh = bsta.getStandort().getStandortgghwsg().getId();
+					Integer sggh = bsta.getStandortgghwsg().getId();
 					if (sggh.equals(1))
 					{
 						value = new String("Zone I");
@@ -218,8 +216,8 @@ public class BasisLageModel extends ListTableModel
 				}
 				break;
 			case 7:
-				if (bsta.getStandort().getWassereinzugsgebiet() != null) {
-					value = bsta.getStandort().getWassereinzugsgebiet();					
+				if (bsta.getWassereinzugsgebiet() != null) {
+					value = bsta.getWassereinzugsgebiet();					
 				}
 				break;
 			default:

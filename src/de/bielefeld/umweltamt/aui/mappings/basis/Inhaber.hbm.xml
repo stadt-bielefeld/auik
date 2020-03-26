@@ -41,6 +41,9 @@
         <property name="email" type="java.lang.String">
             <column name="email" />
         </property>
+        <property name="wassermenge" type="java.lang.Integer">
+            <column name="wassermenge" />
+        </property>
         <property name="bemerkungen" type="java.lang.String">
             <column name="bemerkungen" />
         </property>
@@ -74,6 +77,18 @@
         <property name="datenschutzWhg" type="boolean">
             <column name="datenschutz_whg" not-null="true" />
         </property>
+        <set name="standorts" table="standort" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="inhaberid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Standort" />
+        </set>
+        <set name="objekts" table="objekt" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="betreiberid" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" />
+        </set>
 
     </class>
 </hibernate-mapping>

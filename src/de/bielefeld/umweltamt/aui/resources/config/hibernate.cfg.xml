@@ -104,7 +104,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/BwkFachdaten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/Entsorger.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/SuevFachdaten.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/indeinl/ViewBwk.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/oberflgw/AfsNiederschlagswasser.hbm.xml" />
 		<mapping resource="de/bielefeld/umweltamt/aui/mappings/oberflgw/AfsStoffe.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/oberflgw/Entwaesserungsgrundstueck.hbm.xml" />

@@ -21,23 +21,17 @@
 
 /*
  * Datei:
- * $Id: ProbenehmerModel.java,v 1.1.2.1 2010-11-23 10:25:58 u633d Exp $
+ * $Id: Anh56Model.java,v 1.3 2010-01-20 12:56:53 u633d Exp $
  *
- * Erstellt am 03.05.2006 von David Klotz
+ * Erstellt am 03.05.2006 von Gerd Genuit
  *
  * CVS-Log:
  * $Log: not supported by cvs2svn $
- * Revision 1.3  2010/01/20 12:55:00  u633d
- * Auswertungen order by inaktiv
- *
  * Revision 1.2  2009/03/24 12:35:23  u633d
  * Umstellung auf UTF8
  *
  * Revision 1.1  2008/06/05 11:38:40  u633d
  * Start AUIK auf Informix und Postgresql
- *
- * Revision 1.2  2006/05/23 05:29:42  u633d
- * Objektchronologie für alle Objekte verfügbar gemacht
  *
  * Revision 1.1  2006/05/03 09:01:54  u633d
  * Anhang 40 und 56 ergänzt
@@ -49,29 +43,29 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.util.List;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
- * Ein einfaches TableModel für Probenehmereinsaetze.
+ * Ein einfaches TableModel für eine Standortliste einer Adresse.
  * @author Gerd Genuit
  */
-public class ProbepunkteModel extends ListTableModel {
-    private static final long serialVersionUID = 8683461766128779141L;
+public class BasisStdModel extends ListTableModel {
+    private Adresse adresse = null;
+    private Inhaber inhaber = null;
 
-    public ProbepunkteModel() {
+    public BasisStdModel() {
         super(new String[]{
-                "Standort",
-                "Entgeb",
-                "Betreiber",
-                "Kassenzeichen",
-                "Branche",
-                "Beschreibung",
-                "Sachb.(Rav)",
-                "Sachb.(Heepen)"
+                "Bezeichnung",
+                "E32",
+                "N32"
         },
-        false);
+        false, true);
     }
 
     /* (non-Javadoc)
@@ -79,34 +73,20 @@ public class ProbepunkteModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Messstelle fd = (Messstelle) objectAtRow;
+    	Standort std = (Standort) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
+            tmp = std.getBezeichnung();
             break;
         case 1:
-            tmp = fd.getObjekt().getStandortid().getInhaber().getAdresse().getEntgebid();
+            tmp = std.getE32();
             break;
         case 2:
-            tmp = fd.getObjekt().getBetreiberid();
+            tmp = std.getN32();
             break;
-        case 3:
-            tmp = fd.getObjekt().getBetreiberid().getKassenzeichen();
-            break;
-        case 4:
-            tmp = fd.getBranche();
-            break;
-        case 5:
-            tmp = fd.getObjekt().getBeschreibung();
-            break;
-        case 6:
-            tmp = fd.getObjekt().getSachbearbeiter();
-            break;
-        case 7:
-            tmp = fd.getSachbearbeiter();
-            break;
+
         default:
             tmp = "ERROR";
             break;
@@ -114,10 +94,34 @@ public class ProbepunkteModel extends ListTableModel {
         return tmp;
     }
 
-    /*
-     * Leer, da kein Updaten der Liste nötig/möglich.
-     */
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+    
+    public void setInhaber(Inhaber inhaber) {
+        this.inhaber = inhaber;
+    }
+
     @Override
     public void updateList() {
+
+        if (inhaber != null) {
+            setList(Standort.findByAdresse(inhaber));
+
+            fireTableDataChanged();
+        }
+        else setList(null);
+
     }
+
+    /**
+     * Liefert das Objekt aus einer bestimmten Zeile.
+     * @param rowIndex Die Zeile
+     * @return Das Objekt bei rowIndex
+     */
+    public Standort getRow(int rowIndex) {
+        return (Standort) super.getObjectAtRow(rowIndex);
+    }
+
 }

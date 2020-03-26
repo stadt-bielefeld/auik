@@ -53,21 +53,10 @@ public class Standort  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Inhaber inhaber;
-    private Adresse adresse;
-    private Standortgghwsg standortgghwsg;
-    private Wassereinzugsgebiet wassereinzugsgebiet;
-    private Gemarkung gemarkung;
     private Float e32;
     private Float n32;
-    private String flur;
-    private String flurstueck;
-    private String entgebid;
-    private String strasseeigent;
     private Date revidatum;
     private String revihandz;
-    private Integer wassermenge;
-    private String sachbe33rav;
-    private String sachbe33hee;
     private String bezeichnung;
     private Serializable theGeom;
     private boolean ueberschgeb;
@@ -86,25 +75,12 @@ public class Standort  implements java.io.Serializable {
 
     /** Full constructor */
     public Standort(
-    		Inhaber inhaber, Adresse adresse, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Gemarkung gemarkung, Float e32, Float n32, String flur, String flurstueck, String entgebid, String strasseeigent, Date revidatum, String revihandz, Integer wassermenge, String sachbe33rav, String sachbe33hee, String bezeichnung, boolean ueberschgeb, boolean enabled, boolean deleted, Set<Objekt> objektsForStandortid, Set<ZBetriebMassnahme> zBetriebMassnahmes) {
+    		Inhaber inhaber, Float e32, Float n32, Date revidatum, String revihandz, String bezeichnung, boolean enabled, boolean deleted, Set<Objekt> objektsForStandortid, Set<ZBetriebMassnahme> zBetriebMassnahmes) {
     	this.inhaber = inhaber;
-    	this.adresse = adresse;
-    	this.standortgghwsg = standortgghwsg;
-    	this.wassereinzugsgebiet = wassereinzugsgebiet;
-    	this.gemarkung = gemarkung;
     	this.e32 = e32;
     	this.n32 = n32;
-    	this.flur = flur;
-    	this.flurstueck = flurstueck;
-    	this.entgebid = entgebid;
-    	this.strasseeigent = strasseeigent;
-    	this.revidatum = revidatum;
     	this.revihandz = revihandz;
-    	this.wassermenge = wassermenge;
-    	this.sachbe33rav = sachbe33rav;
-    	this.sachbe33hee = sachbe33hee;
     	this.bezeichnung = bezeichnung;
-    	this.ueberschgeb = ueberschgeb;
         this.enabled = enabled;
         this.deleted = deleted;
         this.objektsForStandortid = objektsForStandortid;
@@ -125,14 +101,6 @@ public class Standort  implements java.io.Serializable {
 
     public void setInhaber(Inhaber inhaber) {
         this.inhaber = inhaber;
-    }
-
-    public Adresse getAdresse() {
-        return this.adresse;
-    }
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
     }
 	
 	public String getStrasse(){
@@ -167,22 +135,6 @@ public class Standort  implements java.io.Serializable {
 	    this.inhaber.getAdresse().setOrt(ort);
 	}
 
-	public Gemarkung getGemarkung(){
-	    return this.gemarkung;
-	}
-
-	public void setGemarkung(Gemarkung gemarkung){
-	    this.gemarkung = gemarkung;
-	}
-
-	public String getEntgebid(){
-	    return this.entgebid;
-	}
-
-	public void setEntgebid(String entgebid){
-	    this.entgebid = entgebid;
-	}
-
 	public Float getE32(){
 	    return this.e32;
 	}
@@ -197,38 +149,6 @@ public class Standort  implements java.io.Serializable {
 
 	public void setN32(Float n32){
 	    this.n32 = n32;
-	}
-
-	public Standortgghwsg getStandortgghwsg(){
-	    return this.standortgghwsg;
-	}
-	
-	public void setStandortgghwsg(Standortgghwsg standortgghwsg){
-	    this.standortgghwsg  = standortgghwsg;
-	}
-
-	public Wassereinzugsgebiet getWassereinzugsgebiet(){
-	    return this.wassereinzugsgebiet;
-	}
-	
-	public void setWassereinzugsgebiet(Wassereinzugsgebiet wassereinzugsgebiet){
-	    this.wassereinzugsgebiet = wassereinzugsgebiet;
-	}
-
-	public String getFlur(){
-	    return this.flur;
-	}
-	
-	public void setFlur(String flur){
-	    this.flur = flur;
-	}
-
-	public String getFlurstueck(){
-	    return this.flurstueck;
-	}
-	
-	public void setFlurstueck(String flurstueck){
-	    this.flurstueck = flurstueck;
 	}
 
 	public String getRevihandz(){
@@ -255,38 +175,6 @@ public class Standort  implements java.io.Serializable {
 
 	public void setRevidatum(Date revidatum){
 	    this.revidatum = revidatum;
-	}
-
-	public String getSachbe33rav(){
-	    return this.sachbe33rav;
-	}
-
-	public void setSachbe33rav(String sachbe33rav){
-		this.sachbe33rav = sachbe33rav;
-	}
-
-	public String getSachbe33hee() {
-		return sachbe33hee;
-	}
-
-	public void setSachbe33hee(String sachbe33hee) {
-		this.sachbe33hee = sachbe33hee;
-	}
-
-	public Integer getWassermenge(){
-	    return this.wassermenge;
-	}
-	
-	public void setWassermenge(Integer wassermenge){
-		this.wassermenge = wassermenge;
-	}
-
-	public String getStrasseeigent() {
-	    return this.strasseeigent;
-	}
-
-	public void setStrasseeigent(String strasseeigent) {
-	    this.strasseeigent = strasseeigent;
 	}
 
 	public Serializable getTheGeom() {
@@ -435,21 +323,10 @@ public class Standort  implements java.io.Serializable {
      */
     private void copy(Standort copy) {
         this.inhaber = copy.getInhaber();
-        this.adresse = copy.getAdresse();
-        this.standortgghwsg = copy.getStandortgghwsg();
-        this.wassereinzugsgebiet = copy.getWassereinzugsgebiet();
-        this.gemarkung = copy.getGemarkung();
         this.e32 = copy.getE32();
         this.n32 = copy.getN32();
-        this.flur = copy.getFlur();
-        this.flurstueck = copy.getFlurstueck();
-        this.entgebid = copy.getEntgebid();
-        this.strasseeigent = copy.getStrasseeigent();
         this.revidatum = copy.getRevidatum();
         this.revihandz = copy.getRevihandz();
-        this.wassermenge = copy.getWassermenge();
-        this.sachbe33rav = copy.getSachbe33rav();
-        this.sachbe33hee = copy.getSachbe33hee();
         this.bezeichnung = copy.getBezeichnung();
         this.ueberschgeb = copy.isUeberschgeb();
         this.enabled = copy.isEnabled();
@@ -521,13 +398,13 @@ public class Standort  implements java.io.Serializable {
     }
 
 
-	public static List <Standort> findByAdresse(Adresse adresse) {
+	public static List <Standort> findByAdresse(Inhaber inhaber) {
 		Standort standort = new Standort();
-		Integer id = adresse.getId();
+		Integer id = inhaber.getId();
 		List standorte = HibernateSessionFactory
 				.currentSession()
 				.createQuery(
-						"from Standort where adresseid= " + id)
+						"from Standort where inhaberid= " + id)
 				.list();
 
 		return standorte;

@@ -476,8 +476,8 @@ public class BasisAdresseSuchen extends AbstractModul {
             Inhaber betr = (Inhaber) this.inhaberModel.getRow(selectedRow);
             log.debug("Betreiber (ID"
                 + betr.getId() + ") angewählt.");
-            searchObjekteByBetreiber(betr.getAdresse());
             this.inhaber = betr;
+            searchObjekteByBetreiber(betr);
         }
         
         log.debug("End updateObjekte()");
@@ -505,14 +505,14 @@ public class BasisAdresseSuchen extends AbstractModul {
      * Betreibers.
      * @param betreiberid Die Betreiber-Id
      */
-    public void searchObjekteByBetreiber(final Adresse betreiber) {
+    public void searchObjekteByBetreiber(final Inhaber inh) {
         // ... siehe show()
         SwingWorkerVariant worker = new SwingWorkerVariant(
             getBetreiberTabelle()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 BasisAdresseSuchen.this.objektModel
-                    .searchByInhaber(inhaber);
+                    .searchByInhaber(inh);
             }
 
             @Override

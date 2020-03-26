@@ -1441,7 +1441,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         Inhaber betr = probe.getMessstelle().getObjekt()
             .getBetreiberid();
         Adresse std = probe.getMessstelle().getObjekt()
-            .getStandortid().getAdresse();
+            .getStandortid().getInhaber().getAdresse();
         Probeart art = probe.getMessstelle().getProbeart();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
@@ -1503,7 +1503,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         Inhaber betr =
             probe.getMessstelle().getObjekt().getBetreiberid();
         Adresse basisStandort =
-            probe.getMessstelle().getObjekt().getStandortid().getAdresse();
+            probe.getMessstelle().getObjekt().getStandortid().getInhaber().getAdresse();
 
         HashMap<String, Object> params = new HashMap<String, Object>();
 

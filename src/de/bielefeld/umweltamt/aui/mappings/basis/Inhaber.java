@@ -60,6 +60,7 @@ public class Inhaber  implements java.io.Serializable {
     private String telefon;
     private String telefax;
     private String email;
+    private Integer wassermenge;
     private String bemerkungen;
     private Date revidatum;
     private String revihandz;
@@ -71,7 +72,7 @@ public class Inhaber  implements java.io.Serializable {
     private boolean datenschutzWhg;
     private String auikWzCode;
     private Date erstellDat;
-    private Set<Objekt> objektsForBetreiberid = new HashSet<Objekt>(0);
+    private Set<Objekt> objekts = new HashSet<Objekt>(0);
     private Set<Standort> standorts = new HashSet<Standort>(0);
     private Integer iglId;
 
@@ -96,9 +97,9 @@ public class Inhaber  implements java.io.Serializable {
     		Adresse adresse, Integer id, Objekt objekt, Wirtschaftszweig wirtschaftszweig, String anrede,
             String name, String vorname, String namezus, String namebetrbeauf, String vornamebetrbeauf,
             String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort,
-            String telefon, String telefax, String email, String bemerkungen, Date revidatum,
-            String revihandz, String kassenzeichen, boolean enabled,
-            boolean deleted, String auikWzCode, Date erstellDat, Integer iglId, Set<Standort> standorts, Set<Objekt> objektsForBetreiberid) {
+            String telefon, String telefax, String email, Integer wassermenge, String bemerkungen, 
+            Date revidatum, String revihandz, String kassenzeichen, boolean enabled,
+            boolean deleted, String auikWzCode, Date erstellDat, Integer iglId, Set<Standort> standorts, Set<Objekt> objekts) {
         this.id = id;
         this.adresse = adresse;
         this.wirtschaftszweig = wirtschaftszweig;
@@ -111,6 +112,7 @@ public class Inhaber  implements java.io.Serializable {
         this.telefon = telefon;
         this.telefax = telefax;
         this.email = email;
+    	this.wassermenge = wassermenge;
         this.bemerkungen = bemerkungen;
         this.revidatum = revidatum;
         this.revihandz = revihandz;
@@ -121,7 +123,7 @@ public class Inhaber  implements java.io.Serializable {
         this.erstellDat = erstellDat;
         this.standorts = standorts;
         this.iglId = iglId;
-        this.objektsForBetreiberid = objektsForBetreiberid;
+        this.objekts = objekts;
     }
 
     /* Setter and getter methods */
@@ -221,6 +223,14 @@ public class Inhaber  implements java.io.Serializable {
         this.email = email;
     }
 
+	public Integer getWassermenge(){
+	    return this.wassermenge;
+	}
+	
+	public void setWassermenge(Integer wassermenge){
+		this.wassermenge = wassermenge;
+	}
+
     public String getBemerkungen() {
         return this.bemerkungen;
     }
@@ -318,12 +328,12 @@ public class Inhaber  implements java.io.Serializable {
     }
 
     @JsonBackReference
-    public Set<Objekt> getObjektsForBetreiberid() {
-        return this.objektsForBetreiberid;
+    public Set<Objekt> getObjekts() {
+        return this.objekts;
     }
 
-    public void setObjektsForBetreiberid(Set<Objekt> objektsForBetreiberid) {
-        this.objektsForBetreiberid = objektsForBetreiberid;
+    public void setObjekts(Set<Objekt> objekts) {
+        this.objekts = objekts;
     }
 
     @JsonBackReference
@@ -377,7 +387,7 @@ public class Inhaber  implements java.io.Serializable {
         buffer.append("auikWzCode").append("='").append(getAuikWzCode()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
         buffer.append("Standorts").append("='").append(getStandorts()).append("' ");			
-        buffer.append("objektsForBetreiberid").append("='").append(getObjektsForBetreiberid()).append("' ");			
+        buffer.append("objektsForBetreiberid").append("='").append(getObjekts()).append("' ");			
         buffer.append("iglId").append("='").append(getIglId()).append("' ");			
         buffer.append("]");
 
@@ -455,7 +465,8 @@ public class Inhaber  implements java.io.Serializable {
         this.vornamebetrbeauf = copy.getVornamebetrbeauf();                    
         this.telefon = copy.getTelefon();            
         this.telefax = copy.getTelefax();            
-        this.email = copy.getEmail();            
+        this.email = copy.getEmail();    
+        this.wassermenge = copy.getWassermenge();        
         this.bemerkungen = copy.getBemerkungen();            
         this.revidatum = copy.getRevidatum();            
         this.revihandz = copy.getRevihandz();            
@@ -466,7 +477,7 @@ public class Inhaber  implements java.io.Serializable {
         this.erstellDat = copy.getErstellDat();            
         this.standorts = copy.getStandorts();            
         this.iglId = copy.getIglId();            
-        this.objektsForBetreiberid = copy.getObjektsForBetreiberid();            
+        this.objekts = copy.getObjekts();            
     }    
 
     /**

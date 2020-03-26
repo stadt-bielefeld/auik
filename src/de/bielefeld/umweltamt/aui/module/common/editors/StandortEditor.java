@@ -79,25 +79,10 @@ public class StandortEditor extends AbstractBaseEditor
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
 
-	// Für die Comboboxen beim Bearbeiten
-	private static Gemarkung[] gemarkungen = null;
-	private static Standortgghwsg[] standortggs = null;
-	private static String[] entwgebiete = null;
-	private static Wassereinzugsgebiet[] wEinzugsgebiete = null;
-
 	private JTextField bezeichnungFeld;
-	private JTextField flurFeld;
-	private JTextField flurStkFeld;
 	private JFormattedTextField e32Feld;
 	private JFormattedTextField n32Feld;
 	private JButton ausAblageButton;
-	private JTextField sachbeFeld;
-	private JFormattedTextField wassermengeFeld;
-
-	private JComboBox gemarkungBox;
-	private JComboBox standortGgBox;
-	private JComboBox entwGebBox;
-	private JComboBox wEinzugsGebBox;
 
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Standorts.
@@ -112,19 +97,9 @@ public class StandortEditor extends AbstractBaseEditor
 	{
 
 		bezeichnungFeld = new LimitedTextField(50);
-		flurFeld = new LimitedTextField(50);
-		flurStkFeld = new LimitedTextField(50);
-		sachbeFeld = new LimitedTextField(50);
-		wassermengeFeld = new IntegerField();
-
 		e32Feld = new DoubleField(1);
 		n32Feld = new DoubleField(1);
 
-		gemarkungBox = new JComboBox();
-		standortGgBox = new JComboBox();
-		entwGebBox = new JComboBox();
-		entwGebBox.setEditable(true);
-		wEinzugsGebBox = new JComboBox();
 
 		
 		String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
@@ -141,65 +116,25 @@ public class StandortEditor extends AbstractBaseEditor
 						"3dlu, " + //6
 						"pref, " + //7
 						"3dlu, " + //8
-						"pref, " + //9
-						"3dlu, " + //10
-						"pref, " + //11
-						"3dlu, " + //12
-						"pref, " + //13
-						"3dlu, " + //14
-						"pref, " + //15
-						"3dlu, " + //16
-						"pref, " + //17
-						"3dlu, " + //18
-						"pref, " + //19
-						"10dlu, " + //20
-						"pref, " + //21
-						"3dlu, " + //22
-						"pref, " + //23
-						"10dlu, " + //24
-						"bottom:pref:grow"); //25
+
+						"bottom:pref:grow"); //9
 
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
 
-		// Stammdaten
-		builder.addSeparator("Stammdaten", cc.xyw(1, 1, 9));
+		builder.addSeparator("Standort", cc.xyw(1, 1, 9));
 
 		builder.addLabel("Bezeichnung:", cc.xy(1, 3));
 		builder.add(bezeichnungFeld, cc.xyw(3, 3, 3));
-
-		//Gemarkung
-		builder.addLabel("Gemarkung:", cc.xy(1, 5));
-		builder.add(gemarkungBox, cc.xyw(3, 5, 3));
-
-		// Flur
-		builder.addLabel("Flur:", cc.xy(1, 7));
-		builder.add(flurFeld, cc.xy(3, 7));
-		builder.addLabel("Flurstück:", cc.xy(1, 9));
-		builder.add(flurStkFeld, cc.xy(3, 9));
 		
 		// Koordinaten
-		builder.addLabel("E32:", cc.xy(1, 11));
-		builder.add(e32Feld, cc.xy(3, 11));
-		builder.addLabel("N32:", cc.xy(1, 13));
-		builder.add(n32Feld, cc.xy(3, 13));
-		builder.add(getAusAblageButton(), cc.xywh(5, 11, 1, 3));
+		builder.addLabel("E32:", cc.xy(1, 5));
+		builder.add(e32Feld, cc.xy(3, 5));
+		builder.addLabel("N32:", cc.xy(1, 7));
+		builder.add(n32Feld, cc.xy(3, 7));
+		builder.add(getAusAblageButton(), cc.xywh(5, 5, 1, 3));
 
-		// VAWS
-		builder.addSeparator("VAWS", cc.xyw(1 + rS, 1, 5));
-		builder.addLabel("Standortgegebenheit:", cc.xy(1 + rS, 3));
-		builder.add(standortGgBox, cc.xyw(3 + rS, 3, 3));
-		builder.addLabel("W.Einzugsgebiet:", cc.xy(1 + rS, 5));
-		builder.add(wEinzugsGebBox, cc.xyw(3 + rS, 5, 3));
 
-		// Indirekteinleiter
-		builder.addSeparator("Indirekteinleiter", cc.xyw(1 + rS, 9, 5));
-		builder.addLabel("Entwässerungsgebiet:", cc.xy(1 + rS, 11));
-		builder.add(entwGebBox, cc.xyw(3 + rS, 11, 3));
-		builder.addLabel("Sachbearbeiter:", cc.xy(1 + rS, 13));
-		builder.add(sachbeFeld, cc.xyw(3 + rS, 13, 3));
-		builder.addLabel("Wasserverbrauch:", cc.xy(1 + rS, 15));
-		builder.add(wassermengeFeld, cc.xyw(3 + rS, 15, 3));
 
 		JPanel panel = builder.getPanel();
 		panel.setBorder(Paddings.DIALOG);
@@ -216,62 +151,19 @@ public class StandortEditor extends AbstractBaseEditor
 		{
 
 			@Override
-			protected void doNonUILogic() throws RuntimeException
-			{
-
-				if (gemarkungen == null)
-				{
-					gemarkungen = DatabaseQuery.getGemarkungen();
-				}
-				if (standortggs == null)
-				{
-					standortggs = DatabaseQuery.getStandortgghwsg();
-				}
-				if (entwgebiete == null)
-				{
-					entwgebiete = DatabaseQuery.getEntwaesserungsgebiete();
-				}
-				if (wEinzugsgebiete == null)
-				{
-					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiet();
-				}
+			protected void doNonUILogic() throws RuntimeException {
+				
 			}
+
 
 			@Override
 			protected void doUIUpdateLogic() throws RuntimeException
 			{
 
-				if (gemarkungen != null)
-				{
-					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
-					gemarkungBox.setSelectedItem(getStandort().getGemarkung());
-				}
-				if (standortggs != null)
-				{
-					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
-					standortGgBox.setSelectedItem(getStandort().getStandortgghwsg());
-				}
-
-				if (entwgebiete != null)
-				{
-					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
-					entwGebBox.setSelectedItem(getStandort().getEntgebid());
-				}
-
-				if (wEinzugsgebiete != null)
-				{
-					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
-					wEinzugsGebBox.setSelectedItem(getStandort().getWassereinzugsgebiet());
-				}
-
 
 				bezeichnungFeld.setText(getStandort().getBezeichnung());
-				flurFeld.setText(getStandort().getFlur());
-				flurStkFeld.setText(getStandort().getFlurstueck());
 				e32Feld.setValue(getStandort().getE32());
 				n32Feld.setValue(getStandort().getN32());
-				sachbeFeld.setText(getStandort().getSachbe33rav());
-				wassermengeFeld.setValue(getStandort().getWassermenge());
 
 				frame.clearStatus();
 			}
@@ -294,35 +186,6 @@ public class StandortEditor extends AbstractBaseEditor
 	protected boolean doSave()
 	{
 
-		// Gemarkung
-		Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
-		getStandort().setGemarkung(bgem);
-
-		// Standortgg
-		Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
-		getStandort().setStandortgghwsg(stgg);
-
-		// Entwässerungsgebiet
-		String entgb = (String) entwGebBox.getSelectedItem();
-
-		// Nötig, weil getSelectedItem bei editierbarer ComboBox auch NULL liefern kann
-		if (entgb != null)
-		{
-			entgb = entgb.trim();
-		}
-		if ("".equals(entgb))
-		{
-			getStandort().setEntgebid(null);
-		}
-		else
-		{
-			getStandort().setEntgebid(entgb);
-		}
-
-		// VAWS-Einzugsgebiet
-		Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
-		getStandort().setWassereinzugsgebiet(wezg);
-
 		//Bezeichnung
 		String bezeichnung = bezeichnungFeld.getText();
 		if (bezeichnung != null)
@@ -338,35 +201,6 @@ public class StandortEditor extends AbstractBaseEditor
 			}
 		}
 		
-		// Flur
-		String flur = flurFeld.getText();
-		if (flur != null)
-		{
-			flur = flur.trim();
-			if (flur.equals(""))
-			{
-				getStandort().setFlur(null);
-			}
-			else
-			{
-				getStandort().setFlur(flur);
-			}
-		}
-
-		// Flurstueck
-		String flurstk = flurStkFeld.getText();
-		if (flurstk != null)
-		{
-			if (flurstk.equals(""))
-			{
-				getStandort().setFlurstueck(null);
-			}
-			else
-			{
-				getStandort().setFlurstueck(flurstk);
-			}
-		}
-
 		// E32
 		Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
 		getStandort().setE32(e32Wert);
@@ -374,24 +208,6 @@ public class StandortEditor extends AbstractBaseEditor
 		// N32
 		Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
 		getStandort().setN32(n32Wert);
-
-		// Indirekteinleiter
-		String sach = sachbeFeld.getText();
-		if (sach != null)
-		{
-			if (sach.equals(""))
-			{
-				getStandort().setSachbe33rav(null);
-			}
-			else
-			{
-				getStandort().setSachbe33rav(sach);
-			}
-		}
-
-		// Wassermenge:
-		Integer wassermng = ((IntegerField) wassermengeFeld).getIntValue();
-		getStandort().setWassermenge(wassermng);
 
 		Standort bsta = Standort.merge(getStandort());
 		if (bsta != null)

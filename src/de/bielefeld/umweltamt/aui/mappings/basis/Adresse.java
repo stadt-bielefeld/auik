@@ -27,6 +27,8 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -49,20 +51,28 @@ public class Adresse  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
+    private Standortgghwsg standortgghwsg;
+    private Wassereinzugsgebiet wassereinzugsgebiet;
+    private Gemarkung gemarkung;
     private String strasse;
     private Integer hausnr;
     private String hausnrzus;
     private String plzzs;
     private String plz;
     private String ort;
+    private String flur;
+    private String flurstueck;
+    private String entgebid;
+    private String strasseeigent;
+    private String sachbe33rav;
+    private String sachbe33hee;
+    private boolean ueberschgeb;
     private String bemerkungen;
     private Date revidatum;
     private String revihandz;
     private boolean enabled;
     private boolean deleted;
     private Date erstellDat;
-    private Set<Objekt> objektsForBetreiberid = new HashSet<Objekt>(0);
-    private Set<Standort> standorts = new HashSet<Standort>(0);
     private Set<Inhaber> inhabers = new HashSet<Inhaber>(0);
     private Integer iglId;
 
@@ -84,12 +94,14 @@ public class Adresse  implements java.io.Serializable {
 
     /** Full constructor */
     public Adresse(
-            Integer id, Objekt objekt, 
-            String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort,
-           String bemerkungen, Date revidatum,
+            Integer id, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Gemarkung gemarkung, 
+            String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, 
+            String flur, String flurstueck, String entgebid, String strasseeigent, 
+            String sachbe33rav, String sachbe33hee, boolean ueberschgeb, 
+            String bemerkungen, Date revidatum,
             String revihandz, boolean enabled,
             boolean deleted, Date erstellDat, Integer iglId, 
-            Set<Standort> standorts, Set<Inhaber> inhabers, Set<Objekt> objektsForBetreiberid) {
+            Set<Inhaber> inhabers) {
         this.id = id;
         this.strasse = strasse;
         this.hausnr = hausnr;
@@ -97,16 +109,24 @@ public class Adresse  implements java.io.Serializable {
         this.plzzs = plzzs;
         this.plz = plz;
         this.ort = ort;
+    	this.standortgghwsg = standortgghwsg;
+    	this.wassereinzugsgebiet = wassereinzugsgebiet;
+    	this.gemarkung = gemarkung;
         this.bemerkungen = bemerkungen;
+    	this.flur = flur;
+    	this.flurstueck = flurstueck;
+    	this.entgebid = entgebid;
+    	this.strasseeigent = strasseeigent;
+    	this.sachbe33rav = sachbe33rav;
+    	this.sachbe33hee = sachbe33hee;
+    	this.ueberschgeb = ueberschgeb;
         this.revidatum = revidatum;
         this.revihandz = revihandz;
         this.enabled = enabled;
         this.deleted = deleted;
         this.erstellDat = erstellDat;
-        this.standorts = standorts;
         this.inhabers = inhabers;
         this.iglId = iglId;
-        this.objektsForBetreiberid = objektsForBetreiberid;
     }
 
     /* Setter and getter methods */
@@ -117,6 +137,38 @@ public class Adresse  implements java.io.Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+	public Gemarkung getGemarkung(){
+	    return this.gemarkung;
+	}
+
+	public void setGemarkung(Gemarkung gemarkung){
+	    this.gemarkung = gemarkung;
+	}
+
+	public String getEntgebid(){
+	    return this.entgebid;
+	}
+
+	public void setEntgebid(String entgebid){
+	    this.entgebid = entgebid;
+	}
+
+	public Standortgghwsg getStandortgghwsg(){
+	    return this.standortgghwsg;
+	}
+	
+	public void setStandortgghwsg(Standortgghwsg standortgghwsg){
+	    this.standortgghwsg  = standortgghwsg;
+	}
+
+	public Wassereinzugsgebiet getWassereinzugsgebiet(){
+	    return this.wassereinzugsgebiet;
+	}
+	
+	public void setWassereinzugsgebiet(Wassereinzugsgebiet wassereinzugsgebiet){
+	    this.wassereinzugsgebiet = wassereinzugsgebiet;
+	}
 
     public String getStrasse() {
         return this.strasse;
@@ -165,6 +217,55 @@ public class Adresse  implements java.io.Serializable {
     public void setOrt(String ort) {
         this.ort = ort;
     }
+
+	public String getFlur(){
+	    return this.flur;
+	}
+	
+	public void setFlur(String flur){
+	    this.flur = flur;
+	}
+
+	public String getFlurstueck(){
+	    return this.flurstueck;
+	}
+	
+	public void setFlurstueck(String flurstueck){
+	    this.flurstueck = flurstueck;
+	}
+
+	public String getSachbe33rav(){
+	    return this.sachbe33rav;
+	}
+
+	public void setSachbe33rav(String sachbe33rav){
+		this.sachbe33rav = sachbe33rav;
+	}
+
+	public String getSachbe33hee() {
+		return sachbe33hee;
+	}
+
+	public void setSachbe33hee(String sachbe33hee) {
+		this.sachbe33hee = sachbe33hee;
+	}
+
+	public String getStrasseeigent() {
+	    return this.strasseeigent;
+	}
+
+	public void setStrasseeigent(String strasseeigent) {
+	    this.strasseeigent = strasseeigent;
+	}
+
+	public Boolean isUeberschgeb() {
+	    return this.ueberschgeb;
+	}
+
+	public void setUeberschgeb(boolean ueberschgeb) {
+	    this.ueberschgeb = ueberschgeb;
+	}
+
 
     public String getBemerkungen() {
         return this.bemerkungen;
@@ -223,24 +324,6 @@ public class Adresse  implements java.io.Serializable {
     }
 
     @JsonBackReference
-    public Set<Objekt> getObjektsForBetreiberid() {
-        return this.objektsForBetreiberid;
-    }
-
-    public void setObjektsForBetreiberid(Set<Objekt> objektsForBetreiberid) {
-        this.objektsForBetreiberid = objektsForBetreiberid;
-    }
-
-    @JsonBackReference
-    public Set<Standort> getStandorts() {
-		return standorts;
-	}
-
-	public void setStandorts(Set<Standort> standorts) {
-		this.standorts = standorts;
-	}
-
-    @JsonBackReference
     public Set<Inhaber> getInhabers() {
 		return inhabers;
 	}
@@ -282,10 +365,8 @@ public class Adresse  implements java.io.Serializable {
         buffer.append("revihandz").append("='").append(getRevihandz()).append("' ");				
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");					
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("Standorts").append("='").append(getStandorts()).append("' ");			
-        buffer.append("Inhabers").append("='").append(getInhabers()).append("' ");	
-        buffer.append("objektsForBetreiberid").append("='").append(getObjektsForBetreiberid()).append("' ");			
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");				
+        buffer.append("Inhabers").append("='").append(getInhabers()).append("' ");				
         buffer.append("iglId").append("='").append(getIglId()).append("' ");			
         buffer.append("]");
 
@@ -352,23 +433,33 @@ public class Adresse  implements java.io.Serializable {
      * @param copy Adresse
      */
     private void copy(Adresse copy) {
-        this.id = copy.getId();                             
+        this.id = copy.getId();   
+        this.standortgghwsg = copy.getStandortgghwsg();
+        this.wassereinzugsgebiet = copy.getWassereinzugsgebiet();
+        this.gemarkung = copy.getGemarkung();                          
         this.strasse = copy.getStrasse();            
         this.hausnr = copy.getHausnr();            
         this.hausnrzus = copy.getHausnrzus();            
         this.plzzs = copy.getPlzzs();            
         this.plz = copy.getPlz();            
-        this.ort = copy.getOrt();                    
+        this.ort = copy.getOrt();  
+        this.flur = copy.getFlur();
+        this.flurstueck = copy.getFlurstueck();
+        this.entgebid = copy.getEntgebid();
+        this.strasseeigent = copy.getStrasseeigent();
+        this.revidatum = copy.getRevidatum();
+        this.revihandz = copy.getRevihandz();
+        this.sachbe33rav = copy.getSachbe33rav();
+        this.sachbe33hee = copy.getSachbe33hee();
+        this.ueberschgeb = copy.isUeberschgeb();                  
         this.bemerkungen = copy.getBemerkungen();            
         this.revidatum = copy.getRevidatum();            
         this.revihandz = copy.getRevihandz();                   
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();                     
-        this.erstellDat = copy.getErstellDat();            
-        this.standorts = copy.getStandorts();             
+        this.erstellDat = copy.getErstellDat();                  
         this.inhabers = copy.getInhabers();          
-        this.iglId = copy.getIglId();            
-        this.objektsForBetreiberid = copy.getObjektsForBetreiberid();            
+        this.iglId = copy.getIglId();                     
     }    
 
     /**
@@ -412,11 +503,6 @@ public class Adresse  implements java.io.Serializable {
     public static List<Adresse> getAll() {
         return DatabaseQuery.getAll(new Adresse());
     }
-
-	public Standort getStandort() {
-		Standort std = (Standort) getStandorts().toArray()[0];
-		return std;
-	}
 
     /* Custom code goes below here! */
 

@@ -89,8 +89,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.SuevFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwkId;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
@@ -162,13 +160,15 @@ public class DatabaseClassToString {
 	public static String toStringForClass(Standort clazz) {
 		String hausnrzus = "";
 
-		if (clazz.getAdresse() != null) {
-			if (clazz.getAdresse().getHausnrzus() != null) {
-				hausnrzus = clazz.getAdresse().getHausnrzus();
+		if (clazz.getInhaber().getAdresse() != null) {
+			if (clazz.getInhaber().getAdresse().getHausnrzus() != null) {
+				hausnrzus = clazz.getInhaber().getAdresse().getHausnrzus();
 			}
-			return clazz.getAdresse().getStrasse() + " " 
-					+ clazz.getAdresse().getHausnr() + hausnrzus
-					+ ", " + clazz.getWassereinzugsgebiet() + ", " + clazz.getEntgebid()
+			return clazz.getInhaber().getName() + ", " 
+					+ clazz.getInhaber().getAdresse().getStrasse() + " "
+					+ clazz.getInhaber().getAdresse().getHausnr() + hausnrzus
+					+ ", " + clazz.getInhaber().getAdresse().getWassereinzugsgebiet() 
+					+ ", " + clazz.getInhaber().getAdresse().getEntgebid()
 					+ ", " + clazz.getBezeichnung();
 		} else {
 			return "Standort ohne Adresse" + ", " + clazz.getBezeichnung();
@@ -695,16 +695,6 @@ public class DatabaseClassToString {
 	}
 
 	public static String toStringForClass(Referenz referenz) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewBwk viewBwk) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewBwkId viewBwkId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
