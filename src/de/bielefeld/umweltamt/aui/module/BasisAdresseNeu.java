@@ -1004,7 +1004,9 @@ public class BasisAdresseNeu extends AbstractModul {
 			@Override
 			protected void doUIUpdateLogic() throws RuntimeException {
 				
-				
+				adrn = new Adresse();
+				inh = new Inhaber();
+				standort = new Standort();
 				
 				if (wirtschaftszweige != null) {
 					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
@@ -1056,6 +1058,10 @@ public class BasisAdresseNeu extends AbstractModul {
 				telefonFeld.setText("");
 				telefaxFeld.setText("");
 				emailFeld.setText("");
+				daten_awsvCheck.setSelected(false);
+				daten_esatzungCheck.setSelected(false);
+				daten_whgCheck.setSelected(false);
+				ueberschgebCheck.setSelected(false);
 				wassermengeFeld.setValue(null);
 				betrBeaufNachnameFeld.setText("");
 				betrBeaufVornameFeld.setText("");
