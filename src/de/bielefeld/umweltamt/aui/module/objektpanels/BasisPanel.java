@@ -1204,11 +1204,12 @@ public class BasisPanel extends JPanel {
                 getBetreiberFeld().setToolTipText(toolTip);
 
             }
-            if (this.hauptModul.getObjekt().getStandortid() != null) {
+            if (this.hauptModul.getObjekt().getStandortid().getBezeichnung() != null &&
+            		!this.hauptModul.getObjekt().getStandortid().getBezeichnung().equals("Standort ohne Adresse")) {
 
                 Standort standort = this.hauptModul.getObjekt().getStandortid();
                 if (standort != null) {
-                	if (standort.getInhaber().getAdresse() != null ) {
+                	if (standort.getInhaber() != null ) {
                     Adresse adr = standort.getInhaber().getAdresse();
                     log.debug("Set standort field to: " + adr
                             + this.hauptModul.getObjekt().getStandortid()
@@ -1520,7 +1521,7 @@ public class BasisPanel extends JPanel {
 						standort = new Standort();
 						standort.getInhaber().setAdresse(new Adresse());
 					}
-					if (standort.getInhaber().getAdresse() != null) {
+					if (standort.getInhaber() != null) {
 						ChooseStandortDialog chooser = new ChooseStandortDialog(standort,
 								BasisPanel.this.hauptModul.getFrame(), "standort");
 						chooser.setVisible(true);
@@ -1528,13 +1529,13 @@ public class BasisPanel extends JPanel {
 						if (chooser.getChosenStandort().getInhaber().getAdresse() != null) {
 							standortFeld.setText(chooser.getChosenStandort().getInhaber().toString());
 							BasisPanel.this.hauptModul.getObjekt()
-									.setStandortid(chooser.getChosenStandort().getInhaber().getStandort());
+									.setStandortid(chooser.getChosenStandort());
 						}
 					} else {
-	                    Adresse betreiber = BasisPanel.this.hauptModul
-	                            .getObjekt().getBetreiberid().getAdresse();
+	                    Inhaber betreiber = BasisPanel.this.hauptModul
+	                            .getObjekt().getBetreiberid();
 	                        if (betreiber == null) {
-	                            betreiber = new Adresse();
+	                            betreiber = new Inhaber();
 	                        }
 	                        ChooseInhaberDialog chooser = new ChooseInhaberDialog(betreiber,
 	                            BasisPanel.this.hauptModul.getFrame(), "betreiber");
