@@ -90,6 +90,7 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -469,26 +470,37 @@ public class Anh49Panel extends AbstractAnhangPanel {
      * @param absch Der Abscheider
      */
     public void editAbscheider(Anh49Abscheiderdetails absch) {
+        
+    	if (fachdaten.getId() == null) {
+			JOptionPane.showMessageDialog(hauptModul.getFrame(),
+				    "Bitte zuerst das Anhangobjekt speichern",
+				    "Warnung",
+				    JOptionPane.WARNING_MESSAGE);
+		} else {
+			
+	        AbscheiderEditor editDialog = new AbscheiderEditor(absch,
+	                hauptModul.getFrame());
 
-        AbscheiderEditor editDialog = new AbscheiderEditor(absch,
-            hauptModul.getFrame());
-        editDialog.setLocationRelativeTo(hauptModul.getFrame());
+	            editDialog.setLocationRelativeTo(hauptModul.getFrame());
 
-        editDialog.setVisible(true);
+	            editDialog.setVisible(true);
 
-        if (editDialog.wasSaved() && (editDialog.getDetails() != null)) {
-            // Die Liste updaten, damit unsere Änderungen auch angezeigt werden
-            abscheiderModel.updateList();
+	            if (editDialog.wasSaved() && (editDialog.getDetails() != null)) {
+	                // Die Liste updaten, damit unsere Änderungen auch angezeigt werden
+	                abscheiderModel.updateList();
 
-            // Den bearbeiteten Abscheider wieder in der Tabelle auswählen
-            Anh49Abscheiderdetails details = editDialog.getDetails();
-            int row = abscheiderModel.getList().indexOf(details);
-            if (row != -1) {
-                getAbscheiderTabelle().setRowSelectionInterval(row, row);
-                getAbscheiderTabelle().scrollRectToVisible(
-                    getAbscheiderTabelle().getCellRect(row, 0, true));
-            }
-        }
+	                // Den bearbeiteten Abscheider wieder in der Tabelle auswählen
+	                Anh49Abscheiderdetails details = editDialog.getDetails();
+	                int row = abscheiderModel.getList().indexOf(details);
+	                if (row != -1) {
+	                    getAbscheiderTabelle().setRowSelectionInterval(row, row);
+	                    getAbscheiderTabelle().scrollRectToVisible(
+	                        getAbscheiderTabelle().getCellRect(row, 0, true));
+	                }
+	            }
+			}
+
+
     }
 
     private void showAbscheiderPopup(MouseEvent e) {

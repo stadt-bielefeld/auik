@@ -256,12 +256,6 @@ public class Anh49DetailsPanel extends JPanel {
     private Action abscheiderNeuAction;
     private JPopupMenu abscheiderPopup;
 
-    private JTable ortsterminTabelle;
-    private Action ortsterminLoeschenAction;
-    private JPopupMenu ortsterminPopup;
-
-    private JButton speichernButton;
-
     public Anh49DetailsPanel(BasisObjektBearbeiten hauptModul) {
         name = "Details und Ortstermine";
         this.hauptModul = hauptModul;
