@@ -403,14 +403,14 @@ public class SielhautBearbeiten extends AbstractModul {
 	/**
 	 * Speichert einen neu angelegten Probenahmepunkt.
 	 */
-	public boolean saveNeuenProbepunkt(Float e32, Float n32) {
+	public boolean saveNeuenProbepunkt() {
 		boolean saved = false;
 
 		if (standort.getId() == null) {
+			standort.setE32(spE32Feld.getFloatValue());
+			standort.setN32(spN32Feld.getFloatValue());
+			standort.setBezeichnung("Sielhautmessstelle");
 			standort = Standort.merge(standort);
-			standort.setE32(e32);
-			standort.setN32(n32);
-			standort.setBezeichnung("Sielhaut");
 			objekt.setStandortid(standort);
 		}
 		if (objekt.getId() == null) {
@@ -419,7 +419,8 @@ public class SielhautBearbeiten extends AbstractModul {
 			sprobePkt.setObjekt(this.objekt);
 		}
 		sprobePkt = Messstelle.merge(sprobePkt);
-
+		spunkt.setMessstelle(sprobePkt);
+		
 		saved = true;
 
 		return saved;
@@ -442,6 +443,13 @@ public class SielhautBearbeiten extends AbstractModul {
 				spunkt.setEntgeb(null);
 			} else {
 				spunkt.setEntgeb(getSpEntgebFeld().getText());
+			}
+
+			// Lage
+			if ("".equals(getSpLageFeld().getText())) {
+				spunkt.setLage(null);
+			} else {
+				spunkt.setLage(getSpLageFeld().getText());
 			}
 
 			// Bemerkungen
@@ -475,11 +483,7 @@ public class SielhautBearbeiten extends AbstractModul {
 			spunkt.setPNachprobe(getSpNachprobeCheck().isSelected());
 			spunkt.setPFirmenprobe(getSpFirmenprobeCheck().isSelected());			
 
-			if (spunkt.getId() == null) {
-				saveNeuenProbepunkt(spE32Feld.getFloatValue(), spN32Feld.getFloatValue());
-				spunkt.setMessstelle(sprobePkt);
-			}
-		
+			spunkt.setMessstelle(sprobePkt);
 
 			Standort std = spunkt.getMessstelle().getObjekt().getStandortid();
 			std = Standort.merge(std);
@@ -894,9 +898,12 @@ public class SielhautBearbeiten extends AbstractModul {
 			punktSaveButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (SielhautBearbeiten.this.spunkt != null) {
-						saveSielhautPunkt();
+					if (spunkt.getMessstelle() == null) {
+						saveNeuenProbepunkt();
 					}
+						
+					saveSielhautPunkt();
+					
 				}
 			});
 		}

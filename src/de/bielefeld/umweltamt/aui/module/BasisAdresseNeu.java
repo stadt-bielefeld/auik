@@ -696,15 +696,6 @@ public class BasisAdresseNeu extends AbstractModul {
 			// Wenn die Eingaben korrekt sind
 
 			setAllEnabled(false);
-			
-			// Zuerst pruefen, ob es schon eine Adesse mit der gleichen
-			// strasse, hausnr, hausnrzus und plz gibt
-			
-			if (DatabaseQuery.findAdressen(getStrasse(), (Integer)hausnrFeld.getValue(), 
-					hausnrZusFeld.getText(), plzFeld.getText()).iterator().hasNext()) {
-				adrn = DatabaseQuery.findAdressen(getStrasse(), (Integer)hausnrFeld.getValue(), 
-						hausnrZusFeld.getText(), plzFeld.getText()).iterator().next();
-			}
 
 			// Anrede
 			String anrede = anredeFeld.getText();
@@ -740,62 +731,6 @@ public class BasisAdresseNeu extends AbstractModul {
 				inh.setKassenzeichen(null);
 			} else {
 				inh.setKassenzeichen(kassenzeichen);
-			}
-
-			if (inh.getAdresse() != null) {				
-				adrn = inh.getAdresse();
-			} else {
-				adrn = new Adresse();
-				inh.setAdresse(adrn);
-			}
-
-			// Strasse:
-			String strasse = strasseFeld.getText();
-			if ("".equals(strasse)) {
-				adrn.setStrasse(null);
-			} else {
-				adrn.setStrasse(strasse);
-			}
-			// Hausnummer:
-			Integer hausnr;
-			try {
-				hausnrFeld.commitEdit();
-			} catch (ParseException e1) {
-				hausnrFeld.setValue(new Integer(0));
-			}
-			if (hausnrFeld.getValue() instanceof Long) {
-				hausnr = new Integer(((Long) hausnrFeld.getValue()).intValue());
-			} else {
-				hausnr = (Integer) hausnrFeld.getValue();
-			}
-			adrn.setHausnr(hausnr);
-			// Hausnummer-Zusatz:
-			String hausnrZus = hausnrZusFeld.getText();
-			if (hausnrZus.equals("")) {
-				adrn.setHausnrzus(null);
-			} else {
-				adrn.setHausnrzus(hausnrZus);
-			}
-			// PLZ-Zusatz
-			String plzZs = plzZsFeld.getText();
-			if (plzZs.equals("")) {
-				adrn.setPlzzs(null);
-			} else {
-				adrn.setPlzzs(plzZs.toUpperCase().trim());
-			}
-			// PLZ:
-			String plz = plzFeld.getText().trim();
-			if (plz.equals("")) {
-				adrn.setPlz(null);
-			} else {
-				adrn.setPlz(plz);
-			}
-			// Orte
-			String ort = ortFeld.getText().trim();
-			if (ort.equals("")) {
-				adrn.setOrt(null);
-			} else {
-				adrn.setOrt(ort);
 			}
 		
 			// Telefon
@@ -833,10 +768,6 @@ public class BasisAdresseNeu extends AbstractModul {
 			} else {
 				inh.setNamebetrbeauf(betrBeaufNachname);
 			}
-
-			
-			adrn.setUeberschgeb(ueberschgebCheck.isSelected());
-
 			// Wassermenge:
 			Integer wassermenge = ((IntegerField) wassermengeFeld).getIntValue();
 			inh.setWassermenge(wassermenge);
@@ -851,58 +782,126 @@ public class BasisAdresseNeu extends AbstractModul {
 			} else {
 				inh.setBemerkungen(bemerkungen);
 			}
-			
-			// Gemarkung
-			Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
-			adrn.setGemarkung(bgem);
-			
-			// Flur
-			String flur = flurFeld.getText().trim();
-			if (flur.equals("")) {
-				adrn.setFlur(null);
-			} else {
-				adrn.setFlur(flur);
-			}
-
-			// Flurstueck
-			String flurstk = flurStkFeld.getText().trim();
-			if (flurstk.equals("")) {
-				adrn.setFlurstueck(null);
-			} else {
-				adrn.setFlurstueck(flurstk);
-			}
-
-			// Standortgg
-			Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
-			adrn.setStandortgghwsg(stgg);
-
-			// Einzugsgebiet
-			String ezgb = (String) entwGebBox.getSelectedItem();
-			// Nötig, weil getSelectedItem bei editierbarer ComboBox auch
-			// NULL
-			// liefern kann
-			if (ezgb != null) {
-				// Weil ich bis jetzt noch keine LimitedComboBox oder so
-				// habe...
-				if (ezgb.length() > 10) {
-					// ... kürze ich hier den String auf 10 Zeichen
-					ezgb = ezgb.substring(0, 10);
-				}
-				ezgb = ezgb.trim();
-			}
-			adrn.setEntgebid(ezgb);
-			adrn.setUeberschgeb(ueberschgebCheck.isSelected());
 			// Datenschutzhinweise
 			inh.setDatenschutzAwsv(daten_awsvCheck.isSelected());
 			inh.setDatenschutzEsatzung(daten_esatzungCheck.isSelected());
 			inh.setDatenschutzWhg(daten_whgCheck.isSelected());
+			
+			// Zuerst pruefen, ob es schon eine Adesse mit der gleichen
+			// strasse, hausnr, hausnrzus und plz gibt
+			
+			if (DatabaseQuery.findAdressen(strasseFeld.getText(), (Integer)hausnrFeld.getValue(), 
+					hausnrZusFeld.getText(), plzFeld.getText()).iterator().hasNext()) {
+				adrn = DatabaseQuery.findAdressen(strasseFeld.getText(), (Integer)hausnrFeld.getValue(), 
+						hausnrZusFeld.getText(), plzFeld.getText()).iterator().next();
+			} else {
+				
+				// Strasse:
+				String strasse = strasseFeld.getText();
+				if ("".equals(strasse)) {
+					adrn.setStrasse(null);
+				} else {
+					adrn.setStrasse(strasse);
+				}
+				// Hausnummer:
+				Integer hausnr;
+				try {
+					hausnrFeld.commitEdit();
+				} catch (ParseException e1) {
+					hausnrFeld.setValue(new Integer(0));
+				}
+				if (hausnrFeld.getValue() instanceof Long) {
+					hausnr = new Integer(((Long) hausnrFeld.getValue()).intValue());
+				} else {
+					hausnr = (Integer) hausnrFeld.getValue();
+				}
+				adrn.setHausnr(hausnr);
+				// Hausnummer-Zusatz:
+				String hausnrZus = hausnrZusFeld.getText();
+				if (hausnrZus.equals("")) {
+					adrn.setHausnrzus(null);
+				} else {
+					adrn.setHausnrzus(hausnrZus);
+				}
+				// PLZ-Zusatz
+				String plzZs = plzZsFeld.getText();
+				if (plzZs.equals("")) {
+					adrn.setPlzzs(null);
+				} else {
+					adrn.setPlzzs(plzZs.toUpperCase().trim());
+				}
+				// PLZ:
+				String plz = plzFeld.getText().trim();
+				if (plz.equals("")) {
+					adrn.setPlz(null);
+				} else {
+					adrn.setPlz(plz);
+				}
+				// Orte
+				String ort = ortFeld.getText().trim();
+				if (ort.equals("")) {
+					adrn.setOrt(null);
+				} else {
+					adrn.setOrt(ort);
+				}
+				adrn.setUeberschgeb(ueberschgebCheck.isSelected());
+				
+				// Gemarkung
+				Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
+				adrn.setGemarkung(bgem);
+				
+				// Flur
+				String flur = flurFeld.getText().trim();
+				if (flur.equals("")) {
+					adrn.setFlur(null);
+				} else {
+					adrn.setFlur(flur);
+				}
 
-			// VAWS-Einzugsgebiet
-			Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
-			adrn.setWassereinzugsgebiet(wezg);
+				// Flurstueck
+				String flurstk = flurStkFeld.getText().trim();
+				if (flurstk.equals("")) {
+					adrn.setFlurstueck(null);
+				} else {
+					adrn.setFlurstueck(flurstk);
+				}
+
+				// Standortgg
+				Standortgghwsg stgg = (Standortgghwsg) standortGgBox.getSelectedItem();
+				adrn.setStandortgghwsg(stgg);
+
+				// Einzugsgebiet
+				String ezgb = (String) entwGebBox.getSelectedItem();
+				// Nötig, weil getSelectedItem bei editierbarer ComboBox auch
+				// NULL
+				// liefern kann
+				if (ezgb != null) {
+					// Weil ich bis jetzt noch keine LimitedComboBox oder so
+					// habe...
+					if (ezgb.length() > 10) {
+						// ... kürze ich hier den String auf 10 Zeichen
+						ezgb = ezgb.substring(0, 10);
+					}
+					ezgb = ezgb.trim();
+				}
+				adrn.setEntgebid(ezgb);
+				adrn.setUeberschgeb(ueberschgebCheck.isSelected());
+
+				// VAWS-Einzugsgebiet
+				Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
+				adrn.setWassereinzugsgebiet(wezg);
+
+				
+			}
 
 			inh.setRevidatum(Calendar.getInstance().getTime());
 			inh.setRevihandz(handzeichenNeuFeld.getText().trim());
+
+			adrn = Adresse.merge(adrn);
+			inh.setAdresse(adrn);
+			inh = Inhaber.merge(inh);
+			standort.setInhaber(inh);
+			standort = Standort.merge(standort);
 
 			if (standort != null) {
 				frame.changeStatus("Neuer Betreiber " + standort.getId() + " erfolgreich gespeichert.",
@@ -927,29 +926,18 @@ public class BasisAdresseNeu extends AbstractModul {
 				}
 			}
 
-			inh = Inhaber.merge(inh);
-			standort.setInhaber(inh);
-			standort = Standort.merge(standort);
-			Set<Inhaber> inhabers = new HashSet<Inhaber>();
-			inhabers.add(inh);
-			adrn.setInhabers(inhabers);
-			Set<Standort> standorts = new HashSet<Standort>();
-			standorts.add(standort);
-			inh.setStandorts(standorts);
-			adrn = Adresse.merge(adrn);
-
-			if (adrn != null) {
-				frame.changeStatus("Neuer Betreiber " + adrn.getId() + " erfolgreich gespeichert.",
+			if (inh != null) {
+				frame.changeStatus("Neue Adresse " + adrn.getId() + " erfolgreich gespeichert.",
 						HauptFrame.SUCCESS_COLOR);
 
 				// Wenn wir vom Objekt anlegen kommen,
 				if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_betreiber")) {
-					manager.getSettingsManager().setSetting("auik.imc.use_betreiber", adrn.getId().intValue(), false);
+					manager.getSettingsManager().setSetting("auik.imc.use_betreiber", inh.getId().intValue(), false);
 					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_betreiber");
 					// ... kehren wir direkt dorthin zurück:
 					manager.switchModul("m_objekt_bearbeiten");
 				} else if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_standort")) {
-					manager.getSettingsManager().setSetting("auik.imc.use_standort", adrn.getId().intValue(), false);
+					manager.getSettingsManager().setSetting("auik.imc.use_standort", standort.getId().intValue(), false);
 					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_standort");
 					// ... kehren wir direkt dorthin zurück:
 					manager.switchModul("m_objekt_bearbeiten");

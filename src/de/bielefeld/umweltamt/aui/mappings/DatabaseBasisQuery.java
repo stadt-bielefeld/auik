@@ -139,7 +139,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 */
 	public static String getStandortString(Standort standort) {
 		String std = new String("");
-		if (standort.getInhaber().getAdresse() != null) {
+		if (standort.getInhaber() != null) {
 			String strasse = standort.getInhaber().getAdresse().getStrasse();
 			Integer hausnr = standort.getInhaber().getAdresse().getHausnr();
 			String zusatz = standort.getInhaber().getAdresse().getHausnrzus();
@@ -770,9 +770,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
 
-		String query = "SELECT a "
+		String query = "SELECT DISTINCT a "
 				+ "FROM Adresse a, Inhaber i, Standort s "
-				+ "WHERE i.adresse = a.id AND s.inhaber = i.id";
+				+ "WHERE a.id = i.adresse AND i.id = s.inhaber";
 		if (bStrasse || bHausnr || bOrt) {
 			query += " AND ";
 			if (bStrasse) {
@@ -942,7 +942,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			
 			query += "adresse.deleted = false ";
 		}
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		List<Adresse> list = HibernateSessionFactory.currentSession().createQuery(query).list();
+		return list;
 	}
 
 	private static String[] entwaesserungsgebiete = null;

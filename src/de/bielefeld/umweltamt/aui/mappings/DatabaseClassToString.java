@@ -160,7 +160,7 @@ public class DatabaseClassToString {
 	public static String toStringForClass(Standort clazz) {
 		String hausnrzus = "";
 
-		if (clazz.getInhaber().getAdresse() != null) {
+		if (clazz.getInhaber() != null) {
 			if (clazz.getInhaber().getAdresse().getHausnrzus() != null) {
 				hausnrzus = clazz.getInhaber().getAdresse().getHausnrzus();
 			}
@@ -180,11 +180,16 @@ public class DatabaseClassToString {
 		if (clazz.getAdresse() != null) {
 			if (clazz.getAdresse().getHausnrzus() != null) {
 				hausnrzus = clazz.getAdresse().getHausnrzus();
+				return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
+						+ hausnrzus + ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
+			} else {
+
+				return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
+						+ ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
 			}
+		} else {
+			return clazz.getName();
 		}
-		return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
-				+ clazz.getAdresse().getHausnr() + hausnrzus
-				+ ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
 	}
 
 	/** @return Gemarkung.toGuiString() */

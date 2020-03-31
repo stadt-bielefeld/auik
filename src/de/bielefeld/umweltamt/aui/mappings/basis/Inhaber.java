@@ -429,7 +429,7 @@ public class Inhaber  implements java.io.Serializable {
      *         <code>null</code> otherwise
      */
     public static Inhaber merge(Inhaber detachedInstance) {
-        log.debug("Merging Adresse instance " + detachedInstance);
+        log.debug("Merging Inhaber instance " + detachedInstance);
         return (Inhaber) new DatabaseAccess().merge(detachedInstance);
     }
 

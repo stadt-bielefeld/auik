@@ -1204,7 +1204,7 @@ public class BasisPanel extends JPanel {
                 getBetreiberFeld().setToolTipText(toolTip);
 
             }
-            if (this.hauptModul.getObjekt().getStandortid().getBezeichnung() != null &&
+            if (this.hauptModul.getObjekt().getStandortid() != null &&
             		!this.hauptModul.getObjekt().getStandortid().getBezeichnung().equals("Standort ohne Adresse")) {
 
                 Standort standort = this.hauptModul.getObjekt().getStandortid();
@@ -1225,7 +1225,6 @@ public class BasisPanel extends JPanel {
                                     : "") + "</html>";
                     getStandortFeld().setToolTipText(toolTip);
                 	}
-                    getStandortFeld().setText(standort.toString());
 
                     if (this.hauptModul.getObjekt().getStandortid() == null) {
                         standort = (Standort) Standort
@@ -1514,7 +1513,6 @@ public class BasisPanel extends JPanel {
 					Standort standort = BasisPanel.this.hauptModul.getObjekt().getStandortid();
 					if (BasisPanel.this.hauptModul.getObjekt().getBetreiberid() != null && standort == null) {
 						standort = new Standort();
-						standort.getInhaber().setAdresse(BasisPanel.this.hauptModul.getObjekt().getBetreiberid().getAdresse());
 						standort.setInhaber(BasisPanel.this.hauptModul.getObjekt().getBetreiberid());
 					}
 					if (standort == null) {

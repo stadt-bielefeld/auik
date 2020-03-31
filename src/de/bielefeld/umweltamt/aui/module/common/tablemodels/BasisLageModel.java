@@ -99,13 +99,12 @@ public class BasisLageModel extends ListTableModel
 	 */
 	public void filterList(String strasse, int hausnr, String ort)
 	{
-        log.debug("Fetching Adresse Objects");
-        //Fetch all BasisAdresse and BasisLage Objects
+        log.debug("Fetching Adresses");
+        //Fetch all BasisAdresse Objects
         List<Adresse> list = DatabaseQuery.findStandorte(strasse, hausnr, ort);
         log.debug("Fetched " + list.size() + " Objects");
-        List<Standort> standorte = new ArrayList<Standort>();
-        //Add fetched objects to a list of Standort
-
+        
+        
         setList(list);
         log.debug("Created list");
 		lastOrt = ort;
