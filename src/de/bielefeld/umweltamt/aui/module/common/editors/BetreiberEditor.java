@@ -81,7 +81,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
-import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
@@ -879,8 +878,8 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		String str = "";
 
 		if (strassenBox.getSelectedItem() != null) {
-			if (strassenBox.getSelectedItem().getClass() == Strassen.class) {
-				Strassen selstrasse = (Strassen) strassenBox.getSelectedItem();
+			if (strassenBox.getSelectedItem().getClass() == TabStreets.class) {
+				TabStreets selstrasse = (TabStreets) strassenBox.getSelectedItem();
 				if (selstrasse != null) {
 					str = selstrasse.getStrasse();
 				}
@@ -1019,7 +1018,8 @@ public class BetreiberEditor extends AbstractBaseEditor {
 			strasseFeld.setText(bts.getName());
 			hausnrFeld.setValue(bts.getHausnr());
 			hausnrZusFeld.setText(bts.getHausnrZusatz());
-			Strassen stra = DatabaseQuery.findStrasse(strassenBox.getSelectedItem().toString());
+			int adr = getAdressenTabelle().getSelectedRow();
+			TabStreets stra = (TabStreets) adressenModel.getObjectAtRow(adr);
 			if (stra.getPlz() != null) {
 				plzFeld.setText(stra.getPlz());
 			}

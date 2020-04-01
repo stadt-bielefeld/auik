@@ -238,7 +238,7 @@ public class AwsvEditor extends AbstractBaseEditor {
     private JCheckBox schutzFolieCheck;
     private JCheckBox schutzAntiheberCheck;
     private LimitedTextArea beschreibungAFeld;
-    private TextArea beschreibungSFeld;
+    private LimitedTextArea beschreibungSFeld;
     // Leitungen (Lageranlagen)
     private JPanel leitungenLageranlagenTab;
     private JCheckBox oberIrdischCheck;
@@ -250,7 +250,7 @@ public class AwsvEditor extends AbstractBaseEditor {
     private JCheckBox schutzrohrCheck;
     private JCheckBox ausHdpeCheck;
     private JCheckBox druckleitungCheck;
-    private TextArea beschreibungRFeld;
+    private LimitedTextArea beschreibungRFeld;
 
     // Daten (Rohrleitungen)
     private JPanel datenRohrleitungenTab;
@@ -525,8 +525,8 @@ public class AwsvEditor extends AbstractBaseEditor {
         schutzSensorCheck = new JCheckBox("Sensor");
         schutzFolieCheck = new JCheckBox("Folie");
         schutzAntiheberCheck = new JCheckBox("Antihebersicherung");
-        beschreibungAFeld = new LimitedTextArea(255);
-        beschreibungSFeld = new TextArea();
+        beschreibungAFeld = new LimitedTextArea(1250);
+        beschreibungSFeld = new LimitedTextArea(1250);
         
         //JGS 
         lagerflaecheFeld = new IntegerField();
@@ -560,7 +560,7 @@ public class AwsvEditor extends AbstractBaseEditor {
         schutzrohrCheck = new JCheckBox("Mit Schutzrohr");
         ausHdpeCheck = new JCheckBox("Aus HDPE");
         druckleitungCheck = new JCheckBox("Druckleitung");
-        beschreibungRFeld = new TextArea();
+        beschreibungRFeld = new LimitedTextArea(1250);
 
         // Ausführung (Abfüllflächen)
         bodenflaechenAusfBox = new JComboBox(

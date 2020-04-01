@@ -95,7 +95,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisInhaberModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
@@ -1264,12 +1263,12 @@ public class BasisAdresseSuchen extends AbstractModul {
 							{
 								String suchText = AuikUtils
 										.sanitizeQueryInput(this.oldText);
-								Strassen str = DatabaseQuery
-										.findStrasse(suchText);
+								String str = DatabaseQuery
+										.getTabStreet(suchText);
 	
 								if (str != null)
 								{
-									this.newText = str.getStrasse();
+									this.newText = str;
 								}
 								else
 								{

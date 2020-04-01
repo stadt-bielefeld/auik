@@ -116,7 +116,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
@@ -535,12 +534,12 @@ public class BasisPanel extends JPanel {
                                 {
                                     String suchText = AuikUtils
                                             .sanitizeQueryInput(this.oldText);
-                                    Strassen str = DatabaseQuery
-                                            .findStrasse(suchText);
+    								String str = DatabaseQuery
+    										.getTabStreet(suchText);
 
                                     if (str != null)
                                     {
-                                        this.newText = str.getStrasse();
+                                        this.newText = str;
                                     }
                                     else
                                     {
@@ -962,12 +961,12 @@ public class BasisPanel extends JPanel {
 	                                {
 	                                    String suchText = AuikUtils
 	                                            .sanitizeQueryInput(this.oldText);
-	                                    Strassen str = DatabaseQuery
-	                                            .findStrasse(suchText);
+	    								String str = DatabaseQuery
+	    										.getTabStreet(suchText);
 	
 	                                    if (str != null)
 	                                    {
-	                                        this.newText = str.getStrasse();
+	                                        this.newText = str;
 	                                    }
 	                                    else
 	                                    {

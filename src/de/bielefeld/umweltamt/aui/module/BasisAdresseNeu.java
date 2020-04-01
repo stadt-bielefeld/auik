@@ -100,7 +100,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
-import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
@@ -645,7 +644,8 @@ public class BasisAdresseNeu extends AbstractModul {
 			strasseFeld.setText(bts.getName());
 			hausnrFeld.setValue(bts.getHausnr());
 			hausnrZusFeld.setText(bts.getHausnrZusatz());
-			Strassen stra = DatabaseQuery.findStrasse(strassenBox.getSelectedItem().toString());
+			int adr = getAdressenTabelle().getSelectedRow();
+			TabStreets stra = (TabStreets) adressenModel.getObjectAtRow(adr);
 			if (stra.getPlz() != null) {
 				plzFeld.setText(stra.getPlz());
 			}
@@ -790,7 +790,10 @@ public class BasisAdresseNeu extends AbstractModul {
 			// Zuerst pruefen, ob es schon eine Adesse mit der gleichen
 			// strasse, hausnr, hausnrzus und plz gibt
 			
-			if (DatabaseQuery.findAdressen(strasseFeld.getText(), (Integer)hausnrFeld.getValue(), 
+			Long nr = (Long) hausnrFeld.getValue();
+			int haus = nr.intValue();
+			
+			if (DatabaseQuery.findAdressen(strasseFeld.getText(), haus, 
 					hausnrZusFeld.getText(), plzFeld.getText()).iterator().hasNext()) {
 				adrn = DatabaseQuery.findAdressen(strasseFeld.getText(), (Integer)hausnrFeld.getValue(), 
 						hausnrZusFeld.getText(), plzFeld.getText()).iterator().next();
