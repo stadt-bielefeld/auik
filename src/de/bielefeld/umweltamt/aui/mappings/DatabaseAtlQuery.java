@@ -34,6 +34,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
@@ -957,23 +958,28 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 * 
 	 * @return <code>List&lt;Sielhaut&gt;</code>
 	 */
-	public static List<Sielhaut> findSielhaut(String search)
+	
+	
+	public static Object[] findSielhaut(String search)
 	{
-		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria
-																	.forClass(Sielhaut.class)
-																	.createAlias("messstelle", "probepkt")
-																	.createAlias("probepkt.objekt", "objekt")
-																	.add(Restrictions.ilike("bezeichnung",
-																							search,
-																							MatchMode.START))
-																	.addOrder(Order.desc("PSielhaut"))
-																	.addOrder(Order.desc("PFirmenprobe"))
-																	.addOrder(Order.asc("objekt.inaktiv"))
-																	.addOrder(Order.asc("bezeichnung")),
-															new Sielhaut());
-	}
 
+		boolean bSearch = (search != null && search.length() > 0);
+		
+		String query = "SELECT s.id, s.bezeichnung, s.lage, s.PSielhaut, s.PFirmenprobe, s.PNachprobe, o.inaktiv "
+				+ "FROM Sielhaut s, Messstelle m, Objekt o "
+				+ "WHERE s.messstelle = m AND m.objekt = o ";
+				if (bSearch) {
+					query += "AND s.bezeichnung like '" + search + "%' ";
+				}
+				query +=  "ORDER BY s.PSielhaut DESC, s.PFirmenprobe DESC, o.inaktiv ASC, s.bezeichnung ASC" ;
+		
+				
+		List sielhaut = HibernateSessionFactory.currentSession().createQuery(query).list();
+		
+		return (Object[]) sielhaut.toArray();
+	}
+	
+	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package ATL : class Status */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

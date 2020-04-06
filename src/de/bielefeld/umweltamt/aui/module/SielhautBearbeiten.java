@@ -273,16 +273,16 @@ public class SielhautBearbeiten extends AbstractModul {
 			setSielhautPunkt(this.spunkt);
 		}
 
-		else {
-			List<Sielhaut> list1 = DatabaseQuery.findSielhaut("101AP");
-			if (list1.isEmpty() != true) {
-				sprobePkt = list1.get(0).getMessstelle();
-				spunkt = list1.get(0);
-				objekt = sprobePkt.getObjekt();
-				setSielhautPunkt(this.spunkt);
-			}
-
-		}
+//		else {
+//			List<Sielhaut> list1 = DatabaseQuery.findSielhaut("101AP");
+//			if (list1.isEmpty() != true) {
+//				sprobePkt = list1.get(0).getMessstelle();
+//				spunkt = list1.get(0);
+//				objekt = sprobePkt.getObjekt();
+//				setSielhautPunkt(this.spunkt);
+//			}
+//
+//		}
 	}
 
 	public void setSielhautPunkt(Sielhaut sp) {
