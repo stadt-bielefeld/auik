@@ -790,10 +790,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			// Zuerst pruefen, ob es schon eine Adesse mit der gleichen
 			// strasse, hausnr, hausnrzus und plz gibt
 			
-			Long nr = (Long) hausnrFeld.getValue();
-			int haus = nr.intValue();
-			
-			if (DatabaseQuery.findAdressen(strasseFeld.getText(), haus, 
+			if (DatabaseQuery.findAdressen(strasseFeld.getText(), (Integer)hausnrFeld.getValue(), 
 					hausnrZusFeld.getText(), plzFeld.getText()).iterator().hasNext()) {
 				adrn = DatabaseQuery.findAdressen(strasseFeld.getText(), (Integer)hausnrFeld.getValue(), 
 						hausnrZusFeld.getText(), plzFeld.getText()).iterator().next();
