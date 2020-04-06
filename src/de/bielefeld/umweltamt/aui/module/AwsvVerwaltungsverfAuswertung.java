@@ -157,7 +157,7 @@ public class AwsvVerwaltungsverfAuswertung extends AbstractQueryModul {
      */
     @Override
     public String getCategory() {
-        return "VAwS";
+        return "AwSV";
     }
 }
 

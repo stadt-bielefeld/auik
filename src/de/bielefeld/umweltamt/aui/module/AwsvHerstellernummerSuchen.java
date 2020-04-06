@@ -78,7 +78,7 @@ public class AwsvHerstellernummerSuchen extends AbstractQueryModul {
     // Legt fest in welchen MenÃ¼ das Modul im AUIK zu finden ist
     @Override
     public String getCategory() {
-        return "VAwS";
+        return "AwSV";
     }
 
     @Override

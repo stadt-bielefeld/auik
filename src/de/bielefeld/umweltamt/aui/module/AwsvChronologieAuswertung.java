@@ -161,7 +161,7 @@ public class AwsvChronologieAuswertung extends AbstractQueryModul {
      */
     @Override
     public String getCategory() {
-        return "VAwS";
+        return "AwSV";
     }
 
     /* (non-Javadoc)

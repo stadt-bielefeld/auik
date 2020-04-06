@@ -157,7 +157,7 @@ public class AwsvKontrollenAuswertung extends AbstractQueryModul {
      */
     @Override
     public String getCategory() {
-        return "VAwS";
+        return "AwSV";
     }
 }
 
