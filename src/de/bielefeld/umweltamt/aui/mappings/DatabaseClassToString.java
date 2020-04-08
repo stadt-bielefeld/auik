@@ -176,16 +176,22 @@ public class DatabaseClassToString {
 
 	public static String toStringForClass(Inhaber clazz) {
 		String hausnrzus = "";
+		String vorname = "";
 		if (clazz.getAdresse() != null) {
 			if (clazz.getAdresse().getHausnrzus() != null) {
 				hausnrzus = clazz.getAdresse().getHausnrzus();
 				return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
 						+ hausnrzus + ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
 			} else {
+		        if (clazz.getVorname() != null) {
+		        	vorname = clazz.getVorname() + " ";
+		        }
+				return vorname + clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
+						+ clazz.getAdresse().getHausnr() + ", " + clazz.getAdresse().getPlz() + " "
+						+ clazz.getAdresse().getOrt();
 
-				return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
-						+ ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
 			}
+
 		} else {
 			return clazz.getName();
 		}
