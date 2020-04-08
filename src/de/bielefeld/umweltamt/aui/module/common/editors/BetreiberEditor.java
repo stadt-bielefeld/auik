@@ -90,6 +90,9 @@ import de.bielefeld.umweltamt.aui.module.BasisAdresseNeu;
 import de.bielefeld.umweltamt.aui.module.BasisAdresseSuchen;
 import de.bielefeld.umweltamt.aui.module.BasisStandortSuchen;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStdModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisTabStreetsModel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.BasisPanel;
+import de.bielefeld.umweltamt.aui.module.common.AdresseChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -107,7 +110,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
  * 
  * @author David Klotz
  */
-public class BetreiberEditor extends AbstractBaseEditor {
+public class BetreiberEditor extends AbstractApplyEditor {
 	private static final long serialVersionUID = -7058333439142990179L;
 
 	/** Logging */
@@ -170,7 +173,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
     private JPopupMenu standortPopup;
 	
 	private JTable adressenTabelle;
-	private BasisAdresseModel adressenModel;
+	private BasisTabStreetsModel adressenModel;
 	private JTable standorteTabelle;
 	private BasisStdModel standorteModel;
 	/**
@@ -396,7 +399,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 		handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 57));
 				builder.add(handzeichenNeuFeld, cc.xyw(12, 57, 2));					
 		
-
+		button3.setText("Andere Adresse zuordnen");
 
 		BetreiberListener dialogListener = new BetreiberListener();
 
@@ -905,7 +908,7 @@ public class BetreiberEditor extends AbstractBaseEditor {
 	private JTable getAdressenTabelle() {
 
 		if (this.adressenModel == null) {
-			this.adressenModel = new BasisAdresseModel();
+			this.adressenModel = new BasisTabStreetsModel();
 
 			if (this.adressenTabelle == null) {
 				this.adressenTabelle = new JTable(this.adressenModel);
@@ -1118,4 +1121,17 @@ public class BetreiberEditor extends AbstractBaseEditor {
             standortPopup.show(e.getComponent(), e.getX(), e.getY());
         }
     }
+
+	@Override
+	protected void doApply() {
+
+		AdresseChooser chooser = new AdresseChooser(inhaber, BetreiberEditor.this.frame, "adresse");
+		chooser.setVisible(true);
+		Adresse adr = chooser.getChosenAdresse();
+		inhaber.setAdresse(adr);
+		TabStreets ts = DatabaseQuery.getSingleTabStreet(adr.getStrasse(), adr.getHausnr(), adr.getHausnrzus());
+		inhaber.getStandort().setE32(ts.getX());
+		inhaber.getStandort().setN32(ts.getY());
+		fillForm();
+	}
 }

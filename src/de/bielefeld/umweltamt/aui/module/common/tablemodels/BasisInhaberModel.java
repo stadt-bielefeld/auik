@@ -94,9 +94,14 @@ public class BasisInhaberModel extends ListTableModel {
      */
     @Override
 	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Object value = null;
+    	Object tmp = null;
+		
+//    	Object[] obj = (Object[]) objectAtRow;
+//		Inhaber betr = (Inhaber) obj[0];
 
 		Inhaber betr = (Inhaber) objectAtRow;
+		
+		
 		HibernateSessionFactory.currentSession().refresh(betr);
 //		if (betr.getStandorts().size() > 0) {
 //			for (int i = 0; i < betr.getStandorts().size(); i++) {
@@ -105,30 +110,30 @@ public class BasisInhaberModel extends ListTableModel {
 				switch (columnIndex) {
 				case 0:
 					if (betr.getKassenzeichen() != null) {
-						String tmp = betr.getName() + " ("
+						String value = betr.getName() + " ("
 								+ betr.getKassenzeichen()
 								+ ")";
-						value = tmp;
+						tmp = value;
 					} else {
-						value = betr.getName();
+						tmp = betr.getName();
 					}
 					break;
 				case 1:
-					value = betr.getVorname();
+					tmp = betr.getVorname();
 					break;
 				case 2:
-					value = betr.getAdresse().getOrt();
+					tmp = betr.getAdresse().getOrt();
 					break;
 				case 3:
-					value = betr.getAdresse().getStrasse();
+					tmp = betr.getAdresse().getStrasse();
 					break;
 				case 4:
 					if (betr.getAdresse().getHausnrzus() != null) {
-						String tmp = betr.getAdresse().getHausnr()
+						String value = betr.getAdresse().getHausnr()
 								+ betr.getAdresse().getHausnrzus();
-						value = tmp;
+						tmp = value;
 					} else {
-						value = betr.getAdresse().getHausnr();
+						tmp = betr.getAdresse().getHausnr();
 					}
 					break;
 //				case 5:
@@ -138,7 +143,7 @@ public class BasisInhaberModel extends ListTableModel {
 //					value = map.getN32();
 //					break;
 				default:
-					value = null;
+					tmp = null;
 				}
 				
 //				return value;
@@ -183,7 +188,7 @@ public class BasisInhaberModel extends ListTableModel {
 //				value = null;
 //			}
 			
-			return value;
+			return tmp;
 		
 	}
 
@@ -234,7 +239,7 @@ public class BasisInhaberModel extends ListTableModel {
     
     public void filterStandort(String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
-        setList(DatabaseQuery.findStandorte(strasse, hausnr, ort));
+        setList(DatabaseQuery.findInhaber(strasse, hausnr, ort));
         lastStrasse = strasse;
         lastHausnr = hausnr;
         LastOrt = ort;
@@ -256,15 +261,6 @@ public class BasisInhaberModel extends ListTableModel {
         lastStrasse = strasse;
         lastHausnr = hausnr;
         LastOrt = ort;
-        log.debug("End filterList");
-    }
-    
-    
-    public void filterStandort(String suche, String property) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.findStandorte(suche, property));
-        lastSuchWort = suche;
-        lastProperty = property;
         log.debug("End filterList");
     }
 }

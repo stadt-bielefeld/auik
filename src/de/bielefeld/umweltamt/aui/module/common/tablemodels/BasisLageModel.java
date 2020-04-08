@@ -49,7 +49,7 @@ public class BasisLageModel extends ListTableModel
 	public BasisLageModel()
 	{
 		super(new String[] {
-				/* "St.ID", */
+				"St.ID",
 				"Straße",
 				"Hausnr.",
 				"PLZ",
@@ -131,100 +131,80 @@ public class BasisLageModel extends ListTableModel
 	 * 
 	 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(Object,
 	 *      int)
-	 * @param objectAtRow
-	 *            Das Object in dieser Zeile
-	 * @param columnIndex
-	 *            Die Spalte der Tabelle
+	 * @param objectAtRow Das Object in dieser Zeile
+	 * @param columnIndex Die Spalte der Tabelle
 	 * @return Den Wert der Zelle oder null (falls die Zelle nicht existiert)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex)
-	{
+	public Object getColumnValue(Object objectAtRow, int columnIndex) {
 		Object value = null;
 		Adresse bsta = (Adresse) objectAtRow;
-		if (bsta != null){
-		switch (columnIndex)
-		{
-		/*
-		 * case 0: value = bsta.getStandortid(); break;
-		 */
+		if (bsta != null) {
+			switch (columnIndex) {
+
 			case 0:
+				value = bsta.getId();
+				break;
+
+			case 1:
 				value = bsta.getStrasse();
 				break;
-			case 1:
-				if (bsta.getHausnrzus() != null)
-				{
+			case 2:
+				if (bsta.getHausnrzus() != null) {
 					String tmp = bsta.getHausnr() + bsta.getHausnrzus();
 					value = tmp;
-				}
-				else
-				{
+				} else {
 					value = bsta.getHausnr();
 				}
 				break;
-			case 2:
+			case 3:
 				value = bsta.getPlz();
 				break;
-			case 3:
+			case 4:
 				value = bsta.getOrt();
 				break;
-			case 4:
-				if (bsta.getEntgebid() != null)
-				{
+			case 5:
+				if (bsta.getEntgebid() != null) {
 					value = bsta.getEntgebid();
-				}
-				else
+				} else
 					value = "";
 				break;
-			case 5:
-				if (bsta.isUeberschgeb() == true)
-				{
+			case 6:
+				if (bsta.isUeberschgeb() == true) {
 
 					value = new Boolean(true);
 
-				}
-				else
-				{
+				} else {
 					value = new Boolean(false);
 				}
 				break;
-			case 6:
-				if (bsta.getStandortgghwsg() != null)
-				{
+			case 7:
+				if (bsta.getStandortgghwsg() != null) {
 					Integer sggh = bsta.getStandortgghwsg().getId();
-					if (sggh.equals(1))
-					{
+					if (sggh.equals(1)) {
 						value = new String("Zone I");
-					}
-					else if (sggh.equals(2))
-					{
+					} else if (sggh.equals(2)) {
 						value = new String("Zone II");
-					}
-					else if (sggh.equals(3))
-					{
+					} else if (sggh.equals(3)) {
 						value = new String("Zone III/III A");
-					}
-					else if (sggh.equals(4))
-					{
+					} else if (sggh.equals(4)) {
 						value = new String("Zone III B");
 					}
-				}
-				else
-				{
+				} else {
 					value = new String("");
 				}
 				break;
-			case 7:
+			case 8:
 				if (bsta.getWassereinzugsgebiet() != null) {
-					value = bsta.getWassereinzugsgebiet();					
+					value = bsta.getWassereinzugsgebiet();
 				}
 				break;
 			default:
 				value = null;
-		}
+			}
 		}
 		return value;
-		
+
 	}
 
 	@Override
@@ -250,10 +230,12 @@ public class BasisLageModel extends ListTableModel
 			case 4:
 				return String.class;
 			case 5:
-				return Boolean.class;
-			case 6:
 				return String.class;
+			case 6:
+				return Boolean.class;
 			case 7:
+				return String.class;
+			case 8:
 				return String.class;
 			default:
 				return null;

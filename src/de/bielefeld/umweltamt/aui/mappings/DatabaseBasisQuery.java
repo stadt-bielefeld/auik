@@ -262,37 +262,30 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	public static List<Objekt> getObjekteByStandort(Adresse adr, String abteilung, Integer artid,
 			Boolean matchArtId) {
+		Integer id = adr.getId();
 		String strasse = adr.getStrasse();
 		strasse = strasse.replace("'", "''");
 		Integer hausnr = adr.getHausnr();
 		String hausnrzus = adr.getHausnrzus();
 		log.debug("Fetching objects at " + adr);
 		// Find objects with standortid of adresse with matching fields
-		String query = "SELECT o.*, s.*, i.*, a.* from basis.objekt o, basis.standort s, basis.inhaber i, basis.adresse a,basis.objektarten art "
+		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.inhaber i, basis.adresse a,basis.objektarten art "
 				+ " WHERE o.standortid = s.id AND s.inhaberid = i.id AND i.adresseid = a.id AND o.objektartid = art.id"
-				+ " AND a.strasse = '" + strasse + "'"
-				+ " AND a.hausnr = " + hausnr
+				+ " AND a.id = '" + id + "'"
 				+ " AND o._deleted = false";
 
-		String filter = " ";
-		if (hausnrzus != null) {
-			filter += " AND a.hausnrzus = '" + hausnrzus + "' ";
-		}else {
-			filter += " AND a.hausnrzus is null ";
-		}
 		if (abteilung != null) {
-			filter += " AND art.abteilung = '" + abteilung + "' ";
+			query += " AND art.abteilung = '" + abteilung + "' ";
 		}
 		if (artid != null) {
 			if (matchArtId) {
-				filter += "AND art.id = " + artid + " ";
+				query += "AND art.id = " + artid + " ";
 			} else {
-				filter += "AND art.id != " + artid + " ";
+				query += "AND art.id != " + artid + " ";
 
 			}
 		}
-		filter += " ORDER BY o.inaktiv, o.objektartid";
-		query += filter + ";";
+		query += " ORDER BY o.inaktiv, o.objektartid";
 		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("o", Objekt.class);
 		return q.list();
@@ -723,7 +716,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            String
 	 * @return <code>List&lt;Object[]&gt;</code>
 	 */
-	public static List<Object[]> findStandorteAll(String strasse, Integer hausnr, String ort) {
+	public static List<Object[]> findInhaber(String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
 		boolean bHausnr = (hausnr != null && hausnr != -1);
@@ -731,9 +724,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
 	
-		String query = "SELECT s.*, a.*, o.* "
-				+ "FROM basis.standort s, basis.adresse a, basis.objekt o "
-				+ "WHERE o.standortid = a.id AND s.adresseid = a.id";
+		String query = "SELECT i.* "
+				+ "FROM basis.inhaber i, basis.adresse a "
+				+ "WHERE i.adresseid = a.id";
 		if (bStrasse || bHausnr || bOrt) {
 			query += " AND ";
 			if (bStrasse) {
@@ -755,9 +748,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		}
 		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC NULLS FIRST;";
 		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
-		q.addEntity("a", Adresse.class);
-		q.addEntity("m", Standort.class);
-		q.addEntity("o", Objekt.class);
+		q.addEntity("i", Inhaber.class);
 		return q.list();
 	}
 
@@ -770,6 +761,40 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		str = str.replace("'", "''");
 
 		String query = "SELECT DISTINCT a "
+				+ "FROM Adresse a, Inhaber i, Standort s "
+				+ "WHERE a.id = i.adresse AND i.id = s.inhaber";
+		if (bStrasse || bHausnr || bOrt) {
+			query += " AND ";
+			if (bStrasse) {
+				query += "LOWER(a.strasse) like '" + str + "%' ";
+			}
+			if (hausnr != null && hausnr != -1) {
+				if (bStrasse) {
+					query += " AND ";
+				}
+				query += " a.hausnr = " + hausnr;
+			}
+			if (bOrt) {
+				if (bStrasse || bHausnr) {
+					query += " AND ";
+				}
+				query += " LOWER(a.ort) like '" + ort.toLowerCase() + "%' ";
+			}
+			query += " AND a.deleted = false";
+		}
+		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC";
+		return HibernateSessionFactory.currentSession().createQuery(query).list();
+	}
+
+	public static List<Standort> chooseStandort(String strasse, Integer hausnr, String ort) {
+		// Check which parameters are set
+		boolean bStrasse = (strasse != null && strasse.length() > 0);
+		boolean bHausnr = (hausnr != null && hausnr != -1);
+		boolean bOrt = (ort != null && ort.length() > 0);
+		String str = strasse.toLowerCase();
+		str = str.replace("'", "''");
+
+		String query = "SELECT s "
 				+ "FROM Adresse a, Inhaber i, Standort s "
 				+ "WHERE a.id = i.adresse AND i.id = s.inhaber";
 		if (bStrasse || bHausnr || bOrt) {
@@ -1023,6 +1048,29 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		List strasse = HibernateSessionFactory.currentSession().createQuery(query).list();
 
 		return (strasse.isEmpty() ? null : strasse.get(0).toString());
+
+	}
+
+	/**
+	 * Get all BasisTabStreets and sort them by their name
+	 * 
+	 * @return <code>Eine Liste aller Stassen</code>
+	 */
+	public static TabStreets getSingleTabStreet(String name, Integer hausnr, String hausnrzus) {
+
+		String query = "SELECT t "
+				+ "FROM TabStreets t "
+				+ "WHERE name like '" + name + "' ";
+		query += "AND hausnr = " + hausnr;
+		if (hausnrzus != null) {
+			query += "AND hausnr_zusatz = '" + hausnrzus + "' ";
+		} else {
+			query += "AND hausnr_zusatz IS NULL";
+		}
+		
+		List tabStreet = HibernateSessionFactory.currentSession().createQuery(query).list();
+
+		return (TabStreets) tabStreet.iterator().next();
 
 	}
 

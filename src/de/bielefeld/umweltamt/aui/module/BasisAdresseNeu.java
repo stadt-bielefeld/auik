@@ -107,7 +107,7 @@ import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStdModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisTabStreetsModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
@@ -188,7 +188,7 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JPopupMenu standortPopup;
 
 	private JTable adressenTabelle;
-	private BasisAdresseModel adressenModel;
+	private BasisTabStreetsModel adressenModel;
 	private JTable standorteTabelle;
 	private BasisStdModel standorteModel;
 
@@ -505,7 +505,7 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JTable getAdressenTabelle() {
 
 		if (this.adressenModel == null) {
-			this.adressenModel = new BasisAdresseModel();
+			this.adressenModel = new BasisTabStreetsModel();
 
 			if (this.adressenTabelle == null) {
 				this.adressenTabelle = new JTable(this.adressenModel);

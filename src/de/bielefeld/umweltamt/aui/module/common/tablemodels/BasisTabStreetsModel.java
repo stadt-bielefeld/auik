@@ -44,41 +44,27 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Ein einfaches TableModel für eine Standortliste.
  * @author Gerd Genuit
  */
-public class BasisAdresseModel extends ListTableModel {
-    private AuikLogger log = AuikLogger.getLogger();
-    private String strasse = null;
-    private String lastSuchWort = null;
-    private String lastProperty = null;
-    private String lastStrasse = null;
-    private Integer lastHausnr = null;
-    private String LastZus = null;
-    private String LastOrt = null;
+public class BasisTabStreetsModel extends ListTableModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4586459781908256454L;
+	private String strasse = null;
 //    private String secondColumn = null;
 
-    //    private String secondColumn = null;
-	
-
-
-	public BasisAdresseModel() {
+    public BasisTabStreetsModel() {
         super(new String[]{
+                "Plz",
                 "Strasse",
                 "Nr",
-                "Zus",
-                "Plz",
-                "Entgeb.",
-                "Standortggh.",
-                "Wassereinzgeb.",
-                "Bemerkungen"
+                "Zus"
         },
         false);
     }
@@ -88,34 +74,21 @@ public class BasisAdresseModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Inhaber inh = (Inhaber) objectAtRow;
-//    	Adresse adr = (Adresse) objectAtRow;
+    	TabStreets ts = (TabStreets) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            tmp = inh.getAdresse().getStrasse();
+            tmp = ts.getPlz();
             break;
         case 1:
-            tmp = inh.getAdresse().getHausnr();
+            tmp = ts.getName();
             break;
         case 2:
-            tmp = inh.getAdresse().getHausnrzus();
+            tmp = ts.getHausnr();
             break;
         case 3:
-            tmp = inh.getAdresse().getPlz();
-            break;
-        case 4:
-            tmp = inh.getAdresse().getEntgebid();
-            break;
-        case 5:
-            tmp = inh.getAdresse().getStandortgghwsg();
-            break;
-        case 6:
-            tmp = inh.getAdresse().getWassereinzugsgebiet();
-            break;
-        case 7:
-            tmp = inh.getAdresse().getBemerkungen();
+            tmp = ts.getHausnrZusatz();
             break;
 
         default:
@@ -144,38 +117,7 @@ public class BasisAdresseModel extends ListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public Inhaber getRow(int rowIndex) {
-        return (Inhaber) super.getObjectAtRow(rowIndex);
-    }
-
-    /**
-     * Filtert den Tabelleninhalt nach Anrede, Name oder Zusatz.
-     * Zu den möglichen Werten von <code>property</code>, siehe {@link BasisAdresse#findBetreiber(String, String)}.
-     * @param suche Der Such-String
-     * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
-     */
-    public void filterList(String suche, String property) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.getAdresse(property, suche));
-        lastSuchWort = suche;
-        lastProperty = property;
-        log.debug("End filterList");
-    }
-    
-    public void filterAllList(String suche, String property) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.findAdressen(suche, property, null, null));
-        lastSuchWort = suche;
-        lastProperty = property;
-        log.debug("End filterList");
-    }
-    
-    public void filterStandort(String strasse, Integer hausnr, String ort) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.findInhaber(strasse, hausnr, ort));
-        lastStrasse = strasse;
-        lastHausnr = hausnr;
-        LastOrt = ort;
-        log.debug("End filterList");
+    public TabStreets getRow(int rowIndex) {
+        return (TabStreets) super.getObjectAtRow(rowIndex);
     }
 }

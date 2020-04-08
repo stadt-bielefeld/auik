@@ -73,7 +73,10 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
  */
 public class StandortEditor extends AbstractBaseEditor
 {
-	private static final long serialVersionUID = 2023212804506559226L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3106924002637463142L;
 
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
