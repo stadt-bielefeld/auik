@@ -496,10 +496,15 @@ public class BasisAdresseSuchen extends AbstractModul {
 
         // Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen auch
         // angezeigt werden.
-//        updateBetreiberListe();
+        updateBetreiberListe();
     }
 
-    /**
+    private void updateBetreiberListe() {
+		filterBetreiberListe(betreiberTabelle);
+		
+	}
+
+	/**
      * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines
      * Betreibers.
      * @param betreiberid Die Betreiber-Id
@@ -837,19 +842,18 @@ public class BasisAdresseSuchen extends AbstractModul {
             });
 
             this.betreiberTabelle.getColumnModel().getColumn(0)
-                .setPreferredWidth(200);
+                .setPreferredWidth(-10);
             this.betreiberTabelle.getColumnModel().getColumn(1)
-                .setPreferredWidth(60);
+                .setPreferredWidth(200);
             this.betreiberTabelle.getColumnModel().getColumn(2)
-                .setPreferredWidth(70);
+                .setPreferredWidth(200);
             this.betreiberTabelle.getColumnModel().getColumn(3)
-            	.setPreferredWidth(70);
+            	.setPreferredWidth(200);
             this.betreiberTabelle.getColumnModel().getColumn(4)
-            	.setPreferredWidth(70);
+            	.setPreferredWidth(200);
             this.betreiberTabelle.getColumnModel().getColumn(5)
-        		.setPreferredWidth(70);
-            this.betreiberTabelle.getColumnModel().getColumn(6)
-            	.setPreferredWidth(30);
+        		.setPreferredWidth(20);
+
 
             this.betreiberTabelle
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -922,19 +926,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 					Component c = super.prepareRenderer(renderer, row, column);
 					Objekt obj = BasisAdresseSuchen.this.objektModel
 							.getRow(row);
-//					if (!isRowSelected(row)) {
-//
-//						if (obj.getBetreiberid() == obj.getStandortid().getAdresse()) {
-//							c.setBackground(new Color(153, 255, 153));
-//						}						
-//						
-//						else if (obj.getBetreiberid() != obj.getStandortid().getAdresse()) {
-//							c.setBackground(new Color(255, 255, 153));
-//						}
-//						else {
-//							c.setBackground(Color.WHITE);
-//						}
-//					}
+
 					return c;
 				}
 			};
@@ -1092,21 +1084,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 	                doSearch();
 	            }
 	        });
-//	        this.suchFeld.setFocusTraversalKeys(
-//	            KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-//	            Collections.EMPTY_SET);
-//	
-//	        this.suchFeld.addKeyListener(new KeyAdapter() {
-//	            @Override
-//	            public void keyPressed(KeyEvent e) {
-//	                if (e.getKeyCode() == KeyEvent.VK_TAB) {
-//	                    String suche = getSuchFeld().getText();
-//	                    String spalte = (String) ((NamedObject) getSuchBox()
-//	                        .getSelectedItem()).getValue();
-//	                    doSearch();
-//	                }
-//	            }
-//	        });
+
 	    }
 	    return this.suchFeld;
 	}

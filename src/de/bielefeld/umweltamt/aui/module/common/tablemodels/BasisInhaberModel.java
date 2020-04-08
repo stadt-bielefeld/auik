@@ -49,25 +49,13 @@ public class BasisInhaberModel extends ListTableModel {
 
     public BasisInhaberModel(boolean zeigeAdresse) {
         super(new String[]{
+        		"ID",
                 "Name",
                 "Vorname",
                 "Ort",
                 "Straße",
-                "Nr.",
-                "e32",
-                "n32"}, false, true);
+                "Nr."}, false, true);
 
-        if (zeigeAdresse) {
-            columns = new String[]{
-                    "Name",
-                    "Vorname",
-                    "Ort",
-                    "Straße",
-                    "Nr.",
-                    "e32",
-                    "n32"
-            };
-        }
     }
 
     /**
@@ -103,12 +91,12 @@ public class BasisInhaberModel extends ListTableModel {
 		
 		
 		HibernateSessionFactory.currentSession().refresh(betr);
-//		if (betr.getStandorts().size() > 0) {
-//			for (int i = 0; i < betr.getStandorts().size(); i++) {
-//				Inhaber map = (Inhaber) betr
-//						.getInhabers().toArray()[i];
+
 				switch (columnIndex) {
 				case 0:
+					tmp = betr.getId();
+					break;
+				case 1:
 					if (betr.getKassenzeichen() != null) {
 						String value = betr.getName() + " ("
 								+ betr.getKassenzeichen()
@@ -118,16 +106,16 @@ public class BasisInhaberModel extends ListTableModel {
 						tmp = betr.getName();
 					}
 					break;
-				case 1:
+				case 2:
 					tmp = betr.getVorname();
 					break;
-				case 2:
+				case 3:
 					tmp = betr.getAdresse().getOrt();
 					break;
-				case 3:
+				case 4:
 					tmp = betr.getAdresse().getStrasse();
 					break;
-				case 4:
+				case 5:
 					if (betr.getAdresse().getHausnrzus() != null) {
 						String value = betr.getAdresse().getHausnr()
 								+ betr.getAdresse().getHausnrzus();
@@ -136,58 +124,11 @@ public class BasisInhaberModel extends ListTableModel {
 						tmp = betr.getAdresse().getHausnr();
 					}
 					break;
-//				case 5:
-//					value = map.getE32();
-//					break;
-//				case 6:
-//					value = map.getN32();
-//					break;
+
 				default:
 					tmp = null;
 				}
 				
-//				return value;
-//			}
-//		} //else
-//			switch (columnIndex) {
-//			case 0:
-//				if (map.getKassenzeichen() != null) {
-//					String tmp = map.getName() + " ("
-//							+ map.getKassenzeichen()
-//							+ ")";
-//					value = tmp;
-//				} else {
-//					value = map.getName();
-//				}
-//				break;
-//			case 1:
-//				value = map.getVorname();
-//				break;
-//			case 2:
-//				value = map.getAdresse().getOrt();
-//				break;
-//			case 3:
-//				value = betr.getAdresse().getStrasse();
-//				break;
-//			case 4:
-//				if (betr.getAdresse().getHausnrzus() != null) {
-//					String tmp = betr.getAdresse().getHausnr()
-//							+ betr.getAdresse().getHausnrzus();
-//					value = tmp;
-//				} else {
-//					value = betr.getAdresse().getHausnr();
-//				}
-//				break;
-//			case 5:
-//				value = "none";
-//				break;
-//			case 6:
-//				value = "none";
-//				break;
-//			default:
-//				value = null;
-//			}
-			
 			return tmp;
 		
 	}

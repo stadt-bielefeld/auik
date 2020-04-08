@@ -149,7 +149,7 @@ public class BasisObjektModel extends ListTableModel {
      * @param betreiberId Die Betreiber-Id
      */
     public void searchByInhaber(Inhaber betr) {
-        setList(DatabaseQuery.getObjekteByAdresse(betr.getAdresse(), abteilung, null, false));
+        setList(DatabaseQuery.getObjekteByInhaber(betr, abteilung, null, false));
     }
 
     /**

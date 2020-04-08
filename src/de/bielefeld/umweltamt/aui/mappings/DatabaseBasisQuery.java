@@ -231,14 +231,14 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 */
 
 
-	public static List<Objekt> getObjekteByAdresse(Adresse adresse, String abteilung, Integer artid,
+	public static List<Objekt> getObjekteByInhaber(Inhaber inh, String abteilung, Integer artid,
 			Boolean matchArtId) {
-		log.debug("Fetching objects at " + adresse);
+		log.debug("Fetching objects at " + inh);
 		// Find objects witch matching standortid
 		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.inhaber i " 
 				+ " WHERE o.standortid = s.id "
-				+ " AND (s.inhaberid = i.id AND i.adresseid = " + adresse.getId()
-				+ " OR o.betreiberid = i.id AND i.adresseid = " + adresse.getId() + " ) "
+				+ " AND (s.inhaberid = i.id AND i.id = " + inh.getId()
+				+ " OR o.betreiberid = i.id AND i.id = " + inh.getId() + " ) "
 				+ " AND o._deleted = false ORDER BY o.inaktiv, o.objektartid";
 
 		String filter = " ";
@@ -922,7 +922,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				query += "LOWER(a.ort) like '" + ort.toLowerCase() + "%' AND ";
 			}
 
-			query += "a.deleted = false ";
+			query += "i.deleted = false ";
 
 			query += "ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC, i.name ASC";
 		}

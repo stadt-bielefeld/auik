@@ -131,6 +131,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.module.common.editors.AdressEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
@@ -165,7 +166,7 @@ public class BasisStandortSuchen extends AbstractModul
 	private JTable objektTabelle;
 	private JSplitPane tabellenSplit;
 
-//	private Action standortEditAction;
+	private Action AdresseEditAction;
 	private Action standortLoeschAction;
 	private Action objektNeuAction;
 	private JPopupMenu standortPopup;
@@ -451,16 +452,16 @@ public class BasisStandortSuchen extends AbstractModul
 	 * @param standort
 	 *            Der Standort
 	 */
-	public void editStandort(Standort standort)
+	public void editStandort(Adresse adr)
 	{
-		StandortEditor editDialog = null;
+		AdressEditor editDialog = null;
 
-		editDialog = new StandortEditor(standort, this.frame);
+		editDialog = new AdressEditor(adr, this.frame);
 		editDialog.setLocationRelativeTo(this.frame);
 
 		editDialog.setVisible(true);
 
-		this.lastStandort = standort;
+//		this.lastStandort = standort;
 
 		if (editDialog.wasSaved())
 		{
@@ -1004,13 +1005,13 @@ public class BasisStandortSuchen extends AbstractModul
 
 				if (i == 0)
 				{
-					column.setPreferredWidth(120);
+					column.setPreferredWidth(20);
 					// column.setCellRenderer(centerRenderer);
 				}
 				else if (i == 1)
 				{
 					// column.setMaxWidth(70);
-					column.setPreferredWidth(80);
+					column.setPreferredWidth(120);
 				}
 				else if (i == 2)
 				{
@@ -1065,7 +1066,7 @@ public class BasisStandortSuchen extends AbstractModul
 						{
 							Adresse adr = BasisStandortSuchen.this.standortModel
 									.getRow(row);
-//							editStandort(bsta);
+							editStandort(adr);
 						}
 					}
 				}
@@ -1128,7 +1129,9 @@ public class BasisStandortSuchen extends AbstractModul
 			this.standortPopup = new JPopupMenu("Standort");
 			
 			JMenuItem gisItem = new JMenuItem(getGisAction());
+			JMenuItem editItem = new JMenuItem(getStandortEditAction());
 			this.standortPopup.add(gisItem);
+			this.standortPopup.add(editItem);
 		}
 
 		if (e.isPopupTrigger())
@@ -1354,15 +1357,15 @@ public class BasisStandortSuchen extends AbstractModul
 
 					int row = BasisStandortSuchen.this.standortTabelle
 							.getSelectedRow();
-					Adresse bsta = BasisStandortSuchen.this.standortModel
+					Adresse adr = BasisStandortSuchen.this.standortModel
 							.getRow(row);
 
 					ProcessBuilder pb = new ProcessBuilder("cmd", "/C", prog,
 							proj);
 
 					Map<String, String> env = pb.environment();
-//					env.put("RECHTS", bsta.getE32().toString());
-//					env.put("HOCH", bsta.getN32().toString());
+					env.put("RECHTS", adr.getInhabers().iterator().next().getStandort().getE32().toString());
+					env.put("HOCH", adr.getInhabers().iterator().next().getStandort().getN32().toString());
 
 					try
 					{
@@ -1498,6 +1501,33 @@ public class BasisStandortSuchen extends AbstractModul
 		}
 		return this.objektTabelle;
 	}
+
+    private Action getStandortEditAction() {
+        if (this.AdresseEditAction == null) {
+            this.AdresseEditAction = new AbstractAction("Bearbeiten") {
+                private static final long serialVersionUID = 5689189314194296978L;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int row = getStandortTabelle().getSelectedRow();
+
+                    // Natürlich nur editieren, wenn wirklich eine Zeile
+                    // ausgewählt ist
+                    if (row != -1) {
+                    	Adresse adr = BasisStandortSuchen.this.standortModel
+                                .getRow(row);
+                        editStandort(adr);
+                    }
+                }
+            };
+            this.AdresseEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
+                KeyEvent.VK_B));
+            this.AdresseEditAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
+        }
+
+        return this.AdresseEditAction;
+    }
 
 	private Action getStandortLoeschAction()
 	{
