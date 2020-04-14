@@ -194,7 +194,7 @@ public class AbaVerfahrenPanel extends JPanel {
                     enableAll(false);
                     if (saveAbaverf()) {
                         AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
-                            "List der Abwasserbehandklungsverfahren "
+                            "Liste der Behandlungsverfahren "
                                 + AbaVerfahrenPanel.this.fachdaten.getId()
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);

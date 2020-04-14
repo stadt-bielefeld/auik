@@ -108,13 +108,6 @@ public class Anh50Panel extends JPanel {
 	// Listener
 	private ActionListener editButtonListener;
 
-	// Objektverknuepfer
-	private ObjektVerknuepfungModel objektVerknuepfungModel;
-	private JTable objektverknuepfungTabelle = null;
-	private JButton selectObjektButton = null;
-	private Action verknuepfungLoeschAction;
-	private JPopupMenu verknuepfungPopup;
-
 	public Anh50Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
 		this.name = "Zahnarzt";
 		this.hauptModul = hauptModul;
@@ -148,10 +141,6 @@ public class Anh50Panel extends JPanel {
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		builder.appendRow("fill:30dlu");
 		builder.append(bemerkungsScroller, 6);
-
-		builder.appendSeparator("Verknüpfte Objekte");
-		builder.appendRow("3dlu");
-		builder.nextLine(2);
 
 		JComponent buttonBar = ComponentFactory.buildRightAlignedBar(getSaveAnh50Button());
 		builder.append(buttonBar, 6);

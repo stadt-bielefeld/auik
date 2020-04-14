@@ -286,7 +286,7 @@ private static final long serialVersionUID = -4030805403749508467L;
 
             // Abwasserbehandlungsanlage speichern
             this.fachdaten.merge();
-            log.debug("Neuer Zahnarzt " + this.fachdaten + " gespeichert.");
+            log.debug("Neue Abwasserbehandlungsanlage " + this.fachdaten + " gespeichert.");
         }
     }
 
@@ -344,13 +344,13 @@ private static final long serialVersionUID = -4030805403749508467L;
                     enableAll(false);
                     if (saveAbaDaten()) {
                         AbaPanel.this.hauptModul.getFrame().changeStatus(
-                            "Zahnarzt "
+                            "Abwasserbehandlungsanlage "
                                 + AbaPanel.this.fachdaten.getId()
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
                     } else {
                         AbaPanel.this.hauptModul.getFrame().changeStatus(
-                            "Fehler beim Speichern des Zahnarztes!",
+                            "Fehler beim Speichern der Abwasserbehandlungsanlage!",
                             HauptFrame.ERROR_COLOR);
                     }
 

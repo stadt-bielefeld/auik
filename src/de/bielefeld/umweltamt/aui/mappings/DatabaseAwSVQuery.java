@@ -58,7 +58,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
-abstract class DatabaseVawsQuery {
+abstract class DatabaseAwSVQuery {
 
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
@@ -124,8 +124,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getBodenflaechenausf() {
-		if (DatabaseVawsQuery.bodenflaechenausf == null) {
-			DatabaseVawsQuery.bodenflaechenausf = new DatabaseAccess()
+		if (DatabaseAwSVQuery.bodenflaechenausf == null) {
+			DatabaseAwSVQuery.bodenflaechenausf = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Abfuellflaeche.class)
@@ -135,7 +135,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("bodenflaechenausf")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.bodenflaechenausf;
+		return DatabaseAwSVQuery.bodenflaechenausf;
 	}
 
 	private static String[] niederschlagschutz = null;
@@ -146,8 +146,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getNiederschlagschutz() {
-		if (DatabaseVawsQuery.niederschlagschutz == null) {
-			DatabaseVawsQuery.niederschlagschutz = new DatabaseAccess()
+		if (DatabaseAwSVQuery.niederschlagschutz == null) {
+			DatabaseAwSVQuery.niederschlagschutz = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Abfuellflaeche.class)
@@ -157,7 +157,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("niederschlagschutz")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.niederschlagschutz;
+		return DatabaseAwSVQuery.niederschlagschutz;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -172,11 +172,11 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>Anlagenarten[]</code>
 	 */
 	public static Anlagenarten[] getAnlagenarten() {
-		if (DatabaseVawsQuery.anlagenarten == null) {
-			DatabaseVawsQuery.anlagenarten = DatabaseQuery.getOrderedAll(
+		if (DatabaseAwSVQuery.anlagenarten == null) {
+			DatabaseAwSVQuery.anlagenarten = DatabaseQuery.getOrderedAll(
 					new Anlagenarten()).toArray(new Anlagenarten[0]);
 		}
-		return DatabaseVawsQuery.anlagenarten;
+		return DatabaseAwSVQuery.anlagenarten;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -211,8 +211,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getBehaelterarten() {
-		if (DatabaseVawsQuery.behaelterart == null) {
-			DatabaseVawsQuery.behaelterart = new DatabaseAccess()
+		if (DatabaseAwSVQuery.behaelterart == null) {
+			DatabaseAwSVQuery.behaelterart = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Behaelterart.class)
@@ -222,7 +222,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("behaelterart")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.behaelterart;
+		return DatabaseAwSVQuery.behaelterart;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -243,7 +243,7 @@ abstract class DatabaseVawsQuery {
 				.executeCriteriaToList(
 						DetachedCriteria.forClass(Fachdaten.class)
 								.add(Restrictions.eq("objekt", objekt))
-								.addOrder(Order.desc("stillegungsdatum"))
+								.addOrder(Order.desc("stilllegungsdatum"))
 								.addOrder(Order.asc("anlagenart"))
 								.addOrder(Order.asc("herstellnr")),
 						new Fachdaten());
@@ -257,8 +257,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getAusfuehrungen() {
-		if (DatabaseVawsQuery.ausfuehrung == null) {
-			DatabaseVawsQuery.ausfuehrung = new DatabaseAccess()
+		if (DatabaseAwSVQuery.ausfuehrung == null) {
+			DatabaseAwSVQuery.ausfuehrung = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Fachdaten.class)
@@ -268,7 +268,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("ausfuehrung")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.ausfuehrung;
+		return DatabaseAwSVQuery.ausfuehrung;
 	}
 
 	/**
@@ -328,8 +328,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getFluessigkeiten() {
-		if (DatabaseVawsQuery.fluessigkeit == null) {
-			DatabaseVawsQuery.fluessigkeit = new DatabaseAccess()
+		if (DatabaseAwSVQuery.fluessigkeit == null) {
+			DatabaseAwSVQuery.fluessigkeit = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Fluessigkeit.class)
@@ -339,7 +339,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("fluessigkeit")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.fluessigkeit;
+		return DatabaseAwSVQuery.fluessigkeit;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -354,12 +354,12 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>Gebuehrenarten[]</code>
 	 */
 	public static Gebuehrenarten[] getGebuehrenarten() {
-		if (DatabaseVawsQuery.gebuehrenarten == null) {
-			DatabaseVawsQuery.gebuehrenarten = DatabaseQuery.getOrderedAll(
+		if (DatabaseAwSVQuery.gebuehrenarten == null) {
+			DatabaseAwSVQuery.gebuehrenarten = DatabaseQuery.getOrderedAll(
 					new Gebuehrenarten())
 					.toArray(new Gebuehrenarten[0]);
 		}
-		return DatabaseVawsQuery.gebuehrenarten;
+		return DatabaseAwSVQuery.gebuehrenarten;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -374,8 +374,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getGefaehrdungsstufen() {
-		if (DatabaseVawsQuery.gefaehrdungsstufen == null) {
-			DatabaseVawsQuery.gefaehrdungsstufen = new DatabaseAccess()
+		if (DatabaseAwSVQuery.gefaehrdungsstufen == null) {
+			DatabaseAwSVQuery.gefaehrdungsstufen = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Gefaehrdungsstufen.class)
@@ -385,7 +385,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("gefaehrdungsstufen")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.gefaehrdungsstufen;
+		return DatabaseAwSVQuery.gefaehrdungsstufen;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -437,8 +437,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getMaterialien() {
-		if (DatabaseVawsQuery.material == null) {
-			DatabaseVawsQuery.material = new DatabaseAccess()
+		if (DatabaseAwSVQuery.material == null) {
+			DatabaseAwSVQuery.material = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Material.class)
@@ -447,7 +447,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("material")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.material;
+		return DatabaseAwSVQuery.material;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -462,8 +462,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getPruefer() {
-		if (DatabaseVawsQuery.pruefer == null) {
-			DatabaseVawsQuery.pruefer = new DatabaseAccess()
+		if (DatabaseAwSVQuery.pruefer == null) {
+			DatabaseAwSVQuery.pruefer = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Pruefer.class)
@@ -472,7 +472,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("pruefer")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.pruefer;
+		return DatabaseAwSVQuery.pruefer;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -487,8 +487,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getPruefergebniss() {
-		if (DatabaseVawsQuery.pruefergebniss == null) {
-			DatabaseVawsQuery.pruefergebniss = new DatabaseAccess()
+		if (DatabaseAwSVQuery.pruefergebniss == null) {
+			DatabaseAwSVQuery.pruefergebniss = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Pruefergebniss.class)
@@ -498,7 +498,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("pruefergebnis")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.pruefergebniss;
+		return DatabaseAwSVQuery.pruefergebniss;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -513,12 +513,12 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>Standortgghwsg[]</code>
 	 */
 	public static Standortgghwsg[] getStandortgghwsg() {
-		if (DatabaseVawsQuery.standortgghwsg == null) {
-			DatabaseVawsQuery.standortgghwsg = DatabaseQuery.getOrderedAll(
+		if (DatabaseAwSVQuery.standortgghwsg == null) {
+			DatabaseAwSVQuery.standortgghwsg = DatabaseQuery.getOrderedAll(
 					new Standortgghwsg())
 					.toArray(new Standortgghwsg[0]);
 		}
-		return DatabaseVawsQuery.standortgghwsg;
+		return DatabaseAwSVQuery.standortgghwsg;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -533,8 +533,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getVawsVbfEinstufungen() {
-		if (DatabaseVawsQuery.vbfeinstufung == null) {
-			DatabaseVawsQuery.vbfeinstufung = new DatabaseAccess()
+		if (DatabaseAwSVQuery.vbfeinstufung == null) {
+			DatabaseAwSVQuery.vbfeinstufung = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Vbfeinstufung.class)
@@ -544,7 +544,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("vbfeinstufung")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.vbfeinstufung;
+		return DatabaseAwSVQuery.vbfeinstufung;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -617,8 +617,8 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getVerwaltungsMassnahmen() {
-		if (DatabaseVawsQuery.verwaltungsMassnahmen == null) {
-			DatabaseVawsQuery.verwaltungsMassnahmen = new DatabaseAccess()
+		if (DatabaseAwSVQuery.verwaltungsMassnahmen == null) {
+			DatabaseAwSVQuery.verwaltungsMassnahmen = new DatabaseAccess()
 					.executeCriteriaToArray(
 							DetachedCriteria
 									.forClass(Verwmassnahmen.class)
@@ -627,7 +627,7 @@ abstract class DatabaseVawsQuery {
 									.addOrder(Order.asc("massnahmen")),
 							new String[0]);
 		}
-		return DatabaseVawsQuery.verwaltungsMassnahmen;
+		return DatabaseAwSVQuery.verwaltungsMassnahmen;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -642,12 +642,12 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>Wassereinzugsgebiet[]</code>
 	 */
 	public static Wassereinzugsgebiet[] getWassereinzugsgebiet() {
-		if (DatabaseVawsQuery.wassereinzugsgebiet == null) {
-			DatabaseVawsQuery.wassereinzugsgebiet = DatabaseQuery
+		if (DatabaseAwSVQuery.wassereinzugsgebiet == null) {
+			DatabaseAwSVQuery.wassereinzugsgebiet = DatabaseQuery
 					.getOrderedAll(new Wassereinzugsgebiet()).toArray(
 							new Wassereinzugsgebiet[0]);
 		}
-		return DatabaseVawsQuery.wassereinzugsgebiet;
+		return DatabaseAwSVQuery.wassereinzugsgebiet;
 	}
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -662,12 +662,12 @@ abstract class DatabaseVawsQuery {
 	 * @return <code>Wirtschaftszweig[]</code>
 	 */
 	public static Wirtschaftszweig[] getWirtschaftszweig() {
-		if (DatabaseVawsQuery.wirtschaftszweige == null) {
-			DatabaseVawsQuery.wirtschaftszweige = DatabaseQuery
+		if (DatabaseAwSVQuery.wirtschaftszweige == null) {
+			DatabaseAwSVQuery.wirtschaftszweige = DatabaseQuery
 					.getOrderedAll(new Wirtschaftszweig()).toArray(
 							new Wirtschaftszweig[0]);
 		}
-		return DatabaseVawsQuery.wirtschaftszweige;
+		return DatabaseAwSVQuery.wirtschaftszweige;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

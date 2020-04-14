@@ -96,7 +96,7 @@ public class HerstellNrSuchenModel extends ListTableModel {
         // Stillgelegt:
         case 6:
             tmp = DateUtils.format(
-                fachdaten.getStillegungsdatum(), DateUtils.FORMAT_DATE);
+                fachdaten.getStilllegungsdatum(), DateUtils.FORMAT_DATE);
             break;
 
         // Andere Spalten sollten nicht vorkommen, deshalb "ERROR":
@@ -105,7 +105,7 @@ public class HerstellNrSuchenModel extends ListTableModel {
             break;
         }
         // Wenn ein Objekt stillgelegt ist, wird es durchgestrichen
-        if ((fachdaten.getStillegungsdatum() != null) && (tmp != null)) {
+        if ((fachdaten.getStilllegungsdatum() != null) && (tmp != null)) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
 

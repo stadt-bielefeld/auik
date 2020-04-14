@@ -347,14 +347,14 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		// Adresse
 		// Links
 		builder.addSeparator("Adresse", cc.xyw(1, 15, 8));
-		builder.addLabel("Stadt", cc.xy(1, 17));
-		builder.add(plzZsFeld, cc.xy(3, 17)); // PLZ-Zusatz
-		builder.add(plzFeld, cc.xy(4, 17)); // PLZ
-		builder.add(ortFeld, cc.xyw(6, 17, 3)); // Stadt
-		builder.addLabel("Straße", cc.xy(1, 19)); // Straße
-		builder.add(strasseFeld, cc.xyw(3, 19, 2));
-		builder.add(hausnrFeld, cc.xy(6, 19)); // Hausnr
-		builder.add(hausnrZusFeld, cc.xy(8, 19)); // HausnrZusatz
+		builder.addLabel("Straße", cc.xy(1, 17)); // Straße
+		builder.add(strasseFeld, cc.xyw(3, 17, 2));
+		builder.add(hausnrFeld, cc.xy(6, 17)); // Hausnr
+		builder.add(hausnrZusFeld, cc.xy(8, 17)); // HausnrZusatz
+		builder.addLabel("Stadt", cc.xy(1, 19));
+		builder.add(plzZsFeld, cc.xy(3, 19)); // PLZ-Zusatz
+		builder.add(plzFeld, cc.xy(4, 19)); // PLZ
+		builder.add(ortFeld, cc.xyw(6, 19, 3)); // Stadt
 		builder.addLabel("Standortgegebenheit", cc.xy(1, 21));
 		builder.add(standortGgBox, cc.xyw(3, 21, 6));
 		builder.addLabel("W.-Einzugsgebiet", cc.xy(1, 23));

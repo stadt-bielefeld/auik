@@ -1418,6 +1418,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             this.isNew = false;
         }
 
+//        parameterTabelle.getCellEditor().stopCellEditing();
         List<?> objects = this.parameterModel.getList();
         Analyseposition position;
         for (Object object : objects) {

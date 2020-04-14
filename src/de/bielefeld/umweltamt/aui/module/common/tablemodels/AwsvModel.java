@@ -106,7 +106,7 @@ public class AwsvModel extends ListTableModel {
         // Stillgelegt:
         case 4:
             tmp = DateUtils.format(
-                fd.getStillegungsdatum(), DateUtils.FORMAT_DATE);
+                fd.getStilllegungsdatum(), DateUtils.FORMAT_DATE);
             break;
 
         // Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
@@ -115,7 +115,7 @@ public class AwsvModel extends ListTableModel {
             break;
         }
 
-        if ((tmp != null) && (fd.getStillegungsdatum() != null)) {
+        if ((tmp != null) && (fd.getStilllegungsdatum() != null)) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
 

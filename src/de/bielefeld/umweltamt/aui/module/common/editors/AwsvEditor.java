@@ -160,7 +160,7 @@ public class AwsvEditor extends AbstractBaseEditor {
     private TextFieldDateChooser inbetriebnahmeChooser;
     private TextFieldDateChooser genehmigungChooser;
     private TextFieldDateChooser erfassungChooser;
-    private TextFieldDateChooser stillegungChooser;
+    private TextFieldDateChooser stilllegungChooser;
     private LimitedTextField aktenzeichenField;
     private IntegerField groesseField;
     private DoubleField pruefTurnusFeld;
@@ -457,7 +457,7 @@ public class AwsvEditor extends AbstractBaseEditor {
         inbetriebnahmeChooser = new TextFieldDateChooser();
         genehmigungChooser = new TextFieldDateChooser();
         erfassungChooser = new TextFieldDateChooser();
-        stillegungChooser = new TextFieldDateChooser();
+        stilllegungChooser = new TextFieldDateChooser();
         aktenzeichenField = new LimitedTextField(50);
         pruefTurnusFeld = new DoubleField(0);
 
@@ -790,7 +790,7 @@ public class AwsvEditor extends AbstractBaseEditor {
         inbetriebnahmeChooser.setDate(getFachdaten().getDatuminbetriebnahme());
         genehmigungChooser.setDate(getFachdaten().getDatumgenehmigung());
         erfassungChooser.setDate(getFachdaten().getDatumerfassung());
-        stillegungChooser.setDate(getFachdaten().getStillegungsdatum());
+        stilllegungChooser.setDate(getFachdaten().getStilllegungsdatum());
         pruefTurnusFeld.setValue(getFachdaten().getPruefturnus());
         aktenzeichenField.setText(getFachdaten().getAktenzeichen());
 
@@ -1174,7 +1174,7 @@ public class AwsvEditor extends AbstractBaseEditor {
         getFachdaten().setDatuminbetriebnahme(inbetriebnahmeChooser.getDate());
         getFachdaten().setDatumgenehmigung(genehmigungChooser.getDate());
         getFachdaten().setDatumerfassung(erfassungChooser.getDate());
-        getFachdaten().setStillegungsdatum(stillegungChooser.getDate());
+        getFachdaten().setStilllegungsdatum(stilllegungChooser.getDate());
         getFachdaten().setPruefturnus(pruefTurnusFeld.getDoubleValue());
         getFachdaten().setAktenzeichen(aktenzeichenField.getText());
 
@@ -1457,7 +1457,7 @@ public class AwsvEditor extends AbstractBaseEditor {
             builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
             builder.nextLine();
 
-            builder.append("Stillegung:", stillegungChooser);
+            builder.append("Stilllegung:", stilllegungChooser);
             builder.nextLine();
 
             /*builder.appendRow("fill:30dlu");
@@ -1615,7 +1615,7 @@ public class AwsvEditor extends AbstractBaseEditor {
             builder.nextLine();
 
             builder.append("Erfassung:", erfassungChooser);
-            builder.append("Stillegung:", stillegungChooser);
+            builder.append("Stilllegung:", stilllegungChooser);
             builder.nextLine();
 
             builder.appendSeparator("Bemerkungen und Anlagenchronologie");
@@ -1727,7 +1727,7 @@ public class AwsvEditor extends AbstractBaseEditor {
             builder.nextLine();
 
             builder.append("Erfassung:", erfassungChooser);
-            builder.append("Stillegung:", stillegungChooser);
+            builder.append("Stilllegung:", stilllegungChooser);
             builder.nextLine();
 
             builder.appendSeparator("Bemerkungen und Anlagenchronologie");
@@ -1774,7 +1774,7 @@ public class AwsvEditor extends AbstractBaseEditor {
             builder.append("Erfassung:", erfassungChooser);
 
             builder.append("Genehmigung:", genehmigungChooser);
-            builder.append("Stillegung:", stillegungChooser);
+            builder.append("Stilllegung:", stilllegungChooser);
 
             builder.append("Aktenzeichen:", aktenzeichenField);
             builder.append("Größe [m²]:", groesseField);
@@ -1892,7 +1892,7 @@ public class AwsvEditor extends AbstractBaseEditor {
             builder.append("Erfassung:", erfassungChooser);
 
             builder.append("Genehmigung:", genehmigungChooser);
-            builder.append("Stillegung:", stillegungChooser);
+            builder.append("Stilllegung:", stilllegungChooser);
 
             builder.nextLine();
 

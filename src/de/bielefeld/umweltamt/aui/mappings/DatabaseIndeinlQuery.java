@@ -63,7 +63,7 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
  * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
-abstract class DatabaseIndeinlQuery extends DatabaseVawsQuery {
+abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 
     /* ********************************************************************** */
     /* Queries for package INDEINL                                            */

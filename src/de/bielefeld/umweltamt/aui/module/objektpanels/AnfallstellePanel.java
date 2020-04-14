@@ -850,6 +850,7 @@ public class AnfallstellePanel extends JPanel {
 			hauptModul.getTabbedPane().addTab(getAnh50Tab().getName(), getAnh50Tab());
 			if (anfallstelle.getAnh50Fachdatens().size() > 0) {
 				getAnh50Tab().enableAll(true);
+				getAnh50Tab().fetchFormData();
 				getAnh50Tab().updateForm(anfallstelle);
 			} else {
 				anfallstelle.setAnhangId("50");
