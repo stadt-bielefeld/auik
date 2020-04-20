@@ -271,8 +271,6 @@ public class DatabaseClassToString {
         return "[Position: " + clazz.getParameter() + ": "
             + clazz.getWert() + " " + clazz.getEinheiten() + ", "
             + clazz.getAnalyseVon() + ", "
-            + (clazz.getProbenahme() != null ?
-                clazz.getProbenahme() + ", " : "")
             + (clazz.getId() != null ?
                 "ID:" + clazz.getId() : "UNSAVED")
             + "]";

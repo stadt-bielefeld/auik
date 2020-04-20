@@ -411,7 +411,7 @@ public class BasisPanel extends JPanel {
 
             if (!neu) {
                 if (this.hauptModul.getObjekt().getObjektarten()
-                        .getAbteilung().equals("IE")) {
+                        .getAbteilung().equals("Indirekt-Einl.")) {
                     getPrioritaetFeld().setVisible(true);
                     getPrioritaetLabel().setVisible(true);
                     getElkarelevantBox().setVisible(true);
