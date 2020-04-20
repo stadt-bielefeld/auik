@@ -105,7 +105,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 				.add(Restrictions.eq("sachbearbeiter",
 						DatabaseBasisQuery.getCurrentSachbearbeiter()))
 				.add(Restrictions.isNotNull("wiedervorlage"))
-                .addOrder(Order.asc("basisObjektarten"))
+                .addOrder(Order.asc("objektarten"))
                 .addOrder(Order.asc("wiedervorlage"));
         if (nurWiedervorlageAbgelaufen) {
             detachedCriteria.add(Restrictions.le("wiedervorlage", new Date()));

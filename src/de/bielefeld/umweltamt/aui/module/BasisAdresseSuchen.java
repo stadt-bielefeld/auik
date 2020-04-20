@@ -157,7 +157,7 @@ public class BasisAdresseSuchen extends AbstractModul {
      */
     @Override
     public String getName() {
-        return "Adresse suchen";
+        return "Betreiber/Inhaber suchen";
     }
 
     /*

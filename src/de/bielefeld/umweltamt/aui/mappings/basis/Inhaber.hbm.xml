@@ -77,13 +77,13 @@
         <property name="datenschutzWhg" type="boolean">
             <column name="datenschutz_whg" not-null="true" />
         </property>
-        <set name="standorts" table="standort" inverse="true" lazy="false" fetch="select">
+        <set name="standorts" table="standort" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="inhaberid" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Standort" />
         </set>
-        <set name="objekts" table="objekt" inverse="true" lazy="false" fetch="select">
+        <set name="objekts" table="objekt" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="betreiberid" />
             </key>

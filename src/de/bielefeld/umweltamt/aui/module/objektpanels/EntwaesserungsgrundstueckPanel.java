@@ -204,6 +204,8 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
         if (this.hauptModul.isNew() || this.entwaesserungsgrundstueck == null) {
         	// Neue EinleitungstellePanel erzeugen
         	this.entwaesserungsgrundstueck = new Entwaesserungsgrundstueck();
+        	this.entwaesserungsgrundstueck.setErstellDat(new Date());
+        	this.entwaesserungsgrundstueck.setAktualDat(new Date());
         	//Objekt_Id setzen
         	this.entwaesserungsgrundstueck.setObjekt(this.hauptModul.getObjekt());
         	this.entwaesserungsgrundstueck.merge();

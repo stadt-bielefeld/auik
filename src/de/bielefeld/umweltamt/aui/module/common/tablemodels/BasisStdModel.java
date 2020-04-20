@@ -48,6 +48,8 @@ import java.util.List;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -122,6 +124,23 @@ public class BasisStdModel extends ListTableModel {
      */
     public Standort getRow(int rowIndex) {
         return (Standort) super.getObjectAtRow(rowIndex);
+    }
+
+    /**
+     * Remove Standort from the model
+     * @param standort
+     */
+    public boolean objectRemoved(Object objectAtRow) {
+        Standort removedObjekt = (Standort) objectAtRow;
+        boolean removed;
+
+        if (removedObjekt.getClass() != null) {
+            removed = Standort.delete(removedObjekt);
+        } else {
+            removed = true;
+        }
+
+        return removed;
     }
 
 }

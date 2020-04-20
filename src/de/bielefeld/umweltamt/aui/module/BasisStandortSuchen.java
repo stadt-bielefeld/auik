@@ -863,7 +863,7 @@ public class BasisStandortSuchen extends AbstractModul
 	{
 		if (this.dreiButton == null)
 		{
-			this.dreiButton = new JButton("IE");
+			this.dreiButton = new JButton("Indirekt-Einl.");
 			this.dreiButton.setToolTipText("nur Indirekteinleiter Objekt");
 			this.dreiButton.addActionListener(new ActionListener()
 			{
@@ -879,7 +879,7 @@ public class BasisStandortSuchen extends AbstractModul
 								.getRow(selectedRow);
 						log.debug("Standort " + adr + " angewählt.");
 						searchObjekteByStandort(adr,
-												DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_33,
+												DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_INDIREKT,
 												DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
 					}
 				}
@@ -909,7 +909,7 @@ public class BasisStandortSuchen extends AbstractModul
 								.getRow(selectedRow);
 						log.debug("Standort " + adr + " angewählt.");
 						searchObjekteByStandort(adr,
-												DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34,
+												DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_AWSV,
 												DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
 					}
 				}

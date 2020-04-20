@@ -967,7 +967,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		
 		String query = "SELECT s.id, s.bezeichnung, s.lage, s.PSielhaut, s.PFirmenprobe, s.PNachprobe, o.inaktiv "
 				+ "FROM Sielhaut s, Messstelle m, Objekt o "
-				+ "WHERE s.messstelle = m AND m.objekt = o ";
+				+ "WHERE s.messstelle = m AND m.objekt = o AND s.deleted = false ";
 				if (bSearch) {
 					query += "AND s.bezeichnung like '" + search + "%' ";
 				}

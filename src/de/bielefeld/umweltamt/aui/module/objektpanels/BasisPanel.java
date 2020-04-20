@@ -203,7 +203,7 @@ public class BasisPanel extends JPanel {
         builder.append(getStandortToolBar());
         builder.nextLine();
 
-        builder.append("Art:", getArtBox());
+        builder.append("Art:", getArtBox(), 3);
         builder.nextLine();
 
         builder.append("Sachbearbeiter:", getSachbearbeiterBox(), 3);

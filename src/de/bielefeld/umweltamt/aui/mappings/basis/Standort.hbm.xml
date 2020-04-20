@@ -31,7 +31,7 @@
         <property name="deleted" type="java.lang.Boolean">
             <column name="_deleted" />
         </property>
-        <set name="objektsForStandortid" table="objekt" inverse="true" lazy="true" fetch="select">
+        <set name="objektsForStandortid" table="objekt" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="standortid" />
             </key>

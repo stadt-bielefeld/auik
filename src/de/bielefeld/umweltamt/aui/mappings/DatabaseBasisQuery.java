@@ -42,7 +42,6 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
@@ -57,7 +56,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.StringUtils;
 
 /**
  * This is a service class for all custom queries from the basis package.
@@ -279,9 +277,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		}
 		if (artid != null) {
 			if (matchArtId) {
-				query += "AND art.id = " + artid + " ";
+				query += " AND art.id = " + artid + " ";
 			} else {
-				query += "AND art.id != " + artid + " ";
+				query += " AND art.id != " + artid + " ";
 
 			}
 		}

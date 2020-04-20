@@ -70,12 +70,6 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht" />
         </set>
-        <set name="adresses" table="adresse" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="objektid" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Adresse" />
-        </set>
         <set name="suevFachdatens" table="suev_fachdaten" schema="indeinl" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="objektid" not-null="true" />

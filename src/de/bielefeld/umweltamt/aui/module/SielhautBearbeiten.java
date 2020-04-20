@@ -269,7 +269,7 @@ public class SielhautBearbeiten extends AbstractModul {
 					.findById(new Integer(this.manager.getSettingsManager().getIntSetting("auik.imc.edit_object")));
 			this.manager.getSettingsManager().removeSetting("auik.imc.edit_object");
 			this.sprobePkt = Messstelle.findByObjektId(this.objekt.getId());
-			this.spunkt = Sielhaut.findByObjektId(this.objekt.getId());
+			this.spunkt = Sielhaut.findById(this.objekt.getId());
 			setSielhautPunkt(this.spunkt);
 		}
 

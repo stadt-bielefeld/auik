@@ -59,6 +59,7 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.TextArea;
@@ -433,6 +434,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 
         fluessigkeitBox = new JComboBox(DatabaseQuery.getFluessigkeiten());
         fluessigkeitBox.setEditable(true);
+        fluessigkeitBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         //fluessigkeitBox.setPrototypeDisplayValue("Lösungsmittelrückstände");
 
         vbfBox = new JComboBox(DatabaseQuery.getVawsVbfEinstufungen());
@@ -465,6 +467,7 @@ public class AwsvEditor extends AbstractBaseEditor {
         behaelterArtBox.setEditable(false);
 
         materialBox = new JComboBox(DatabaseQuery.getMaterialien());
+        materialBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         // TODO: Material-Box editable / Tabelleninhalt?
         materialBox.setEditable(true);
         bemerkungArea = new LimitedTextArea(1000);

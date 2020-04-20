@@ -543,12 +543,12 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             log.debug("Unknown Objektart: "
                                 + objekt.getObjektarten());
                             if (objekt.getObjektarten().getAbteilung().equals(
-                                DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34)) {
+                                DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_AWSV)) {
                                 getChronoTab().fetchFormData();
                                 getVawsTab().fetchFormData();
                                 getFotoTab();
                             } else if (objekt.getObjektarten().getAbteilung().equals(
-                                DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_33)) {
+                                DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_INDIREKT)) {
                                 getChronoTab().fetchFormData();
                             }
                     }
@@ -658,7 +658,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                 log.debug("Unknown Objektart: "
                                     + objekt.getObjektarten());
                                 if (objekt.getObjektarten().getAbteilung().equals(
-                                    DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_34)) {
+                                    DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_AWSV)) {
                                     getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                     getTabbedPane().addTab(getVawsTab().getName(), getVawsTab());
                                     getTabbedPane().addTab(getFotoTab().getName(), getFotoTab());
@@ -666,7 +666,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                                     getVawsTab().updateForm();
                                     getTabbedPane().setSelectedComponent(getVawsTab());
                                 } else if (objekt.getObjektarten().getAbteilung().equals(
-                                    DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_33)) {
+                                    DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_INDIREKT)) {
                                     getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
                                     getChronoTab().updateForm();
                                     getTabbedPane().setSelectedComponent(getBasisTab());
