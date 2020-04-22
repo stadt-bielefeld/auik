@@ -143,7 +143,7 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JTextField nameZusFeld;
 	private JTextField kassenzeichenFeld;
 	private JTextField strasseFeld;
-	private JFormattedTextField hausnrFeld;
+	private IntegerField hausnrFeld;
 	private JTextField hausnrZusFeld;
 	private JTextField plzZsFeld;
 	private JTextField plzFeld;
@@ -790,9 +790,9 @@ public class BasisAdresseNeu extends AbstractModul {
 			// Zuerst pruefen, ob es schon eine Adesse mit der gleichen
 			// strasse, hausnr, hausnrzus und plz gibt
 			
-			if (DatabaseQuery.findAdressen(strasseFeld.getText(), (Integer)hausnrFeld.getValue(), 
+			if (DatabaseQuery.findAdressen(strasseFeld.getText(), hausnrFeld.getIntValue(), 
 					hausnrZusFeld.getText(), plzFeld.getText()).iterator().hasNext()) {
-				adrn = DatabaseQuery.findAdressen(strasseFeld.getText(), (Integer)hausnrFeld.getValue(), 
+				adrn = DatabaseQuery.findAdressen(strasseFeld.getText(), hausnrFeld.getIntValue(), 
 						hausnrZusFeld.getText(), plzFeld.getText()).iterator().next();
 			} else {
 				

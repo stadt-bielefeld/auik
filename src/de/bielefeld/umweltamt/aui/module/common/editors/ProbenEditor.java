@@ -61,6 +61,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -852,6 +853,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         sachbearbeiterBox.setModel(new DefaultComboBoxModel(
             DatabaseQuery.getEnabledSachbearbeiter()));
+        sachbearbeiterBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         sachbearbeiterBox.setEditable(true);
 
         statusHoch.addActionListener(new ActionListener() {
