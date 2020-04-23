@@ -140,7 +140,7 @@ public class SonderbauwerkPanel extends JPanel {
         builder.nextLine();
         builder.append("Wiederinbetriebnahme:", getWiederinebetriebdatDatum());
         builder.nextLine();
-        builder.append("stillgelegt:", getStillgelegtCheck());
+        builder.append("", getStillgelegtCheck());
         builder.append("am:", getStillegdatDatum());
         builder.nextLine();
         builder.append("Ostwert:", getE32Feld());
@@ -399,7 +399,7 @@ public class SonderbauwerkPanel extends JPanel {
         if (success) {
             log.debug("Sonderbauwerk"
                     + this.sonderbauwerk.getObjekt().getBetreiberid()
-                    .getBetrname() + " gespeichert.");
+                    .getName() + " gespeichert.");
         } else {
             log.debug("Sonderbauwerk" + this.sonderbauwerk
                     + " konnte nicht gespeichert werden!");

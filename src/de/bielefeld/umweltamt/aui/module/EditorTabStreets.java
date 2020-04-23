@@ -70,7 +70,6 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorStrassenModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorTabStreetsModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;

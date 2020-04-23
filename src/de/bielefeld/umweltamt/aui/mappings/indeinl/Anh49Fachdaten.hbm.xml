@@ -7,8 +7,8 @@
         <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
             <generator class="identity"/>
         </id>
-        <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
-            <column name="objektid" not-null="true" />
+        <many-to-one name="anfallstelle" class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" fetch="select">
+            <column name="anfallstelleid" not-null="true" />
         </many-to-one>
         <property name="klaeranlage" type="java.lang.String">
             <column name="klaeranlage" />
@@ -127,6 +127,9 @@
         <property name="dekraTuevDatum" type="java.util.Date">
             <column name="dekra_tuev_datum" length="29" />
         </property>
+        <property name="sicherheitsabscheider" type="java.lang.Boolean">
+            <column name="sicherheitsabscheider" />
+        </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
         </property>
@@ -145,23 +148,11 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen" />
         </set>
-        <set name="anh49Ortstermines" table="anh_49_ortstermine" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="anh49id" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine" />
-        </set>
         <set name="anh49Abscheiderdetailses" table="anh_49_abscheiderdetails" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="anh49id" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails" />
-        </set>
-        <set name="anh49Verwaltungsverfs" table="anh_49_verwaltungsverf" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="anh49id" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf" />
         </set>
     </class>
 </hibernate-mapping>

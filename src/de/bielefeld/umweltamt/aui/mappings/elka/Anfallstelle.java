@@ -29,6 +29,13 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -68,10 +75,19 @@ public class Anfallstelle  implements java.io.Serializable {
     private BigDecimal maxVolStunde;
     private Integer volJahr;
     private String externalNr;
+    private String anlagenart;
+    private String bemerkungen;
     private Set<AfsStoffe> afsStoffes = new HashSet<AfsStoffe>(0);
     private Set<Referenz> referenzsForZAfsNr = new HashSet<Referenz>(0);
     private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
     private Set<Referenz> referenzsForQAfsNr = new HashSet<Referenz>(0);
+    private Set<BwkFachdaten> bwkFachdatens = new HashSet<BwkFachdaten>(0);
+    private Set<Anh40Fachdaten> anh40Fachdatens = new HashSet<Anh40Fachdaten>(0);
+    private Set<Anh49Fachdaten> anh49Fachdatens = new HashSet<Anh49Fachdaten>(0);
+    private Set<Anh50Fachdaten> anh50Fachdatens = new HashSet<Anh50Fachdaten>(0);
+    private Set<Anh52Fachdaten> anh52Fachdatens = new HashSet<Anh52Fachdaten>(0);
+    private Set<Anh55Fachdaten> anh55Fachdatens = new HashSet<Anh55Fachdaten>(0);
+    private Set<Anh56Fachdaten> anh56Fachdatens = new HashSet<Anh56Fachdaten>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -89,7 +105,7 @@ public class Anfallstelle  implements java.io.Serializable {
 
     /** Full constructor */
     public Anfallstelle(
-        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, BigDecimal maxVolTag, BigDecimal maxVolStunde, Integer volJahr, String externalNr, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr) {
+        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, BigDecimal maxVolTag, BigDecimal maxVolStunde, Integer volJahr, String externalNr, String anlagenart, String bemerkungen, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr, Set<BwkFachdaten> bwkFachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
         this.id = id;
         this.objekt = objekt;
         this.seqId = seqId;
@@ -108,10 +124,19 @@ public class Anfallstelle  implements java.io.Serializable {
         this.maxVolStunde = maxVolStunde;
         this.volJahr = volJahr;
         this.externalNr = externalNr;
+        this.anlagenart = anlagenart;
+        this.bemerkungen = bemerkungen;
         this.afsStoffes = afsStoffes;
         this.referenzsForZAfsNr = referenzsForZAfsNr;
         this.afsNiederschlagswassers = afsNiederschlagswassers;
         this.referenzsForQAfsNr = referenzsForQAfsNr;
+        this.bwkFachdatens = bwkFachdatens;
+        this.anh40Fachdatens = anh40Fachdatens;
+        this.anh49Fachdatens = anh49Fachdatens;
+        this.anh50Fachdatens = anh50Fachdatens;
+        this.anh52Fachdatens = anh52Fachdatens;
+        this.anh55Fachdatens = anh55Fachdatens;
+        this.anh56Fachdatens = anh56Fachdatens;
     }
 
     /* Setter and getter methods */
@@ -259,6 +284,22 @@ public class Anfallstelle  implements java.io.Serializable {
         this.externalNr = externalNr;
     }
 
+    public String getAnlagenart() {
+        return this.anlagenart;
+    }
+
+    public void setAnlagenart(String anlagenart) {
+        this.anlagenart = anlagenart;
+    }
+
+    public String getBemerkungen() {
+        return this.bemerkungen;
+    }
+
+    public void setBemerkungen(String bemerkungen) {
+        this.bemerkungen = bemerkungen;
+    }
+
     public Set<AfsStoffe> getAfsStoffes() {
         return this.afsStoffes;
     }
@@ -289,6 +330,62 @@ public class Anfallstelle  implements java.io.Serializable {
 
     public void setReferenzsForQAfsNr(Set<Referenz> referenzsForQAfsNr) {
         this.referenzsForQAfsNr = referenzsForQAfsNr;
+    }
+
+    public Set<BwkFachdaten> getBwkFachdatens() {
+        return this.bwkFachdatens;
+    }
+
+    public void setBwkFachdatens(Set<BwkFachdaten> bwkFachdatens) {
+        this.bwkFachdatens = bwkFachdatens;
+    }
+
+    public Set<Anh40Fachdaten> getAnh40Fachdatens() {
+        return this.anh40Fachdatens;
+    }
+
+    public void setAnh40Fachdatens(Set<Anh40Fachdaten> anh40Fachdatens) {
+        this.anh40Fachdatens = anh40Fachdatens;
+    }
+
+    public Set<Anh49Fachdaten> getAnh49Fachdatens() {
+        return this.anh49Fachdatens;
+    }
+
+    public void setAnh49Fachdatens(Set<Anh49Fachdaten> anh49Fachdatens) {
+        this.anh49Fachdatens = anh49Fachdatens;
+    }
+
+    public Set<Anh50Fachdaten> getAnh50Fachdatens() {
+        return this.anh50Fachdatens;
+    }
+
+    public void setAnh50Fachdatens(Set<Anh50Fachdaten> anh50Fachdatens) {
+        this.anh50Fachdatens = anh50Fachdatens;
+    }
+
+    public Set<Anh52Fachdaten> getAnh52Fachdatens() {
+        return this.anh52Fachdatens;
+    }
+
+    public void setAnh52Fachdatens(Set<Anh52Fachdaten> anh52Fachdatens) {
+        this.anh52Fachdatens = anh52Fachdatens;
+    }
+
+    public Set<Anh55Fachdaten> getAnh55Fachdatens() {
+        return this.anh55Fachdatens;
+    }
+
+    public void setAnh55Fachdatens(Set<Anh55Fachdaten> anh55Fachdatens) {
+        this.anh55Fachdatens = anh55Fachdatens;
+    }
+
+    public Set<Anh56Fachdaten> getAnh56Fachdatens() {
+        return this.anh56Fachdatens;
+    }
+
+    public void setAnh56Fachdatens(Set<Anh56Fachdaten> anh56Fachdatens) {
+        this.anh56Fachdatens = anh56Fachdatens;
     }
 
     /**
@@ -332,7 +429,14 @@ public class Anfallstelle  implements java.io.Serializable {
         buffer.append("afsStoffes").append("='").append(getAfsStoffes()).append("' ");			
         buffer.append("referenzsForZAfsNr").append("='").append(getReferenzsForZAfsNr()).append("' ");			
         buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");			
-        buffer.append("referenzsForQAfsNr").append("='").append(getReferenzsForQAfsNr()).append("' ");			
+        buffer.append("referenzsForQAfsNr").append("='").append(getReferenzsForQAfsNr()).append("' ");
+        buffer.append("bwkFachdatens").append("='").append(getBwkFachdatens()).append("' ");
+        buffer.append("anh40Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
+        buffer.append("anh49Fachdatens").append("='").append(getAnh49Fachdatens()).append("' ");
+        buffer.append("anh50Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
+        buffer.append("anh52Fachdatens").append("='").append(getAnh52Fachdatens()).append("' ");
+        buffer.append("anh55Fachdatens").append("='").append(getAnh55Fachdatens()).append("' ");
+        buffer.append("anh56Fachdatens").append("='").append(getAnh56Fachdatens()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -419,7 +523,14 @@ public class Anfallstelle  implements java.io.Serializable {
         this.afsStoffes = copy.getAfsStoffes();            
         this.referenzsForZAfsNr = copy.getReferenzsForZAfsNr();            
         this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();            
-        this.referenzsForQAfsNr = copy.getReferenzsForQAfsNr();            
+        this.referenzsForQAfsNr = copy.getReferenzsForQAfsNr();     
+        this.bwkFachdatens = copy.getBwkFachdatens();
+        this.anh40Fachdatens = copy.getAnh40Fachdatens();
+        this.anh49Fachdatens = copy.getAnh49Fachdatens();
+        this.anh50Fachdatens = copy.getAnh50Fachdatens();
+        this.anh55Fachdatens = copy.getAnh55Fachdatens();
+        this.anh52Fachdatens = copy.getAnh52Fachdatens();
+        this.anh56Fachdatens = copy.getAnh56Fachdatens();       
     }    
 
     /**
@@ -472,4 +583,62 @@ public class Anfallstelle  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+
+    public static Integer getBetriebsweiseIdFromDescription(String description) {
+        if (description == null) {
+            return null;
+        }
+        switch (description) {
+            case "Chargenbetrieb": return 0;
+            case "Durchlaufbetrieb": return 1;
+            case "Kampagnebetrieb": return 2;
+            default: return null;
+        }
+    }
+
+    public static String getBetriebsweiseDescriptionFromId(Integer id) {
+        if (id == null) {
+            return "-";
+        }
+        switch (id) {
+            case 0: return "Chargenbetrieb";
+            case 1: return "Durchlaufbetrieb";
+            case 2: return "Kampagnebetrieb";
+            default: return "-";
+        }
+    }
+
+    public static Integer getBeschaffenheitIdFromDescription(String description) {
+        if (description == null) {
+            return null;
+        }
+        switch (description) {
+            case "Produktionsabwasser": return 0;
+            case "Kühlwasser": return 1;
+            case "Sanitärwasser": return 2;
+            case "Niederschlagswasser mit Sonderbauwerk": return 3;
+            case "Niederschlagswasser ohne Sonderbauwerk": return 4;
+            case "Grubenwasser": return 5;
+            case "Fischteiche": return 6;
+            case "sonstiges Wasser": return 7;
+            default: return null;
+        }
+    }
+
+    public static String getBeschaffenheitDescriptionFromId(Integer id) {
+        if (id == null) {
+            return "-";
+        }
+        switch (id) {
+            case 0: return "Produktionsabwasser";
+            case 1: return "Kühlwasser";
+            case 2: return "Sanitärwasser";
+            case 3: return "Niederschlagswasser mit Sonderbauwerk";
+            case 4: return "Niederschlagswasser ohne Sonderbauwerk";
+            case 5: return "Grubenwasser";
+            case 6: return "Fischteiche";
+            case 7: return "sonstiges Wasser";
+            default: return "-";
+        }
+    }
 }

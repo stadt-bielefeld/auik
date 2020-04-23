@@ -228,4 +228,5 @@ public class DatabaseSerialVersionUID {
     public static final long forZSbVerfahrenId = 95L;
     public static final long forZAbaWasserrecht = 96L;
     public static final long forZAbaVerfahren = 97L;
+	public static final long forAnhang = 98L;
 }	

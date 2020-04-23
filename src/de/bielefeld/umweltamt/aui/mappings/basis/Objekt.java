@@ -37,7 +37,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
@@ -64,7 +63,7 @@ public class Objekt  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Standort standortid;
-    private Adresse betreiberid;
+    private Inhaber betreiberid;
     private Objektarten objektarten;
     private Sachbearbeiter sachbearbeiter;
     private Integer uschistdid;
@@ -81,14 +80,10 @@ public class Objekt  implements java.io.Serializable {
     private Boolean abwasserfrei;
     private Boolean elkarelevant;
     private Set<Objektverknuepfung> objektverknuepfungsForIstVerknuepftMit = new HashSet<Objektverknuepfung>(0);
-    private Set<Anh53Fachdaten> anh53Fachdatens = new HashSet<Anh53Fachdaten>(0);
-    private Set<Anh40Fachdaten> anh40Fachdatens = new HashSet<Anh40Fachdaten>(0);
     private Set<Einleitungsstelle> einleitungsstelles = new HashSet<Einleitungsstelle>(0);
-    private Set<BwkFachdaten> bwkFachdatens = new HashSet<BwkFachdaten>(0);
     private Set<Wasserrecht> wasserrechts = new HashSet<Wasserrecht>(0);
     private Set<Adresse> adresses = new HashSet<Adresse>(0);
     private Set<Aba> abas = new HashSet<Aba>(0);
-    private Set<Anh49Fachdaten> anh49Fachdatens = new HashSet<Anh49Fachdaten>(0);
     private Set<SuevFachdaten> suevFachdatens = new HashSet<SuevFachdaten>(0);
     private Set<Anh50Fachdaten> anh50Fachdatens = new HashSet<Anh50Fachdaten>(0);
     private Set<Messstelle> messstelles = new HashSet<Messstelle>(0);
@@ -96,11 +91,9 @@ public class Objekt  implements java.io.Serializable {
     private Set<Entwaesserungsgrundstueck> entwaesserungsgrundstuecks = new HashSet<Entwaesserungsgrundstueck>(0);
     private Set<Objektchrono> objektchronos = new HashSet<Objektchrono>(0);
     private Set<Objektverknuepfung> objektverknuepfungsForObjekt = new HashSet<Objektverknuepfung>(0);
-    private Set<Anh55Fachdaten> anh55Fachdatens = new HashSet<Anh55Fachdaten>(0);
     private Set<Fachdaten> fachdatens = new HashSet<Fachdaten>(0);
-    private Set<Anh52Fachdaten> anh52Fachdatens = new HashSet<Anh52Fachdaten>(0);
-    private Set<Anh56Fachdaten> anh56Fachdatens = new HashSet<Anh56Fachdaten>(0);
     private Set<Anfallstelle> Anfallstelles = new HashSet<Anfallstelle>(0);
+    private Set<Anh49Fachdaten> anh49Fachdatens = new HashSet<Anh49Fachdaten>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -120,7 +113,7 @@ public class Objekt  implements java.io.Serializable {
 
     /** Full constructor */
     public Objekt(
-        Standort standortid, Adresse betreiberid, Objektarten objektarten, Sachbearbeiter sachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Boolean elkarelevant, Set<Objektverknuepfung> objektverknuepfungsForIstVerknuepftMit, Set<Anh53Fachdaten> anh53Fachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<BwkFachdaten> bwkFachdatens, Set<Wasserrecht> wasserrechts, Set<Adresse> adresses, Set<Anh49Fachdaten> anh49Fachdatens, Set<SuevFachdaten> suevFachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Messstelle> messstelles, Set<Sonderbauwerk> sonderbauwerks, Set<Entwaesserungsgrundstueck> entwaesserungsgrundstuecks, Set<Objektchrono> objektchronos, Set<Objektverknuepfung> objektverknuepfungsForObjekt, Set<Anh55Fachdaten> anh55Fachdatens, Set<Fachdaten> fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
+        Standort standortid, Inhaber betreiberid, Objektarten objektarten, Sachbearbeiter sachbearbeiter, Integer uschistdid, String beschreibung, Date wiedervorlage, Date erfassungsdatum, Date gueltigVon, Date aenderungsdatum, Date gueltigBis, boolean inaktiv, String prioritaet, boolean enabled, boolean deleted, Boolean abwasserfrei, Boolean elkarelevant, Set<Objektverknuepfung> objektverknuepfungsForIstVerknuepftMit, Set<Anh40Fachdaten> anh40Fachdatens, Set<BwkFachdaten> bwkFachdatens, Set<Wasserrecht> wasserrechts, Set<Adresse> adresses, Set<Anh49Fachdaten> anh49Fachdatens, Set<SuevFachdaten> suevFachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Messstelle> messstelles, Set<Sonderbauwerk> sonderbauwerks, Set<Entwaesserungsgrundstueck> entwaesserungsgrundstuecks, Set<Objektchrono> objektchronos, Set<Objektverknuepfung> objektverknuepfungsForObjekt, Set<Anh55Fachdaten> anh55Fachdatens, Set<Fachdaten> fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
         this.standortid = standortid;
         this.betreiberid = betreiberid;
         this.objektarten = objektarten;
@@ -139,12 +132,8 @@ public class Objekt  implements java.io.Serializable {
         this.abwasserfrei = abwasserfrei;
         this.elkarelevant = elkarelevant;
         this.objektverknuepfungsForIstVerknuepftMit = objektverknuepfungsForIstVerknuepftMit;
-        this.anh53Fachdatens = anh53Fachdatens;
-        this.anh40Fachdatens = anh40Fachdatens;
-        this.bwkFachdatens = bwkFachdatens;
         this.wasserrechts = wasserrechts;
         this.adresses = adresses;
-        this.anh49Fachdatens = anh49Fachdatens;
         this.suevFachdatens = suevFachdatens;
         this.anh50Fachdatens = anh50Fachdatens;
         this.messstelles = messstelles;
@@ -152,10 +141,7 @@ public class Objekt  implements java.io.Serializable {
         this.entwaesserungsgrundstuecks = entwaesserungsgrundstuecks;
         this.objektchronos = objektchronos;
         this.objektverknuepfungsForObjekt = objektverknuepfungsForObjekt;
-        this.anh55Fachdatens = anh55Fachdatens;
         this.fachdatens = fachdatens;
-        this.anh52Fachdatens = anh52Fachdatens;
-        this.anh56Fachdatens = anh56Fachdatens;
     }
 
     /* Setter and getter methods */
@@ -175,11 +161,11 @@ public class Objekt  implements java.io.Serializable {
         this.standortid = standortid;
     }
 
-    public Adresse getBetreiberid() {
+    public Inhaber getBetreiberid() {
         return this.betreiberid;
     }
 
-    public void setBetreiberid(Adresse betreiberid) {
+    public void setBetreiberid(Inhaber betreiberid) {
         this.betreiberid = betreiberid;
     }
 
@@ -311,22 +297,6 @@ public class Objekt  implements java.io.Serializable {
         this.objektverknuepfungsForIstVerknuepftMit = objektverknuepfungsForIstVerknuepftMit;
     }
 
-    public Set<Anh53Fachdaten> getAnh53Fachdatens() {
-        return this.anh53Fachdatens;
-    }
-
-    public void setAnh53Fachdatens(Set<Anh53Fachdaten> anh53Fachdatens) {
-        this.anh53Fachdatens = anh53Fachdatens;
-    }
-
-    public Set<Anh40Fachdaten> getAnh40Fachdatens() {
-        return this.anh40Fachdatens;
-    }
-
-    public void setAnh40Fachdatens(Set<Anh40Fachdaten> anh40Fachdatens) {
-        this.anh40Fachdatens = anh40Fachdatens;
-    }
-
     public Set<Einleitungsstelle> getEinleitungsstelles() {
         return this.einleitungsstelles;
     }
@@ -335,14 +305,6 @@ public class Objekt  implements java.io.Serializable {
 		this.einleitungsstelles = einleitungsstelles;
     }
 
-
-    public Set<BwkFachdaten> getBwkFachdatens() {
-        return this.bwkFachdatens;
-    }
-
-    public void setBwkFachdatens(Set<BwkFachdaten> bwkFachdatens) {
-        this.bwkFachdatens = bwkFachdatens;
-    }
 
     public Set<Wasserrecht> getWasserrechts() {
         return this.wasserrechts;
@@ -366,14 +328,6 @@ public class Objekt  implements java.io.Serializable {
 
     public void setAbas(Set<Aba> abas) {
 		this.abas = abas;
-    }
-
-    public Set<Anh49Fachdaten> getAnh49Fachdatens() {
-        return this.anh49Fachdatens;
-    }
-
-    public void setAnh49Fachdatens(Set<Anh49Fachdaten> anh49Fachdatens) {
-        this.anh49Fachdatens = anh49Fachdatens;
     }
 
     public Set<SuevFachdaten> getSuevFachdatens() {
@@ -432,36 +386,12 @@ public class Objekt  implements java.io.Serializable {
         this.objektverknuepfungsForObjekt = objektverknuepfungsForObjekt;
     }
 
-    public Set<Anh55Fachdaten> getAnh55Fachdatens() {
-        return this.anh55Fachdatens;
-    }
-
-    public void setAnh55Fachdatens(Set<Anh55Fachdaten> anh55Fachdatens) {
-        this.anh55Fachdatens = anh55Fachdatens;
-    }
-
     public Set<Fachdaten> getFachdatens() {
         return this.fachdatens;
     }
 
     public void setFachdatens(Set<Fachdaten> fachdatens) {
         this.fachdatens = fachdatens;
-    }
-
-    public Set<Anh52Fachdaten> getAnh52Fachdatens() {
-        return this.anh52Fachdatens;
-    }
-
-    public void setAnh52Fachdatens(Set<Anh52Fachdaten> anh52Fachdatens) {
-        this.anh52Fachdatens = anh52Fachdatens;
-    }
-
-    public Set<Anh56Fachdaten> getAnh56Fachdatens() {
-        return this.anh56Fachdatens;
-    }
-
-    public void setAnh56Fachdatens(Set<Anh56Fachdaten> anh56Fachdatens) {
-        this.anh56Fachdatens = anh56Fachdatens;
     }
 
     public Set<Anfallstelle> getAnfallstelles() {
@@ -471,6 +401,14 @@ public class Objekt  implements java.io.Serializable {
 	public void setAnfallstelles(Set<Anfallstelle> anfallstelles) {
 		Anfallstelles = anfallstelles;
 	}
+
+    public Set<Anh49Fachdaten> getAnh49Fachdatens() {
+        return this.anh49Fachdatens;
+    }
+
+    public void setAnh49Fachdatens(Set<Anh49Fachdaten> anh49Fachdatens) {
+        this.anh49Fachdatens = anh49Fachdatens;
+    }
 
 	/**
      * To implement custom toString methods, jump to not generated code.<br>
@@ -510,12 +448,8 @@ public class Objekt  implements java.io.Serializable {
         buffer.append("abwasserfrei").append("='").append(getAbwasserfrei()).append("' ");
         buffer.append("elkarelevant").append("='").append(getElkarelevant()).append("' ");
         buffer.append("objektverknuepfungsForIstVerknuepftMit").append("='").append(getObjektverknuepfungsForIstVerknuepftMit()).append("' ");
-        buffer.append("anh53Fachdatens").append("='").append(getAnh53Fachdatens()).append("' ");
-        buffer.append("anh40Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
-        buffer.append("bwkFachdatens").append("='").append(getBwkFachdatens()).append("' ");
         buffer.append("wasserrechts").append("='").append(getWasserrechts()).append("' ");
         buffer.append("adresses").append("='").append(getAdresses()).append("' ");
-        buffer.append("anh49Fachdatens").append("='").append(getAnh49Fachdatens()).append("' ");
         buffer.append("suevFachdatens").append("='").append(getSuevFachdatens()).append("' ");
         buffer.append("anh50Fachdatens").append("='").append(getAnh50Fachdatens()).append("' ");
         buffer.append("messstelles").append("='").append(getMessstelles()).append("' ");
@@ -523,10 +457,7 @@ public class Objekt  implements java.io.Serializable {
         buffer.append("entwaesserungsgrundstuecks").append("='").append(getEntwaesserungsgrundstuecks()).append("' ");
         buffer.append("objektchronos").append("='").append(getObjektchronos()).append("' ");
         buffer.append("objektverknuepfungsForObjekt").append("='").append(getObjektverknuepfungsForObjekt()).append("' ");
-        buffer.append("anh55Fachdatens").append("='").append(getAnh55Fachdatens()).append("' ");
         buffer.append("fachdatens").append("='").append(getFachdatens()).append("' ");
-        buffer.append("anh52Fachdatens").append("='").append(getAnh52Fachdatens()).append("' ");
-        buffer.append("anh56Fachdatens").append("='").append(getAnh56Fachdatens()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -610,12 +541,8 @@ public class Objekt  implements java.io.Serializable {
         this.abwasserfrei = copy.getAbwasserfrei();
         this.elkarelevant = copy.getElkarelevant();
         this.objektverknuepfungsForIstVerknuepftMit = copy.getObjektverknuepfungsForIstVerknuepftMit();
-        this.anh53Fachdatens = copy.getAnh53Fachdatens();
-        this.anh40Fachdatens = copy.getAnh40Fachdatens();
-        this.bwkFachdatens = copy.getBwkFachdatens();
         this.wasserrechts = copy.getWasserrechts();
         this.adresses = copy.getAdresses();
-        this.anh49Fachdatens = copy.getAnh49Fachdatens();
         this.suevFachdatens = copy.getSuevFachdatens();
         this.anh50Fachdatens = copy.getAnh50Fachdatens();
         this.messstelles = copy.getMessstelles();
@@ -623,10 +550,7 @@ public class Objekt  implements java.io.Serializable {
         this.entwaesserungsgrundstuecks = copy.getEntwaesserungsgrundstuecks();
         this.objektchronos = copy.getObjektchronos();
         this.objektverknuepfungsForObjekt = copy.getObjektverknuepfungsForObjekt();
-        this.anh55Fachdatens = copy.getAnh55Fachdatens();
         this.fachdatens = copy.getFachdatens();
-        this.anh52Fachdatens = copy.getAnh52Fachdatens();
-        this.anh56Fachdatens = copy.getAnh56Fachdatens();
     }
 
     /**

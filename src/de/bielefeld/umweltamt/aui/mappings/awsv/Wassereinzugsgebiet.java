@@ -27,7 +27,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -52,7 +52,7 @@ public class Wassereinzugsgebiet  implements java.io.Serializable {
     private String ezgbname;
     private boolean enabled;
     private boolean deleted;
-    private Set<Lage> lages = new HashSet<Lage>(0);
+    private Set<Standort> standorts = new HashSet<Standort>(0);
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -72,12 +72,12 @@ public class Wassereinzugsgebiet  implements java.io.Serializable {
 
     /** Full constructor */
     public Wassereinzugsgebiet(
-        Integer id, String ezgbname, boolean enabled, boolean deleted, Set<Lage> lages) {
+        Integer id, String ezgbname, boolean enabled, boolean deleted, Set<Standort> standorts) {
         this.id = id;
         this.ezgbname = ezgbname;
         this.enabled = enabled;
         this.deleted = deleted;
-        this.lages = lages;
+        this.standorts = standorts;
     }
 
     /* Setter and getter methods */
@@ -114,12 +114,12 @@ public class Wassereinzugsgebiet  implements java.io.Serializable {
     }
 
     @JsonBackReference
-    public Set<Lage> getLages() {
-        return this.lages;
+    public Set<Standort> getStandorts() {
+        return this.standorts;
     }
 
-    public void setLages(Set<Lage> lages) {
-        this.lages = lages;
+    public void setStandorts(Set<Standort> standorts) {
+        this.standorts = standorts;
     }
 
     /**
@@ -146,7 +146,7 @@ public class Wassereinzugsgebiet  implements java.io.Serializable {
         buffer.append("ezgbname").append("='").append(getEzgbname()).append("' ");			
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("lages").append("='").append(getLages()).append("' ");			
+        buffer.append("standorts").append("='").append(getStandorts()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -216,7 +216,7 @@ public class Wassereinzugsgebiet  implements java.io.Serializable {
         this.ezgbname = copy.getEzgbname();            
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();            
-        this.lages = copy.getLages();            
+        this.standorts = copy.getStandorts();            
     }    
 
     /**

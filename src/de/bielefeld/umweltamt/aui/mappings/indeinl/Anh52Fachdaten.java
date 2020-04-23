@@ -23,14 +23,17 @@
 
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class that represents a row in the Anh52Fachdaten database table.<br>
@@ -45,7 +48,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Objekt objekt;
+    private Anfallstelle anfallstelle;
     private Integer nrbetriebsstaette;
     private String firmenname;
     private String telefon;
@@ -66,18 +69,18 @@ public class Anh52Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh52Fachdaten(
-        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh52Fachdaten(
-        Integer id, Objekt objekt, Integer nrbetriebsstaette, String firmenname, String telefon, String telefax, String ansprechpartner, Date datumgenehmigung, String bemerkungen, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, Integer nrbetriebsstaette, String firmenname, String telefon, String telefax, String ansprechpartner, Date datumgenehmigung, String bemerkungen, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.nrbetriebsstaette = nrbetriebsstaette;
         this.firmenname = firmenname;
         this.telefon = telefon;
@@ -98,12 +101,12 @@ public class Anh52Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Objekt getObjekt() {
-        return this.objekt;
+    public Anfallstelle getAnfallstelle() {
+        return this.anfallstelle;
     }
 
-    public void setObjekt(Objekt objekt) {
-        this.objekt = objekt;
+    public void setAnfallstelle(Anfallstelle anfallstelle) {
+        this.anfallstelle = anfallstelle;
     }
 
     public Integer getNrbetriebsstaette() {
@@ -199,7 +202,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
         buffer.append("nrbetriebsstaette").append("='").append(getNrbetriebsstaette()).append("' ");			
         buffer.append("firmenname").append("='").append(getFirmenname()).append("' ");			
         buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
@@ -275,7 +278,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh52Fachdaten copy) {
         this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
+        this.anfallstelle = copy.getAnfallstelle();            
         this.nrbetriebsstaette = copy.getNrbetriebsstaette();            
         this.firmenname = copy.getFirmenname();            
         this.telefon = copy.getTelefon();            
@@ -330,14 +333,10 @@ public class Anh52Fachdaten  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-    public static Anh52Fachdaten findByObjektId(java.lang.Integer id){
-        log.debug("Getting Anh52Fachdaten instance with connect BasisObjekt with id: " + id);
-        List<Anh52Fachdaten> all = Anh52Fachdaten.getAll();
-        for(Anh52Fachdaten i : all){
-            if(i.getObjekt().getId().equals(id)){
-                return (Anh52Fachdaten) new DatabaseAccess().get(Anh52Fachdaten.class, i.getId());
-            }
-        }
-        return null;
+    public static Anh52Fachdaten findByAnfallstelleId(java.lang.Integer id){
+        log.debug("Getting Anh52Fachdaten instance with connected Anfallstelle with id: " + id);
+        Anfallstelle anfallstelle = (Anfallstelle) HibernateSessionFactory.currentSession().createQuery("from Anfallstelle where id= " + id).list().get(0);
+        Set<Anh52Fachdaten> list = anfallstelle.getAnh52Fachdatens();
+        return list.iterator().next();
     }
 }

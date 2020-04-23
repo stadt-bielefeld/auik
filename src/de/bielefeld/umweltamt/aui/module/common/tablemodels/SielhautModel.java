@@ -1,5 +1,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.util.Arrays;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -20,43 +22,40 @@ public class SielhautModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Sielhaut spunkt = (Sielhaut) objectAtRow;
+    	Object[] obj = (Object[]) objectAtRow;
         Object tmp;
+        Boolean b = (Boolean) obj[3];
 
         switch (columnIndex) {
             case 0:
-                tmp = spunkt.getBezeichnung();
+                tmp = obj[1];
                 break;
             case 1:
-                tmp = spunkt.getLage();
+                tmp = obj[2];
                 break;
             case 2:
-                if (spunkt.getPSielhaut() == null) {
+                if (obj[3] == null) {
                     tmp = new Boolean(false);
                 } else {
-                    tmp = new Boolean(spunkt.getPSielhaut());
+                    tmp = new Boolean((Boolean) obj[3]);
                 }
                 break;
             case 3:
-                if (spunkt.getPFirmenprobe() == null) {
+                if (obj[4] == null) {
                     tmp = new Boolean(false);
                 } else {
-                    tmp = new Boolean(spunkt.getPFirmenprobe());
+                    tmp = new Boolean((Boolean) obj[4]);
                 }
                 break;
             case 4:
-                if (spunkt.getPNachprobe() == null) {
+                if (obj[5] == null) {
                     tmp = new Boolean(false);
                 } else {
-                    tmp = new Boolean(spunkt.getPNachprobe());
+                    tmp = new Boolean((Boolean) obj[5]);
                 }
                 break;
             case 5:
-                if (spunkt.getMessstelle().getObjekt().isInaktiv() == true) {
-                    tmp = new Boolean(true);
-                } else {
-                    tmp = new Boolean(false);
-                }
+                tmp = new Boolean((Boolean) obj[6]);
                 break;
             default:
                 tmp = "FEHLER!";
@@ -88,7 +87,8 @@ public class SielhautModel extends ListTableModel {
     }
 
     public void filterList(String suche) {
-        setList(DatabaseQuery.findSielhaut(suche));
+    	Object[] array = DatabaseQuery.findSielhaut(suche);
+        setList(Arrays.asList(array));
         log.debug("Suche nach '" + suche + "' (" + getList().size()
             + " Ergebnisse)");
     }

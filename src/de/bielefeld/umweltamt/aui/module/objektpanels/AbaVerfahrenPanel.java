@@ -29,6 +29,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -152,7 +153,7 @@ public class AbaVerfahrenPanel extends JPanel {
     }
 
     public void clearForm() {
-
+        rightData.clear();
     }
 
     public void enableAll(boolean enabled) {
@@ -200,13 +201,13 @@ public class AbaVerfahrenPanel extends JPanel {
                     enableAll(false);
                     if (saveAbaverf()) {
                         AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
-                            "List der Abwasserbehandklungsverfahren "
+                            "Liste der Behandlungsverfahren "
                                 + AbaVerfahrenPanel.this.fachdaten.getId()
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
                     } else {
                         AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
-                            "Fehler beim Speichern des Zahnarztes!",
+                            "Fehler beim Speichern des Behandlungsverfahrens!",
                             HauptFrame.ERROR_COLOR);
                     }
 
@@ -214,6 +215,7 @@ public class AbaVerfahrenPanel extends JPanel {
                 }
 
                 private boolean saveAbaverf() {
+                    boolean success;
                     List<Abaverfahren> selected = AbaVerfahrenPanel.this.getSelected();
                     List<Abaverfahren> removed = new ArrayList<>();
                     Set<Abaverfahren> verfahrens = 
@@ -231,7 +233,17 @@ public class AbaVerfahrenPanel extends JPanel {
                         });
                     }
                     verfahrens.removeAll(removed);
-                    return AbaVerfahrenPanel.this.hauptModul.getAbaTab().getFachdaten().merge();
+                    success = AbaVerfahrenPanel.this.hauptModul.getAbaTab().getFachdaten().merge();
+
+                    if (success) {
+                        log.debug("Abwasserbehandlungsanlage "
+                            + fachdaten.getObjekt().getBetreiberid()
+                                .getName() + " gespeichert.");
+                    } else {
+                        log.debug("Abwasserbehandlungsanlage " + fachdaten
+                            + " konnte nicht gespeichert werden!");
+                    }
+                    return success;
                 }
             });
         }
@@ -278,6 +290,9 @@ public class AbaVerfahrenPanel extends JPanel {
         });
         this.updateLists();
         leftList.clearSelection();
+        Set set = new HashSet(rightData);
+        fachdaten.setAbaverfahrens(null);
+        fachdaten.setAbaverfahrens((Set<Abaverfahren>) set);
     }
 
     /**
@@ -291,6 +306,9 @@ public class AbaVerfahrenPanel extends JPanel {
         });
         this.updateLists();
         rightList.clearSelection();
+        Set set = new HashSet(rightData);
+        fachdaten.setAbaverfahrens(null);
+        fachdaten.setAbaverfahrens((Set<Abaverfahren>) set);
     }
 
     /**

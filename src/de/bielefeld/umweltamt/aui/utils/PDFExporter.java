@@ -72,13 +72,13 @@ public class PDFExporter {
 	public static final String SIELHAUT_BEARBEITEN = "sielhaut_bearbeiten.jasper";
 
 	/** VAwS-Anlagen. */
-	public static final String VAWS_ANLAGEN = "vaws_anlagen.jasper";
+	public static final String AWSV_ANLAGEN = "awsv_anlagen.jasper";
 
 	/** VAwS-Liste. */
-	public static final String VAWS_LISTE = "vaws_liste.jasper";
+	public static final String AWSV_LISTE = "awsv_liste.jasper";
 
 	/** VAwS-StandortListe. */
-	public static final String VAWS_STANDORTLISTE = "vaws_standortliste.jasper";
+	public static final String AWSV_STANDORTLISTE = "awsv_standortliste.jasper";
 
 	/** VAwS-StandortListe. */
 	public static final String SUEV_LISTE = "suevkan.jasper";

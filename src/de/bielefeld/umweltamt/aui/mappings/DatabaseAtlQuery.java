@@ -34,6 +34,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
@@ -84,7 +85,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 				Map<Parameter, Analyseposition>>();
 		Map<Parameter, Analyseposition> parameterMap;
 		// For each Probe add an empty parameterMap to the probeMap
-		List<Probenahme> proben = DatabaseQuery.findProbenahme(probepkt);
+		List<Probenahme> proben = DatabaseAtlQuery.findProbenahme(probepkt);
 		for (Probenahme probe : proben)
 		{
 			parameterMap = new HashMap<Parameter, Analyseposition>();
@@ -432,7 +433,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	public static boolean isCompleteParameterGroup(
 		int id, List<Parameter> group)
 	{
-		List<Parameter> complete = DatabaseQuery.getParameterInGroup(id);
+		List<Parameter> complete = getParameterInGroup(id);
 		// First simply check the size
 		// As we use List and not Set the size is not a good criteria...
 		//        if (group.size() != complete.size()) {
@@ -600,10 +601,12 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 */
 	public static Boolean isKlaerschlammProbe(Probenahme probe)
 	{
-		return (probe.getMessstelle().getProbeart().getId().equals(
-																		DatabaseConstants.ATL_PROBEART_ID_FAULSCHLAMM) || probe
-				.getMessstelle().getProbeart().getId().equals(
-																	DatabaseConstants.ATL_PROBEART_ID_ROHRSCHLAMM));
+		if (probe.getMessstelle().getProbeart() != null) {
+			return (probe.getMessstelle().getProbeart().getId().equals(DatabaseConstants.ATL_PROBEART_ID_FAULSCHLAMM)
+					|| probe.getMessstelle().getProbeart().getId()
+							.equals(DatabaseConstants.ATL_PROBEART_ID_ROHRSCHLAMM));
+		}
+		else return false;
 	}
 
 	public static JRMapDataSource getAuftragDataSource(Probenahme probe)
@@ -649,7 +652,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	public static JRMapDataSource getBescheidDataSource(Probenahme probe)
 	{
 		List<Analyseposition> sorted =
-				DatabaseQuery.getSortedAnalysepositionen(probe);
+				getSortedAnalysepositionen(probe);
 		List<Parameter> params = new ArrayList<Parameter>();
 		for (Analyseposition pos : sorted)
 		{
@@ -722,7 +725,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 			Parametergruppen gr = parameter.getParametergruppen();
 			int groupId = gr != null ? gr.getId() : -1;
 
-			boolean inGroup = DatabaseQuery.isCompleteParameterGroup(
+			boolean inGroup = isCompleteParameterGroup(
 																		groupId, params);
 
 			//            if (inGroup) {
@@ -955,23 +958,28 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 * 
 	 * @return <code>List&lt;Sielhaut&gt;</code>
 	 */
-	public static List<Sielhaut> findSielhaut(String search)
+	
+	
+	public static Object[] findSielhaut(String search)
 	{
-		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria
-																	.forClass(Sielhaut.class)
-																	.createAlias("messstelle", "probepkt")
-																	.createAlias("probepkt.objekt", "objekt")
-																	.add(Restrictions.ilike("bezeichnung",
-																							search,
-																							MatchMode.START))
-																	.addOrder(Order.desc("PSielhaut"))
-																	.addOrder(Order.desc("PFirmenprobe"))
-																	.addOrder(Order.asc("objekt.inaktiv"))
-																	.addOrder(Order.asc("bezeichnung")),
-															new Sielhaut());
-	}
 
+		boolean bSearch = (search != null && search.length() > 0);
+		
+		String query = "SELECT s.id, s.bezeichnung, s.lage, s.PSielhaut, s.PFirmenprobe, s.PNachprobe, o.inaktiv "
+				+ "FROM Sielhaut s, Messstelle m, Objekt o "
+				+ "WHERE s.messstelle = m AND m.objekt = o AND s.deleted = false ";
+				if (bSearch) {
+					query += "AND s.bezeichnung like '" + search + "%' ";
+				}
+				query +=  "ORDER BY s.PSielhaut DESC, s.PFirmenprobe DESC, o.inaktiv ASC, s.bezeichnung ASC" ;
+		
+				
+		List sielhaut = HibernateSessionFactory.currentSession().createQuery(query).list();
+		
+		return (Object[]) sielhaut.toArray();
+	}
+	
+	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package ATL : class Status */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1068,7 +1076,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		List<Analyseposition> result = new ArrayList<Analyseposition>();
 		for (ViewAtlAnalysepositionAll viewPos : viewResult)
 		{
-			result.add(DatabaseQuery.getAnalysepositionFromView(viewPos));
+			result.add(getAnalysepositionFromView(viewPos));
 		}
 		return result;
 	}

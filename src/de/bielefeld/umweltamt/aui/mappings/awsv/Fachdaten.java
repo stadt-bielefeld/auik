@@ -489,11 +489,11 @@ public class Fachdaten  implements java.io.Serializable {
         this.wiedervorlage = wiedervorlage;
     }
 
-    public Date getStillegungsdatum() {
+    public Date getStilllegungsdatum() {
         return this.stillegungsdatum;
     }
 
-    public void setStillegungsdatum(Date stillegungsdatum) {
+    public void setStilllegungsdatum(Date stillegungsdatum) {
         this.stillegungsdatum = stillegungsdatum;
     }
 
@@ -706,7 +706,7 @@ public class Fachdaten  implements java.io.Serializable {
         buffer.append("angemahntkz").append("='").append(getAngemahntkz()).append("' ");			
         buffer.append("mahnfrist").append("='").append(getMahnfrist()).append("' ");			
         buffer.append("wiedervorlage").append("='").append(getWiedervorlage()).append("' ");			
-        buffer.append("stillegungsdatum").append("='").append(getStillegungsdatum()).append("' ");			
+        buffer.append("stillegungsdatum").append("='").append(getStilllegungsdatum()).append("' ");			
         buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
         buffer.append("ausfuehrung").append("='").append(getAusfuehrung()).append("' ");			
         buffer.append("pruefumfang").append("='").append(getPruefumfang()).append("' ");			
@@ -828,7 +828,7 @@ public class Fachdaten  implements java.io.Serializable {
         this.angemahntkz = copy.getAngemahntkz();            
         this.mahnfrist = copy.getMahnfrist();            
         this.wiedervorlage = copy.getWiedervorlage();            
-        this.stillegungsdatum = copy.getStillegungsdatum();            
+        this.stillegungsdatum = copy.getStilllegungsdatum();            
         this.bemerkungen = copy.getBemerkungen();            
         this.ausfuehrung = copy.getAusfuehrung();            
         this.pruefumfang = copy.getPruefumfang();            

@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-    <class name="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" table="anfallstelle" schema="elka" optimistic-lock="version">
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" table="anfallstelle" schema="elka" lazy="false" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
@@ -59,7 +59,55 @@
         <property name="externalNr" type="java.lang.String">
             <column name="external_nr" length="50" />
         </property>
-        <set name="afsStoffes" table="afs_stoffe" schema="oberflgw" inverse="true" lazy="true" fetch="select">
+        <property name="anlagenart" type="java.lang.String">
+            <column name="anlagenart" />
+        </property>
+        <property name="bemerkungen" type="java.lang.String">
+            <column name="bemerkungen" />
+        </property>
+        <set name="anh40Fachdatens" table="anh_40_fachdaten" schema="indeinl" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="anfallstelleid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten" />
+        </set>
+        <set name="bwkFachdatens" table="bwk_fachdaten" schema="indeinl" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="anfallstelleid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten" />
+        </set>
+        <set name="anh49Fachdatens" table="anh_49_fachdaten" schema="indeinl" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="anfallstelleid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten" />
+        </set>
+        <set name="anh50Fachdatens" table="anh_50_fachdaten" schema="indeinl" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="anfallstelleid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten" />
+        </set>
+        <set name="anh55Fachdatens" table="anh_55_fachdaten" schema="indeinl" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="anfallstelleid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten" />
+        </set>
+        <set name="anh56Fachdatens" table="anh_56_fachdaten" schema="indeinl" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="anfallstelleid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten" />
+        </set>
+        <set name="anh52Fachdatens" table="anh_52_fachdaten" schema="indeinl" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="anfallstelleid" not-null="true" />
+            </key>
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten" />
+        </set>
+        <set name="afsStoffes" table="afs_stoffe" schema="oberflgw" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="anfallstellen_nr" not-null="true" />
             </key>

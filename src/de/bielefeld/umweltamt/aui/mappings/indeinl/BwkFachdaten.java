@@ -29,6 +29,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +48,7 @@ public class BwkFachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Objekt objekt;
+    private Anfallstelle anfallstelle;
     private String branche;
     private String KHersteller;
     private String KTyp;
@@ -78,18 +79,18 @@ public class BwkFachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public BwkFachdaten(
-        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public BwkFachdaten(
-        Integer id, Objekt objekt, String branche, String KHersteller, String KTyp, String KBrennmittel, Integer KLeistung, Date datumG, Boolean aba, String WBrenner, String WWaermetauscher, String WAbgasleitung, String WKondensableitung, String abnahme, String bemerkungen, Date anschreiben, Integer erfassung, Boolean genehmigung, Boolean genehmigungspflicht, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, String branche, String KHersteller, String KTyp, String KBrennmittel, Integer KLeistung, Date datumG, Boolean aba, String WBrenner, String WWaermetauscher, String WAbgasleitung, String WKondensableitung, String abnahme, String bemerkungen, Date anschreiben, Integer erfassung, Boolean genehmigung, Boolean genehmigungspflicht, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.branche = branche;
         this.KHersteller = KHersteller;
         this.KTyp = KTyp;
@@ -120,12 +121,12 @@ public class BwkFachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Objekt getObjekt() {
-        return this.objekt;
+    public Anfallstelle getAnfallstelle() {
+        return this.anfallstelle;
     }
 
-    public void setObjekt(Objekt objekt) {
-        this.objekt = objekt;
+    public void setAnfallstelle(Anfallstelle anfallstelle) {
+        this.anfallstelle = anfallstelle;
     }
 
     public String getBranche() {
@@ -301,7 +302,7 @@ public class BwkFachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
         buffer.append("branche").append("='").append(getBranche()).append("' ");			
         buffer.append("KHersteller").append("='").append(getKHersteller()).append("' ");			
         buffer.append("KTyp").append("='").append(getKTyp()).append("' ");			
@@ -387,7 +388,7 @@ public class BwkFachdaten  implements java.io.Serializable {
      */
     private void copy(BwkFachdaten copy) {
         this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
+        this.anfallstelle = copy.getAnfallstelle();            
         this.branche = copy.getBranche();            
         this.KHersteller = copy.getKHersteller();            
         this.KTyp = copy.getKTyp();            
@@ -464,7 +465,15 @@ public class BwkFachdaten  implements java.io.Serializable {
         return null;*/
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         //BasisObjekt.findById(id);
-        Set<BwkFachdaten> list = objekt.getBwkFachdatens();
+//        Set<BwkFachdaten> list = objekt.getBwkFachdatens();
+        return null;
+    }
+    
+    public static BwkFachdaten findByAnfallstelleId(java.lang.Integer id) {
+        log.debug("Getting AnhBwkFachdaten instance with connected Objekt with id: " + id);
+
+        Anfallstelle anfallstelle = (Anfallstelle) HibernateSessionFactory.currentSession().createQuery("from Anfallstelle where id= " + id).list().get(0);
+        Set<BwkFachdaten> list = anfallstelle.getBwkFachdatens();
         return list.iterator().next();
     }
 }

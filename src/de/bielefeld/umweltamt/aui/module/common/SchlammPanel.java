@@ -264,9 +264,6 @@ public class SchlammPanel extends JPanel {
     public void showContent() {
         lastProbe = null;
 
-        // Standardmäßig wird Heepen ausgewählt
-        getAnlageBox().setSelectedItem(
-            DatabaseConstants.ATL_KLAERANLAGE_HEEPEN);
         updateProbeListe();
     }
 

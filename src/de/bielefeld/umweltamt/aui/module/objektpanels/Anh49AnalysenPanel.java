@@ -661,7 +661,7 @@ public class Anh49AnalysenPanel extends JPanel {
         this.fachdaten = fachdaten;
     }
 
-    public void updateForm() {
+    public void updateForm(Anh49Fachdaten fachdaten) {
         if (fachdaten != null) {
             analysenModel.setFachdaten(fachdaten);
             analysenModel.updateList();

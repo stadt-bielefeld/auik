@@ -44,7 +44,7 @@
             <column name="erstell_dat" length="29" not-null="true" />
         </property>
         <property name="einlBereichOpt" type="java.lang.Integer">
-            <column name="einl_bereich_opt" not-null="true" />
+            <column name="einl_bereich_opt"/>
         </property>
         <property name="abwbeskonNr" type="java.lang.String">
             <column name="abwbeskon_nr" length="30" />
@@ -56,7 +56,7 @@
             <column name="aktual_dat" length="29" not-null="true" />
         </property>
         <property name="adrNr" type="long">
-            <column name="adr_nr" not-null="true" />
+            <column name="adr_nr"/>
         </property>
         <property name="externalNr" type="java.lang.String">
             <column name="external_nr" length="50" />

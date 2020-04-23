@@ -94,7 +94,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         createMappings();
 
         FormLayout layout = new FormLayout(
-                "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
+                "r:pref, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
@@ -248,7 +248,48 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
      * @return Field value
      */
     public Object getFieldValue(String fieldName) {
-        return getFieldValue(fieldName, this);
+        //TODO: add missing field return values
+        switch(fieldName) {
+            case "betriebsartBox":
+                return ((CBoxItem) betriebsartBox.getSelectedItem()).getId();
+            case "beckenartBox":
+                return ((CBoxItem) beckenartBox.getSelectedItem()).getId();
+            case "entlastungsartBox":
+                return ((CBoxItem) entlastungsartBox.getSelectedItem()).getId();
+            case "anordungBox":
+                return ((CBoxItem) anordnungBox.getSelectedItem()).getId();
+            case "drosselabflussBox":
+                return ((CBoxItem) drosselabflussBox.getSelectedItem()).getId();
+            case "drosselschluss":
+                return drosselschluss.isSelected();
+            case "behandFlaeche":
+                return parseBigDecimalFromString(behandFlaeche.getText());
+            case "nBehandFlaeche":
+                //TODO: Field
+                return null;
+            case "kritRegenspende":
+                return parseBigDecimalFromString(kritRegenspende.getText());
+            case "vorhandVolumen":
+                //TODO: Field
+                return null;
+            case "beckentiefe":
+                return parseBigDecimalFromString(beckentiefe.getText());
+            case "beckenoberfl":
+                return parseIntegerFromString(beckenoberfl.getText());
+            case "drosselabflussTat":
+                return parseBigDecimalFromString(drosselabflussTat.getText());
+            case "spezVolumen":
+                return null;
+            case "minVolumen":
+                return null;
+            case "beckenvolumen":
+                return null;
+            case "flaechenbeschickung":
+                return null;
+            case "minDrosselabfluss":
+                return null;
+            default: throw new IllegalArgumentException("Unkown field name: " + fieldName);
+        }
     }
 
     private void setBetriebsArt(String betriebsart) {

@@ -87,7 +87,7 @@ public class ProbepunkteModel extends ListTableModel {
             tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
             break;
         case 1:
-            tmp = fd.getObjekt().getStandortid().getLage().getEntgebid();
+            tmp = fd.getObjekt().getStandortid().getInhaber().getAdresse().getEntgebid();
             break;
         case 2:
             tmp = fd.getObjekt().getBetreiberid();

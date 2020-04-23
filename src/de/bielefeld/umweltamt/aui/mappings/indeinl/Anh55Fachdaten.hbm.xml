@@ -7,8 +7,8 @@
         <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
             <generator class="identity"/>
         </id>
-        <many-to-one name="objekt" class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" fetch="select">
-            <column name="objektid" not-null="true" />
+        <many-to-one name="anfallstelle" class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" fetch="select">
+            <column name="anfallstelleid" not-null="true" />
         </many-to-one>
         <property name="abgemeldet" type="java.lang.Boolean">
             <column name="abgemeldet" />
