@@ -1602,7 +1602,7 @@ public class Sonderbauwerk  implements java.io.Serializable {
 
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Sonderbauwerk> list = objekt.getSonderbauwerks();
-        return list.iterator().next();
+        return list.size() > 0 ? list.iterator().next() : null;
 	}
 
     /* Custom code goes below here! */

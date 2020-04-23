@@ -256,7 +256,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
                 return ((CBoxItem) beckenartBox.getSelectedItem()).getId();
             case "entlastungsartBox":
                 return ((CBoxItem) entlastungsartBox.getSelectedItem()).getId();
-            case "anordungBox":
+            case "anordnungBox":
                 return ((CBoxItem) anordnungBox.getSelectedItem()).getId();
             case "drosselabflussBox":
                 return ((CBoxItem) drosselabflussBox.getSelectedItem()).getId();

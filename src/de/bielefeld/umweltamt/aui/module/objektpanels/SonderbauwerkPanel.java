@@ -323,6 +323,10 @@ public class SonderbauwerkPanel extends JPanel {
                 getBezeichnungFeld().setText(this.sonderbauwerk.getBezeichnung());
             }
 
+            if (this.sonderbauwerk.getKurzbeschreibung() != null) {
+                getKurzbezeichnungFeld().setText(this.sonderbauwerk.getKurzbeschreibung());
+            }
+
             String[] verfahren = {"-", "Trennverfahren", "Mischverfahren"};
             getVerfahrenBox().setModel(new DefaultComboBoxModel(verfahren));
 
@@ -376,6 +380,8 @@ public class SonderbauwerkPanel extends JPanel {
     private boolean saveSonderbauwerkDaten() {
         boolean success;
 
+        completeObjekt();
+
         this.sonderbauwerk.setAktualDat(new Date());
 
         this.sonderbauwerk.setTypOpt(
@@ -386,10 +392,16 @@ public class SonderbauwerkPanel extends JPanel {
         this.sonderbauwerk.setErstellDat(erstellDat);
 
         String bezeichnung = this.bezeichnungFeld.getText();
+        String kurzbezeichnung = this.kurzbezeichnungFeld.getText();
         if("".equals(bezeichnung)) {
             this.sonderbauwerk.setBezeichnung(null);
         } else {
             this.sonderbauwerk.setBezeichnung(bezeichnung);
+        }
+        if ("".equals(kurzbezeichnung)) {
+            this.sonderbauwerk.setKurzbeschreibung(null);
+        } else {
+            this.sonderbauwerk.setKurzbeschreibung(kurzbezeichnung);
         }
 
         //Save subpanel data to record
@@ -415,8 +427,15 @@ public class SonderbauwerkPanel extends JPanel {
         if (this.hauptModul.isNew() || this.sonderbauwerk == null) {
             // Neue EinleitungstellePanel erzeugen
             this.sonderbauwerk = new Sonderbauwerk();
+            this.sonderbauwerk.setErstellDat(new Date());
+            this.sonderbauwerk.setAktualDat(new Date());
             //Objekt_Id setzen
             this.sonderbauwerk.setObjekt(this.hauptModul.getObjekt());
+            //Dummy Values
+            this.sonderbauwerk.setGemeindeId("-");
+            this.sonderbauwerk.setTypOpt(0);
+            this.sonderbauwerk.setN32(0);
+            this.sonderbauwerk.setE32(0);
             this.sonderbauwerk.merge();
             //ElkaEinleitungsstelle.merge(this.einleitungstelle);
             log.debug("Neues Sonderbauwerk " + this.sonderbauwerk + " gespeichert.");
