@@ -116,4 +116,20 @@ public class ALPanel extends AbstractSonderbauwerkTypPanel {
     public Object getFieldValue(String fieldName) {
         return getFieldValue(fieldName, this);
     }
+
+    public JTextField getDrossabflussField() {
+        return this.drossabflussField;
+    }
+
+    public JTextField getVolumenField() {
+        return this.volumenField;
+    }
+
+    public JTextField getUeberlaufhaeufigkeitField() {
+        return this.ueberlaufhaeufigkeitField;
+    }
+
+    public JTextField getEntleerungsZeitField() {
+        return this.entleerungsZeitField;
+    }
 }

@@ -63,6 +63,7 @@ public class BFPanel extends AbstractSonderbauwerkTypPanel {
         this.name = "BF";
         this.parentModule = parentModule;
         createFields();
+        createMappings();
 
         FormLayout layout = new FormLayout(
                 "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten

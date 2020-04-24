@@ -319,13 +319,12 @@ public class SonderbauwerkPanel extends JPanel {
     public void updateForm() throws RuntimeException {
         if (this.sonderbauwerk != null) {
 
-            if (this.sonderbauwerk.getBezeichnung() != null) {
-                getBezeichnungFeld().setText(this.sonderbauwerk.getBezeichnung());
-            }
+            String bezeichnung = this.sonderbauwerk.getBezeichnung();
+            String kurzbezeichnung = this.sonderbauwerk.getKurzbeschreibung();
 
-            if (this.sonderbauwerk.getKurzbeschreibung() != null) {
-                getKurzbezeichnungFeld().setText(this.sonderbauwerk.getKurzbeschreibung());
-            }
+            getBezeichnungFeld().setText(bezeichnung != null ? bezeichnung: "");
+            getKurzbezeichnungFeld().setText(kurzbezeichnung != null ? kurzbezeichnung: "");
+
 
             String[] verfahren = {"-", "Trennverfahren", "Mischverfahren"};
             getVerfahrenBox().setModel(new DefaultComboBoxModel(verfahren));
