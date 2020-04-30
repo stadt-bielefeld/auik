@@ -32,7 +32,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -133,9 +135,14 @@ public class AbaVerfahrenPanel extends JPanel {
         this.fachdaten = Aba.findByObjektId(
                 this.hauptModul.getObjekt().getId());
             log.debug("Abwasserbehandlungsanlage aus DB geholt: " + this.fachdaten);
-
-        applyEntries(new ArrayList<Abaverfahren> (fachdaten.getAbaverfahrens()));
-
+        //Select entries from record
+        List<Abaverfahren> entries = new ArrayList<>();
+        fachdaten.getAbaverfahrens().forEach(item -> {
+            entries.addAll(leftData.stream()
+                    .filter(i -> i.getNr().equals(item.getNr()))
+                    .collect(Collectors.toList()));
+        });
+        applyEntries(entries);
     }
 
     public void updateForm() throws RuntimeException {
@@ -146,7 +153,7 @@ public class AbaVerfahrenPanel extends JPanel {
     }
 
     public void clearForm() {
-    	rightData.clear();
+        rightData.clear();
     }
 
     public void enableAll(boolean enabled) {
@@ -208,10 +215,26 @@ public class AbaVerfahrenPanel extends JPanel {
                 }
 
                 private boolean saveAbaverf() {
-                	
                     boolean success;
-                    
-                    success = fachdaten.merge();
+                    List<Abaverfahren> selected = AbaVerfahrenPanel.this.getSelected();
+                    List<Abaverfahren> removed = new ArrayList<>();
+                    Set<Abaverfahren> verfahrens = 
+                            AbaVerfahrenPanel.this.hauptModul.getAbaTab().getFachdaten().getAbaverfahrens();
+                    if (verfahrens != null) {
+                        verfahrens.forEach(item -> {
+                            if (!rightData.contains(item)) {
+                                removed.add(item);
+                            }
+                        });
+                        selected.forEach(item -> {
+                            if (!verfahrens.contains(item)) {
+                                verfahrens.add(item);
+                            }
+                        });
+                    }
+                    verfahrens.removeAll(removed);
+                    success = AbaVerfahrenPanel.this.hauptModul.getAbaTab().getFachdaten().merge();
+
                     if (success) {
                         log.debug("Abwasserbehandlungsanlage "
                             + fachdaten.getObjekt().getBetreiberid()
@@ -305,5 +328,9 @@ public class AbaVerfahrenPanel extends JPanel {
         this.leftData.forEach(element -> this.leftListModel.addElement(element));
         this.rightListModel.clear();
         this.rightData.forEach(element -> this.rightListModel.addElement(element));
+    }
+
+    public List<Abaverfahren> getSelected() {
+        return this.rightData;
     }
 }

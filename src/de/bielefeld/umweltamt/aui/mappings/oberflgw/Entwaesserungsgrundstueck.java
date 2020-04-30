@@ -461,6 +461,10 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     public static Entwaesserungsgrundstueck findByObjektId(java.lang.Integer id) {
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Entwaesserungsgrundstueck> list = objekt.getEntwaesserungsgrundstuecks();
-        return list.iterator().next();
+        if (list.size() > 0) {
+            return list.iterator().next();
+        } else {
+            return null;
+        }
     }
 }

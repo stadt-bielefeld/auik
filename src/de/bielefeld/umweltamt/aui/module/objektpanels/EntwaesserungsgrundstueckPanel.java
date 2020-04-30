@@ -30,12 +30,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -50,13 +58,18 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
+import de.bielefeld.umweltamt.aui.module.common.ZuordnungChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -89,14 +102,42 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
     private JButton selectObjektButton = null;
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
+    
+    //Fields and Labels and Models
+    JComboBox<CBoxItem> einleitungsbereich;
+    JTextField gebName;
+    JTextField konzeptNr;
+    JTextField gebGroesse;
+    JTextField regenspende;
+    JTextField regenhaufigkeit;
+    JTextField regendauer;
+    JCheckBox erlaubnisfrei;
+    JComboBox<CBoxItem> einbauart;
+    ZuordnungChooser<Abaverfahren> abaverfahrens;
+
+    JLabel einleitungsbereichLabel;
+    JLabel gebNameLabel;
+    JLabel konzeptNrLabel;
+    JLabel gebGroesseLabel;
+    JLabel regenspendeLabel;
+    JLabel regenhaufigkeitLabel;
+    JLabel regendauerLabel;
+    JLabel erlaubnisfreiLabel;
+    JLabel einbauartLabel;
+    JLabel abaverfahrensLabel;
+
+    DefaultComboBoxModel<CBoxItem> einleitungsbereichModel;
+    DefaultComboBoxModel<CBoxItem> einbauartModel;
 
     public EntwaesserungsgrundstueckPanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Einleitungsstelle";
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-        		"r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
+                "r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu, 100dlu", // Spalten
             "");
+            
+        createFields();
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
 
@@ -104,31 +145,103 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
         builder.append("Erstellung:", getErstellDatDatum());
         builder.append("Bezeichnung:", getBezeichnungFeld());
         builder.nextLine();
+
+        builder.append(einleitungsbereichLabel, einleitungsbereich);
+        builder.nextLine();
+        builder.append(gebNameLabel, gebName);
+        builder.nextLine();
+        builder.append(regenspendeLabel, regenspende);
+        builder.append(regenhaufigkeitLabel, regenhaufigkeit);
+        builder.nextLine();
+        builder.append(regendauerLabel, regendauer);
+        builder.nextLine();
+        builder.append(erlaubnisfreiLabel, erlaubnisfrei);
+        builder.nextLine();
+        builder.append(einbauartLabel, einbauart);
+        builder.nextLine();
+        builder.appendSeparator(abaverfahrensLabel.getText());
+        builder.append(abaverfahrens, 8);
+
+        builder.nextLine();
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
+        builder.append(objektverknuepfungScroller, 8);
         builder.nextLine();
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-        		getSelectObjektButton(), getSaveEntwaesserungsgrundstueckButton());
+                getSelectObjektButton(), getSaveEntwaesserungsgrundstueckButton());
         builder.append(buttonBar, 7);
 
     }
     
-	/**
+    public void createFields() {
+        //CboxModels
+        einleitungsbereichModel = new DefaultComboBoxModel<CBoxItem>(new CBoxItem[]{
+            new CBoxItem(null, "-"),
+            new CBoxItem(0, "Einleitungs aus nicht öffentlichem Bereich"),
+            new CBoxItem(1, "Einleitung aus öffentlichem Bereich"),
+            new CBoxItem(2, "Einleitung aus außerörtlichen Straßen")
+        });
+
+        einbauartModel = new DefaultComboBoxModel<CBoxItem>(new CBoxItem[]{
+            new CBoxItem(null, "-"),
+            new CBoxItem(1, "Einbau im bestehenden Straßenablauf"),
+            new CBoxItem(2, "baulicher Ersatz des Straßenablaufs"),
+            new CBoxItem(3, "separates Schachtbauwerk")
+        });
+
+        //Fields and Labels
+        einleitungsbereich = new JComboBox<CBoxItem>(einleitungsbereichModel);
+        gebName = new JTextField();
+        konzeptNr = new JTextField();
+        gebGroesse = new JTextField();
+        regenspende = new JTextField();
+        regenhaufigkeit = new JTextField();
+        regendauer = new JTextField();
+        erlaubnisfrei = new JCheckBox();
+        einbauart = new JComboBox<CBoxItem>(einbauartModel);
+        abaverfahrens = new ZuordnungChooser<Abaverfahren>();
+
+        abaverfahrens.setSort(true);
+        abaverfahrens.setSortComparator((v1, v2) -> {
+            return v1.getNr() - v2.getNr();
+        });
+
+        einleitungsbereichLabel = new JLabel("Einleitungsbereich");
+        gebNameLabel = new JLabel("Name des Entwässerungsgebiet");
+        konzeptNrLabel = new JLabel("Abwasserbeseitigungskonzept");
+        gebGroesseLabel = new JLabel("Größe des Entwässerungsgebiet");
+        regenspendeLabel = new JLabel("Regenspende");
+        regenhaufigkeitLabel = new JLabel("Regenhäufigkeit");
+        regendauerLabel = new JLabel("Regendauer");
+        erlaubnisfreiLabel = new JLabel("Erlaubnisfreie Einleitung");
+        einbauartLabel = new JLabel("Einbauart");
+        abaverfahrensLabel = new JLabel("Abwasserbehandlungsverfahren");
+    }
+    
+    /**
      * Methode verknüpft das lokal erstelle Objekt einleitungstelle
      * mit der ElkaSonderbauwerk der Datenbank und holt sich die Klaeranlagen
      * aus der Datenbank
      * @throws RuntimeException
      */
     public void fetchFormData() throws RuntimeException {
-    	this.entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findByObjektId(
-    			this.hauptModul.getObjekt().getId());
-    	log.debug("Entwaesserungsgrundstueck aus DB geholt: " + this.entwaesserungsgrundstueck);
-    	
-
+        this.entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findByObjektId(
+                this.hauptModul.getObjekt().getId());
+        log.debug("Entwaesserungsgrundstueck aus DB geholt: " + this.entwaesserungsgrundstueck);
+        this.abaverfahrens.setData(Abaverfahren.getAll());
+        List<Abaverfahren> selected = new ArrayList<Abaverfahren>();
+        if (this.entwaesserungsgrundstueck != null) {
+            Set<ZEntwaessgrAbwasbehverf> verfs = this.entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs();
+            if (verfs != null) {
+                verfs.forEach(element -> {
+                    selected.add(element.getAbaverfahren());
+                });
+            }
+            this.abaverfahrens.applyEntries(selected);
+        }
     }
     
     /**
@@ -138,22 +251,43 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
      * @throws RuntimeException
      */
     public void updateForm() throws RuntimeException {
-    	if (this.entwaesserungsgrundstueck != null) {
-    		if (this.entwaesserungsgrundstueck.getErstellDat() != null) {
-    			getErstellDatDatum().setDate(this.entwaesserungsgrundstueck.getErstellDat());
-    		}
+        if (this.entwaesserungsgrundstueck != null) {
+            if (this.entwaesserungsgrundstueck.getErstellDat() != null) {
+                getErstellDatDatum().setDate(this.entwaesserungsgrundstueck.getErstellDat());
+            }
 
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
-    	}
+            this.bezeichnungFeld.setText(entwaesserungsgrundstueck.getBemerkung());
+            this.gebName.setText(entwaesserungsgrundstueck.getNameEtwGebiet());
+            this.regenspende.setText(entwaesserungsgrundstueck.getRegenspende().toString());
+            this.regenhaufigkeit.setText(entwaesserungsgrundstueck.getRegenhaeufigkeit().toString());
+            this.regendauer.setText(entwaesserungsgrundstueck.getRegendauer().toString());
+            if (entwaesserungsgrundstueck.getEinlBereichOpt() != null) {
+                for (int i = 0; i < einleitungsbereich.getItemCount(); i++) {
+                    if (einleitungsbereich.getItemAt(i).getId().equals(
+                            entwaesserungsgrundstueck.getEinlBereichOpt())) {
+                        einleitungsbereich.setSelectedIndex(i);
+                    }
+                }
+            }
+            if (entwaesserungsgrundstueck.getEinbauartOpt() != null) {
+                for (int i = 0; i < einbauart.getItemCount(); i++) {
+                    if (einbauart.getItemAt(i).getId().equals(
+                            entwaesserungsgrundstueck.getEinbauartOpt())) {
+                        einbauart.setSelectedIndex(i);
+                    }
+                }
+            }
+        }
     }
   
     /**
      * Methode die alle Eingabefelder des Panels auf den Standard zurücksetzt.
      */
     public void clearForm() {
-    	getErstellDatDatum().setDate(null);
-    	getBezeichnungFeld().setText(null);
-    	
+        getErstellDatDatum().setDate(null);
+        getBezeichnungFeld().setText(null);
+        
     }
     
     /**
@@ -162,8 +296,8 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
      * @param enabled
      */
     public void enableAll(boolean enabled) {
-    	getErstellDatDatum().setEnabled(enabled);
-    	getBezeichnungFeld().setEnabled(enabled);
+        getErstellDatDatum().setEnabled(enabled);
+        getBezeichnungFeld().setEnabled(enabled);
     }
 
     @Override
@@ -177,23 +311,50 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
      * @return boolean
      */
     private boolean saveEntwaesserungsgrundstueckDaten() {
-    	boolean success;
-    	
-    	this.entwaesserungsgrundstueck.setAktualDat(new Date());
-    	
-    	Date erstellDat = this.erstellDatDatum.getDate();
-    	this.entwaesserungsgrundstueck.setErstellDat(erstellDat);
+        boolean success;
+        if (this.entwaesserungsgrundstueck == null) {
+            this.entwaesserungsgrundstueck = new Entwaesserungsgrundstueck();
+            this.entwaesserungsgrundstueck.setObjekt(this.hauptModul.getObjekt());
+        }
+        if (((CBoxItem) einleitungsbereich.getSelectedItem()).getId() != null) {
+            this.entwaesserungsgrundstueck.setEinlBereichOpt(
+                ((CBoxItem) einleitungsbereich.getSelectedItem()).getId());
+        }
+        if (gebName.getText() != null  && !gebName.getText().isEmpty()) {
+            this.entwaesserungsgrundstueck.setNameEtwGebiet(gebName.getText());
+        }
+        if (konzeptNr.getText() != null && !konzeptNr.getText().isEmpty()) {
+            this.entwaesserungsgrundstueck.setAbwbeskonNr(konzeptNr.getText());
+        }
+        if (gebGroesse.getText() != null && !gebGroesse.getText().isEmpty()) {
+            this.entwaesserungsgrundstueck.setGrEntwGebiet(Integer.parseInt(gebGroesse.getText()));
+        }
+        if (regenspende.getText() != null && !regenspende.getText().isEmpty()) {
+            this.entwaesserungsgrundstueck.setRegenspende(new BigDecimal(regenspende.getText()));
+        }
+        if (regenhaufigkeit.getText() != null && !regenhaufigkeit.getText().isEmpty()) {
+            this.entwaesserungsgrundstueck.setRegenhaeufigkeit(new BigDecimal(regenhaufigkeit.getText()));
+        }
+        this.entwaesserungsgrundstueck.setErlFreiElTog(erlaubnisfrei.isSelected());
+        if (((CBoxItem) einbauart.getSelectedItem()).getId() != null) {
+            this.entwaesserungsgrundstueck.setEinbauartOpt(((CBoxItem) einbauart.getSelectedItem()).getId());
+        }
+
+        this.entwaesserungsgrundstueck.setAktualDat(new Date());
+        
+        Date erstellDat = this.erstellDatDatum.getDate() != null? this.erstellDatDatum.getDate(): new Date();
+        this.entwaesserungsgrundstueck.setErstellDat(erstellDat);
     
-    	success = this.entwaesserungsgrundstueck.merge();
-    	if (success) {
-    		log.debug("Entwaesserungsgrundstueck"
-    				+ this.entwaesserungsgrundstueck.getObjekt().getBetreiberid()
-    				.getName() + " gespeichert.");
-    	} else {
-    		log.debug("Entwaesserungsgrundstueck" + this.entwaesserungsgrundstueck
-    				+ " konnte nicht gespeichert werden!");
-    	}
-    	return success;
+        success = this.entwaesserungsgrundstueck.merge();
+        if (success) {
+            log.debug("Entwaesserungsgrundstueck"
+                    + this.entwaesserungsgrundstueck.getObjekt().getBetreiberid()
+                    .getName() + " gespeichert.");
+        } else {
+            log.debug("Entwaesserungsgrundstueck" + this.entwaesserungsgrundstueck
+                    + " konnte nicht gespeichert werden!");
+        }
+        return success;
     }
 
     /**
@@ -219,10 +380,10 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
      * @return {@link TextFieldDateChooser}
      */
     private TextFieldDateChooser getErstellDatDatum() {
-    	if (this.erstellDatDatum == null) {
-    		this.erstellDatDatum = new TextFieldDateChooser();
-    	}
-    	return this.erstellDatDatum;
+        if (this.erstellDatDatum == null) {
+            this.erstellDatDatum = new TextFieldDateChooser();
+        }
+        return this.erstellDatDatum;
     }
     
     /**
@@ -230,115 +391,115 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
      * @return {@link JTextField}
      */
     private JTextField getBezeichnungFeld() {
-    	if (this.bezeichnungFeld == null) {
-    		this.bezeichnungFeld = new LimitedTextField(50);
-    	}
-    	return this.bezeichnungFeld;
+        if (this.bezeichnungFeld == null) {
+            this.bezeichnungFeld = new LimitedTextField(50);
+        }
+        return this.bezeichnungFeld;
     }
     
     private JTable getObjektverknuepungTabelle() {
-	
-	    if (this.objektVerknuepfungModel == null) {
-	        this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
-	            this.hauptModul.getObjekt());
-	
-	        if (this.objektverknuepfungTabelle == null) {
-	            this.objektverknuepfungTabelle = new JTable(
-	                this.objektVerknuepfungModel);
-	        } else {
-	            this.objektverknuepfungTabelle
-	                .setModel(this.objektVerknuepfungModel);
-	        }
-	        this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
-	            .setPreferredWidth(5);
-	        this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
-	            .setPreferredWidth(100);
-	        this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
-	            .setPreferredWidth(250);
-	
-	        this.objektverknuepfungTabelle
-	            .addMouseListener(new java.awt.event.MouseAdapter() {
-	                @Override
-	                public void mouseClicked(java.awt.event.MouseEvent e) {
-	                    if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-	                        Point origin = e.getPoint();
-	                        int row = getObjektverknuepungTabelle().rowAtPoint(
-	                            origin);
-	
-	                        if (row != -1) {
-	                            Objektverknuepfung obj = EntwaesserungsgrundstueckPanel.this.objektVerknuepfungModel
-	                                .getRow(row);
-	                            if (obj.getObjektByIstVerknuepftMit()
-	                                .getId().intValue() != EntwaesserungsgrundstueckPanel.this.hauptModul
-	                                .getObjekt().getId().intValue())
-	                            	EntwaesserungsgrundstueckPanel.this.hauptModul
-	                                    .getManager()
-	                                    .getSettingsManager()
-	                                    .setSetting(
-	                                        "auik.imc.edit_object",
-	                                        obj.getObjektByIstVerknuepftMit()
-	                                            .getId().intValue(),
-	                                        false);
-	                            else
-	                            	EntwaesserungsgrundstueckPanel.this.hauptModul
-	                                    .getManager()
-	                                    .getSettingsManager()
-	                                    .setSetting(
-	                                        "auik.imc.edit_object",
-	                                        obj.getObjektByObjekt()
-	                                            .getId().intValue(),
-	                                        false);
-	                            EntwaesserungsgrundstueckPanel.this.hauptModul.getManager()
-	                                .switchModul("m_objekt_bearbeiten");
-	                        }
-	                    }
-	                }
-	
-	                @Override
-	                public void mousePressed(MouseEvent e) {
-	                    showVerknuepfungPopup(e);
-	                }
-	
-	                @Override
-	                public void mouseReleased(MouseEvent e) {
-	                    showVerknuepfungPopup(e);
-	                }
-	            });
-	
-	        this.objektverknuepfungTabelle.getInputMap().put(
-	            (KeyStroke) getVerknuepfungLoeschAction().getValue(
-	                Action.ACCELERATOR_KEY),
-	            getVerknuepfungLoeschAction().getValue(Action.NAME));
-	        this.objektverknuepfungTabelle.getActionMap().put(
-	            getVerknuepfungLoeschAction().getValue(Action.NAME),
-	            getVerknuepfungLoeschAction());
-	    }
-	
-	    return this.objektverknuepfungTabelle;
-	
-	}
+    
+        if (this.objektVerknuepfungModel == null) {
+            this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
+                this.hauptModul.getObjekt());
+    
+            if (this.objektverknuepfungTabelle == null) {
+                this.objektverknuepfungTabelle = new JTable(
+                    this.objektVerknuepfungModel);
+            } else {
+                this.objektverknuepfungTabelle
+                    .setModel(this.objektVerknuepfungModel);
+            }
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
+                .setPreferredWidth(5);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
+                .setPreferredWidth(100);
+            this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
+                .setPreferredWidth(250);
+    
+            this.objektverknuepfungTabelle
+                .addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
+                            Point origin = e.getPoint();
+                            int row = getObjektverknuepungTabelle().rowAtPoint(
+                                origin);
+    
+                            if (row != -1) {
+                                Objektverknuepfung obj = EntwaesserungsgrundstueckPanel.this.objektVerknuepfungModel
+                                    .getRow(row);
+                                if (obj.getObjektByIstVerknuepftMit()
+                                    .getId().intValue() != EntwaesserungsgrundstueckPanel.this.hauptModul
+                                    .getObjekt().getId().intValue())
+                                    EntwaesserungsgrundstueckPanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getObjektByIstVerknuepftMit()
+                                                .getId().intValue(),
+                                            false);
+                                else
+                                    EntwaesserungsgrundstueckPanel.this.hauptModul
+                                        .getManager()
+                                        .getSettingsManager()
+                                        .setSetting(
+                                            "auik.imc.edit_object",
+                                            obj.getObjektByObjekt()
+                                                .getId().intValue(),
+                                            false);
+                                EntwaesserungsgrundstueckPanel.this.hauptModul.getManager()
+                                    .switchModul("m_objekt_bearbeiten");
+                            }
+                        }
+                    }
+    
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+    
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        showVerknuepfungPopup(e);
+                    }
+                });
+    
+            this.objektverknuepfungTabelle.getInputMap().put(
+                (KeyStroke) getVerknuepfungLoeschAction().getValue(
+                    Action.ACCELERATOR_KEY),
+                getVerknuepfungLoeschAction().getValue(Action.NAME));
+            this.objektverknuepfungTabelle.getActionMap().put(
+                getVerknuepfungLoeschAction().getValue(Action.NAME),
+                getVerknuepfungLoeschAction());
+        }
+    
+        return this.objektverknuepfungTabelle;
+    
+    }
 
-	private void showVerknuepfungPopup(MouseEvent e) {
-	    if (this.verknuepfungPopup == null) {
-	        this.verknuepfungPopup = new JPopupMenu("Objekt");
-	        JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-	        this.verknuepfungPopup.add(loeschItem);
-	    }
-	
-	    if (e.isPopupTrigger()) {
-	        Point origin = e.getPoint();
-	        int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
-	
-	        if (row != -1) {
-	            this.objektverknuepfungTabelle
-	                .setRowSelectionInterval(row, row);
-	            this.verknuepfungPopup.show(e.getComponent(), e.getX(),
-	                e.getY());
-	        }
-	    }
-	}
+    private void showVerknuepfungPopup(MouseEvent e) {
+        if (this.verknuepfungPopup == null) {
+            this.verknuepfungPopup = new JPopupMenu("Objekt");
+            JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
+            this.verknuepfungPopup.add(loeschItem);
+        }
+    
+        if (e.isPopupTrigger()) {
+            Point origin = e.getPoint();
+            int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
+    
+            if (row != -1) {
+                this.objektverknuepfungTabelle
+                    .setRowSelectionInterval(row, row);
+                this.verknuepfungPopup.show(e.getComponent(), e.getX(),
+                    e.getY());
+            }
+        }
+    }
 
-	/**
+    /**
      * Methode die den SaveEntwaesserungsgrundstueckButton zurückgibt sofern er existiert,
      * ansonsten wird ein neuer erstellt und diesem einen {@link ActionListener} hinzugefügt,
      * der bei einem Klick die Methoden <code>saveEntwaesserungsgrundstueckDaten</code>.
@@ -346,94 +507,94 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
      * @return {@link JButton}
      */
     private JButton getSaveEntwaesserungsgrundstueckButton() {
-    	if (this.saveEntwaesserungsgrundstueckButton == null) {
-    		this.saveEntwaesserungsgrundstueckButton = new JButton("Speichern");
-    		
-    		this.saveEntwaesserungsgrundstueckButton.addActionListener(new ActionListener() {
-			@Override
-    		public void actionPerformed(ActionEvent e) {
-	    			enableAll(false);
-	    			String status = "";
-	    			if(saveEntwaesserungsgrundstueckDaten()) {
-	    			    status = "Einleitungsstelle " + 
-	    			EntwaesserungsgrundstueckPanel.this.entwaesserungsgrundstueck.getNr()
-	    			+ " erfolgreich gespeichert.";
-	    			} else {
-	    			    status = "Fehler beim Speichern der Einleitungsstelle!";				
-	    			}
-	    			if(status.startsWith("Sonderbauwerk")) {
-	    			    EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame().changeStatus(status,
-	    				    HauptFrame.SUCCESS_COLOR);
-	    			} else {
-	    			    EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame().changeStatus(status,
-	    				    HauptFrame.ERROR_COLOR);
-	    			}
-	    			EntwaesserungsgrundstueckPanel.this.hauptModul.fillForm();
-    		}	
-    		});		
-    	}
-    	return this.saveEntwaesserungsgrundstueckButton;
+        if (this.saveEntwaesserungsgrundstueckButton == null) {
+            this.saveEntwaesserungsgrundstueckButton = new JButton("Speichern");
+            
+            this.saveEntwaesserungsgrundstueckButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    enableAll(false);
+                    String status = "";
+                    if(saveEntwaesserungsgrundstueckDaten()) {
+                        status = "Einleitungsstelle " + 
+                    EntwaesserungsgrundstueckPanel.this.entwaesserungsgrundstueck.getNr()
+                    + " erfolgreich gespeichert.";
+                    } else {
+                        status = "Fehler beim Speichern der Einleitungsstelle!";				
+                    }
+                    if(status.startsWith("Sonderbauwerk")) {
+                        EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame().changeStatus(status,
+                            HauptFrame.SUCCESS_COLOR);
+                    } else {
+                        EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame().changeStatus(status,
+                            HauptFrame.ERROR_COLOR);
+                    }
+                    EntwaesserungsgrundstueckPanel.this.hauptModul.fillForm();
+            }	
+            });		
+        }
+        return this.saveEntwaesserungsgrundstueckButton;
     }
 
-	private Action getVerknuepfungLoeschAction() {
-	    if (this.verknuepfungLoeschAction == null) {
-	        this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
-	
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                int row = getObjektverknuepungTabelle().getSelectedRow();
-	                if (row != -1
-	                    && getObjektverknuepungTabelle().getEditingRow() == -1) {
-	                    Objektverknuepfung verknuepfung = EntwaesserungsgrundstueckPanel.this.objektVerknuepfungModel
-	                        .getRow(row);
-	                    if (GUIManager.getInstance().showQuestion(
-	                        "Soll die Verknüpfung wirklich gelöscht werden?\n"
-	                            + "Hinweis: Die Aktion betrifft nur die "
-	                            + "Verknüpfung, die Objekte bleiben erhalten "
-	                            + "und können jederzeit neu verknüpft werden.",
-	                        "Löschen bestätigen")) {
-	                        if (EntwaesserungsgrundstueckPanel.this.objektVerknuepfungModel
-	                            .removeRow(row)) {
-	                        	EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame()
-	                                .changeStatus("Objekt gelöscht.",
-	                                    HauptFrame.SUCCESS_COLOR);
-	                            log.debug("Objekt " + verknuepfung.getId()
-	                                + " wurde gelöscht!");
-	                        } else {
-	                        	EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame()
-	                                .changeStatus(
-	                                    "Konnte das Objekt nicht löschen!",
-	                                    HauptFrame.ERROR_COLOR);
-	                        }
-	                    }
-	                }
-	            }
-	        };
-	        this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
-	            new Integer(KeyEvent.VK_L));
-	        this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
-	            KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
-	    }
-	
-	    return this.verknuepfungLoeschAction;
-	}
+    private Action getVerknuepfungLoeschAction() {
+        if (this.verknuepfungLoeschAction == null) {
+            this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
+    
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int row = getObjektverknuepungTabelle().getSelectedRow();
+                    if (row != -1
+                        && getObjektverknuepungTabelle().getEditingRow() == -1) {
+                        Objektverknuepfung verknuepfung = EntwaesserungsgrundstueckPanel.this.objektVerknuepfungModel
+                            .getRow(row);
+                        if (GUIManager.getInstance().showQuestion(
+                            "Soll die Verknüpfung wirklich gelöscht werden?\n"
+                                + "Hinweis: Die Aktion betrifft nur die "
+                                + "Verknüpfung, die Objekte bleiben erhalten "
+                                + "und können jederzeit neu verknüpft werden.",
+                            "Löschen bestätigen")) {
+                            if (EntwaesserungsgrundstueckPanel.this.objektVerknuepfungModel
+                                .removeRow(row)) {
+                                EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame()
+                                    .changeStatus("Objekt gelöscht.",
+                                        HauptFrame.SUCCESS_COLOR);
+                                log.debug("Objekt " + verknuepfung.getId()
+                                    + " wurde gelöscht!");
+                            } else {
+                                EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame()
+                                    .changeStatus(
+                                        "Konnte das Objekt nicht löschen!",
+                                        HauptFrame.ERROR_COLOR);
+                            }
+                        }
+                    }
+                }
+            };
+            this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
+                new Integer(KeyEvent.VK_L));
+            this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+        }
+    
+        return this.verknuepfungLoeschAction;
+    }
 
-	private JButton getSelectObjektButton() {
-	    if (this.selectObjektButton == null) {
-	        this.selectObjektButton = new JButton("Objekt auswählen");
-	
-	        this.selectObjektButton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                ObjektChooser chooser = new ObjektChooser(
-	                		EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame(),
-	                		EntwaesserungsgrundstueckPanel.this.entwaesserungsgrundstueck.getObjekt(),
-	                		EntwaesserungsgrundstueckPanel.this.objektVerknuepfungModel);
-	                chooser.setVisible(true);
-	            }
-	        });
-	    }
-	    return this.selectObjektButton;
-	}    
+    private JButton getSelectObjektButton() {
+        if (this.selectObjektButton == null) {
+            this.selectObjektButton = new JButton("Objekt auswählen");
+    
+            this.selectObjektButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ObjektChooser chooser = new ObjektChooser(
+                            EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame(),
+                            EntwaesserungsgrundstueckPanel.this.entwaesserungsgrundstueck.getObjekt(),
+                            EntwaesserungsgrundstueckPanel.this.objektVerknuepfungModel);
+                    chooser.setVisible(true);
+                }
+            });
+        }
+        return this.selectObjektButton;
+    }    
     
 }

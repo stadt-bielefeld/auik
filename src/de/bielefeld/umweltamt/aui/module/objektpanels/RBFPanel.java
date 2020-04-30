@@ -113,8 +113,8 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
         builder.nextLine();
         builder.append(filterVolumenLabel, filterVolumenField);
         builder.nextLine();
-        
-        this.add(builder.build());
+
+        this.add(builder.getPanel());
         this.add(schutzgueterChooser);
     }
 
@@ -169,8 +169,13 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
         this.schutzgueterChooser.applyEntries(selected);
     }
 
+    /**
+     * Get field value by field name.
+     * @param fieldName Field name
+     * @return Field value
+     */
     public Object getFieldValue(String fieldName) {
-        return null;
+        return getFieldValue(fieldName, this);
     }
 
     public void save() {

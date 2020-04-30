@@ -21,17 +21,14 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-import java.util.List;
+import java.util.HashMap;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -66,6 +63,7 @@ public class BFPanel extends AbstractSonderbauwerkTypPanel {
         this.name = "BF";
         this.parentModule = parentModule;
         createFields();
+        createMappings();
 
         FormLayout layout = new FormLayout(
                 "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
@@ -108,11 +106,20 @@ public class BFPanel extends AbstractSonderbauwerkTypPanel {
         ueberlaufhaufigkeitLabel = new JLabel("Überlaufhäufigkeit");
     }
 
-    public void fetchFormData() {
-        
+    public void createMappings() {
+        this.fieldMapping = new HashMap<String, RecordMap>();
     }
 
-    public Object getFieldValue(String name) {
-        return null;
+    public void fetchFormData() {
+
+    }
+
+    /**
+     * Get field value by field name.
+     * @param fieldName Field name
+     * @return Field value
+     */
+    public Object getFieldValue(String fieldName) {
+        return getFieldValue(fieldName, this);
     }
 }

@@ -641,7 +641,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             	break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_SONDERBAUWERK:
                             	getTabbedPane().addTab(getChronoTab().getName(), getChronoTab());
-                            	getTabbedPane().addTab(getSonderbauwerkTab().getName(), getSonderbauwerkTab());
+                                getTabbedPane().addTab(getSonderbauwerkTab().getName(), getSonderbauwerkTab());
                                 getTabbedPane().addTab(getSonderbauwerkTypTab().getContentName(), getSonderbauwerkTypTab());
                             	getChronoTab().updateForm();
                             	getSonderbauwerkTab().updateForm();

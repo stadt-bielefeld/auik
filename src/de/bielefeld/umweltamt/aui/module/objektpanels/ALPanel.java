@@ -109,20 +109,27 @@ public class ALPanel extends AbstractSonderbauwerkTypPanel {
     }
 
     /**
-     * Get value for a field by name
-     * @param fieldName Field name as String
+     * Get field value by field name.
+     * @param fieldName Field name
+     * @return Field value
      */
     public Object getFieldValue(String fieldName) {
-        switch(fieldName) {
-            case "drossabflussField":
-                return parseBigDecimalFromString(drossabflussField.getText());
-            case "volumenField":
-                return parseIntegerFromString(volumenField.getText());
-            case "ueberlaufhaeufigkeitField":
-                return parseBigDecimalFromString(ueberlaufhaeufigkeitField.getText());
-            case "entleerungsZeitField":
-                return parseBigDecimalFromString(entleerungsZeitField.getText());
-            default: throw new IllegalArgumentException("Unkown field name: " + fieldName);
-        }
+        return getFieldValue(fieldName, this);
+    }
+
+    public JTextField getDrossabflussField() {
+        return this.drossabflussField;
+    }
+
+    public JTextField getVolumenField() {
+        return this.volumenField;
+    }
+
+    public JTextField getUeberlaufhaeufigkeitField() {
+        return this.ueberlaufhaeufigkeitField;
+    }
+
+    public JTextField getEntleerungsZeitField() {
+        return this.entleerungsZeitField;
     }
 }
