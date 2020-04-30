@@ -50,7 +50,7 @@ public class RKBPanel extends AbstractSonderbauwerkTypPanel {
     JComboBox<CBoxItem> betriebsartBox;
     JComboBox<CBoxItem> beckenartBox;
     JComboBox<CBoxItem> entlastungsartBox;
-    JComboBox<CBoxItem> anordungBox;
+    JComboBox<CBoxItem> anordnungBox;
     JComboBox<CBoxItem> drosselabflussBox;
     JCheckBox drosselschluss;
 
@@ -106,11 +106,11 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         builder.nextLine();
         builder.append("Art der Entlastung des Stauraumkanals", entlastungsartBox);
         builder.nextLine();
-        builder.append("Anordnung des Regenklärbeckens", anordungBox);
+        builder.append("Anordnung des Regenklärbeckens", anordnungBox);
         builder.nextLine();
         builder.append("Drosselabfluss zur Behandlung", drosselabflussBox);
         builder.nextLine();
-        builder.append("Drosselschluss bei Überschreiten des Füllstandes oder eines Maximalzuflusses",
+        builder.append("Drosselschluss bei Überschreiten dess Füllstandes oder eines Maximalzuflusses",
                 drosselschluss);
         builder.nextLine();
 
@@ -177,7 +177,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         betriebsartBox = new JComboBox<CBoxItem>(betriebsartModel);
         beckenartBox = new JComboBox<CBoxItem>(beckenartModel);
         entlastungsartBox = new JComboBox<CBoxItem>(entlastungsartModel);
-        anordungBox = new JComboBox<CBoxItem>(anordnungModel);
+        anordnungBox = new JComboBox<CBoxItem>(anordnungModel);
         drosselabflussBox = new JComboBox<CBoxItem>(drosselabflussModel);
         drosselschluss = new JCheckBox();
 
@@ -230,7 +230,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         this.fieldMapping.put("betriebsartBox", new RecordMap("betriebsartOpt", "java.lang.Integer"));
         this.fieldMapping.put("beckenartBox", new RecordMap("beckenartOpt", "java.lang.Integer"));
         this.fieldMapping.put("entlastungsartBox", new RecordMap("entlastungsartOpt", "java.lang.Integer"));
-        this.fieldMapping.put("anordungBox", new RecordMap("anordnungOpt", "java.lang.Integer"));
+        this.fieldMapping.put("anordnungBox", new RecordMap("anordnungOpt", "java.lang.Integer"));
         this.fieldMapping.put("drosselabflussBox", new RecordMap("drossAbflussOpt", "java.lang.Integer"));
         this.fieldMapping.put("kritRegenspende", new RecordMap("qrkrit", "java.math.BigDecimal"));
         this.fieldMapping.put("beckentiefe", new RecordMap("beckentiefe", "java.math.BigDecimal"));
@@ -239,9 +239,14 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
     }
 
     public void fetchFormData() {
-        
+
     }
 
+    /**
+     * Get field value by field name.
+     * @param fieldName Field name
+     * @return Field value
+     */
     public Object getFieldValue(String fieldName) {
         //TODO: add missing field return values
         switch(fieldName) {
@@ -251,8 +256,8 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
                 return ((CBoxItem) beckenartBox.getSelectedItem()).getId();
             case "entlastungsartBox":
                 return ((CBoxItem) entlastungsartBox.getSelectedItem()).getId();
-            case "anordungBox":
-                return ((CBoxItem) anordungBox.getSelectedItem()).getId();
+            case "anordnungBox":
+                return ((CBoxItem) anordnungBox.getSelectedItem()).getId();
             case "drosselabflussBox":
                 return ((CBoxItem) drosselabflussBox.getSelectedItem()).getId();
             case "drosselschluss":
@@ -360,5 +365,41 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
                 drosselschluss.setEnabled(false);
                 break;
         }
+    }
+
+    public JComboBox<CBoxItem> getBetriebsartBox() {
+        return this.betriebsartBox;
+    }
+
+    public JComboBox<CBoxItem> getBeckenartBox() {
+        return this.beckenartBox;
+    }
+
+    public JComboBox<CBoxItem> getEntlastungsartBox() {
+        return this.entlastungsartBox;
+    }
+
+    public JComboBox<CBoxItem> getAnordnungBox() {
+        return this.anordnungBox;
+    }
+
+    public JComboBox<CBoxItem> getDrosselabflussBox() {
+        return this.drosselabflussBox;
+    }
+
+    public JTextField getKritRegenspende() {
+        return this.kritRegenspende;
+    }
+
+    public JTextField getBeckentiefe() {
+        return this.beckentiefe;
+    }
+
+    public JTextField getBeckenoberfl() {
+        return this.beckenoberfl;
+    }
+
+    public JTextField getDrosselabflussTat() {
+        return this.drosselabflussTat;
     }
 }

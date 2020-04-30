@@ -102,11 +102,11 @@ public class RRBPanel extends AbstractSonderbauwerkTypPanel {
      */
     private void createMappings() {
         this.fieldMapping = new HashMap<String, RecordMap>();
-        this.fieldMapping.put("funktionenBox", new RecordMap("funktionOpt", "java.lang.Integer"));
-        this.fieldMapping.put("drosselabflussField", new RecordMap("drossAbflussOpt", "java.lang.Integer"));
-        this.fieldMapping.put("volumenField", new RecordMap("speichervolumen", "java.lang.Integer"));
-        this.fieldMapping.put("ueberlaufhaeufigkeitField", new RecordMap("rjahrUeh", "java.math.BigDecimal"));
-        this.fieldMapping.put("entleerungszeit", new RecordMap("entleerungszeit", "java.math.BigDecimal"));
+        this.addMapping("funktionenBox", "funktionOpt", "java.lang.Integer");
+        this.addMapping("drosselabflussField", "drossAbflussOpt", "java.lang.Integer");
+        this.addMapping("volumenField", "speichervolumen", "java.lang.Integer");
+        this.addMapping("ueberlaufhaeufigkeitField", "rjahrUeh", "java.math.BigDecimal");
+        this.addMapping("entleerungszeit", "entleerungszeit", "java.math.BigDecimal");
     }
 
     public void fetchFormData() {
@@ -125,22 +125,31 @@ public class RRBPanel extends AbstractSonderbauwerkTypPanel {
     }
 
     /**
-     * Get value for a field by name
-     * @param fieldName Field name as String
+     * Get field value by field name.
+     * @param fieldName Field name
+     * @return Field value
      */
     public Object getFieldValue(String fieldName) {
-        switch (fieldName) {
-            case "funktionenBox":
-                return ((CBoxItem)funktionenBox.getSelectedItem()).getId();
-            case "drosselabflussField":
-                return parseIntegerFromString(drosselabflussField.getText());
-            case "volumenField":
-                return parseIntegerFromString(volumenField.getText());
-            case "ueberlaufhaeufigkeitField":
-                return parseBigDecimalFromString(ueberlaufhaeufigkeitField.getText());
-            case "entleerungszeit":
-                return parseBigDecimalFromString(entleerungszeit.getText());
-            default: throw new IllegalArgumentException("Unkown field name: " + fieldName);
-        }
+        return getFieldValue(fieldName, this);
+    }
+
+    public JComboBox<CBoxItem> getFunktionenBox () {
+        return this.funktionenBox;
+    }
+
+    public JTextField getDrosselabflussField () {
+        return this.drosselabflussField;
+    }
+
+    public JTextField getVolumenField () {
+        return this.volumenField;
+    }
+
+    public JTextField getUeberlaufhaeufigkeitField () {
+        return this.ueberlaufhaeufigkeitField;
+    }
+
+    public JTextField getEntleerungszeit () {
+        return this.entleerungszeit;
     }
 }

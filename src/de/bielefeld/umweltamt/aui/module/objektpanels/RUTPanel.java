@@ -21,18 +21,14 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-import java.awt.Graphics;
-import java.util.List;
+import java.util.HashMap;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -94,14 +90,39 @@ public class RUTPanel extends AbstractSonderbauwerkTypPanel {
     }
 
     private void createMappings() {
-        
+        this.fieldMapping = new HashMap<String, RecordMap>();
     }
 
     public void fetchFormData() {
-        
+
     }
 
+    /**
+     * Get field value by field name.
+     * @param fieldName Field name
+     * @return Field value
+     */
     public Object getFieldValue(String fieldName) {
-        return null;
+        return getFieldValue(fieldName, this);
+    }
+
+    public JTextField getBehandlungsFlaecheField () {
+        return this.behandlungsFlaecheField;
+    }
+
+    public JTextField getNichtBehandlungsFlaecheField () {
+        return this.nichtBehandlungsFlaecheField;
+    }
+
+    public JTextField getKritRegenspendeField () {
+        return this.kritRegenspendeField;
+    }
+
+    public JTextField getDrossabflussTatField () {
+        return this.drossabflussTatField;
+    }
+
+    public JTextField getMinDrosselabflussField () {
+        return this.minDrosselabflussField;
     }
 }
