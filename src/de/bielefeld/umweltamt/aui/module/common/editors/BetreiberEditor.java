@@ -201,11 +201,17 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		nameZusFeld = new LimitedTextField(50);
 		kassenzeichenFeld = new LimitedTextField(50);
 		hausnrFeld = new IntegerField();
+		hausnrFeld.setEnabled(false);
 		hausnrZusFeld = new LimitedTextField(10);
+		hausnrZusFeld.setEnabled(false);
 		plzZsFeld = new LimitedTextField(3, "");
+		plzZsFeld.setEnabled(false);
 		plzFeld = new JTextField();
+		plzFeld.setEnabled(false);
 		strasseFeld = new JTextField();
+		strasseFeld.setEnabled(false);
 		ortFeld = new JTextField();
+		ortFeld.setEnabled(false);
 		telefonFeld = new LimitedTextField(50);
 		telefaxFeld = new LimitedTextField(50);
 		emailFeld = new LimitedTextField(50);
@@ -507,6 +513,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 					adressenModel.setStrasse(null);
 					adressenModel.updateList();
 					adressenTabelle.setModel(adressenModel);
+					adressenTabelle.setEnabled(false);
 					
 					getAdressenTabelle();
 
@@ -1057,6 +1064,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 
 		strassenBox = new JComboBox();
 		strassenBox.setRenderer(new LongNameComboBoxRenderer());
+		strassenBox.setEnabled(false);
 
 		return strassenBox;
 	}

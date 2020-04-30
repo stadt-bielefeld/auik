@@ -251,14 +251,8 @@ public class BWKPanel extends JPanel {
 
     }
 
-    public void fetchFormData() throws RuntimeException {
-		Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
-		this.bwk = BwkFachdaten.findByAnfallstelleId(
-				list.iterator().next().getId());
-	    log.debug("Brennwertkessel aus DB geholt: " + this.bwk);
-	}
-
 	public void clearForm() {
+		bwk = null;
         getHerstellerFeld().setText(null);
         getTypFeld().setText(null);
         getBrennmittelFeld().setText(null);
@@ -306,13 +300,11 @@ public class BWKPanel extends JPanel {
         if (this.bwk == null) {
             // Neuen Brennwertkessel erzeugen
             this.bwk = new BwkFachdaten();
-            Set<BwkFachdaten> fachdaten = new HashSet<BwkFachdaten>();
-    	    fachdaten.add(bwk);
-    	    this.anfallstelle.setBwkFachdatens(fachdaten);
-        }
-        // Anfallstelle setzen
+            // Anfallstelle setzen
         	this.anfallstelle = anfallstelle;
         	this.bwk.setAnfallstelle(this.anfallstelle);
+        }
+
     }
 
     private boolean saveBwkDaten() {
