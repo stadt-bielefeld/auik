@@ -57,7 +57,7 @@ public class BasisLageModel extends ListTableModel
 				"Entw.-Gebiet",
 				"Übersch.-Gebiet",
 				"Wasserschutzgebiet",
-				"VAwS-Gebiet" }, true, true);
+				"AwSV-Gebiet" }, true, true);
         log.debug("Creating new BasisLagemodel");
 	}
     
