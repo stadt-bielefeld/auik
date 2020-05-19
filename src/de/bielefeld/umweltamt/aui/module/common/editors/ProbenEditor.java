@@ -170,7 +170,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Dieser Wert stellt den Preis einer Stunde f&uuml;r Personal- und
      * Sachkosten in Cent dar.
      **/
-    public static final double PERSONAL_UND_SACHKOSTEN = 6135;
+    public static final double PERSONAL_UND_SACHKOSTEN = 6403;
 
     /**
      * Dieser Wert gibt an, wieviele Stellen das Feld in der Datei kasse.txt
@@ -1030,6 +1030,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         String rechnungsbetrag = cd.toString();
         rechnungsbetrag = rechnungsbetrag.replace("€", "");
         rechnungsbetrag = rechnungsbetrag.replace(",", "");
+        rechnungsbetrag = rechnungsbetrag.substring(0, rechnungsbetrag.length()-1);
         rechnungsbetrag = rechnungsbetrag.trim();
         rechnungsbetrag = rechnungsbetrag.substring(0, rechnungsbetrag.length()-1);
 
