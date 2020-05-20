@@ -76,14 +76,14 @@ public class AnhBwkModel extends ListTableModel {
 
         switch (columnIndex) {
             case 0:
-                String anrede = fachdaten.getObjekt().getBetreiberid()
-                    .getBetranrede();
+                String anrede = fachdaten.getAnfallstelle().getObjekt().getBetreiberid()
+                    .getAnrede();
                 result = (anrede != null? anrede + " " : "")
-                    + fachdaten.getObjekt().getBetreiberid()
-                        .getBetrname();
+                    + fachdaten.getAnfallstelle().getObjekt().getBetreiberid()
+                        .getName();
                 break;
             case 1:
-                result = DatabaseQuery.getStandortString(fachdaten.getObjekt().getStandortid());
+                result = DatabaseQuery.getStandortString(fachdaten.getAnfallstelle().getObjekt().getStandortid());
                 break;
             case 2: result = fachdaten.getKHersteller();  break;
             case 3: result = fachdaten.getKBrennmittel(); break;
@@ -92,12 +92,12 @@ public class AnhBwkModel extends ListTableModel {
             case 6: return fachdaten.getAnschreiben();
             case 7: return fachdaten.getDatumG();
             case 8:
-                result = fachdaten.getObjekt().getBeschreibung();
+                result = fachdaten.getAnfallstelle().getObjekt().getBeschreibung();
                 break;
             default: result = "ERROR";                    break;
         }
 
-        if (result != null && fachdaten.getObjekt().isInaktiv()) {
+        if (result != null && fachdaten.getAnfallstelle().getObjekt().isInaktiv()) {
             result = StringUtils.setStrike(result.toString());
         }
         return result;

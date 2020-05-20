@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.2.2  -->
+=======
 <!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.2.2  -->
+>>>>>>> refs/remotes/origin/master
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="deckblatt_handakte" language="groovy" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="75" rightMargin="5" topMargin="40" bottomMargin="40" uuid="74726fd8-4acb-49de-bf6b-602a7e2af24e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="FISUmwelt"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="fisumwelt"/>
 	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -15,6 +19,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#B9B9B9"/>
@@ -46,56 +51,96 @@
 	<parameter name="id" class="java.lang.Integer"/>
 	<parameter name="foto" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT
-  basis_betreiber.betranrede,
-  basis_betreiber.betrname,
-  basis_betreiber.betrnamezus,
-  basis_standort.strasse,
-  basis_standort.hausnr,
-  basis_standort.hausnrzus,
-  basis_standort.plz,
-  lage.entgebid,
-  objekt.prioritaet,
-  objekt.beschreibung,
-  sb1.name AS SbAtl,
-  sb2.name AS SbAbs,
-  klaeranlage.anlage,
+		<![CDATA[SELECT 
+  inhaber.anrede AS betranrede, 
+  inhaber.name AS betrname, 
+  inhaber.namezus AS betrnamezus, 
+  adresse.strasse, 
+  adresse.hausnr, 
+  adresse.hausnrzus, 
+  adresse.plz, 
+  adresse.entgebid, 
+  objekt.prioritaet, 
+  objekt.beschreibung, 
+  sb1.name AS sbatl, 
+  sb2.name AS sbabs, 
+  klaeranlage.anlage, 
   messstelle.branche
-FROM
-  basis.adresse AS basis_betreiber,
-  basis.objekt,
-  labor.messstelle,
-  basis.standort,
-  basis.adresse AS basis_standort,
-  basis.lage,
-  labor.klaeranlage,
-  basis.sachbearbeiter as sb1,
-  basis.sachbearbeiter as sb2
-WHERE
+FROM 
+  basis.adresse, 
+  basis.inhaber,
+  basis.standort, 
+  basis.objekt, 
+  labor.messstelle, 
+  labor.klaeranlage, 
+  basis.sachbearbeiter AS sb1, 
+  basis.sachbearbeiter AS sb2
+WHERE 
+  adresse.id = inhaber.adresseid AND
+  inhaber.id = standort.inhaberid AND
+  standort.id = objekt.standortid AND
   objekt.id = messstelle.objektid AND
-  objekt.betreiberid = basis_betreiber.id AND
-  objekt.standortid = standort.id AND
-  standort.adresseid = basis_standort.id AND
-  standort.lageid = lage.id AND
   messstelle.ka_id = klaeranlage.id AND
   messstelle.sachbearbeiter = sb1.id AND
   objekt.sachbearbeiter = sb2.id AND
   objekt.id = $P{id}]]>
 	</queryString>
-	<field name="betranrede" class="java.lang.String"/>
-	<field name="betrname" class="java.lang.String"/>
-	<field name="betrnamezus" class="java.lang.String"/>
-	<field name="strasse" class="java.lang.String"/>
-	<field name="hausnr" class="java.lang.Integer"/>
-	<field name="hausnrzus" class="java.lang.String"/>
-	<field name="plz" class="java.lang.String"/>
-	<field name="entgebid" class="java.lang.String"/>
-	<field name="prioritaet" class="java.lang.String"/>
-	<field name="beschreibung" class="java.lang.String"/>
-	<field name="sbatl" class="java.lang.String"/>
-	<field name="sbabs" class="java.lang.String"/>
-	<field name="anlage" class="java.lang.String"/>
-	<field name="branche" class="java.lang.String"/>
+	<field name="betranrede" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="betranrede"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inhaber"/>
+	</field>
+	<field name="betrname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="betrname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inhaber"/>
+	</field>
+	<field name="betrnamezus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="betrnamezus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inhaber"/>
+	</field>
+	<field name="strasse" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="strasse"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adresse"/>
+	</field>
+	<field name="hausnr" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="hausnr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adresse"/>
+	</field>
+	<field name="hausnrzus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="hausnrzus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adresse"/>
+	</field>
+	<field name="plz" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="plz"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adresse"/>
+	</field>
+	<field name="entgebid" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="entgebid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adresse"/>
+	</field>
+	<field name="prioritaet" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="prioritaet"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="objekt"/>
+	</field>
+	<field name="beschreibung" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="beschreibung"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="objekt"/>
+	</field>
+	<field name="sbatl" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sbatl"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sachbearbeiter"/>
+	</field>
+	<field name="sbabs" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sbabs"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sachbearbeiter"/>
+	</field>
+	<field name="anlage" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="anlage"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="klaeranlage"/>
+	</field>
+	<field name="branche" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="branche"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="messstelle"/>
+	</field>
 	<variable name="DATE" class="java.util.Date">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
 		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>

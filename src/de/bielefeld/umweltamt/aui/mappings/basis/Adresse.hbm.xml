@@ -8,24 +8,15 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="wirtschaftszweig" class="de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig" fetch="select">
-            <column name="wirtschaftszweigid" />
+        <many-to-one name="standortgghwsg" class="de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg" fetch="select">
+            <column name="standortgegebid" />
         </many-to-one>
-        <property name="betranrede" type="java.lang.String">
-            <column name="betranrede" />
-        </property>
-        <property name="betrname" type="java.lang.String">
-            <column name="betrname" />
-        </property>
-        <property name="betrnamezus" type="java.lang.String">
-            <column name="betrnamezus" />
-        </property>
-        <property name="namebetrbeauf" type="java.lang.String">
-            <column name="namebetrbeauf" />
-        </property>
-        <property name="vornamebetrbeauf" type="java.lang.String">
-            <column name="vornamebetrbeauf" />
-        </property>
+        <many-to-one name="wassereinzugsgebiet" class="de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet" fetch="select">
+            <column name="wassereinzgebid" />
+        </many-to-one>
+        <many-to-one name="gemarkung" class="de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung" fetch="select">
+            <column name="gemarkungid" />
+        </many-to-one>
         <property name="strasse" type="java.lang.String">
             <column name="strasse" />
         </property>
@@ -44,14 +35,26 @@
         <property name="ort" type="java.lang.String">
             <column name="ort" />
         </property>
-        <property name="telefon" type="java.lang.String">
-            <column name="telefon" />
+        <property name="entgebid" type="java.lang.String">
+            <column name="entgebid" />
         </property>
-        <property name="telefax" type="java.lang.String">
-            <column name="telefax" />
+        <property name="strasseeigent" type="java.lang.String">
+            <column name="strasseeigent" />
         </property>
-        <property name="email" type="java.lang.String">
-            <column name="email" />
+        <property name="ueberschgeb" type="boolean">
+            <column name="ueberschgeb" />
+        </property>
+        <property name="flur" type="java.lang.String">
+            <column name="flur" />
+        </property>
+        <property name="flurstueck" type="java.lang.String">
+            <column name="flurstueck" />
+        </property>
+        <property name="sachbe33rav" type="java.lang.String">
+            <column name="sachbe33rav" />
+        </property>
+        <property name="sachbe33hee" type="java.lang.String">
+            <column name="sachbe33hee" />
         </property>
         <property name="bemerkungen" type="java.lang.String">
             <column name="bemerkungen" />
@@ -62,20 +65,11 @@
         <property name="revihandz" type="java.lang.String">
             <column name="revihandz" />
         </property>
-        <property name="kassenzeichen" type="java.lang.String">
-            <column name="kassenzeichen" />
-        </property>
-        <property name="betrvorname" type="java.lang.String">
-            <column name="betrvorname" />
-        </property>
         <property name="enabled" type="boolean">
             <column name="_enabled" not-null="true" />
         </property>
         <property name="deleted" type="boolean">
             <column name="_deleted" not-null="true" />
-        </property>
-        <property name="auikWzCode" type="java.lang.String">
-            <column name="auik_wz_code" />
         </property>
         <property name="erstellDat" type="java.util.Date">
             <column name="erstell_dat" length="13" />
@@ -83,26 +77,11 @@
         <property name="iglId" type="java.lang.Integer">
             <column name="igl_id" />
         </property>
-        <property name="datenschutzAwsv" type="boolean">
-            <column name="datenschutz_awsv" not-null="true" />
-        </property>
-        <property name="datenschutzEsatzung" type="boolean">
-            <column name="datenschutz_esatzung" not-null="true" />
-        </property>
-        <property name="datenschutzWhg" type="boolean">
-            <column name="datenschutz_whg" not-null="true" />
-        </property>
-        <set name="standorts" table="objekt" inverse="true" lazy="true" fetch="select">
+        <set name="inhabers" table="inhaber" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="adresseid" />
             </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Standort" />
-        </set>
-        <set name="objektsForBetreiberid" table="objekt" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="betreiberid" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Objekt" />
+            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Inhaber" />
         </set>
 
     </class>

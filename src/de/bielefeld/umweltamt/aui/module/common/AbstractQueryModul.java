@@ -79,6 +79,8 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -160,6 +162,8 @@ public abstract class AbstractQueryModul extends AbstractModul {
 		try {
 			if (fachdaten instanceof Objekt) {
 				tmp = (Objekt) fachdaten;
+			} else if (fachdaten instanceof BwkFachdaten){
+				tmp = ((BwkFachdaten) fachdaten).getAnfallstelle().getObjekt();
 			} else {
 				Method getBO = fachdaten.getClass().getMethod("getObjekt");
 				tmp = (Objekt) getBO.invoke(fachdaten);

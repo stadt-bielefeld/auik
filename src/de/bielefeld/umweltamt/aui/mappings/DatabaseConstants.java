@@ -51,8 +51,7 @@ public class DatabaseConstants {
     public static final String ATL_PARAMETER_ID_AMMONIUM_STICKSTOFF = "L12490";
     public static final String ATL_PARAMETER_ID_AOX = "L13430";
     public static final String ATL_PARAMETER_ID_ARSEN = "L11420";
-    public static final String ATL_PARAMETER_ID_BASISCH_WIRKSAME_SUBSTANZ =
-        "N00002";
+    public static final String ATL_PARAMETER_ID_BASISCH_WIRKSAME_SUBSTANZ = "N00002";
     public static final String ATL_PARAMETER_ID_BENZO_A_PYREN = "B00106";
     public static final String ATL_PARAMETER_ID_BLEI = "L11380";
     public static final String ATL_PARAMETER_ID_CADMIUM = "L11650";
@@ -81,10 +80,8 @@ public class DatabaseConstants {
     public static final String ATL_PARAMETER_ID_TROCKENSUBSTANZ = "B00107";
     public static final String ATL_PARAMETER_ID_ZINK = "L11640";
     public static final String ATL_PARAMETER_ID_PFT = "P00002";
-
     public static final String ATL_PARAMETER_ID_TOC = "L15230";
     public static final String ATL_PARAMETER_ID_ABWASSERMENGE = "P00013";
-
     public static final String ATL_PARAMETER_ID_TEMPERATUR = "L10111";
     public static final String ATL_PARAMETER_ID_PH_WERT = "B00600";
     public static final String ATL_PARAMETER_ID_LEITFAEHIGKEIT = "L10821";
@@ -97,18 +94,6 @@ public class DatabaseConstants {
     public static final Integer ATL_PROBEART_ID_ROHRSCHLAMM = 6;
     public static final Integer ATL_PROBEART_ID_SIELHAUT = 7;
     public static final Integer ATL_PROBEART_ID_ZULAUF = 9;
-
-    /* AtlKlÃ¤ranlage */
-    public static final Klaeranlage ATL_KLAERANLAGE_HEEPEN =
-        Klaeranlage.findById(1);
-    public static final Klaeranlage ATL_KLAERANLAGE_BRAKE =
-        Klaeranlage.findById(4);
-    public static final Klaeranlage ATL_KLAERANLAGE_OBERE_LUTTER =
-        Klaeranlage.findById(5);
-    public static final Klaeranlage ATL_KLAERANLAGE_SENNESTADT =
-        Klaeranlage.findById(8);
-    public static final Klaeranlage ATL_KLAERANLAGE_VERL_SENDE =
-        Klaeranlage.findById(9);
 
     /* AtlStatus */
     public static final Status ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT =
@@ -130,10 +115,25 @@ public class DatabaseConstants {
     public static final int BASIS_BETREIBER_ID_Umweltamt_360x33 = 3;
 
     /* BasisStandort */
-    public static final int BASIS_STANDORT_KEIN_STANDORT = 50610;
+    public static final int BASIS_STANDORT_KEIN_STANDORT = 3;
 
     /* BasisObjektarten */
     public static final int BASIS_OBJEKTART_ID_SUEV = 13;
+    public static final int BASIS_OBJEKTART_ID_PROBEPUNKT = 32;
+    public static final int BASIS_OBJEKTART_ID_ABA = 34;
+    public static final int BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE = 40;
+    public static final int BASIS_OBJEKTART_ID_GENEHMIGUNG = 42;
+    public static final int BASIS_OBJEKTART_ID_ABSCHEIDER34 = 58;
+    public static final int BASIS_OBJEKTART_ID_EINLEITUNGSTELLE = 66;
+    public static final int BASIS_OBJEKTART_ID_ANFALLSTELLE = 65;
+    public static final int BASIS_OBJEKTART_ID_ENTWAESSERUNGSGRUNDSTUECK = 69;
+    public static final int BASIS_OBJEKTART_ID_SONDERBAUWERK = 68;
+    public static final String BASIS_OBJEKTART_ABTEILUNG_INDIREKT = "Indirekt-Einl.";
+    public static final String BASIS_OBJEKTART_ABTEILUNG_DIREKT = "Direkt-Einl.";
+    public static final String BASIS_OBJEKTART_ABTEILUNG_AWSV = "AwSV";
+
+    /* Anfallstellen */
+
     public static final int BASIS_OBJEKTART_ID_ANHANG_49 = 14;
     public static final int BASIS_OBJEKTART_ID_FETTABSCHEIDER = 15;
     public static final int BASIS_OBJEKTART_ID_BWK = 16;
@@ -144,21 +144,9 @@ public class DatabaseConstants {
     public static final int BASIS_OBJEKTART_ID_ANHANG_40 = 25;
     public static final int BASIS_OBJEKTART_ID_ANHANG_55 = 29;
     public static final int BASIS_OBJEKTART_ID_ANHANG_56 = 30;
-    public static final int BASIS_OBJEKTART_ID_PROBEPUNKT = 32;
-    public static final int BASIS_OBJEKTART_ID_ABA = 34;
     public static final int BASIS_OBJEKTART_ID_ANHANG_52 = 35;
     public static final int BASIS_OBJEKTART_ID_BHKW = 36;
-    public static final int BASIS_OBJEKTART_ID_SIELHAUTMESSSTELLE = 40;
-    public static final int BASIS_OBJEKTART_ID_GENEHMIGUNG = 42;
-    public static final int BASIS_OBJEKTART_ID_ABSCHEIDER34 = 58;
     public static final int BASIS_OBJEKTART_ID_ABSCHEIDER_ES = 60;
-    public static final int BASIS_OBJEKTART_ID_EINLEITUNGSTELLE = 66;
-    public static final int BASIS_OBJEKTART_ID_ANFALLSTELLE = 65;
-    public static final int BASIS_OBJEKTART_ID_ENTWAESSERUNGSGRUNDSTUECK = 69;
-    public static final int BASIS_OBJEKTART_ID_SONDERBAUWERK = 68;
-    public static final String BASIS_OBJEKTART_ABTEILUNG_33 = "360.33";
-    public static final String BASIS_OBJEKTART_ABTEILUNG_34 = "360.34";
-    
 
     /* ********************************************************************** */
     /* Constants for package INDEINL                                          */

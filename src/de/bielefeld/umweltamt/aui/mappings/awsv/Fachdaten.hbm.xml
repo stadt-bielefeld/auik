@@ -118,7 +118,7 @@
         <property name="wiedervorlage" type="java.util.Date">
             <column name="wiedervorlage" length="29" />
         </property>
-        <property name="stillegungsdatum" type="java.util.Date">
+        <property name="stilllegungsdatum" type="java.util.Date">
             <column name="stillegungsdatum" length="29" />
         </property>
         <property name="bemerkungen" type="java.lang.String">

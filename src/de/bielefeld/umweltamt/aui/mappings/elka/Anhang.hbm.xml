@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.Anhang" table="anhang" schema="elka" lazy="false" optimistic-lock="version">
+        <id name="slNr" type="java.lang.Integer">
+            <column name="sl_nr" />
+            <generator class="assigned" />
+        </id>
+        <property name="anhMaSlNr" type="java.lang.Integer">
+            <column name="anh_ma_sl_nr" />
+        </property>
+        <property name="anhangId" type="java.lang.String">
+            <column name="anhang_id" />
+        </property>
+        <property name="anhGueltigVon" type="java.util.Date">
+            <column name="anh_gueltig_von" length="13" />
+        </property>
+        <property name="anhGueltigBis" type="java.util.Date">
+            <column name="anh_gueltig_bis" length="13" />
+        </property>
+        <property name="anhRegelwerk" type="java.lang.String">
+            <column name="anh_regelwerk" />
+        </property>
+        <property name="anhText" type="java.lang.String">
+            <column name="anh_text" />
+        </property>
+        <property name="herkunft" type="java.lang.String">
+            <column name="herkunft" />
+        </property>
+        <property name="aktualDat" type="java.util.Date">
+            <column name="aktual_dat" length="13" />
+        </property>
+        <property name="erstellDat" type="java.util.Date">
+            <column name="erstell_dat" length="13" />
+        </property>
+        <property name="zeitstempel" type="java.util.Date">
+            <column name="zeitstempel" />
+        </property>
+    </class>
+</hibernate-mapping>

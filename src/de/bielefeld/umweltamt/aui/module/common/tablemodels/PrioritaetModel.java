@@ -46,7 +46,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**

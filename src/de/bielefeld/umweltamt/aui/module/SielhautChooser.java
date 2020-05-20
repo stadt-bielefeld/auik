@@ -94,8 +94,9 @@ class SielhautChooser extends OkCancelDialog {
 
     private void choose(int row) {
         if (row != -1) {
-            this.chosenSielhaut = (Sielhaut) this.sielhautModel
-                .getObjectAtRow(row);
+        	Object[] obj = (Object[]) this.sielhautModel
+                    .getObjectAtRow(row);
+            this.chosenSielhaut = Sielhaut.findById((Integer) obj[0]);
             dispose();
         }
     }

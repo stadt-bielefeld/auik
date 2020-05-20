@@ -90,8 +90,6 @@ public class GenehmigungPanel extends JPanel {
     private JCheckBox gen8Check = null;
     private JCheckBox selbstueberwCheck = null;
     private JCheckBox eSatzungCheck = null;
-    private IntegerField uebergabestelleE32Field = null;
-    private IntegerField uebergabestelleN32Field = null;
 
     private JButton saveGenehmigungButton = null;
 
@@ -111,7 +109,7 @@ public class GenehmigungPanel extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-            "r:80dlu, 5dlu, 80dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
+            "r:80dlu, 5dlu, 90dlu, 5dlu, r:20dlu, 5dlu, 100dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
@@ -132,13 +130,8 @@ public class GenehmigungPanel extends JPanel {
         builder.append("Genehmigte Menge [m³]:", getGenMengeFeld());
         builder.append("", getEsaCheckBox());
         builder.nextLine();
-        builder.append("", getBefCheckBox());
-        builder.append("");
+        builder.append("Genehmigung befristet:", getBefCheckBox());
         builder.append("bis:", getBefristetDatum());
-        builder.nextLine();
-        builder.appendSeparator("Übergabestelle");
-        builder.append("E32:", this.getUebergabestelleE32Field());
-        builder.append("N32:",   this.getUebergabestelleN32Field());
         builder.nextLine();
         builder.appendSeparator("Bemerkungen");
         builder.appendRow("3dlu");
@@ -243,14 +236,6 @@ public class GenehmigungPanel extends JPanel {
                     getEsaCheckBox().setSelected(false);
                 }
             }
-            if (this.fachdaten.getUebergabestelleE32() != null) {
-                this.getUebergabestelleE32Field().setValue(
-                    this.fachdaten.getUebergabestelleE32());
-            }
-            if (this.fachdaten.getUebergabestelleN32() != null) {
-                this.getUebergabestelleN32Field().setValue(
-                    this.fachdaten.getUebergabestelleN32());
-            }
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
 
         }
@@ -271,8 +256,6 @@ public class GenehmigungPanel extends JPanel {
         getGen8CheckBox().setSelected(false);
         getSelbCheckBox().setSelected(false);
         getEsaCheckBox().setSelected(false);
-        getUebergabestelleE32Field().setValue(null);
-        getUebergabestelleN32Field().setValue(null);
     }
 
     public void enableAll(boolean enabled) {
@@ -289,8 +272,6 @@ public class GenehmigungPanel extends JPanel {
         getGen8CheckBox().setEnabled(enabled);
         getSelbCheckBox().setEnabled(enabled);
         getEsaCheckBox().setEnabled(enabled);
-        getUebergabestelleE32Field().setEnabled(enabled);
-        getUebergabestelleN32Field().setEnabled(enabled);
     }
 
     private boolean saveGenehmigungDaten() {
@@ -356,10 +337,6 @@ public class GenehmigungPanel extends JPanel {
         } else {
             this.fachdaten.setESatzung(false);
         }
-        this.fachdaten.setUebergabestelleE32(
-            this.getUebergabestelleE32Field().getIntValue());
-        this.fachdaten.setUebergabestelleN32(
-            this.getUebergabestelleN32Field().getIntValue());
 
         success = this.fachdaten.merge();
         if (success) {
@@ -466,7 +443,7 @@ public class GenehmigungPanel extends JPanel {
 
     private JCheckBox getBefCheckBox() {
         if (this.befristetCheck == null) {
-            this.befristetCheck = new JCheckBox("Genehmigung befristet");
+            this.befristetCheck = new JCheckBox();
         }
         return this.befristetCheck;
     }
@@ -513,20 +490,6 @@ public class GenehmigungPanel extends JPanel {
             this.genBemerkungArea.setWrapStyleWord(true);
         }
         return this.genBemerkungArea;
-    }
-
-    private IntegerField getUebergabestelleE32Field() {
-        if (this.uebergabestelleE32Field == null) {
-            this.uebergabestelleE32Field = new IntegerField();
-        }
-        return this.uebergabestelleE32Field;
-    }
-
-    private IntegerField getUebergabestelleN32Field() {
-        if (this.uebergabestelleN32Field == null) {
-            this.uebergabestelleN32Field = new IntegerField();
-        }
-        return this.uebergabestelleN32Field;
     }
 
     private JTable getObjektverknuepungTabelle() {

@@ -95,7 +95,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SortedProperties;

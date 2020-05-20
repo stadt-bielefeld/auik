@@ -81,9 +81,12 @@ public class BasisModel extends ListTableModel {
         case 0:
             tmp = obj.getBetreiberid();
             break;
-        case 1:
-            tmp = DatabaseQuery.getStandortString(obj.getStandortid());
-            break;
+		case 1:
+			tmp = "";
+			if (obj.getStandortid() != null) {
+				tmp = DatabaseQuery.getStandortString(obj.getStandortid());
+			}
+			break;
         case 2:
 			tmp = "";
 			if (obj.getSachbearbeiter() != null) {

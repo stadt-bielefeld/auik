@@ -93,10 +93,10 @@ import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisInhaberModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -140,9 +140,9 @@ public class BasisAdresseSuchen extends AbstractModul {
     private Action objektLoeschAction;
     private JPopupMenu objektPopup;
 
-    private BasisAdresseModel betreiberModel;
+    private BasisInhaberModel inhaberModel;
     private BasisObjektModel objektModel;
-    public Adresse adresse;
+    public Inhaber inhaber;
 
 	private Timer suchTimer;
 
@@ -150,14 +150,14 @@ public class BasisAdresseSuchen extends AbstractModul {
      * Wird benutzt, um nach dem Bearbeiten etc. wieder den selben Betreiber in
      * der Liste auszuwählen.
      */
-    private Adresse lastAdresse;
+    private Inhaber lastAdresse;
 
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
     @Override
     public String getName() {
-        return "Adresse suchen";
+        return "Betreiber/Inhaber suchen";
     }
 
     /*
@@ -192,7 +192,7 @@ public class BasisAdresseSuchen extends AbstractModul {
     @Override
     public JPanel getPanel() {
         if (this.panel == null) {
-            this.betreiberModel = new BasisAdresseModel();
+            this.inhaberModel = new BasisInhaberModel();
             this.objektModel = new BasisObjektModel("Standort", this.manager
                 .getSettingsManager().getSetting("auik.prefs.abteilungsfilter"));
 
@@ -315,7 +315,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			protected void doNonUILogic() throws RuntimeException {
 //				if (name != "" || strasse != ""
 //						|| fhausnr != -1 || ort != "") {
-					BasisAdresseSuchen.this.betreiberModel.filterAllList(name,
+					BasisAdresseSuchen.this.inhaberModel.filterAllList(name,
 							strasse, fhausnr, ort, property);
 				}
 //			}
@@ -324,17 +324,17 @@ public class BasisAdresseSuchen extends AbstractModul {
                 protected void doUIUpdateLogic() throws RuntimeException {
     				getBetreiberTabelle().clearSelection();
     				
-    				BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
+    				BasisAdresseSuchen.this.inhaberModel.fireTableDataChanged();
     				String statusMsg = "Suche: "
-    						+ BasisAdresseSuchen.this.betreiberModel.getRowCount()
+    						+ BasisAdresseSuchen.this.inhaberModel.getRowCount()
     						+ " Ergebnis";
-    				if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1)
+    				if (BasisAdresseSuchen.this.inhaberModel.getRowCount() != 1)
     				{
     					statusMsg += "se";
     				}
     				statusMsg += ".";
     				BasisAdresseSuchen.this.frame.changeStatus(statusMsg);
-                	BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
+                	BasisAdresseSuchen.this.inhaberModel.fireTableDataChanged();
                 }
             };
             worker.start();
@@ -373,7 +373,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			{
 				if (SettingsManager.getInstance().getStandort() != null)
 				{					
-					BasisAdresseSuchen.this.betreiberModel.filterBetreiber(
+					BasisAdresseSuchen.this.inhaberModel.filterBetreiber(
 																		getSuchFeld().getText(),
 																		getStrassenFeld().getText(),
 																		fhausnr,
@@ -388,11 +388,11 @@ public class BasisAdresseSuchen extends AbstractModul {
 			{
 				getBetreiberTabelle().clearSelection();
 	
-				BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
+				BasisAdresseSuchen.this.inhaberModel.fireTableDataChanged();
 				String statusMsg = "Suche: "
-						+ BasisAdresseSuchen.this.betreiberModel.getRowCount()
+						+ BasisAdresseSuchen.this.inhaberModel.getRowCount()
 						+ " Ergebnis";
-				if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1)
+				if (BasisAdresseSuchen.this.inhaberModel.getRowCount() != 1)
 				{
 					statusMsg += "se";
 				}
@@ -434,7 +434,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			{
 				if (SettingsManager.getInstance().getStandort() != null)
 				{
-					BasisAdresseSuchen.this.betreiberModel.filterStandort(
+					BasisAdresseSuchen.this.inhaberModel.filterStandort(
 																		getSuchFeld().getText(),
 																		getStrassenFeld().getText(),
 																		fhausnr,
@@ -448,11 +448,11 @@ public class BasisAdresseSuchen extends AbstractModul {
 			{
 				getBetreiberTabelle().clearSelection();
 	
-				BasisAdresseSuchen.this.betreiberModel.fireTableDataChanged();
+				BasisAdresseSuchen.this.inhaberModel.fireTableDataChanged();
 				String statusMsg = "Suche: "
-						+ BasisAdresseSuchen.this.betreiberModel.getRowCount()
+						+ BasisAdresseSuchen.this.inhaberModel.getRowCount()
 						+ " Ergebnis";
-				if (BasisAdresseSuchen.this.betreiberModel.getRowCount() != 1)
+				if (BasisAdresseSuchen.this.inhaberModel.getRowCount() != 1)
 				{
 					statusMsg += "se";
 				}
@@ -472,11 +472,11 @@ public class BasisAdresseSuchen extends AbstractModul {
         ListSelectionModel lsm = getBetreiberTabelle().getSelectionModel();
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
-            Adresse betr = this.betreiberModel.getRow(selectedRow);
-            log.debug("Betreiber " + betr.getBetrname() + " (ID"
+            Inhaber betr = (Inhaber) this.inhaberModel.getRow(selectedRow);
+            log.debug("Betreiber (ID"
                 + betr.getId() + ") angewählt.");
+            this.inhaber = betr;
             searchObjekteByBetreiber(betr);
-            this.adresse = betr;
         }
         
         log.debug("End updateObjekte()");
@@ -486,7 +486,7 @@ public class BasisAdresseSuchen extends AbstractModul {
      * öffnet einen Dialog um einen Betreiber-Datensatz zu bearbeiten.
      * @param betr Der Betreiber
      */
-    public void editBetreiber(Adresse betr) {
+    public void editBetreiber(Inhaber betr) {
         BetreiberEditor editDialog = new BetreiberEditor(betr, this.frame);
         editDialog.setLocationRelativeTo(this.frame);
 
@@ -496,22 +496,27 @@ public class BasisAdresseSuchen extends AbstractModul {
 
         // Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen auch
         // angezeigt werden.
-//        updateBetreiberListe();
+        updateBetreiberListe();
     }
 
-    /**
+    private void updateBetreiberListe() {
+		filterBetreiberListe(betreiberTabelle);
+		
+	}
+
+	/**
      * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines
      * Betreibers.
      * @param betreiberid Die Betreiber-Id
      */
-    public void searchObjekteByBetreiber(final Adresse betreiber) {
+    public void searchObjekteByBetreiber(final Inhaber inh) {
         // ... siehe show()
         SwingWorkerVariant worker = new SwingWorkerVariant(
             getBetreiberTabelle()) {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 BasisAdresseSuchen.this.objektModel
-                    .searchByStandort(betreiber);
+                    .searchByInhaber(inh);
             }
 
             @Override
@@ -534,7 +539,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                     // Natürlich nur editieren, wenn wirklich eine Zeile
                     // ausgewählt ist
                     if (row != -1) {
-                        Adresse betr = BasisAdresseSuchen.this.betreiberModel
+                    	Inhaber betr = BasisAdresseSuchen.this.inhaberModel
                             .getRow(row);
                         editBetreiber(betr);
                     }
@@ -565,14 +570,14 @@ public class BasisAdresseSuchen extends AbstractModul {
                                     "Kann Betreiber nicht löschen: Zu erst alle zugehörigen Objekte löschen!",
                                     HauptFrame.ERROR_COLOR);
                         } else {
-                            Adresse betr = BasisAdresseSuchen.this.betreiberModel
+                        	Inhaber betr = BasisAdresseSuchen.this.inhaberModel
                                 .getRow(row);
 
                             if (GUIManager.getInstance().showQuestion(
                                 "Soll der Betreiber '" + betr
                                     + "' wirklich gelöscht werden?",
                                 "Löschen bestätigen")) {
-                                if (BasisAdresseSuchen.this.betreiberModel
+                                if (BasisAdresseSuchen.this.inhaberModel
                                     .removeRow(row)) {
                                     BasisAdresseSuchen.this.frame
                                         .changeStatus("Betreiber gelöscht.",
@@ -611,7 +616,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                         .getSelectedRow();
 
                     if (row != -1) {
-                        Adresse betr = BasisAdresseSuchen.this.betreiberModel
+                    	Inhaber betr = BasisAdresseSuchen.this.inhaberModel
                             .getRow(row);
                         if(betr.getStandorts().size() > 0) {
                         BasisAdresseSuchen.this.manager.getSettingsManager()
@@ -819,7 +824,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private JTable getBetreiberTabelle() {
         if (this.betreiberTabelle == null) {
-            this.betreiberTabelle = new JTable(this.betreiberModel);
+            this.betreiberTabelle = new JTable(this.inhaberModel);
 
             // Wir wollen wissen, wenn eine andere Zeile ausgewählt wurde
             ListSelectionModel rowSM = this.betreiberTabelle
@@ -837,19 +842,18 @@ public class BasisAdresseSuchen extends AbstractModul {
             });
 
             this.betreiberTabelle.getColumnModel().getColumn(0)
-                .setPreferredWidth(200);
+                .setPreferredWidth(-10);
             this.betreiberTabelle.getColumnModel().getColumn(1)
-                .setPreferredWidth(60);
+                .setPreferredWidth(200);
             this.betreiberTabelle.getColumnModel().getColumn(2)
-                .setPreferredWidth(70);
+                .setPreferredWidth(200);
             this.betreiberTabelle.getColumnModel().getColumn(3)
-            	.setPreferredWidth(70);
+            	.setPreferredWidth(200);
             this.betreiberTabelle.getColumnModel().getColumn(4)
-            	.setPreferredWidth(70);
+            	.setPreferredWidth(200);
             this.betreiberTabelle.getColumnModel().getColumn(5)
-        		.setPreferredWidth(70);
-            this.betreiberTabelle.getColumnModel().getColumn(6)
-            	.setPreferredWidth(30);
+        		.setPreferredWidth(20);
+
 
             this.betreiberTabelle
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -866,7 +870,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                             Point origin = e.getPoint();
                             int row = getBetreiberTabelle().rowAtPoint(origin);
 
-                            Adresse betr = BasisAdresseSuchen.this.betreiberModel
+                            Inhaber betr = BasisAdresseSuchen.this.inhaberModel
                                 .getRow(row);
                             log.debug("Doppelklick auf Zeile " + row);
                             editBetreiber(betr);
@@ -912,7 +916,7 @@ public class BasisAdresseSuchen extends AbstractModul {
     }
 
     private JTable getObjektTabelle() {
-    	Adresse adr = this.adresse;
+
         if (this.objektTabelle == null) {
         	
             this.objektTabelle = new JTable(this.objektModel){
@@ -922,19 +926,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 					Component c = super.prepareRenderer(renderer, row, column);
 					Objekt obj = BasisAdresseSuchen.this.objektModel
 							.getRow(row);
-					if (!isRowSelected(row)) {
 
-						if (obj.getBetreiberid() == obj.getStandortid().getAdresse()) {
-							c.setBackground(new Color(153, 255, 153));
-						}						
-						
-						else if (obj.getBetreiberid() != obj.getStandortid().getAdresse()) {
-							c.setBackground(new Color(255, 255, 153));
-						}
-						else {
-							c.setBackground(Color.WHITE);
-						}
-					}
 					return c;
 				}
 			};
@@ -1092,21 +1084,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 	                doSearch();
 	            }
 	        });
-//	        this.suchFeld.setFocusTraversalKeys(
-//	            KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-//	            Collections.EMPTY_SET);
-//	
-//	        this.suchFeld.addKeyListener(new KeyAdapter() {
-//	            @Override
-//	            public void keyPressed(KeyEvent e) {
-//	                if (e.getKeyCode() == KeyEvent.VK_TAB) {
-//	                    String suche = getSuchFeld().getText();
-//	                    String spalte = (String) ((NamedObject) getSuchBox()
-//	                        .getSelectedItem()).getValue();
-//	                    doSearch();
-//	                }
-//	            }
-//	        });
+
 	    }
 	    return this.suchFeld;
 	}
@@ -1263,12 +1241,12 @@ public class BasisAdresseSuchen extends AbstractModul {
 							{
 								String suchText = AuikUtils
 										.sanitizeQueryInput(this.oldText);
-								Strassen str = DatabaseQuery
-										.findStrasse(suchText);
+								String str = DatabaseQuery
+										.getTabStreet(suchText);
 	
 								if (str != null)
 								{
-									this.newText = str.getStrasse();
+									this.newText = str;
 								}
 								else
 								{

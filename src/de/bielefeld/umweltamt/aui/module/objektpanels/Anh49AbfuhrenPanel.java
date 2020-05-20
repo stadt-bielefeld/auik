@@ -599,7 +599,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
         this.fachdaten = fachdaten;
     }
 
-    public void updateForm() {
+    public void updateForm(Anh49Fachdaten fachdaten) {
         if (fachdaten != null) {
         	abfuhrModel.setFachdaten(fachdaten);
         	abfuhrModel.updateList();

@@ -25,10 +25,8 @@
 package de.bielefeld.umweltamt.aui.utils;
 
 import java.awt.Desktop;
-import java.awt.Toolkit;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.nio.file.Files;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -39,13 +37,9 @@ import java.util.GregorianCalendar;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
-
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 
 import de.bielefeld.umweltamt.aui.AUIKataster;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -569,43 +563,5 @@ public class AuikUtils {
             log.debug("Konnte Icon " + iconPath + " nicht finden!");
             return null;
         }
-    }
-
-    /**
-     * überprüft, ob wir unter XP und mit dem XP-Stil angezeigt werden.
-     * @return <code>true</code>, wenn der XP-Stil aktiv ist, sonst
-     *         <code>false</code>
-     */
-    public static boolean isUsingXpStyle() {
-        boolean tmp;
-
-        LookAndFeel laf = UIManager.getLookAndFeel();
-        if (laf instanceof WindowsLookAndFeel
-            && !(laf.getClass().getName().endsWith("WindowsClassicLookAndFeel"))) {
-            if (System.getProperty("swing.noxp") != null) {
-                // log.debug("Using Classic style (\"swing.noxp\" defined)");
-                tmp = false;
-            } else {
-                Toolkit toolkit = Toolkit.getDefaultToolkit();
-                boolean themeActive = Boolean.TRUE.equals(toolkit
-                    .getDesktopProperty("win.xpstyle.themeActive"));
-                if (!themeActive) {
-                    // log.debug("Using Classic style (XP style not enabled on desktop)");
-                    tmp = false;
-                } else {
-                    /*String dllName   = (String)toolkit.getDesktopProperty("win.xpstyle.dllName");
-                    String colorName = (String)toolkit.getDesktopProperty("win.xpstyle.colorName");
-                    String sizeName  = (String)toolkit.getDesktopProperty("win.xpstyle.sizeName");
-                    log.debug("XP Style: " + dllName);
-                    log.debug("Color scheme: " + colorName);
-                    log.debug("Font size: " + sizeName);*/
-                    tmp = true;
-                }
-            }
-        } else {
-            tmp = false;
-        }
-
-        return tmp;
     }
 }

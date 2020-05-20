@@ -36,6 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Bezeichnung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
@@ -44,9 +45,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Onlinekartendienst;
 import de.bielefeld.umweltamt.aui.mappings.basis.OnlinekartendienstId;
 import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.basis.Lage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
-import de.bielefeld.umweltamt.aui.mappings.basis.Strassen;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfungId;
@@ -55,6 +54,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.PrioritaetId;
 import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
 import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnhang;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaEinheit;
@@ -81,18 +81,13 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Ortstermine;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh53Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.SuevFachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwk;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.ViewBwkId;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
@@ -148,19 +143,12 @@ public class DatabaseClassToString {
      * falls ein Zusatz vorhanden ist.
      */
     public static String toStringForClass(Adresse clazz) {
-        String zusatz = "";
-        String vorname = "";
         String hausnrzus = "";
         
-        if (clazz.getBetrvorname() != null) {
-        	vorname = clazz.getBetrvorname() + " ";
-        } else if (clazz.getBetrnamezus() != null) {
-            zusatz = ", " + clazz.getBetrnamezus();
-        } else if (clazz.getHausnrzus() != null) {
+        if (clazz.getHausnrzus() != null) {
         	hausnrzus = clazz.getHausnrzus();
         }       
-        return vorname + clazz.getBetrname() + zusatz + ", " + clazz.getStrasse()
-        	+ " " + clazz.getHausnr() + hausnrzus;
+        return clazz.getStrasse() + " " + clazz.getHausnr() + hausnrzus + ", " + clazz.getOrt();
     }
     
     /**
@@ -171,13 +159,41 @@ public class DatabaseClassToString {
 	public static String toStringForClass(Standort clazz) {
 		String hausnrzus = "";
 
+		if (clazz.getInhaber() != null) {
+			if (clazz.getInhaber().getAdresse().getHausnrzus() != null) {
+				hausnrzus = clazz.getInhaber().getAdresse().getHausnrzus();
+			}
+			return clazz.getInhaber().getName() + ", " 
+					+ clazz.getInhaber().getAdresse().getStrasse() + " "
+					+ clazz.getInhaber().getAdresse().getHausnr() + hausnrzus
+					+ ", " + clazz.getInhaber().getAdresse().getWassereinzugsgebiet() 
+					+ ", " + clazz.getInhaber().getAdresse().getEntgebid()
+					+ ", " + clazz.getBezeichnung();
+		} else {
+			return "Standort ohne Adresse" + ", " + clazz.getBezeichnung();
+		}
+	}
+
+	public static String toStringForClass(Inhaber clazz) {
+		String hausnrzus = "";
+		String vorname = "";
 		if (clazz.getAdresse() != null) {
 			if (clazz.getAdresse().getHausnrzus() != null) {
 				hausnrzus = clazz.getAdresse().getHausnrzus();
+				return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
+						+ hausnrzus + ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
+			} else {
+		        if (clazz.getVorname() != null) {
+		        	vorname = clazz.getVorname() + " ";
+		        }
+				return vorname + clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
+						+ clazz.getAdresse().getHausnr() + ", " + clazz.getAdresse().getPlz() + " "
+						+ clazz.getAdresse().getOrt();
+
 			}
-			return clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr() + hausnrzus;
+
 		} else {
-			return "Dieser Standort hat keine Adresse";
+			return clazz.getName();
 		}
 	}
 
@@ -240,30 +256,6 @@ public class DatabaseClassToString {
         return ((name != null) ? name + " (" + kennnummer + ")" : kennnummer);
     }
 
-    /**
-     * Custom BasisLage.toString()<br>
-     * Liefert die komplette Strassen, wenn vorhanden inklusive der Hausnummer
-     * und deren Zusatz.<br>
-     * <br>
-     * Formatierung: &quot;&lt;Strassen&gt; &lt;HausNr&gt;&lt;HausNrzus&gt;&quot;<br>
-     * <br>
-     * Beispiele: &quot;Ravensberger Straße 77&quot;, &quot;Apfelstraße
-     * 23b&quot;, &quot;Jahnplatz 41-42&quot;
-     * @return Komplette, formatierte Strassen inkl. Hausnr
-     */
-    public static String toStringForClass(Lage clazz) {
-        return "" 
-            + (clazz.getEntgebid() != null ? "" + clazz.getEntgebid() : "")
-            + (clazz.getWassereinzugsgebiet() != null ? ", " + clazz.getWassereinzugsgebiet() : "")
-            + (clazz.getE32() != null ? ", " + clazz.getE32() : "")
-            + (clazz.getN32() != null ? ", " + clazz.getN32() : "");
-    }
-
-    /** @return Strassen.toGuiString() */
-    public static String toStringForClass(Strassen clazz) {
-        return clazz.toGuiString();
-    }
-
 
 
     /* ********************************************************************** */
@@ -279,8 +271,6 @@ public class DatabaseClassToString {
         return "[Position: " + clazz.getParameter() + ": "
             + clazz.getWert() + " " + clazz.getEinheiten() + ", "
             + clazz.getAnalyseVon() + ", "
-            + (clazz.getProbenahme() != null ?
-                clazz.getProbenahme() + ", " : "")
             + (clazz.getId() != null ?
                 "ID:" + clazz.getId() : "UNSAVED")
             + "]";
@@ -363,7 +353,7 @@ public class DatabaseClassToString {
      * Liefert einen String der Form "[Anhang 40:ID]"
      */
     public static String toStringForClass(Anh40Fachdaten clazz) {
-        return "[Anhang 40:" + clazz.getObjekt() + "]";
+        return "[Anhang 40:" + clazz.getAnfallstelle().getObjekt() + "]";
     }
 
     /**
@@ -385,7 +375,7 @@ public class DatabaseClassToString {
 
     /** @return Custom Anh49Fachdaten.toString() */
     public static String toStringForClass(Anh49Fachdaten clazz) {
-        return "[Anh49:" + clazz.getObjekt() + "]";
+        return "[Anh49:" + clazz.getAnfallstelle() + "]";
     }
 
     /**
@@ -408,26 +398,6 @@ public class DatabaseClassToString {
             + ", Entsorger: " + clazz.getEntsorger() + "]";
     }
 
-    /**
-     * @return Custom Anh49Ortstermine.toString()
-     * Liefert einen String der Form "[Datum: DATUM und SACHBEARBEITER]".
-     */
-    public static String toStringForClass(Anh49Ortstermine clazz) {
-        return "[Datum: " + AuikUtils.getStringFromDate(clazz.getDatum())
-            + ", SachbearbeiterIn: " + clazz.getSachbearbeiterIn() + "]";
-    }
-
-    /** @return Custom Anh49Verwaltungsverf.toString() */
-    public static String toStringForClass(Anh49Verwaltungsverf clazz) {
-        return "[Datum: " + AuikUtils.getStringFromDate(clazz.getDatum())
-            + ", Maßnahme: " + clazz.getMassnahme() + " ("
-            + ((clazz.getAbgeschlossen() != null && clazz.getAbgeschlossen()) ?
-                "" : "nicht ") + "abgeschlossen)"
-            + ", SachbearbeiterIn: " + clazz.getSachbearbeiterIn()
-            + (clazz.getWiedervorlage() == null ? "" : ", Wiedervorlage: "
-            + AuikUtils.getStringFromDate(clazz.getWiedervorlage())) + "]";
-    }
-
     /** @return Custom Anh50Fachdaten.toString() */
     public static String toStringForClass(Anh50Fachdaten clazz) {
         return "[ID:" + clazz.getId() + "]";
@@ -435,11 +405,6 @@ public class DatabaseClassToString {
 
     /** @return Custom Anh52Fachdaten.toString() */
     public static String toStringForClass(Anh52Fachdaten clazz) {
-        return "[ID:" + clazz.getId() + "]";
-    }
-
-    /** @return Custom Anh53Fachdaten.toString() */
-    public static String toStringForClass(Anh53Fachdaten clazz) {
         return "[ID:" + clazz.getId() + "]";
     }
 
@@ -742,16 +707,6 @@ public class DatabaseClassToString {
 		return null;
 	}
 
-	public static String toStringForClass(ViewBwk viewBwk) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(ViewBwkId viewBwkId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(AfsNiederschlagswasser afsNiederschlagswasser) {
 		// TODO Auto-generated method stub
 		return null;
@@ -810,6 +765,10 @@ public class DatabaseClassToString {
 	public static String toStringForClass(EZElsWasserrecht ezElsWasserrecht) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public static String toStringForClass(Anhang clazz) {
+        return clazz.toGuiString();
 	}
 	
 }

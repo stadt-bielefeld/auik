@@ -82,7 +82,7 @@ public class SuevModel extends ListTableModel {
             break;
         case 1:
             if (fd.getObjekt() != null) {
-                tmp = fd.getObjekt().getStandortid().getLage();
+                tmp = fd.getObjekt().getStandortid();
             } else {
                 tmp = "<html><font color=red>KEIN BASISOBJEKT!</font></html>";
             }

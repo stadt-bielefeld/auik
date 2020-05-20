@@ -23,13 +23,16 @@
 
 package de.bielefeld.umweltamt.aui.mappings.indeinl;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class that represents a row in the Anh55Fachdaten database table.<br>
@@ -44,7 +47,7 @@ public class Anh55Fachdaten  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
-    private Objekt objekt;
+    private Anfallstelle anfallstelle;
     private Boolean abgemeldet;
     private Boolean putztuecher;
     private Boolean teppich;
@@ -84,18 +87,18 @@ public class Anh55Fachdaten  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Anh55Fachdaten(
-        Integer id, Objekt objekt, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.enabled = enabled;
         this.deleted = deleted;
     }
 
     /** Full constructor */
     public Anh55Fachdaten(
-        Integer id, Objekt objekt, Boolean abgemeldet, Boolean putztuecher, Boolean teppich, Boolean matten, Boolean haushaltstex, Boolean berufskl, Boolean gaststhotel, Boolean krankenhaus, Boolean heimwaesche, Integer anteilwaschgut, Boolean vlies, Boolean fischfleisch, Integer anteilgesamtgut, Boolean betrwasseraufber, Boolean chlor, Boolean aktivchlor, String sachbearbeiter, String entgebId, String bemerkungen, String mengewaesche, String sonsttex, String monatwasserverb, String waschsituation, String ansprechpartner, String branche, Boolean loesungsmittel, boolean enabled, boolean deleted) {
+        Integer id, Anfallstelle anfallstelle, Boolean abgemeldet, Boolean putztuecher, Boolean teppich, Boolean matten, Boolean haushaltstex, Boolean berufskl, Boolean gaststhotel, Boolean krankenhaus, Boolean heimwaesche, Integer anteilwaschgut, Boolean vlies, Boolean fischfleisch, Integer anteilgesamtgut, Boolean betrwasseraufber, Boolean chlor, Boolean aktivchlor, String sachbearbeiter, String entgebId, String bemerkungen, String mengewaesche, String sonsttex, String monatwasserverb, String waschsituation, String ansprechpartner, String branche, Boolean loesungsmittel, boolean enabled, boolean deleted) {
         this.id = id;
-        this.objekt = objekt;
+        this.anfallstelle = anfallstelle;
         this.abgemeldet = abgemeldet;
         this.putztuecher = putztuecher;
         this.teppich = teppich;
@@ -135,12 +138,12 @@ public class Anh55Fachdaten  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Objekt getObjekt() {
-        return this.objekt;
+    public Anfallstelle getAnfallstelle() {
+        return this.anfallstelle;
     }
 
-    public void setObjekt(Objekt objekt) {
-        this.objekt = objekt;
+    public void setAnfallstelle(Anfallstelle anfallstelle) {
+        this.anfallstelle = anfallstelle;
     }
 
     public Boolean getAbgemeldet() {
@@ -388,7 +391,7 @@ public class Anh55Fachdaten  implements java.io.Serializable {
         
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
         buffer.append("abgemeldet").append("='").append(getAbgemeldet()).append("' ");			
         buffer.append("putztuecher").append("='").append(getPutztuecher()).append("' ");			
         buffer.append("teppich").append("='").append(getTeppich()).append("' ");			
@@ -483,7 +486,7 @@ public class Anh55Fachdaten  implements java.io.Serializable {
      */
     private void copy(Anh55Fachdaten copy) {
         this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
+        this.anfallstelle = copy.getAnfallstelle();            
         this.abgemeldet = copy.getAbgemeldet();            
         this.putztuecher = copy.getPutztuecher();            
         this.teppich = copy.getTeppich();            
@@ -558,14 +561,10 @@ public class Anh55Fachdaten  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
-    public static Anh55Fachdaten findByObjektId(java.lang.Integer id){
-        log.debug("Getting Anh55Fachdaten instance with connected BasisObjekt with id: " + id);
-        List<Anh55Fachdaten> all = Anh55Fachdaten.getAll();
-        for(Anh55Fachdaten i : all){
-            if(i.getObjekt().getId().equals(id)){
-                return (Anh55Fachdaten) new DatabaseAccess().get(Anh55Fachdaten.class, i.getId());
-            }
-        }
-        return null;
+    public static Anh55Fachdaten findByAnfallstelleId(java.lang.Integer id){
+        log.debug("Getting Anh55Fachdaten instance with connected Anfallstelle with id: " + id);
+        Anfallstelle anfallstelle = (Anfallstelle) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
+        Set<Anh55Fachdaten> list = anfallstelle.getAnh55Fachdatens();
+        return list.iterator().next();
     }
 }

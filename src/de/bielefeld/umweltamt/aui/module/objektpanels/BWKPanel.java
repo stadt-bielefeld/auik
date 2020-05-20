@@ -30,6 +30,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -54,6 +57,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
@@ -77,6 +82,7 @@ public class BWKPanel extends JPanel {
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
+    private Anfallstelle anfallstelle;
 
     // Widgets
     private JTextField herstellerFeld = null;
@@ -99,16 +105,11 @@ public class BWKPanel extends JPanel {
     // Daten
     private BwkFachdaten bwk = null;
 
-    // Objektverknuepfer
-    private ObjektVerknuepfungModel objektVerknuepfungModel;
-    private JTable objektverknuepfungTabelle = null;
-    private JButton selectObjektButton = null;
-    private Action verknuepfungLoeschAction;
-    private JPopupMenu verknuepfungPopup;
 
-    public BWKPanel(BasisObjektBearbeiten hauptModul) {
+    public BWKPanel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
         this.name = "Brennwertkessel";
         this.hauptModul = hauptModul;
+        this.anfallstelle = anfallstelle;
 
         FormLayout layout = new FormLayout(
             "r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 70dlu, 5dlu, 70dlu, 70dlu", // Spalten
@@ -134,7 +135,7 @@ public class BWKPanel extends JPanel {
                 "3dlu, " + // 20
                 "pref, " + // 21
                 "3dlu, " + // 22
-                "fill:100dlu, " + // 23
+                "pref, " + // 23
                 "3dlu, " + // 24
                 "pref"); // 25
 
@@ -151,15 +152,16 @@ public class BWKPanel extends JPanel {
         builder.add(getBrennmittelFeld(), cc.xy(3, 7));
         builder.addLabel("Leistung:", cc.xy(1, 9));
         builder.add(getLeistungFeld(), cc.xy(3, 9));
-        builder.addSeparator("Werkstoffe", cc.xyw(1, 11, 3));
-        builder.addLabel("Brenner:", cc.xy(1, 13));
-        builder.add(getBrennerFeld(), cc.xy(3, 13));
-        builder.addLabel("Tauscher:", cc.xy(1, 15));
-        builder.add(getWaermetauscherFeld(), cc.xy(3, 15));
-        builder.addLabel("Abgasleitung:", cc.xy(1, 17));
-        builder.add(getAbgasleitungFeld(), cc.xy(3, 17));
-        builder.addLabel("Kondensatabl.:", cc.xy(1, 19));
-        builder.add(getKondensatltgFeld(), cc.xy(3, 19));
+        builder.addSeparator("Werkstoffe", cc.xyw(1, 15, 3));
+        builder.addLabel("Brenner:", cc.xy(1, 17));
+        builder.add(getBrennerFeld(), cc.xy(3, 17));
+        builder.addLabel("Tauscher:", cc.xy(1, 19));
+        builder.add(getWaermetauscherFeld(), cc.xy(3, 19));
+        builder.addLabel("Abgasleitung:", cc.xy(1, 21));
+        builder.add(getAbgasleitungFeld(), cc.xy(3, 21));
+        builder.addLabel("Kondensatabl.:", cc.xy(1, 23));
+        builder.add(getKondensatltgFeld(), cc.xy(3, 23));
+       
 
         // rechte Seite
         builder.addSeparator("Erfassung", cc.xyw(5, 1, 3));
@@ -173,36 +175,24 @@ public class BWKPanel extends JPanel {
         builder.add(getGenehmigungDatum(), cc.xy(7, 9));
         // builder.addLabel("ABA:", cc.xy( 5, 11));
         builder.add(getgenehmpflichtCheck(), cc.xyw(5, 11, 3));
-        builder.add(getAbaCheck(), cc.xy(8, 11));
-        builder.addSeparator("Bemerkungen", cc.xyw(5, 13, 3));
+        builder.add(getAbaCheck(), cc.xyw(5, 13, 3));
+        builder.addSeparator("Bemerkungen", cc.xyw(5, 15, 3));
         builder.add(new JScrollPane(getBwkBeschreibungsArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh(5, 15, 3,
-            5));
-
-        builder.addSeparator("Verknüpfte Objekte", cc.xyw(1, 21, 7));
-        JScrollPane objektverknuepfungScroller = new JScrollPane(
-            getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.add(objektverknuepfungScroller, cc.xyw(1, 23, 7));
-        builder.nextLine();
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh(5, 17, 3,
+            7));
 
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveBwkButton());
+            getSaveBwkButton());
         builder.add(buttonBar, cc.xyw(1, 25, 7));
 
     }
 
-    public void fetchFormData() throws RuntimeException {
-        this.bwk = BwkFachdaten.findByObjektId(
-            this.hauptModul.getObjekt().getId());
-        log.debug("Brennwertkessel aus DB geholt: " + this.bwk);
-    }
+    public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
 
-    public void updateForm() throws RuntimeException {
-
+    	this.anfallstelle = anfallstelle;
+    	this.bwk = this.anfallstelle.getBwkFachdatens().iterator().next();
+    	
         if (this.bwk != null) {
             if (this.bwk.getKHersteller() != null) {
                 getHerstellerFeld().setText(this.bwk.getKHersteller());
@@ -257,12 +247,12 @@ public class BWKPanel extends JPanel {
                     getgenehmpflichtCheck().setSelected(false);
                 }
             }
-            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         }
 
     }
 
-    public void clearForm() {
+	public void clearForm() {
+		bwk = null;
         getHerstellerFeld().setText(null);
         getTypFeld().setText(null);
         getBrennmittelFeld().setText(null);
@@ -305,134 +295,132 @@ public class BWKPanel extends JPanel {
         return this.name;
     }
 
-    private boolean saveBwkDaten() {
-        boolean success;
-
-        String hersteller = this.herstellerFeld.getText();
-        if ("".equals(hersteller)) {
-            this.bwk.setKHersteller(null);
-        } else {
-            this.bwk.setKHersteller(hersteller);
-        }
-
-        String typ = this.typFeld.getText();
-        if ("".equals(typ)) {
-            this.bwk.setKTyp(null);
-        } else {
-            this.bwk.setKTyp(typ);
-        }
-
-        String brennmittel = this.brennmittelFeld.getText();
-        if ("".equals(brennmittel)) {
-            this.bwk.setKBrennmittel(null);
-        } else {
-            this.bwk.setKBrennmittel(brennmittel);
-        }
-
-        Integer leistung = ((IntegerField) this.leistungFeld).getIntValue();
-        this.bwk.setKLeistung(leistung);
-
-        String brenner = this.brennerFeld.getText();
-        if ("".equals(brenner)) {
-            this.bwk.setWBrenner(null);
-        } else {
-            this.bwk.setWBrenner(brenner);
-        }
-
-        String tauscher = this.waermetauscherFeld.getText();
-        if ("".equals(tauscher)) {
-            this.bwk.setWWaermetauscher(null);
-        } else {
-            this.bwk.setWWaermetauscher(tauscher);
-        }
-
-        String abgasleitung = this.abgasleitungFeld.getText();
-        if ("".equals(abgasleitung)) {
-            this.bwk.setWAbgasleitung(null);
-        } else {
-            this.bwk.setWAbgasleitung(abgasleitung);
-        }
-
-        String kondensatabl = this.kondensatltgFeld.getText();
-        if ("".equals(kondensatabl)) {
-            this.bwk.setWKondensableitung(null);
-        } else {
-            this.bwk.setWKondensableitung(kondensatabl);
-        }
-
-        Integer jahrgang = ((IntegerField) this.jahrgangFeld).getIntValue();
-        this.bwk.setErfassung(jahrgang);
-
-        String abnahme = this.abnahmeFeld.getText();
-        if ("".equals(abnahme)) {
-            this.bwk.setAbnahme(null);
-        } else {
-            this.bwk.setAbnahme(abnahme);
-        }
-
-        Date anschreiben = this.anschreibenFeld.getDate();
-        if ("".equals(anschreiben)) {
-            this.bwk.setAnschreiben(null);
-        } else {
-            this.bwk.setAnschreiben(anschreiben);
-        }
-
-        Date genehmigung = this.genehmigungDatum.getDate();
-        this.bwk.setDatumG(genehmigung);
-
-        Boolean aba;
-        if (getAbaCheck().isSelected()) {
-            aba = true;
-        } else {
-            aba = false;
-        }
-        this.bwk.setAba(new Boolean(aba));
-
-        Boolean genehmpflicht;
-        if (getgenehmpflichtCheck().isSelected()) {
-            genehmpflicht = true;
-        } else {
-            genehmpflicht = false;
-        }
-        this.bwk.setGenehmigungspflicht(new Boolean(genehmpflicht));
-
-        String beschreibung = this.bwkBeschreibungsArea.getText();
-        if ("".equals(beschreibung)) {
-            this.bwk.setBemerkungen(null);
-        } else {
-            this.bwk.setBemerkungen(beschreibung);
-        }
-
-        success = this.bwk.merge();
-
-        if (success) {
-            log.debug("Brennwertkessel " + this.bwk + " gespeichert.");
-        } else {
-            log.debug("Brennwertkessel " + this.bwk
-                + " konnte nicht gespeichert werden!");
-        }
-
-        return success;
-    }
-
-    public void completeObjekt() {
-        if (this.hauptModul.isNew() || this.bwk == null) {
+    public void completeObjekt(Anfallstelle anfallstelle) {
+    	
+        if (this.bwk == null) {
             // Neuen Brennwertkessel erzeugen
             this.bwk = new BwkFachdaten();
-            // Objekt_Id setzen
-            this.bwk.setObjekt(this.hauptModul.getObjekt());
-
-            // Brennwertkessel speichern
-            if (this.bwk.merge()) {
-                log.debug("Neuer Brennwertkessel " + this.bwk
-                    + " gespeichert.");
-            }
+            // Anfallstelle setzen
+        	this.anfallstelle = anfallstelle;
+        	this.bwk.setAnfallstelle(this.anfallstelle);
         }
+
     }
 
-    private JCheckBox getAbaCheck() {
+    private boolean saveBwkDaten() {
+	    boolean success;
+	
+	    String hersteller = this.herstellerFeld.getText();
+	    if ("".equals(hersteller)) {
+	        this.bwk.setKHersteller(null);
+	    } else {
+	        this.bwk.setKHersteller(hersteller);
+	    }
+	
+	    String typ = this.typFeld.getText();
+	    if ("".equals(typ)) {
+	        this.bwk.setKTyp(null);
+	    } else {
+	        this.bwk.setKTyp(typ);
+	    }
+	
+	    String brennmittel = this.brennmittelFeld.getText();
+	    if ("".equals(brennmittel)) {
+	        this.bwk.setKBrennmittel(null);
+	    } else {
+	        this.bwk.setKBrennmittel(brennmittel);
+	    }
+	
+	    Integer leistung = ((IntegerField) this.leistungFeld).getIntValue();
+	    this.bwk.setKLeistung(leistung);
+	
+	    String brenner = this.brennerFeld.getText();
+	    if ("".equals(brenner)) {
+	        this.bwk.setWBrenner(null);
+	    } else {
+	        this.bwk.setWBrenner(brenner);
+	    }
+	
+	    String tauscher = this.waermetauscherFeld.getText();
+	    if ("".equals(tauscher)) {
+	        this.bwk.setWWaermetauscher(null);
+	    } else {
+	        this.bwk.setWWaermetauscher(tauscher);
+	    }
+	
+	    String abgasleitung = this.abgasleitungFeld.getText();
+	    if ("".equals(abgasleitung)) {
+	        this.bwk.setWAbgasleitung(null);
+	    } else {
+	        this.bwk.setWAbgasleitung(abgasleitung);
+	    }
+	
+	    String kondensatabl = this.kondensatltgFeld.getText();
+	    if ("".equals(kondensatabl)) {
+	        this.bwk.setWKondensableitung(null);
+	    } else {
+	        this.bwk.setWKondensableitung(kondensatabl);
+	    }
+	
+	    Integer jahrgang = ((IntegerField) this.jahrgangFeld).getIntValue();
+	    this.bwk.setErfassung(jahrgang);
+	
+	    String abnahme = this.abnahmeFeld.getText();
+	    if ("".equals(abnahme)) {
+	        this.bwk.setAbnahme(null);
+	    } else {
+	        this.bwk.setAbnahme(abnahme);
+	    }
+	
+	    Date anschreiben = this.anschreibenFeld.getDate();
+	    if ("".equals(anschreiben)) {
+	        this.bwk.setAnschreiben(null);
+	    } else {
+	        this.bwk.setAnschreiben(anschreiben);
+	    }
+	
+	    Date genehmigung = this.genehmigungDatum.getDate();
+	    this.bwk.setDatumG(genehmigung);
+	
+	    Boolean aba;
+	    if (getAbaCheck().isSelected()) {
+	        aba = true;
+	    } else {
+	        aba = false;
+	    }
+	    this.bwk.setAba(new Boolean(aba));
+	
+	    Boolean genehmpflicht;
+	    if (getgenehmpflichtCheck().isSelected()) {
+	        genehmpflicht = true;
+	    } else {
+	        genehmpflicht = false;
+	    }
+	    this.bwk.setGenehmigungspflicht(new Boolean(genehmpflicht));
+	
+	    String beschreibung = this.bwkBeschreibungsArea.getText();
+	    if ("".equals(beschreibung)) {
+	        this.bwk.setBemerkungen(null);
+	    } else {
+	        this.bwk.setBemerkungen(beschreibung);
+	    }
+	
+	    Anfallstelle.merge(this.anfallstelle);
+	    success = this.bwk.merge();
+	
+	    if (success) {
+	        log.debug("Brennwertkessel " + this.bwk + " gespeichert.");
+	    } else {
+	        log.debug("Brennwertkessel " + this.bwk
+	            + " konnte nicht gespeichert werden!");
+	    }
+	
+	    return success;
+	}
+
+	private JCheckBox getAbaCheck() {
         if (this.abaCheck == null) {
-            this.abaCheck = new JCheckBox("ABA");
+            this.abaCheck = new JCheckBox("Abwasserbehandlungsanlage");
         }
         return this.abaCheck;
     }
@@ -544,7 +532,7 @@ public class BWKPanel extends JPanel {
             this.saveBwkButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    enableAll(false);
+//                    enableAll(false);
                     if (saveBwkDaten()) {
                         BWKPanel.this.hauptModul.getFrame().changeStatus(
                             "Brennwertkessel " + BWKPanel.this.bwk.getId()
@@ -561,169 +549,5 @@ public class BWKPanel extends JPanel {
             });
         }
         return this.saveBwkButton;
-    }
-
-    private JTable getObjektverknuepungTabelle() {
-
-        if (this.objektVerknuepfungModel == null) {
-            this.objektVerknuepfungModel = new ObjektVerknuepfungModel(
-                this.hauptModul.getObjekt());
-
-            if (this.objektverknuepfungTabelle == null) {
-                this.objektverknuepfungTabelle = new JTable(
-                    this.objektVerknuepfungModel);
-            } else {
-                this.objektverknuepfungTabelle
-                    .setModel(this.objektVerknuepfungModel);
-            }
-            this.objektverknuepfungTabelle.getColumnModel().getColumn(0)
-                .setPreferredWidth(5);
-            this.objektverknuepfungTabelle.getColumnModel().getColumn(1)
-                .setPreferredWidth(100);
-            this.objektverknuepfungTabelle.getColumnModel().getColumn(2)
-                .setPreferredWidth(250);
-
-            this.objektverknuepfungTabelle
-                .addMouseListener(new java.awt.event.MouseAdapter() {
-                    @Override
-                    public void mouseClicked(java.awt.event.MouseEvent e) {
-                        if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                            Point origin = e.getPoint();
-                            int row = getObjektverknuepungTabelle().rowAtPoint(
-                                origin);
-
-                            if (row != -1) {
-                                Objektverknuepfung obj = BWKPanel.this.objektVerknuepfungModel
-                                    .getRow(row);
-                                if (obj.getObjektByIstVerknuepftMit()
-                                    .getId().intValue() != BWKPanel.this.hauptModul
-                                    .getObjekt().getId().intValue())
-                                    BWKPanel.this.hauptModul
-                                        .getManager()
-                                        .getSettingsManager()
-                                        .setSetting(
-                                            "auik.imc.edit_object",
-                                            obj.getObjektByIstVerknuepftMit()
-                                                .getId().intValue(),
-                                            false);
-                                else
-                                    BWKPanel.this.hauptModul
-                                        .getManager()
-                                        .getSettingsManager()
-                                        .setSetting(
-                                            "auik.imc.edit_object",
-                                            obj.getObjektByObjekt()
-                                                .getId().intValue(),
-                                            false);
-                                BWKPanel.this.hauptModul.getManager()
-                                    .switchModul("m_objekt_bearbeiten");
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        showVerknuepfungPopup(e);
-                    }
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        showVerknuepfungPopup(e);
-                    }
-                });
-
-            this.objektverknuepfungTabelle.getInputMap().put(
-                (KeyStroke) getVerknuepfungLoeschAction().getValue(
-                    Action.ACCELERATOR_KEY),
-                getVerknuepfungLoeschAction().getValue(Action.NAME));
-            this.objektverknuepfungTabelle.getActionMap().put(
-                getVerknuepfungLoeschAction().getValue(Action.NAME),
-                getVerknuepfungLoeschAction());
-        }
-
-        return this.objektverknuepfungTabelle;
-
-    }
-
-    private void showVerknuepfungPopup(MouseEvent e) {
-        if (this.verknuepfungPopup == null) {
-            this.verknuepfungPopup = new JPopupMenu("Objekt");
-            JMenuItem loeschItem = new JMenuItem(getVerknuepfungLoeschAction());
-            this.verknuepfungPopup.add(loeschItem);
-        }
-
-        if (e.isPopupTrigger()) {
-            Point origin = e.getPoint();
-            int row = this.objektverknuepfungTabelle.rowAtPoint(origin);
-
-            if (row != -1) {
-                this.objektverknuepfungTabelle
-                    .setRowSelectionInterval(row, row);
-                this.verknuepfungPopup.show(e.getComponent(), e.getX(),
-                    e.getY());
-            }
-        }
-    }
-
-    private Action getVerknuepfungLoeschAction() {
-        if (this.verknuepfungLoeschAction == null) {
-            this.verknuepfungLoeschAction = new AbstractAction("Löschen") {
-                private static final long serialVersionUID = -7075711379257351951L;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int row = getObjektverknuepungTabelle().getSelectedRow();
-                    if (row != -1
-                        && getObjektverknuepungTabelle().getEditingRow() == -1) {
-                        Objektverknuepfung verknuepfung = BWKPanel.this.objektVerknuepfungModel
-                            .getRow(row);
-                        if (GUIManager.getInstance().showQuestion(
-                            "Soll die Verknüpfung wirklich gelöscht werden?\n"
-                                + "Hinweis: Die Aktion betrifft nur die "
-                                + "Verknüpfung, die Objekte bleiben erhalten "
-                                + "und können jederzeit neu verknüpft werden.",
-                            "Löschen bestätigen")) {
-                            if (BWKPanel.this.objektVerknuepfungModel
-                                .removeRow(row)) {
-                                BWKPanel.this.hauptModul.getFrame()
-                                    .changeStatus("Objekt gelöscht.",
-                                        HauptFrame.SUCCESS_COLOR);
-                                log.debug("Objekt " + verknuepfung.getId()
-                                    + " wurde gelöscht!");
-                            } else {
-                                BWKPanel.this.hauptModul.getFrame()
-                                    .changeStatus(
-                                        "Konnte das Objekt nicht löschen!",
-                                        HauptFrame.ERROR_COLOR);
-                            }
-                        }
-                    }
-                }
-            };
-            this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
-                new Integer(KeyEvent.VK_L));
-            this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
-                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
-        }
-
-        return this.verknuepfungLoeschAction;
-    }
-
-    private JButton getSelectObjektButton() {
-        if (this.selectObjektButton == null) {
-            this.selectObjektButton = new JButton("Objekt auswählen");
-
-            this.selectObjektButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ObjektChooser chooser = new ObjektChooser(
-                        BWKPanel.this.hauptModul.getFrame(), BWKPanel.this.bwk
-                            .getObjekt(),
-                        BWKPanel.this.objektVerknuepfungModel);
-                    chooser.setVisible(true);
-                }
-            });
-        }
-        return this.selectObjektButton;
     }
 }

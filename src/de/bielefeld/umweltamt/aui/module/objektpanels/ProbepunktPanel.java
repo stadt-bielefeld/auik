@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +38,7 @@ import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -236,6 +238,7 @@ public class ProbepunktPanel extends JPanel {
         if (this.sachbearbeiter != null) {
             getSachbearbeiterBox().setModel(
                 new DefaultComboBoxModel(this.sachbearbeiter));
+            sachbearbeiterBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
             getSachbearbeiterBox().setEditable(true);
         }
 
