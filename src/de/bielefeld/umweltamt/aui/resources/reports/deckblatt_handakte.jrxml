@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.2.2  -->
+=======
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.2.2  -->
+>>>>>>> refs/remotes/origin/master
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="deckblatt_handakte" language="groovy" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="75" rightMargin="5" topMargin="40" bottomMargin="40" uuid="74726fd8-4acb-49de-bf6b-602a7e2af24e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -147,7 +151,7 @@ WHERE
 	<title>
 		<band height="124" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="422" height="20" uuid="90708f2b-4866-41ba-b917-c7663d85373c">
+				<reportElement x="1" y="-20" width="422" height="20" uuid="90708f2b-4866-41ba-b917-c7663d85373c">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
@@ -157,7 +161,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{betrname}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="20" width="424" height="20" uuid="65e64b8d-218d-47fb-9798-a0999c0c82ef">
+				<reportElement x="0" y="6" width="424" height="20" uuid="65e64b8d-218d-47fb-9798-a0999c0c82ef">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
