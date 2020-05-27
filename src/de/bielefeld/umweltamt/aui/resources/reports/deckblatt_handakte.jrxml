@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.2.2  -->
-=======
-<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.2.2  -->
->>>>>>> refs/remotes/origin/master
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="deckblatt_handakte" language="groovy" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="75" rightMargin="5" topMargin="40" bottomMargin="40" uuid="74726fd8-4acb-49de-bf6b-602a7e2af24e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>

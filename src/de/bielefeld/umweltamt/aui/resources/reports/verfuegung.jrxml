@@ -293,7 +293,7 @@
 			</textField>
 		</band>
 		<band height="54" splitType="Stretch">
-			<textField textAdjust="StretchHeight">
+			<textField>
 				<reportElement x="20" y="42" width="400" height="12" uuid="d14ec260-d70d-4bc1-9b32-36d3b971402e"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>

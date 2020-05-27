@@ -5,6 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <properties>
     <jersey.version>2.5</jersey.version>
+    <jasper.version>6.10.0</jasper.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
@@ -236,12 +237,12 @@
 	<dependency>
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports</artifactId>
-      <version>6.10.0</version>
+      <version>${jasper.version}</version>
 	</dependency>
 	<dependency>
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports-fonts</artifactId>
-      <version>6.10.0</version>
+      <version>${jasper.version}</version>
 	</dependency>
 
     <!-- A repacked jasperreports jar file with necessary fonts included, workaround for font problems on Windows systems-->
@@ -438,6 +439,11 @@
       <name>JBoss.org Maven repository</name>
       <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
     </repository>
+    <repository>
+      <id>repository.mavencentral</id>
+      <name> Maven Central Repository</name>
+      <url>https://repo1.maven.org/maven2/</url>
+    </repository>
   </repositories>
 
   <build>
@@ -476,7 +482,7 @@
       </plugin>
 	    <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.1.1</version>
+        <version>3.3.0</version>
         <configuration>
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -497,6 +503,38 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jasperreports-maven-plugin</artifactId>
+        <version>1.0-beta-2</version>
+        <configuration>
+          <sourceDirectory>src/de/bielefeld/umweltamt/aui/resources</sourceDirectory>
+          <outputDirectory>${project.build.directory}/classes/de/bielefeld/umweltamt/aui/resources/</outputDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+              <goals>
+                <goal>compile-reports</goal>
+              </goals>
+          </execution>
+        </executions>
+        <dependencies>
+            <dependency>
+                <groupId>net.sf.jasperreports</groupId>
+                <artifactId>jasperreports</artifactId>
+                <version>${jasper.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>org.codehaus.groovy</groupId>
+              <artifactId>groovy-all</artifactId>
+              <version>2.0.1</version>
+              <scope>compile</scope>
+              <optional>true</optional>
+            </dependency>
+      </dependencies>
+    </plugin>
 
 	  <!--install local jars via install plugin,
 		  use "mvn validate" before compiling -->
