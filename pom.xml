@@ -464,6 +464,17 @@
       </resource>
     </resources>
 
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jasperreports-maven-plugin</artifactId>
+        <version>1.0-beta-2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
+    </plugins>
+
      <pluginManagement>
      	<plugins>
      		<plugin>
@@ -505,7 +516,7 @@
 		          </execution>
 		        </executions>
 		      </plugin>
-		
+          <!-- Jasper compiler-->
 		      <plugin>
 		        <groupId>org.codehaus.mojo</groupId>
 		        <artifactId>jasperreports-maven-plugin</artifactId>
@@ -563,6 +574,23 @@
 		        </execution>
 		   		</executions>
 			  </plugin>
+
+        <!--Copy all dependencies to the maven_lib folder-->
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+              <phase>compile</phase>
+              <goals>
+                <goal>copy-dependencies</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>maven_lib</outputDirectory>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
 			  <plugin>
 			    <artifactId>maven-antrun-plugin</artifactId>
 		        <version>1.8</version>
