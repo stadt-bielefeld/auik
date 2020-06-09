@@ -1,6 +1,8 @@
 # Willkommen zu AUI-K
 
 [![License](https://img.shields.io/badge/License-LGPL%20v2.1-blue.svg)][license]
+![Build](https://github.com/stadt-bielefeld/auik/workflows/Build/badge.svg)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/stadt-bielefeld/auik?include_prereleases)
 
 [license]:  https://tldrlegal.com/license/gnu-lesser-general-public-license-v2.1-(lgpl-2.1)
 [sonarcube]: https://sonarcloud.io/dashboard?id=auik_prod%3Aauik_prod
