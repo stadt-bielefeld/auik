@@ -275,6 +275,15 @@ public class Abaverfahren  implements java.io.Serializable {
         return DatabaseQuery.getAll(new Abaverfahren());
     }
 
+    /**
+     * Get a list of all <code>Abaverfahren</code>
+     * @return <code>List&lt;Abaverfahren&gt;</code>
+     *         all <code>Abaverfahren</code>
+     */
+    public static List<Abaverfahren> getNwBehandel() {
+        return DatabaseQuery.getNwAbaVerfahrens();
+    }
+
     /* Custom code goes below here! */
     public String toGuiString() {
         return getBezeichnung();

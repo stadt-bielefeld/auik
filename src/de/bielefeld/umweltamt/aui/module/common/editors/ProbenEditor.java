@@ -1021,18 +1021,13 @@ public class ProbenEditor extends AbstractApplyEditor {
             probe.getMessstelle().getObjekt().getBetreiberid();
 
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
-        CurrencyDouble cd = new CurrencyDouble(getRechnungsbetrag(probe),
-            Locale.GERMANY);
+        double cd = getRechnungsbetrag(probe);
 
         String kassenzeichen = basisBetr.getKassenzeichen().toString();
         kassenzeichen = kassenzeichen.replace(".", "");
 
-        String rechnungsbetrag = cd.toString();
-        rechnungsbetrag = rechnungsbetrag.replace("€", "");
-        rechnungsbetrag = rechnungsbetrag.replace(",", "");
-        rechnungsbetrag = rechnungsbetrag.substring(0, rechnungsbetrag.length()-1);
-        rechnungsbetrag = rechnungsbetrag.trim();
-        rechnungsbetrag = rechnungsbetrag.substring(0, rechnungsbetrag.length()-1);
+        String rechnungsbetrag = String.valueOf(cd);
+        rechnungsbetrag = rechnungsbetrag.replace(".", "");
 
         String kasseDatum = DateUtils.format(rechnungsdatum,
             DateUtils.FORMAT_KASSE);

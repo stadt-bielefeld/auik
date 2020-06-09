@@ -88,34 +88,44 @@ public class BasisAdresseModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Inhaber inh = (Inhaber) objectAtRow;
-//    	Adresse adr = (Adresse) objectAtRow;
+    	
+    	Inhaber inh = null;
+    	Adresse adr = null;
+    	
+    	if (objectAtRow instanceof Inhaber) {
+        	inh = (Inhaber) objectAtRow;
+        	adr = inh.getAdresse();
+    	} else {
+        	adr = (Adresse) objectAtRow;
+    	}
+    	
+
         Object tmp;
 
         switch (columnIndex) {
         case 0:
-            tmp = inh.getAdresse().getStrasse();
+            tmp = adr.getStrasse();
             break;
         case 1:
-            tmp = inh.getAdresse().getHausnr();
+            tmp = adr.getHausnr();
             break;
         case 2:
-            tmp = inh.getAdresse().getHausnrzus();
+            tmp = adr.getHausnrzus();
             break;
         case 3:
-            tmp = inh.getAdresse().getPlz();
+            tmp = adr.getPlz();
             break;
         case 4:
-            tmp = inh.getAdresse().getEntgebid();
+            tmp = adr.getEntgebid();
             break;
         case 5:
-            tmp = inh.getAdresse().getStandortgghwsg();
+            tmp = adr.getStandortgghwsg();
             break;
         case 6:
-            tmp = inh.getAdresse().getWassereinzugsgebiet();
+            tmp = adr.getWassereinzugsgebiet();
             break;
         case 7:
-            tmp = inh.getAdresse().getBemerkungen();
+            tmp = adr.getBemerkungen();
             break;
 
         default:
@@ -144,8 +154,8 @@ public class BasisAdresseModel extends ListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public Inhaber getRow(int rowIndex) {
-        return (Inhaber) super.getObjectAtRow(rowIndex);
+    public Adresse getRow(int rowIndex) {
+        return (Adresse) super.getObjectAtRow(rowIndex);
     }
 
     /**
@@ -170,12 +180,11 @@ public class BasisAdresseModel extends ListTableModel {
         log.debug("End filterList");
     }
     
-    public void filterStandort(String strasse, Integer hausnr, String ort) {
+    public void filterStandort(String strasse, Integer hausnr) {
         log.debug("Start filterList");
-        setList(DatabaseQuery.findInhaber(strasse, hausnr, ort));
+        setList(DatabaseQuery.findAdressen(strasse, hausnr));
         lastStrasse = strasse;
         lastHausnr = hausnr;
-        LastOrt = ort;
         log.debug("End filterList");
     }
 }

@@ -83,7 +83,7 @@ public class ZuordnungChooser<T> extends JPanel{
         removeButton = new JButton("< Entfernen");
 
         FormLayout chooserLayout = new FormLayout("150dlu, 5dlu, 65dlu, 5dlu, 150dlu", // Spalten
-                "20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 200dlu, 3dlu, 20dlu"); // zeilen
+                "20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 50dlu, 3dlu, 20dlu"); // zeilen
 
         @SuppressWarnings("deprecation")
         DefaultFormBuilder builder = new DefaultFormBuilder(chooserLayout, this);
@@ -92,10 +92,10 @@ public class ZuordnungChooser<T> extends JPanel{
         if (this.title != null) {
             builder.appendSeparator(title);
         }
-        builder.add(new JScrollPane(leftList), cc.xywh(1, 3, 1,9));
-        builder.add(new JScrollPane(rightList), cc.xywh(5, 3, 1, 9));
-        builder.add(addButton, cc.xy(3, 5));
-        builder.add(removeButton, cc.xy(3, 7));
+        builder.add(new JScrollPane(leftList), cc.xywh(1, 1, 1,9));
+        builder.add(new JScrollPane(rightList), cc.xywh(5, 1, 1, 9));
+        builder.add(addButton, cc.xy(3, 3));
+        builder.add(removeButton, cc.xy(3, 5));
         builder.nextLine();
 
 

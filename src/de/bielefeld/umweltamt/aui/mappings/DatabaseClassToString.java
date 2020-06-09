@@ -717,9 +717,8 @@ public class DatabaseClassToString {
 		return null;
 	}
 
-    public static String toStringForClass(Entwaesserungsgrundstueck entwaesserungsgrundstueck) {
-		// TODO Auto-generated method stub
-		return null;
+    public static String toStringForClass(Entwaesserungsgrundstueck clazz) {
+        return clazz.toDebugString();
 	}
 
 	public static String toStringForClass(Massnahme massnahme) {

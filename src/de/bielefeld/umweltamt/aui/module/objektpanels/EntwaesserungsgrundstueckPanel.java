@@ -130,7 +130,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
     DefaultComboBoxModel<CBoxItem> einbauartModel;
 
     public EntwaesserungsgrundstueckPanel(BasisObjektBearbeiten hauptModul) {
-        this.name = "Einleitungsstelle";
+        this.name = "Entwässerungsgrundstück";
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
@@ -160,6 +160,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
         builder.append(einbauartLabel, einbauart);
         builder.nextLine();
         builder.appendSeparator(abaverfahrensLabel.getText());
+        builder.nextLine();
         builder.append(abaverfahrens, 8);
 
         builder.nextLine();
@@ -230,8 +231,8 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
     public void fetchFormData() throws RuntimeException {
         this.entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findByObjektId(
                 this.hauptModul.getObjekt().getId());
-        log.debug("Entwaesserungsgrundstueck aus DB geholt: " + this.entwaesserungsgrundstueck);
-        this.abaverfahrens.setData(Abaverfahren.getAll());
+        log.debug("Entwaesserungsgrundstueck aus DB geholt: " + this.entwaesserungsgrundstueck.toString());
+        this.abaverfahrens.setData(Abaverfahren.getNwBehandel());
         List<Abaverfahren> selected = new ArrayList<Abaverfahren>();
         if (this.entwaesserungsgrundstueck != null) {
             Set<ZEntwaessgrAbwasbehverf> verfs = this.entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs();
@@ -259,24 +260,20 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
             this.bezeichnungFeld.setText(entwaesserungsgrundstueck.getBemerkung());
             this.gebName.setText(entwaesserungsgrundstueck.getNameEtwGebiet());
-            this.regenspende.setText(entwaesserungsgrundstueck.getRegenspende().toString());
-            this.regenhaufigkeit.setText(entwaesserungsgrundstueck.getRegenhaeufigkeit().toString());
-            this.regendauer.setText(entwaesserungsgrundstueck.getRegendauer().toString());
-            if (entwaesserungsgrundstueck.getEinlBereichOpt() != null) {
-                for (int i = 0; i < einleitungsbereich.getItemCount(); i++) {
-                    if (einleitungsbereich.getItemAt(i).getId().equals(
-                            entwaesserungsgrundstueck.getEinlBereichOpt())) {
-                        einleitungsbereich.setSelectedIndex(i);
-                    }
-                }
+            if (this.entwaesserungsgrundstueck.getRegenspende() != null) {
+				this.regenspende.setText(entwaesserungsgrundstueck.getRegenspende().toString());
+			}
+			if (entwaesserungsgrundstueck.getRegenhaeufigkeit() != null) {
+				this.regenhaufigkeit.setText(entwaesserungsgrundstueck.getRegenhaeufigkeit().toString());
+			}
+			if (entwaesserungsgrundstueck.getRegendauer() != null) {
+				this.regendauer.setText(entwaesserungsgrundstueck.getRegendauer().toString());
+			}
+			if (entwaesserungsgrundstueck.getEinlBereichOpt() != null) {
+                einleitungsbereich.setSelectedIndex(entwaesserungsgrundstueck.getEinlBereichOpt());
             }
             if (entwaesserungsgrundstueck.getEinbauartOpt() != null) {
-                for (int i = 0; i < einbauart.getItemCount(); i++) {
-                    if (einbauart.getItemAt(i).getId().equals(
-                            entwaesserungsgrundstueck.getEinbauartOpt())) {
-                        einbauart.setSelectedIndex(i);
-                    }
-                }
+                einbauart.setSelectedIndex(entwaesserungsgrundstueck.getEinbauartOpt());
             }
         }
     }
@@ -516,13 +513,13 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
                     enableAll(false);
                     String status = "";
                     if(saveEntwaesserungsgrundstueckDaten()) {
-                        status = "Einleitungsstelle " + 
+                        status = "Entwässerungsgrundstück " + 
                     EntwaesserungsgrundstueckPanel.this.entwaesserungsgrundstueck.getNr()
                     + " erfolgreich gespeichert.";
                     } else {
-                        status = "Fehler beim Speichern der Einleitungsstelle!";				
+                        status = "Fehler beim Speichern der Entwässerungsgrundstück!";				
                     }
-                    if(status.startsWith("Sonderbauwerk")) {
+                    if(status.startsWith("Entwässerungsgrundstück")) {
                         EntwaesserungsgrundstueckPanel.this.hauptModul.getFrame().changeStatus(status,
                             HauptFrame.SUCCESS_COLOR);
                     } else {

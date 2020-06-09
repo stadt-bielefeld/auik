@@ -687,7 +687,7 @@ public class Anh55Panel extends JPanel {
 //                getAbwasseranfallCheck().setSelected(false);
 //            }
 //        }
-            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
+//            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         }
 
     }

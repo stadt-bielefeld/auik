@@ -826,11 +826,9 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria.forClass(Messstelle.class)
 																	.createAlias("objekt", "objekt")
-																	.createAlias("objekt.standortid", "standort")
-																	.createAlias("objekt.betreiberid", "adresse")
+																	.createAlias("probenahmes", "probe")
 																	.add(Restrictions.eq("objekt.inaktiv", true))
-																	.addOrder(Order.asc("adresse.strasse"))
-																	.addOrder(Order.asc("adresse.hausnr")),
+																	.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
 															new Messstelle());
 	}
 

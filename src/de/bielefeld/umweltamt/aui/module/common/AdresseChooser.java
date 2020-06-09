@@ -178,7 +178,7 @@ public class AdresseChooser extends JDialog {
 	private void choose(int row) {
 		if (row != -1) {
 			if (this.betreiberAdresse != null && caller == "adresse") {
-				this.adresse = this.adresseModel.getRow(row).getAdresse();
+				this.adresse = this.adresseModel.getRow(row);
 			} else if (this.betreiberAdresse != null && caller == "betreiber") {
 				this.betreiberAdresse = this.betreiberModel.getRow(row);
 			} else if (this.standortAdresse != null) {
@@ -241,7 +241,7 @@ public class AdresseChooser extends JDialog {
 			SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
 				@Override
 				protected void doNonUILogic() throws RuntimeException {
-					AdresseChooser.this.adresseModel.filterStandort(strasse, hausnr, null);
+					AdresseChooser.this.adresseModel.filterStandort(strasse, hausnr);
 				}
 
 				@Override

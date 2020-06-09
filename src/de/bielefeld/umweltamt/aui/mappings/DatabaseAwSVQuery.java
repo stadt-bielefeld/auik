@@ -226,7 +226,7 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Fachdaten */
+	/* Queries for package AwSV: class Fachdaten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
