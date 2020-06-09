@@ -51,9 +51,12 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
+import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
+import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -940,14 +943,25 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 */
 	
 	public static List<Adresse> findAdressen(String strasse, Integer hausnr, String zusatz, String plz) {
+
+		String query = "SELECT adresse FROM Adresse adresse WHERE ";
+		query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' AND ";
+		query += "adresse.hausnr = " + hausnr + " AND ";
+		query += "adresse.hausnrzus = '" + zusatz + "' AND ";
+		query += "adresse.plz = '" + plz + "' AND ";
+		query += "adresse.deleted = false ";
+
+		List<Adresse> list = HibernateSessionFactory.currentSession().createQuery(query).list();
+		return list;
+	}
+	
+	public static List<Adresse> findAdressen(String strasse, Integer hausnr) {
 	
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
 		boolean bHausnr = (hausnr != null && hausnr != -1);
-		boolean bZusatz = (zusatz != null && zusatz.length() > 0);
-		boolean bPlz = (plz != null && plz.length() > 0);
 	
 		String query = "SELECT adresse " + "FROM Adresse adresse";
-		if (bStrasse || bHausnr || bZusatz || bPlz) {
+		if (bStrasse || bHausnr) {
 			query += " WHERE ";
 			if (bStrasse) {
 				query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' AND ";
@@ -955,14 +969,10 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			if (bHausnr) {
 				query += "adresse.hausnr = " + hausnr + " AND ";
 			}
-			if (bZusatz) {
-				query += "adresse.hausnrzus = '" + hausnr + "' AND ";
-			}
-			if (bPlz) {
-				query += "adresse.plz = '" + plz + "' AND ";
-			}
 			
 			query += "adresse.deleted = false ";
+					
+			query += "ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC ";
 		}
 		List<Adresse> list = HibernateSessionFactory.currentSession().createQuery(query).list();
 		return list;
@@ -989,6 +999,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				DetachedCriteria.forClass(TabStreets.class).add(Restrictions.eq("name", strasse))
 						.addOrder(Order.asc("hausnr")).addOrder(Order.asc("hausnrZusatz").nulls(NullPrecedence.FIRST)),
 				new TabStreets());
+	}
+
+	public static Standort findStandort(Inhaber inh) {
+		return new DatabaseAccess().executeCriteriaToUniqueResult(
+				DetachedCriteria.forClass(Standort.class).add(Restrictions.eq("inhaber", inh))
+						.add(Restrictions.eq("bezeichnung", "Adresse")),
+				new Standort());
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1218,6 +1235,50 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				"ORDER BY CAST (NULLIF(regexp_replace(anhang_id, '\\D', '', 'g'), '') as int) asc";
 
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
+	}
+	
+	/**
+	 * Get all Anhangs and sort them by their anhang_id as integer
+	 * 
+	 * @return <code>Eine Liste aller Anhangs</code>
+	 */
+
+	public static List<Abaverfahren> getNwAbaVerfahrens() {
+
+		String query = "FROM Abaverfahren WHERE bezeichnung LIKE '34.%' " + 
+				"ORDER BY bezeichnung asc";
+
+		return HibernateSessionFactory.currentSession().createQuery(query).list();
+	}
+
+	/* ********************************************************************** */
+	/* Queries for package Direkteinleiter */
+	/* ********************************************************************** */
+
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	/* Queries for package VAWS : class VawsWasserschutzgebiete */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+	/**
+	 * Durchsucht Fachdaten nach einem bestimmten Aktenzeichen und gibt
+	 * das Ergebnis als List zurück
+	 * 
+	 * @param search
+	 *            String
+	 * @return <code>List&lt;Fachdaten&gt;</code>
+	 */
+	public static List<Wasserrecht> findAktenzeichen(String search) {
+
+		if (search == null || search == "") {
+			return new DatabaseAccess().executeCriteriaToList(
+					DetachedCriteria.forClass(Wasserrecht.class),
+					new Wasserrecht());
+		} else {
+			return new DatabaseAccess().executeCriteriaToList(
+					DetachedCriteria.forClass(Wasserrecht.class).add(
+							Restrictions.like("aktenzeichen", "%" + search + "%")),
+					new Wasserrecht());
+		}
 	}
 
 }
