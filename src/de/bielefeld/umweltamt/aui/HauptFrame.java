@@ -73,6 +73,7 @@ package de.bielefeld.umweltamt.aui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
@@ -88,10 +89,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -101,6 +104,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
@@ -112,8 +116,12 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.jfree.ui.tabbedui.VerticalLayout;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Paddings;
@@ -179,6 +187,8 @@ public class HauptFrame extends JFrame {
     private JMenu helpMenu = null;
     private JMenuItem aboutMenuItem = null;
     private JMenuItem DokuItem = null;
+
+    private JMenuItem passwordChangeMenuItem = null;
 
     private JPanel titlePanel = null;
 
@@ -566,6 +576,7 @@ public class HauptFrame extends JFrame {
             fileMenu.setText("Datei");
             fileMenu.setMnemonic(KeyEvent.VK_D);
             // fileMenu.putClientProperty(Options.NO_ICONS_KEY, Boolean.TRUE);
+            fileMenu.add(getPasswordChangeItem());
             fileMenu.add(getSettingsMenuItem());
             fileMenu.addSeparator();
             fileMenu.add(getExitMenuItem());
@@ -588,6 +599,30 @@ public class HauptFrame extends JFrame {
             helpMenu.add(getDoku());
         }
         return helpMenu;
+    }
+
+    /**
+     * Create password change menu item
+     * @return Menu item
+     */
+    private JMenuItem getPasswordChangeItem() {
+        if (passwordChangeMenuItem == null) {
+            passwordChangeMenuItem = new JMenuItem();
+            passwordChangeMenuItem.setText("Password ändern");
+            passwordChangeMenuItem.setMnemonic(KeyEvent.VK_P);
+            passwordChangeMenuItem.setEnabled(true);
+            final Frame owner = this;
+            passwordChangeMenuItem.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    PasswordChangeDialog pwChangeDialog = new PasswordChangeDialog(owner);
+                    //Show dialog above right panel
+                    pwChangeDialog.setLocationRelativeTo(getRightFrame());
+                    pwChangeDialog.setVisible(true);
+                }
+            });
+        }
+        return passwordChangeMenuItem;
     }
 
     /**
@@ -937,6 +972,142 @@ public class HauptFrame extends JFrame {
             return file;
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Dialog, allowing the user to change the current password
+     */
+    private final class PasswordChangeDialog extends JDialog {
+
+        private JLabel currentPasswordLabel;
+        private JLabel newPasswordLabel;
+        private JLabel newPasswordConfirmLabel;
+
+        private JPasswordField currentPasswordField;
+        private JPasswordField newPasswordField;
+        private JPasswordField newPasswordConfirmField;
+
+        private JButton okButton;
+        private JButton cancelButton;
+
+        public PasswordChangeDialog(Frame owner) throws HeadlessException {
+            super(owner, "Passwort ändern", true);
+            this.setSize(450, 150);
+            initialize();
+        }
+
+        /**
+         * Initialize UI
+         */
+        private void initialize() {
+            currentPasswordLabel = new JLabel("Aktuelles Passwort:");
+            newPasswordLabel = new JLabel("Neues Passwort:");
+            newPasswordConfirmLabel = new JLabel("Passwort bestätigen:");
+            currentPasswordField = new JPasswordField();
+            newPasswordField = new JPasswordField();
+            newPasswordConfirmField = new JPasswordField();
+            okButton = new JButton("OK");
+            cancelButton = new JButton("Abbrechen");
+
+            currentPasswordField.setPreferredSize(new Dimension(150, 22));
+
+            okButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (newPasswordField.getText().isEmpty()
+                            || newPasswordConfirmField.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(PasswordChangeDialog.this, "Bitte geben Sie ein neues Passwort ein");
+                    }
+                    if (!checkPasswordConfirmation()) {
+                        JOptionPane.showMessageDialog(PasswordChangeDialog.this, "Die Passwörter stimmen nicht überein");
+                        return;
+                    }
+                    if (!checkCurrentPassword()) {
+                        JOptionPane.showMessageDialog(PasswordChangeDialog.this, "Das eingegebene Passwort ist nicht korrekt");
+                        return;
+                    }
+                    if (!changePassword(newPasswordField.getText())) {
+                        JOptionPane.showMessageDialog(PasswordChangeDialog.this, "Passwortänderung fehlgeschlagen");
+                    }
+                }
+            });
+            cancelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    PasswordChangeDialog.this.dispose();
+                }
+            });
+
+            FormLayout layout = new FormLayout(
+                "right:pref, 4dlu, pref:grow, 4dlu, pref", // Spalten
+                "pref:grow, 3dlu, pref, 3dlu, pref, 3dlu, p" // Zeilen
+            );
+
+            JPanel contentPanel = new JPanel(new VerticalLayout());
+
+            layout.setRowGroups(new int[][]{{1, 3, 5}});
+
+            PanelBuilder builder = new PanelBuilder(layout);
+            CellConstraints cc = new CellConstraints();
+            builder.add(currentPasswordLabel, cc.xy(1, 1));
+            builder.add(currentPasswordField, cc.xy(3, 1));
+            builder.add(newPasswordLabel, cc.xy(1, 3));
+            builder.add(newPasswordField, cc.xy(3, 3));
+            builder.add(newPasswordConfirmLabel, cc.xy(1, 5));
+            builder.add(newPasswordConfirmField, cc.xy(3, 5));
+            // builder.add(okButton, cc.xy(1, 7));
+            // builder.add(cancelButton, cc.xy(3, 7));
+            JPanel formPanel = builder.getPanel();
+            formPanel.setBorder(Paddings.DIALOG);
+            contentPanel.add(formPanel);
+
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.add(okButton);
+            buttonPanel.add(cancelButton);
+            contentPanel.add(buttonPanel);
+
+            this.setContentPane(contentPanel);
+            this.pack();
+        }
+
+        /**
+         * Check if password was correctly repeated in the second input field
+         * @return True if password is confirmed, else false
+         */
+        private boolean checkPasswordConfirmation() {
+            return newPasswordField.getText().equals(newPasswordConfirmField.getText());
+        }
+
+        /**
+         * Check if current password is correct
+         * @return True if password is correct, else false
+         */
+        private boolean checkCurrentPassword() {
+            return HibernateSessionFactory.checkCredentials(HibernateSessionFactory.getDBUser(), currentPasswordField.getText(), false);
+        }
+
+        /**
+         * Change the current password
+         * @return True if successful
+         */
+        private boolean changePassword(String newPw) {
+            Session session = HibernateSessionFactory.currentSession();
+            String user = HibernateSessionFactory.getDBUser();
+            SQLQuery query = session.createSQLQuery("ALTER USER ? WITH PASSWORD ? ;");
+            boolean success = false;
+            query.setParameter(0, user);
+            query.setParameter(1, newPw);
+            try {
+                List result = query.list();
+                System.out.println(result.get(0));
+                success = true;
+                System.out.println("Changed");
+                HibernateSessionFactory.setDBData(HibernateSessionFactory.getDBUser(), newPw);
+            } catch (Exception e) {
+                log.error("Error changing password: " + e);
+            }
+            return success;
         }
     }
 
