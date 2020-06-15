@@ -275,7 +275,7 @@ public class HibernateSessionFactory {
      * überprüft die Benutzerdaten für die Datenbank.
      * @param user Der Datenbank-Benutzer
      * @param pass Das Passwort des Datenbank-Benutzers
-     * @param save True korrekte Benuterdaten gespeichert werden sollen
+     * @param save True wenn korrekte Benuterdaten gespeichert werden sollen
      * @return <code>true</code>, wenn die Benutzerdaten korrekt sind, sonst <code>false</code>
      */
     public static boolean checkCredentials(String user, String pass, boolean save) throws HibernateException {
@@ -299,13 +299,14 @@ public class HibernateSessionFactory {
         } catch (Exception e) {
             if (e.getClass().equals(org.hibernate.exception.JDBCConnectionException.class)) {
                 tmp = false;
-                if (save == true) {
+                if (save) {
                     setDBData("", "");
-                } else {
-                    setDBData(currentUser, currentPw);
                 }
             }
         } finally {
+            if (!save) {
+                setDBData(currentUser, currentPw);
+            }
             closeSession();
         }
 
