@@ -2632,7 +2632,11 @@ class VerwGebuehrenModel extends EditableListTableModel {
             break;
         // Betrag:
         case 2:
-            tmp = new KommaDouble(gebuehr.getBetrag().doubleValue());
+        	if(gebuehr.getBetrag() != null) {
+        		tmp = new KommaDouble(gebuehr.getBetrag().doubleValue());
+        	} else {
+        		tmp = "";
+        	}
             break;
         // Abschnitt:
         case 3:
