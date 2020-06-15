@@ -111,7 +111,7 @@ public class PasswordChangeDialog extends JDialog {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cancel();
+                close();
             }
         });
 
@@ -125,7 +125,7 @@ public class PasswordChangeDialog extends JDialog {
                 switch (e.getKeyCode()) {
                     //Use ESC to cancel
                     case KeyEvent.VK_ESCAPE:
-                        cancel();
+                        close();
                         break;
                     //Use enter to submit if focus is on new password confirmation field
                     case KeyEvent.VK_ENTER:
@@ -180,13 +180,15 @@ public class PasswordChangeDialog extends JDialog {
         }
         if (!changePassword(newPasswordField.getPassword())) {
             JOptionPane.showMessageDialog(PasswordChangeDialog.this, "Passwortänderung fehlgeschlagen. \nBitte versuchen Sie es erneut.");
+        } else {
+            close();
         }
     }
 
     /**
      * Cancel action and dispose this dialog
      */
-    private void cancel() {
+    private void close() {
         PasswordChangeDialog.this.dispose();
     }
 
@@ -250,17 +252,38 @@ public class PasswordChangeDialog extends JDialog {
             return false;
         }
         String user = HibernateSessionFactory.getDBUser();
-        SQLQuery query = session.createSQLQuery("ALTER USER ? WITH PASSWORD ? ;");
+        String queryString = String.format("ALTER USER \"%s\" WITH PASSWORD '%s'",
+                escapeUserString(user),
+                escapePasswordString(String.valueOf(newPw)));
         boolean success = false;
-        query.setParameter(0, user);
-        query.setParameter(1, newPw);
+        SQLQuery query = session.createSQLQuery(queryString);
         try {
-            List result = query.list();
+            query.executeUpdate();
             success = true;
             HibernateSessionFactory.setDBData(HibernateSessionFactory.getDBUser(), String.valueOf(newPw));
         } catch (Exception e) {
             log.error("Error changing password: " + e);
         }
         return success;
+    }
+
+    /**
+     * Returns an escaped username String
+     * @param user Username
+     * @return Escaped String
+     */
+    private String escapeUserString(String user) {
+        String returnString = user.replaceAll("\"", "\\\"");
+        return returnString;
+    }
+
+    /**
+     * Get an escaped password String
+     * @param pw Password
+     * @return Escaped String
+     */
+    private String escapePasswordString(String pw) {
+        String returnString = pw.replaceAll("'", "''");
+        return returnString;
     }
 }
