@@ -130,6 +130,7 @@ public class HibernateSessionFactory {
                 catch (Exception e) {
                     log.error("%%%% Error Creating SessionFactory %%%%");
                     e.printStackTrace();
+                    return null;
                 }
             }
             session = sessionFactory.openSession();
