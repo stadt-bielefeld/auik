@@ -259,9 +259,9 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 
         DetachedCriteria criteria =
             DetachedCriteria.forClass(Anh49Fachdaten.class)
-            .createAlias("anfallstelle", "anf")
+            	.createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "obj")
-                .createAlias("objekt.objektarten", "art");
+                .createAlias("obj.objektarten", "art");
 
         if (inaktiv == true) {
             criteria.add(Restrictions.eq("obj.inaktiv", inaktiv));
@@ -362,7 +362,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
                 .add(Restrictions.eq("objekt.inaktiv", false))
                 .add(Restrictions.eq("objekt.deleted", false))
                 .addOrder(Order.asc("wiedervorlage"))
-                .addOrder(Order.asc("adresse.betrname"));
+                .addOrder(Order.asc("adresse.name"));
         if (nurWiedervorlageAbgelaufen) {
             detachedCriteria.add(Restrictions.le("wiedervorlage", new Date()));
         }
@@ -420,7 +420,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
             .createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "objekt")
                 .createAlias("objekt.standortid", "standort")
-                .createAlias("standort.adresse", "adresse")
+                .createAlias("standort.inhaber", "inhaber")
+                .createAlias("inhaber.adresse", "adresse")
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("adresse.strasse"))
                 .addOrder(Order.asc("adresse.hausnr"));
@@ -451,7 +452,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
             .createAlias("anfallstelle", "anf")
             .createAlias("anf.objekt", "obj")
             .createAlias("obj.standortid", "standort")
-            .createAlias("standort.adresse", "adresse")
+            .createAlias("standort.inhaber", "inhaber")
+            .createAlias("inhaber.adresse", "adresse")
             .add(Restrictions.eq("obj.deleted", false));
         detachedCriteria.addOrder(Order.asc("adresse.strasse"));
         detachedCriteria.addOrder(Order.asc("adresse.hausnr"));

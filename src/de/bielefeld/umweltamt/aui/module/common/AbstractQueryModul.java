@@ -80,6 +80,9 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -164,6 +167,12 @@ public abstract class AbstractQueryModul extends AbstractModul {
 				tmp = (Objekt) fachdaten;
 			} else if (fachdaten instanceof BwkFachdaten){
 				tmp = ((BwkFachdaten) fachdaten).getAnfallstelle().getObjekt();
+			} else if (fachdaten instanceof Anh49Fachdaten){
+				tmp = ((Anh49Fachdaten) fachdaten).getAnfallstelle().getObjekt();
+			} else if (fachdaten instanceof Anh50Fachdaten){
+				tmp = ((Anh50Fachdaten) fachdaten).getAnfallstelle().getObjekt();
+			} else if (fachdaten instanceof Anh56Fachdaten){
+				tmp = ((Anh56Fachdaten) fachdaten).getAnfallstelle().getObjekt();
 			} else {
 				Method getBO = fachdaten.getClass().getMethod("getObjekt");
 				tmp = (Objekt) getBO.invoke(fachdaten);
