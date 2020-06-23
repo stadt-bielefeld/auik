@@ -293,6 +293,19 @@ public class HauptFrame extends JFrame {
         String db = settings.getSetting("auik.system.dburl");
         if (db != null && !db.equals("")) {
             HibernateSessionFactory.setDBUrl(db);
+
+            String dialectName = db.split(":")[1];
+            //Set DB dialect and driver
+            try {
+                log.info(String.format("Database dialect: %s", dialectName));
+                String dialect = HibernateSessionFactory.getDialectClassByDialectName(dialectName);
+                String driver = HibernateSessionFactory.getDriverByDialectClass(dialect);
+                HibernateSessionFactory.setDBDialect(dialect);
+                HibernateSessionFactory.setDBDriver(driver);
+            } catch (IllegalArgumentException iae) {
+                log.error("Error setting up db driver: " + iae);
+                this.close();
+            }
         }
 
         // Fragt die Benutzerdaten ab, wenn die Abfrage erfolgreich war...
@@ -312,6 +325,9 @@ public class HauptFrame extends JFrame {
     }
 
     private boolean askForDBCredentials() {
+        if (!HibernateSessionFactory.doesDialectNeedCredentials()) {
+            return true;
+        }
         BenutzerDatenDialog benutzerDialog = new BenutzerDatenDialog(this);
         locateOnScreen(benutzerDialog);
         return benutzerDialog.loginSuccessful();

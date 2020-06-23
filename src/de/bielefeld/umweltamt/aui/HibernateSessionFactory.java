@@ -22,6 +22,7 @@
 package de.bielefeld.umweltamt.aui;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -40,7 +41,7 @@ public class HibernateSessionFactory {
 
     /** Database manager */
     private static final DatabaseManager dbManager = DatabaseManager.getInstance();
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
@@ -78,6 +79,22 @@ public class HibernateSessionFactory {
     private static String DB_Dialect = "";
 
     /**
+     * Map supported dialects to dialect classes
+     */
+    private static final Map<String, String> DIALECTS = Map.of(
+        "postgresql", "org.hibernate.dialect.PostgreSQLDialect",
+        "sqlite", "org.hibernate.dialect.SQLiteDialect"
+    );
+
+    /**
+     * Map dialect to driver class
+     */
+    private static final Map<String, String> DIALECT_TO_DRIVER = Map.of(
+        "org.hibernate.dialect.PostgreSQLDialect", "org.postgresql.Driver",
+        "org.hibernate.dialect.SQLiteDialect", "org.sqlite.JDBC"
+    );
+
+    /**
      * Returns the ThreadLocal Session instance.  Lazy initialize
      * the <code>SessionFactory</code> if needed.
      * NIEMALS die Session über sess.close() selbst wieder schließen,
@@ -97,12 +114,17 @@ public class HibernateSessionFactory {
                     // First load the config file
                     cfg.configure(
                         AUIKataster.class.getResource(CONFIG_FILE_LOCATION));
-                    // Then overwrite the user / password property
-                    cfg.setProperty("hibernate.connection.username", DB_USER);
-                    cfg.setProperty("hibernate.connection.password", DB_PASS);
-					if (DB_URL != null && !DB_URL.equals("")) {
-						cfg.setProperty("hibernate.connection.url", DB_URL);
-					}
+                    if (doesDialectNeedCredentials()) {
+                        // If needed overwrite the user / password property
+                        cfg.setProperty("hibernate.connection.username", DB_USER);
+                        cfg.setProperty("hibernate.connection.password", DB_PASS);
+                    }
+
+                    if (DB_URL != null && !DB_URL.equals("")) {
+                        cfg.setProperty("hibernate.connection.url", DB_URL);
+                        cfg.setProperty("hibernate.connection.driver_class", DB_Driver);
+                        cfg.setProperty("hibernate.dialect", DB_Dialect);
+                    }
                     sessionFactory = cfg.buildSessionFactory();
                 }
                 catch (Exception e) {
@@ -114,7 +136,6 @@ public class HibernateSessionFactory {
             threadLocal.set(session);
             log.debug("Neue Session begonnen!");
         }
-
         return session;
     }
 
@@ -122,7 +143,7 @@ public class HibernateSessionFactory {
      *  Close the single hibernate session instance.
      *
      */
-    public static void closeSession() {//throws HibernateException {
+    public static void closeSession() {
         Session session = threadLocal.get();
         threadLocal.set(null);
 
@@ -131,7 +152,7 @@ public class HibernateSessionFactory {
                 session.close();
                 log.debug("Session geschlossen!");
             } catch (HibernateException e) {
-            	dbManager.handleDBException(e, "HibernateSessionFactory.closeSession", false);
+                dbManager.handleDBException(e, "HibernateSessionFactory.closeSession", false);
             }
         }
     }
@@ -164,8 +185,60 @@ public class HibernateSessionFactory {
         return DB_Dialect;
     }
 
+    /**
+     * Set the db dialect name.
+     * Support dialects are:
+     *   - org.hibernate.dialect.PostgreSQLDialect
+     *   - org.hibernate.dialect.SQLiteDialect
+     * @param dialect Dialect class name
+     */
     public static void setDBDialect(String dialect) {
         DB_Dialect = dialect;
+    }
+
+    /**
+     * Get the dialect class by dialect name
+     * Supported dialect name are:
+     *   - postgresql
+     *   - sqlite
+     * @param dialectName Dialect name String
+     * @throws IllegalArgumentException Thrown if a unsupported dialect is set
+     * @return Dialect class name as String
+     */
+    public static String getDialectClassByDialectName(String dialectName) throws IllegalArgumentException {
+        String dialect = DIALECTS.get(dialectName);
+        if (dialect == null) {
+            throw new IllegalArgumentException(String.format(String.format("Unsupported dialect name: %s", dialectName)));
+        }
+        return dialect;
+    }
+
+    /**
+     * Get the jdbc driver class by dialect name
+     * Supported dialect name are:
+     *   - postgresql
+     *   - sqlite
+     * @param dialectName Dialect name String
+     * @throws IllegalArgumentException Thrown if a unsupported dialect is set
+     * @return Driver class name as String
+     */
+    public static String getDriverByDialectClass(String dialectName) throws IllegalArgumentException {
+        String driver = DIALECT_TO_DRIVER.get(dialectName);
+        if (driver == null) {
+            throw new IllegalArgumentException(String.format(String.format("Unsupported dialect class: %s", dialectName)));
+        }
+        return driver;
+    }
+
+    /**
+     * Check if the current db dialect needs credentials for authorization
+     * @return True if credentials are needed, else false
+     */
+    public static boolean doesDialectNeedCredentials() {
+        switch (DB_Dialect) {
+            case "org.hibernate.dialect.SQLiteDialect": return false;
+            default: return true;
+        }
     }
 
     /**
@@ -218,7 +291,6 @@ public class HibernateSessionFactory {
      * Default constructor.
      */
     private HibernateSessionFactory() {
-    	// This place is intentionally left blank.
+        // This place is intentionally left blank.
     }
-
 }
