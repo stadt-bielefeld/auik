@@ -125,6 +125,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Gebuehren;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parametergruppen;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
@@ -133,6 +134,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
+import de.bielefeld.umweltamt.aui.module.GebuehrenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
@@ -167,12 +169,6 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
     /**
-     * Dieser Wert stellt den Preis einer Stunde f&uuml;r Personal- und
-     * Sachkosten in Cent dar.
-     **/
-    public static final double PERSONAL_UND_SACHKOSTEN = 6403;
-
-    /**
      * Dieser Wert gibt an, wieviele Stellen das Feld in der Datei kasse.txt
      * besitzen muss, welches das Rechnungsdatum und den Rechnungsbetrag
      * enth&auml;lt.
@@ -184,6 +180,8 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Geb&uuml;hrenbescheides.
      **/
     public static final String KASSE_FILENAME = "kasse.txt";
+
+    private double personalkosten = -1;
 
     private class ParameterModel extends EditableListTableModel {
         private static final long serialVersionUID = 6042681141925302970L;
@@ -1527,7 +1525,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("maxdatum", DateUtils.format(DateUtils.getDateOfBill(now),
             DateUtils.FORMAT_DATE));
         params.put("kosten",
-            Double.toString(PERSONAL_UND_SACHKOSTEN/100).replace(".", ","));
+            Double.toString(getPersonalkosten()/100).replace(".", ","));
         params.put("kassenzeichen", betr.getKassenzeichen());
         params.put("firmaAnrede", betr.getAnrede());
         if (betr.getVorname() != null)
@@ -1559,7 +1557,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 .parse(mitFahrt, DateUtils.FORMAT_TIME);
 
             String dauer = DateUtils.getDuration(beginnDate, mitFahrtDate);
-            double kosten = Math.round((getSachUndPersonalkosten()) * 100) / 100.0;
+            double kosten = Math.round((calculateSachUndPersonalkosten()) * 100) / 100.0;
             double gesamt = Math
                 .round((kosten + getAnalysekosten(probe)) * 100) / 100.0;
 
@@ -1575,6 +1573,23 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         return params;
+    }
+
+    /**
+     * Return personalkosten or load from db if not set
+     * @return personalkosten as double
+     * @throws RuntimeException Thrown if no database entry could be found
+     */
+    private double getPersonalkosten() throws RuntimeException{
+        if (this.personalkosten >= 0) {
+            return this.personalkosten;
+        }
+        Gebuehren record = Gebuehren.findByBezeichnung(GebuehrenEditor.PERSONNEL_FEE_BEZEICHNUNG);
+        if (record == null) {
+            throw new RuntimeException("Can not find personnel fee in database");
+        }
+        this.personalkosten = (double) record.getWert();
+        return this.personalkosten;
     }
 
     /**
@@ -1608,8 +1623,8 @@ public class ProbenEditor extends AbstractApplyEditor {
      * Diese Methode liefert die Sach- und Personalkosten.
      * @return die Personal- und Sachkosten.
      */
-    public double getSachUndPersonalkosten() throws ParseException {
-    	double kosten = PERSONAL_UND_SACHKOSTEN * getDauer() * getAnzahl();
+    public double calculateSachUndPersonalkosten() throws ParseException {
+    	double kosten = getPersonalkosten() * getDauer() * getAnzahl();
     	double round = Math.round(kosten);
     	return round/100;
     }
@@ -1721,7 +1736,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public double getRechnungsbetrag(Probenahme probe)
         throws ParseException, IllegalArgumentException {
-        return Math.round(getSachUndPersonalkosten() * 100.) / 100.
+        return Math.round(calculateSachUndPersonalkosten() * 100.) / 100.
             + Math.round(getAnalysekosten(probe) * 100.) / 100.;
     }
 

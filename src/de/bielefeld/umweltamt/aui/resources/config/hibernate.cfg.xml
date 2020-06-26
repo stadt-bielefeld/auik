@@ -17,6 +17,7 @@
         
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/Analyseposition.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/Einheiten.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/Gebuehren.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/Klaeranlage.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/Messstelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/atl/MetaParameter.hbm.xml" />

@@ -123,6 +123,7 @@ import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
 import de.bielefeld.umweltamt.aui.module.common.editors.EinstellungenEditor;
+import de.bielefeld.umweltamt.aui.module.GebuehrenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
@@ -179,6 +180,9 @@ public class HauptFrame extends JFrame {
     private JMenu helpMenu = null;
     private JMenuItem aboutMenuItem = null;
     private JMenuItem DokuItem = null;
+
+    private JMenu editMenu = null;
+    private JMenuItem feeMenuItem = null;
 
     private JPanel titlePanel = null;
 
@@ -563,6 +567,7 @@ public class HauptFrame extends JFrame {
         if (hauptMenue == null) {
             hauptMenue = new JMenuBar();
             hauptMenue.add(getFileMenu());
+            hauptMenue.add(getEditMenu());
             // hauptMenue.add(Box.createHorizontalGlue());
             hauptMenue.add(getHelpMenu());
             hauptMenue.putClientProperty(
@@ -590,6 +595,20 @@ public class HauptFrame extends JFrame {
     }
 
     /**
+     * Get the edit menu
+     * @return Edit menu instance
+     */
+    private JMenu getEditMenu() {
+        if (editMenu == null) {
+            editMenu = new JMenu();
+            editMenu.setText("Bearbeiten");
+            editMenu.setMnemonic(KeyEvent.VK_B);
+            editMenu.add(getFeeMenuItem());
+        }
+        return editMenu;
+    }
+
+    /**
      * This method initializes helpMenu
      *
      * @return javax.swing.JMenu
@@ -604,6 +623,30 @@ public class HauptFrame extends JFrame {
             helpMenu.add(getDoku());
         }
         return helpMenu;
+    }
+
+
+    /**
+     * Get the fee menu item
+     * @return Fee menu item instance
+     */
+    private JMenuItem getFeeMenuItem() {
+        if (feeMenuItem == null) {
+            feeMenuItem = new JMenuItem();
+            feeMenuItem.setText("Gebühren");
+            feeMenuItem.setMnemonic(KeyEvent.VK_G);
+            feeMenuItem.setEnabled(true);
+            final JFrame owner = this;
+            feeMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    GebuehrenEditor gebuehrenPanel = new GebuehrenEditor(owner);
+                    gebuehrenPanel.setLocationRelativeTo(getRightFrame());
+                    gebuehrenPanel.setVisible(true);
+                }
+            });
+        }
+        return feeMenuItem;
     }
 
     /**

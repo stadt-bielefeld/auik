@@ -23,6 +23,7 @@ package de.bielefeld.umweltamt.aui.mappings;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
+import de.bielefeld.umweltamt.aui.mappings.atl.Gebuehren;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.atl.MetaParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
@@ -279,6 +280,10 @@ public class DatabaseClassToString {
     /** @return Einheiten.toGuiString() */
     public static String toStringForClass(Einheiten clazz) {
         return clazz.toGuiString();
+    }
+
+    public static String toStringForClass(Gebuehren clazz) {
+        return String.format("Gebühren: %s: %d", clazz.getBezeichnung(), clazz.getWert());
     }
 
     /** @return Klaeranlage.toGuiString() */

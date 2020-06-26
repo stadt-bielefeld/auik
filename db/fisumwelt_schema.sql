@@ -13405,6 +13405,18 @@ INSERT INTO anhang VALUES (148, 33, '42', '1984-09-26', '1997-03-31', 'AbwVerwVo
 
 SELECT setval('basis.basis_betreiber_id_seq', 1, true);
 
+CREATE TABLE labor.gebuehren (
+    id SERIAL PRIMARY KEY,
+    bezeichnung VARCHAR(50) UNIQUE NOT NULL,
+    wert INTEGER NOT NULL,
+    _enabled BOOLEAN NOT NULL DEFAULT true,
+    _deleted BOOLEAN NOT NULL DEFAULT false
+);
+
+ALTER TABLE labor.gebuehren OWNER TO auikadmin;
+
+INSERT INTO labor.gebuehren (bezeichnung, wert) VALUES ('personalkosten', 6403);
+
 
 -- Completed on 2020-04-01 15:14:49
 

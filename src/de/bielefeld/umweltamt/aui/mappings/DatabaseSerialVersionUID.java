@@ -50,6 +50,7 @@ public class DatabaseSerialVersionUID {
     /* Generated serialVersionUID for atl package */
     public static final long forAnalyseposition    = 8611630449814009888L;
     public static final long forEinheiten          = 866939599579322354L;
+    public static final long forGebuehren          = 8668574783844322354L;
     public static final long forKlaeranlage        = 4476838822557197680L;
     public static final long forMetaParameter      = 8096270946149269437L;
     public static final long forParameter          = 2852105702010364133L;
