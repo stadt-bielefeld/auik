@@ -249,6 +249,8 @@ public class AnfallstellePanel extends JPanel {
             	getAnlagenartBox().setSelectedItem(this.anfallstelle.getAnlagenart());
             }
             
+            getAnlagenartBox().setVisible(false);
+            
             List<Anhang> anhang = Anhang.getAll();
             getAnhangBox().setModel(new DefaultComboBoxModel(anhang.toArray()));
                         
@@ -307,7 +309,7 @@ public class AnfallstellePanel extends JPanel {
 		getBetriebsweiseOptFeld().setText(null);
 		getBemerkungenArea().setText(null);
 
-		if (anfallstelle != null) {
+		if (anfallstelle != null && anfallstelle.getAnhangId() != null) {
 			switch (anfallstelle.getAnhangId()) {
 			case "40":
 				getAnh40Tab().clearForm();

@@ -98,7 +98,9 @@ public class BasisObjektModel extends ListTableModel {
             	} else if (bo.getAnfallstelles().size() > 0) {
             		Set<Anfallstelle> list = bo.getAnfallstelles();
             		Anfallstelle anfallstelle = list.iterator().next();
-            		if (!anfallstelle.getAnhangId().equals("99")) {
+            		if (anfallstelle.getAbwaBeschaffOpt() == 5) {
+            			tmp = "Anfallstelle (Niederschlagswasser ohne Sonderbauwerk)";
+            		} else if (!anfallstelle.getAnhangId().equals("99")) {
             			tmp = "Anfallstelle (Anh " + anfallstelle.getAnhangId() + ")";
             		} else {
             			tmp = "Anfallstelle (" + anfallstelle.getAnlagenart() + ")";
