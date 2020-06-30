@@ -630,14 +630,14 @@ public class Anfallstelle  implements java.io.Serializable {
             return "-";
         }
         switch (id) {
-            case 0: return "Produktionsabwasser";
-            case 1: return "Kühlwasser";
-            case 2: return "Sanitärwasser";
-            case 3: return "Niederschlagswasser mit Sonderbauwerk";
-            case 4: return "Niederschlagswasser ohne Sonderbauwerk";
-            case 5: return "Grubenwasser";
-            case 6: return "Fischteiche";
-            case 7: return "sonstiges Wasser";
+            case 1: return "Produktionsabwasser";
+            case 2: return "Kühlwasser";
+            case 3: return "Sanitärwasser";
+            case 4: return "Niederschlagswasser mit Sonderbauwerk";
+            case 5: return "Niederschlagswasser ohne Sonderbauwerk";
+            case 6: return "Grubenwasser";
+            case 7: return "Fischteiche";
+            case 8: return "sonstiges Wasser";
             default: return "-";
         }
     }
