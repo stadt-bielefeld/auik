@@ -633,27 +633,29 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		boolean bOrt = (ort != null && ort.length() > 0);
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
-
-		String query = "SELECT DISTINCT adresse " + "FROM objekt as obj JOIN obj.adresseByBetreiberid adresse";
+		
+		String query = "SELECT DISTINCT i, a "
+				+ "FROM Adresse a, Inhaber i, Objekt o "
+				+ "WHERE a.id = i.adresse AND i.id = o.betreiberid";
 		if (bName || bStrasse || bHausnr || bOrt) {
-			query += " WHERE ";
 			if (bName) {
-				query += "LOWER(adresse.betrname) like '" + name.toLowerCase() + "%' AND ";
+				query += " AND LOWER(i.name) like '" + name.toLowerCase() + "%'";
 			}
 			if (bStrasse) {
-				query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' AND ";
+				query += " AND LOWER(a.strasse) like '" + str + "%' ";
 			}
-			if (bHausnr) {
-				query += "adresse.hausnr = " + hausnr + " AND ";
+			if (hausnr != null && hausnr != -1) {
+				if (bStrasse) {
+					query += " AND ";
+				}
+				query += " a.hausnr = " + hausnr;
 			}
 			if (bOrt) {
-				query += "LOWER(adresse.ort) like '" + ort.toLowerCase() + "%' AND ";
+				query += " AND LOWER(a.ort) like '" + ort.toLowerCase() + "%' ";
 			}
-
-			query += "adresse.deleted = false ";
-
-			query += "ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
+			query += " AND a.deleted = false";
 		}
+		query += " ORDER BY i.name, a.strasse, a.hausnr ASC";
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
 
@@ -895,7 +897,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		boolean bHausnr = (hausnr != null && hausnr != -1);
 		boolean bOrt = (ort != null && ort.length() > 0);
 
-		String query = "SELECT i FROM Adresse a, Inhaber i WHERE i.adresse = a";
+		String query = "SELECT i, a FROM Adresse a, Inhaber i WHERE i.adresse = a";
 		if (bName || bStrasse || bHausnr || bOrt) {
 			query += " AND ";
 			if (bName && property == null) {
