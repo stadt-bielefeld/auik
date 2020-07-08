@@ -92,22 +92,22 @@ public class BasisObjektModel extends ListTableModel {
                     tmp = secondColumn;
                 }
                 break;
-            case 2:
-            	if (bo.getObjektarten().getAbteilung() == "AwSV") {
-            		tmp = bo.getObjektarten();
-            	} else if (bo.getAnfallstelles().size() > 0) {
-            		Set<Anfallstelle> list = bo.getAnfallstelles();
-            		Anfallstelle anfallstelle = list.iterator().next();
-            		if (anfallstelle.getAbwaBeschaffOpt() == 5) {
-            			tmp = "Anfallstelle (Niederschlagswasser ohne Sonderbauwerk)";
-            		} else if (!anfallstelle.getAnhangId().equals("99")) {
-            			tmp = "Anfallstelle (Anh " + anfallstelle.getAnhangId() + ")";
-            		} else {
-            			tmp = "Anfallstelle (" + anfallstelle.getAnlagenart() + ")";
-            		}
-            	} else {
-            		tmp = bo.getObjektarten();
-    	}
+			case 2:
+				if (bo.getObjektarten().getAbteilung() == "AwSV") {
+					tmp = bo.getObjektarten();
+				} else if (bo.getAnfallstelles().size() > 0) {
+					Set<Anfallstelle> list = bo.getAnfallstelles();
+					Anfallstelle anfallstelle = list.iterator().next();
+					if (anfallstelle.getAbwaBeschaffOpt() != null && anfallstelle.getAbwaBeschaffOpt() == 5) {
+						tmp = "Anfallstelle (Niederschlagswasser ohne Sonderbauwerk)";
+					} else if (!anfallstelle.getAnhangId().equals("99")) {
+						tmp = "Anfallstelle (Anh " + anfallstelle.getAnhangId() + ")";
+					} else {
+						tmp = "Anfallstelle (" + anfallstelle.getAnlagenart() + ")";
+					}
+				} else {
+					tmp = bo.getObjektarten();
+				}
                 break;
             case 3:
                 tmp = bo.getBeschreibung();

@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.util.List;
 import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -84,10 +85,10 @@ public class BasisInhaberModel extends ListTableModel {
 	public Object getColumnValue(Object objectAtRow, int columnIndex) {
     	Object tmp = null;
 		
-//    	Object[] obj = (Object[]) objectAtRow;
-//		Inhaber betr = (Inhaber) obj[0];
+    	Object[] obj = (Object[]) objectAtRow;
+		Inhaber betr = (Inhaber) obj[0];
 
-		Inhaber betr = (Inhaber) objectAtRow;
+//		Inhaber betr = (Inhaber) objectAtRow;
 		
 		
 		HibernateSessionFactory.currentSession().refresh(betr);
@@ -138,8 +139,8 @@ public class BasisInhaberModel extends ListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    public Inhaber getRow(int rowIndex) {
-        return (Inhaber) super.getObjectAtRow(rowIndex);
+    public Object[] getRow(int rowIndex) {
+        return (Object[]) super.getObjectAtRow(rowIndex);
     }
 
     @Override

@@ -180,7 +180,8 @@ public class AdresseChooser extends JDialog {
 			if (this.betreiberAdresse != null && caller == "adresse") {
 				this.adresse = this.adresseModel.getRow(row);
 			} else if (this.betreiberAdresse != null && caller == "betreiber") {
-				this.betreiberAdresse = this.betreiberModel.getRow(row);
+				Object[] obj = (Object[]) this.betreiberModel.getRow(row);
+				this.betreiberAdresse = (Inhaber) obj[0];
 			} else if (this.standortAdresse != null) {
 				this.standortAdresse = this.standortModel.getRow(row);
 			}
