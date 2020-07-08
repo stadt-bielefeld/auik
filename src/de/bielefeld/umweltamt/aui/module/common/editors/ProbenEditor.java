@@ -76,6 +76,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -1022,6 +1023,9 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
         double cd = getRechnungsbetrag(probe);
+        cd = cd*100;
+        cd = Math.round(cd);
+        cd = cd/100;
 
         String kassenzeichen = basisBetr.getKassenzeichen().toString();
         kassenzeichen = kassenzeichen.replace(".", "");
