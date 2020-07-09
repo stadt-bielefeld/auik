@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>auik_prod</groupId>
   <artifactId>auik_prod</artifactId>
-  <version>${git.commit.id.describe-short}</version>
+  <version>0.0.1-SNAPSHOT</version>
   <properties>
     <jersey.version>2.5</jersey.version>
     <jasper.version>6.10.0</jasper.version>
@@ -458,6 +458,7 @@
   </repositories>
 
   <build>
+    <finalName>${project.artifactId}-${git.commit.id.describe-short}</finalName>
     <sourceDirectory>src</sourceDirectory>
     <resources>
       <resource>
@@ -592,27 +593,29 @@
       <plugin>
         <groupId>pl.project13.maven</groupId>
         <artifactId>git-commit-id-plugin</artifactId>
-        <version>2.2.4</version>
+        <version>4.0.0</version>
         <executions>
-            <execution>
-                <id>get-the-git-infos</id>
-                <goals>
-                    <goal>revision</goal>
-                </goals>
-            </execution>
+          <execution>
+            <id>get-the-git-infos</id>
+            <goals>
+              <goal>revision</goal>
+            </goals>
+            <phase>validate</phase>
+          </execution>
         </executions>
         <configuration>
-            <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-            <prefix>git</prefix>
-            <verbose>false</verbose>
-            <generateGitPropertiesFile>true</generateGitPropertiesFile>
-            <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-            <format>json</format>
-            <gitDescribe>
-                <skip>false</skip>
-                <always>false</always>
-                <dirty>-dirty</dirty>
-            </gitDescribe>
+          <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <SCM-Revision>${git.commit.id.describe-short}</SCM-Revision>
+            </manifestEntries>
+          </archive>
         </configuration>
       </plugin>
 
