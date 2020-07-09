@@ -622,64 +622,25 @@
       </plugin>
 
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.8</version>
-          <executions>
-        <!--run hibernate tools via antrun plugin-->
-            <!-- TODO: run with mvn antrun:run@db2mapping -->
-        <!-- <execution>
-        <id>db2mapping</id>
-          <phase>test-compile</phase>
-              <configuration>
-                <property name="src"        location="src" />
-          <property name="resources"  value="src/de/bielefeld/umweltamt/aui/resources" />
-                <property name="config"     value="src/de/bielefeld/umweltamt/aui/resources/config" />
-          <property name="data" location="data" />
-          <target>
-            <property name="maven_compile_classpath" refid="maven.compile.classpath"/>
-                  <property name="maven_test_classpath" refid="maven.test.classpath"/>
-          <path id="hibernatetool.path">
-            <pathelement path="${maven_compile_classpath}"/>
-            <pathelement path="${maven_test_classpath}"/>
-                  </path>
-          <taskdef name="hibernatetool"
-                    classname="org.hibernate.tool.ant.HibernateToolTask"
-                      classpathref="hibernatetool.path" />
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <phase>install</phase>
+            <configuration>
+              <target>
+                <echo>Copy ${project.artifactId}-${git.commit.id.describe-short}-jar-with-dependencies.jar to  X:\Applikationen\Anlagenkataster\AUIK\${project.artifactId}-${git.commit.id.describe-short}.jar</echo>
+                <copy file="target/${project.artifactId}-${git.commit.id.describe-short}-jar-with-dependencies.jar" tofile="X:\Applikationen\Anlagenkataster\AUIK\${project.artifactId}-${git.commit.id.describe-short}.jar" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-                  <hibernatetool destdir="src">
-                    <jdbcconfiguration
-                      propertyfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.properties"
-                      revengfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.reveng.xml">
-                    </jdbcconfiguration>
-                    <hbm2hbmxml />
-                    <hbm2cfgxml destdir="src/de/bielefeld/umweltamt/aui/resources/config/generated" />
-            <hbm2java />
-                  </hibernatetool>
-            </target>
-              </configuration>
-          <goals>
-            <goal>run</goal>
-          </goals>
-        </execution>
-        -->
-        <execution>
-              <id>copy-jars</id>
-              <phase>install</phase>
-              <configuration>
-                <target>
-                  <copy todir="X:\Applikationen\Anlagenkataster\AUIK">
-                    <fileset dir="target">
-                      <include name="*.jar"/>
-                    </fileset>
-                  </copy>
-                </target>
-              </configuration>
-              <goals>
-                <goal>run</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
     </plugins>
   </build>
 </project>
