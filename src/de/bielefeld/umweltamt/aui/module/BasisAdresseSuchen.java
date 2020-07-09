@@ -397,8 +397,7 @@ public class BasisAdresseSuchen extends AbstractModul {
         ListSelectionModel lsm = getBetreiberTabelle().getSelectionModel();
         if (!lsm.isSelectionEmpty()) {
             int selectedRow = lsm.getMinSelectionIndex();
-            Object[] obj = (Object[]) this.inhaberModel.getRow(selectedRow);
-    		Inhaber betr = (Inhaber) obj[0];
+    		Inhaber betr = (Inhaber) this.inhaberModel.getRow(selectedRow);
             log.debug("Betreiber (ID"
                 + betr.getId() + ") angewählt.");
             this.inhaber = betr;
@@ -465,9 +464,8 @@ public class BasisAdresseSuchen extends AbstractModul {
                     // Natürlich nur editieren, wenn wirklich eine Zeile
                     // ausgewählt ist
                     if (row != -1) {
-                        Object[] obj = (Object[]) BasisAdresseSuchen.this.inhaberModel
+                    	Inhaber betr = (Inhaber) BasisAdresseSuchen.this.inhaberModel
                                 .getRow(row);
-                    	Inhaber betr = (Inhaber) obj[0];
                         editBetreiber(betr);
                     }
                 }
@@ -497,9 +495,8 @@ public class BasisAdresseSuchen extends AbstractModul {
                                     "Kann Betreiber nicht löschen: Zu erst alle zugehörigen Objekte löschen!",
                                     HauptFrame.ERROR_COLOR);
                         } else {
-                            Object[] obj = (Object[]) BasisAdresseSuchen.this.inhaberModel
+                        	Inhaber betr = (Inhaber) BasisAdresseSuchen.this.inhaberModel
                                     .getRow(row);
-                        	Inhaber betr = (Inhaber) obj[0];
 
                             if (GUIManager.getInstance().showQuestion(
                                 "Soll der Betreiber '" + betr
@@ -544,9 +541,8 @@ public class BasisAdresseSuchen extends AbstractModul {
                         .getSelectedRow();
 
                     if (row != -1) {
-                        Object[] obj = (Object[]) BasisAdresseSuchen.this.inhaberModel
+                    	Inhaber betr = (Inhaber) BasisAdresseSuchen.this.inhaberModel
                                 .getRow(row);
-                    	Inhaber betr = (Inhaber) obj[0];
                         if(betr.getStandorts().size() > 0) {
                         BasisAdresseSuchen.this.manager.getSettingsManager()
                             .setSetting("auik.imc.use_standort",
@@ -788,6 +784,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             this.betreiberTabelle.setColumnSelectionAllowed(false);
             this.betreiberTabelle.setRowSelectionAllowed(true);
+            this.betreiberTabelle.setAutoCreateRowSorter(true);
 
             this.betreiberTabelle
                 .addMouseListener(new java.awt.event.MouseAdapter() {
@@ -799,9 +796,8 @@ public class BasisAdresseSuchen extends AbstractModul {
                             Point origin = e.getPoint();
                             int row = getBetreiberTabelle().rowAtPoint(origin);
 
-                            Object[] obj = (Object[]) BasisAdresseSuchen.this.inhaberModel
+                            Inhaber betr = (Inhaber) BasisAdresseSuchen.this.inhaberModel
                                     .getRow(row);
-                            Inhaber betr = (Inhaber) obj[0];
                             log.debug("Doppelklick auf Zeile " + row);
                             editBetreiber(betr);
                         }
