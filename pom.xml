@@ -590,6 +590,7 @@
           </execution>
         </executions>
       </plugin>
+      <!--maven git commit id plugin-->
       <plugin>
         <groupId>pl.project13.maven</groupId>
         <artifactId>git-commit-id-plugin</artifactId>
@@ -607,6 +608,7 @@
           <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
         </configuration>
       </plugin>
+      <!--Put git hash in the jar META-INF/MANIFEST.MF -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
