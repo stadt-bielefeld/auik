@@ -78,7 +78,7 @@ public class AdresseChooser extends JDialog {
 		List<Object> initialList = new ArrayList<Object>();
 		initialList.add(initial);
 
-		if (initial instanceof Inhaber && caller == "adresse") {
+if (initial instanceof Inhaber && caller == "adresse") {
             setTitle("Adresse auswählen");
             this.betreiberAdresse = (Inhaber) initial;
             this.adresseModel = new BasisAdresseModel();
@@ -112,7 +112,7 @@ public class AdresseChooser extends JDialog {
 	}
 
 	public Adresse getChosenAdresse() {
-		if (this.adresse.getId() != null) {
+		if (this.adresse != null) {
 			return this.adresse;
 		} else {
 			return null;
@@ -180,8 +180,7 @@ public class AdresseChooser extends JDialog {
 			if (this.betreiberAdresse != null && caller == "adresse") {
 				this.adresse = this.adresseModel.getRow(row);
 			} else if (this.betreiberAdresse != null && caller == "betreiber") {
-				Object[] obj = (Object[]) this.betreiberModel.getRow(row);
-				this.betreiberAdresse = (Inhaber) obj[0];
+				this.betreiberAdresse = (Inhaber) this.betreiberModel.getRow(row);
 			} else if (this.standortAdresse != null) {
 				this.standortAdresse = this.standortModel.getRow(row);
 			}
@@ -440,7 +439,6 @@ public class AdresseChooser extends JDialog {
 				this.ergebnisTabelle = new JTable(this.betreiberModel);
 			} else if (this.standortAdresse != null) {
 				this.ergebnisTabelle = new JTable(this.standortModel);
-				// ergebnisTabelle = new JTable(3, 3);
 			}
 
 			this.ergebnisTabelle.addFocusListener(TableFocusListener.getInstance());

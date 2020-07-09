@@ -22,6 +22,7 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -625,7 +626,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */
 
-	public static List<Adresse> findBetreiber(String name, String strasse, Integer hausnr, String ort) {
+	public static List<Inhaber> findBetreiber(String name, String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bName = (name != null && name.length() > 0);
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
@@ -634,7 +635,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
 		
-		String query = "SELECT DISTINCT i, a "
+		String query = "SELECT DISTINCT i "
 				+ "FROM Adresse a, Inhaber i, Objekt o "
 				+ "WHERE a.id = i.adresse AND i.id = o.betreiberid";
 		if (bName || bStrasse || bHausnr || bOrt) {
@@ -655,8 +656,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			}
 			query += " AND a.deleted = false";
 		}
-		query += " ORDER BY i.name, a.strasse, a.hausnr ASC";
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		query += " ORDER BY i.name ASC";
+		List list = HibernateSessionFactory.currentSession().createQuery(query).list();
+		return list;
 	}
 
 	/**
@@ -897,7 +899,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		boolean bHausnr = (hausnr != null && hausnr != -1);
 		boolean bOrt = (ort != null && ort.length() > 0);
 
-		String query = "SELECT i, a FROM Adresse a, Inhaber i WHERE i.adresse = a";
+		String query = "SELECT i FROM Adresse a, Inhaber i WHERE i.adresse = a";
 		if (bName || bStrasse || bHausnr || bOrt) {
 			query += " AND ";
 			if (bName && property == null) {
@@ -927,7 +929,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 			query += "i.deleted = false ";
 
-			query += "ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC, i.name ASC";
+			query += "ORDER BY i.name ASC";
 		}
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
@@ -949,7 +951,11 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String query = "SELECT adresse FROM Adresse adresse WHERE ";
 		query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' AND ";
 		query += "adresse.hausnr = " + hausnr + " AND ";
-		query += "adresse.hausnrzus = '" + zusatz + "' AND ";
+		if (!zusatz.equals("")) {
+			query += "adresse.hausnrzus = '" + zusatz + "' AND ";
+		} else {
+			query += "adresse.hausnrzus = null AND ";
+		}
 		query += "adresse.plz = '" + plz + "' AND ";
 		query += "adresse.deleted = false ";
 
