@@ -71,9 +71,11 @@ public class Anfallstelle  implements java.io.Serializable {
     private Integer betriebsweiseOpt;
     private Boolean enabled;
     private Boolean deleted;
-    private BigDecimal maxVolTag;
-    private BigDecimal maxVolStunde;
+    private Float maxVolTag;
+    private Float maxVolStunde;
     private Integer volJahr;
+    private Float abflussmenge;
+    private Integer befFlaeche;
     private String externalNr;
     private String anlagenart;
     private String bemerkungen;
@@ -105,7 +107,7 @@ public class Anfallstelle  implements java.io.Serializable {
 
     /** Full constructor */
     public Anfallstelle(
-        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, BigDecimal maxVolTag, BigDecimal maxVolStunde, Integer volJahr, String externalNr, String anlagenart, String bemerkungen, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr, Set<BwkFachdaten> bwkFachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
+        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, Float maxVolTag, Float maxVolStunde, Integer volJahr, Float abflussmenge, Integer befFlaeche, String externalNr, String anlagenart, String bemerkungen, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr, Set<BwkFachdaten> bwkFachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
         this.id = id;
         this.objekt = objekt;
         this.seqId = seqId;
@@ -123,6 +125,8 @@ public class Anfallstelle  implements java.io.Serializable {
         this.maxVolTag = maxVolTag;
         this.maxVolStunde = maxVolStunde;
         this.volJahr = volJahr;
+        this.abflussmenge = abflussmenge;
+        this.befFlaeche = befFlaeche;
         this.externalNr = externalNr;
         this.anlagenart = anlagenart;
         this.bemerkungen = bemerkungen;
@@ -252,19 +256,19 @@ public class Anfallstelle  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-    public BigDecimal getMaxVolTag() {
+    public Float getMaxVolTag() {
         return this.maxVolTag;
     }
 
-    public void setMaxVolTag(BigDecimal maxVolTag) {
+    public void setMaxVolTag(Float maxVolTag) {
         this.maxVolTag = maxVolTag;
     }
 
-    public BigDecimal getMaxVolStunde() {
+    public Float getMaxVolStunde() {
         return this.maxVolStunde;
     }
 
-    public void setMaxVolStunde(BigDecimal maxVolStunde) {
+    public void setMaxVolStunde(Float maxVolStunde) {
         this.maxVolStunde = maxVolStunde;
     }
 
@@ -274,6 +278,22 @@ public class Anfallstelle  implements java.io.Serializable {
 
     public void setVolJahr(Integer volJahr) {
         this.volJahr = volJahr;
+    }
+
+    public Float getAbflussmenge() {
+        return this.abflussmenge;
+    }
+
+    public void setAbflussmenge(Float abflussmenge) {
+        this.abflussmenge = abflussmenge;
+    }
+
+    public Integer getBefFlaeche() {
+        return this.befFlaeche;
+    }
+
+    public void setBefFlaeche(Integer befFlaeche) {
+        this.befFlaeche = befFlaeche;
     }
 
     public String getExternalNr() {
@@ -424,7 +444,9 @@ public class Anfallstelle  implements java.io.Serializable {
         buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
         buffer.append("maxVolTag").append("='").append(getMaxVolTag()).append("' ");			
         buffer.append("maxVolStunde").append("='").append(getMaxVolStunde()).append("' ");			
-        buffer.append("volJahr").append("='").append(getVolJahr()).append("' ");			
+        buffer.append("volJahr").append("='").append(getVolJahr()).append("' ");		
+        buffer.append("abflussmenge").append("='").append(getAbflussmenge()).append("' ");	
+        buffer.append("befFlaeche").append("='").append(getBefFlaeche()).append("' ");		
         buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
         buffer.append("afsStoffes").append("='").append(getAfsStoffes()).append("' ");			
         buffer.append("referenzsForZAfsNr").append("='").append(getReferenzsForZAfsNr()).append("' ");			
@@ -518,7 +540,9 @@ public class Anfallstelle  implements java.io.Serializable {
         this.deleted = copy.getDeleted();            
         this.maxVolTag = copy.getMaxVolTag();            
         this.maxVolStunde = copy.getMaxVolStunde();            
-        this.volJahr = copy.getVolJahr();            
+        this.volJahr = copy.getVolJahr();             
+        this.abflussmenge = copy.getAbflussmenge();   
+        this.befFlaeche = copy.getBefFlaeche();        
         this.externalNr = copy.getExternalNr();            
         this.afsStoffes = copy.getAfsStoffes();            
         this.referenzsForZAfsNr = copy.getReferenzsForZAfsNr();            
@@ -630,14 +654,14 @@ public class Anfallstelle  implements java.io.Serializable {
             return "-";
         }
         switch (id) {
-            case 1: return "Produktionsabwasser";
-            case 2: return "Kühlwasser";
-            case 3: return "Sanitärwasser";
-            case 4: return "Niederschlagswasser mit Sonderbauwerk";
-            case 5: return "Niederschlagswasser ohne Sonderbauwerk";
-            case 6: return "Grubenwasser";
-            case 7: return "Fischteiche";
-            case 8: return "sonstiges Wasser";
+            case 0: return "Produktionsabwasser";
+            case 1: return "Kühlwasser";
+            case 2: return "Sanitärwasser";
+            case 3: return "Niederschlagswasser mit Sonderbauwerk";
+            case 4: return "Niederschlagswasser ohne Sonderbauwerk";
+            case 5: return "Grubenwasser";
+            case 6: return "Fischteiche";
+            case 7: return "sonstiges Wasser";
             default: return "-";
         }
     }
