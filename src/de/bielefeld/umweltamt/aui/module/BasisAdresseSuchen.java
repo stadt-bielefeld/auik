@@ -784,7 +784,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             this.betreiberTabelle.setColumnSelectionAllowed(false);
             this.betreiberTabelle.setRowSelectionAllowed(true);
-            this.betreiberTabelle.setAutoCreateRowSorter(true);
+//            this.betreiberTabelle.setAutoCreateRowSorter(true);
 
             this.betreiberTabelle
                 .addMouseListener(new java.awt.event.MouseAdapter() {

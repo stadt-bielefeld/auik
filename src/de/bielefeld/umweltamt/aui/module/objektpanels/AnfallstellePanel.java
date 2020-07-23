@@ -368,6 +368,12 @@ public class AnfallstellePanel extends JPanel {
 		getStillgelegtAmDatum().setDate(null);
 		getAbwaBeschaffOptFeld().setText(null);
 		getBetriebsweiseOptFeld().setText(null);
+//		getHerkunftBox().setSelectedIndex(1);
+		getBefestFlaecheFeld().setText(null);
+		getLProSFeld().setText(null);
+		getQmProHFeld().setText(null);
+		getQmProDFeld().setText(null);
+		getQmProAFeld().setText(null);
 		getBemerkungenArea().setText(null);
 
 		if (anfallstelle != null && anfallstelle.getAnhangId() != null) {
@@ -426,6 +432,12 @@ public class AnfallstellePanel extends JPanel {
         getStillgelegtAmDatum().setEnabled(enabled);
         getAbwaBeschaffOptFeld().setEnabled(enabled);
         getBetriebsweiseOptFeld().setEnabled(enabled);
+		getHerkunftBox().setEnabled(enabled);
+		getBefestFlaecheFeld().setEnabled(enabled);
+		getLProSFeld().setEnabled(enabled);
+		getQmProHFeld().setEnabled(enabled);
+		getQmProDFeld().setEnabled(enabled);
+		getQmProAFeld().setEnabled(enabled);
         getBemerkungenArea().setEnabled(enabled);
     }
 
@@ -624,21 +636,21 @@ public class AnfallstellePanel extends JPanel {
     
     private JFormattedTextField getLProSFeld() {
     	if (this.lProSFeld == null) {
-    		this.lProSFeld = new DoubleField(0, 0);
+    		this.lProSFeld = new DoubleField(1);
     	}
     	return this.lProSFeld;
     }
     
     private JFormattedTextField getQmProHFeld() {
     	if (this.qmProHFeld == null) {
-    		this.qmProHFeld = new DoubleField(0, 0);
+    		this.qmProHFeld = new DoubleField(1);
     	}
     	return this.qmProHFeld;
     }
     
     private JFormattedTextField getQmProDFeld() {
     	if (this.qmProDFeld == null) {
-    		this.qmProDFeld = new DoubleField(0, 0);
+    		this.qmProDFeld = new DoubleField(1);
     	}
     	return this.qmProDFeld;
     }

@@ -67,6 +67,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Anfallstelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Anhang.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Einleitungsstelle.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/MapElkaAnalysemethode.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/MapElkaAnhang.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/MapElkaEinheit.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/MapElkaStoff.hbm.xml" />

@@ -137,6 +137,7 @@ import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageModel;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
+import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.BasicEntryField;
@@ -1364,8 +1365,9 @@ public class BasisStandortSuchen extends AbstractModul
 							proj);
 
 					Map<String, String> env = pb.environment();
-					env.put("RECHTS", adr.getInhabers().iterator().next().getStandort().getE32().toString());
-					env.put("HOCH", adr.getInhabers().iterator().next().getStandort().getN32().toString());
+					TabStreets ts = DatabaseQuery.getSingleTabStreet(adr.getStrasse(), adr.getHausnr(), null);
+					env.put("RECHTS", ts.getX().toString());
+					env.put("HOCH", ts.getY().toString());
 
 					try
 					{
