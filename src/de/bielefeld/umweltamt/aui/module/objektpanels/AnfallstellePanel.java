@@ -107,9 +107,9 @@ public class AnfallstellePanel extends JPanel {
 
     private JComboBox herkunftBox = null;
     private IntegerField befestFlaecheFeld = null;
-    private JFormattedTextField lProSFeld = null;
-    private JFormattedTextField qmProHFeld = null;
-    private JFormattedTextField qmProDFeld = null;
+    private DoubleField lProSFeld = null;
+    private DoubleField qmProHFeld = null;
+    private DoubleField qmProDFeld = null;
     private IntegerField qmProAFeld = null;
     
     private JFormattedTextField bezeichnungFeld = null;
