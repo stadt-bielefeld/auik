@@ -32,8 +32,8 @@
 		<property name="seitenwaende" type="java.lang.Boolean">
 			<column name="seitenwaende" />
 		</property>
-		<property name="wandhoehe" type="java.lang.Integer">
-			<column name="wandhoehe" />
+		<property name="wandhoehe" type="java.lang.Double">
+			<column name="wandhoehe" precision="17" scale="17" />
 		</property>
 		<property name="bodenplatte" type="java.lang.String">
 			<column name="bodenplatte" />

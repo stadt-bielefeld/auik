@@ -55,7 +55,7 @@ public class Jgs  implements java.io.Serializable {
     private Integer brunnenAbstand;
     private String tierhaltung;
     private Boolean seitenwaende;
-    private Integer wandhoehe;
+    private Double wandhoehe;
     private String bodenplatte;
     private Boolean ueberdachung;
     private String auffangbeh;
@@ -86,7 +86,7 @@ public class Jgs  implements java.io.Serializable {
 
     /** Full constructor */
     public Jgs(
-        Integer id, Fachdaten fachdaten, Integer lagerflaeche, Integer gewaesserAbstand, String gewaesserName, Integer brunnenAbstand, String tierhaltung, Boolean seitenwaende, Integer wandhoehe, String bodenplatte, Boolean ueberdachung, String auffangbeh, Double volumenAuffangbeh, String rohrleitung, Date dichtheitspruefung, Boolean drainage, Boolean fuellanzeiger, Boolean schieber, Boolean abdeckung, Boolean leitungGeprueft, Boolean enabled, Boolean deleted) {
+        Integer id, Fachdaten fachdaten, Integer lagerflaeche, Integer gewaesserAbstand, String gewaesserName, Integer brunnenAbstand, String tierhaltung, Boolean seitenwaende, Double wandhoehe, String bodenplatte, Boolean ueberdachung, String auffangbeh, Double volumenAuffangbeh, String rohrleitung, Date dichtheitspruefung, Boolean drainage, Boolean fuellanzeiger, Boolean schieber, Boolean abdeckung, Boolean leitungGeprueft, Boolean enabled, Boolean deleted) {
         this.id = id;
         this.fachdaten = fachdaten;
         this.lagerflaeche = lagerflaeche;
@@ -176,11 +176,11 @@ public class Jgs  implements java.io.Serializable {
         this.seitenwaende = seitenwaende;
     }
 
-    public Integer getWandhoehe() {
+    public Double getWandhoehe() {
         return this.wandhoehe;
     }
 
-    public void setWandhoehe(Integer wandhoehe) {
+    public void setWandhoehe(Double wandhoehe) {
         this.wandhoehe = wandhoehe;
     }
 
