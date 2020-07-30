@@ -276,7 +276,7 @@ public class AwsvEditor extends AbstractBaseEditor {
     private IntegerField abstandBrunnenFeld;
     private LimitedTextField tierhaltungFeld;
     private JCheckBox seitenwandCheck;
-    private IntegerField wandhoeheFeld;
+    private DoubleField wandhoeheFeld;
     private LimitedTextField bodenplatteFeld;
     private JCheckBox ueberdachungCheck;
     private JComboBox auffangbehBox;
@@ -538,7 +538,7 @@ public class AwsvEditor extends AbstractBaseEditor {
         abstandBrunnenFeld = new IntegerField();
         tierhaltungFeld = new LimitedTextField(25);
         seitenwandCheck = new JCheckBox("Seitenwand");
-        wandhoeheFeld = new IntegerField();
+        wandhoeheFeld = new DoubleField(0);
         bodenplatteFeld = new LimitedTextField(25);
         ueberdachungCheck = new JCheckBox("Überdachung");
         auffangbehBox = new JComboBox(DatabaseQuery.getBehaelterarten());
@@ -1298,7 +1298,7 @@ public class AwsvEditor extends AbstractBaseEditor {
         	getJgs().setLagerflaeche(lagerflaecheFeld.getIntValue());   
         	getJgs().setSeitenwaende(seitenwandCheck.isSelected());
         	getJgs().setTierhaltung(tierhaltungFeld.getText());
-        	getJgs().setWandhoehe(wandhoeheFeld.getIntValue());
+        	getJgs().setWandhoehe(wandhoeheFeld.getDoubleValue());
         	getJgs().setAuffangbeh((String)auffangbehBox.getSelectedItem());
         	getJgs().setVolumenAuffangbeh(volumenAuffangbehFeld.getDoubleValue());
         	getJgs().setRohrleitung((String)rohrleitungBox.getSelectedItem());

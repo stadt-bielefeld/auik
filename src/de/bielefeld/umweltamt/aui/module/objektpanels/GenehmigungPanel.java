@@ -43,6 +43,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
@@ -77,6 +78,7 @@ public class GenehmigungPanel extends JPanel {
 
     // Widgets
 
+    private JTextField aktenzeichenFeld = null;
     private JTextArea genBemerkungArea = null;
     private TextFieldDateChooser antragsDatum = null;
     private TextFieldDateChooser genehmigungsDatum = null;
@@ -115,6 +117,8 @@ public class GenehmigungPanel extends JPanel {
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
 
         builder.appendSeparator("Fachdaten");
+        builder.append("Aktenzeichen:", getAktenzeichenFeld());
+        builder.nextLine();
         builder.append("Antragsdatum:", getAntragsDatum());
         builder.append("", getGen58CheckBox());
         builder.nextLine();
@@ -170,6 +174,9 @@ public class GenehmigungPanel extends JPanel {
 
         if (this.fachdaten != null) {
 
+            if (this.fachdaten.getAktenzeichen() != null) {
+                getAktenzeichenFeld().setText(this.fachdaten.getAktenzeichen());
+            }
             if (this.fachdaten.getBemerkungen() != null) {
                 getGenBemerkungArea().setText(this.fachdaten.getBemerkungen());
             }
@@ -243,6 +250,7 @@ public class GenehmigungPanel extends JPanel {
     }
 
     public void clearForm() {
+    	getAktenzeichenFeld().setText(null);
         getGenBemerkungArea().setText(null);
         getAnhangFeld().setText(null);
         getGenMengeFeld().setText(null);
@@ -259,6 +267,7 @@ public class GenehmigungPanel extends JPanel {
     }
 
     public void enableAll(boolean enabled) {
+    	getAktenzeichenFeld().setEnabled(enabled);
         getGenBemerkungArea().setEnabled(enabled);
         getAnhangFeld().setEnabled(enabled);
         getGenMengeFeld().setEnabled(enabled);
@@ -277,6 +286,12 @@ public class GenehmigungPanel extends JPanel {
     private boolean saveGenehmigungDaten() {
         boolean success;
 
+        String aktenzeichen = this.aktenzeichenFeld.getText();
+        if ("".equals(aktenzeichen)) {
+            this.fachdaten.setAktenzeichen(null);
+        } else {
+            this.fachdaten.setAktenzeichen(aktenzeichen);
+        }
         String bemerkungen = this.genBemerkungArea.getText();
         if ("".equals(bemerkungen)) {
             this.fachdaten.setBemerkungen(null);
@@ -397,6 +412,13 @@ public class GenehmigungPanel extends JPanel {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    private JTextField getAktenzeichenFeld() {
+        if (this.aktenzeichenFeld == null) {
+            this.aktenzeichenFeld = new JTextField();
+        }
+        return this.aktenzeichenFeld;
     }
 
     private TextFieldDateChooser getAntragsDatum() {

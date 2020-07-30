@@ -42,6 +42,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -59,6 +60,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -89,7 +91,6 @@ public class EinleitungsstellePanel extends JPanel {
 
     // Widgets
     private TextFieldDateChooser erstellDatDatum = null;
-    private JTextField herkunftFeld = null;
     private JTextField bezeichnungFeld = null;
     private JTextField gewaessernameAlias3Feld = null;
     private JTextField gewaessernameNsFeld = null;
@@ -98,25 +99,34 @@ public class EinleitungsstellePanel extends JPanel {
     private JCheckBox typIndirektCheck = null;
     private JCheckBox typIndGewDirektCheck = null;
     private JCheckBox typKommTrennCheck = null;
-    private JCheckBox typPrivatTrennCheck = null;
-    private JCheckBox typSonstigeCheck = null;
+    private JCheckBox typKommMischCheck = null;
+    private JCheckBox typIndGewTrennCheck = null;
+    private JCheckBox typIndGewMischCheck = null;
+    private JCheckBox typNwPrivatTrennCheck = null;
     private JCheckBox typAusserortStrasseneinlCheck = null;
+    private JCheckBox typSonstigeCheck = null;
     private DoubleField stationierungNs3Feld = null;
     private DoubleField einzugsgebietFeld = null;
     private DoubleField stationierungSt3Feld = null;
-    private JFormattedTextField abgaberelEinlFeld = null;
-    private JFormattedTextField e32Feld = null;
-    private JFormattedTextField n32Feld = null;
-    private JFormattedTextField kanalArtOptFeld = null;
     private JFormattedTextField stationierung3OptFeld = null;
     private JFormattedTextField schutzzoneOptFeld = null;
+
+    private JComboBox abgaberelEinlBox = null;
+    private JComboBox kanalArtOptFeld = null;
+    
     //Kläranlage
     private Klaeranlage[] klaeranlagen = null;
     private JComboBox<Klaeranlage> klaeranlageBox = null;
     private JButton saveElkaEinleitungsstelleButton = null;
+    
     // Daten
     private Einleitungsstelle  einleitungsstelle = null;
     private Referenz referenz = null;
+    
+    //Label
+    private JLabel abgabepflichtLb = new JLabel("Abgabepflichtige Einleitung: ");
+    private JLabel kanalartLb = new JLabel("Kanalart: ");
+    private JLabel klaeranlageLb = new JLabel("Kläranlage: ");
 
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
@@ -133,75 +143,59 @@ public class EinleitungsstellePanel extends JPanel {
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-                "r:80dlu, 5dlu, 100dlu, 5dlu, r:80dlu, 5dlu, 100dlu", // Spalten
+                "r:100dlu, 5dlu, 100dlu, 5dlu, r:80dlu, 5dlu, 100dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-builder.nextLine();
-        builder.appendRow("fill:15dlu");
-    builder.appendSeparator("Art der Einleitung");
+    builder.nextLine();
+    builder.appendRow("fill:15dlu");
+        
+    builder.append("Bezeichnung:", getBezeichnungFeld(), 5);
+    
+    builder.nextLine();
+	builder.appendSeparator("Art der Einleitung");
 
-builder.nextLine();
-    builder.append("", getTypIndirektCheck(), 5);
+    builder.nextLine();
+    builder.append(getTypIndirektCheck(), 3);
 
-builder.nextLine();
-    builder.append("", getTypIndGewDirektCheck(), 5);
+    builder.nextLine();
+    builder.append(getTypIndGewDirektCheck(), 3);
+    builder.append(getTypNwPrivatTrennCheck(), 3);
 
-builder.nextLine();
-    builder.append("", getTypKommTrennCheck(), 5);
+    builder.nextLine();
+	builder.append(getTypIndGewTrennCheck(), 3);
+    builder.append(getTypKommTrennCheck(), 3);
 
-builder.nextLine();
-    builder.append("", getTypPrivatTrennCheck(), 5);
+    builder.nextLine();
+    builder.append(getTypIndGewMischCheck(), 3);
+    builder.append(getTypKommMischCheck(), 3);
 
-builder.nextLine();
-    builder.append("", getTypSonstigeCheck(), 5);
-
-builder.nextLine();
-    builder.append("", getTypAusserortStrasseneinlCheck(), 5);
+    builder.nextLine();
+	builder.append(getTypAusserortStrasseneinlCheck(), 3);
+    builder.append(getTypSonstigeCheck(), 3);
     builder.appendRow("fill:20dlu");
 
-builder.appendSeparator("Details");
+    builder.nextLine();
+    builder.appendSeparator("Details");
     builder.append("Erstellung:", getErstellDatDatum());
-    builder.append("Stationierungst3", getStationierungSt3Feld());
+    builder.append("Stilllegedatum:", getStillgelegtAmDatum());
 
-builder.nextLine();
-    builder.append("Herkunft:", getHerkunftFeld());
-    builder.append("Abgabe einleitung: ", getAbgaberelEinlFeld());
-
-
-builder.nextLine();
-    builder.append("Bezeichnung:", getBezeichnungFeld());
-    builder.append("Kanal Art Opt:", getKanalArtOptFeld());
-
-builder.nextLine();
-    builder.append("Gewässername ", getGewaessernameNsFeld());
-    builder.append("Ostwert:", getE32Feld());
-
-builder.nextLine();
-    builder.append("Aliasname:", getGewaessernameAlias3Feld());
-    builder.append("Nordwert:", getN32Feld());
-
-builder.nextLine();
-    builder.append("NadiaId:", getNadiaIdFeld());
-    builder.append("Stationierung [km]:", getStationierung3OptFeld());
-
-builder.nextLine();
-    builder.append("Datum:", getStillgelegtAmDatum());
-    builder.append("Schutzzone:", getSchutzzoneOptFeld());
-
-builder.nextLine();
-    builder.append("Stationierungns3: ", getStationierungNs3Feld());
-    builder.append("Kläranlage: ", getKlaeranlageBox());
-
-builder.nextLine();
-    builder.append("Einzugsgebiet:", getEinzugsgebietFeld());
+    builder.nextLine();
+    builder.append(abgabepflichtLb);
+    builder.append(getAbgaberelEinlBox());
 
 
-builder.nextLine();
-        builder.appendRow("fill:15dlu");
-        builder.appendSeparator("Verknüpfungen");
+    builder.nextLine();
+    builder.append(kanalartLb);
+    builder.append(getKanalArtBox());
+    builder.append(klaeranlageLb);
+    builder.append(getKlaeranlageBox());
 
-builder.nextLine();
+    builder.nextLine();
+    builder.appendRow("fill:15dlu");
+    builder.appendSeparator("Verknüpfungen");
+
+    builder.nextLine();
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -216,7 +210,10 @@ builder.nextLine();
         otherChecks = new ArrayList<JCheckBox>();
         otherChecks.add(getTypIndGewDirektCheck());
         otherChecks.add(getTypKommTrennCheck());
-        otherChecks.add(getTypPrivatTrennCheck());
+        otherChecks.add(getTypKommMischCheck());
+        otherChecks.add(getTypIndGewTrennCheck());
+        otherChecks.add(getTypIndGewMischCheck());
+        otherChecks.add(getTypNwPrivatTrennCheck());
         otherChecks.add(getTypSonstigeCheck());
         otherChecks.add(getTypAusserortStrasseneinlCheck());
 
@@ -227,17 +224,20 @@ builder.nextLine();
                 if (indCheck.isSelected() == true) {
                     otherChecks.forEach((check) -> {
                         check.setSelected(false);
-                        check.setEnabled(false);
+                        check.setEnabled(false);                        
                     });
+                    switchArtEinleitung("Indirekteinleiter");
                 } else {
                     otherChecks.forEach((check) -> {
                         check.setEnabled(true);
-                        indCheck.setEnabled(true);
+                        indCheck.setEnabled(false);
                     });
+                    switchArtEinleitung("Direkteinleiter");
                 }
             }
         });
 
+        
     }
 
     /**
@@ -279,90 +279,42 @@ builder.nextLine();
                 getErstellDatDatum().setDate(this.einleitungsstelle.getErstellDat());
             }
 
-            if(this.einleitungsstelle.getHerkunft() != null) {
-                getHerkunftFeld().setText(this.einleitungsstelle.getHerkunft());
-            }
-
             if (this.einleitungsstelle.getBezeichnung() != null) {
                 getBezeichnungFeld().setText(this.einleitungsstelle.getBezeichnung());
-            }
-
-            if (this.einleitungsstelle.getGewaessernameAlias3() != null) {
-                getGewaessernameAlias3Feld().setText(this.einleitungsstelle.getGewaessernameAlias3());
-            }
-
-            if (this.einleitungsstelle.getGewaessernameNs() != null) {
-                getGewaessernameNsFeld().setText(this.einleitungsstelle.getGewaessernameNs());
-            }
-
-            if (this.einleitungsstelle.getNadiaId() != null) {
-                getNadiaIdFeld().setText(this.einleitungsstelle.getNadiaId());
             }
 
             if (this.einleitungsstelle.getStillgelegtAm() != null) {
                 getStillgelegtAmDatum().setDate(this.einleitungsstelle.getStillgelegtAm());
             }
 
-            if (this.einleitungsstelle.getTypIndirekt() != null) {
-                getTypIndirektCheck().setSelected(this.einleitungsstelle.getTypIndirekt());
-            }
+            getTypIndirektCheck().setSelected(this.einleitungsstelle.isTypIndirekteinleitungTog());
 
-            if (this.einleitungsstelle.getTypIndGewDirekt() != null) {
-                getTypIndGewDirektCheck().setSelected(this.einleitungsstelle.getTypIndGewDirekt());
-            }
+            getTypIndGewDirektCheck().setSelected(this.einleitungsstelle.isTypIndusGewerbDirekteinleitungTog());
 
-            if (this.einleitungsstelle.getTypKommTrenn() != null) {
-                getTypKommTrennCheck().setSelected(this.einleitungsstelle.getTypKommTrenn());
-            }
+            getTypKommMischCheck().setSelected(this.einleitungsstelle.isTypKommNwMischTog());
 
+            getTypKommTrennCheck().setSelected(this.einleitungsstelle.isTypKommNwTrennTog());
 
-            if (this.einleitungsstelle.getTypPrivatTrenn() != null) {
-                getTypPrivatTrennCheck().setSelected(this.einleitungsstelle.getTypPrivatTrenn());
-            }
+            getTypNwPrivatTrennCheck().setSelected(this.einleitungsstelle.isTypNwPrivatTrennTog());
 
-            if (this.einleitungsstelle.getTypSonstige() != null) {
-                getTypSonstigeCheck().setSelected(this.einleitungsstelle.getTypSonstige());
-            }
+            getTypIndGewMischCheck().setSelected(this.einleitungsstelle.isTypIndusGewerbNwMischTog());
 
-            if (this.einleitungsstelle.getTypAusserortStrasseneinl() != null) {
-                getTypAusserortStrasseneinlCheck().setSelected(this.einleitungsstelle.getTypAusserortStrasseneinl());
-            }
+            getTypIndGewTrennCheck().setSelected(this.einleitungsstelle.isTypIndusGewerbNwTrennTog());
 
-            if (this.einleitungsstelle.getStationierungNs3() != null) {
-                getStationierungNs3Feld().setText(new GermanDouble(this.einleitungsstelle.getStationierungNs3()).toString());
-            }
+            getTypAusserortStrasseneinlCheck().setSelected(this.einleitungsstelle.isTypAusseroertlicheStrasseneinleitungTog());
 
-            if (this.einleitungsstelle.getEinzugsgebiet() != null) {
-                getEinzugsgebietFeld().setText(new GermanDouble(this.einleitungsstelle.getEinzugsgebiet()).toString());
-            }
-
-            if (this.einleitungsstelle.getStationierungSt3() != null) {
-                getStationierungSt3Feld().setText(new GermanDouble(this.einleitungsstelle.getStationierungSt3()).toString());
-            }
-
-            if (this.einleitungsstelle.getAbgaberelEinl() != null) {
-                getAbgaberelEinlFeld().setText(this.einleitungsstelle.getAbgaberelEinl().toString());
-            }
-
-            if (this.einleitungsstelle.getE32() != null) {
-                getE32Feld().setText(this.einleitungsstelle.getE32().toString());
-            }
-
-            if (this.einleitungsstelle.getN32() != null) {
-                getN32Feld().setText(this.einleitungsstelle.getN32().toString());
-            }
-
-            if (this.einleitungsstelle.getKanalArtOpt() != null) {
-                getKanalArtOptFeld().setText(this.einleitungsstelle.getKanalArtOpt().toString());
-            }
-
-            if (this.einleitungsstelle.getStationierung3Opt() != null) {
-                getStationierung3OptFeld().setText(this.einleitungsstelle.getStationierung3Opt().toString());
-            }
-
-            if (this.einleitungsstelle.getSchutzzoneOpt() != null) {
-                getSchutzzoneOptFeld().setText(this.einleitungsstelle.getSchutzzoneOpt().toString());
-            }
+            getTypSonstigeCheck().setSelected(this.einleitungsstelle.isTypSonstigeTog());
+            
+            String[] abgabe = {"-",  "abgabepflichtig", "nicht abgabepflichtig"};
+            getAbgaberelEinlBox().setModel(new DefaultComboBoxModel(abgabe));
+            
+            getAbgaberelEinlBox().setSelectedItem(einleitungsstelle.getAbgaberelDescriptionFromId(this.einleitungsstelle.getAbgaberelevanteEltOpt()));
+            
+            String[] kanalart = {"-",  "Schmutzwasser", "Mischwasser", 
+            		"Niederschlagswasserk"};
+            getKanalArtBox().setModel(new DefaultComboBoxModel(kanalart));
+            
+            getKanalArtBox().setSelectedItem(einleitungsstelle.getKanalartDescriptionFromId(this.einleitungsstelle.getKanalArtOpt()));
 
             if (this.klaeranlagen != null) {
                 getKlaeranlageBox().setModel(new DefaultComboBoxModel<Klaeranlage>(this.klaeranlagen));
@@ -373,6 +325,14 @@ builder.nextLine();
                 getKlaeranlageBox().setSelectedItem(this.referenz.getKlaeranlageByZKaNr());
             }
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
+            
+            if (typIndirektCheck.isSelected()) {
+            	switchArtEinleitung("Indirekteinleiter");
+            } else {
+            	switchArtEinleitung("Direkteinleite");
+            }
+            
+            
         }
     }
 
@@ -381,27 +341,19 @@ builder.nextLine();
      */
     public void clearForm() {
         getErstellDatDatum().setDate(null);
-        getHerkunftFeld().setText(null);
         getBezeichnungFeld().setText(null);
-        getGewaessernameAlias3Feld().setText(null);
-        getGewaessernameNsFeld().setText(null);
-        getNadiaIdFeld().setText(null);
         getStillgelegtAmDatum().setDate(null);
         getTypIndirektCheck().setSelected(false);
         getTypIndGewDirektCheck().setSelected(false);
         getTypKommTrennCheck().setSelected(false);
-        getTypPrivatTrennCheck().setSelected(false);
-        getTypSonstigeCheck().setSelected(false);
+        getTypKommMischCheck().setSelected(false);
+        getTypNwPrivatTrennCheck().setSelected(false);
+        getTypIndGewTrennCheck().setSelected(false);
+        getTypIndGewMischCheck().setSelected(false);
         getTypAusserortStrasseneinlCheck().setSelected(false);
-        getStationierungNs3Feld().setText(null);
-        getEinzugsgebietFeld().setText(null);
-        getStationierungSt3Feld().setText(null);
-        getAbgaberelEinlFeld().setText(null);
-        getE32Feld().setText(null);
-        getN32Feld().setText(null);
-        getKanalArtOptFeld().setText(null);
-        getStationierung3OptFeld().setText(null);
-        getSchutzzoneOptFeld().setText(null);
+        getTypSonstigeCheck().setSelected(false);
+        getAbgaberelEinlBox().setSelectedIndex(-1);
+        getKanalArtBox().setSelectedIndex(-1);
         getKlaeranlageBox().setSelectedIndex(-1);
 
     }
@@ -413,27 +365,19 @@ builder.nextLine();
      */
     public void enableAll(boolean enabled) {
         getErstellDatDatum().setEnabled(enabled);
-        getHerkunftFeld().setEnabled(enabled);
         getBezeichnungFeld().setEnabled(enabled);
-        getGewaessernameAlias3Feld().setEnabled(enabled);
-        getGewaessernameNsFeld().setEnabled(enabled);
-        getNadiaIdFeld().setEnabled(enabled);
         getStillgelegtAmDatum().setEnabled(enabled);
         getTypIndirektCheck().setEnabled(enabled);
         getTypIndGewDirektCheck().setEnabled(enabled);
         getTypKommTrennCheck().setEnabled(enabled);
-        getTypPrivatTrennCheck().setEnabled(enabled);
+        getTypKommMischCheck().setEnabled(enabled);
+        getTypNwPrivatTrennCheck().setEnabled(enabled);
+        getTypIndGewTrennCheck().setEnabled(enabled);
+        getTypIndGewMischCheck().setEnabled(enabled);
         getTypSonstigeCheck().setEnabled(enabled);
         getTypAusserortStrasseneinlCheck().setEnabled(enabled);
-        getStationierungNs3Feld().setEnabled(enabled);
-        getEinzugsgebietFeld().setEnabled(enabled);
-        getStationierungSt3Feld().setEnabled(enabled);
-        getAbgaberelEinlFeld().setEnabled(enabled);
-        getE32Feld().setEnabled(enabled);
-        getN32Feld().setEnabled(enabled);
-        getKanalArtOptFeld().setEnabled(enabled);
-        getStationierung3OptFeld().setEnabled(enabled);
-        getSchutzzoneOptFeld().setEnabled(enabled);
+        getAbgaberelEinlBox().setEnabled(enabled);
+        getKanalArtBox().setEnabled(enabled);
         getKlaeranlageBox().setEnabled(enabled);
     }
 
@@ -455,13 +399,6 @@ builder.nextLine();
         Date erstellDat = this.erstellDatDatum.getDate();
         this.einleitungsstelle.setErstellDat(erstellDat);
 
-        String herkunft = this.herkunftFeld.getText();
-        if ("".equals(herkunft)) {
-            this.einleitungsstelle.setHerkunft(null);
-        } else {
-            this.einleitungsstelle.setHerkunft(herkunft);
-        }
-
         String bezeichnung = this.bezeichnungFeld.getText();
         if("".equals(bezeichnung)) {
             this.einleitungsstelle.setBezeichnung(null);
@@ -469,92 +406,68 @@ builder.nextLine();
             this.einleitungsstelle.setBezeichnung(bezeichnung);
         }
 
-        String gewaessernameAlias3 = this.gewaessernameAlias3Feld.getText();
-        if("".equals(gewaessernameAlias3)) {
-            this.einleitungsstelle.setGewaessernameAlias3(null);
-        } else {
-            this.einleitungsstelle.setGewaessernameAlias3(gewaessernameAlias3);
-        }
-
-        String gewaessernameNs = this.gewaessernameNsFeld.getText();
-        if("".equals(gewaessernameNs)) {
-            this.einleitungsstelle.setGewaessernameNs(null);
-        } else {
-            this.einleitungsstelle.setGewaessernameNs(gewaessernameNs);
-        }
-
-        String nadiaId = this.nadiaIdFeld.getText();
-        if("".equals(nadiaId)) {
-            this.einleitungsstelle.setNadiaId(null);
-        } else {
-            this.einleitungsstelle.setNadiaId(nadiaId);
-        }
-
         Date stillgelegtAm = this.stillgelegtAmDatum.getDate();
         this.einleitungsstelle.setStillgelegtAm(stillgelegtAm);
 
         if(getTypIndirektCheck().isSelected()) {
-            this.einleitungsstelle.setTypIndirekt(true);
+            this.einleitungsstelle.setTypIndirekteinleitungTog(true);
         } else {
-            this.einleitungsstelle.setTypIndirekt(false);
+            this.einleitungsstelle.setTypIndirekteinleitungTog(false);
         }
 
         if(getTypIndGewDirektCheck().isSelected()) {
-            this.einleitungsstelle.setTypIndGewDirekt(true);
+            this.einleitungsstelle.setTypIndusGewerbDirekteinleitungTog(true);
         } else {
-            this.einleitungsstelle.setTypIndGewDirekt(false);
+            this.einleitungsstelle.setTypIndusGewerbDirekteinleitungTog(false);
         }
 
         if(getTypKommTrennCheck().isSelected()) {
-            this.einleitungsstelle.setTypKommTrenn(true);
+            this.einleitungsstelle.setTypKommNwTrennTog(true);
         } else {
-            this.einleitungsstelle.setTypKommTrenn(false);
+            this.einleitungsstelle.setTypKommNwTrennTog(false);
         }
 
-        if(getTypPrivatTrennCheck().isSelected()) {
-            this.einleitungsstelle.setTypPrivatTrenn(true);
+        if(getTypKommMischCheck().isSelected()) {
+            this.einleitungsstelle.setTypKommNwMischTog(true);
         } else {
-            this.einleitungsstelle.setTypPrivatTrenn(false);
+            this.einleitungsstelle.setTypKommNwMischTog(false);
         }
 
-        if(getTypSonstigeCheck().isSelected()) {
-            this.einleitungsstelle.setTypSonstige(true);
+        if(getTypIndGewTrennCheck().isSelected()) {
+            this.einleitungsstelle.setTypIndusGewerbNwTrennTog(true);
         } else {
-            this.einleitungsstelle.setTypSonstige(false);
+            this.einleitungsstelle.setTypIndusGewerbNwTrennTog(false);
+        }
+
+        if(getTypIndGewMischCheck().isSelected()) {
+            this.einleitungsstelle.setTypIndusGewerbNwMischTog(true);
+        } else {
+            this.einleitungsstelle.setTypIndusGewerbNwMischTog(false);
+        }
+
+        if(getTypNwPrivatTrennCheck().isSelected()) {
+            this.einleitungsstelle.setTypNwPrivatTrennTog(true);
+        } else {
+            this.einleitungsstelle.setTypNwPrivatTrennTog(false);
         }
 
         if(getTypAusserortStrasseneinlCheck().isSelected()) {
-            this.einleitungsstelle.setTypAusserortStrasseneinl(true);
+            this.einleitungsstelle.setTypAusseroertlicheStrasseneinleitungTog(true);
         } else {
-            this.einleitungsstelle.setTypAusserortStrasseneinl(false);
+            this.einleitungsstelle.setTypAusseroertlicheStrasseneinleitungTog(false);
+        }
+        
+        if(getTypSonstigeCheck().isSelected()) {
+            this.einleitungsstelle.setTypSonstigeTog(true);
+        } else {
+            this.einleitungsstelle.setTypSonstigeTog(false);
         }
 
-        Double stationierungNs3 = this.stationierungNs3Feld.getDoubleValue();
-        this.einleitungsstelle.setStationierungNs3(stationierungNs3);
+        this.einleitungsstelle.setAbgaberelevanteEltOpt(
+                Einleitungsstelle.getAbgaberelIdFromDescription((String) getAbgaberelEinlBox().getSelectedItem()));
 
-        Double einzugsgebiet = this.einzugsgebietFeld.getDoubleValue();
-        this.einleitungsstelle.setEinzugsgebiet(einzugsgebiet);
-
-        Double stationierungSt3 = this.stationierungSt3Feld.getDoubleValue();
-        this.einleitungsstelle.setStationierungSt3(stationierungSt3);
-
-        Integer abgaberelEinl = ((IntegerField)this.abgaberelEinlFeld).getIntValue();
-        this.einleitungsstelle.setAbgaberelevanteEltOpt(abgaberelEinl);
-
-        Integer e32 = ((IntegerField)this.e32Feld).getIntValue();
-        this.einleitungsstelle.setE32(e32);
-
-        Integer n32 = ((IntegerField)this.n32Feld).getIntValue();
-        this.einleitungsstelle.setN32(n32);
-
-        Integer kanalArtOpt = ((IntegerField)this.kanalArtOptFeld).getIntValue();
-        this.einleitungsstelle.setKanalArtOpt(kanalArtOpt);
-
-        Integer stationierung3Opt = ((IntegerField)this.stationierung3OptFeld).getIntValue();
-        this.einleitungsstelle.setStationierung3Opt(stationierung3Opt);
-
-        Integer schutzzoneOpt = ((IntegerField)this.schutzzoneOptFeld).getIntValue();
-        this.einleitungsstelle.setSchutzzoneOpt(schutzzoneOpt);
+        this.einleitungsstelle.setKanalArtOpt(
+                Einleitungsstelle.getKanalartIdFromDescription((String) getKanalArtBox().getSelectedItem()));
 
         success = this.einleitungsstelle.merge();
         if (success) {
@@ -617,17 +530,6 @@ builder.nextLine();
     }
 
     /**
-     * Get-Methode die das Herkunftsfeld des Panels zurückgibt:
-     * @return {@link JTextField}
-     */
-    private JTextField getHerkunftFeld() {
-        if (this.herkunftFeld == null) {
-            this.herkunftFeld = new LimitedTextField(50);
-        }
-        return this.herkunftFeld;
-    }
-
-    /**
      * Get-Methode die das Bezeichnungsfeld des Panels zurückgibt:
      * @return {@link JTextField}
      */
@@ -636,38 +538,6 @@ builder.nextLine();
             this.bezeichnungFeld = new LimitedTextField(50);
         }
         return this.bezeichnungFeld;
-    }
-
-    /**
-     * Get-Methode die das GewässernameAlias3Feld des Panels zurückgibt:
-     * @return {@link JTextField}
-     */
-    private JTextField getGewaessernameAlias3Feld() {
-        if (this.gewaessernameAlias3Feld == null) {
-            this.gewaessernameAlias3Feld = new LimitedTextField(50);
-        }
-        return this.gewaessernameAlias3Feld;
-    }
-
-    /**
-     * Get-Methode die das GewässsernameNsFeld des Panels zurückgibt:
-     * @return {@link JTextField}
-     */
-    private JTextField getGewaessernameNsFeld() {
-        if (this.gewaessernameNsFeld == null) {
-            this.gewaessernameNsFeld = new LimitedTextField(50);
-        }
-        return this.gewaessernameNsFeld;
-    }
-     /**
-      * Get-Methode die das NadiaIdFeld des Panels zurückgibt:
-      * @return {@link JTextField}
-      */
-    private JTextField getNadiaIdFeld() {
-        if (this.nadiaIdFeld == null) {
-            this.nadiaIdFeld = new LimitedTextField(50);
-        }
-        return this.nadiaIdFeld;
     }
 
     /**
@@ -698,7 +568,7 @@ builder.nextLine();
      */
     private JCheckBox getTypIndGewDirektCheck() {
         if (this.typIndGewDirektCheck == null) {
-            this.typIndGewDirektCheck = new JCheckBox("industrielle Direkteinleitung");
+            this.typIndGewDirektCheck = new JCheckBox("indus./gew. Direkteinleitung");
         }
         return this.typIndGewDirektCheck;
     }
@@ -709,7 +579,7 @@ builder.nextLine();
      */
     private JCheckBox getTypKommTrennCheck() {
         if (this.typKommTrennCheck == null) {
-            this.typKommTrennCheck =  new JCheckBox("kommunales Nierderschlagswasser (Trennverfahren)");
+            this.typKommTrennCheck =  new JCheckBox("kommunales NW (Trennverfahren)");
         }
         return this.typKommTrennCheck;
     }
@@ -718,11 +588,33 @@ builder.nextLine();
      * Get-Methode die das TypPrivatTrennCheck des Panels zurückgibt:
      * @return {@link JCheckBox}
      */
-    private JCheckBox getTypPrivatTrennCheck() {
-        if (this.typPrivatTrennCheck == null) {
-            this.typPrivatTrennCheck = new JCheckBox("Niederschlagswassser aus dem privaten Bereich (Trennverfahren)");
+    private JCheckBox getTypIndGewTrennCheck() {
+        if (this.typIndGewTrennCheck == null) {
+            this.typIndGewTrennCheck = new JCheckBox("indus./gew. NW (Trennverfahren)");
         }
-        return this.typPrivatTrennCheck;
+        return this.typIndGewTrennCheck;
+    }
+
+    /**
+     * Get-Methode die das TypKommTrennCheck des Panels zurückgibt:
+     * @return {@link JcheckBox}
+     */
+    private JCheckBox getTypKommMischCheck() {
+        if (this.typKommMischCheck == null) {
+            this.typKommMischCheck =  new JCheckBox("kommunales NW (Mischverfahren)");
+        }
+        return this.typKommMischCheck;
+    }
+
+    /**
+     * Get-Methode die das TypPrivatTrennCheck des Panels zurückgibt:
+     * @return {@link JCheckBox}
+     */
+    private JCheckBox getTypIndGewMischCheck() {
+        if (this.typIndGewMischCheck == null) {
+            this.typIndGewMischCheck = new JCheckBox("indus./gew. NW (Mischverfahren)");
+        }
+        return this.typIndGewMischCheck;
     }
 
     /**
@@ -737,6 +629,17 @@ builder.nextLine();
     }
 
     /**
+     * Get-Methode die das TypSonstigeCheck des Panels zurückgibt:
+     * @return {@link JCheckBox}
+     */
+    private JCheckBox getTypNwPrivatTrennCheck() {
+        if (this.typNwPrivatTrennCheck == null) {
+            this.typNwPrivatTrennCheck = new JCheckBox("NW aus privatem Bereich (Trennverfahren)");
+        }
+        return this.typNwPrivatTrennCheck;
+    }
+
+    /**
      * Get-Methode die das TypAusserortStrasseneinlCheck des Panels zurückgibt:
      * @return {@link JCheckBox}
      */
@@ -748,93 +651,27 @@ builder.nextLine();
     }
 
     /**
-     * Get-Methode die das StationierungNs3Feld des Panels zurückgibt:
-     * @return {@link DoubleField}
-     */
-    private DoubleField getStationierungNs3Feld() {
-        if (this.stationierungNs3Feld == null) {
-            this.stationierungNs3Feld = new DoubleField(50);
-        }
-        return this.stationierungNs3Feld;
-    }
-
-    /**
-     * Get-Methode die das EinzugsgebietFeld des Panels zurückgibt:
-     * @return {@link DoubleField}
-     */
-    private DoubleField getEinzugsgebietFeld() {
-        if (this.einzugsgebietFeld == null) {
-            this.einzugsgebietFeld = new DoubleField(50);
-        }
-        return this.einzugsgebietFeld;
-    }
-
-    /**
-     * Get-Methode die das StationierungSt3Feld des Panels zurückgibt:
-     * @return {@link DoubleField}
-     */
-    private DoubleField getStationierungSt3Feld() {
-        if (this.stationierungSt3Feld == null) {
-            this.stationierungSt3Feld = new DoubleField(50);
-        }
-        return this.stationierungSt3Feld;
-    }
-
-    /**
      * Get-Methode die das AbgaberelEinlFeld des Panels zurückgibt:
      * @return {@link JFormattedTextField}
      */
-    private JFormattedTextField getAbgaberelEinlFeld() {
-        if (this.abgaberelEinlFeld == null) {
-            this.abgaberelEinlFeld = new IntegerField();
+    private JComboBox getAbgaberelEinlBox() {
+        if (this.abgaberelEinlBox == null) {
+            this.abgaberelEinlBox = new JComboBox();
         }
-        return this.abgaberelEinlFeld;
-    }
-
-    /**
-     * Get-Methode die das E32Feld des Panels zurückgibt:
-     * @return {@link JFormattedTextField}
-     */
-    private JFormattedTextField getE32Feld() {
-        if (this.e32Feld == null) {
-            this.e32Feld = new IntegerField();
-        }
-        return this.e32Feld;
-    }
-
-    /***
-     * Get-Methode die das N32Feld des Panels zurückgibt:
-     * @return {@link JFormattedTextField}
-     */
-    private JFormattedTextField getN32Feld() {
-        if (this.n32Feld == null) {
-            this.n32Feld = new IntegerField();
-        }
-        return this.n32Feld;
+        return this.abgaberelEinlBox;
     }
 
     /**
      * Get-Methode die das KanalArtOptFeld des Panels zurückgibt:
      * @return {@link JFormattedTextField}
      */
-    private JFormattedTextField getKanalArtOptFeld() {
+    private JComboBox getKanalArtBox() {
         if (this.kanalArtOptFeld == null) {
-            this.kanalArtOptFeld = new IntegerField();
+            this.kanalArtOptFeld = new JComboBox();
         }
         return this.kanalArtOptFeld;
     }
-
-    /**
-     * Get-Methode die das Stationierung3OptFeld des Panels zurückgibt:
-     * @return {@link JFormattedTextField}
-     */
-    private JFormattedTextField getStationierung3OptFeld() {
-        if (this.stationierung3OptFeld == null) {
-            this.stationierung3OptFeld = new IntegerField();
-        }
-        return this.stationierung3OptFeld;
-    }
-
+    
     /**
      * Get-Methode die die KlaeranlageBox des Panels zurückgibt
      * @return {@link JComboBox}
@@ -847,17 +684,6 @@ builder.nextLine();
 
         }
         return this.klaeranlageBox;
-    }
-
-    /**
-     * Get-Methode die das SchutzzoneOptFeld des Panels zurückgibt:
-     * @return {@link JFormattedTextField}
-     */
-    private JFormattedTextField getSchutzzoneOptFeld() {
-        if (this.schutzzoneOptFeld == null) {
-            this.schutzzoneOptFeld = new IntegerField();
-            }
-        return this.schutzzoneOptFeld;
     }
 
     private JTable getObjektverknuepungTabelle() {
@@ -1068,5 +894,37 @@ builder.nextLine();
         }
         return this.selectObjektButton;
     }
+
+	/**
+	 * Switch the panel content according to the given type
+	 * 
+	 * @param type       New panel content type
+	 */
+	public void switchArtEinleitung(String type) {
+		if (type == null) {
+			return;
+		}
+
+		if (type.equals("Indirekteinleiter")) {
+
+			abgabepflichtLb.setVisible(false);
+            getAbgaberelEinlBox().setVisible(false);
+            kanalartLb.setVisible(true);
+            getKanalArtBox().setVisible(true);
+            klaeranlageLb.setVisible(true);
+            klaeranlageBox.setVisible(true);
+            
+		} else {
+
+			abgabepflichtLb.setVisible(true);
+            getAbgaberelEinlBox().setVisible(true);
+            kanalartLb.setVisible(false);
+            getKanalArtBox().setVisible(false);
+            klaeranlageLb.setVisible(false);
+            klaeranlageBox.setVisible(false);
+			
+		}
+
+	}
 
 }

@@ -648,7 +648,6 @@ public class BasisPanel extends JPanel {
 					}
 					if (standort == null) {
 						standort = new Standort();
-						standort.getInhaber().setAdresse(new Adresse());
 					}
 					if (standort.getInhaber() != null) {
 						AdresseChooser chooser = new AdresseChooser(standort,
@@ -670,8 +669,10 @@ public class BasisPanel extends JPanel {
 	                            BasisPanel.this.hauptModul.getFrame(), "betreiber");
 	                        chooser.setVisible(true);
 
-	                        BasisPanel.this.hauptModul.getObjekt().setStandortid(
-	                            chooser.getChosenBetreiber().getStandort());
+	                        if (chooser.getChosenBetreiber() != null && chooser.getChosenBetreiber().getStandort() != null) {
+		                        BasisPanel.this.hauptModul.getObjekt().setStandortid(
+		                            chooser.getChosenBetreiber().getStandort());
+	                        }
 					}
 					updateForm();
 				}
@@ -722,17 +723,6 @@ public class BasisPanel extends JPanel {
                                     .intValue(), false);
                     }
                     if (BasisPanel.this.hauptModul.getObjekt()
-                        .getStandortid() != null) {
-                        BasisPanel.this.hauptModul
-                            .getManager()
-                            .getSettingsManager()
-                            .setSetting(
-                                "auik.imc.use_lage",
-                                BasisPanel.this.hauptModul.getObjekt()
-                                    .getStandortid().getId()
-                                    .intValue(), false);
-                    }
-                    if (BasisPanel.this.hauptModul.getObjekt()
                             .getStandortid() != null) {
                             BasisPanel.this.hauptModul
                                 .getManager()
@@ -745,6 +735,7 @@ public class BasisPanel extends JPanel {
                         }
                     BasisPanel.this.hauptModul.getManager().switchModul(
                         "m_betreiber_neu");
+                    saveObjektDaten();
                 }
             });
         }
@@ -808,44 +799,18 @@ public class BasisPanel extends JPanel {
             this.standortNewButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-                    BasisPanel.this.hauptModul.getManager()
-                        .getSettingsManager()
-                        .setSetting("auik.imc.return_to_objekt_betreiber", true, false);
-                    if (BasisPanel.this.hauptModul.getObjekt()
-                        .getBetreiberid() != null) {
-                        BasisPanel.this.hauptModul
-                            .getManager()
-                            .getSettingsManager()
-                            .setSetting(
-                                "auik.imc.use_betreiber",
-                                BasisPanel.this.hauptModul.getObjekt()
-                                    .getBetreiberid().getId()
-                                    .intValue(), false);
-                    }
-                    if (BasisPanel.this.hauptModul.getObjekt()
-                        .getStandortid() != null) {
-                        BasisPanel.this.hauptModul
-                            .getManager()
-                            .getSettingsManager()
-                            .setSetting(
-                                "auik.imc.use_lage",
-                                BasisPanel.this.hauptModul.getObjekt()
-                                    .getStandortid().getId()
-                                    .intValue(), false);
-                    }
-                    if (BasisPanel.this.hauptModul.getObjekt()
-                            .getStandortid() != null) {
-                            BasisPanel.this.hauptModul
-                                .getManager()
-                                .getSettingsManager()
-                                .setSetting(
-                                    "auik.imc.use_standort",
-                                    BasisPanel.this.hauptModul.getObjekt()
-                                        .getStandortid().getId()
-                                        .intValue(), false);
-                        }
-                    BasisPanel.this.hauptModul.getManager().switchModul(
-                        "m_betreiber_neu");
+
+					Standort std = new Standort();
+					StandortEditor editDialog = new StandortEditor(std,
+							BasisPanel.this.hauptModul.getFrame());
+
+					editDialog.setVisible(true);
+					if (!std.getBezeichnung().equals("")) {
+						std = Standort.merge(std);
+						hauptModul.getObjekt().setStandortid(std);
+						updateForm();
+					}
+
 				}
 			});
         }

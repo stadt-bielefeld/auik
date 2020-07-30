@@ -85,13 +85,16 @@ public class StandortEditor extends AbstractBaseEditor
 	private JFormattedTextField e32Feld;
 	private JFormattedTextField n32Feld;
 	private JButton ausAblageButton;
+	private Standort bsta;
 
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Standorts.
 	 */
-	public StandortEditor(Standort bsta, HauptFrame owner)
+	public StandortEditor(Standort bsta, HauptFrame frame)
 	{
-		super("Standort (" + bsta.getId() + ")", bsta, owner);
+		super("Standort (" + bsta.getId() + ")", bsta, frame);
+		this.frame = frame;
+		this.bsta = bsta;
 	}
 
 	@Override
@@ -211,7 +214,6 @@ public class StandortEditor extends AbstractBaseEditor
 		Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
 		getStandort().setN32(n32Wert);
 
-		Standort bsta = Standort.merge(getStandort());
 		if (bsta != null)
 		{
 			setEditedObject(bsta);

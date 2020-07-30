@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode" table="map_elka_analysemethode" schema="elka" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer" column="id" unsaved-value="0">
+            <generator class="identity"/>
+        </id>
+        <property name="gruppeDevId" type="java.lang.String">
+            <column name="gruppe_dev_id" />
+        </property>
+        <property name="regelwerkId" type="java.lang.String">
+            <column name="regelwerk_id" />
+        </property>
+        <property name="variantenId" type="java.lang.String">
+            <column name="varianten_id" />
+        </property>
+        <property name="methodenNr" type="java.lang.String">
+            <column name="methoden_nr" />
+        </property>
+    </class>
+</hibernate-mapping>

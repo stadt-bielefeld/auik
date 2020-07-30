@@ -47,10 +47,10 @@
         <property name="deleted" type="java.lang.Boolean">
             <column name="_deleted" />
         </property>
-        <property name="maxVolTag" type="big_decimal">
+        <property name="maxVolTag" type="java.lang.Float">
             <column name="max_vol_tag" precision="11" />
         </property>
-        <property name="maxVolStunde" type="big_decimal">
+        <property name="maxVolStunde" type="java.lang.Float">
             <column name="max_vol_stunde" precision="11" />
         </property>
         <property name="volJahr" type="java.lang.Integer">
@@ -64,6 +64,12 @@
         </property>
         <property name="bemerkungen" type="java.lang.String">
             <column name="bemerkungen" />
+        </property>
+        <property name="abflussmenge" type="java.lang.Float">
+            <column name="abflussmenge" precision="11" />
+        </property>
+        <property name="befFlaeche" type="java.lang.Integer">
+            <column name="bef_flaeche" />
         </property>
         <set name="anh40Fachdatens" table="anh_40_fachdaten" schema="indeinl" inverse="true" lazy="false" fetch="select">
             <key>

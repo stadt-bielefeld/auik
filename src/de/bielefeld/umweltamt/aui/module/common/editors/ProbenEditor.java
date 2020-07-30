@@ -76,6 +76,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -133,6 +134,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
@@ -194,7 +196,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         public ParameterModel(Probenahme probe, boolean isNew,
             boolean isSchlamm, boolean isSielhaut) {
-            super(new String[] {"Parameter", "GrKl", "Messwert", "Einheit",
+            super(new String[] {"Parameter", "GrKl", "Messwert", "Einheit", "Analysemethode",
                     "Analyse von", "Grenzwert", "% Normwert"}, false, true);
             this.probe = probe;
             this.isNew = isNew;
@@ -291,12 +293,16 @@ public class ProbenEditor extends AbstractApplyEditor {
                 case 3:
                     value = pos.getEinheiten();
                     break;
-                // Analyse von
+                // Methode
                 case 4:
+                    value = pos.getMapElkaAnalysemethode();
+                    break;
+                // Analyse von
+                case 5:
                     value = pos.getAnalyseVon();
                     break;
                 // Grenzwert
-                case 5:
+                case 6:
                     value = null;
                     Double grenzWert = null;
                     if (pos.getParameter() != null) {
@@ -314,7 +320,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     }
                     break;
                 // % Normwert
-                case 6:
+                case 7:
                     value = "-";
                     if (pos.getEinheiten().getId().equals(
                         DatabaseConstants.ATL_EINHEIT_MG_KG.getId())) {
@@ -362,7 +368,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            if (columnIndex == 5 || columnIndex == 6) {
+            if (columnIndex == 6 || columnIndex == 7) {
                 return false;
             } else {
                 return true;
@@ -412,6 +418,11 @@ public class ProbenEditor extends AbstractApplyEditor {
                     break;
 
                 case 4:
+                	MapElkaAnalysemethode tmpMethode = (MapElkaAnalysemethode) newValue;
+                    tmp.setMapElkaAnalysemethode(tmpMethode);
+                    break;
+
+                case 5:
                     String tmpAnalyse = (String) newValue;
                     if (tmpAnalyse != null) {
                         tmpAnalyse = tmpAnalyse.trim();
@@ -605,6 +616,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private JComboBox parameterBox;
     private JComboBox einheitenBox;
     private JComboBox analysevonBox;
+    private JComboBox methodeBox;
 
     private ParameterModel parameterModel;
     private boolean isNew;
@@ -872,7 +884,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         bemerkungsScroller.setPreferredSize(new Dimension(0, 50));
 
-        parameterTabelle.setRowHeight(20);
+        parameterTabelle.setRowHeight(25);
 
         Action aposRemoveAction = new AbstractAction("Analyseposition löschen") {
             private static final long serialVersionUID = -5755536713201543469L;
@@ -903,20 +915,22 @@ public class ProbenEditor extends AbstractApplyEditor {
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         FormLayout layout = new FormLayout(
-            "70dlu, 60dlu, 40dlu, 5dlu, 30dlu, 5dlu, 60dlu, 5dlu, 30dlu, 50dlu, 5dlu, 50dlu",
+            "70dlu, 60dlu, 40dlu, 5dlu, 30dlu, 5dlu, 60dlu, 5dlu, 30dlu, 50dlu, 5dlu, 50dlu, 5dlu, 250dlu",
             "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu,"
                 + "pref, 8dlu, pref, 8dlu, pref, 8dlu, "
-                + "pref, 16dlu,pref, 16dlu, pref, 16dlu, pref, 8dlu, 250dlu");
+                + "pref, 16dlu,pref, 16dlu, pref, 16dlu, pref");
 
         PanelBuilder builder = new PanelBuilder(layout);
         CellConstraints cc = new CellConstraints();
 
         int row = 1;
         builder.addSeparator("Probe", cc.xyw(1, row, 12));
+        builder.addSeparator("Bemerkung", cc.xy(14, row));
 
         row += 2;
         builder.addLabel("Probenummer:", cc.xyw(1, row, 1));
         builder.add(probenummer, cc.xyw(2, row, 4));
+        builder.add(bemerkungsScroller, cc.xywh(14, row, 1, 6));
 
         row += 2;
         builder.add(new JLabel("Vorgangsstatus:"), cc.xyw(1, row, 1));
@@ -971,16 +985,10 @@ public class ProbenEditor extends AbstractApplyEditor {
         builder.add(rechnungsBetrag, cc.xyw(9, row, 1));
 
         row += 2;
-        builder.addSeparator("Bemerkung", cc.xyw(1, row, 12));
+        builder.addSeparator("Parameter", cc.xyw(1, row, 14));
 
         row += 2;
-        builder.add(bemerkungsScroller, cc.xyw(1, row, 12));
-
-        row += 2;
-        builder.addSeparator("Parameter", cc.xyw(1, row, 12));
-
-        row += 2;
-        builder.add(parameterScroller, cc.xyw(1, row, 12));
+        builder.add(parameterScroller, cc.xyw(1, row, 14));
 
         return builder.getPanel();
     }
@@ -1022,6 +1030,9 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
         double cd = getRechnungsbetrag(probe);
+        cd = cd*100;
+        cd = Math.round(cd);
+        cd = cd/100;
 
         String kassenzeichen = basisBetr.getKassenzeichen().toString();
         kassenzeichen = kassenzeichen.replace(".", "");
@@ -1242,11 +1253,22 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         parameterColumn.setCellEditor(new DefaultCellEditor(parameterBox));
         parameterColumn.setCellRenderer(new ComboBoxRenderer());
+        
+        //Werte
+        TableColumn gkColumn = this.parameterTabelle.getColumnModel()
+                .getColumn(1);
+        gkColumn.setMaxWidth(50);
+        
+        TableColumn wertColumn = this.parameterTabelle.getColumnModel()
+                .getColumn(2);
+        wertColumn.setPreferredWidth(60);DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        wertColumn.setCellRenderer(rightRenderer);
 
         // Einheit
         TableColumn einheitenColumn = this.parameterTabelle.getColumnModel()
             .getColumn(3);
-        einheitenColumn.setPreferredWidth(100);
+        einheitenColumn.setPreferredWidth(40);
         
         einheitenBox = new JComboBox(DatabaseQuery.getEinheiten());
         einheitenBox.setEditable(false);
@@ -1261,9 +1283,27 @@ public class ProbenEditor extends AbstractApplyEditor {
         einheitenColumn.setCellEditor(new DefaultCellEditor(einheitenBox));
         einheitenColumn.setCellRenderer(new ComboBoxRenderer());
 
+        // Methode
+        TableColumn methodeColumn = this.parameterTabelle.getColumnModel()
+            .getColumn(4);
+        methodeColumn.setPreferredWidth(200);
+        
+        methodeBox = new JComboBox(DatabaseQuery.getMapElkaAnalysemethode());
+        methodeBox.setEditable(false);
+        methodeBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                ProbenEditor.this.methodeBox.showPopup();
+            }
+        });
+        methodeBox.setBorder(BorderFactory.createEmptyBorder());
+
+        methodeColumn.setCellEditor(new DefaultCellEditor(methodeBox));
+        methodeColumn.setCellRenderer(new ComboBoxRenderer());
+
         // Analyse von
         TableColumn analyseColumn = this.parameterTabelle.getColumnModel()
-            .getColumn(4);
+            .getColumn(5);
         analyseColumn.setPreferredWidth(100);
 
         String[] analyse_von_auswahl = {"700.44", "360.33", "OWL-Umwelt", "Stadtwerke GT", "AGROLAB", "HBICON",
@@ -1282,12 +1322,18 @@ public class ProbenEditor extends AbstractApplyEditor {
         analyseColumn.setCellEditor(new DefaultCellEditor(this.analysevonBox));
         analyseColumn.setCellRenderer(new ComboBoxRenderer());
 
+        //Grenzwert
+        TableColumn gwColumn = this.parameterTabelle.getColumnModel()
+                .getColumn(6);
+        gwColumn.setPreferredWidth(100);
+        
         // Normwert
         TableColumn normwertColumn = this.parameterTabelle.getColumnModel()
-            .getColumn(6);
+            .getColumn(7);
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.TRAILING);
         normwertColumn.setCellRenderer(renderer);
+        normwertColumn.setPreferredWidth(100);
     }
 
     /**
@@ -1424,7 +1470,10 @@ public class ProbenEditor extends AbstractApplyEditor {
             position.setProbenahme(probe);
             if (position.getParameter().getSielhautGw() != null) {
             	position.setNormwert(position.getWert()/position.getParameter().getSielhautGw());
-            }            
+            }  
+            if (position.getMapElkaAnalysemethode() == null) {
+            	position.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
+            }           
             success = success && position.merge();
         }
 

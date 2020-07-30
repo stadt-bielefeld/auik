@@ -114,7 +114,7 @@ public class EinleiterAnfallstelleAuswertung extends AbstractQueryModul {
 
     @Override
     public String getIdentifier() {
-        return "m_auswertung_anh49";
+        return "m_auswertung_anfallstelle";
     }
 
     public HauptFrame getFrame() {

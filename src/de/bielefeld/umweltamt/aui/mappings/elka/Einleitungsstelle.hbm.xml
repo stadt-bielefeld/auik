@@ -35,24 +35,6 @@
         <property name="stillgelegtAm" type="java.util.Date">
             <column name="stillgelegt_am" length="13" />
         </property>
-        <property name="typIndirekt" type="java.lang.Boolean">
-            <column name="typ_indirekt" />
-        </property>
-        <property name="typIndGewDirekt" type="java.lang.Boolean">
-            <column name="typ_ind_gew_direkt" />
-        </property>
-        <property name="typKommTrenn" type="java.lang.Boolean">
-            <column name="typ_komm_trenn" />
-        </property>
-        <property name="typPrivatTrenn" type="java.lang.Boolean">
-            <column name="typ_privat_trenn" />
-        </property>
-        <property name="typSonstige" type="java.lang.Boolean">
-            <column name="typ_sonstige" />
-        </property>
-        <property name="typAusserortStrasseneinl" type="java.lang.Boolean">
-            <column name="typ_ausserort_strasseneinl" />
-        </property>
         <property name="stationierungNs3" type="java.lang.Double">
             <column name="stationierung_ns_3" precision="17" scale="17" />
         </property>
@@ -61,15 +43,6 @@
         </property>
         <property name="stationierungSt3" type="java.lang.Double">
             <column name="stationierung_st_3" precision="17" scale="17" />
-        </property>
-        <property name="abgaberelEinl" type="java.lang.Integer">
-            <column name="abgaberel_einl" />
-        </property>
-        <property name="e32" type="java.lang.Integer">
-            <column name="e32" />
-        </property>
-        <property name="n32" type="java.lang.Integer">
-            <column name="n32" />
         </property>
         <property name="kanalArtOpt" type="java.lang.Integer">
             <column name="kanal_art_opt" />

@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import java.util.List;
 import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -67,12 +68,6 @@ public class BasisInhaberModel extends ListTableModel {
             filterList(lastSuchWort, lastProperty);
         }
     }
-    
-    public void updateAllList() {
-        if (lastSuchWort != null) {
-            filterAllList(lastSuchWort, lastProperty);
-        }
-    }
 
     /**
      * Liefert den Inhalt der Zelle mit den gegebenen Koordinaten.
@@ -84,11 +79,10 @@ public class BasisInhaberModel extends ListTableModel {
 	public Object getColumnValue(Object objectAtRow, int columnIndex) {
     	Object tmp = null;
 		
-//    	Object[] obj = (Object[]) objectAtRow;
-//		Inhaber betr = (Inhaber) obj[0];
 
-		Inhaber betr = (Inhaber) objectAtRow;
-		
+    	Inhaber	betr = (Inhaber) objectAtRow;
+
+    	
 		
 		HibernateSessionFactory.currentSession().refresh(betr);
 
@@ -138,13 +132,18 @@ public class BasisInhaberModel extends ListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
+    
+
     public Inhaber getRow(int rowIndex) {
         return (Inhaber) super.getObjectAtRow(rowIndex);
     }
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	Inhaber removedBetreiber = (Inhaber) objectAtRow;
+
+		
+    	Object[] obj = (Object[]) objectAtRow;
+    	Inhaber removedBetreiber = (Inhaber) obj[0];
         return Inhaber.delete(removedBetreiber);
     }
 
@@ -197,7 +196,8 @@ public class BasisInhaberModel extends ListTableModel {
     }
     
     public void filterBetreiber(String name, String strasse, Integer hausnr, String ort) {
-        log.debug("Start filterList");
+
+    	log.debug("Start filterList");
         setList(DatabaseQuery.findBetreiber(name, strasse, hausnr, ort));
         lastStrasse = strasse;
         lastHausnr = hausnr;

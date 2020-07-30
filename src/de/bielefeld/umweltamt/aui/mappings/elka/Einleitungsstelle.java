@@ -61,18 +61,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
     private String gewaessernameNs;
     private String nadiaId;
     private Date stillgelegtAm;
-    private Boolean typIndirekt;
-    private Boolean typIndGewDirekt;
-    private Boolean typKommTrenn;
-    private Boolean typPrivatTrenn;
-    private Boolean typSonstige;
-    private Boolean typAusserortStrasseneinl;
     private Double stationierungNs3;
     private Double einzugsgebiet;
     private Double stationierungSt3;
-    private Integer abgaberelEinl;
-    private Integer e32;
-    private Integer n32;
     private Integer kanalArtOpt;
     private Integer stationierung3Opt;
     private Integer schutzzoneOpt;
@@ -143,7 +134,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
 
     /** Full constructor */
     public Einleitungsstelle(
-        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, String gewaessernameNs, String nadiaId, Date stillgelegtAm, Boolean typIndirekt, Boolean typIndGewDirekt, Boolean typKommTrenn, Boolean typPrivatTrenn, Boolean typSonstige, Boolean typAusserortStrasseneinl, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer e32, Integer n32, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr) {
+        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, String gewaessernameNs, String nadiaId, Date stillgelegtAm, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr) {
         this.id = id;
         this.objektid = objektid;
         this.aktualDat = aktualDat;
@@ -154,18 +145,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.gewaessernameNs = gewaessernameNs;
         this.nadiaId = nadiaId;
         this.stillgelegtAm = stillgelegtAm;
-        this.typIndirekt = typIndirekt;
-        this.typIndGewDirekt = typIndGewDirekt;
-        this.typKommTrenn = typKommTrenn;
-        this.typPrivatTrenn = typPrivatTrenn;
-        this.typSonstige = typSonstige;
-        this.typAusserortStrasseneinl = typAusserortStrasseneinl;
         this.stationierungNs3 = stationierungNs3;
         this.einzugsgebiet = einzugsgebiet;
         this.stationierungSt3 = stationierungSt3;
-        this.abgaberelEinl = abgaberelEinl;
-        this.e32 = e32;
-        this.n32 = n32;
         this.kanalArtOpt = kanalArtOpt;
         this.stationierung3Opt = stationierung3Opt;
         this.schutzzoneOpt = schutzzoneOpt;
@@ -297,54 +279,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.stillgelegtAm = stillgelegtAm;
     }
 
-    public Boolean getTypIndirekt() {
-        return this.typIndirekt;
-    }
-
-    public void setTypIndirekt(Boolean typIndirekt) {
-        this.typIndirekt = typIndirekt;
-    }
-
-    public Boolean getTypIndGewDirekt() {
-        return this.typIndGewDirekt;
-    }
-
-    public void setTypIndGewDirekt(Boolean typIndGewDirekt) {
-        this.typIndGewDirekt = typIndGewDirekt;
-    }
-
-    public Boolean getTypKommTrenn() {
-        return this.typKommTrenn;
-    }
-
-    public void setTypKommTrenn(Boolean typKommTrenn) {
-        this.typKommTrenn = typKommTrenn;
-    }
-
-    public Boolean getTypPrivatTrenn() {
-        return this.typPrivatTrenn;
-    }
-
-    public void setTypPrivatTrenn(Boolean typPrivatTrenn) {
-        this.typPrivatTrenn = typPrivatTrenn;
-    }
-
-    public Boolean getTypSonstige() {
-        return this.typSonstige;
-    }
-
-    public void setTypSonstige(Boolean typSonstige) {
-        this.typSonstige = typSonstige;
-    }
-
-    public Boolean getTypAusserortStrasseneinl() {
-        return this.typAusserortStrasseneinl;
-    }
-
-    public void setTypAusserortStrasseneinl(Boolean typAusserortStrasseneinl) {
-        this.typAusserortStrasseneinl = typAusserortStrasseneinl;
-    }
-
     public Double getStationierungNs3() {
         return this.stationierungNs3;
     }
@@ -367,30 +301,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
 
     public void setStationierungSt3(Double stationierungSt3) {
         this.stationierungSt3 = stationierungSt3;
-    }
-
-    public Integer getAbgaberelEinl() {
-        return this.abgaberelEinl;
-    }
-
-    public void setAbgaberelEinl(Integer abgaberelEinl) {
-        this.abgaberelEinl = abgaberelEinl;
-    }
-
-    public Integer getE32() {
-        return this.e32;
-    }
-
-    public void setE32(Integer e32) {
-        this.e32 = e32;
-    }
-
-    public Integer getN32() {
-        return this.n32;
-    }
-
-    public void setN32(Integer n32) {
-        this.n32 = n32;
     }
 
     public Integer getKanalArtOpt() {
@@ -743,19 +653,10 @@ public class Einleitungsstelle  implements java.io.Serializable {
         buffer.append("gewaessernameAlias3").append("='").append(getGewaessernameAlias3()).append("' ");			
         buffer.append("gewaessernameNs").append("='").append(getGewaessernameNs()).append("' ");			
         buffer.append("nadiaId").append("='").append(getNadiaId()).append("' ");			
-        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");			
-        buffer.append("typIndirekt").append("='").append(getTypIndirekt()).append("' ");			
-        buffer.append("typIndGewDirekt").append("='").append(getTypIndGewDirekt()).append("' ");			
-        buffer.append("typKommTrenn").append("='").append(getTypKommTrenn()).append("' ");			
-        buffer.append("typPrivatTrenn").append("='").append(getTypPrivatTrenn()).append("' ");			
-        buffer.append("typSonstige").append("='").append(getTypSonstige()).append("' ");			
-        buffer.append("typAusserortStrasseneinl").append("='").append(getTypAusserortStrasseneinl()).append("' ");			
+        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");					
         buffer.append("stationierungNs3").append("='").append(getStationierungNs3()).append("' ");			
         buffer.append("einzugsgebiet").append("='").append(getEinzugsgebiet()).append("' ");			
-        buffer.append("stationierungSt3").append("='").append(getStationierungSt3()).append("' ");			
-        buffer.append("abgaberelEinl").append("='").append(getAbgaberelEinl()).append("' ");			
-        buffer.append("e32").append("='").append(getE32()).append("' ");			
-        buffer.append("n32").append("='").append(getN32()).append("' ");			
+        buffer.append("stationierungSt3").append("='").append(getStationierungSt3()).append("' ");									
         buffer.append("kanalArtOpt").append("='").append(getKanalArtOpt()).append("' ");			
         buffer.append("stationierung3Opt").append("='").append(getStationierung3Opt()).append("' ");			
         buffer.append("schutzzoneOpt").append("='").append(getSchutzzoneOpt()).append("' ");			
@@ -870,19 +771,10 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.gewaessernameAlias3 = copy.getGewaessernameAlias3();            
         this.gewaessernameNs = copy.getGewaessernameNs();            
         this.nadiaId = copy.getNadiaId();            
-        this.stillgelegtAm = copy.getStillgelegtAm();            
-        this.typIndirekt = copy.getTypIndirekt();            
-        this.typIndGewDirekt = copy.getTypIndGewDirekt();            
-        this.typKommTrenn = copy.getTypKommTrenn();            
-        this.typPrivatTrenn = copy.getTypPrivatTrenn();            
-        this.typSonstige = copy.getTypSonstige();            
-        this.typAusserortStrasseneinl = copy.getTypAusserortStrasseneinl();            
+        this.stillgelegtAm = copy.getStillgelegtAm();                        
         this.stationierungNs3 = copy.getStationierungNs3();            
         this.einzugsgebiet = copy.getEinzugsgebiet();            
-        this.stationierungSt3 = copy.getStationierungSt3();            
-        this.abgaberelEinl = copy.getAbgaberelEinl();            
-        this.e32 = copy.getE32();            
-        this.n32 = copy.getN32();            
+        this.stationierungSt3 = copy.getStationierungSt3();                             
         this.kanalArtOpt = copy.getKanalArtOpt();            
         this.stationierung3Opt = copy.getStationierung3Opt();            
         this.schutzzoneOpt = copy.getSchutzzoneOpt();            
@@ -973,5 +865,55 @@ public class Einleitungsstelle  implements java.io.Serializable {
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Einleitungsstelle> list = objekt.getEinleitungsstelles();
         return list.iterator().next();
+    }
+
+    public static Integer getAbgaberelIdFromDescription(String description) {
+        if (description == null) {
+            return null;
+        }
+        switch (description) {
+            case "-": return 0;
+            case "abgabepflichtig": return 1;
+            case "nicht abgabepflichtig": return 2;
+            default: return null;
+        }
+    }
+
+    public static String getAbgaberelDescriptionFromId(Integer id) {
+        if (id == null) {
+            return "-";
+        }
+        switch (id) {
+            case 0: return "-";
+            case 1: return "abgabepflichtig";
+            case 2: return "nicht abgabepflichtig";
+            default: return "-";
+        }
+    }
+
+    public static Integer getKanalartIdFromDescription(String description) {
+        if (description == null) {
+            return null;
+        }
+        switch (description) {
+            case "-": return 0;
+            case "Schmutzwasser": return 1;
+            case "Mischwasser": return 2;
+            case "Niederschlagswasser": return 3;
+            default: return null;
+        }
+    }
+
+    public static String getKanalartDescriptionFromId(Integer id) {
+        if (id == null) {
+            return "-";
+        }
+        switch (id) {
+            case 0: return "-";
+            case 1: return "Schmutzwasser";
+            case 2: return "Mischwasser";
+            case 3: return "Niederschlagswasser";
+            default: return "-";
+        }
     }
 }

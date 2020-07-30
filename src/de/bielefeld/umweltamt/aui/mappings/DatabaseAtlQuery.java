@@ -46,6 +46,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 
@@ -268,6 +269,28 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 			}
 		}
 		return false;
+	}
+
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	/* Queries for package ATL : class MapElkaAnalysemethode */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+	private static MapElkaAnalysemethode[] methode = null;
+
+	/**
+	 * Liefert alle in der MapElkaAnalysemethode-Tabelle gespeicherten Analysemethode.
+	 * 
+	 * @return Ein Array mit allen MapElkaAnalysemethode
+	 */
+	public static MapElkaAnalysemethode[] getMapElkaAnalysemethode()
+	{
+		if (DatabaseAtlQuery.methode == null)
+		{
+			DatabaseAtlQuery.methode =
+					DatabaseQuery.getAll(new MapElkaAnalysemethode())
+							.toArray(new MapElkaAnalysemethode[0]);
+		}
+		return DatabaseAtlQuery.methode;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
