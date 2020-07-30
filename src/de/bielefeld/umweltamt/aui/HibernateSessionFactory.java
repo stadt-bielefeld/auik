@@ -21,13 +21,19 @@
 
 package de.bielefeld.umweltamt.aui;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.jdbc.Work;
 import org.postgresql.util.PSQLException;
+import org.sqlite.SQLiteConfig;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -239,6 +245,10 @@ public class HibernateSessionFactory {
             case "org.hibernate.dialect.SQLiteDialect": return false;
             default: return true;
         }
+    }
+
+    public static boolean isDialectSqlite() {
+        return DB_Dialect.equals("org.hibernate.dialect.SQLiteDialect");
     }
 
     /**

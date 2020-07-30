@@ -1230,11 +1230,19 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 */
 
 	public static List<Anhang> allActiveAnhangs() {
-
-		String query = "FROM Anhang WHERE anh_gueltig_bis IS NULL " + 
-				"ORDER BY CAST (NULLIF(regexp_replace(anhang_id, '\\D', '', 'g'), '') as int) asc";
-
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		String query;
+		//Sqlite is missing the regexp_replace function
+		if (HibernateSessionFactory.isDialectSqlite()) {
+			query = "SELECT sl_nr, anh_ma_sl_nr, anhang_id, datetime(anh_gueltig_von), datetime(anh_gueltig_bis)," +
+				"anh_regelwerk, anh_text, herkunft, datetime(erstell_dat), datetime(aktual_dat), zeitstempel " +
+				"FROM anhang WHERE anh_gueltig_bis IS NULL " + 
+				"ORDER BY anhang_id asc";
+			return HibernateSessionFactory.currentSession().createSQLQuery(query).list();
+		} else {
+			query = "FROM Anhang WHERE anh_gueltig_bis IS NULL " + 
+			"ORDER BY CAST (NULLIF(regexp_replace(anhang_id, '\\D', '', 'g'), '') as int) asc";
+			return HibernateSessionFactory.currentSession().createQuery(query).list();
+		}
 	}
 	
 	/**
