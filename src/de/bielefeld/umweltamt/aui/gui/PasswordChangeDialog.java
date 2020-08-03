@@ -48,6 +48,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.jfree.ui.tabbedui.VerticalLayout;
 import org.postgresql.util.PSQLException;
 
@@ -257,9 +258,12 @@ public class PasswordChangeDialog extends JDialog {
                 escapePasswordString(String.valueOf(newPw)));
         boolean success = false;
         SQLQuery query = session.createSQLQuery(queryString);
-        try {
-            query.executeUpdate();
-            success = true;
+        try {		
+			Transaction tx = null;
+		    tx = session.beginTransaction();
+		    query.executeUpdate();
+		    tx.commit();
+        	success = true;
             HibernateSessionFactory.setDBData(HibernateSessionFactory.getDBUser(), String.valueOf(newPw));
         } catch (Exception e) {
             log.error("Error changing password: " + e);
