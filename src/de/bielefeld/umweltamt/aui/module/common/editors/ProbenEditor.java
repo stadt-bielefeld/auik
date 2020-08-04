@@ -62,7 +62,10 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FocusTraversalPolicy;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -481,6 +484,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             pos.setWert(new Float(0));
             pos.setEinheiten(Einheiten.findById(parameter
                 .getWirdgemessenineinheit()));
+            pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
 
 //            getList().add(pos);
             List<Analyseposition> list = (List<Analyseposition>) getList();
@@ -509,6 +513,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             pos.setWert(new Float(0));
             pos.setEinheiten(einheit);
             pos.setAnalyseVon(analysevon);
+            pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
 
 //          getList().add(pos);
             List<Analyseposition> list = (List<Analyseposition>) getList();
@@ -545,6 +550,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         @Override
         public boolean objectRemoved(Object objectAtRow) {
             Analyseposition tmp = (Analyseposition) objectAtRow;
+            tmp.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
 
             if(tmp.getId() == null) {
             	probe.getAnalysepositions().remove(tmp);
@@ -571,7 +577,11 @@ public class ProbenEditor extends AbstractApplyEditor {
                 case 3:
                     tmp = Einheiten.class;
                     break;
-
+                    
+                case 4:
+                	tmp = MapElkaAnalysemethode.class;
+                    break;
+                    
                 case 5:
                     tmp = Double.class;
                     break;
@@ -989,6 +999,8 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         row += 2;
         builder.add(parameterScroller, cc.xyw(1, row, 14));
+        
+        builder.getPanel().setFocusCycleRoot(true);
 
         return builder.getPanel();
     }

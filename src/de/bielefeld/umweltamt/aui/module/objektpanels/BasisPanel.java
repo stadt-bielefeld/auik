@@ -805,7 +805,7 @@ public class BasisPanel extends JPanel {
 							BasisPanel.this.hauptModul.getFrame());
 
 					editDialog.setVisible(true);
-					if (!std.getBezeichnung().equals("")) {
+					if (std.getBezeichnung() != null && !std.getBezeichnung().equals("")) {
 						std = Standort.merge(std);
 						hauptModul.getObjekt().setStandortid(std);
 						updateForm();

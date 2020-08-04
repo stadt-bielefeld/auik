@@ -1136,13 +1136,16 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		AdresseChooser chooser = new AdresseChooser(inhaber, BetreiberEditor.this.frame, "adresse");
 		chooser.setVisible(true);
 		Adresse adr = chooser.getChosenAdresse();
-		inhaber.setAdresse(adr);
-		TabStreets ts = DatabaseQuery.getSingleTabStreet(adr.getStrasse(), adr.getHausnr(), adr.getHausnrzus());
-		Standort std = DatabaseQuery.findStandort(inhaber);
-		std.setE32(ts.getX());
-		std.setN32(ts.getY());
-		std.merge();
-//		standorteModel.updateList();
-		fillForm();
+		if (adr != null) {
+			inhaber.setAdresse(adr);
+			TabStreets ts = DatabaseQuery.getSingleTabStreet(adr.getStrasse(), adr.getHausnr(), adr.getHausnrzus());
+			Standort std = DatabaseQuery.findStandort(inhaber);
+			std.setE32(ts.getX());
+			std.setN32(ts.getY());
+			std.merge();
+//			standorteModel.updateList();
+			fillForm();
+		}
+
 	}
 }

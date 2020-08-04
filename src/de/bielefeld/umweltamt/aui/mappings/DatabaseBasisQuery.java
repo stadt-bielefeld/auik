@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.hibernate.NullPrecedence;
 import org.hibernate.SQLQuery;
@@ -1085,7 +1087,11 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				+ "FROM TabStreets t "
 				+ "WHERE name like '" + name + "' ";
 		query += "AND hausnr = " + hausnr;
-		if (hausnrzus != null) {
+		Pattern p = Pattern.compile("\\p{Alpha}");
+		Matcher m = p.matcher(hausnrzus);
+		boolean match = m.find();
+		if (match) {
+			hausnrzus = hausnrzus.substring(0, 1);
 			query += "AND hausnr_zusatz = '" + hausnrzus + "' ";
 		} else {
 			query += "AND hausnr_zusatz IS NULL";

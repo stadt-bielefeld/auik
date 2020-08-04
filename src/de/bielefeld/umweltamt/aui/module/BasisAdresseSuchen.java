@@ -218,6 +218,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             TabAction ta = new TabAction();
 			ta.addComp(getSuchFeld());
 			ta.addComp(getHausnrFeld());
+			ta.addComp(getOrtFeld());
             ta.addComp(getBetreiberTabelle());
             ta.addComp(getObjektTabelle());
 
