@@ -48,7 +48,7 @@ public class GebuehrenEditor extends JDialog {
 
     public GebuehrenEditor(JFrame owner) {
         super(owner, "Gebühren bearbeiten", true);
-        this.setSize(350, 100);
+        this.setSize(350, 120);
 
         this.personnelFeeField = this.initPersonnelFeeField();
         this.personnelFeeField.setPreferredSize(new Dimension(100, 22));
