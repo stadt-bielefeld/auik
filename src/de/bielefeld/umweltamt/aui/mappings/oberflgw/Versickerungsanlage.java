@@ -130,24 +130,24 @@ public class Versickerungsanlage  implements java.io.Serializable {
         return this.flurabstand;
     }
 
-    public void setFlurabstand(BigDecimal flurabstand) {
-        this.flurabstand = flurabstand;
+    public void setFlurabstand(BigDecimal flurabstand2) {
+        this.flurabstand = flurabstand2;
     }
 
     public BigDecimal getGelaendeVerAnlage() {
         return this.gelaendeVerAnlage;
     }
 
-    public void setGelaendeVerAnlage(BigDecimal gelaendeVerAnlage) {
-        this.gelaendeVerAnlage = gelaendeVerAnlage;
+    public void setGelaendeVerAnlage(BigDecimal gelaendeVerAnlage2) {
+        this.gelaendeVerAnlage = gelaendeVerAnlage2;
     }
 
     public BigDecimal getAbstGrGrenze() {
         return this.abstGrGrenze;
     }
 
-    public void setAbstGrGrenze(BigDecimal abstGrGrenze) {
-        this.abstGrGrenze = abstGrGrenze;
+    public void setAbstGrGrenze(BigDecimal abstGrGrenze2) {
+        this.abstGrGrenze = abstGrGrenze2;
     }
 
     public BigDecimal getAbstUnterkGebaeude() {
@@ -166,7 +166,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.abstVerAnlage = abstVerAnlage;
     }
 
-    public boolean isLandesfoerderungTog() {
+    public Boolean isLandesfoerderungTog() {
         return this.landesfoerderungTog;
     }
 
@@ -174,7 +174,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.landesfoerderungTog = landesfoerderungTog;
     }
 
-    public boolean isNotueberlaufTog() {
+    public Boolean isNotueberlaufTog() {
         return this.notueberlaufTog;
     }
 
@@ -202,8 +202,8 @@ public class Versickerungsanlage  implements java.io.Serializable {
         return this.durchlaessigkeit;
     }
 
-    public void setDurchlaessigkeit(BigDecimal durchlaessigkeit) {
-        this.durchlaessigkeit = durchlaessigkeit;
+    public void setDurchlaessigkeit(BigDecimal durchlaessigkeit2) {
+        this.durchlaessigkeit = durchlaessigkeit2;
     }
 
     public String getUntergrundart() {

@@ -29,8 +29,8 @@
         <property name="gewaessernameNs" type="java.lang.String">
             <column name="gewaessername_ns" />
         </property>
-        <property name="nadiaId" type="java.lang.String">
-            <column name="nadia_id" />
+        <property name="bezBiele" type="java.lang.String">
+            <column name="bez_biele" />
         </property>
         <property name="stillgelegtAm" type="java.util.Date">
             <column name="stillgelegt_am" length="13" />
@@ -122,9 +122,6 @@
         <property name="typSonstigeTog" type="boolean">
             <column name="typ_sonstige_tog" not-null="true" />
         </property>
-        <property name="abgaberelevanteEltOpt" type="java.lang.Integer">
-            <column name="abgaberelevante_elt_opt" />
-        </property>
         <property name="gewaesser3Id" type="java.lang.String">
             <column name="gewaesser_3_id" length="20" />
         </property>
@@ -182,7 +179,24 @@
         <property name="externalNr" type="java.lang.String">
             <column name="external_nr" length="50" />
         </property>
-        <set name="versickerungsanlages" table="versickerungsanlage" schema="oberflgw" inverse="true" lazy="true" fetch="select">
+        <property name="gewnameStat1" type="java.lang.String">
+            <column name="gewname_stat_1" length="50" />
+        </property>
+         <property name="gewnameStat2" type="java.lang.String">
+            <column name="gewname_stat_2" length="50" />
+        </property>
+        <property name="gewkennzStat1" type="java.lang.String">
+            <column name="gewkennz_stat_1" length="50" />
+        </property>
+         <property name="gewkennzStat2" type="java.lang.String">
+            <column name="gewkennz_stat_2" length="50" />
+        </property>
+        
+        
+        
+        
+        
+        <set name="versickerungsanlages" table="versickerungsanlage" schema="oberflgw" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="els_nr" not-null="true" />
             </key>
