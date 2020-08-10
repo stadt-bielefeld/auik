@@ -31,6 +31,7 @@ import java.util.Map;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.jdbc.Work;
 import org.postgresql.util.PSQLException;
 import org.sqlite.SQLiteConfig;
@@ -131,7 +132,11 @@ public class HibernateSessionFactory {
                         cfg.setProperty("hibernate.connection.driver_class", DB_Driver);
                         cfg.setProperty("hibernate.dialect", DB_Dialect);
                     }
+                    if (isDialectSqlite()) {
+                        cfg.setProperty("hibernate.connection.provider_class", "de.bielefeld.umweltamt.aui.SqliteConnectionProvider");
+                    }
                     sessionFactory = cfg.buildSessionFactory();
+
                 }
                 catch (Exception e) {
                     log.error("%%%% Error Creating SessionFactory %%%%");
