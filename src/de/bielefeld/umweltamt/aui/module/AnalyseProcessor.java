@@ -97,7 +97,12 @@ public class AnalyseProcessor {
             position.setGrkl(grkl);
             position.setEinheiten(einheit);
             position.setAnalyseVon("E-Satzung");
-            position.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
+            if (parameter.getMapElkaAnalysemethode() != null) {
+            	position.setMapElkaAnalysemethode(parameter.getMapElkaAnalysemethode());
+            } else {
+            	position.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
+            }
+            
             position.merge();
 
             probe.setStatus(DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN);
