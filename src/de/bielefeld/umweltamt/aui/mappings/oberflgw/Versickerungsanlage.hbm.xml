@@ -4,9 +4,8 @@
 <!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.Versickerungsanlage" table="versickerungsanlage" schema="oberflgw" optimistic-lock="version">
-        <id name="nr" type="long">
-            <column name="nr" />
-            <generator class="assigned" />
+   		<id name="nr" type="long" column="nr" unsaved-value="0">
+            <generator class="identity"/>
         </id>
         <many-to-one name="einleitungsstelle" class="de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle" fetch="select">
             <column name="els_nr" not-null="true" />
@@ -55,9 +54,6 @@
         </property>
         <property name="aktualDat" type="java.util.Date">
             <column name="aktual_dat" length="29" not-null="true" />
-        </property>
-        <property name="herkunft" type="java.lang.String">
-            <column name="herkunft" length="20" not-null="true" />
         </property>
         <property name="externalNr" type="java.lang.String">
             <column name="external_nr" length="50" />

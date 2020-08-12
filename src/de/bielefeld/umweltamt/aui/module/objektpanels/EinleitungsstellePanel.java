@@ -789,7 +789,9 @@ public class EinleitungsstellePanel extends JPanel {
 			hauptModul.getTabbedPane().addTab("Gewässerdaten", getGewaesserTab());
 			if (einleitungsstelle != null) {
 				getGewaesserTab().enableAll(true);
+				getGewaesserTab().clearForm();
 				getGewaesserTab().updateForm(einleitungsstelle);
+							
 			} else {
 				getGewaesserTab().clearForm();
 				getGewaesserTab().completeObjekt(einleitungsstelle);

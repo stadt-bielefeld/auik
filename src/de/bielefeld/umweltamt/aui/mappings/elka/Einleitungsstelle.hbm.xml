@@ -179,19 +179,13 @@
         <property name="externalNr" type="java.lang.String">
             <column name="external_nr" length="50" />
         </property>
-        <property name="gewnameStat1" type="java.lang.String">
-            <column name="gewname_stat_1" length="50" />
+        <property name="gewnameStat" type="java.lang.String">
+            <column name="gewname_stat" length="50" />
         </property>
-         <property name="gewnameStat2" type="java.lang.String">
-            <column name="gewname_stat_2" length="50" />
+        <property name="gewkennzStat" type="java.lang.String">
+            <column name="gewkennz_stat" length="50" />
         </property>
-        <property name="gewkennzStat1" type="java.lang.String">
-            <column name="gewkennz_stat_1" length="50" />
-        </property>
-         <property name="gewkennzStat2" type="java.lang.String">
-            <column name="gewkennz_stat_2" length="50" />
-        </property>
-        
+       
         
         
         

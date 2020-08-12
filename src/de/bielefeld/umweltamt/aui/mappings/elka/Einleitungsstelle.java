@@ -124,10 +124,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
     private Set<Referenz> referenzsForQElsNr = new HashSet<Referenz>(0);
     private Set<Referenz> referenzsForZElsNr = new HashSet<Referenz>(0);
     
-    private String gewnameStat1;
-    private String gewnameStat2;
-    private String gewkennzStat1;
-    private String gewkennzStat2;   
+    private String gewnameStat;
+    private String gewkennzStat;
+
     
     
 
@@ -161,7 +160,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     /** Full constructor 
       */
     public Einleitungsstelle(
-        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, String gewaessernameNs, String nadiaId, Date stillgelegtAm, Boolean typIndirekt, Boolean typIndGewDirekt, Boolean typKommTrenn, Boolean typPrivatTrenn, Boolean typSonstige, Boolean typAusserortStrasseneinl, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer e32, Integer n32, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr, String abwAgEinl, Integer einleitungsart, String bezBiele, String gewnameStat1, String gewnameStat2, String gewkennzStat1, String gewkennzStat2) {
+        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, String gewaessernameNs, String nadiaId, Date stillgelegtAm, Boolean typIndirekt, Boolean typIndGewDirekt, Boolean typKommTrenn, Boolean typPrivatTrenn, Boolean typSonstige, Boolean typAusserortStrasseneinl, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer e32, Integer n32, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr, String abwAgEinl, Integer einleitungsart, String bezBiele, String gewnameStat, String gewkennzStat) {
         this.id = id;
         this.objektid = objektid;
         this.aktualDat = aktualDat;
@@ -231,10 +230,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.versickerungsanlages = versickerungsanlages;
         this.referenzsForQElsNr = referenzsForQElsNr;
         this.referenzsForZElsNr = referenzsForZElsNr;
-        this.gewkennzStat1 = gewkennzStat1;
-        this.gewkennzStat2 = gewkennzStat2;
-        this.gewnameStat1 = gewnameStat1;
-        this.gewnameStat2 = gewnameStat2;
+        this.gewkennzStat = gewkennzStat;
+        this.gewnameStat = gewnameStat;
+  
         
     }
 
@@ -273,37 +271,25 @@ public class Einleitungsstelle  implements java.io.Serializable {
     
 // Relevant
     
-    public String getGewnameStat1() {
-    	return this.gewnameStat1;
+    public String getGewnameStat() {
+    	return this.gewnameStat;
     }
    
-    public void setGewnameStat1(String gewnameStat1) {
-    	this.gewnameStat1 = gewnameStat1;
+    public void setGewnameStat(String gewnameStat) {
+    	this.gewnameStat = gewnameStat;
     }
     
-    public String getGewnameStat2() {
-    	return this.gewnameStat2;
+
+    
+    public String getGewkennzStat() {
+    	return this.gewkennzStat;
     }
    
-    public void setGewnameStat2(String gewnameStat2) {
-    	this.gewnameStat2 = gewnameStat2;
+    public void setGewkennzStat(String gewkennzStat) {
+    	this.gewkennzStat = gewkennzStat;
     }
     
-    public String getGewkennzStat1() {
-    	return this.gewkennzStat1;
-    }
-   
-    public void setGewkennzStat1(String gewkennzStat1) {
-    	this.gewkennzStat1 = gewkennzStat1;
-    }
     
-    public String getGewkennzStat2() {
-    	return this.gewkennzStat2;
-    }
-   
-    public void setGewkennzStat2(String gewkennzStat2) {
-    	this.gewkennzStat2 = gewkennzStat2;
-    }
     
     public Date getErstellDat() {
         return this.erstellDat;
@@ -874,10 +860,8 @@ public class Einleitungsstelle  implements java.io.Serializable {
         buffer.append("versickerungsanlages").append("='").append(getVersickerungsanlages()).append("' ");			
         buffer.append("referenzsForQElsNr").append("='").append(getReferenzsForQElsNr()).append("' ");			
         buffer.append("referenzsForZElsNr").append("='").append(getReferenzsForZElsNr()).append("' ");
-        buffer.append("gewnameStat1").append("=").append(getGewnameStat1()).append("'");
-        buffer.append("gewkennzStat1").append("=").append(getGewkennzStat1()).append("'");
-        buffer.append("gewnameStat2").append("=").append(getGewnameStat2()).append("'");
-        buffer.append("gewkennzStat2").append("=").append(getGewkennzStat2()).append("'");
+        buffer.append("gewnameStat1").append("=").append(getGewnameStat()).append("'");
+        buffer.append("gewkennzStat1").append("=").append(getGewkennzStat()).append("'");
         buffer.append("]");
 
         return buffer.toString();
@@ -1005,11 +989,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.versickerungsanlages = copy.getVersickerungsanlages();            
         this.referenzsForQElsNr = copy.getReferenzsForQElsNr();            
         this.referenzsForZElsNr = copy.getReferenzsForZElsNr();  
-        this.gewnameStat1 = copy.getGewnameStat1();
-        this.gewnameStat2 = copy.getGewnameStat2();
-        this.gewkennzStat1 = copy.getGewkennzStat1();
-        this.gewkennzStat2 = copy.getGewkennzStat2();
-        
+        this.gewnameStat = copy.getGewnameStat();
+        this.gewkennzStat = copy.getGewkennzStat();
+   
     }    
 
     /**

@@ -62,7 +62,6 @@ public class Versickerungsanlage  implements java.io.Serializable {
     private String sonstigesVers;
     private String bauartzulId;
     private Date aktualDat;
-    private String herkunft;
     private String externalNr;
 
     /** Logging */
@@ -82,12 +81,12 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.notueberlaufTog = notueberlaufTog;
         this.erstellDat = erstellDat;
         this.aktualDat = aktualDat;
-        this.herkunft = herkunft;
+        
     }
 
     /** Full constructor */
     public Versickerungsanlage(
-        Long nr, Einleitungsstelle einleitungsstelle, BigDecimal flurabstand, BigDecimal gelaendeVerAnlage, BigDecimal abstGrGrenze, BigDecimal abstUnterkGebaeude, BigDecimal abstVerAnlage, boolean landesfoerderungTog, boolean notueberlaufTog, String notueberlaufZiel, Date erstellDat, BigDecimal durchlaessigkeit, String untergrundart, Integer verAnlageOpt, String sonstigesVers, String bauartzulId, Date aktualDat, String herkunft, String externalNr) {
+        Long nr, Einleitungsstelle einleitungsstelle, BigDecimal flurabstand, BigDecimal gelaendeVerAnlage, BigDecimal abstGrGrenze, BigDecimal abstUnterkGebaeude, BigDecimal abstVerAnlage, boolean landesfoerderungTog, boolean notueberlaufTog, String notueberlaufZiel, Date erstellDat, BigDecimal durchlaessigkeit, String untergrundart, Integer verAnlageOpt, String sonstigesVers, String bauartzulId, Date aktualDat,  String externalNr) {
         this.nr = nr;
         this.einleitungsstelle = einleitungsstelle;
         this.flurabstand = flurabstand;
@@ -105,7 +104,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.sonstigesVers = sonstigesVers;
         this.bauartzulId = bauartzulId;
         this.aktualDat = aktualDat;
-        this.herkunft = herkunft;
+  
         this.externalNr = externalNr;
     }
 
@@ -246,14 +245,6 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.aktualDat = aktualDat;
     }
 
-    public String getHerkunft() {
-        return this.herkunft;
-    }
-
-    public void setHerkunft(String herkunft) {
-        this.herkunft = herkunft;
-    }
-
     public String getExternalNr() {
         return this.externalNr;
     }
@@ -298,8 +289,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         buffer.append("verAnlageOpt").append("='").append(getVerAnlageOpt()).append("' ");			
         buffer.append("sonstigesVers").append("='").append(getSonstigesVers()).append("' ");			
         buffer.append("bauartzulId").append("='").append(getBauartzulId()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");			
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");	
         buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
         buffer.append("]");
 
@@ -382,8 +372,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.verAnlageOpt = copy.getVerAnlageOpt();            
         this.sonstigesVers = copy.getSonstigesVers();            
         this.bauartzulId = copy.getBauartzulId();            
-        this.aktualDat = copy.getAktualDat();            
-        this.herkunft = copy.getHerkunft();            
+        this.aktualDat = copy.getAktualDat(); 
         this.externalNr = copy.getExternalNr();            
     }    
 
