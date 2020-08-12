@@ -26,7 +26,9 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
@@ -43,6 +45,7 @@ import org.hibernate.type.descriptor.sql.VarcharTypeDescriptor;
 
 import com.ibm.icu.math.BigDecimal;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -73,6 +76,7 @@ public class GewaesserdatenPanel extends JPanel {
 	private BasisObjektBearbeiten hauptModul;
 	private Einleitungsstelle einleitungsstelle;
 	private Versickerungsanlage versickerungsanlage;
+    private EinleitungsstellePanel einleitungsstelleTab;
 
 	// Widgets allgemein
 	private JButton saveGewDatenButton;
@@ -132,14 +136,12 @@ public class GewaesserdatenPanel extends JPanel {
 	private JLabel abstUnterkGebaeudeLb = new JLabel("Abstand zum nächsten unterkellerten Gebäude [m]");
 	private JLabel abstVerAnlageLb = new JLabel("Abstand zur nächstenVersickerungsanlage [m]");
 
-	// Daten
-	private Versickerungsanlage fachdaten = null;
-
 	@SuppressWarnings("deprecation")
-	public GewaesserdatenPanel(BasisObjektBearbeiten hauptModul) {
+	public GewaesserdatenPanel(BasisObjektBearbeiten hauptModul, Einleitungsstelle einleitungsstelle) {
 
 		this.name = "Gewaesserdaten";
 		this.hauptModul = hauptModul;
+		this.einleitungsstelle = einleitungsstelle;
 
 		FormLayout layout = new FormLayout("r:pref, 5dlu, 100dlu", // Spalten
 				"");
@@ -265,8 +267,8 @@ public class GewaesserdatenPanel extends JPanel {
 			"Mulden-Rigolenvescikerung", "Schachtversickerung", "Versickerungsbecken", "Sonstiges" };
 
 	public void fetchFormData() throws RuntimeException {
-		Set<Einleitungsstelle> list = this.hauptModul.getObjekt().getEinleitungsstelles();
-		this.versickerungsanlage = Versickerungsanlage.findById(list.iterator().next().getId());
+		
+		this.versickerungsanlage = einleitungsstelle.getVersickerungsanlages().iterator().next();
 		log.debug("Gewässerdaten werden geholt: ID" + this.versickerungsanlage);
 	}
 
@@ -275,7 +277,7 @@ public class GewaesserdatenPanel extends JPanel {
 
 		if (this.einleitungsstelle != null) {
 			if (this.einleitungsstelle.getStationierung3Opt() != null) {
-				getStationierung3OptBox().setSelectedItem(this.einleitungsstelle.getStationierung3Opt());
+				getStationierung3OptBox().setSelectedIndex(this.einleitungsstelle.getStationierung3Opt());
 				switchTypGewBezItems((String) getStationierung3OptBox().getSelectedItem());
 			} else {
 				getStationierung3OptBox().setSelectedIndex(-1);
@@ -432,6 +434,8 @@ public class GewaesserdatenPanel extends JPanel {
 	private boolean saveGewDaten() {
 		boolean success = false;
 
+//		getEinleitungsstelleTab().setObjektValues(this.einleitungsstelle);
+		
 		if (getStationierung3OptBox().getSelectedItem() == null) {
 			this.einleitungsstelle.setStationierung3Opt(null);
 		} else {
@@ -449,7 +453,7 @@ public class GewaesserdatenPanel extends JPanel {
 				this.einleitungsstelle.setStationierung3Opt(2);
 				if (einleitungsstelle.getVersickerungsanlages().size() == 0) {
 					this.versickerungsanlage = new Versickerungsanlage();
-					this.versickerungsanlage.setEinleitungsstelle(einleitungsstelle);
+					this.versickerungsanlage.setEinleitungsstelle(this.einleitungsstelle);
 				} else {
 					this.versickerungsanlage = this.einleitungsstelle.getVersickerungsanlages().iterator().next();
 				}
@@ -488,8 +492,6 @@ public class GewaesserdatenPanel extends JPanel {
 			this.einleitungsstelle.setGewkennzStat(gewkennzStat);
 		}
 
-
-
 		String gewaessernameAlias3 = this.getGewaessernameAlias3Feld().getText();
 		if ("".equals(gewaessernameAlias3)) {
 			this.einleitungsstelle.setGewaessernameAlias3(null);
@@ -500,9 +502,7 @@ public class GewaesserdatenPanel extends JPanel {
 		Double stationierungSt3 = (Double) this.stationierungSt3Feld.getValue();
 		this.einleitungsstelle.setStationierungSt3(stationierungSt3);
 
-		if (getVerAnlageOptBox().getSelectedItem() == null) {
-			this.versickerungsanlage.setVerAnlageOpt(null);
-		} else {
+		if (getVerAnlageOptBox().getSelectedItem() != null)  {
 			String type = getVerAnlageOptBox().getSelectedItem().toString();
 			switch ((String) type) {
 			case "-":
@@ -510,24 +510,31 @@ public class GewaesserdatenPanel extends JPanel {
 
 			case "Flächenversickerung":
 				this.versickerungsanlage.setVerAnlageOpt(1);
+				break;
 
 			case "Muldenversickerung":
 				this.versickerungsanlage.setVerAnlageOpt(2);
+				break;
 
 			case "Rigolenversickerung":
 				this.versickerungsanlage.setVerAnlageOpt(3);
+				break;
 
 			case "Mulden-Rigolenversickerung":
 				this.versickerungsanlage.setVerAnlageOpt(4);
+				break;
 
 			case "Schachtversickerung":
 				this.versickerungsanlage.setVerAnlageOpt(5);
+				break;
 
 			case "Versickerungsbecken":
 				this.versickerungsanlage.setVerAnlageOpt(6);
+				break;
 
 			case "Sonstiges":
 				this.versickerungsanlage.setVerAnlageOpt(7);
+				break;
 			}
 
 			String sonstigesVers = this.getSonstigesVersFeld().getText();
@@ -582,21 +589,28 @@ public class GewaesserdatenPanel extends JPanel {
 			this.versickerungsanlage.setAbstVerAnlage(abstVerAnlage);
 
 			if (this.versickerungsanlage.getAktualDat() != null) {
-				versickerungsanlage.setAktualDat(this.versickerungsanlage.getAktualDat());
+				this.versickerungsanlage.setAktualDat(this.versickerungsanlage.getAktualDat());
 			} else {
-				versickerungsanlage.setAktualDat(new Date());
+				this.versickerungsanlage.setAktualDat(new Date());
 			}
 
 			if (this.versickerungsanlage.getErstellDat() != null) {
-				versickerungsanlage.setErstellDat(this.versickerungsanlage.getErstellDat());
+				this.versickerungsanlage.setErstellDat(this.versickerungsanlage.getErstellDat());
 			} else {
-				versickerungsanlage.setErstellDat(new Date());
+				this.versickerungsanlage.setErstellDat(new Date());
 			}
+			
+			versickerungsanlage.merge();
 
-			if (einleitungsstelle.merge()) {
-				success=true;
-			}
+		}
 
+		Set<Versickerungsanlage> anlagen = new HashSet<Versickerungsanlage>();
+		anlagen.add(versickerungsanlage);
+//		getEinleitungsstelleTab().setObjektValues(einleitungsstelle);
+		this.einleitungsstelle.setVersickerungsanlages(anlagen);
+		
+		if (einleitungsstelle.merge()) {
+			success = true;
 		}
 
 		return success;
@@ -606,10 +620,10 @@ public class GewaesserdatenPanel extends JPanel {
 
 		if (einleitungsstelle.getVersickerungsanlages().size() == 0) {
 
-			this.fachdaten = new Versickerungsanlage();
+			this.versickerungsanlage = new Versickerungsanlage();
 
 			this.einleitungsstelle = einleitungsstelle;
-			this.fachdaten.setEinleitungsstelle(einleitungsstelle);
+			this.versickerungsanlage.setEinleitungsstelle(this.einleitungsstelle);
 
 		}
 	}
@@ -625,7 +639,7 @@ public class GewaesserdatenPanel extends JPanel {
 					;
 					if (saveGewDaten()) {
 						GewaesserdatenPanel.this.hauptModul.getFrame().changeStatus("Gewaessserdaten "
-								+ GewaesserdatenPanel.this.versickerungsanlage.getNr() + " erfolgreich gespeichert.",
+								+ GewaesserdatenPanel.this.einleitungsstelle + " erfolgreich gespeichert.",
 								HauptFrame.SUCCESS_COLOR);
 					} else {
 						GewaesserdatenPanel.this.hauptModul.getFrame()
@@ -645,7 +659,7 @@ public class GewaesserdatenPanel extends JPanel {
 		}
 		if (type == "Sonstiges") {
 			getSonstigesVersFeld().setEnabled(true);
-		} else if (type != "Sonstiges") {
+		} else {
 			getSonstigesVersFeld().setEnabled(false);
 		}
 	}
@@ -990,5 +1004,13 @@ public class GewaesserdatenPanel extends JPanel {
 		}
 		return this.abstVerAnlageFeld;
 	}
+
+    public EinleitungsstellePanel getEinleitungsstelleTab() {
+        if (einleitungsstelleTab == null) {
+            einleitungsstelleTab = new EinleitungsstellePanel(this.hauptModul);
+            einleitungsstelleTab.setBorder(Paddings.DIALOG);
+        }
+        return einleitungsstelleTab;
+    }
 
 }

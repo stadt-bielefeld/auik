@@ -363,7 +363,7 @@ public class EinleitungsstellePanel extends JPanel {
 			}
 			this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
 			
-			switchEinleitungItems((String)getEinleitungsartBox().getSelectedItem());
+//			switchEinleitungItems((String)getEinleitungsartBox().getSelectedItem());
 			
 		}
 	}
@@ -412,16 +412,11 @@ public class EinleitungsstellePanel extends JPanel {
 	public String getName() {
 		return this.name;
 	}
-
-	/**
-	 * Methode die, die Eingabefelder des Panels welche einen Wert haben in die
-	 * Einleitungsstelle der Datenbank schreibt.
-	 * 
-	 * @return boolean
-	 */
-	private boolean saveElkaEinleitungsstelleDaten() {
-		boolean success;
-
+	
+	public void setObjektValues(Einleitungsstelle einleitungsstelle) {
+		
+		this.einleitungsstelle = einleitungsstelle;
+		
 		this.einleitungsstelle.setTypAusseroertlicheStrasseneinleitungTog(false);
 		this.einleitungsstelle.setTypGrubenwasserTog(false);
 		this.einleitungsstelle.setTypIndirekteinleitungTog(false);
@@ -510,6 +505,18 @@ public class EinleitungsstellePanel extends JPanel {
 
 		Integer kanalArtOpt = ((JComboBox) this.kanalArtOptBox).getSelectedIndex();
 		this.einleitungsstelle.setKanalArtOpt(kanalArtOpt);
+	}
+
+	/**
+	 * Methode die, die Eingabefelder des Panels welche einen Wert haben in die
+	 * Einleitungsstelle der Datenbank schreibt.
+	 * 
+	 * @return boolean
+	 */
+	private boolean saveElkaEinleitungsstelleDaten() {
+		boolean success;
+
+		setObjektValues(this.einleitungsstelle);
 
 		success = this.einleitungsstelle.merge();
 		if (success) {
@@ -786,17 +793,62 @@ public class EinleitungsstellePanel extends JPanel {
 			bezBieleLb.setVisible(true);
 			bezBieleFeld.setVisible(true);
 			
-			hauptModul.getTabbedPane().addTab("Gewässerdaten", getGewaesserTab());
-			if (einleitungsstelle != null) {
-				getGewaesserTab().enableAll(true);
-				getGewaesserTab().clearForm();
-				getGewaesserTab().updateForm(einleitungsstelle);
-							
-			} else {
-				getGewaesserTab().clearForm();
-				getGewaesserTab().completeObjekt(einleitungsstelle);
+			this.einleitungsstelle.setTypAusseroertlicheStrasseneinleitungTog(false);
+			this.einleitungsstelle.setTypGrubenwasserTog(false);
+			this.einleitungsstelle.setTypIndirekteinleitungTog(false);
+			this.einleitungsstelle.setTypIndusGewerbDirekteinleitungTog(false);
+			this.einleitungsstelle.setTypIndusGewerbNwMischTog(false);
+			this.einleitungsstelle.setTypIndusGewerbNwTrennTog(false);
+			this.einleitungsstelle.setTypKleinklaeranlageTog(false);
+			this.einleitungsstelle.setTypKommKaTog(false);
+			this.einleitungsstelle.setTypKommNwMischTog(false);
+			this.einleitungsstelle.setTypKommNwTrennTog(false);
+			this.einleitungsstelle.setTypNwPrivatTrennTog(false);
+			this.einleitungsstelle.setTypSonstigeTog(false);
+			
+			if (this.einleitungsartBox.getSelectedIndex()==0) {
+				this.einleitungsstelle.setTypIndirekteinleitungTog(true);
 				
+			} else if (this.einleitungsartBox.getSelectedIndex()==1) {
+				this.einleitungsstelle.setTypIndusGewerbDirekteinleitungTog(true);	
+				
+			} else if (this.einleitungsartBox.getSelectedIndex()==2) {
+				this.einleitungsstelle.setTypKommNwMischTog(true);		
+				
+			}else if(this.einleitungsartBox.getSelectedIndex()==3) {
+				this.einleitungsstelle.setTypIndusGewerbNwMischTog(true);
+				
+			}else if(this.einleitungsartBox.getSelectedIndex()==4) {
+				this.einleitungsstelle.setTypNwPrivatTrennTog(true);
+				
+			}else if(this.einleitungsartBox.getSelectedIndex()==5) {
+				this.einleitungsstelle.setTypKleinklaeranlageTog(true);
+				
+			}else if(this.einleitungsartBox.getSelectedIndex()==6) {
+				this.einleitungsstelle.setTypKommKaTog(true);
+				
+			}else if(this.einleitungsartBox.getSelectedIndex()==7) {
+				this.einleitungsstelle.setTypKommNwTrennTog(true);
+				
+			}else if(this.einleitungsartBox.getSelectedIndex()==8) {
+				this.einleitungsstelle.setTypIndusGewerbNwTrennTog(true);
+				
+			}else if(this.einleitungsartBox.getSelectedIndex()==9) {
+				this.einleitungsstelle.setTypGrubenwasserTog(true);
+				
+			}else if(this.einleitungsartBox.getSelectedIndex()==10) {
+				this.einleitungsstelle.setTypAusseroertlicheStrasseneinleitungTog(true);
+				
+			}else if(this.einleitungsartBox.getSelectedIndex()==11) {
+				this.einleitungsstelle.setTypSonstigeTog(true);
 			}
+						
+			hauptModul.getTabbedPane().addTab("Gewässerdaten", getGewaesserTab());
+			getGewaesserTab().enableAll(true);
+			getGewaesserTab().clearForm();
+			getGewaesserTab().updateForm(einleitungsstelle);
+			hauptModul.getTabbedPane().setSelectedIndex(2);
+							
 			
 			
 		}
@@ -805,7 +857,7 @@ public class EinleitungsstellePanel extends JPanel {
 	
 	public GewaesserdatenPanel getGewaesserTab() {
 		if(gewaesserTab == null) {
-			gewaesserTab = new GewaesserdatenPanel (hauptModul);
+			gewaesserTab = new GewaesserdatenPanel (hauptModul, einleitungsstelle);
 			gewaesserTab.setBorder(Paddings.DIALOG);
 		}
 		return gewaesserTab;
