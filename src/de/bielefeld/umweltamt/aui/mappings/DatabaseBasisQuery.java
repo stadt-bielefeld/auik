@@ -53,6 +53,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -1281,4 +1282,18 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		}
 	}
 
+
+	private static MapElkaGewkennz[] mapElkaGewkennz = null;
+
+	/**
+	 * Get an array with all <code>MapElkaGewkennz</code>en
+	 * 
+	 * @return <code>MapElkaGewkennz[]</code>
+	 */
+	public static MapElkaGewkennz[] getMapElkaGewkennz() {
+		if (DatabaseBasisQuery.mapElkaGewkennz == null) {
+			DatabaseBasisQuery.mapElkaGewkennz = DatabaseQuery.getOrderedAll(new MapElkaGewkennz()).toArray(new MapElkaGewkennz[0]);
+		}
+		return DatabaseBasisQuery.mapElkaGewkennz;
+	}
 }

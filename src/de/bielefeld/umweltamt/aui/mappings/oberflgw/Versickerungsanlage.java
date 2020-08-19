@@ -47,16 +47,16 @@ public class Versickerungsanlage  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Long nr;
     private Einleitungsstelle einleitungsstelle;
-    private BigDecimal flurabstand;
-    private BigDecimal gelaendeVerAnlage;
-    private BigDecimal abstGrGrenze;
-    private BigDecimal abstUnterkGebaeude;
-    private BigDecimal abstVerAnlage;
+    private Double flurabstand;
+    private Double gelaendeVerAnlage;
+    private Double abstGrGrenze;
+    private Double abstUnterkGebaeude;
+    private Double abstVerAnlage;
     private boolean landesfoerderungTog;
     private boolean notueberlaufTog;
     private String notueberlaufZiel;
     private Date erstellDat;
-    private BigDecimal durchlaessigkeit;
+    private Double durchlaessigkeit;
     private String untergrundart;
     private Integer verAnlageOpt;
     private String sonstigesVers;
@@ -86,7 +86,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
 
     /** Full constructor */
     public Versickerungsanlage(
-        Long nr, Einleitungsstelle einleitungsstelle, BigDecimal flurabstand, BigDecimal gelaendeVerAnlage, BigDecimal abstGrGrenze, BigDecimal abstUnterkGebaeude, BigDecimal abstVerAnlage, boolean landesfoerderungTog, boolean notueberlaufTog, String notueberlaufZiel, Date erstellDat, BigDecimal durchlaessigkeit, String untergrundart, Integer verAnlageOpt, String sonstigesVers, String bauartzulId, Date aktualDat,  String externalNr) {
+        Long nr, Einleitungsstelle einleitungsstelle, Double flurabstand, Double gelaendeVerAnlage, Double abstGrGrenze, Double abstUnterkGebaeude, Double abstVerAnlage, boolean landesfoerderungTog, boolean notueberlaufTog, String notueberlaufZiel, Date erstellDat, Double durchlaessigkeit, String untergrundart, Integer verAnlageOpt, String sonstigesVers, String bauartzulId, Date aktualDat,  String externalNr) {
         this.nr = nr;
         this.einleitungsstelle = einleitungsstelle;
         this.flurabstand = flurabstand;
@@ -125,44 +125,44 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.einleitungsstelle = einleitungsstelle;
     }
 
-    public BigDecimal getFlurabstand() {
+    public Double getFlurabstand() {
         return this.flurabstand;
     }
 
-    public void setFlurabstand(BigDecimal flurabstand2) {
+    public void setFlurabstand(Double flurabstand2) {
         this.flurabstand = flurabstand2;
     }
 
-    public BigDecimal getGelaendeVerAnlage() {
+    public Double getGelaendeVerAnlage() {
         return this.gelaendeVerAnlage;
     }
 
-    public void setGelaendeVerAnlage(BigDecimal gelaendeVerAnlage2) {
+    public void setGelaendeVerAnlage(Double gelaendeVerAnlage2) {
         this.gelaendeVerAnlage = gelaendeVerAnlage2;
     }
 
-    public BigDecimal getAbstGrGrenze() {
+    public Double getAbstGrGrenze() {
         return this.abstGrGrenze;
     }
 
-    public void setAbstGrGrenze(BigDecimal abstGrGrenze2) {
+    public void setAbstGrGrenze(Double abstGrGrenze2) {
         this.abstGrGrenze = abstGrGrenze2;
     }
 
-    public BigDecimal getAbstUnterkGebaeude() {
+    public Double getAbstUnterkGebaeude() {
         return this.abstUnterkGebaeude;
     }
 
-    public void setAbstUnterkGebaeude(BigDecimal abstUnterkGebaeude) {
-        this.abstUnterkGebaeude = abstUnterkGebaeude;
+    public void setAbstUnterkGebaeude(Double abstUnterkGebaeude2) {
+        this.abstUnterkGebaeude = abstUnterkGebaeude2;
     }
 
-    public BigDecimal getAbstVerAnlage() {
+    public Double getAbstVerAnlage() {
         return this.abstVerAnlage;
     }
 
-    public void setAbstVerAnlage(BigDecimal abstVerAnlage) {
-        this.abstVerAnlage = abstVerAnlage;
+    public void setAbstVerAnlage(Double abstVerAnlage2) {
+        this.abstVerAnlage = abstVerAnlage2;
     }
 
     public Boolean isLandesfoerderungTog() {
@@ -197,11 +197,11 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.erstellDat = erstellDat;
     }
 
-    public BigDecimal getDurchlaessigkeit() {
+    public Double getDurchlaessigkeit() {
         return this.durchlaessigkeit;
     }
 
-    public void setDurchlaessigkeit(BigDecimal durchlaessigkeit2) {
+    public void setDurchlaessigkeit(Double durchlaessigkeit2) {
         this.durchlaessigkeit = durchlaessigkeit2;
     }
 

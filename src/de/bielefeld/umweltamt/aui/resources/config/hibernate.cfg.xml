@@ -69,6 +69,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Einleitungsstelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/MapElkaAnhang.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/MapElkaEinheit.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/MapElkaGewkennz.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/MapElkaStoff.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Referenz.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/Wasserrecht.hbm.xml" />

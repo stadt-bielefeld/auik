@@ -38,7 +38,10 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import org.codehaus.jackson.map.ext.JodaDeserializers.DateMidnightDeserializer;
 import org.hibernate.type.descriptor.sql.VarcharTypeDescriptor;
@@ -49,6 +52,7 @@ import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
@@ -58,10 +62,10 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
-
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 /**
  * DAs "GewaesserdatenTab" des Einleitungsstelle-Panels
- * 
+ * d
  * @author Lisa Fuchs
  * @date 27.07.2020
  */
@@ -77,19 +81,26 @@ public class GewaesserdatenPanel extends JPanel {
 	private Einleitungsstelle einleitungsstelle;
 	private Versickerungsanlage versickerungsanlage;
     private EinleitungsstellePanel einleitungsstelleTab;
+   
 
 	// Widgets allgemein
 	private JButton saveGewDatenButton;
 	private JComboBox stationierung3OptBox = null; // Typ Gewässer Bezeichnung
-
-	// Widgets nicht stationiertes Gewässer
-	private JTextField gewaessernameNs3Feld = null; // Gewässername nicht stat. Gewässer
-	private DoubleField stationierungNs3Feld = null; // Stationierung der Mündung in das stat. Gewässer
+	
+	// Widgets nicht stationiertes & stat. Gewässer
+	
 	private DoubleField einzugsgebietFeld = null; // Einzugsgebiet des Gewässers bis zur Einleitung
 	private JTextField gewnameStatFeld = null; // Gewässername stat Gewässer in welches nstat Gew mündet
-	private JTextField gewkennzStatFeld = null; // Gewässerkennzahl stat Gewässer in welches nstat Gew. mündet
-
-	// Widgets stationiertes Gewässer
+	private JComboBox gewkennzStatBox =null; // Gewässerkennzahl stat Gewässer in welches nstat Gew. mündet
+	
+	
+// Widgets nur nicht stationiertes Gewässer
+	
+	private JTextField gewaessernameNs3Feld = null; // Gewässername nicht stat. Gewässer
+	private DoubleField stationierungNs3Feld = null; // Stationierung der Mündung in das stat. Gewässer
+	
+	
+	// Widgets nur stat Gewässer
 
 	private JTextField gewaessernameAlias3Feld = null; // Aliasname stat Gewässer
 	private DoubleField stationierungSt3Feld = null; // Stationierung stat Gewässer
@@ -136,6 +147,10 @@ public class GewaesserdatenPanel extends JPanel {
 	private JLabel abstUnterkGebaeudeLb = new JLabel("Abstand zum nächsten unterkellerten Gebäude [m]");
 	private JLabel abstVerAnlageLb = new JLabel("Abstand zur nächstenVersickerungsanlage [m]");
 
+	
+	private MapElkaGewkennz[] mapElkaGewkennz = null;
+	
+	
 	@SuppressWarnings("deprecation")
 	public GewaesserdatenPanel(BasisObjektBearbeiten hauptModul, Einleitungsstelle einleitungsstelle) {
 
@@ -143,7 +158,7 @@ public class GewaesserdatenPanel extends JPanel {
 		this.hauptModul = hauptModul;
 		this.einleitungsstelle = einleitungsstelle;
 
-		FormLayout layout = new FormLayout("r:pref, 5dlu, 100dlu", // Spalten
+		FormLayout layout = new FormLayout("r:pref, 5dlu, 100dlu, 200dlu", // Spalten
 				"");
 
 		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
@@ -161,7 +176,7 @@ public class GewaesserdatenPanel extends JPanel {
 
 		builder.nextLine();
 		builder.append(gewkennzStat1Lb);
-		builder.append(getGewkennzStatFeld());
+		builder.append(getGewkennzStatBox());
 		
 		builder.nextLine();
 		builder.append(einzugsgebietLb);
@@ -300,7 +315,8 @@ public class GewaesserdatenPanel extends JPanel {
 			}
 
 			if (this.einleitungsstelle.getGewkennzStat() != null) {
-				getGewkennzStatFeld().setText(this.einleitungsstelle.getGewkennzStat());
+				gewkennzStatBox.setModel(new DefaultComboBoxModel(mapElkaGewkennz));
+				gewkennzStatBox.setSelectedIndex(-1);
 			}
 
 
@@ -388,7 +404,7 @@ public class GewaesserdatenPanel extends JPanel {
 		getStationierungsNs3Feld().setValue(null);
 		getEinzugsgebietFeld().setValue(null);
 		getGewnameStatFeld().setText(null);
-		getGewkennzStatFeld().setText(null);
+		getGewkennzStatBox().setSelectedIndex(-1);
 		getGewaessernameAlias3Feld().setText(null);
 		getStationierungSt3Feld().setValue(null);
 		getVerAnlageOptBox().setSelectedIndex(-1);
@@ -403,6 +419,10 @@ public class GewaesserdatenPanel extends JPanel {
 		getAbstGrGrenzeFeld().setValue(null);
 		getAbstUnterkGebaeudeFeld().setValue(null);
 		getAbstVerAnlageFeld().setValue(null);
+		
+		if (mapElkaGewkennz == null) {
+			mapElkaGewkennz = DatabaseQuery.getMapElkaGewkennz();
+		}
 
 	}
 
@@ -413,7 +433,7 @@ public class GewaesserdatenPanel extends JPanel {
 
 		getEinzugsgebietFeld().setEnabled(enabled);
 		getGewnameStatFeld().setEnabled(enabled);
-		getGewkennzStatFeld().setEnabled(enabled);
+		getGewkennzStatBox().setEnabled(enabled);
 		getGewaessernameAlias3Feld().setEnabled(enabled);
 		getStationierungSt3Feld().setEnabled(enabled);
 		getVerAnlageOptBox().setEnabled(enabled);
@@ -472,10 +492,10 @@ public class GewaesserdatenPanel extends JPanel {
 			this.einleitungsstelle.setGewaessernameNs3(gewaessernameNs3);
 		}
 
-		Double stationierungsNs3 = (Double) this.stationierungNs3Feld.getValue();
+		Double stationierungsNs3 = (Double) this.stationierungNs3Feld.getDoubleValue();
 		this.einleitungsstelle.setStationierungNs3(stationierungsNs3);
 
-		Double einzugsgebiet = (Double) this.einzugsgebietFeld.getValue();
+		Double einzugsgebiet = (Double) this.einzugsgebietFeld.getDoubleValue();
 		this.einleitungsstelle.setEinzugsgebiet(einzugsgebiet);
 
 		String gewnameStat = this.gewnameStatFeld.getText();
@@ -485,7 +505,11 @@ public class GewaesserdatenPanel extends JPanel {
 			this.einleitungsstelle.setGewnameStat(gewnameStat);
 		}
 
-		String gewkennzStat = this.getGewkennzStatFeld().getText();
+		MapElkaGewkennz gewkennzStat = (MapElkaGewkennz) gewkennzStatBox.getSelectedItem();
+		ArrayList gew = (ArrayList) gewkennzStat;
+		
+		
+		
 		if ("".equals(gewkennzStat)) {
 			this.einleitungsstelle.setGewkennzStat(null);
 		} else {
@@ -499,7 +523,7 @@ public class GewaesserdatenPanel extends JPanel {
 			this.einleitungsstelle.setGewaessernameAlias3(gewaessernameAlias3);
 		}
 
-		Double stationierungSt3 = (Double) this.stationierungSt3Feld.getValue();
+		Double stationierungSt3 = (Double) this.stationierungSt3Feld.getDoubleValue();
 		this.einleitungsstelle.setStationierungSt3(stationierungSt3);
 
 		if (getVerAnlageOptBox().getSelectedItem() != null)  {
@@ -570,22 +594,22 @@ public class GewaesserdatenPanel extends JPanel {
 				this.versickerungsanlage.setNotueberlaufZiel(notueberlaufZiel);
 			}
 
-			java.math.BigDecimal durchlaessigkeit = (java.math.BigDecimal) this.durchlaessigkeitFeld.getValue();
+			Double durchlaessigkeit = (Double) this.durchlaessigkeitFeld.getDoubleValue();
 			this.versickerungsanlage.setDurchlaessigkeit(durchlaessigkeit);
 
-			java.math.BigDecimal flurabstand = (java.math.BigDecimal) this.flurabstandFeld.getValue();
+			Double flurabstand = (Double) this.flurabstandFeld.getDoubleValue();
 			this.versickerungsanlage.setFlurabstand(flurabstand);
 
-			java.math.BigDecimal gelaendeVerAnlage = (java.math.BigDecimal) this.gelaendeVerAnlageFeld.getValue();
+			Double gelaendeVerAnlage = (Double) this.gelaendeVerAnlageFeld.getDoubleValue();
 			this.versickerungsanlage.setGelaendeVerAnlage(gelaendeVerAnlage);
 
-			java.math.BigDecimal abstGrGrenze = (java.math.BigDecimal) this.abstGrGrenzeFeld.getValue();
+			Double abstGrGrenze = (Double) this.abstGrGrenzeFeld.getDoubleValue();
 			this.versickerungsanlage.setAbstGrGrenze(abstGrGrenze);
 
-			java.math.BigDecimal abstUnterkGebaeude = (java.math.BigDecimal) this.abstUnterkGebaeudeFeld.getValue();
+			Double abstUnterkGebaeude = (Double) this.abstUnterkGebaeudeFeld.getDoubleValue();
 			this.versickerungsanlage.setAbstUnterkGebaeude(abstUnterkGebaeude);
 
-			java.math.BigDecimal abstVerAnlage = (java.math.BigDecimal) this.abstVerAnlageFeld.getValue();
+			Double abstVerAnlage = (Double) this.abstVerAnlageFeld.getDoubleValue();
 			this.versickerungsanlage.setAbstVerAnlage(abstVerAnlage);
 
 			if (this.versickerungsanlage.getAktualDat() != null) {
@@ -674,7 +698,7 @@ public class GewaesserdatenPanel extends JPanel {
 			gewnameStat1Lb.setVisible(true);
 			getGewnameStatFeld().setVisible(true);
 			gewkennzStat1Lb.setVisible(true);
-			getGewkennzStatFeld().setVisible(true);
+			getGewkennzStatBox().setVisible(true);
 			einzugsgebietLb.setVisible(true);
 			getEinzugsgebietFeld().setVisible(true);
 			
@@ -722,7 +746,7 @@ public class GewaesserdatenPanel extends JPanel {
 			gewnameStat1Lb.setVisible(true);
 			getGewnameStatFeld().setVisible(true);
 			gewkennzStat1Lb.setVisible(true);
-			getGewkennzStatFeld().setVisible(true);
+			getGewkennzStatBox().setVisible(true);
 			einzugsgebietLb.setVisible(true);
 			getEinzugsgebietFeld().setVisible(true);
 
@@ -768,7 +792,7 @@ public class GewaesserdatenPanel extends JPanel {
 			gewnameStat1Lb.setVisible(false);
 			getGewnameStatFeld().setVisible(false);
 			gewkennzStat1Lb.setVisible(false);
-			getGewkennzStatFeld().setVisible(false);
+			getGewkennzStatBox().setVisible(false);
 			einzugsgebietLb.setVisible(false);
 			getEinzugsgebietFeld().setVisible(false);
 
@@ -815,7 +839,7 @@ public class GewaesserdatenPanel extends JPanel {
 			gewnameStat1Lb.setVisible(false);
 			getGewnameStatFeld().setVisible(false);
 			gewkennzStat1Lb.setVisible(false);
-			getGewkennzStatFeld().setVisible(false);
+			getGewkennzStatBox().setVisible(false);
 
 			//nicht stat. Gew			
 			gewaessernameNs3Lb.setVisible(false);
@@ -897,11 +921,11 @@ public class GewaesserdatenPanel extends JPanel {
 		return this.gewnameStatFeld;
 	}
 
-	private JTextField getGewkennzStatFeld() {
-		if (this.gewkennzStatFeld == null) {
-			this.gewkennzStatFeld = new LimitedTextField(50);
+	private JComboBox getGewkennzStatBox() {
+		if (this.gewkennzStatBox == null) {
+			this.gewkennzStatBox = new JComboBox();
 		}
-		return this.gewkennzStatFeld;
+		return this.gewkennzStatBox;
 	}
 
 	private JTextField getGewaessernameAlias3Feld() {
@@ -1012,5 +1036,8 @@ public class GewaesserdatenPanel extends JPanel {
         }
         return einleitungsstelleTab;
     }
+    
+    
+
 
 }

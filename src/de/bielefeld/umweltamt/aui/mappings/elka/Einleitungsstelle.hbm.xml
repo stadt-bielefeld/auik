@@ -53,10 +53,10 @@
         <property name="typAusserortStrasseneinl" type="java.lang.Boolean">
             <column name="typ_ausserort_strasseneinl" />
         </property>
-        <property name="stationierungNs3" type="java.lang.Double">
+        <property name="stationierungNs3" type="double">
             <column name="stationierung_ns_3" precision="17" scale="17" />
         </property>
-        <property name="einzugsgebiet" type="java.lang.Double">
+        <property name="einzugsgebiet" type="double">
             <column name="einzugsgebiet" precision="17" scale="17" />
         </property>
         <property name="stationierungSt3" type="java.lang.Double">

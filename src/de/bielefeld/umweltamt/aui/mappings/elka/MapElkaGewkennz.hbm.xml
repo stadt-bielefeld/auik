@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
+<hibernate-mapping>
+    <class name="de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz" table="map_elka_gewkennz" schema="elka" optimistic-lock="version">
+        <id name="gewkz" type="java.lang.Integer">
+            <column name="gewkz" />
+            <generator class="assigned" />
+        </id>
+        <property name="gewname" type="java.lang.String">
+            <column name="gewname" />
+        </property>
+       
+    </class>
+</hibernate-mapping>
