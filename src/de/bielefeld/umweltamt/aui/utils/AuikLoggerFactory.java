@@ -44,7 +44,6 @@ public class AuikLoggerFactory implements LoggerFactory {
 	 * Must be implemented for using log4j compatibility API
 	 * @return The new AuikLogger instance 
 	 */
-	@Override
 	public Logger makeNewLoggerInstance(LoggerContext context, String name){
 		if (AuikLoggerFactory.needsToRunInit) init();
 		return new AuikLogger(name);

@@ -687,9 +687,11 @@ public class ELKASync extends AbstractModul {
     ) {
         if (entities.size() > 0) {
             if(PROXY_HOST != null){
+                System.setProperty("https.proxyHost", PROXY_HOST);
                 System.setProperty("http.proxyHost", PROXY_HOST);
             }
             if(PROXY_PORT != null){
+                System.setProperty("https.proxyPort", PROXY_PORT);
                 System.setProperty("http.proxyPort", PROXY_PORT);
             }
             JFileChooser chooser = new JFileChooser();
@@ -761,9 +763,11 @@ public class ELKASync extends AbstractModul {
     ) {
         if (entities.size() > 0) {
             if(PROXY_HOST != null){
+                System.setProperty("https.proxyHost", PROXY_HOST);
                 System.setProperty("http.proxyHost", PROXY_HOST);
             }
             if(PROXY_PORT != null){
+                System.setProperty("https.proxyPort", PROXY_PORT);
                 System.setProperty("http.proxyPort", PROXY_PORT);
             }
             JFileChooser chooser = new JFileChooser();
