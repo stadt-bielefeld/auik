@@ -50,6 +50,7 @@ import com.ibm.icu.math.BigDecimal;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
+import com.sun.jdi.IntegerValue;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -147,8 +148,6 @@ public class GewaesserdatenPanel extends JPanel {
 	private JLabel abstUnterkGebaeudeLb = new JLabel("Abstand zum nächsten unterkellerten Gebäude [m]");
 	private JLabel abstVerAnlageLb = new JLabel("Abstand zur nächstenVersickerungsanlage [m]");
 
-	
-	private MapElkaGewkennz[] mapElkaGewkennz = null;
 	
 	
 	@SuppressWarnings("deprecation")
@@ -273,6 +272,15 @@ public class GewaesserdatenPanel extends JPanel {
 			}
 		});
 
+		this.gewkennzStatBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Integer gewKennz = (Integer) gewkennzStatBox.getSelectedItem();
+				switchGewKennz(gewKennz);;
+			}
+		});
+
 	}
 
 	private String[] typGewBezItems = { "nicht stationiertes Gewässer", "stationiertes Gewässer", "Grundwasser",
@@ -280,6 +288,12 @@ public class GewaesserdatenPanel extends JPanel {
 
 	private String[] anlagenItems = { "-", "Flächenversickerung", "Muldenversickerung", "Rigolenversickerung",
 			"Mulden-Rigolenvescikerung", "Schachtversickerung", "Versickerungsbecken", "Sonstiges" };
+
+	
+	private Integer[] mapElkaGewkennz = 	DatabaseQuery.getMapElkaGewkennzArray();
+
+
+	
 
 	public void fetchFormData() throws RuntimeException {
 		
@@ -315,10 +329,10 @@ public class GewaesserdatenPanel extends JPanel {
 			}
 
 			if (this.einleitungsstelle.getGewkennzStat() != null) {
-				gewkennzStatBox.setModel(new DefaultComboBoxModel(mapElkaGewkennz));
-				gewkennzStatBox.setSelectedIndex(-1);
+				getGewkennzStatBox().setSelectedItem(Integer.valueOf(einleitungsstelle.getGewkennzStat()));
+			} else {
+				getGewkennzStatBox().setSelectedIndex(-1);
 			}
-
 
 
 			if (this.einleitungsstelle.getGewaessernameAlias3() != null) {
@@ -419,10 +433,6 @@ public class GewaesserdatenPanel extends JPanel {
 		getAbstGrGrenzeFeld().setValue(null);
 		getAbstUnterkGebaeudeFeld().setValue(null);
 		getAbstVerAnlageFeld().setValue(null);
-		
-		if (mapElkaGewkennz == null) {
-			mapElkaGewkennz = DatabaseQuery.getMapElkaGewkennz();
-		}
 
 	}
 
@@ -505,17 +515,12 @@ public class GewaesserdatenPanel extends JPanel {
 			this.einleitungsstelle.setGewnameStat(gewnameStat);
 		}
 
-		MapElkaGewkennz gewkennzStat = (MapElkaGewkennz) gewkennzStatBox.getSelectedItem();
-		ArrayList gew = (ArrayList) gewkennzStat;
-		
-		
-		
-		if ("".equals(gewkennzStat)) {
+		if (gewkennzStatBox.getSelectedItem() == null) {
 			this.einleitungsstelle.setGewkennzStat(null);
 		} else {
-			this.einleitungsstelle.setGewkennzStat(gewkennzStat);
+			this.einleitungsstelle.setGewkennzStat(gewkennzStatBox.getSelectedItem().toString());
 		}
-
+		
 		String gewaessernameAlias3 = this.getGewaessernameAlias3Feld().getText();
 		if ("".equals(gewaessernameAlias3)) {
 			this.einleitungsstelle.setGewaessernameAlias3(null);
@@ -675,6 +680,13 @@ public class GewaesserdatenPanel extends JPanel {
 		}
 		return this.saveGewDatenButton;
 
+	}
+
+	public void switchGewKennz(Integer type) {
+		if (type == null) {
+			return;
+		}
+		getGewnameStatFeld().setText(MapElkaGewkennz.findByGewkz((Integer) getGewkennzStatBox().getSelectedItem()).getGewname());
 	}
 
 	public void switchAnlagenItems(String type) {
@@ -924,6 +936,7 @@ public class GewaesserdatenPanel extends JPanel {
 	private JComboBox getGewkennzStatBox() {
 		if (this.gewkennzStatBox == null) {
 			this.gewkennzStatBox = new JComboBox();
+			this.gewkennzStatBox.setModel(new DefaultComboBoxModel(this.mapElkaGewkennz));
 		}
 		return this.gewkennzStatBox;
 	}

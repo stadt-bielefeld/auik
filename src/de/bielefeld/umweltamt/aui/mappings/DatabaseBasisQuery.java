@@ -1296,4 +1296,26 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		}
 		return DatabaseBasisQuery.mapElkaGewkennz;
 	}
+
+	public static Integer[] getMapElkaGewkennzArray() {
+		
+		List<Integer> mapElkaGewkennzList = getMapElkaGewkennzList();
+
+		Integer[] mapElkaGew = new Integer[mapElkaGewkennzList.size()];
+		return mapElkaGew = mapElkaGewkennzList.toArray(mapElkaGew);
+		
+	}
+
+	/**
+	 * Get all MapElkaGewkennz and sort them by their gewkz
+	 * 
+	 * @return <code>Eine Liste aller Gewaesser</code>
+	 */
+	public static List<Integer> getMapElkaGewkennzList() {
+
+		String query = "SELECT gewkz " + "FROM MapElkaGewkennz ORDER BY gewkz";
+
+		return HibernateSessionFactory.currentSession().createQuery(query).list();
+
+	}
 }
