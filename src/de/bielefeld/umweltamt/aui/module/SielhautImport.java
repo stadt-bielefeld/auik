@@ -82,6 +82,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -350,6 +351,10 @@ public class SielhautImport extends AbstractModul {
                             // Sollte eigentlich auch nicht vorkommen, nötig?
                             throw new Exception("Importdatei beschädigt!");
                         }
+                        
+                        // Analysemethode
+                        
+                        pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
 
                         // Einheit
                         Einheiten einheit =

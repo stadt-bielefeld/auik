@@ -179,18 +179,24 @@ public class DatabaseClassToString {
 		String hausnrzus = "";
 		String vorname = "";
 		if (clazz.getAdresse() != null) {
-			if (clazz.getAdresse().getHausnrzus() != null) {
+			if (clazz.getAdresse().getHausnrzus() != null && clazz.getVorname() != null) {
+				hausnrzus = clazz.getAdresse().getHausnrzus();
+				vorname = clazz.getVorname();
+				return vorname + " " + clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
+						+ clazz.getAdresse().getHausnr() + hausnrzus + ", " + clazz.getAdresse().getPlz() + " "
+						+ clazz.getAdresse().getOrt();
+			} else if (clazz.getAdresse().getHausnrzus() == null && clazz.getVorname() != null) {
+				vorname = clazz.getVorname();
+				return vorname + " " + clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
+						+ clazz.getAdresse().getHausnr() + ", " + clazz.getAdresse().getPlz() + " "
+						+ clazz.getAdresse().getOrt();
+			} else if (clazz.getAdresse().getHausnrzus() != null && clazz.getVorname() == null) {
 				hausnrzus = clazz.getAdresse().getHausnrzus();
 				return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
 						+ hausnrzus + ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
 			} else {
-		        if (clazz.getVorname() != null) {
-		        	vorname = clazz.getVorname() + " ";
-		        }
-				return vorname + clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
-						+ clazz.getAdresse().getHausnr() + ", " + clazz.getAdresse().getPlz() + " "
-						+ clazz.getAdresse().getOrt();
-
+				return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
+						+ ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
 			}
 
 		} else {
