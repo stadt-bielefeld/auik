@@ -63,6 +63,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
+import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 /**
  * DAs "GewaesserdatenTab" des Einleitungsstelle-Panels
@@ -168,14 +169,14 @@ public class GewaesserdatenPanel extends JPanel {
 		builder.nextLine();
 		builder.append(stationierung3OptLb);
 		builder.append(getStationierung3OptBox());
-
-		builder.nextLine();
-		builder.append(gewnameStat1Lb);
-		builder.append(getGewnameStatFeld());
-
+		
 		builder.nextLine();
 		builder.append(gewkennzStat1Lb);
 		builder.append(getGewkennzStatBox());
+		
+		builder.nextLine();
+		builder.append(gewnameStat1Lb);
+		builder.append(getGewnameStatFeld());
 		
 		builder.nextLine();
 		builder.append(einzugsgebietLb);
@@ -442,7 +443,7 @@ public class GewaesserdatenPanel extends JPanel {
 		getStationierungsNs3Feld().setEnabled(enabled);
 
 		getEinzugsgebietFeld().setEnabled(enabled);
-		getGewnameStatFeld().setEnabled(enabled);
+		getGewnameStatFeld().setEnabled(false);
 		getGewkennzStatBox().setEnabled(enabled);
 		getGewaessernameAlias3Feld().setEnabled(enabled);
 		getStationierungSt3Feld().setEnabled(enabled);
@@ -935,7 +936,7 @@ public class GewaesserdatenPanel extends JPanel {
 
 	private JComboBox getGewkennzStatBox() {
 		if (this.gewkennzStatBox == null) {
-			this.gewkennzStatBox = new JComboBox();
+			this.gewkennzStatBox = new SearchBox();
 			this.gewkennzStatBox.setModel(new DefaultComboBoxModel(this.mapElkaGewkennz));
 		}
 		return this.gewkennzStatBox;
