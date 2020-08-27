@@ -46,6 +46,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 
@@ -59,7 +60,13 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 {
 
 	/** Logging */
-	// private static final AuikLogger log = AuikLogger.getLogger();
+	 private static final AuikLogger log = AuikLogger.getLogger();
+
+		private static Einheiten[] einheiten = null;
+		private static Klaeranlage[] klaeranlage = null;
+		private static Parameter[] parameter = null;
+		private static Probeart[] probearten = null;
+		private static Status[] atlStatus = null;
 
 	/* ********************************************************************** */
 	/* Queries for package ATL */
@@ -214,8 +221,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/* Queries for package ATL : class Einheiten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static Einheiten[] einheiten = null;
-
 	/**
 	 * Liefert alle in der Einheiten-Tabelle gespeicherten Einheiten.
 	 * 
@@ -273,8 +278,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package ATL : class Klaeranlage */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static Klaeranlage[] klaeranlage = null;
 
 	/**
 	 * Get an array of all Klaeranlage,
@@ -351,8 +354,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	{
 		return DatabaseQuery.getOrderedAll(new Parameter(), "bezeichnung");
 	}
-
-	private static Parameter[] parameter = null;
 
 	public static Parameter[] getAllParameterAsArray()
 	{
@@ -454,8 +455,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package ATL : class Probeart */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static Probeart[] probearten = null;
 
 	/**
 	 * Liefert alle vorhandenen Probearten.
@@ -981,8 +980,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package ATL : class Status */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static Status[] atlStatus = null;
 
 	/**
 	 * Get all Status

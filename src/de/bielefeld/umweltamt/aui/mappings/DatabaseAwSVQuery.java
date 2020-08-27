@@ -53,7 +53,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
- * This is a service class for all custom queries from the vaws package.
+ * This is a service class for all custom queries from the AWSV package.
  *
  * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
@@ -62,61 +62,36 @@ abstract class DatabaseAwSVQuery {
 
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
-
-	/* ********************************************************************** */
-	/* Queries for package VAWS */
-	/* ********************************************************************** */
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Abfuellflaeche */
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	/**
-	 * Get a VawsAbfluellflaeche (create a new one if needed)
-	 * 
-	 * @param fachdaten
-	 *            Fachdaten
-	 * @return Abfuellflaeche
-	 */
-	// TODO: I replaced this hole method by fachdaten.getAbfuellflaeche()
-	// BUT: Someone should still find out why this does not work... :(
-	private static Abfuellflaeche getAbfuellflaeche(Fachdaten fachdaten) {
-		if (fachdaten == null
-				|| !fachdaten.getAnlagenart().equals(
-						DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)) {
-			return null;
-		}
-		Abfuellflaeche flaeche = new DatabaseAccess()
-				.executeCriteriaToUniqueResult(
-						DetachedCriteria.forClass(Abfuellflaeche.class)
-						// TODO: For some reason this throws strange exceptions.
-						// Using the id directly is only a workaround and
-						// somebody should take a longer
-						// look at this at some point in time... :(
-						// And it seems to be working with the Kontrollen...
-								.add(Restrictions
-										.eq("fachdaten", fachdaten)),
-						// .add(Restrictions.eq(
-						// "behaelterid", fachdaten.getBehaelterid())),
-						new Abfuellflaeche());
-		if (flaeche == null) {
-			// Bei so ziemlich 95% aller Tankstellen gibts ein Fachdaten-
-			// Objekt, aber kein Abfuellflaechen-Objekt.
-			// Seems like it's not a bug, it's a feature...
-
-			// Also legen wir in diesen Füllen einfach ein neues
-			// Abfuellflaechen-Objekt an.
-
-			// Das selbe tun wir bei einem noch ungespeicherten
-			// neuen Fachdaten-Objekt.
-			flaeche = new Abfuellflaeche();
-			flaeche.setFachdaten(fachdaten);
-			log.debug("Neue Fläche für '" + fachdaten + "' erzeugt!");
-		}
-		return flaeche;
-	}
-
+	
+	
 	private static String[] bodenflaechenausf = null;
+	private static String[] niederschlagschutz = null;
+	private static Anlagenarten[] anlagenarten = null;
+	private static String[] behaelterart = null;
+	private static String[] fluessigkeit = null;
+	private static String[] ausfuehrung = null;
+	private static Gebuehrenarten[] gebuehrenarten = null;
+	private static String[] gefaehrdungsstufen = null;
+	private static String[] material = null;
+	private static String[] pruefer = null;
+	private static String[] verwaltungsMassnahmen = null;
+	private static String[] pruefergebniss = null;
+	private static Standortgghwsg[] standortgghwsg = null;
+	private static String[] vbfeinstufung = null;
+	private static Wassereinzugsgebiet[] wassereinzugsgebiet = null;
+	private static Wirtschaftszweig[] wirtschaftszweige = null;
+
+	/* ********************************************************************** */
+	/* Queries for package AwSV */
+	/* ********************************************************************** */
+
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	/* Queries for package AWSV: class Abfuellflaeche */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+	
 
 	/**
 	 * Get all used Bodenflaechenausf from Abfuellflaeche
@@ -137,8 +112,6 @@ abstract class DatabaseAwSVQuery {
 		}
 		return DatabaseAwSVQuery.bodenflaechenausf;
 	}
-
-	private static String[] niederschlagschutz = null;
 
 	/**
 	 * Get all used Niederschlagschutz from Abfuellflaeche
@@ -161,10 +134,9 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Anlagenarten */
+	/* Queries for package AWSV: class Anlagenarten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	private static Anlagenarten[] anlagenarten = null;
 
 	/**
 	 * Get all Anlagenarten
@@ -180,7 +152,7 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Anlagenchrono */
+	/* Queries for package AWSV: class Anlagenchrono */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
@@ -200,10 +172,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Behaelterart */
+	/* Queries for package AWSV: class Behaelterart */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static String[] behaelterart = null;
 
 	/**
 	 * Get all Behaelterart
@@ -248,8 +218,6 @@ abstract class DatabaseAwSVQuery {
 								.addOrder(Order.asc("herstellnr")),
 						new Fachdaten());
 	}
-
-	private static String[] ausfuehrung = null;
 
 	/**
 	 * Get all used Ausführungen from Fachdaten
@@ -317,10 +285,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Fluessigkeit */
+	/* Queries for package AWSV: class Fluessigkeit */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static String[] fluessigkeit = null;
 
 	/**
 	 * Get all Fluessigkeit
@@ -343,10 +309,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Gebuehrenarten */
+	/* Queries for package AWSV: class Gebuehrenarten */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static Gebuehrenarten[] gebuehrenarten = null;
 
 	/**
 	 * Get all Gebuehrenarten
@@ -363,10 +327,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Gefaehrdungsstufen */
+	/* Queries for package AWSV: class Gefaehrdungsstufen */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static String[] gefaehrdungsstufen = null;
 
 	/**
 	 * Get all Gefaehrdungsstufen
@@ -389,7 +351,7 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Kontrollen */
+	/* Queries for package AWSV: class Kontrollen */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
@@ -426,10 +388,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Material */
+	/* Queries for package AWSV: class Material */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static String[] material = null;
 
 	/**
 	 * Get all Material
@@ -451,10 +411,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Pruefer */
+	/* Queries for package AWSV: class Pruefer */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static String[] pruefer = null;
 
 	/**
 	 * Get all Pruefer
@@ -476,10 +434,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Pruefergebniss */
+	/* Queries for package AWSV: class Pruefergebniss */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static String[] pruefergebniss = null;
 
 	/**
 	 * Get all Pruefergebniss
@@ -502,10 +458,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Standortgghwsg */
+	/* Queries for package AWSV: class Standortgghwsg */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static Standortgghwsg[] standortgghwsg = null;
 
 	/**
 	 * Get all Standortgghwsg
@@ -522,10 +476,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Vbfeinstufung */
+	/* Queries for package AWSV: class Vbfeinstufung */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static String[] vbfeinstufung = null;
 
 	/**
 	 * Get all Vbfeinstufung
@@ -548,7 +500,7 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Verwaltungsgebuehren */
+	/* Queries for package AWSV: class Verwaltungsgebuehren */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
@@ -568,7 +520,7 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Verwaltungsverf */
+	/* Queries for package AWSV: class Verwaltungsverf */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
@@ -606,10 +558,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Verwmassnahmen */
+	/* Queries for package AWSV: class Verwmassnahmen */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static String[] verwaltungsMassnahmen = null;
 
 	/**
 	 * Get all Verwmassnahmen
@@ -631,10 +581,8 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Wassereinzugsgebiet */
+	/* Queries for package AWSV: class Wassereinzugsgebiet */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static Wassereinzugsgebiet[] wassereinzugsgebiet = null;
 
 	/**
 	 * Get all Wassereinzugsgebiet
@@ -651,10 +599,8 @@ abstract class DatabaseAwSVQuery {
 	}
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Wirtschaftszweig */
+	/* Queries for package AWSV: class Wirtschaftszweig */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	private static Wirtschaftszweig[] wirtschaftszweige = null;
 
 	/**
 	 * Get all Wirtschaftszweig
@@ -671,7 +617,7 @@ abstract class DatabaseAwSVQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package VAWS: class Anlagenchronologie */
+	/* Queries for package AWSV: class Anlagenchronologie */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
