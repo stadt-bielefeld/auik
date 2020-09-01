@@ -75,7 +75,12 @@ public class ObjektChooser extends OkCancelDialog {
 
         setResizable(true);
 
-        objektModel.searchByStandort(objekt.getStandortid().getInhaber().getAdresse());
+        if (objekt.getStandortid().getInhaber() != null) {
+        	objektModel.searchByStandort(objekt.getStandortid().getInhaber().getAdresse());
+        } else {
+        	objektModel.searchByStandort(objekt);
+        }
+        
         // Remove this BasisObjekt from the list as we do not want to connect the
         // BasisObjekt with itself
         objektModel.removeFromList(objekt);

@@ -655,19 +655,14 @@ public class BasisPanel extends JPanel {
 								BasisPanel.this.hauptModul.getFrame(), "standort");
 						chooser.setVisible(true);
 
-						if (chooser.getChosenStandort().getInhaber().getAdresse() != null) {
-							standortFeld.setText(chooser.getChosenStandort().getInhaber().toString());
-							BasisPanel.this.hauptModul.getObjekt()
-									.setStandortid(chooser.getChosenStandort());
-						}
+						BasisPanel.this.hauptModul.getObjekt()
+								.setStandortid(chooser.getChosenStandort());
+						
 					} else {
-	                    Inhaber betreiber = BasisPanel.this.hauptModul
-	                            .getObjekt().getBetreiberid();
-	                        if (betreiber == null) {
-	                            betreiber = new Inhaber();
-	                        }
-	                        AdresseChooser chooser = new AdresseChooser(betreiber,
-	                            BasisPanel.this.hauptModul.getFrame(), "betreiber");
+	                    Standort std = BasisPanel.this.hauptModul
+	                            .getObjekt().getStandortid();
+	                        AdresseChooser chooser = new AdresseChooser(std,
+	                            BasisPanel.this.hauptModul.getFrame(), "standort");
 	                        chooser.setVisible(true);
 
 	                        BasisPanel.this.hauptModul.getObjekt().setStandortid(
@@ -797,58 +792,23 @@ public class BasisPanel extends JPanel {
         return this.standortEditButton;
     }
 
-    private JButton getStandortNewButton() {
-        if (this.standortNewButton == null) {
-            this.standortNewButton = new JButton(AuikUtils.getIcon(16,
-                "filenew.png", ""));
-            this.standortNewButton
-                .setHorizontalAlignment(SwingConstants.CENTER);
-            this.standortNewButton.setToolTipText("Neuen Standort anlegen");
+	private JButton getStandortNewButton() {
+		if (this.standortNewButton == null) {
+			this.standortNewButton = new JButton(AuikUtils.getIcon(16, "filenew.png", ""));
+			this.standortNewButton.setHorizontalAlignment(SwingConstants.CENTER);
+			this.standortNewButton.setToolTipText("Neuen Standort anlegen");
 
-            this.standortNewButton.addActionListener(new ActionListener() {
+			this.standortNewButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-                    BasisPanel.this.hauptModul.getManager()
-                        .getSettingsManager()
-                        .setSetting("auik.imc.return_to_objekt_betreiber", true, false);
-                    if (BasisPanel.this.hauptModul.getObjekt()
-                        .getBetreiberid() != null) {
-                        BasisPanel.this.hauptModul
-                            .getManager()
-                            .getSettingsManager()
-                            .setSetting(
-                                "auik.imc.use_betreiber",
-                                BasisPanel.this.hauptModul.getObjekt()
-                                    .getBetreiberid().getId()
-                                    .intValue(), false);
-                    }
-                    if (BasisPanel.this.hauptModul.getObjekt()
-                        .getStandortid() != null) {
-                        BasisPanel.this.hauptModul
-                            .getManager()
-                            .getSettingsManager()
-                            .setSetting(
-                                "auik.imc.use_lage",
-                                BasisPanel.this.hauptModul.getObjekt()
-                                    .getStandortid().getId()
-                                    .intValue(), false);
-                    }
-                    if (BasisPanel.this.hauptModul.getObjekt()
-                            .getStandortid() != null) {
-                            BasisPanel.this.hauptModul
-                                .getManager()
-                                .getSettingsManager()
-                                .setSetting(
-                                    "auik.imc.use_standort",
-                                    BasisPanel.this.hauptModul.getObjekt()
-                                        .getStandortid().getId()
-                                        .intValue(), false);
-                        }
-                    BasisPanel.this.hauptModul.getManager().switchModul(
-                        "m_betreiber_neu");
+
+					Standort standort = new Standort();
+					StandortEditor standortEdit = new StandortEditor(standort, hauptModul.getFrame());
+					standortEdit.setVisible(true);
+
 				}
 			});
-        }
+		}
 
         return this.standortNewButton;
     }

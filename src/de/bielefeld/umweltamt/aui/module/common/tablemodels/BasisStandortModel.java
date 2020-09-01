@@ -69,12 +69,12 @@ public class BasisStandortModel extends ListTableModel {
 
     public BasisStandortModel() {
         super(new String[]{
+                "Bezeichnung",
                 "Betreiber",
                 "Straße",
                 "Hausnummer",
                 "Wassereinzugsgebiet",
-                "Entwässerungsgebiet",
-                "Standortbezeichnung"
+                "Entwässerungsgebiet"
         },
         false, true);
     }
@@ -89,22 +89,42 @@ public class BasisStandortModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = std.getInhaber().getName();
+            tmp = std.getBezeichnung();
             break;
         case 1:
-            tmp = std.getInhaber().getAdresse().getStrasse();
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getName();
+        	} else {
+        		tmp = null;
+        	}
             break;
         case 2:
-            tmp = std.getInhaber().getAdresse().getHausnr();
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getAdresse().getStrasse();
+        	} else {
+        		tmp = null;
+        	}
             break;
         case 3:
-            tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getAdresse().getHausnr();
+        	} else {
+        		tmp = null;
+        	}            
             break;
         case 4:
-            tmp = std.getInhaber().getAdresse().getEntgebid();
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
+        	} else {
+        		tmp = null;
+        	}            
             break;
         case 5:
-            tmp = std.getBezeichnung();
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getAdresse().getEntgebid();
+        	} else {
+        		tmp = null;
+        	}            
             break;
 
         default:
@@ -150,51 +170,24 @@ public class BasisStandortModel extends ListTableModel {
      * @param suche Der Such-String
      * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
      */
-    public void filterList(String suche, String property) {
+    
+    public void filterAllList(String suche) {
         log.debug("Start filterList");
-        setList(DatabaseQuery.findStandorte(suche, property));
+        setList(DatabaseQuery.findStandorteNachAZ(suche));
         lastSuchWort = suche;
-        lastProperty = property;
         log.debug("End filterList");
     }
     
-    public void filterAllList(String suche, String strasse, Integer hausnr, String ort, String property) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.findAdressen(suche, strasse, hausnr, ort, property));
-        lastSuchWort = suche;
-        lastProperty = property;
-        log.debug("End filterList");
-    }
-    
-    public void filterStandort(String strasse, Integer hausnr, String ort) {
+    public void filterStandortList(String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
         setList(DatabaseQuery.chooseStandort(strasse, hausnr, ort));
         lastStrasse = strasse;
         lastHausnr = hausnr;
         LastOrt = ort;
         log.debug("End filterList");
-    }
+    }    
     
-    public void filterStandort(String name, String strasse, Integer hausnr, String ort) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.findAdressen(name, strasse, hausnr, ort));
-        lastStrasse = strasse;
-        lastHausnr = hausnr;
-        LastOrt = ort;
-        log.debug("End filterList");
-    }
-    
-    public void filterBetreiber(String name, String strasse, Integer hausnr, String ort) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.findBetreiber(name, strasse, hausnr, ort));
-        lastStrasse = strasse;
-        lastHausnr = hausnr;
-        LastOrt = ort;
-        log.debug("End filterList");
-    }
-    
-    
-    public void filterStandort(String suche, String property) {
+    public void filterStandortList(String suche, String property) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findStandorte(suche, property));
         lastSuchWort = suche;
