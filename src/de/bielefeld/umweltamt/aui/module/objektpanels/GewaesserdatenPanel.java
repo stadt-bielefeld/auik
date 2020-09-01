@@ -278,7 +278,7 @@ public class GewaesserdatenPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Integer gewKennz = (Integer) gewkennzStatBox.getSelectedItem();
-				switchGewKennz(gewKennz);;
+				switchGewKennz(gewKennz);
 			}
 		});
 
