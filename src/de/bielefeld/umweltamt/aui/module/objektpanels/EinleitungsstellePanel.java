@@ -365,8 +365,6 @@ public class EinleitungsstellePanel extends JPanel {
 			}
 			this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
 			
-//			switchEinleitungItems((String)getEinleitungsartBox().getSelectedItem());
-			
 		}
 	}
 
@@ -515,10 +513,11 @@ public class EinleitungsstellePanel extends JPanel {
 	 * 
 	 * @return boolean
 	 */
-	private boolean saveElkaEinleitungsstelleDaten() {
+	public boolean saveElkaEinleitungsstelleDaten() {
 		boolean success;
 
 		setObjektValues(this.einleitungsstelle);
+		String status = "";
 
 		success = this.einleitungsstelle.merge();
 		if (success) {
@@ -527,6 +526,17 @@ public class EinleitungsstellePanel extends JPanel {
 		} else {
 			log.debug("Einleitungsstelle" + this.einleitungsstelle + " konnte nicht gespeichert werden!");
 		}
+		
+		if (einleitungsartBox.getSelectedItem() == "Indirekteinleitung") {
+			if (saveKlaeranlageDaten()) {
+				status = status + " & Verknüpfung mit der Kläranlage "
+						+ EinleitungsstellePanel.this.referenz.getKlaeranlageByZKaNr().getAnlage()
+						+ " über die Referenz-Tabelle erfolgreich gespeichert.";
+			} else {
+				status = status + " & es wurde keine Verknüpfung mit einer Kläranlage gespeichert!";
+			}
+		}
+		
 		return success;
 	
 	
@@ -891,13 +901,7 @@ public class EinleitungsstellePanel extends JPanel {
 					} else {
 						status = "Fehler beim Speichern der Einleitungsstelle!";
 					}
-					if (saveKlaeranlageDaten()) {
-						status = status + " & Verknüpfung mit der Kläranlage "
-								+ EinleitungsstellePanel.this.referenz.getKlaeranlageByZKaNr().getAnlage()
-								+ " über die Referenz-Tabelle erfolgreich gespeichert.";
-					} else {
-						status = status + " & Verknüpfung konnte nicht gespeichert werden!";
-					}
+
 					if (status.startsWith("Einleitungsstelle")) {
 						EinleitungsstellePanel.this.hauptModul.getFrame().changeStatus(status,
 								HauptFrame.SUCCESS_COLOR);
