@@ -32,6 +32,7 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -202,7 +203,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 		builder.append(getErlaubnisfreiBox());
 		builder.nextLine();
 		builder.append(einbauartLabel);
-		builder.append(getEinbauartBox(), 2);
+		builder.append(getEinbauartBox(), 3);
 		builder.nextLine();
 		builder.appendSeparator("Gebietsart");
 		builder.nextLine();
@@ -329,7 +330,6 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 			
 			if( this.entwaesserungsgrundstueck.getEinbauartOpt() !=null) {
 				getEinbauartBox().setSelectedIndex(this.entwaesserungsgrundstueck.getEinbauartOpt());
-				switchEinbauartItems((String) getEinbauartBox().getSelectedItem());
 			}else {
 			 getEinbauartBox().setSelectedIndex(-1);	
 			}
@@ -383,10 +383,10 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 				}
 			}
 			
-					
-			
+			List list = new ArrayList(entwaesserungsgrundstueck.getAbaverfahrens());
+			abaverfahrens.setListData(list);
+						
 			switchEinlBereichItems((String) getEinleitungsbereichBox().getSelectedItem());
-			switchEinbauartItems((String) getEinbauartBox().getSelectedItem());
 		}
 	}
 
@@ -461,7 +461,10 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 		if (this.entwaesserungsgrundstueck == null) {
 			this.entwaesserungsgrundstueck = new Entwaesserungsgrundstueck();
 			this.entwaesserungsgrundstueck.setObjekt(this.hauptModul.getObjekt());
-		
+
+		}
+		if (bezeichnungFeld.getText() != null && !bezeichnungFeld.getText().isEmpty()) {
+			this.entwaesserungsgrundstueck.setBemerkung(bezeichnungFeld.getText());
 		}
 		if (gebNameFeld.getText() != null && !gebNameFeld.getText().isEmpty()) {
 			this.entwaesserungsgrundstueck.setNameEtwGebiet(gebNameFeld.getText());
@@ -479,7 +482,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 			this.entwaesserungsgrundstueck.setRegenhaeufigkeit(new BigDecimal(regenhaufigkeitFeld.getText()));
 		}
 		this.entwaesserungsgrundstueck.setErlFreiElTog(erlaubnisfreiBox.isSelected());
-		
+
 		this.entwaesserungsgrundstueck.setAktualDat(new Date());
 
 		Date erstellDat = this.erstellDatDatum.getDate() != null ? this.erstellDatDatum.getDate() : new Date();
@@ -493,10 +496,10 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 			log.debug(
 					"Entwaesserungsgrundstueck" + this.entwaesserungsgrundstueck + " konnte nicht gespeichert werden!");
 		}
-		
-		if (getEinleitungsbereichBox().getSelectedItem()== null) {
+
+		if (getEinleitungsbereichBox().getSelectedItem() == null) {
 			this.entwaesserungsgrundstueck.setEinlBereichOpt(null);
-		}else {
+		} else {
 			String type = getEinleitungsbereichBox().getSelectedItem().toString();
 			switch ((String) type) {
 			case "Einleitung aus nicht öffentlichem Bereich":
@@ -504,16 +507,16 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 				break;
 			case "Einleitung aus öffentlichem Bereich":
 				this.entwaesserungsgrundstueck.setEinlBereichOpt(1);
-				break; 
+				break;
 			case "Einleitung aus außerörtlichen Straßen":
 				this.entwaesserungsgrundstueck.setEinlBereichOpt(2);
-				break; 
+				break;
 			}
 		}
-			
-		if (getEinbauartBox().getSelectedItem()==null) {
-				this.entwaesserungsgrundstueck.setEinbauartOpt(null);
-		}else {
+
+		if (getEinbauartBox().getSelectedItem() == null) {
+			this.entwaesserungsgrundstueck.setEinbauartOpt(null);
+		} else {
 			String type = getEinbauartBox().getSelectedItem().toString();
 			switch ((String) type) {
 			case "nicht zugeordnet":
@@ -530,48 +533,63 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 				break;
 			}
 		}
-		
-		if (getWasserableitungsstreckeOptBox().getSelectedItem()==null) {
-			this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(null);
-	}else {
-		String type = getWasserableitungsstreckeOptBox().getSelectedItem().toString();
-		switch ((String) type) {
-		case "nicht definiert":
-			this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(null);
-			break;
-		case "Rohrleitung mit Hochbord":
-			this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(1);
-			break;
-		case "Mulde mit Muldeneinläufen und Rohrleitung":
-			this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(2);
-			break;
-		case "Mulde / Graben":
-			this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(3);
-			break;
-		case "Mulde / Graben befestigt":
-			this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(4);
-			break;
-		case " Rückhaltegraben":
-			this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(5);
-			break;
-		case "sonstiges":
-			this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(6);
-			break;
-		}
-	}
-		if(this.entwaesserungsgrundstueck.merge()) {
-				success = true;
-		}else {
-			success= false;
-		}
-	
-		return success;
-	}
 
-	public void switchEinbauartItems(String type) {
-		if (type== null) {
-			return;
+		if (getWasserableitungsstreckeOptBox().getSelectedItem() == null) {
+			this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(null);
+		} else {
+			String type = getWasserableitungsstreckeOptBox().getSelectedItem().toString();
+			switch ((String) type) {
+			case "nicht definiert":
+				this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(null);
+				break;
+			case "Rohrleitung mit Hochbord":
+				this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(1);
+				break;
+			case "Mulde mit Muldeneinläufen und Rohrleitung":
+				this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(2);
+				break;
+			case "Mulde / Graben":
+				this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(3);
+				break;
+			case "Mulde / Graben befestigt":
+				this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(4);
+				break;
+			case " Rückhaltegraben":
+				this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(5);
+				break;
+			case "sonstiges":
+				this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(6);
+				break;
+			}
 		}
+		
+        List<Abaverfahren> selected = abaverfahrens.getSelected();
+        List<Abaverfahren> removed = new ArrayList<>();
+        Set set = new HashSet(selected);
+        entwaesserungsgrundstueck.setAbaverfahrens(set);
+        Set<Abaverfahren> verfahrens = 
+        		entwaesserungsgrundstueck.getAbaverfahrens();
+        if (abaverfahrens != null) {
+            verfahrens.forEach(item -> {
+                if (!abaverfahrens.getSelected().contains(item)) {
+                    removed.add(item);
+                }
+            });
+            selected.forEach(item -> {
+                if (!verfahrens.contains(item)) {
+                    verfahrens.add(item);
+                }
+            });
+        }
+        verfahrens.removeAll(removed);
+        
+		if (this.entwaesserungsgrundstueck.merge()) {
+			success = true;
+		} else {
+			success = false;
+		}
+
+		return success;
 	}
 	
 	public void switchEinlBereichItems(String type) {

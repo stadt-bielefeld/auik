@@ -85,27 +85,31 @@
 			<column name="gem_tog" />
 		</property>
 		<property name="strTog" type="java.lang.Boolean">
-			<column name="str_tog" />
-		
-			
-					</property>
-					<set name="ZEntwaessgrAbwasbehverfs"
-						table="z_entwaessgr_abwasbehverf" inverse="true" lazy="true"
-						fetch="select">
-						<key>
-							<column name="entw_grund_nr" not-null="true" />
-						</key>
-						<one-to-many
-							class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf" />
-					</set>
-					<set name="afsNiederschlagswassers"
-						table="afs_niederschlagswasser" inverse="true" lazy="false"
-						fetch="join">
-						<key>
-							<column name="entw_grund_nr" />
-						</key>
-						<one-to-many
-							class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" />
-					</set>
+			<column name="str_tog" />			
+		</property>
+		<set name="ZEntwaessgrAbwasbehverfs"
+			table="z_entwaessgr_abwasbehverf" inverse="true" lazy="false"
+			fetch="select">
+			<key>
+				<column name="entw_grund_nr" not-null="true" />
+			</key>
+			<one-to-many
+				class="de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf" />
+		</set>
+		<set name="afsNiederschlagswassers"
+			table="afs_niederschlagswasser" inverse="true" lazy="false"
+			fetch="join">
+			<key>
+				<column name="entw_grund_nr" />
+			</key>
+			<one-to-many
+				class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" />
+		</set>					
+		<set name="Abaverfahrens" table="elka.z_aba_verfahren" lazy="false" fetch="select">
+		  <key>
+			<column name="anlage_nr" not-null="true" />
+		  </key>
+		<many-to-many column="abwasbehverf_nr" class="de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren" />
+		</set>
 	</class>
 </hibernate-mapping>

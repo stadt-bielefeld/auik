@@ -29,6 +29,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.math.BigDecimal;
@@ -36,6 +37,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A class that represents a row in the Entwaesserungsgrundstueck database table.<br>
@@ -76,6 +78,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private Boolean giTog;
     private Boolean gemTog;
     private Boolean strTog;
+    private Set<Abaverfahren> Abaverfahrens = new HashSet<Abaverfahren>(0);
     
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -99,7 +102,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public Entwaesserungsgrundstueck(
-        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, long adrNr, String externalNr, Boolean woTog, Boolean miTog, Boolean geTog, Boolean giTog, Boolean gemTog, Boolean strTog, Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, long adrNr, String externalNr, Boolean woTog, Boolean miTog, Boolean geTog, Boolean giTog, Boolean gemTog, Boolean strTog,Set<Abaverfahren> Abaverfahrens,  Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
         this.nr = nr;
         this.objekt = objekt;
         this.wasserrecht = wasserrecht;
@@ -121,6 +124,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.externalNr = externalNr;
         this.ZEntwaessgrAbwasbehverfs = ZEntwaessgrAbwasbehverfs;
         this.afsNiederschlagswassers = afsNiederschlagswassers;
+        this.Abaverfahrens = Abaverfahrens;
         this.woTog = woTog;
         this.miTog = miTog;
         this.geTog = geTog;
@@ -339,6 +343,14 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.afsNiederschlagswassers = afsNiederschlagswassers;
     }
 
+    public Set<Abaverfahren> getAbaverfahrens() {
+        return this.Abaverfahrens;
+    }
+
+    public void setAbaverfahrens(Set<Abaverfahren> Abaverfahrens) {
+        this.Abaverfahrens = Abaverfahrens;
+    }
+
     /**
      * To implement custom toString methods, jump to not generated code.<br>
      * Basically we either call on <code>toDebugString</code> for a debug
@@ -386,6 +398,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         buffer.append("strTog").append("='").append(getStrTog()).append("' ");   
         buffer.append("ZEntwaessgrAbwasbehverfs").append("='").append(getZEntwaessgrAbwasbehverfs()).append("' ");
         buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");
+        buffer.append("Abaverfahrens").append("='").append(getAbaverfahrens()).append("' ");	
         buffer.append("]");
 
         return buffer.toString();
@@ -471,7 +484,8 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.adrNr = copy.getAdrNr();
         this.externalNr = copy.getExternalNr();
         this.ZEntwaessgrAbwasbehverfs = copy.getZEntwaessgrAbwasbehverfs();
-        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();
+        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();       
+        this.Abaverfahrens = copy.getAbaverfahrens();  
         this.woTog = copy.getWoTog();
         this.miTog = copy.getMiTog();
         this.geTog = copy.getGeTog();
@@ -533,4 +547,11 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
             return null;
         }
     }
+
+	public List<Object> getSortedVerfahren() {
+		Set<Abaverfahren> items = getAbaverfahrens();
+		List<Object> sortedVerfahren = items.stream().collect(Collectors.toList());
+		return sortedVerfahren;
+
+	}
 }

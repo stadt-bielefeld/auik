@@ -189,5 +189,10 @@ public class ZuordnungChooser<T> extends JPanel{
     public void setSortComparator(Comparator<T> sortComparator) {
         this.sortComparator = sortComparator;
     }
+    
+    public void setListData (List<T> data) {
+    	applyEntries(data);
+    	updateLists();
+    }
 
 }
