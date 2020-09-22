@@ -61,7 +61,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
     private Integer einleitungsart; 
     private Date erstellDat;
     private Date stillgelegtAm;
-    private String bezBiele;
     private Integer kanalArtOpt;
     private Integer abgaberelEinl;
     private String abwAgEinl;
@@ -70,19 +69,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
     private String herkunft;
    
     private String gewaessernameAlias3;
-    private String gewaessernameNs;
-    
-    private Boolean typIndirekt;
-    private Boolean typIndGewDirekt;
-    private Boolean typKommTrenn;
-    private Boolean typPrivatTrenn;
-    private Boolean typSonstige;
-    private Boolean typAusserortStrasseneinl;
     private Double stationierungNs3;
     private Double einzugsgebiet;
     private Double stationierungSt3;
-    private Integer e32;
-    private Integer n32;
 
     private Integer stationierung3Opt;
     private Integer schutzzoneOpt;
@@ -126,6 +115,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
     
     private String gewnameStat;
     private String gewkennzStat;
+    private String gewNameStadt;
+    private String gewKennzStadt;
+    private String hwrMassnahme;
 
     
     
@@ -160,7 +152,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     /** Full constructor 
       */
     public Einleitungsstelle(
-        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, String gewaessernameNs, String nadiaId, Date stillgelegtAm, Boolean typIndirekt, Boolean typIndGewDirekt, Boolean typKommTrenn, Boolean typPrivatTrenn, Boolean typSonstige, Boolean typAusserortStrasseneinl, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer e32, Integer n32, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr, String abwAgEinl, Integer einleitungsart, String bezBiele, String gewnameStat, String gewkennzStat) {
+        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, Date stillgelegtAm, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr, String abwAgEinl, Integer einleitungsart, String gewnameStat, String gewkennzStat, String gewNameStadt, String gewKennzStadt, String hwrMassnahme) {
         this.id = id;
         this.objektid = objektid;
         this.aktualDat = aktualDat;
@@ -168,7 +160,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
         
         this.erstellDat = erstellDat;
         this.bezeichnung = bezeichnung;
-        this.bezBiele = bezBiele;
         this.stillgelegtAm = stillgelegtAm;
         this.kanalArtOpt = kanalArtOpt;
         this.abgaberelEinl = abgaberelEinl;
@@ -176,20 +167,10 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.einleitungsart = einleitungsart;
         
         this.gewaessernameAlias3 = gewaessernameAlias3;
-        this.gewaessernameNs = gewaessernameNs;
         
-        this.typIndirekt = typIndirekt;
-        this.typIndGewDirekt = typIndGewDirekt;
-        this.typKommTrenn = typKommTrenn;
-        this.typPrivatTrenn = typPrivatTrenn;
-        this.typSonstige = typSonstige;
-        this.typAusserortStrasseneinl = typAusserortStrasseneinl;
         this.stationierungNs3 = stationierungNs3;
         this.einzugsgebiet = einzugsgebiet;
         this.stationierungSt3 = stationierungSt3;
-       
-        this.e32 = e32;
-        this.n32 = n32;
         
         this.stationierung3Opt = stationierung3Opt;
         this.schutzzoneOpt = schutzzoneOpt;
@@ -232,6 +213,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.referenzsForZElsNr = referenzsForZElsNr;
         this.gewkennzStat = gewkennzStat;
         this.gewnameStat = gewnameStat;
+        this.gewNameStadt = gewNameStadt;
+        this.gewKennzStadt = gewKennzStadt;
+        this.hwrMassnahme = hwrMassnahme;
   
         
     }
@@ -305,14 +289,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setBezeichnung(String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }
-    
-    public String getBezBiele() {
-        return this.bezBiele;
-    }
-
-    public void setBezBiele(String bezBiele) {
-        this.bezBiele = bezBiele;
-    }
     public String getAbwAgEinl() {
         return this.abwAgEinl;
     }
@@ -372,64 +348,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setGewaessernameAlias3(String gewaessernameAlias3) {
         this.gewaessernameAlias3 = gewaessernameAlias3;
     }
-
-    public String getGewaessernameNs() {
-        return this.gewaessernameNs;
-    }
-
-    public void setGewaessernameNs(String gewaessernameNs) {
-        this.gewaessernameNs = gewaessernameNs;
-    }
-
-  
-    public Boolean getTypIndirekt() {
-        return this.typIndirekt;
-    }
-
-    public void setTypIndirekt(Boolean typIndirekt) {
-        this.typIndirekt = typIndirekt;
-    }
-
-    public Boolean getTypIndGewDirekt() {
-        return this.typIndGewDirekt;
-    }
-
-    public void setTypIndGewDirekt(Boolean typIndGewDirekt) {
-        this.typIndGewDirekt = typIndGewDirekt;
-    }
-
-    public Boolean getTypKommTrenn() {
-        return this.typKommTrenn;
-    }
-
-    public void setTypKommTrenn(Boolean typKommTrenn) {
-        this.typKommTrenn = typKommTrenn;
-    }
-
-    public Boolean getTypPrivatTrenn() {
-        return this.typPrivatTrenn;
-    }
-
-    public void setTypPrivatTrenn(Boolean typPrivatTrenn) {
-        this.typPrivatTrenn = typPrivatTrenn;
-    }
-
-    public Boolean getTypSonstige() {
-        return this.typSonstige;
-    }
-
-    public void setTypSonstige(Boolean typSonstige) {
-        this.typSonstige = typSonstige;
-    }
-
-    public Boolean getTypAusserortStrasseneinl() {
-        return this.typAusserortStrasseneinl;
-    }
-
-    public void setTypAusserortStrasseneinl(Boolean typAusserortStrasseneinl) {
-        this.typAusserortStrasseneinl = typAusserortStrasseneinl;
-    }
-
+    
     public Double getStationierungNs3() {
         return this.stationierungNs3;
     }
@@ -452,23 +371,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
 
     public void setStationierungSt3(Double stationierungSt3) {
         this.stationierungSt3 = stationierungSt3;
-    }
-
-   
-    public Integer getE32() {
-        return this.e32;
-    }
-
-    public void setE32(Integer e32) {
-        this.e32 = e32;
-    }
-
-    public Integer getN32() {
-        return this.n32;
-    }
-
-    public void setN32(Integer n32) {
-        this.n32 = n32;
     }
 
 
@@ -753,7 +655,31 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.externalNr = externalNr;
     }
 
-    public Set<Versickerungsanlage> getVersickerungsanlages() {
+    public String getGewNameStadt() {
+		return gewNameStadt;
+	}
+
+	public void setGewNameStadt(String gewNameStadt) {
+		this.gewNameStadt = gewNameStadt;
+	}
+
+	public String getGewKennzStadt() {
+		return gewKennzStadt;
+	}
+
+	public void setGewKennzStadt(String gewKennzStadt) {
+		this.gewKennzStadt = gewKennzStadt;
+	}
+
+	public String getHwrMassnahme() {
+		return hwrMassnahme;
+	}
+
+	public void setHwrMassnahme(String hwrMassnahme) {
+		this.hwrMassnahme = hwrMassnahme;
+	}
+
+	public Set<Versickerungsanlage> getVersickerungsanlages() {
         return this.versickerungsanlages;
     }
 
@@ -804,22 +730,12 @@ public class Einleitungsstelle  implements java.io.Serializable {
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
         buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");			
         buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("gewaessernameAlias3").append("='").append(getGewaessernameAlias3()).append("' ");			
-        buffer.append("gewaessernameNs").append("='").append(getGewaessernameNs()).append("' ");			
-        buffer.append("bezBiele").append("='").append(getBezBiele()).append("' ");			
-        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");			
-        buffer.append("typIndirekt").append("='").append(getTypIndirekt()).append("' ");			
-        buffer.append("typIndGewDirekt").append("='").append(getTypIndGewDirekt()).append("' ");			
-        buffer.append("typKommTrenn").append("='").append(getTypKommTrenn()).append("' ");			
-        buffer.append("typPrivatTrenn").append("='").append(getTypPrivatTrenn()).append("' ");			
-        buffer.append("typSonstige").append("='").append(getTypSonstige()).append("' ");			
-        buffer.append("typAusserortStrasseneinl").append("='").append(getTypAusserortStrasseneinl()).append("' ");			
+        buffer.append("gewaessernameAlias3").append("='").append(getGewaessernameAlias3()).append("' ");						
+        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");					
         buffer.append("stationierungNs3").append("='").append(getStationierungNs3()).append("' ");			
         buffer.append("einzugsgebiet").append("='").append(getEinzugsgebiet()).append("' ");			
         buffer.append("stationierungSt3").append("='").append(getStationierungSt3()).append("' ");			
-        buffer.append("abgaberelEinl").append("='").append(getAbgaberelEinl()).append("' ");			
-        buffer.append("e32").append("='").append(getE32()).append("' ");			
-        buffer.append("n32").append("='").append(getN32()).append("' ");			
+        buffer.append("abgaberelEinl").append("='").append(getAbgaberelEinl()).append("' ");						
         buffer.append("kanalArtOpt").append("='").append(getKanalArtOpt()).append("' ");			
         buffer.append("stationierung3Opt").append("='").append(getStationierung3Opt()).append("' ");			
         buffer.append("schutzzoneOpt").append("='").append(getSchutzzoneOpt()).append("' ");			
@@ -862,6 +778,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
         buffer.append("referenzsForZElsNr").append("='").append(getReferenzsForZElsNr()).append("' ");
         buffer.append("gewnameStat1").append("=").append(getGewnameStat()).append("'");
         buffer.append("gewkennzStat1").append("=").append(getGewkennzStat()).append("'");
+        buffer.append("GewNameStadt").append("='").append(getGewNameStadt()).append("' ");
+        buffer.append("GewKennzStadt").append("=").append(getGewKennzStadt()).append("'");
+        buffer.append("HwrMassnahme").append("=").append(getHwrMassnahme()).append("'");
         buffer.append("]");
 
         return buffer.toString();
@@ -933,22 +852,12 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.erstellDat = copy.getErstellDat();            
         this.herkunft = copy.getHerkunft();            
         this.bezeichnung = copy.getBezeichnung();            
-        this.gewaessernameAlias3 = copy.getGewaessernameAlias3();            
-        this.gewaessernameNs = copy.getGewaessernameNs();            
-        this.bezBiele = copy.getBezBiele();            
-        this.stillgelegtAm = copy.getStillgelegtAm();            
-        this.typIndirekt = copy.getTypIndirekt();            
-        this.typIndGewDirekt = copy.getTypIndGewDirekt();            
-        this.typKommTrenn = copy.getTypKommTrenn();            
-        this.typPrivatTrenn = copy.getTypPrivatTrenn();            
-        this.typSonstige = copy.getTypSonstige();            
-        this.typAusserortStrasseneinl = copy.getTypAusserortStrasseneinl();            
+        this.gewaessernameAlias3 = copy.getGewaessernameAlias3();                      
+        this.stillgelegtAm = copy.getStillgelegtAm();                       
         this.stationierungNs3 = copy.getStationierungNs3();            
         this.einzugsgebiet = copy.getEinzugsgebiet();            
         this.stationierungSt3 = copy.getStationierungSt3();            
-        this.abgaberelEinl = copy.getAbgaberelEinl();            
-        this.e32 = copy.getE32();            
-        this.n32 = copy.getN32();            
+        this.abgaberelEinl = copy.getAbgaberelEinl();                      
         this.kanalArtOpt = copy.getKanalArtOpt();            
         this.stationierung3Opt = copy.getStationierung3Opt();            
         this.schutzzoneOpt = copy.getSchutzzoneOpt();            
@@ -991,6 +900,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.referenzsForZElsNr = copy.getReferenzsForZElsNr();  
         this.gewnameStat = copy.getGewnameStat();
         this.gewkennzStat = copy.getGewkennzStat();
+        this.gewNameStadt = copy.getGewNameStadt();  
+        this.gewKennzStadt = copy.getGewKennzStadt();
+        this.hwrMassnahme = copy.getHwrMassnahme();
    
     }    
 

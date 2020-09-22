@@ -23,9 +23,6 @@
         <property name="anhangId" type="java.lang.String">
             <column name="anhang_id" />
         </property>
-        <property name="herkunft" type="java.lang.String">
-            <column name="herkunft" />
-        </property>
         <property name="anwendungsbereich" type="java.lang.String">
             <column name="anwendungsbereich" />
         </property>
@@ -70,6 +67,9 @@
         </property>
         <property name="befFlaeche" type="java.lang.Integer">
             <column name="bef_flaeche" />
+        </property>
+        <property name="nwHerBereichOpt" type="java.lang.Integer">
+            <column name="nw_her_bereich_opt" />
         </property>
         <set name="anh40Fachdatens" table="anh_40_fachdaten" schema="indeinl" inverse="true" lazy="false" fetch="select">
             <key>

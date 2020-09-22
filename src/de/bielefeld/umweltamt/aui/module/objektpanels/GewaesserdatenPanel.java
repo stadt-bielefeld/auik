@@ -94,9 +94,12 @@ public class GewaesserdatenPanel extends JPanel {
 	private DoubleField einzugsgebietFeld = null; // Einzugsgebiet des Gewässers bis zur Einleitung
 	private JTextField gewnameStatFeld = null; // Gewässername stat Gewässer in welches nstat Gew mündet
 	private JComboBox gewkennzStatBox =null; // Gewässerkennzahl stat Gewässer in welches nstat Gew. mündet
+	private JTextField gewNameStadtFeld = null; // Gewässername bei der Stadt Bielefeld
+	private JTextField gewKennzStadtFeld = null; // Gewässerkennzahl bei der Stadt Bielefeld
+	private JTextField hwrMassnahmeFeld = null; // HWR Maßnahme
 	
 	
-// Widgets nur nicht stationiertes Gewässer
+    // Widgets nur nicht stationiertes Gewässer
 	
 	private JTextField gewaessernameNs3Feld = null; // Gewässername nicht stat. Gewässer
 	private DoubleField stationierungNs3Feld = null; // Stationierung der Mündung in das stat. Gewässer
@@ -126,6 +129,9 @@ public class GewaesserdatenPanel extends JPanel {
 	private JLabel gewnameStat1Lb = new JLabel("Gewässername des (zgh) stat. Gewäsers");
 	private JLabel gewkennzStat1Lb = new JLabel("Gewässerkennzahl des (zgh) stat. Gewässers");
 	private JLabel einzugsgebietLb = new JLabel("Einzugsgebiet des Gewässers bis zur Einleitung [km²]");
+	private JLabel gewNameStadtLb = new JLabel("Gewässername bei der Stadt Bielefeld");
+	private JLabel gewKennzStadtLb = new JLabel("Gewässerkennzahl bei der Stadt Bielefeld");
+	private JLabel hwrMassnahmeLb = new JLabel("HWR Maßnahme");
 	
 	//nicht stat Gew
 	private JLabel gewaessernameNs3Lb = new JLabel("Gewässername des n stat. Gewässers");
@@ -181,6 +187,18 @@ public class GewaesserdatenPanel extends JPanel {
 		builder.nextLine();
 		builder.append(einzugsgebietLb);
 		builder.append(getEinzugsgebietFeld());
+		
+		builder.nextLine();
+		builder.append(gewNameStadtLb);
+		builder.append(getGewNameStadtFeld());
+		
+		builder.nextLine();
+		builder.append(gewKennzStadtLb);
+		builder.append(getGewKennzStadtFeld());
+		
+		builder.nextLine();
+		builder.append(hwrMassnahmeLb);
+		builder.append(getHwrMassnahmeFeld());
 		
 		builder.nextLine();
 		builder.append(gewaessernameNs3Lb);
@@ -325,6 +343,18 @@ public class GewaesserdatenPanel extends JPanel {
 				getEinzugsgebietFeld().setValue(this.einleitungsstelle.getEinzugsgebiet());
 			}
 
+			if (this.einleitungsstelle.getGewNameStadt() != null) {
+				getGewNameStadtFeld().setText(this.einleitungsstelle.getGewNameStadt());
+			}
+
+			if (this.einleitungsstelle.getGewKennzStadt() != null) {
+				getGewKennzStadtFeld().setText(this.einleitungsstelle.getGewKennzStadt());
+			}
+
+			if (this.einleitungsstelle.getHwrMassnahme() != null) {
+				getHwrMassnahmeFeld().setText(this.einleitungsstelle.getHwrMassnahme());
+			}
+
 			if (this.einleitungsstelle.getGewnameStat() != null) {
 				getGewnameStatFeld().setText(this.einleitungsstelle.getGewnameStat());
 			}
@@ -418,6 +448,9 @@ public class GewaesserdatenPanel extends JPanel {
 		getGewaessernameNs3Feld().setText(null);
 		getStationierungsNs3Feld().setValue(null);
 		getEinzugsgebietFeld().setValue(null);
+		getGewNameStadtFeld().setText(null);
+		getGewKennzStadtFeld().setText(null);
+		getHwrMassnahmeFeld().setText(null);
 		getGewnameStatFeld().setText(null);
 		getGewkennzStatBox().setSelectedIndex(-1);
 		getGewaessernameAlias3Feld().setText(null);
@@ -441,8 +474,10 @@ public class GewaesserdatenPanel extends JPanel {
 		getStationierung3OptBox().setEnabled(enabled);
 		getGewaessernameNs3Feld().setEnabled(enabled);
 		getStationierungsNs3Feld().setEnabled(enabled);
-
 		getEinzugsgebietFeld().setEnabled(enabled);
+		getGewNameStadtFeld().setEnabled(enabled);
+		getGewKennzStadtFeld().setEnabled(enabled);
+		getHwrMassnahmeFeld().setEnabled(enabled);
 		getGewnameStatFeld().setEnabled(false);
 		getGewkennzStatBox().setEnabled(enabled);
 		getGewaessernameAlias3Feld().setEnabled(enabled);
@@ -508,6 +543,27 @@ public class GewaesserdatenPanel extends JPanel {
 
 		Double einzugsgebiet = (Double) this.einzugsgebietFeld.getDoubleValue();
 		this.einleitungsstelle.setEinzugsgebiet(einzugsgebiet);
+
+		String gewNameStadt = this.gewNameStadtFeld.getText();
+		if ("".equals(gewNameStadt)) {
+			this.einleitungsstelle.setGewNameStadt(null);
+		} else {
+			this.einleitungsstelle.setGewNameStadt(gewNameStadt);
+		}
+
+		String gewKennzStadt = this.gewKennzStadtFeld.getText();
+		if ("".equals(gewKennzStadt)) {
+			this.einleitungsstelle.setGewKennzStadt(null);
+		} else {
+			this.einleitungsstelle.setGewKennzStadt(gewKennzStadt);
+		}
+
+		String hwrMassnahme = this.hwrMassnahmeFeld.getText();
+		if ("".equals(hwrMassnahme)) {
+			this.einleitungsstelle.setHwrMassnahme(null);
+		} else {
+			this.einleitungsstelle.setHwrMassnahme(hwrMassnahme);
+		}
 
 		String gewnameStat = this.gewnameStatFeld.getText();
 		if ("".equals(gewnameStat)) {
@@ -684,7 +740,7 @@ public class GewaesserdatenPanel extends JPanel {
 	}
 
 	public void switchGewKennz(Integer type) {
-		if (type == null) {
+		if (type == null || type == 0) {
 			return;
 		}
 		getGewnameStatFeld().setText(MapElkaGewkennz.findByGewkz((Integer) getGewkennzStatBox().getSelectedItem()).getGewname());
@@ -714,6 +770,12 @@ public class GewaesserdatenPanel extends JPanel {
 			getGewkennzStatBox().setVisible(true);
 			einzugsgebietLb.setVisible(true);
 			getEinzugsgebietFeld().setVisible(true);
+			gewNameStadtLb.setVisible(true);
+			getGewNameStadtFeld().setVisible(true);
+			gewKennzStadtLb.setVisible(true);
+			getGewKennzStadtFeld().setVisible(true);
+			hwrMassnahmeLb.setVisible(true);
+			getHwrMassnahmeFeld().setVisible(true);
 			
 			//nicht stat. Gew			
 			gewaessernameNs3Lb.setVisible(true);
@@ -762,6 +824,12 @@ public class GewaesserdatenPanel extends JPanel {
 			getGewkennzStatBox().setVisible(true);
 			einzugsgebietLb.setVisible(true);
 			getEinzugsgebietFeld().setVisible(true);
+			gewNameStadtLb.setVisible(true);
+			getGewNameStadtFeld().setVisible(true);
+			gewKennzStadtLb.setVisible(true);
+			getGewKennzStadtFeld().setVisible(true);
+			hwrMassnahmeLb.setVisible(true);
+			getHwrMassnahmeFeld().setVisible(true);
 
 			// nicht stat. Gew
 			gewaessernameNs3Lb.setVisible(false);
@@ -808,6 +876,12 @@ public class GewaesserdatenPanel extends JPanel {
 			getGewkennzStatBox().setVisible(false);
 			einzugsgebietLb.setVisible(false);
 			getEinzugsgebietFeld().setVisible(false);
+			gewNameStadtLb.setVisible(false);
+			getGewNameStadtFeld().setVisible(false);
+			gewKennzStadtLb.setVisible(false);
+			getGewKennzStadtFeld().setVisible(false);
+			hwrMassnahmeLb.setVisible(false);
+			getHwrMassnahmeFeld().setVisible(false);
 
 			//nicht stat. Gew			
 			gewaessernameNs3Lb.setVisible(false);
@@ -927,6 +1001,27 @@ public class GewaesserdatenPanel extends JPanel {
 		return this.einzugsgebietFeld;
 	}
 
+	private JTextField getGewNameStadtFeld() {
+		if (this.gewNameStadtFeld == null) {
+			this.gewNameStadtFeld = new LimitedTextField(50);
+		}
+		return this.gewNameStadtFeld;
+	}
+
+	private JTextField getGewKennzStadtFeld() {
+		if (this.gewKennzStadtFeld == null) {
+			this.gewKennzStadtFeld = new LimitedTextField(50);
+		}
+		return this.gewKennzStadtFeld;
+	}
+
+	private JTextField getHwrMassnahmeFeld() {
+		if (this.hwrMassnahmeFeld == null) {
+			this.hwrMassnahmeFeld = new LimitedTextField(50);
+		}
+		return this.hwrMassnahmeFeld;
+	}
+
 	private JTextField getGewnameStatFeld() {
 		if (this.gewnameStatFeld == null) {
 			this.gewnameStatFeld = new LimitedTextField(50);
@@ -1043,7 +1138,11 @@ public class GewaesserdatenPanel extends JPanel {
 		return this.abstVerAnlageFeld;
 	}
 
-    public EinleitungsstellePanel getEinleitungsstelleTab() {
+	public void setHwrMassnahmeFeld(JTextField hwrMassnahmeFeld) {
+		this.hwrMassnahmeFeld = hwrMassnahmeFeld;
+	}
+
+	public EinleitungsstellePanel getEinleitungsstelleTab() {
         if (einleitungsstelleTab == null) {
             einleitungsstelleTab = new EinleitungsstellePanel(this.hauptModul);
             einleitungsstelleTab.setBorder(Paddings.DIALOG);

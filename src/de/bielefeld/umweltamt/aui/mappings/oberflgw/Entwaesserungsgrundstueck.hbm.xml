@@ -63,7 +63,7 @@
 		<property name="aktualDat" type="java.util.Date">
 			<column name="aktual_dat" length="29" not-null="true" />
 		</property>
-		<property name="adrNr" type="long">
+		<property name="adrNr" type="java.lang.Integer">
 			<column name="adr_nr" />
 		</property>
 		<property name="externalNr" type="java.lang.String">
@@ -86,6 +86,9 @@
 		</property>
 		<property name="strTog" type="java.lang.Boolean">
 			<column name="str_tog" />			
+		</property>
+		<property name="parkplatzTog" type="java.lang.Boolean">
+			<column name="parkplatz_tog" />			
 		</property>
 		<set name="ZEntwaessgrAbwasbehverfs"
 			table="z_entwaessgr_abwasbehverf" inverse="true" lazy="false"

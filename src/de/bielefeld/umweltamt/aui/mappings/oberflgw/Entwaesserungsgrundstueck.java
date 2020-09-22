@@ -68,7 +68,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private String abwbeskonNr;
     private Integer einbauartOpt;
     private Date aktualDat;
-    private long adrNr;
+    private Integer adrNr;
     private String externalNr;
     private Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs = new HashSet<ZEntwaessgrAbwasbehverf>(0);
     private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
@@ -78,6 +78,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private Boolean giTog;
     private Boolean gemTog;
     private Boolean strTog;
+    private Boolean parkplatzTog;
     private Set<Abaverfahren> Abaverfahrens = new HashSet<Abaverfahren>(0);
     
     /** Logging */
@@ -90,7 +91,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Entwaesserungsgrundstueck(
-        long nr, Objekt objekt, boolean erlFreiElTog, Date erstellDat, Integer einlBereichOpt, Date aktualDat, long adrNr) {
+        long nr, Objekt objekt, boolean erlFreiElTog, Date erstellDat, Integer einlBereichOpt, Date aktualDat, Integer adrNr) {
         this.nr = nr;
         this.objekt = objekt;
         this.erlFreiElTog = erlFreiElTog;
@@ -102,7 +103,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public Entwaesserungsgrundstueck(
-        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, long adrNr, String externalNr, Boolean woTog, Boolean miTog, Boolean geTog, Boolean giTog, Boolean gemTog, Boolean strTog,Set<Abaverfahren> Abaverfahrens,  Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, Integer adrNr, String externalNr, Boolean woTog, Boolean miTog, Boolean geTog, Boolean giTog, Boolean gemTog, Boolean strTog, Boolean parkplatzTog, Set<Abaverfahren> Abaverfahrens, Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
         this.nr = nr;
         this.objekt = objekt;
         this.wasserrecht = wasserrecht;
@@ -131,6 +132,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.giTog = giTog;
         this.gemTog = gemTog;
         this.strTog = strTog;
+        this.parkplatzTog  = parkplatzTog;
     }
 
     /* Setter and getter methods */
@@ -270,11 +272,11 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.aktualDat = aktualDat;
     }
 
-    public long getAdrNr() {
+    public Integer getAdrNr() {
         return this.adrNr;
     }
 
-    public void setAdrNr(long adrNr) {
+    public void setAdrNr(Integer adrNr) {
         this.adrNr = adrNr;
     }
 
@@ -325,6 +327,13 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     }
     public void setStrTog(Boolean strTog) {
         this.strTog = strTog;
+    }
+
+    public Boolean getParkplatzTog() {
+        return this.parkplatzTog;
+    }
+    public void setParkplatzTog(Boolean parkplatzTog) {
+        this.parkplatzTog = parkplatzTog;
     }
 
     public Set<ZEntwaessgrAbwasbehverf> getZEntwaessgrAbwasbehverfs() {
@@ -395,7 +404,8 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         buffer.append("geTog").append("='").append(getGeTog()).append("' ");
         buffer.append("giTog").append("='").append(getGiTog()).append("' ");
         buffer.append("gemTog").append("='").append(getGemTog()).append("' ");
-        buffer.append("strTog").append("='").append(getStrTog()).append("' ");   
+        buffer.append("strTog").append("='").append(getStrTog()).append("' ");  
+        buffer.append("parkplatzTog").append("='").append(getParkplatzTog()).append("' ");    
         buffer.append("ZEntwaessgrAbwasbehverfs").append("='").append(getZEntwaessgrAbwasbehverfs()).append("' ");
         buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");
         buffer.append("Abaverfahrens").append("='").append(getAbaverfahrens()).append("' ");	
@@ -492,6 +502,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.giTog = copy.getGiTog();
         this.gemTog = copy.getGemTog();
         this.strTog = copy.getStrTog();
+        this.parkplatzTog = copy.getParkplatzTog();
         
     }
 

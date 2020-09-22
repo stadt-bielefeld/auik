@@ -286,10 +286,6 @@ public class EinleitungsstellePanel extends JPanel {
 				getBezeichnungFeld().setText(this.einleitungsstelle.getBezeichnung());
 			}
 
-			if (this.einleitungsstelle.getBezBiele() != null) {
-				getBezBieleFeld().setText(this.einleitungsstelle.getBezBiele());
-			}
-
 			if (this.einleitungsstelle.getAbwAgEinl() != null) {
 				getAbwAgEinlFeld().setText(this.einleitungsstelle.getAbwAgEinl());
 			}
@@ -440,13 +436,6 @@ public class EinleitungsstellePanel extends JPanel {
 			this.einleitungsstelle.setBezeichnung(null);
 		} else {
 			this.einleitungsstelle.setBezeichnung(bezeichnung);
-		}
-
-		String bezBiele = this.bezBieleFeld.getText();
-		if ("".equals(bezBiele)) {
-			this.einleitungsstelle.setBezBiele(null);
-		} else {
-			this.einleitungsstelle.setBezBiele(bezBiele);
 		}
 
 		String abwAgEinl = this.abwAgEinlFeld.getText();

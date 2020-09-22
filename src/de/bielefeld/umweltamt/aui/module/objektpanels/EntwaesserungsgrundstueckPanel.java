@@ -121,6 +121,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 	private JCheckBox giTog;
 	private JCheckBox gemTog;
 	private JCheckBox strTog;
+	private JCheckBox parkplatzTog;
 	private JComboBox wasserableitungsstreckeOptBox = null;
 	private ZuordnungChooser<Abaverfahren> abaverfahrens;
 
@@ -211,6 +212,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 		builder.append(getWoTog());
 		builder.append(getMiTog());
 		builder.append(getGeTog());
+		builder.append(getParkplatzTog());
 		builder.nextLine();
 		builder.append("");
 		builder.append(getGiTog());
@@ -382,8 +384,15 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 					getStrTog().setSelected(false);
 				}
 			}
+			if(this.entwaesserungsgrundstueck.getParkplatzTog() !=null) {
+				if (this.entwaesserungsgrundstueck.getParkplatzTog()== true) {
+					getParkplatzTog().setSelected(true);
+				}else {
+					getParkplatzTog().setSelected(false);
+				}
+			}
 			
-			List list = new ArrayList(entwaesserungsgrundstueck.getAbaverfahrens());
+			List list = new ArrayList(entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs());
 			abaverfahrens.setListData(list);
 						
 			switchEinlBereichItems((String) getEinleitungsbereichBox().getSelectedItem());
@@ -413,6 +422,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 		getGiTog().setSelected(false);
 		getGemTog().setSelected(false);
 		getStrTog().setSelected(false);
+		getParkplatzTog().setSelected(false);
 
 	}
 
@@ -442,6 +452,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 		getGiTog().setEnabled(enabled);
 		getGemTog().setEnabled(enabled);
 		getStrTog().setEnabled(enabled);
+		getParkplatzTog().setEnabled(enabled);
 
 	}
 
@@ -620,6 +631,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 			giTog.setVisible(true);
 			gemTog.setVisible(true);
 			strTog.setVisible(true);
+			parkplatzTog.setVisible(true);
 			wasserableitungsstreckeOptBox.setVisible(false);
 
 			einleitungsbereichLabel.setVisible(true);
@@ -660,6 +672,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 			giTog.setVisible(true);
 			gemTog.setVisible(true);
 			strTog.setVisible(true);
+			parkplatzTog.setVisible(true);
 			wasserableitungsstreckeOptBox.setVisible(false);
 
 			einleitungsbereichLabel.setVisible(true);
@@ -699,6 +712,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 			giTog.setVisible(true);
 			gemTog.setVisible(true);
 			strTog.setVisible(true);
+			parkplatzTog.setVisible(true);
 			wasserableitungsstreckeOptBox.setVisible(true);
 
 			einleitungsbereichLabel.setVisible(true);
@@ -869,6 +883,13 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 			strTog = new JCheckBox("Straßenfläche");
 		}
 		return strTog;
+	}
+
+	private JCheckBox getParkplatzTog() {
+		if (parkplatzTog == null) {
+			parkplatzTog = new JCheckBox("Parkplatz");
+		}
+		return parkplatzTog;
 	}
 
 	private JTable getObjektverknuepungTabelle() {
