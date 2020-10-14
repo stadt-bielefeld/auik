@@ -69,12 +69,14 @@ public class BasisStandortModel extends ListTableModel {
 
     public BasisStandortModel() {
         super(new String[]{
-                "Betreiber",
+        		"Id",
+                "Name",
+                "Vorname",
                 "Straße",
                 "Hausnummer",
                 "Wassereinzugsgebiet",
-                "Entwässerungsgebiet",
-                "Standortbezeichnung"
+                "Entwässerungsgebiet"
+                
         },
         false, true);
     }
@@ -89,23 +91,27 @@ public class BasisStandortModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
+        	tmp = std.getId();
+        break;
+        case 1:
             tmp = std.getInhaber().getName();
             break;
-        case 1:
-            tmp = std.getInhaber().getAdresse().getStrasse();
-            break;
-        case 2:
-            tmp = std.getInhaber().getAdresse().getHausnr();
+        case 2: 
+        	tmp = std.getInhaber().getVorname();
             break;
         case 3:
-            tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
+            tmp = std.getInhaber().getAdresse().getStrasse();
             break;
         case 4:
-            tmp = std.getInhaber().getAdresse().getEntgebid();
+            tmp = std.getInhaber().getAdresse().getHausnr();
             break;
         case 5:
-            tmp = std.getBezeichnung();
+            tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
             break;
+        case 6:
+            tmp = std.getInhaber().getAdresse().getEntgebid();
+            break;
+       
 
         default:
             tmp = "ERROR";
