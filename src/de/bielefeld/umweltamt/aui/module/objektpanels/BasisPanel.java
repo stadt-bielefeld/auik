@@ -642,38 +642,15 @@ public class BasisPanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Standort standort = BasisPanel.this.hauptModul.getObjekt().getStandortid();
-					if (BasisPanel.this.hauptModul.getObjekt().getBetreiberid() != null && standort == null) {
-						standort = new Standort();
-						standort.setInhaber(BasisPanel.this.hauptModul.getObjekt().getBetreiberid());
-					}
 					if (standort == null) {
 						standort = new Standort();
 					}
-					if (standort.getInhaber() != null) {
-						AdresseChooser chooser = new AdresseChooser(standort,
-								BasisPanel.this.hauptModul.getFrame(), "standort");
-						chooser.setVisible(true);
+                    AdresseChooser chooser = new AdresseChooser(standort,
+                            BasisPanel.this.hauptModul.getFrame(), "standort");
+                        chooser.setVisible(true);
 
-						if (chooser.getChosenStandort().getInhaber().getAdresse() != null) {
-							standortFeld.setText(chooser.getChosenStandort().getInhaber().toString());
-							BasisPanel.this.hauptModul.getObjekt()
-									.setStandortid(chooser.getChosenStandort());
-						}
-					} else {
-	                    Inhaber betreiber = BasisPanel.this.hauptModul
-	                            .getObjekt().getBetreiberid();
-	                        if (betreiber == null) {
-	                            betreiber = new Inhaber();
-	                        }
-	                        AdresseChooser chooser = new AdresseChooser(betreiber,
-	                            BasisPanel.this.hauptModul.getFrame(), "betreiber");
-	                        chooser.setVisible(true);
-
-	                        if (chooser.getChosenBetreiber() != null && chooser.getChosenBetreiber().getStandort() != null) {
-		                        BasisPanel.this.hauptModul.getObjekt().setStandortid(
-		                            chooser.getChosenBetreiber().getStandort());
-	                        }
-					}
+                        BasisPanel.this.hauptModul.getObjekt().setStandortid(
+                            chooser.getChosenStandort());
 					updateForm();
 				}
 			});

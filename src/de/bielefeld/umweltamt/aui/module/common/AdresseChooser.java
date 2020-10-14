@@ -78,7 +78,7 @@ public class AdresseChooser extends JDialog {
 		List<Object> initialList = new ArrayList<Object>();
 		initialList.add(initial);
 
-if (initial instanceof Inhaber && caller == "adresse") {
+		if (initial instanceof Inhaber && caller == "adresse") {
             setTitle("Adresse auswählen");
             this.betreiberAdresse = (Inhaber) initial;
             this.adresseModel = new BasisAdresseModel();
