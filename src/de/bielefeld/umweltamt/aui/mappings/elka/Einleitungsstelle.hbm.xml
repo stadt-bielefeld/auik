@@ -164,6 +164,21 @@
         <property name="hwrMassnahme" type="java.lang.String">
             <column name="hwr_massnahme" length="50" />
         </property>
+       <property name="entfEinlStatGew" type="java.lang.Integer">
+            <column name="entf_einl_stat_gew" />
+        </property>
+         <property name="mwq" type="java.lang.Integer">
+            <column name="mwq" />
+        </property>
+         <property name="hq1" type="java.lang.Integer">
+            <column name="hq1" />
+        </property>
+         <property name="abwAgEinl" type="java.lang.String">
+            <column name="abw_ag_einl" />
+        </property>
+        <property name="bemerkungGewDaten" type="java.lang.String">
+            <column name="bemerkung_gew_daten" length="1000" />
+        </property>
        
         
         

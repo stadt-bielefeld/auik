@@ -102,6 +102,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     private String gewaesserAuflage3Id;
     private String flussGebiet3Id;
     private String bemerkung;
+    private String bemerkungGewDaten;
     private String flussAuflage3Id;
     private String gewaessernameNs3;
     private String gewaesserNs3Id;
@@ -112,12 +113,18 @@ public class Einleitungsstelle  implements java.io.Serializable {
     private Set<Versickerungsanlage> versickerungsanlages = new HashSet<Versickerungsanlage>(0);
     private Set<Referenz> referenzsForQElsNr = new HashSet<Referenz>(0);
     private Set<Referenz> referenzsForZElsNr = new HashSet<Referenz>(0);
+   
+  
     
     private String gewnameStat;
     private String gewkennzStat;
     private String gewNameStadt;
     private String gewKennzStadt;
     private String hwrMassnahme;
+    
+    private Integer entfEinlStatGew;
+    private Integer mwq;
+    private Integer hq1;
 
     
     
@@ -152,7 +159,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     /** Full constructor 
       */
     public Einleitungsstelle(
-        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, Date stillgelegtAm, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr, String abwAgEinl, Integer einleitungsart, String gewnameStat, String gewkennzStat, String gewNameStadt, String gewKennzStadt, String hwrMassnahme) {
+        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, Date stillgelegtAm, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String bemerkungGewDaten, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr, String abwAgEinl, Integer einleitungsart, String gewnameStat, String gewkennzStat, String gewNameStadt, String gewKennzStadt, String hwrMassnahme, Integer entfEinlStatGew, Integer mwq, Integer hq1) {
         this.id = id;
         this.objektid = objektid;
         this.aktualDat = aktualDat;
@@ -201,6 +208,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.gewaesserAuflage3Id = gewaesserAuflage3Id;
         this.flussGebiet3Id = flussGebiet3Id;
         this.bemerkung = bemerkung;
+        this.bemerkungGewDaten = bemerkungGewDaten;
         this.flussAuflage3Id = flussAuflage3Id;
         this.gewaessernameNs3 = gewaessernameNs3;
         this.gewaesserNs3Id = gewaesserNs3Id;
@@ -216,6 +224,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.gewNameStadt = gewNameStadt;
         this.gewKennzStadt = gewKennzStadt;
         this.hwrMassnahme = hwrMassnahme;
+        this.entfEinlStatGew = entfEinlStatGew;
+        this.mwq = mwq;
+        this.hq1 = hq1; 
   
         
     }
@@ -598,7 +609,16 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setBemerkung(String bemerkung) {
         this.bemerkung = bemerkung;
     }
+    
+    public String getBemerkungGewDaten() {
+        return this.bemerkungGewDaten;
+    }
 
+    public void setBemerkungGewDaten(String bemerkungGewDaten) {
+        this.bemerkungGewDaten = bemerkungGewDaten;
+    }
+    
+    
     public String getFlussAuflage3Id() {
         return this.flussAuflage3Id;
     }
@@ -678,6 +698,33 @@ public class Einleitungsstelle  implements java.io.Serializable {
 	public void setHwrMassnahme(String hwrMassnahme) {
 		this.hwrMassnahme = hwrMassnahme;
 	}
+	
+	
+	public Integer getEntfEinlStatGew() {
+		return entfEinlStatGew;
+	}
+
+	public void setEntfEinlStatGew(Integer entfEinlStatGew) {
+		this.entfEinlStatGew = entfEinlStatGew;
+	}
+	
+	public Integer getMwq() {
+		return mwq;
+	}
+
+	public void setMwq(Integer mwq) {
+		this.mwq = mwq;
+	}
+	
+	public Integer getHq1() {
+		return hq1;
+	}
+
+	public void setHq1(Integer hq1) {
+		this.hq1 = hq1;
+	}
+	
+	
 
 	public Set<Versickerungsanlage> getVersickerungsanlages() {
         return this.versickerungsanlages;
@@ -765,7 +812,8 @@ public class Einleitungsstelle  implements java.io.Serializable {
         buffer.append("einleitungsstellenId").append("='").append(getEinleitungsstellenId()).append("' ");			
         buffer.append("gewaesserAuflage3Id").append("='").append(getGewaesserAuflage3Id()).append("' ");			
         buffer.append("flussGebiet3Id").append("='").append(getFlussGebiet3Id()).append("' ");			
-        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");			
+        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");	
+        buffer.append("bemerkungGewDaten").append("='").append(getBemerkung()).append("' ");
         buffer.append("flussAuflage3Id").append("='").append(getFlussAuflage3Id()).append("' ");			
         buffer.append("gewaessernameNs3").append("='").append(getGewaessernameNs3()).append("' ");			
         buffer.append("gewaesserNs3Id").append("='").append(getGewaesserNs3Id()).append("' ");			
@@ -781,6 +829,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
         buffer.append("GewNameStadt").append("='").append(getGewNameStadt()).append("' ");
         buffer.append("GewKennzStadt").append("=").append(getGewKennzStadt()).append("'");
         buffer.append("HwrMassnahme").append("=").append(getHwrMassnahme()).append("'");
+        buffer.append("entfEinlStatGew").append("=").append(getEntfEinlStatGew()).append("'");
+        buffer.append("mwq").append("=").append(getEntfEinlStatGew()).append("'");
+        buffer.append("hq1").append("=").append(getEntfEinlStatGew()).append("'");
         buffer.append("]");
 
         return buffer.toString();
@@ -875,7 +926,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.typKommKaTog = copy.getTypKommKaTog();            
         this.typAusseroertlicheStrasseneinleitungTog = copy.getTypAusseroertlicheStrasseneinleitungTog();            
         this.typSonstigeTog = copy.getTypSonstigeTog();            
-
         this.gewaesser3Id = copy.getGewaesser3Id();            
         this.ofwkNrwId = copy.getOfwkNrwId();            
         this.ofwkNrwAuflageId = copy.getOfwkNrwAuflageId();            
@@ -887,7 +937,8 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.einleitungsstellenId = copy.getEinleitungsstellenId();            
         this.gewaesserAuflage3Id = copy.getGewaesserAuflage3Id();            
         this.flussGebiet3Id = copy.getFlussGebiet3Id();            
-        this.bemerkung = copy.getBemerkung();            
+        this.bemerkung = copy.getBemerkung();     
+        this.bemerkungGewDaten = copy.getBemerkungGewDaten(); 
         this.flussAuflage3Id = copy.getFlussAuflage3Id();            
         this.gewaessernameNs3 = copy.getGewaessernameNs3();            
         this.gewaesserNs3Id = copy.getGewaesserNs3Id();            
@@ -903,6 +954,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.gewNameStadt = copy.getGewNameStadt();  
         this.gewKennzStadt = copy.getGewKennzStadt();
         this.hwrMassnahme = copy.getHwrMassnahme();
+        this.entfEinlStatGew = copy.getEntfEinlStatGew();
+        this.mwq = copy.getMwq();
+        this.hq1 = copy.getHq1();
    
     }    
 
