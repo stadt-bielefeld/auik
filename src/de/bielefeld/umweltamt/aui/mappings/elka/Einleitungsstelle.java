@@ -122,9 +122,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
     private String gewKennzStadt;
     private String hwrMassnahme;
     
-    private Integer entfEinlStatGew;
-    private Integer mwq;
-    private Integer hq1;
+    private Double entfEinlStatGew;
+    private Double mwq;
+    private Double hq1;
 
     
     
@@ -159,7 +159,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     /** Full constructor 
       */
     public Einleitungsstelle(
-        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, Date stillgelegtAm, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String bemerkungGewDaten, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr, String abwAgEinl, Integer einleitungsart, String gewnameStat, String gewkennzStat, String gewNameStadt, String gewKennzStadt, String hwrMassnahme, Integer entfEinlStatGew, Integer mwq, Integer hq1) {
+        Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, Date stillgelegtAm, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String bemerkungGewDaten, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr, String abwAgEinl, Integer einleitungsart, String gewnameStat, String gewkennzStat, String gewNameStadt, String gewKennzStadt, String hwrMassnahme, Double entfEinlStatGew, Double mwq, Double hq1) {
         this.id = id;
         this.objektid = objektid;
         this.aktualDat = aktualDat;
@@ -700,27 +700,27 @@ public class Einleitungsstelle  implements java.io.Serializable {
 	}
 	
 	
-	public Integer getEntfEinlStatGew() {
+	public Double getEntfEinlStatGew() {
 		return entfEinlStatGew;
 	}
 
-	public void setEntfEinlStatGew(Integer entfEinlStatGew) {
+	public void setEntfEinlStatGew(Double entfEinlStatGew) {
 		this.entfEinlStatGew = entfEinlStatGew;
 	}
 	
-	public Integer getMwq() {
+	public Double getMwq() {
 		return mwq;
 	}
 
-	public void setMwq(Integer mwq) {
+	public void setMwq(Double mwq) {
 		this.mwq = mwq;
 	}
 	
-	public Integer getHq1() {
+	public Double getHq1() {
 		return hq1;
 	}
 
-	public void setHq1(Integer hq1) {
+	public void setHq1(Double hq1) {
 		this.hq1 = hq1;
 	}
 	

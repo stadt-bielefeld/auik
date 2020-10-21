@@ -101,9 +101,9 @@ public class GewaesserdatenPanel extends JPanel {
 	private JTextField gewNameStadtFeld = null; // Gewässername bei der Stadt Bielefeld
 	private JTextField gewKennzStadtFeld = null; // Gewässerkennzahl bei der Stadt Bielefeld
 	private JTextField hwrMassnahmeFeld = null; // HWR Maßnahme
-	private IntegerField entfEinlStatGewFeld = null; // Entfernung der Einleitung zum stat Gew
-	private IntegerField mwqFeld = null; 
-	private IntegerField hq1Feld = null; 
+	private DoubleField entfEinlStatGewFeld = null; // Entfernung der Einleitung zum stat Gew
+	private DoubleField mwqFeld = null; 
+	private DoubleField hq1Feld = null; 
 	
 	
 	
@@ -604,13 +604,13 @@ public class GewaesserdatenPanel extends JPanel {
 		Double einzugsgebiet = (Double) this.einzugsgebietFeld.getDoubleValue();
 		this.einleitungsstelle.setEinzugsgebiet(einzugsgebiet);
 		
-		Integer entfEinlStatGew = (Integer) this.entfEinlStatGewFeld.getIntValue();
+		Double entfEinlStatGew = (Double) this.entfEinlStatGewFeld.getDoubleValue();
 		this.einleitungsstelle.setEntfEinlStatGew(entfEinlStatGew);
 		
-		Integer mwq = (Integer) this.mwqFeld.getIntValue();
+		Double mwq = (Double) this.mwqFeld.getDoubleValue();
 		this.einleitungsstelle.setMwq(mwq);
 		
-		Integer hq1 = (Integer) this.hq1Feld.getIntValue();
+		Double hq1 = (Double) this.hq1Feld.getDoubleValue();
 		this.einleitungsstelle.setHq1(hq1);
 
 		String gewNameStadt = this.gewNameStadtFeld.getText();
@@ -1153,23 +1153,23 @@ public class GewaesserdatenPanel extends JPanel {
 		return this.stationierungSt3Feld;
 	}
 
-	private IntegerField getEntfEinlStatGewFeld() {
+	private DoubleField getEntfEinlStatGewFeld() {
 		if (this.entfEinlStatGewFeld == null) {
-			this.entfEinlStatGewFeld = new IntegerField();
+			this.entfEinlStatGewFeld = new DoubleField(10);
 		}
 		return this.entfEinlStatGewFeld;
 	}
 	
-	private IntegerField getMwqFeld() {
+	private DoubleField getMwqFeld() {
 		if (this.mwqFeld == null) {
-			this.mwqFeld = new IntegerField();
+			this.mwqFeld = new DoubleField(10);
 		}
 		return this.mwqFeld;
 	}
 	
-	private IntegerField getHq1Feld() {
+	private DoubleField getHq1Feld() {
 		if (this.hq1Feld == null) {
-			this.hq1Feld = new IntegerField();
+			this.hq1Feld = new DoubleField(10);
 		}
 		return this.hq1Feld;
 	}
