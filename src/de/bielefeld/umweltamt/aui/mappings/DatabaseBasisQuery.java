@@ -1087,14 +1087,16 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				+ "FROM TabStreets t "
 				+ "WHERE name like '" + name + "' ";
 		query += "AND hausnr = " + hausnr;
-		Pattern p = Pattern.compile("\\p{Alpha}");
-		Matcher m = p.matcher(hausnrzus);
-		boolean match = m.find();
-		if (match) {
-			hausnrzus = hausnrzus.substring(0, 1);
-			query += "AND hausnr_zusatz = '" + hausnrzus + "' ";
-		} else {
-			query += "AND hausnr_zusatz IS NULL";
+		if (hausnrzus != null) {
+			Pattern p = Pattern.compile("\\p{Alpha}");
+			Matcher m = p.matcher(hausnrzus);
+			boolean match = m.find();
+			if (match) {
+				hausnrzus = hausnrzus.substring(0, 1);
+				query += " AND hausnr_zusatz = '" + hausnrzus + "' ";
+			} else {
+				query += " AND hausnr_zusatz IS NULL";
+			}
 		}
 		
 		List tabStreet = HibernateSessionFactory.currentSession().createQuery(query).list();

@@ -1365,7 +1365,7 @@ public class BasisStandortSuchen extends AbstractModul
 							proj);
 
 					Map<String, String> env = pb.environment();
-					TabStreets ts = DatabaseQuery.getSingleTabStreet(adr.getStrasse(), adr.getHausnr(), null);
+					TabStreets ts = DatabaseQuery.getSingleTabStreet(adr.getStrasse(), adr.getHausnr(), adr.getHausnrzus());
 					env.put("RECHTS", ts.getX().toString());
 					env.put("HOCH", ts.getY().toString());
 

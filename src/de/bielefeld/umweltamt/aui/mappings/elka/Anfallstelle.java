@@ -63,7 +63,6 @@ public class Anfallstelle  implements java.io.Serializable {
     private Date aktualDat;
     private Date erstellDat;
     private String anhangId;
-    private String herkunft;
     private String anwendungsbereich;
     private String bezeichnung;
     private Date stillgelegtAm;
@@ -107,14 +106,13 @@ public class Anfallstelle  implements java.io.Serializable {
 
     /** Full constructor */
     public Anfallstelle(
-        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String herkunft, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, Float maxVolTag, Float maxVolStunde, Integer volJahr, Float abflussmenge, Integer befFlaeche, String externalNr, String anlagenart, String bemerkungen, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr, Set<BwkFachdaten> bwkFachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
+        Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, Float maxVolTag, Float maxVolStunde, Integer volJahr, Float abflussmenge, Integer befFlaeche, String externalNr, String anlagenart, String bemerkungen, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr, Set<BwkFachdaten> bwkFachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
         this.id = id;
         this.objekt = objekt;
         this.seqId = seqId;
         this.aktualDat = aktualDat;
         this.erstellDat = erstellDat;
         this.anhangId = anhangId;
-        this.herkunft = herkunft;
         this.anwendungsbereich = anwendungsbereich;
         this.bezeichnung = bezeichnung;
         this.stillgelegtAm = stillgelegtAm;
@@ -190,14 +188,6 @@ public class Anfallstelle  implements java.io.Serializable {
 
     public void setAnhangId(String anhangId) {
         this.anhangId = anhangId;
-    }
-
-    public String getHerkunft() {
-        return this.herkunft;
-    }
-
-    public void setHerkunft(String herkunft) {
-        this.herkunft = herkunft;
     }
 
     public String getAnwendungsbereich() {
@@ -434,7 +424,6 @@ public class Anfallstelle  implements java.io.Serializable {
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
         buffer.append("anhangId").append("='").append(getAnhangId()).append("' ");			
-        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");			
         buffer.append("anwendungsbereich").append("='").append(getAnwendungsbereich()).append("' ");			
         buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
         buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");			
@@ -529,8 +518,7 @@ public class Anfallstelle  implements java.io.Serializable {
         this.seqId = copy.getSeqId();            
         this.aktualDat = copy.getAktualDat();            
         this.erstellDat = copy.getErstellDat();            
-        this.anhangId = copy.getAnhangId();            
-        this.herkunft = copy.getHerkunft();            
+        this.anhangId = copy.getAnhangId();              
         this.anwendungsbereich = copy.getAnwendungsbereich();            
         this.bezeichnung = copy.getBezeichnung();            
         this.stillgelegtAm = copy.getStillgelegtAm();            

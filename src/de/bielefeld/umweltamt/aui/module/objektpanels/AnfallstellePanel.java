@@ -299,10 +299,6 @@ public class AnfallstellePanel extends JPanel {
             		"Kategorie III: Stark belastetes NW"};
             getHerkunftBox().setModel(new DefaultComboBoxModel(herkunft));
     		
-    		if(this.anfallstelle.getHerkunft() != null) {
-    			getHerkunftBox().setSelectedItem(this.anfallstelle.getHerkunft());
-    		}
-    		
     		if(this.anfallstelle.getAnwendungsbereich() != null) {
     			getAnwendungsbereichFeld().setText(this.anfallstelle.getAnwendungsbereich());
     		}
@@ -472,12 +468,6 @@ public class AnfallstellePanel extends JPanel {
         	this.anfallstelle.setAnlagenart(null);
         } else {
         	this.anfallstelle.setAnlagenart((String) getAnlagenartBox().getSelectedItem());
-        }
-        
-        if (getHerkunftBox().getSelectedItem() == null) {
-        	this.anfallstelle.setHerkunft(null);
-        } else {
-        	this.anfallstelle.setHerkunft((String) getHerkunftBox().getSelectedItem());
         }
         
         String anwendungsbereich = this.anwendungsbereichFeld.getText();

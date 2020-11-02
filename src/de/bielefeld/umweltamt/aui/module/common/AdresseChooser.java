@@ -454,7 +454,12 @@ public class AdresseChooser extends JDialog {
 				}
 			});
 
-			this.ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(130);
+			this.ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(20);
+			this.ergebnisTabelle.getColumnModel().getColumn(1).setPreferredWidth(150);
+			this.ergebnisTabelle.getColumnModel().getColumn(2).setPreferredWidth(80);
+			this.ergebnisTabelle.getColumnModel().getColumn(3).setPreferredWidth(80);
+			this.ergebnisTabelle.getColumnModel().getColumn(4).setPreferredWidth(80);
+			this.ergebnisTabelle.getColumnModel().getColumn(5).setPreferredWidth(80);
 		}
 
 		return this.ergebnisTabelle;

@@ -23,9 +23,6 @@
         <property name="anhangId" type="java.lang.String">
             <column name="anhang_id" />
         </property>
-        <property name="herkunft" type="java.lang.String">
-            <column name="herkunft" />
-        </property>
         <property name="anwendungsbereich" type="java.lang.String">
             <column name="anwendungsbereich" />
         </property>
