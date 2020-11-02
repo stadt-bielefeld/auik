@@ -34,6 +34,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 
@@ -96,6 +97,12 @@ public class AnalyseProcessor {
             position.setGrkl(grkl);
             position.setEinheiten(einheit);
             position.setAnalyseVon("E-Satzung");
+            if (parameter.getMapElkaAnalysemethode() != null) {
+            	position.setMapElkaAnalysemethode(parameter.getMapElkaAnalysemethode());
+            } else {
+            	position.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
+            }
+            
             position.merge();
 
             probe.setStatus(DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN);

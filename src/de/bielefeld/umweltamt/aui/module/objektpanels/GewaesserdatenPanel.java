@@ -1098,7 +1098,7 @@ public class GewaesserdatenPanel extends JPanel {
 
 	private DoubleField getEinzugsgebietFeld() {
 		if (this.einzugsgebietFeld == null) {
-			this.einzugsgebietFeld = new DoubleField(10);
+			this.einzugsgebietFeld = new DoubleField(3, 3);
 		}
 		return this.einzugsgebietFeld;
 	}
@@ -1148,28 +1148,28 @@ public class GewaesserdatenPanel extends JPanel {
 
 	private DoubleField getStationierungSt3Feld() {
 		if (this.stationierungSt3Feld == null) {
-			this.stationierungSt3Feld = new DoubleField(10);
+			this.stationierungSt3Feld = new DoubleField(3, 3);
 		}
 		return this.stationierungSt3Feld;
 	}
 
 	private DoubleField getEntfEinlStatGewFeld() {
 		if (this.entfEinlStatGewFeld == null) {
-			this.entfEinlStatGewFeld = new DoubleField(10);
+			this.entfEinlStatGewFeld = new DoubleField(3, 3);
 		}
 		return this.entfEinlStatGewFeld;
 	}
 	
 	private DoubleField getMwqFeld() {
 		if (this.mwqFeld == null) {
-			this.mwqFeld = new DoubleField(10);
+			this.mwqFeld = new DoubleField(2, 2);
 		}
 		return this.mwqFeld;
 	}
 	
 	private DoubleField getHq1Feld() {
 		if (this.hq1Feld == null) {
-			this.hq1Feld = new DoubleField(10);
+			this.hq1Feld = new DoubleField(2, 2);
 		}
 		return this.hq1Feld;
 	}

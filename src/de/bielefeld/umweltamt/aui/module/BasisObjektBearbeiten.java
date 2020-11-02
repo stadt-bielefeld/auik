@@ -790,6 +790,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT:
                     getProbepunktTab().completeObjekt();
+                    break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ABA:
                     getAbaTab().completeObjekt();
                     getAbaVerfahrenTab().completeObjekt();

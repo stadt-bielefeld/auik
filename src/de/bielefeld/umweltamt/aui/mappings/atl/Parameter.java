@@ -27,6 +27,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.HashSet;
 import java.util.List;
@@ -46,6 +47,7 @@ public class Parameter  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private String ordnungsbegriff;
     private Parametergruppen parametergruppen;
+    private MapElkaAnalysemethode mapElkaAnalysemethode;
     private String analyseverfahren;
     private String bezeichnung;
     private Integer wirdgemessenineinheit;
@@ -82,9 +84,10 @@ public class Parameter  implements java.io.Serializable {
 
     /** Full constructor */
     public Parameter(
-        String ordnungsbegriff, Parametergruppen parametergruppen, String analyseverfahren, String bezeichnung, Integer wirdgemessenineinheit, Double grenzwert, String grenzwertname, Double sielhautGw, Double klaerschlammGw, Double preisfueranalyse, Boolean einzelnbeauftragbar, String kennzeichnung, String konservierung, Integer reihenfolge, boolean enabled, boolean deleted, Integer deaStoffeStoffNr, Set<MetaParameter> metaParameters, Set<Analyseposition> analysepositions) {
+        String ordnungsbegriff, Parametergruppen parametergruppen, MapElkaAnalysemethode mapElkaAnalysemethode, String analyseverfahren, String bezeichnung, Integer wirdgemessenineinheit, Double grenzwert, String grenzwertname, Double sielhautGw, Double klaerschlammGw, Double preisfueranalyse, Boolean einzelnbeauftragbar, String kennzeichnung, String konservierung, Integer reihenfolge, boolean enabled, boolean deleted, Integer deaStoffeStoffNr, Set<MetaParameter> metaParameters, Set<Analyseposition> analysepositions) {
         this.ordnungsbegriff = ordnungsbegriff;
         this.parametergruppen = parametergruppen;
+        this.mapElkaAnalysemethode = mapElkaAnalysemethode;
         this.analyseverfahren = analyseverfahren;
         this.bezeichnung = bezeichnung;
         this.wirdgemessenineinheit = wirdgemessenineinheit;
@@ -119,6 +122,14 @@ public class Parameter  implements java.io.Serializable {
 
     public void setParametergruppen(Parametergruppen parametergruppen) {
         this.parametergruppen = parametergruppen;
+    }
+
+    public MapElkaAnalysemethode getMapElkaAnalysemethode() {
+        return this.mapElkaAnalysemethode;
+    }
+
+    public void setMapElkaAnalysemethode(MapElkaAnalysemethode mapElkaAnalysemethode) {
+        this.mapElkaAnalysemethode = mapElkaAnalysemethode;
     }
 
     public String getAnalyseverfahren() {
@@ -279,6 +290,7 @@ public class Parameter  implements java.io.Serializable {
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("ordnungsbegriff").append("='").append(getOrdnungsbegriff()).append("' ");			
         buffer.append("parametergruppen").append("='").append(getParametergruppen()).append("' ");			
+        buffer.append("mapElkaAnalysemethode").append("='").append(getMapElkaAnalysemethode()).append("' ");			
         buffer.append("analyseverfahren").append("='").append(getAnalyseverfahren()).append("' ");			
         buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
         buffer.append("wirdgemessenineinheit").append("='").append(getWirdgemessenineinheit()).append("' ");			
@@ -362,7 +374,8 @@ public class Parameter  implements java.io.Serializable {
      */
     private void copy(Parameter copy) {
         this.ordnungsbegriff = copy.getOrdnungsbegriff();            
-        this.parametergruppen = copy.getParametergruppen();            
+        this.parametergruppen = copy.getParametergruppen();    
+        this.mapElkaAnalysemethode = copy.getMapElkaAnalysemethode();           
         this.analyseverfahren = copy.getAnalyseverfahren();            
         this.bezeichnung = copy.getBezeichnung();            
         this.wirdgemessenineinheit = copy.getWirdgemessenineinheit();            

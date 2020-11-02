@@ -73,6 +73,7 @@ package de.bielefeld.umweltamt.aui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
@@ -88,10 +89,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -101,6 +104,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
@@ -112,8 +116,12 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.jfree.ui.tabbedui.VerticalLayout;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Paddings;
@@ -122,6 +130,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
+import de.bielefeld.umweltamt.aui.gui.PasswordChangeDialog;
 import de.bielefeld.umweltamt.aui.module.common.editors.EinstellungenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -179,6 +188,8 @@ public class HauptFrame extends JFrame {
     private JMenu helpMenu = null;
     private JMenuItem aboutMenuItem = null;
     private JMenuItem DokuItem = null;
+
+    private JMenuItem passwordChangeMenuItem = null;
 
     private JPanel titlePanel = null;
 
@@ -293,6 +304,19 @@ public class HauptFrame extends JFrame {
         String db = settings.getSetting("auik.system.dburl");
         if (db != null && !db.equals("")) {
             HibernateSessionFactory.setDBUrl(db);
+
+            String dialectName = db.split(":")[1];
+            //Set DB dialect and driver
+            try {
+                log.info(String.format("Database dialect: %s", dialectName));
+                String dialect = HibernateSessionFactory.getDialectClassByDialectName(dialectName);
+                String driver = HibernateSessionFactory.getDriverByDialectClass(dialect);
+                HibernateSessionFactory.setDBDialect(dialect);
+                HibernateSessionFactory.setDBDriver(driver);
+            } catch (IllegalArgumentException iae) {
+                log.error("Error setting up db driver: " + iae);
+                this.close();
+            }
         }
 
         // Fragt die Benutzerdaten ab, wenn die Abfrage erfolgreich war...
@@ -312,6 +336,9 @@ public class HauptFrame extends JFrame {
     }
 
     private boolean askForDBCredentials() {
+        if (!HibernateSessionFactory.doesDialectNeedCredentials()) {
+            return true;
+        }
         BenutzerDatenDialog benutzerDialog = new BenutzerDatenDialog(this);
         locateOnScreen(benutzerDialog);
         return benutzerDialog.loginSuccessful();
@@ -566,6 +593,7 @@ public class HauptFrame extends JFrame {
             fileMenu.setText("Datei");
             fileMenu.setMnemonic(KeyEvent.VK_D);
             // fileMenu.putClientProperty(Options.NO_ICONS_KEY, Boolean.TRUE);
+            fileMenu.add(getPasswordChangeItem());
             fileMenu.add(getSettingsMenuItem());
             fileMenu.addSeparator();
             fileMenu.add(getExitMenuItem());
@@ -588,6 +616,30 @@ public class HauptFrame extends JFrame {
             helpMenu.add(getDoku());
         }
         return helpMenu;
+    }
+
+    /**
+     * Create password change menu item
+     * @return Menu item
+     */
+    private JMenuItem getPasswordChangeItem() {
+        if (passwordChangeMenuItem == null) {
+            passwordChangeMenuItem = new JMenuItem();
+            passwordChangeMenuItem.setText("Password ändern");
+            passwordChangeMenuItem.setMnemonic(KeyEvent.VK_P);
+            passwordChangeMenuItem.setEnabled(true);
+            final JFrame owner = this;
+            passwordChangeMenuItem.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    PasswordChangeDialog pwChangeDialog = new PasswordChangeDialog(owner);
+                    //Show dialog above right panel
+                    pwChangeDialog.setLocationRelativeTo(getRightFrame());
+                    pwChangeDialog.setVisible(true);
+                }
+            });
+        }
+        return passwordChangeMenuItem;
     }
 
     /**

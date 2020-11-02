@@ -82,6 +82,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -151,13 +152,12 @@ public class SielhautImport extends AbstractModul {
                     throw new IOException(
                         "Datei ist kein SielhautBearbeiten-CSV!");
                 }
-                String[] tmp = line.split(";");
-                if (tmp.length != 8) {
+                String[] tmp = line.split(";", -1);
+                if (tmp.length != 9) {
                     throw new IOException("Datei ist beschädigt!");
                 }
-                // log.debug(count + ": " + line);
 
-                if (!tmp[0].startsWith("PROBENAHMEDATUM")) {
+                if (!tmp[0].startsWith("PROBENAHMEDATUM") && !tmp[3].contains("PFO")) {
                     getList().add(tmp);
                 }
 
@@ -350,6 +350,10 @@ public class SielhautImport extends AbstractModul {
                             // Sollte eigentlich auch nicht vorkommen, nötig?
                             throw new Exception("Importdatei beschädigt!");
                         }
+                        
+                        // Analysemethode
+                        
+                        pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
 
                         // Einheit
                         Einheiten einheit =

@@ -182,15 +182,14 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     public static List<Anh49Fachdaten> getFettabscheider() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh49Fachdaten.class)
-            .createAlias("anfallstelle", "anf")
+                .createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "objekt")
                 .createAlias("objekt.objektarten", "art")
                 .createAlias("objekt.betreiberid", "adresse")
-//                .add(Restrictions.eq("art.id",
-//                    DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER))
                 .add(Restrictions.eq("objekt.deleted", false))
+                .add(Restrictions.eq("anf.anlagenart", "Fettabscheider"))
                 .addOrder(Order.asc("objekt.inaktiv"))
-                .addOrder(Order.asc("adresse.betrname")),
+                .addOrder(Order.asc("adresse.name")),
             new Anh49Fachdaten());
     }
 
@@ -328,7 +327,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
         boolean nurWiedervorlageAbgelaufen) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Anh50Fachdaten.class)
-            .createAlias("anfallstelle", "anf")
+                .createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "objekt")
                 .createAlias("objekt.betreiberid", "adresse")
                 .add(Restrictions.eq("erloschen", false))

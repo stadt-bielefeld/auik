@@ -27,6 +27,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class Analyseposition  implements java.io.Serializable {
     private Einheiten einheiten;
     private Parameter parameter;
     private Probenahme probenahme;
+    private MapElkaAnalysemethode methode;
     private String grkl;
     private Float wert;
     private String analyseVon;
@@ -65,10 +67,11 @@ public class Analyseposition  implements java.io.Serializable {
 
     /** Minimal constructor */
     public Analyseposition(
-        Integer id, Parameter parameter, Probenahme probenahme, Float wert, boolean enabled, boolean deleted) {
+        Integer id, Parameter parameter, Probenahme probenahme, MapElkaAnalysemethode methode, Float wert, boolean enabled, boolean deleted) {
         this.id = id;
         this.parameter = parameter;
         this.probenahme = probenahme;
+        this.methode = methode;
         this.wert = wert;
         this.enabled = enabled;
         this.deleted = deleted;
@@ -76,11 +79,12 @@ public class Analyseposition  implements java.io.Serializable {
 
     /** Full constructor */
     public Analyseposition(
-        Integer id, Einheiten einheiten, Parameter parameter, Probenahme probenahme, String grkl, Float wert, String analyseVon, String bericht, Double normwert, boolean enabled, boolean deleted, Double normwertNeu) {
+        Integer id, Einheiten einheiten, Parameter parameter, Probenahme probenahme, MapElkaAnalysemethode methode, String grkl, Float wert, String analyseVon, String bericht, Double normwert, boolean enabled, boolean deleted, Double normwertNeu) {
         this.id = id;
         this.einheiten = einheiten;
         this.parameter = parameter;
         this.probenahme = probenahme;
+        this.methode = methode;
         this.grkl = grkl;
         this.wert = wert;
         this.analyseVon = analyseVon;
@@ -122,6 +126,14 @@ public class Analyseposition  implements java.io.Serializable {
 
     public void setProbenahme(Probenahme probenahme) {
         this.probenahme = probenahme;
+    }
+
+    public MapElkaAnalysemethode getMapElkaAnalysemethode() {
+        return this.methode;
+    }
+
+    public void setMapElkaAnalysemethode( MapElkaAnalysemethode methode) {
+        this.methode = methode;
     }
 
     public String getGrkl() {
@@ -211,7 +223,8 @@ public class Analyseposition  implements java.io.Serializable {
         buffer.append("id").append("='").append(getId()).append("' ");			
         buffer.append("einheiten").append("='").append(getEinheiten()).append("' ");			
         buffer.append("parameter").append("='").append(getParameter()).append("' ");			
-        buffer.append("probenahme").append("='").append(getProbenahme()).append("' ");			
+        buffer.append("probenahme").append("='").append(getProbenahme()).append("' ");		
+        buffer.append("methode").append("='").append(getMapElkaAnalysemethode()).append("' ");			
         buffer.append("grkl").append("='").append(getGrkl()).append("' ");			
         buffer.append("wert").append("='").append(getWert()).append("' ");			
         buffer.append("analyseVon").append("='").append(getAnalyseVon()).append("' ");			
@@ -288,7 +301,8 @@ public class Analyseposition  implements java.io.Serializable {
         this.id = copy.getId();            
         this.einheiten = copy.getEinheiten();            
         this.parameter = copy.getParameter();            
-        this.probenahme = copy.getProbenahme();            
+        this.probenahme = copy.getProbenahme();          
+        this.methode = copy.getMapElkaAnalysemethode();           
         this.grkl = copy.getGrkl();            
         this.wert = copy.getWert();            
         this.analyseVon = copy.getAnalyseVon();            
