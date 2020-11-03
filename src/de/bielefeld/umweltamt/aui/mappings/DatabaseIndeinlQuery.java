@@ -64,7 +64,14 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
 abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
+	
+    private static Entsorger[] entsorger = null;
 
+    private static Abaverfahren[] verfahren = null;
+    
+    private static Integer[] anhaenge = null;
+    
+    
     /* ********************************************************************** */
     /* Queries for package INDEINL                                            */
     /* ********************************************************************** */
@@ -148,25 +155,6 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
         return new DatabaseAccess().executeCriteriaToList(
                 criteria, new Anfallstelle());
 	}
-    
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package INDEINL: class Anh40Fachdaten                      */
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-
-    /**
-     * Get a list of all Anh40Fachdaten
-     * @return <code>List&lt;Anh40Fachdaten&gt;</code>
-     */
-    public static List<Anh40Fachdaten> getAnhang40Auswertung() {
-        return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anh40Fachdaten.class)
-            	.createAlias("anfallstelle", "anf")
-                .createAlias("anf.objekt", "objekt")
-                .add(Restrictions.eq("objekt.deleted", false))
-                .addOrder(Order.asc("objekt.inaktiv"))
-                .addOrder(Order.asc("objektid")),
-            new Anh40Fachdaten());
-    }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class Anh49Abscheiderdetails              */
@@ -180,10 +168,6 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     // TODO: Maybe we can use the Set within the Anh49Fachdaten directly?
     public static List<Anh49Abscheiderdetails> getAbscheiderDetails(
         Anh49Fachdaten fachdaten) {
-//        Set<Anh49Abscheiderdetails> set = fachdaten.getAnh49Abscheiderdetailses();
-//        List<Anh49Abscheiderdetails> list = new ArrayList<Anh49Abscheiderdetails>();
-//        list.addAll(set);
-//        return list;
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(Anh49Abscheiderdetails.class)
                 .add(Restrictions.eq("anh49Fachdaten", fachdaten))
@@ -274,21 +258,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
         if (abgelWdrVorlage == true && abgelWdrVorlage) {
             criteria.add(Restrictions.le("wiedervorlage", new Date()));
         }
-//        if (tuev != null) {
-//            Calendar start = Calendar.getInstance();
-//            start.set(tuev, 1, 1, 0, 0, 0); // start = 'tuev-01-01 00:00:00'
-//            Calendar end = Calendar.getInstance();
-//            end.set(tuev, 12, 31, 23, 59, 59); // end = 'tuev-12-31 23:59:59'
-//            criteria.add(Restrictions.between(
-//                "dekraTuevDatum", start.getTime(), end.getTime()));
-//        }
         if (sachbearbeiter != null) {
             criteria.add(
                 Restrictions.eq("obj.sachbearbeiter", sachbearbeiter));
         }
-
-//        criteria.add(Restrictions.ne("art.id",
-//                DatabaseConstants.BASIS_OBJEKTART_ID_FETTABSCHEIDER));
 
         criteria.addOrder(Order.asc("obj.inaktiv"));
 
@@ -367,41 +340,6 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
         }
         return new DatabaseAccess().executeCriteriaToList(
             detachedCriteria, new Anh50Fachdaten());
-    }
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package INDEINL: class Anh52Fachdaten                      */
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-
-    /**
-     * Liefert eine Liste mit allen Anhang52 Objekten.
-     * @return <code>List&lt;Anh52Fachdaten&gt;</code>
-     */
-    public static List<Anh52Fachdaten> getAnhang52() {
-        return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anh52Fachdaten.class)
-                .createAlias("anfallstelle", "anfallstelle")
-                .addOrder(Order.asc("anfallstelle.objekt.inaktiv"))
-                .addOrder(Order.asc("id")),
-            new Anh52Fachdaten());
-    }
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package INDEINL: class Anh55Fachdaten                      */
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-
-    /**
-     * Liefert eine Liste mit allen Anhang55 Objekten.
-     * @return <code>List&lt;Anh55Fachdaten&gt;</code>
-     */
-    public static List<Anh55Fachdaten> getAnhang55() {
-        return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anh55Fachdaten.class)
-            .createAlias("anfallstelle", "anf")
-                .createAlias("anf.objekt", "objekt")
-                .addOrder(Order.asc("objekt.inaktiv"))
-                .addOrder(Order.asc("id")),
-            new Anh55Fachdaten());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
@@ -524,7 +462,6 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     /* Queries for package INDEINL: class Entsorger                        */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
-    private static Entsorger[] entsorger = null;
     /**
      * Get all Entsorger
      * @return <code>Entsorger[]</code>
@@ -573,20 +510,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 	}
 
     
-    /**
-     * Get ZAbaVerfahren for Aba
-     * @return <code>ZAbaVerfahren[]</code>
-     */
-    public static List<ZAbaVerfahren> getZAbaVerfahren(Aba fachdaten) {
-        return new DatabaseAccess().executeCriteriaToList(
-                DetachedCriteria.forClass(ZAbaVerfahren.class)
-                    .add(Restrictions.eq("abwasserbehandlungsanlage", fachdaten)),
-                new ZAbaVerfahren());
-    }
-
     
-    
-    private static Abaverfahren[] verfahren = null;
     /**
      * Get all AbaVerfahren
      * @return <code>AbaVerfahren[]</code>
@@ -621,7 +545,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     /* Queries for package INDEINL: class IndeinlGenehmigung                  */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
-    private static Integer[] anhaenge = null;
+
     public static Integer[] getAnhangFromGenehmigung() {
         if (DatabaseIndeinlQuery.anhaenge == null) {
             DatabaseIndeinlQuery.anhaenge = new DatabaseAccess()

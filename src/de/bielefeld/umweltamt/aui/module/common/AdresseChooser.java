@@ -50,7 +50,7 @@ public class AdresseChooser extends JDialog {
 
 	private HauptFrame frame;
 	private Inhaber betreiberAdresse;
-	private Standort standortAdresse;
+	private Standort standort;
 	private Adresse adresse;
 	private String caller;
 
@@ -61,8 +61,10 @@ public class AdresseChooser extends JDialog {
 	private JTextField suchFeld;
 	private JTextField strasseFeld;
 	private JTextField hausnrFeld;
+	private JTextField standortFeld;
 	private JButton submitButton;
-	private JButton submitButtonStrassen;
+	private JButton submitButtonAdresse;
+	private JButton submitButtonStandort;
 	private JTable ergebnisTabelle;
 
 	private JButton okButton;
@@ -78,11 +80,11 @@ public class AdresseChooser extends JDialog {
 		List<Object> initialList = new ArrayList<Object>();
 		initialList.add(initial);
 
-		if (initial instanceof Inhaber && caller == "adresse") {
+		if (initial instanceof Adresse && caller == "adresse") {
             setTitle("Adresse auswählen");
-            this.betreiberAdresse = (Inhaber) initial;
+            this.adresse = (Adresse) initial;
             this.adresseModel = new BasisAdresseModel();
-            if (this.betreiberAdresse.getAdresse().getId() != null) {
+            if (this.adresse.getId() != null) {
                 this.adresseModel.setList(initialList);
             }
         } else if (initial instanceof Inhaber && caller == "betreiber") {
@@ -94,9 +96,9 @@ public class AdresseChooser extends JDialog {
             }
         } else if (initial instanceof Standort) {
 			setTitle("Standort auswählen");
-			this.standortAdresse = (Standort) initial;
+			this.standort = (Standort) initial;
 			this.standortModel = new BasisStandortModel();
-			if (this.standortAdresse.getId() != null) {
+			if (this.standort.getId() != null) {
 				this.standortModel.setList(initialList);
 			}
 		} else {
@@ -129,8 +131,8 @@ public class AdresseChooser extends JDialog {
 
 	
     public Standort getChosenStandort() {
-        if (this.standortAdresse.getId() != null) {
-            return this.standortAdresse;
+        if (this.standort.getId() != null) {
+            return this.standort;
         } else {
             return null;
         }
@@ -152,11 +154,11 @@ public class AdresseChooser extends JDialog {
 		submitToolBar.add(getSubmitButton());
 
 		FormLayout layout = new FormLayout("pref, 3dlu, 400dlu:g, 3dlu, pref, 3dlu, 30dlu:g, 3dlu, pref", // spalten
-				"pref, 3dlu, pref, 3dlu, 320dlu:g, 3dlu, 3dlu, pref"); // zeilen
+				"pref, 3dlu, pref, 3dlu, pref, 3dlu, 320dlu:g, 3dlu, 3dlu, pref"); // zeilen
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
 
-		if (!caller.equals("adresse")) {
+		if (caller.equals("betreiber")) {
 			builder.addLabel("Name:", cc.xy(1, 1));
 			builder.add(getSuchFeld(), cc.xyw(3, 1, 5));
 			builder.add(getSubmitButton(), cc.xy(9, 1));
@@ -165,9 +167,15 @@ public class AdresseChooser extends JDialog {
 		builder.add(getStrassenFeld(), cc.xy(3, 3));
 		builder.addLabel("Hausnr.:", cc.xy(5, 3));
 		builder.add(getHausnrFeld(), cc.xy(7, 3));
-		builder.add(getSubmitButtonStrassen(), cc.xy(9, 3));
-		builder.add(tabellenScroller, cc.xywh(1, 5, 9, 2));
-		builder.add(buttonBar, cc.xyw(3, 8, 3));
+		builder.add(getSubmitButtonAdresse(), cc.xy(9, 3));	
+		
+		if (caller.equals("standort")) {
+			builder.addLabel("Standort:", cc.xy(1, 5));
+			builder.add(getStandortFeld(), cc.xyw(3, 5, 5));
+			builder.add(getSubmitButtonStandort(), cc.xy(9, 5));
+		}
+		builder.add(tabellenScroller, cc.xywh(1, 7, 9, 2));
+		builder.add(buttonBar, cc.xyw(3, 10, 3));
 
 		JPanel panel = builder.getPanel();
 		panel.setBorder(Paddings.DIALOG);
@@ -180,9 +188,9 @@ public class AdresseChooser extends JDialog {
 			if (this.betreiberAdresse != null && caller == "adresse") {
 				this.adresse = this.adresseModel.getRow(row);
 			} else if (this.betreiberAdresse != null && caller == "betreiber") {
-				this.betreiberAdresse = (Inhaber) this.betreiberModel.getRow(row);
-			} else if (this.standortAdresse != null) {
-				this.standortAdresse = this.standortModel.getRow(row);
+				this.betreiberAdresse = this.betreiberModel.getRow(row);
+			} else if (this.standort != null) {
+				this.standort = this.standortModel.getRow(row);
 			}
 			dispose();
 		}
@@ -212,7 +220,7 @@ public class AdresseChooser extends JDialog {
 			SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
 				@Override
 				protected void doNonUILogic() throws RuntimeException {
-					AdresseChooser.this.standortModel.filterStandort(suche, null);
+					AdresseChooser.this.standortModel.filterStandortList(suche, null);
 				}
 
 				@Override
@@ -275,7 +283,7 @@ public class AdresseChooser extends JDialog {
 			SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
 				@Override
 				protected void doNonUILogic() throws RuntimeException {
-					AdresseChooser.this.standortModel.filterStandort(strasse, hausnr, null);
+					AdresseChooser.this.standortModel.filterStandortList(strasse, hausnr, null);
 				}
 
 				@Override
@@ -288,6 +296,29 @@ public class AdresseChooser extends JDialog {
 			getStrassenFeld().setText("");
 			getHausnrFeld().setText("");
 		}
+	}
+
+	private void doSearchStandort() {
+		final String standort = getStandortFeld().getText();
+
+
+			SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
+				@Override
+				protected void doNonUILogic() throws RuntimeException {
+					AdresseChooser.this.standortModel.filterAllList(standort);
+				}
+
+				@Override
+				protected void doUIUpdateLogic() throws RuntimeException {
+					AdresseChooser.this.standortModel.fireTableDataChanged();
+				}
+			};
+			worker.start();
+
+			getStrassenFeld().setText("");
+			getHausnrFeld().setText("");
+
+
 	}
 
 	/**
@@ -346,6 +377,20 @@ public class AdresseChooser extends JDialog {
 		}
 
 		return this.suchFeld;
+	}
+
+	private JTextField getStandortFeld() {
+		if (this.standortFeld == null) {
+			this.standortFeld = new JTextField();
+			this.standortFeld.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					doSearchName();
+				}
+			});
+		}
+
+		return this.standortFeld;
 	}
 
 	private JTextField getStrassenFeld() {
@@ -416,11 +461,11 @@ public class AdresseChooser extends JDialog {
 		return this.submitButton;
 	}
 
-	private JButton getSubmitButtonStrassen() {
-		if (this.submitButtonStrassen == null) {
-			this.submitButtonStrassen = new JButton("Standort suchen", AuikUtils.getIcon(16, "key_enter.png"));
-			this.submitButtonStrassen.setToolTipText("Suche starten");
-			this.submitButtonStrassen.addActionListener(new ActionListener() {
+	private JButton getSubmitButtonAdresse() {
+		if (this.submitButtonAdresse == null) {
+			this.submitButtonAdresse = new JButton("Adresse suchen", AuikUtils.getIcon(16, "key_enter.png"));
+			this.submitButtonAdresse.setToolTipText("Suche starten");
+			this.submitButtonAdresse.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					doSearchStrasse();
@@ -428,16 +473,33 @@ public class AdresseChooser extends JDialog {
 			});
 		}
 
-		return this.submitButtonStrassen;
+		return this.submitButtonAdresse;
+	}
+
+	private JButton getSubmitButtonStandort() {
+		if (this.submitButtonStandort == null) {
+			this.submitButtonStandort = new JButton("Standort suchen", AuikUtils.getIcon(16, "key_enter.png"));
+			this.submitButtonStandort.setToolTipText("Suche starten");
+			this.submitButtonStandort.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (!getStandortFeld().equals("")) {
+						doSearchStandort();
+					}					
+				}
+			});
+		}
+
+		return this.submitButtonStandort;
 	}
 
 	private JTable getErgebnisTabelle() {
 		if (this.ergebnisTabelle == null) {
-			if (this.betreiberAdresse != null && caller == "adresse") {
+			if (this.adresse != null && caller == "adresse") {
 				this.ergebnisTabelle = new JTable(this.adresseModel);
 			} else if (this.betreiberAdresse != null && caller == "betreiber") {
 				this.ergebnisTabelle = new JTable(this.betreiberModel);
-			} else if (this.standortAdresse != null) {
+			} else if (this.standort != null) {
 				this.ergebnisTabelle = new JTable(this.standortModel);
 			}
 

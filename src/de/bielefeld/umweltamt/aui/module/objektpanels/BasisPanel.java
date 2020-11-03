@@ -765,15 +765,13 @@ public class BasisPanel extends JPanel {
         return this.standortEditButton;
     }
 
-    private JButton getStandortNewButton() {
-        if (this.standortNewButton == null) {
-            this.standortNewButton = new JButton(AuikUtils.getIcon(16,
-                "filenew.png", ""));
-            this.standortNewButton
-                .setHorizontalAlignment(SwingConstants.CENTER);
-            this.standortNewButton.setToolTipText("Neuen Standort anlegen");
+	private JButton getStandortNewButton() {
+		if (this.standortNewButton == null) {
+			this.standortNewButton = new JButton(AuikUtils.getIcon(16, "filenew.png", ""));
+			this.standortNewButton.setHorizontalAlignment(SwingConstants.CENTER);
+			this.standortNewButton.setToolTipText("Neuen Standort anlegen");
 
-            this.standortNewButton.addActionListener(new ActionListener() {
+			this.standortNewButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
@@ -790,7 +788,7 @@ public class BasisPanel extends JPanel {
 
 				}
 			});
-        }
+		}
 
         return this.standortNewButton;
     }

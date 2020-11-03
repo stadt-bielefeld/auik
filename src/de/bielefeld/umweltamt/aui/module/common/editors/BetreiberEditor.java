@@ -1133,7 +1133,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 	@Override
 	protected void doApply() {
 
-		AdresseChooser chooser = new AdresseChooser(inhaber, BetreiberEditor.this.frame, "adresse");
+		AdresseChooser chooser = new AdresseChooser(inhaber.getAdresse(), BetreiberEditor.this.frame, "adresse");
 		chooser.setVisible(true);
 		Adresse adr = chooser.getChosenAdresse();
 		if (adr != null) {

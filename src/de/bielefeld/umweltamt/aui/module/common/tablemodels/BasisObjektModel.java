@@ -167,6 +167,14 @@ public class BasisObjektModel extends ListTableModel {
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */
+    public void searchByStandort(Objekt obj) {
+        setList(DatabaseQuery.getObjekteByStandort(obj));
+    }
+
+    /**
+     * Durchsucht den Tabelleninhalt nach der Standort-Id.
+     * @param standortId Die Standort-Id
+     */
     public void searchByStandort(Adresse adr) {
         setList(DatabaseQuery.getObjekteByStandort(
         		adr, null, null, null));

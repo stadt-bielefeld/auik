@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>auik_prod</groupId>
   <artifactId>auik_prod</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>${git.commit.id.describe-short}</version>
   <properties>
     <jersey.version>2.5</jersey.version>
     <jasper.version>6.10.0</jasper.version>
@@ -169,6 +169,11 @@
       <version>2.0.1</version>
     </dependency>
     <dependency>
+      <groupId>org.glassfish.hk2</groupId>
+      <artifactId>osgi-resource-locator</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+    <dependency>
       <groupId>antlr</groupId>
       <artifactId>antlr</artifactId>
       <version>2.7.7</version>
@@ -191,7 +196,7 @@
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
-      <version>0.9.5.4</version>
+      <version>0.9.5.2</version>
     </dependency>
     <dependency>
       <groupId>cglib</groupId>
@@ -201,7 +206,7 @@
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
-      <version>1.9.4</version>
+      <version>1.9.2</version>
     </dependency>
     <dependency>
       <groupId>commons-cli</groupId>
@@ -287,7 +292,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
-      <version>2.7.4</version>
+      <version>2.7.0</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -327,7 +332,7 @@
     <dependency>
       <groupId>org.glassfish.jersey.ext</groupId>
       <artifactId>jersey-entity-filtering</artifactId>
-      <version>2.22.2</version>
+      <version>2.22.1</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.bundles.repackaged</groupId>
@@ -336,23 +341,28 @@
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-1.2-api</artifactId>
+      <version>2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>2.13.3</version>
+      <version>2.5</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.13.3</version>
+      <version>2.5</version>
     </dependency>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-analyzers-common</artifactId>
-      <version>5.5.5</version>
+      <version>4.10.4</version>
     </dependency>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
-      <version>5.5.5</version>
+      <version>4.10.4</version>
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>
@@ -420,17 +430,6 @@
       <artifactId>jgoodies-forms</artifactId>
       <version>1.9.0</version>
 	</dependency>
-  <!-- sqlite driver and dialect-->
-  <dependency>
-    <groupId>org.xerial</groupId>
-    <artifactId>sqlite-jdbc</artifactId>
-    <version>3.32.3</version>
-  </dependency>
-  <dependency>
-    <groupId>com.zsoltfabok</groupId>
-    <artifactId>sqlite-dialect</artifactId>
-    <version>1.0</version>
-  </dependency>
  </dependencies>
 
   <!-- jboss public repository-->
@@ -448,7 +447,6 @@
   </repositories>
 
   <build>
-    <finalName>${project.artifactId}-${git.commit.id.describe-short}</finalName>
     <sourceDirectory>src</sourceDirectory>
     <resources>
       <resource>
@@ -479,8 +477,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
         <configuration>
-          <source>11</source>
-          <target>11</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
@@ -580,57 +578,92 @@
           </execution>
         </executions>
       </plugin>
-      <!--maven git commit id plugin-->
       <plugin>
         <groupId>pl.project13.maven</groupId>
         <artifactId>git-commit-id-plugin</artifactId>
-        <version>4.0.0</version>
+        <version>2.2.4</version>
         <executions>
-          <execution>
-            <id>get-the-git-infos</id>
-            <goals>
-              <goal>revision</goal>
-            </goals>
-            <phase>validate</phase>
-          </execution>
+            <execution>
+                <id>get-the-git-infos</id>
+                <goals>
+                    <goal>revision</goal>
+                </goals>
+            </execution>
         </executions>
         <configuration>
-          <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-        </configuration>
-      </plugin>
-      <!--Put git hash in the jar META-INF/MANIFEST.MF -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <SCM-Revision>${git.commit.id.describe-short}</SCM-Revision>
-            </manifestEntries>
-          </archive>
+            <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+            <prefix>git</prefix>
+            <verbose>false</verbose>
+            <generateGitPropertiesFile>true</generateGitPropertiesFile>
+            <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+            <format>json</format>
+            <gitDescribe>
+                <skip>false</skip>
+                <always>false</always>
+                <dirty>-dirty</dirty>
+            </gitDescribe>
         </configuration>
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.8</version>
-        <executions>
-          <execution>
-            <phase>install</phase>
-            <configuration>
-              <target>
-                <echo>Copy ${project.artifactId}-${git.commit.id.describe-short}-jar-with-dependencies.jar to  X:\Applikationen\Anlagenkataster\AUIK\${project.artifactId}-${git.commit.id.describe-short}.jar</echo>
-                <copy file="target/${project.artifactId}-${git.commit.id.describe-short}-jar-with-dependencies.jar" tofile="X:\Applikationen\Anlagenkataster\AUIK\${project.artifactId}-${git.commit.id.describe-short}.jar" />
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+          <version>1.8</version>
+          <executions>
+        <!--run hibernate tools via antrun plugin-->
+            <!-- TODO: run with mvn antrun:run@db2mapping -->
+        <!-- <execution>
+        <id>db2mapping</id>
+          <phase>test-compile</phase>
+              <configuration>
+                <property name="src"        location="src" />
+          <property name="resources"  value="src/de/bielefeld/umweltamt/aui/resources" />
+                <property name="config"     value="src/de/bielefeld/umweltamt/aui/resources/config" />
+          <property name="data" location="data" />
+          <target>
+            <property name="maven_compile_classpath" refid="maven.compile.classpath"/>
+                  <property name="maven_test_classpath" refid="maven.test.classpath"/>
+          <path id="hibernatetool.path">
+            <pathelement path="${maven_compile_classpath}"/>
+            <pathelement path="${maven_test_classpath}"/>
+                  </path>
+          <taskdef name="hibernatetool"
+                    classname="org.hibernate.tool.ant.HibernateToolTask"
+                      classpathref="hibernatetool.path" />
 
+                  <hibernatetool destdir="src">
+                    <jdbcconfiguration
+                      propertyfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.properties"
+                      revengfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.reveng.xml">
+                    </jdbcconfiguration>
+                    <hbm2hbmxml />
+                    <hbm2cfgxml destdir="src/de/bielefeld/umweltamt/aui/resources/config/generated" />
+            <hbm2java />
+                  </hibernatetool>
+            </target>
+              </configuration>
+          <goals>
+            <goal>run</goal>
+          </goals>
+        </execution>
+        -->
+        <execution>
+              <id>copy-jars</id>
+              <phase>install</phase>
+              <configuration>
+                <target>
+                  <copy todir="X:\Applikationen\Anlagenkataster\AUIK">
+                    <fileset dir="target">
+                      <include name="*.jar"/>
+                    </fileset>
+                  </copy>
+                </target>
+              </configuration>
+              <goals>
+                <goal>run</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
     </plugins>
   </build>
 </project>

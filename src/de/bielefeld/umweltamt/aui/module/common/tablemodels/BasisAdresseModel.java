@@ -164,21 +164,7 @@ public class BasisAdresseModel extends ListTableModel {
      * @param suche Der Such-String
      * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
      */
-    public void filterList(String suche, String property) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.getAdresse(property, suche));
-        lastSuchWort = suche;
-        lastProperty = property;
-        log.debug("End filterList");
-    }
-    
-    public void filterAllList(String suche, String property) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.findAdressen(suche, property, null, null));
-        lastSuchWort = suche;
-        lastProperty = property;
-        log.debug("End filterList");
-    }
+
     
     public void filterStandort(String strasse, Integer hausnr) {
         log.debug("Start filterList");
