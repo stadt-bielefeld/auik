@@ -147,7 +147,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */
 	
-	public static List<Adresse> findBetreiber(String name, String strasse, Integer hausnr, String ort) {
+	public static List<Inhaber> findBetreiber(String name, String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bName = (name != null && name.length() > 0);
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
@@ -155,28 +155,31 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		boolean bOrt = (ort != null && ort.length() > 0);
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
-	
-		String query = "SELECT DISTINCT adresse " + "FROM objekt as obj JOIN obj.adresseByBetreiberid adresse";
+		
+		String query = "SELECT DISTINCT i "
+				+ "FROM Adresse a, Inhaber i, Objekt o "
+				+ "WHERE a.id = i.adresse AND i.id = o.betreiberid";
 		if (bName || bStrasse || bHausnr || bOrt) {
-			query += " WHERE ";
 			if (bName) {
-				query += "LOWER(adresse.betrname) like '" + name.toLowerCase() + "%' AND ";
+				query += " AND LOWER(i.name) like '" + name.toLowerCase() + "%'";
 			}
 			if (bStrasse) {
-				query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' AND ";
+				query += " AND LOWER(a.strasse) like '" + str + "%' ";
 			}
-			if (bHausnr) {
-				query += "adresse.hausnr = " + hausnr + " AND ";
+			if (hausnr != null && hausnr != -1) {
+				if (bStrasse) {
+					query += " AND ";
+				}
+				query += " a.hausnr = " + hausnr;
 			}
 			if (bOrt) {
-				query += "LOWER(adresse.ort) like '" + ort.toLowerCase() + "%' AND ";
+				query += " AND LOWER(a.ort) like '" + ort.toLowerCase() + "%' ";
 			}
-	
-			query += "adresse.deleted = false ";
-	
-			query += "ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
+			query += " AND a.deleted = false";
 		}
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		query += " ORDER BY i.name ASC";
+		List list = HibernateSessionFactory.currentSession().createQuery(query).list();
+		return list;
 	}
 
 	/**
