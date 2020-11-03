@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.10.0  -->
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.2.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="awsv_standortliste" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="483" leftMargin="70" rightMargin="42" topMargin="48" bottomMargin="42" uuid="bb16e809-8cfa-44f5-8373-13d589070031">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -27,7 +27,7 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="StandortId" class="java.lang.Integer"/>
-	<parameter name="Standort" class="java.lang.String"/>
+	<parameter name="Standort" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/home/andre/kde_trunk/src/auik/src/de/bielefeld/umweltamt/aui/resources/reports/"]]></defaultValueExpression>
 	</parameter>

@@ -69,8 +69,9 @@ public class BasisStandortModel extends ListTableModel {
 
     public BasisStandortModel() {
         super(new String[]{
-                "Bezeichnung",
-                "Betreiber",
+        		"Id",
+                "Name",
+                "Vorname",
                 "Straße",
                 "Hausnummer",
                 "Wassereinzugsgebiet",
@@ -89,43 +90,27 @@ public class BasisStandortModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = std.getBezeichnung();
-            break;
+        	tmp = std.getId();
+        break;
         case 1:
-        	if (std.getInhaber() != null) {
-        		tmp = std.getInhaber().getName();
-        	} else {
-        		tmp = null;
-        	}
+            tmp = std.getInhaber().getName();
             break;
-        case 2:
-        	if (std.getInhaber() != null) {
-        		tmp = std.getInhaber().getAdresse().getStrasse();
-        	} else {
-        		tmp = null;
-        	}
+        case 2: 
+        	tmp = std.getInhaber().getVorname();
             break;
         case 3:
-        	if (std.getInhaber() != null) {
-        		tmp = std.getInhaber().getAdresse().getHausnr();
-        	} else {
-        		tmp = null;
-        	}            
+            tmp = std.getInhaber().getAdresse().getStrasse();
             break;
         case 4:
-        	if (std.getInhaber() != null) {
-        		tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
-        	} else {
-        		tmp = null;
-        	}            
+            tmp = std.getInhaber().getAdresse().getHausnr();
             break;
         case 5:
-        	if (std.getInhaber() != null) {
-        		tmp = std.getInhaber().getAdresse().getEntgebid();
-        	} else {
-        		tmp = null;
-        	}            
+            tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
             break;
+        case 6:
+            tmp = std.getInhaber().getAdresse().getEntgebid();
+            break;
+       
 
         default:
             tmp = "ERROR";

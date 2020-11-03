@@ -72,7 +72,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
     private Double stationierungNs3;
     private Double einzugsgebiet;
     private Double stationierungSt3;
-
     private Integer stationierung3Opt;
     private Integer schutzzoneOpt;
     private Boolean deleted;
@@ -160,6 +159,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
       */
     public Einleitungsstelle(
         Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, Date stillgelegtAm, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String bemerkungGewDaten, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr, String abwAgEinl, Integer einleitungsart, String gewnameStat, String gewkennzStat, String gewNameStadt, String gewKennzStadt, String hwrMassnahme, Double entfEinlStatGew, Double mwq, Double hq1) {
+
         this.id = id;
         this.objektid = objektid;
         this.aktualDat = aktualDat;
@@ -172,13 +172,10 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.abgaberelEinl = abgaberelEinl;
         this.abwAgEinl = abwAgEinl;
         this.einleitungsart = einleitungsart;
-        
         this.gewaessernameAlias3 = gewaessernameAlias3;
-        
         this.stationierungNs3 = stationierungNs3;
         this.einzugsgebiet = einzugsgebiet;
         this.stationierungSt3 = stationierungSt3;
-        
         this.stationierung3Opt = stationierung3Opt;
         this.schutzzoneOpt = schutzzoneOpt;
         this.deleted = deleted;
@@ -195,7 +192,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.typKommKaTog = typKommKaTog;
         this.typAusseroertlicheStrasseneinleitungTog = typAusseroertlicheStrasseneinleitungTog;
         this.typSonstigeTog = typSonstigeTog;
-        
         this.gewaesser3Id = gewaesser3Id;
         this.ofwkNrwId = ofwkNrwId;
         this.ofwkNrwAuflageId = ofwkNrwAuflageId;
@@ -314,7 +310,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setStillgelegtAm(Date stillgelegtAm) {
         this.stillgelegtAm = stillgelegtAm;
     }
-
     
     public Integer getAbgaberelEinl() {
         return this.abgaberelEinl;
@@ -359,7 +354,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setGewaessernameAlias3(String gewaessernameAlias3) {
         this.gewaessernameAlias3 = gewaessernameAlias3;
     }
-    
+
     public Double getStationierungNs3() {
         return this.stationierungNs3;
     }
@@ -383,7 +378,6 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setStationierungSt3(Double stationierungSt3) {
         this.stationierungSt3 = stationierungSt3;
     }
-
 
     public Integer getStationierung3Opt() {
         return this.stationierung3Opt;
@@ -1008,5 +1002,55 @@ public class Einleitungsstelle  implements java.io.Serializable {
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Einleitungsstelle> list = objekt.getEinleitungsstelles();
         return list.iterator().next();
+    }
+
+    public static Integer getAbgaberelIdFromDescription(String description) {
+        if (description == null) {
+            return null;
+        }
+        switch (description) {
+            case "-": return 0;
+            case "abgabepflichtig": return 1;
+            case "nicht abgabepflichtig": return 2;
+            default: return null;
+        }
+    }
+
+    public static String getAbgaberelDescriptionFromId(Integer id) {
+        if (id == null) {
+            return "-";
+        }
+        switch (id) {
+            case 0: return "-";
+            case 1: return "abgabepflichtig";
+            case 2: return "nicht abgabepflichtig";
+            default: return "-";
+        }
+    }
+
+    public static Integer getKanalartIdFromDescription(String description) {
+        if (description == null) {
+            return null;
+        }
+        switch (description) {
+            case "-": return 0;
+            case "Schmutzwasser": return 1;
+            case "Mischwasser": return 2;
+            case "Niederschlagswasser": return 3;
+            default: return null;
+        }
+    }
+
+    public static String getKanalartDescriptionFromId(Integer id) {
+        if (id == null) {
+            return "-";
+        }
+        switch (id) {
+            case 0: return "-";
+            case 1: return "Schmutzwasser";
+            case 2: return "Mischwasser";
+            case 3: return "Niederschlagswasser";
+            default: return "-";
+        }
     }
 }

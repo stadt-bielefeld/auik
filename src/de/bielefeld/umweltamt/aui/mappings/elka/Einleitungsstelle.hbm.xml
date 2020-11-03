@@ -29,7 +29,7 @@
         <property name="stillgelegtAm" type="java.util.Date">
             <column name="stillgelegt_am" length="13" />
         </property>
-        <property name="stationierungNs3" type="double">
+        <property name="stationierungNs3" type="java.lang.Double">
             <column name="stationierung_ns_3" precision="17" scale="17" />
         </property>
         <property name="einzugsgebiet" type="double">

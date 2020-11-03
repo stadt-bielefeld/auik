@@ -108,6 +108,7 @@ public class Anfallstelle  implements java.io.Serializable {
     /** Full constructor */
     public Anfallstelle(
         Integer id, Objekt objekt, Integer seqId, Date aktualDat, Date erstellDat, String anhangId, String anwendungsbereich, String bezeichnung, Date stillgelegtAm, Integer abwaBeschaffOpt, Integer betriebsweiseOpt, Boolean enabled, Boolean deleted, Float maxVolTag, Float maxVolStunde, Integer volJahr, Float abflussmenge, Integer befFlaeche, Integer nwHerBereichOpt, String externalNr, String anlagenart, String bemerkungen, Set<AfsStoffe> afsStoffes, Set<Referenz> referenzsForZAfsNr, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Set<Referenz> referenzsForQAfsNr, Set<BwkFachdaten> bwkFachdatens, Set<Anh40Fachdaten> anh40Fachdatens, Set<Anh49Fachdaten> anh49Fachdatens, Set<Anh50Fachdaten> anh50Fachdatens, Set<Anh52Fachdaten> anh52Fachdatens, Set<Anh55Fachdaten> anh55Fachdatens, Set<Anh56Fachdaten> anh56Fachdatens) {
+
         this.id = id;
         this.objekt = objekt;
         this.seqId = seqId;
@@ -294,6 +295,7 @@ public class Anfallstelle  implements java.io.Serializable {
 
     public void setNwHerBereichOpt(Integer nwHerBereichOpt) {
         this.nwHerBereichOpt = nwHerBereichOpt;
+
     }
 
     public String getExternalNr() {
@@ -446,7 +448,7 @@ public class Anfallstelle  implements java.io.Serializable {
         buffer.append("volJahr").append("='").append(getVolJahr()).append("' ");		
         buffer.append("abflussmenge").append("='").append(getAbflussmenge()).append("' ");	
         buffer.append("befFlaeche").append("='").append(getBefFlaeche()).append("' ");	
-        buffer.append("befFlaeche").append("='").append(getNwHerBereichOpt()).append("' ");	
+        buffer.append("nwHerBereichOpt").append("='").append(getNwHerBereichOpt()).append("' ");	
         buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
         buffer.append("afsStoffes").append("='").append(getAfsStoffes()).append("' ");			
         buffer.append("referenzsForZAfsNr").append("='").append(getReferenzsForZAfsNr()).append("' ");			
@@ -529,7 +531,7 @@ public class Anfallstelle  implements java.io.Serializable {
         this.seqId = copy.getSeqId();            
         this.aktualDat = copy.getAktualDat();            
         this.erstellDat = copy.getErstellDat();            
-        this.anhangId = copy.getAnhangId();             
+        this.anhangId = copy.getAnhangId();              
         this.anwendungsbereich = copy.getAnwendungsbereich();            
         this.bezeichnung = copy.getBezeichnung();            
         this.stillgelegtAm = copy.getStillgelegtAm();            
@@ -542,7 +544,7 @@ public class Anfallstelle  implements java.io.Serializable {
         this.volJahr = copy.getVolJahr();             
         this.abflussmenge = copy.getAbflussmenge();   
         this.befFlaeche = copy.getBefFlaeche();   
-        this.befFlaeche = copy.getNwHerBereichOpt();     
+        this.nwHerBereichOpt = copy.getNwHerBereichOpt();     
         this.externalNr = copy.getExternalNr();            
         this.afsStoffes = copy.getAfsStoffes();            
         this.referenzsForZAfsNr = copy.getReferenzsForZAfsNr();            

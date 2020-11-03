@@ -501,7 +501,6 @@ public class AdresseChooser extends JDialog {
 				this.ergebnisTabelle = new JTable(this.betreiberModel);
 			} else if (this.standort != null) {
 				this.ergebnisTabelle = new JTable(this.standortModel);
-				// ergebnisTabelle = new JTable(3, 3);
 			}
 
 			this.ergebnisTabelle.addFocusListener(TableFocusListener.getInstance());
@@ -517,7 +516,12 @@ public class AdresseChooser extends JDialog {
 				}
 			});
 
-			this.ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(130);
+			this.ergebnisTabelle.getColumnModel().getColumn(0).setPreferredWidth(20);
+			this.ergebnisTabelle.getColumnModel().getColumn(1).setPreferredWidth(150);
+			this.ergebnisTabelle.getColumnModel().getColumn(2).setPreferredWidth(80);
+			this.ergebnisTabelle.getColumnModel().getColumn(3).setPreferredWidth(80);
+			this.ergebnisTabelle.getColumnModel().getColumn(4).setPreferredWidth(80);
+			this.ergebnisTabelle.getColumnModel().getColumn(5).setPreferredWidth(80);
 		}
 
 		return this.ergebnisTabelle;

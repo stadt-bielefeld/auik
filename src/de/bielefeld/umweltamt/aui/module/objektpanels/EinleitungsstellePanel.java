@@ -67,6 +67,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
@@ -117,6 +118,7 @@ public class EinleitungsstellePanel extends JPanel {
 
 	private JComboBox abgaberelEinlBox = null;
 	private JTextField abwAgEinlFeld = null;
+
 
 	private JButton saveElkaEinleitungsstelleButton = null;
 
