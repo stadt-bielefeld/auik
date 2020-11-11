@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -463,24 +462,22 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		str = str.replace("'", "''");
 	
 		String query = "SELECT DISTINCT a "
-				+ "FROM Adresse a, Inhaber i, Standort s "
-				+ "WHERE a.id = i.adresse AND i.id = s.inhaber";
+				+ "FROM Adresse a ";
 		if (bStrasse || bHausnr || bOrt) {
-			query += " AND ";
+			query += " WHERE ";
 			if (bStrasse) {
 				query += "LOWER(a.strasse) like '" + str + "%' ";
 			}
-			if (hausnr != null && hausnr != -1) {
+			if (bHausnr) {
 				if (bStrasse) {
-					query += " AND ";
+					query += " AND  a.hausnr = " + hausnr;
 				}
-				query += " a.hausnr = " + hausnr;
 			}
 			if (bOrt) {
-				if (bStrasse || bHausnr) {
-					query += " AND ";
-				}
-				query += " LOWER(a.ort) like '" + ort.toLowerCase() + "%' ";
+				query += " AND LOWER(a.ort) like '" + ort.toLowerCase() + "%' ";
+			}
+			if (!bOrt) {
+				query += " AND LOWER(a.ort) like 'bielefeld' ";
 			}
 			query += " AND a.deleted = false";
 		}

@@ -78,6 +78,11 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
     public String getName() {
         return "Aktenzeichen suchen";
     }
+    
+    @Override
+    public String getCategory() {
+        return "Betriebe";
+    }
 
     @Override
     public String getIdentifier() {
