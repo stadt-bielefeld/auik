@@ -77,7 +77,7 @@
         <property name="iglId" type="java.lang.Integer">
             <column name="igl_id" />
         </property>
-        <set name="inhabers" table="inhaber" inverse="true" lazy="false" fetch="select">
+        <set name="inhabers" table="inhaber" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="adresseid" />
             </key>

@@ -70,10 +70,11 @@ public class BasisStandortModel extends ListTableModel {
     public BasisStandortModel() {
         super(new String[]{
         		"Id",
+        		"Bezeichnung",
                 "Name",
                 "Vorname",
                 "Straße",
-                "Hausnummer",
+                "Hausnr",
                 "Wassereinzugsgebiet",
                 "Entwässerungsgebiet"
         },
@@ -93,22 +94,49 @@ public class BasisStandortModel extends ListTableModel {
         	tmp = std.getId();
         break;
         case 1:
-            tmp = std.getInhaber().getName();
+            tmp = std.getBezeichnung();
             break;
-        case 2: 
-        	tmp = std.getInhaber().getVorname();
+        case 2:
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getName();
+        	} else {
+        		tmp = "";
+        	}            
             break;
-        case 3:
-            tmp = std.getInhaber().getAdresse().getStrasse();
+        case 3: 
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getVorname();
+        	} else {
+        		tmp = "";
+        	}  
             break;
         case 4:
-            tmp = std.getInhaber().getAdresse().getHausnr();
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getAdresse().getStrasse();
+        	} else {
+        		tmp = "";
+        	}  
             break;
         case 5:
-            tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getAdresse().getHausnr();
+        	} else {
+        		tmp = "";
+        	}  
             break;
         case 6:
-            tmp = std.getInhaber().getAdresse().getEntgebid();
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
+        	} else {
+        		tmp = "";
+        	}  
+            break;
+        case 7:
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getAdresse().getEntgebid();
+        	} else {
+        		tmp = "";
+        	}  
             break;
        
 
