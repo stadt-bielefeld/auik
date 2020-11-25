@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.AbstractButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -104,6 +105,7 @@ public class GewaesserdatenPanel extends JPanel {
 	private DoubleField entfEinlStatGewFeld = null; // Entfernung der Einleitung zum stat Gew
 	private DoubleField mwqFeld = null; 
 	private DoubleField hq1Feld = null; 
+	private JTextField untergrundartFeld = null;
 	
 	
 	
@@ -144,7 +146,7 @@ public class GewaesserdatenPanel extends JPanel {
 	private JLabel entfLb = new JLabel ("Entfernung der Einleitung zum stat. Gew.");
 	private JLabel mwqLb = new JLabel ("MWQ [l/s]");
 	private JLabel hq1Lb = new JLabel ("<html>HQ<sub>1p,nat</sub>[l/s]</html>");
-	
+	private JLabel untergrundartLb = new JLabel ("Bodenart");
 	
 	//nicht stat Gew
 	private JLabel gewaessernameNs3Lb = new JLabel("Gewässername des n stat. Gewässers");
@@ -158,15 +160,15 @@ public class GewaesserdatenPanel extends JPanel {
 	private JLabel verAnlageOptLb = new JLabel("Anlagentyp");
 	private JLabel sonstigesVersLb = new JLabel("Sonstiger Typ");
 	private JLabel bauartzulIdLb = new JLabel("Bauartzulassungs-Nr.");
-	private JLabel landesfoerderungTogLb = new JLabel("Untergrundart");
+	private JLabel landesfoerderungTogLb = new JLabel("Landesförderung");
 	private JLabel notueberlaufTogLb = new JLabel("Notüberlauf");
 	private JLabel notueberlaufZielLb = new JLabel("Ziel des Notüberlaufs");
-	private JLabel durchlaessigkeitLb = new JLabel("Durchlässigkeitsbeiwert");
+	private JLabel durchlaessigkeitLb = new JLabel("Durchlässigkeitsbeiwert (kf)");
 	private JLabel flurabstandLb = new JLabel("Flurabstand des Grundwassers [m]");
 	private JLabel gelaendeVerAnlageLb = new JLabel("Geländehöhe [m ü. NHN]");
 	private JLabel abstGrGrenzeLb = new JLabel("Abstand zur Grundstücksgrenze [m]");
 	private JLabel abstUnterkGebaeudeLb = new JLabel("Abstand zum nächsten unterkellerten Gebäude [m]");
-	private JLabel abstVerAnlageLb = new JLabel("Abstand zur nächstenVersickerungsanlage [m]");
+	private JLabel abstVerAnlageLb = new JLabel("Abstand zur nächsten Versickerungsanlage [m]");
 
 	
 	
@@ -268,8 +270,12 @@ public class GewaesserdatenPanel extends JPanel {
 		builder.nextLine();
 		builder.append(durchlaessigkeitLb);
 		builder.append(getDurchlaessigkeitFeld());
-
+		
 		builder.nextLine();
+		builder.append(untergrundartLb);
+		builder.append(getUntergrundartFeld());
+		
+				builder.nextLine();
 		builder.append(flurabstandLb);
 		builder.append(getFlurabstandFeld());
 
@@ -465,6 +471,10 @@ public class GewaesserdatenPanel extends JPanel {
 					getDurchlaessigkeitFeld().setValue(this.versickerungsanlage.getDurchlaessigkeit());
 				}
 
+				if (this.versickerungsanlage.getUntergrundart() != null) {
+					getUntergrundartFeld().setText(this.versickerungsanlage.getUntergrundart());
+				}
+
 				if (this.versickerungsanlage.getFlurabstand() != null) {
 					getFlurabstandFeld().setValue(this.versickerungsanlage.getFlurabstand());
 				}
@@ -515,6 +525,7 @@ public class GewaesserdatenPanel extends JPanel {
 		isNotueberlaufTogBox().setSelected(false);
 		getNotueberlaufZielFeld().setText(null);
 		getDurchlaessigkeitFeld().setValue(null);
+		getUntergrundartFeld().setText(null);
 		getFlurabstandFeld().setValue(null);
 		getGelaendeVerAnlageFeld().setValue(null);
 		getAbstGrGrenzeFeld().setValue(null);
@@ -547,6 +558,7 @@ public class GewaesserdatenPanel extends JPanel {
 		isNotueberlaufTogBox().setEnabled(enabled);
 		getNotueberlaufZielFeld().setEnabled(enabled);
 		getDurchlaessigkeitFeld().setEnabled(enabled);
+		getUntergrundartFeld().setEnabled(enabled);
 		getFlurabstandFeld().setEnabled(enabled);
 		getGelaendeVerAnlageFeld().setEnabled(enabled);
 		getAbstGrGrenzeFeld().setEnabled(enabled);
@@ -556,6 +568,8 @@ public class GewaesserdatenPanel extends JPanel {
 		getMwqFeld().setEnabled(enabled);
 		getHq1Feld().setEnabled(enabled);
 	}
+
+	
 
 	private boolean saveGewDaten() {
 		boolean success = false;
@@ -734,6 +748,13 @@ public class GewaesserdatenPanel extends JPanel {
 
 			Double durchlaessigkeit = (Double) this.durchlaessigkeitFeld.getDoubleValue();
 			this.versickerungsanlage.setDurchlaessigkeit(durchlaessigkeit);
+			
+			String untergrundart = this.untergrundartFeld.getText();
+			if ("".equals(untergrundart)) {
+				this.versickerungsanlage.setUntergrundart(null);
+			} else {
+				this.versickerungsanlage.setUntergrundart(untergrundart);
+			}
 
 			Double flurabstand = (Double) this.flurabstandFeld.getDoubleValue();
 			this.versickerungsanlage.setFlurabstand(flurabstand);
@@ -887,6 +908,8 @@ public class GewaesserdatenPanel extends JPanel {
 			getNotueberlaufZielFeld().setVisible(false);
 			durchlaessigkeitLb.setVisible(false);
 			getDurchlaessigkeitFeld().setVisible(false);
+			getUntergrundartFeld().setVisible(false);
+			untergrundartLb.setVisible(false);
 			flurabstandLb.setVisible(false);
 			getFlurabstandFeld().setVisible(false);
 			gelaendeVerAnlageLb.setVisible(false);
@@ -946,6 +969,8 @@ public class GewaesserdatenPanel extends JPanel {
 			notueberlaufZielLb.setVisible(false);
 			getNotueberlaufZielFeld().setVisible(false);
 			durchlaessigkeitLb.setVisible(false);
+			getUntergrundartFeld().setVisible(false);
+			untergrundartLb.setVisible(false);
 			getDurchlaessigkeitFeld().setVisible(false);
 			flurabstandLb.setVisible(false);
 			getFlurabstandFeld().setVisible(false);
@@ -1006,6 +1031,8 @@ public class GewaesserdatenPanel extends JPanel {
 			getNotueberlaufZielFeld().setVisible(true);
 			durchlaessigkeitLb.setVisible(true);
 			getDurchlaessigkeitFeld().setVisible(true);
+			getUntergrundartFeld().setVisible(true);
+			untergrundartLb.setVisible(true);
 			flurabstandLb.setVisible(true);
 			getFlurabstandFeld().setVisible(true);
 			gelaendeVerAnlageLb.setVisible(true);
@@ -1057,6 +1084,8 @@ public class GewaesserdatenPanel extends JPanel {
 			notueberlaufZielLb.setVisible(false);
 			getNotueberlaufZielFeld().setVisible(false);
 			durchlaessigkeitLb.setVisible(false);
+			getUntergrundartFeld().setVisible(false);
+			untergrundartLb.setVisible(false);
 			getDurchlaessigkeitFeld().setVisible(false);
 			flurabstandLb.setVisible(false);
 			getFlurabstandFeld().setVisible(false);
@@ -1226,6 +1255,13 @@ public class GewaesserdatenPanel extends JPanel {
 			this.durchlaessigkeitFeld = new DoubleField(10);
 		}
 		return this.durchlaessigkeitFeld;
+	}
+	
+	private JTextField getUntergrundartFeld() {
+		if (this.untergrundartFeld == null) {
+			this.untergrundartFeld = new JTextField(20);
+		}
+		return this.untergrundartFeld;
 	}
 
 	private DoubleField getFlurabstandFeld() {

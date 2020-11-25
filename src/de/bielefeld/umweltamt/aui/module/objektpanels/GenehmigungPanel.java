@@ -80,6 +80,7 @@ public class GenehmigungPanel extends JPanel {
 
     private JTextField aktenzeichenFeld = null;
     private JTextArea genBemerkungArea = null;
+    private JTextArea nebenbestArea =null;
     private TextFieldDateChooser antragsDatum = null;
     private TextFieldDateChooser genehmigungsDatum = null;
     private TextFieldDateChooser aenderungsDatum = null;
@@ -136,7 +137,18 @@ public class GenehmigungPanel extends JPanel {
         builder.nextLine();
         builder.append("Genehmigung befristet:", getBefCheckBox());
         builder.append("bis:", getBefristetDatum());
+        
         builder.nextLine();
+        builder.appendSeparator("Nebenbestimmungen");
+        builder.appendRow("3dlu");
+        builder.nextLine(2);
+        JScrollPane nebenbestScroller = new JScrollPane(getNebenbestArea(),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        builder.appendRow("fill:30dlu");
+        builder.append(nebenbestScroller, 7);
+        
+        builder.nextLine();      
         builder.appendSeparator("Bemerkungen");
         builder.appendRow("3dlu");
         builder.nextLine(2);
@@ -145,18 +157,16 @@ public class GenehmigungPanel extends JPanel {
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:30dlu");
         builder.append(bemerkungsScroller, 7);
+        
         builder.nextLine();
-
         builder.appendSeparator("Verknüpfte Objekte");
         builder.appendRow("3dlu");
         builder.nextLine(2);
-        JScrollPane objektverknuepfungScroller = new JScrollPane(
-            getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
-        builder.nextLine();
+		JScrollPane objektverknuepfungScroller = new JScrollPane(getObjektverknuepungTabelle(),
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		builder.appendRow("fill:100dlu");
+		builder.append(objektverknuepfungScroller, 7);
+		builder.nextLine();
 
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSelectObjektButton(), getsaveGenehmigungButton());
@@ -180,6 +190,11 @@ public class GenehmigungPanel extends JPanel {
             if (this.fachdaten.getBemerkungen() != null) {
                 getGenBemerkungArea().setText(this.fachdaten.getBemerkungen());
             }
+            
+            if (this.fachdaten.getNebenbest() != null) {
+            	getNebenbestArea().setText(this.fachdaten.getNebenbest());
+            }
+            
             if (this.fachdaten.getAnhang() != null) {
                 getAnhangFeld().setText(this.fachdaten.getAnhang().toString());
             }
@@ -252,6 +267,7 @@ public class GenehmigungPanel extends JPanel {
     public void clearForm() {
     	getAktenzeichenFeld().setText(null);
         getGenBemerkungArea().setText(null);
+        getNebenbestArea().setText(null);
         getAnhangFeld().setText(null);
         getGenMengeFeld().setText(null);
         getAntragsDatum().setDate(null);
@@ -269,6 +285,7 @@ public class GenehmigungPanel extends JPanel {
     public void enableAll(boolean enabled) {
     	getAktenzeichenFeld().setEnabled(enabled);
         getGenBemerkungArea().setEnabled(enabled);
+        getNebenbestArea().setEnabled(enabled);
         getAnhangFeld().setEnabled(enabled);
         getGenMengeFeld().setEnabled(enabled);
         getAntragsDatum().setEnabled(enabled);
@@ -298,7 +315,14 @@ public class GenehmigungPanel extends JPanel {
         } else {
             this.fachdaten.setBemerkungen(bemerkungen);
         }
-
+        
+        String nebenbest = this.nebenbestArea.getText();
+        if ("".equals(nebenbest)) {
+            this.fachdaten.setNebenbest(null);
+        } else {
+            this.fachdaten.setNebenbest(nebenbest);
+        }
+        
         Date antrag = this.antragsDatum.getDate();
         this.fachdaten.setAntragDatum(antrag);
 
@@ -486,7 +510,7 @@ public class GenehmigungPanel extends JPanel {
 
     private JCheckBox getGen8CheckBox() {
         if (this.gen8Check == null) {
-            this.gen8Check = new JCheckBox("8er Genehmigung");
+            this.gen8Check = new JCheckBox("8er Erlaubnis");
         }
         return this.gen8Check;
     }
@@ -513,6 +537,16 @@ public class GenehmigungPanel extends JPanel {
         }
         return this.genBemerkungArea;
     }
+    
+    private JTextArea getNebenbestArea() {
+        if (this.nebenbestArea == null) {
+            this.nebenbestArea = new LimitedTextArea(150);
+            this.nebenbestArea.setLineWrap(true);
+            this.nebenbestArea.setWrapStyleWord(true);
+        }
+        return this.nebenbestArea;
+    }
+    
 
     private JTable getObjektverknuepungTabelle() {
 
