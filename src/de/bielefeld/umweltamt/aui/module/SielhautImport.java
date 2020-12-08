@@ -215,6 +215,11 @@ public class SielhautImport extends AbstractModul {
             return zeile[3].trim();
         }
 
+        private String methodeAusZeile(String[] zeile) {
+//            return zeile[5].replaceFirst(" \\(.*\\)", "");
+            return zeile[6].trim();
+        }
+
         // Schneidet einen String (aus einem Array) vor dem ersten Leerzeichen
         // ab
         /*private String spalteAusZeile(String[] zeile, int spalte) {
@@ -353,7 +358,7 @@ public class SielhautImport extends AbstractModul {
                         
                         // Analysemethode
                         
-                        pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
+                        pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findByMethodenNr(methodeAusZeile(current)));
 
                         // Einheit
                         Einheiten einheit =

@@ -927,7 +927,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			}
 
 			if (inh != null) {
-				frame.changeStatus("Neue Adresse " + adrn.getId() + " erfolgreich gespeichert.",
+				frame.changeStatus("Neuer Inhaber " + inh.getId() + " erfolgreich gespeichert.",
 						HauptFrame.SUCCESS_COLOR);
 
 				// Wenn wir vom Objekt anlegen kommen,

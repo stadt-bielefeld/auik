@@ -244,6 +244,19 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
     }
 
     /**
+     * Find an <code>MapElkaStoff</code> instance by its primary key
+     * @param id the primary key value
+     * @return <code>MapElkaStoff</code> the requested instance,
+     *         if one exists,
+     *         <code>null</code> otherwise
+     */
+    public static MapElkaAnalysemethode findByMethodenNr(java.lang.String methode) {
+        log.debug("Getting MapElkaStoff instance with id: " + methode);
+        return (MapElkaAnalysemethode)
+            new DatabaseAccess().get(MapElkaAnalysemethode.class, methode);
+    }
+
+    /**
      * Get a list of all <code>MapElkaStoff</code>
      * @return <code>List&lt;MapElkaStoff&gt;</code>
      *         all <code>MapElkaStoff</code>

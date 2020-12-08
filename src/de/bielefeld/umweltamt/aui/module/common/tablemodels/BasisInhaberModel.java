@@ -142,8 +142,8 @@ public class BasisInhaberModel extends ListTableModel {
     public boolean objectRemoved(Object objectAtRow) {
 
 		
-    	Object[] obj = (Object[]) objectAtRow;
-    	Inhaber removedBetreiber = (Inhaber) obj[0];
+    	Object obj = objectAtRow;
+    	Inhaber removedBetreiber = (Inhaber) obj;
         return Inhaber.delete(removedBetreiber);
     }
 
