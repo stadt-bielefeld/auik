@@ -70,7 +70,6 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private Date aktualDat;
     private Integer adrNr;
     private String externalNr;
-    private Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs = new HashSet<ZEntwaessgrAbwasbehverf>(0);
     private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
     private Boolean woTog;
     private Boolean miTog;
@@ -103,7 +102,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public Entwaesserungsgrundstueck(
-        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, Integer adrNr, String externalNr, Boolean woTog, Boolean miTog, Boolean geTog, Boolean giTog, Boolean gemTog, Boolean strTog, Boolean parkplatzTog, Set<Abaverfahren> Abaverfahrens, Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, Integer adrNr, String externalNr, Boolean woTog, Boolean miTog, Boolean geTog, Boolean giTog, Boolean gemTog, Boolean strTog, Boolean parkplatzTog, Set<Abaverfahren> Abaverfahrens, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
         this.nr = nr;
         this.objekt = objekt;
         this.wasserrecht = wasserrecht;
@@ -123,7 +122,6 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.aktualDat = aktualDat;
         this.adrNr = adrNr;
         this.externalNr = externalNr;
-        this.ZEntwaessgrAbwasbehverfs = ZEntwaessgrAbwasbehverfs;
         this.afsNiederschlagswassers = afsNiederschlagswassers;
         this.Abaverfahrens = Abaverfahrens;
         this.woTog = woTog;
@@ -336,14 +334,6 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.parkplatzTog = parkplatzTog;
     }
 
-    public Set<ZEntwaessgrAbwasbehverf> getZEntwaessgrAbwasbehverfs() {
-        return this.ZEntwaessgrAbwasbehverfs;
-    }
-
-    public void setZEntwaessgrAbwasbehverfs(Set<ZEntwaessgrAbwasbehverf> ZEntwaessgrAbwasbehverfs) {
-        this.ZEntwaessgrAbwasbehverfs = ZEntwaessgrAbwasbehverfs;
-    }
-
     public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
         return this.afsNiederschlagswassers;
     }
@@ -406,7 +396,6 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         buffer.append("gemTog").append("='").append(getGemTog()).append("' ");
         buffer.append("strTog").append("='").append(getStrTog()).append("' ");  
         buffer.append("parkplatzTog").append("='").append(getParkplatzTog()).append("' ");    
-        buffer.append("ZEntwaessgrAbwasbehverfs").append("='").append(getZEntwaessgrAbwasbehverfs()).append("' ");
         buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");
         buffer.append("Abaverfahrens").append("='").append(getAbaverfahrens()).append("' ");	
         buffer.append("]");
@@ -493,7 +482,6 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.aktualDat = copy.getAktualDat();
         this.adrNr = copy.getAdrNr();
         this.externalNr = copy.getExternalNr();
-        this.ZEntwaessgrAbwasbehverfs = copy.getZEntwaessgrAbwasbehverfs();
         this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();       
         this.Abaverfahrens = copy.getAbaverfahrens();  
         this.woTog = copy.getWoTog();

@@ -642,24 +642,24 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			Boolean matchArtId) {
 		log.debug("Fetching objects at " + inh);
 		// Find objects witch matching standortid
-		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.inhaber i " 
-				+ " WHERE o.standortid = s.id "
+		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.inhaber i, basis.objektarten art  " 
+				+ " WHERE o.standortid = s.id AND o.objektartid = art.id "
 				+ " AND (s.inhaberid = i.id AND i.id = " + inh.getId()
 				+ " OR o.betreiberid = i.id AND i.id = " + inh.getId() + " ) "
-				+ " AND o._deleted = false ORDER BY o.inaktiv, o.objektartid";
+				+ " AND o._deleted = false";
 
-		String filter = " ";
 		if (abteilung != null) {
-			filter += " AND art.abteilung = '" + abteilung + "' ";
+			query += " AND art.abteilung = '" + abteilung + "' ";
 		}
 		if (artid != null) {
 			if (matchArtId) {
-				filter += "AND art.id = " + artid + " ";
+				query += " AND o.objektartid = " + artid + " ";
 			} else {
-				filter += "AND art.id != " + artid + " ";
+				query += " AND o.objektartid != " + artid + " ";
 
 			}
 		}
+		query += " ORDER BY o.inaktiv, o.objektartid";
 
 		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 
@@ -682,7 +682,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String hausnrzus = adr.getHausnrzus();
 		log.debug("Fetching objects at " + adr);
 		// Find objects with standortid of adresse with matching fields
-		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.inhaber i, basis.adresse a,basis.objektarten art "
+		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.inhaber i, basis.adresse a, basis.objektarten art "
 				+ " WHERE o.standortid = s.id AND s.inhaberid = i.id AND i.adresseid = a.id AND o.objektartid = art.id"
 				+ " AND a.id = '" + id + "'"
 				+ " AND o._deleted = false";

@@ -155,6 +155,22 @@ public class BasisObjektModel extends ListTableModel {
     }
 
     /**
+     * Durchsucht den Tabelleninhalt nach der Betreiber-Id.
+     * @param betreiberId Die Betreiber-Id
+     */
+    public void searchByInhaber(Inhaber betr, Integer istartid) {
+        setList(DatabaseQuery.getObjekteByInhaber(betr, null, istartid, true));
+    }
+
+    /**
+     * Durchsucht den Tabelleninhalt nach der Betreiber-Id.
+     * @param betreiberId Die Betreiber-Id
+     */
+    public void searchByInhaber(Inhaber betr, String abteilung) {
+        setList(DatabaseQuery.getObjekteByInhaber(betr, abteilung, null, false));
+    }
+
+    /**
      * Durchsucht den Tabelleninhalt nach der Standort-Id.
      * @param standortId Die Standort-Id
      */

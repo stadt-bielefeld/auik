@@ -257,12 +257,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 		this.abaverfahrens.setData(Abaverfahren.getNwBehandel());
 		List<Abaverfahren> selected = new ArrayList<Abaverfahren>();
 		if (this.entwaesserungsgrundstueck != null) {
-			Set<ZEntwaessgrAbwasbehverf> verfs = this.entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs();
-			if (verfs != null) {
-				verfs.forEach(element -> {
-					selected.add(element.getAbaverfahren());
-				});
-			}
+			Set<Abaverfahren> verfs = this.entwaesserungsgrundstueck.getAbaverfahrens();
 			this.abaverfahrens.applyEntries(selected);
 		}
 	}
@@ -392,7 +387,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 				}
 			}
 			
-			List list = new ArrayList(entwaesserungsgrundstueck.getZEntwaessgrAbwasbehverfs());
+			List list = new ArrayList(entwaesserungsgrundstueck.getAbaverfahrens());
 			abaverfahrens.setListData(list);
 						
 			switchEinlBereichItems((String) getEinleitungsbereichBox().getSelectedItem());

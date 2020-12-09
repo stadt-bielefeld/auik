@@ -48,9 +48,11 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
+import java.awt.Label;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -64,6 +66,7 @@ import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -123,6 +126,11 @@ public class BasisAdresseSuchen extends AbstractModul {
 	private JTextField hausnrFeld;
 	private JTextField ortFeld;
     private JButton submitButton;
+	private JButton indirektButton;
+	private JButton awsvButton;
+	private JButton probepktButton;
+	private JButton anfallButton;
+	private JButton genButton;
     private JButton submitButtonStandort;
     private JButton submitButtonBetreiber;
     private JSplitPane tabellenSplit;
@@ -213,6 +221,15 @@ public class BasisAdresseSuchen extends AbstractModul {
             submitToolBar.setRollover(true);
             submitToolBar.add(getSubmitButton());
 
+			JPanel restrictPanel = new JPanel(new BorderLayout());
+
+			JComponent restrictButtonBar = ComponentFactory.buildLeftAlignedBar(
+					getAwsvButton(), getIndirektButton(), getProbepktButton(), getAnfallButton(), getGenButton());
+
+			restrictPanel.add(new Label("Objekte einschränken:"),
+								BorderLayout.WEST);
+			restrictPanel.add(restrictButtonBar, BorderLayout.CENTER);
+
             // Die Tab-Action ist in eine neue Klasse ausgelagert,
             // weil man sie evtl. öfters brauchen wird.
             TabAction ta = new TabAction();
@@ -228,7 +245,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
             FormLayout layout = new FormLayout(
 					"l:p, max(4dlu;p), p:g, 3dlu, p, 3dlu, 40dlu, 3dlu, p, 3dlu,  p:g, 3dlu, 70dlu, 3dlu, 70dlu", // spalten
-					"pref, 3dlu, pref, 3dlu, 150dlu:grow"); // zeilen
+					"pref, 3dlu, pref, 3dlu, 150dlu:grow, 3dlu, 30"); // zeilen
 
             PanelBuilder builder = new PanelBuilder(layout);
             CellConstraints cc = new CellConstraints();
@@ -245,6 +262,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             builder.add(getSubmitButton(), cc.xyw(13, 3, 3));
 //            builder.add(getSubmitButtonStandort(), cc.xy(15, 3));
             builder.add(this.tabellenSplit, cc.xyw(1, 5, 15));
+			builder.add(restrictPanel, cc.xyw(1, 7, 15));
 
             this.panel = builder.getPanel();
             this.panel.setBorder(Paddings.DIALOG);
@@ -443,6 +461,59 @@ public class BasisAdresseSuchen extends AbstractModul {
             protected void doNonUILogic() throws RuntimeException {
                 BasisAdresseSuchen.this.objektModel
                     .searchByInhaber(inh);
+            }
+
+            @Override
+            protected void doUIUpdateLogic() throws RuntimeException {
+            	
+                BasisAdresseSuchen.this.objektModel.fireTableDataChanged();
+            }
+            
+        };
+        worker.start();
+    }
+
+	/**
+     * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines
+     * Betreibers.
+     * @param betreiberid Die Betreiber-Id
+     */
+    public void searchObjekteByBetreiber(final Inhaber inh,
+    		final Integer istartid) {
+        // ... siehe show()
+        SwingWorkerVariant worker = new SwingWorkerVariant(
+            getBetreiberTabelle()) {
+            @Override
+            protected void doNonUILogic()
+            {
+                BasisAdresseSuchen.this.objektModel.searchByInhaber(inh,
+																	istartid);
+            }
+
+            @Override
+            protected void doUIUpdateLogic()
+            {
+                BasisAdresseSuchen.this.objektModel.fireTableDataChanged();
+            }
+        };
+        worker.start();
+    }
+
+	/**
+     * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines
+     * Betreibers.
+     * @param betreiberid Die Betreiber-Id
+     */
+    public void searchObjekteByBetreiber(final Inhaber inh,
+    		final String abteilung) {
+        // ... siehe show()
+        SwingWorkerVariant worker = new SwingWorkerVariant(
+            getBetreiberTabelle()) {
+            @Override
+            protected void doNonUILogic() throws RuntimeException {
+                BasisAdresseSuchen.this.objektModel
+                    .searchByInhaber(inh,
+                    		abteilung);
             }
 
             @Override
@@ -1118,6 +1189,155 @@ public class BasisAdresseSuchen extends AbstractModul {
 			});
 		}
 		return this.hausnrFeld;
+	}
+
+	private JButton getAwsvButton()
+	{
+		if (this.awsvButton == null)
+		{
+			this.awsvButton = new JButton("AwSV");
+			this.awsvButton.setToolTipText("nur AwSV Objekte");
+			this.awsvButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ListSelectionModel lsm = getBetreiberTabelle()
+							.getSelectionModel();
+					if (!lsm.isSelectionEmpty())
+					{
+						int selectedRow = lsm.getMinSelectionIndex();
+						Inhaber inh = BasisAdresseSuchen.this.inhaberModel
+								.getRow(selectedRow);
+						log.debug("Standort " + inh + " angewählt.");
+						searchObjekteByBetreiber(inh,
+												DatabaseConstants.BASIS_OBJEKTART_ABTEILUNG_AWSV);
+					}
+				}
+			});
+		}
+
+		return this.awsvButton;
+	}
+
+	private JButton getProbepktButton()
+	{
+		if (this.probepktButton == null)
+		{
+			this.probepktButton = new JButton("Probepunkte");
+			this.probepktButton
+					.setToolTipText("nur die Probenahmepunkte anzeigen");
+			this.probepktButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ListSelectionModel lsm = getBetreiberTabelle()
+							.getSelectionModel();
+					if (!lsm.isSelectionEmpty())
+					{
+						int selectedRow = lsm.getMinSelectionIndex();
+						Inhaber inh = BasisAdresseSuchen.this.inhaberModel
+								.getRow(selectedRow);
+						log.debug("Standort " + inh + " angewählt.");
+						searchObjekteByBetreiber(inh,
+												DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
+					}
+				}
+			});
+		}
+
+		return this.probepktButton;
+	}
+
+	private JButton getIndirektButton()
+	{
+		if (this.indirektButton == null)
+		{
+			this.indirektButton = new JButton("Indirekt-Einl.");
+			this.indirektButton
+					.setToolTipText("nur die Indirekteinleiter anzeigen");
+			this.indirektButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ListSelectionModel lsm = getBetreiberTabelle()
+							.getSelectionModel();
+					if (!lsm.isSelectionEmpty())
+					{
+						int selectedRow = lsm.getMinSelectionIndex();
+						Inhaber inh = BasisAdresseSuchen.this.inhaberModel
+								.getRow(selectedRow);
+						log.debug("Standort " + inh + " angewählt.");
+						searchObjekteByBetreiber(inh,
+												DatabaseConstants.BASIS_OBJEKTART_ID_PROBEPUNKT);
+					}
+				}
+			});
+		}
+
+		return this.indirektButton;
+	}
+
+	private JButton getAnfallButton()
+	{
+		if (this.anfallButton == null)
+		{
+			this.anfallButton = new JButton("Anfallstellen");
+			this.anfallButton
+					.setToolTipText("nur die Anfallstellen anzeigen");
+			this.anfallButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ListSelectionModel lsm = getBetreiberTabelle()
+							.getSelectionModel();
+					if (!lsm.isSelectionEmpty())
+					{
+						int selectedRow = lsm.getMinSelectionIndex();
+						Inhaber inh = BasisAdresseSuchen.this.inhaberModel
+								.getRow(selectedRow);
+						log.debug("Standort " + inh + " angewählt.");
+						searchObjekteByBetreiber(inh,
+												DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE);
+					}
+				}
+			});
+		}
+
+		return this.anfallButton;
+	}
+
+	private JButton getGenButton()
+	{
+		if (this.genButton == null)
+		{
+			this.genButton = new JButton("Genehmigungen");
+			this.genButton
+					.setToolTipText("nur die Genehmigungen anzeigen");
+			this.genButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ListSelectionModel lsm = getBetreiberTabelle()
+							.getSelectionModel();
+					if (!lsm.isSelectionEmpty())
+					{
+						int selectedRow = lsm.getMinSelectionIndex();
+						Inhaber inh = BasisAdresseSuchen.this.inhaberModel
+								.getRow(selectedRow);
+						log.debug("Standort " + inh + " angewählt.");
+						searchObjekteByBetreiber(inh,
+												DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG);
+					}
+				}
+			});
+		}
+
+		return this.genButton;
 	}
 
 	private Timer getSuchTimer()
