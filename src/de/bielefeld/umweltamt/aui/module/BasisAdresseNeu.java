@@ -352,7 +352,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			// Inhaber
 			// Links oben
 
-			builder.addSeparator("Inhaber", cc.xyw(1, 1, 8)); // Adresse----
+			builder.addSeparator("Inhaber", cc.xyw(1, 1, 8)); // Inhaber----
 			namenLabel = builder.addLabel("Firma/Name:", cc.xy(1, 3)); // Name
 			builder.add(namenFeld, cc.xyw(3, 3, 6));
 			builder.addLabel("Anrede:", cc.xy(1, 5)); // Anrede
