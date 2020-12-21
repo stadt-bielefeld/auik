@@ -436,7 +436,6 @@ public class SonderbauwerkPanel extends JPanel {
             this.sonderbauwerk.setN32(0);
             this.sonderbauwerk.setE32(0);
             this.sonderbauwerk.merge();
-            //ElkaEinleitungsstelle.merge(this.einleitungstelle);
             log.debug("Neues Sonderbauwerk " + this.sonderbauwerk + " gespeichert.");
         }
     }
@@ -584,11 +583,11 @@ public class SonderbauwerkPanel extends JPanel {
                     enableAll(false);
                     String status = "";
                     if(saveSonderbauwerkDaten()) {
-                        status = "Einleitungsstelle " +
+                        status = "Sonderbauwerk " +
                     SonderbauwerkPanel.this.sonderbauwerk.getNr()
                     + " erfolgreich gespeichert.";
                     } else {
-                        status = "Fehler beim Speichern der Einleitungsstelle!";
+                        status = "Fehler beim Speichern der Sonderbauwerk!";
                     }
                     if(status.startsWith("Sonderbauwerk")) {
                         SonderbauwerkPanel.this.hauptModul.getFrame().changeStatus(status,

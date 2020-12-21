@@ -108,10 +108,25 @@ public class BFPanel extends AbstractSonderbauwerkTypPanel {
 
     public void createMappings() {
         this.fieldMapping = new HashMap<String, RecordMap>();
+        this.addMapping("stauvolumenField", "rstauvolumen", "java.lang.Integer");
+        this.addMapping("filterflaecheField", "rfilterflaeche", "java.lang.Integer");
+        this.addMapping("drosseldurchflussField", "rdrosseldurchfluss", "java.math.BigDecimal");
+        this.addMapping("filterGeschField", "rfiltergeschwin", "java.math.BigDecimal");
+        this.addMapping("beschickungshoeheField", "rfiltersubstratH", "java.math.BigDecimal");
+        this.addMapping("hydraulWirkungsgradField", "rhydWirkungsgrad", "java.lang.Integer");
+        this.addMapping("staerkeFiltersubstratField", "rfiltersubstratH", "java.math.BigDecimal");
+        this.addMapping("ueberlaufhaufigkeitField", "rjahrUeh", "java.math.BigDecimal");
     }
 
     public void fetchFormData() {
-
+        setTextFieldContent(stauvolumenField, this.record.getRstauvolumen());
+        setTextFieldContent(filterflaecheField, this.record.getRfilterflaeche());
+        setTextFieldContent(drosseldurchflussField, this.record.getRdrosseldurchfluss());
+        setTextFieldContent(filterGeschField, this.record.getRfiltergeschwin());
+        setTextFieldContent(beschickungshoeheField, this.record.getRfiltersubstratH());
+        setTextFieldContent(hydraulWirkungsgradField, this.record.getRhydWirkungsgrad());
+        setTextFieldContent(staerkeFiltersubstratField, this.record.getRfiltersubstratH());
+        setTextFieldContent(ueberlaufhaufigkeitField, this.record.getRjahrUeh());
     }
 
     /**
@@ -121,5 +136,37 @@ public class BFPanel extends AbstractSonderbauwerkTypPanel {
      */
     public Object getFieldValue(String fieldName) {
         return getFieldValue(fieldName, this);
+    }
+    
+    public JTextField getStauvolumenField() {
+        return this.stauvolumenField;
+    }
+    
+    public JTextField getFilterflaecheField() {
+        return this.filterflaecheField;
+    }
+    
+    public JTextField getDrosseldurchflussField() {
+        return this.drosseldurchflussField;
+    }
+    
+    public JTextField getFilterGeschField() {
+        return this.filterGeschField;
+    }
+    
+    public JTextField getBeschickungshoeheField() {
+        return this.beschickungshoeheField;
+    }
+    
+    public JTextField getHydraulWirkungsgradField() {
+        return this.hydraulWirkungsgradField;
+    }
+    
+    public JTextField getStaerkeFiltersubstratField() {
+        return this.staerkeFiltersubstratField;
+    }
+    
+    public JTextField getUeberlaufhaufigkeitField() {
+        return this.ueberlaufhaufigkeitField;
     }
 }
