@@ -132,7 +132,7 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
 
         stauvolumenLabel = new JLabel("Stauvolumen über dem Filterkörper");
         volumenLabel = new JLabel("Volumen der Speicherlamelle");
-        filterLabel = new JLabel("Filterfäche");
+        filterLabel = new JLabel("Filterfläche");
         drossLabel = new JLabel("Rechnerischer Drosseldurchfluss (bei halber Volumenfüllung");
         filterGeschLabel = new JLabel("Filtergeschwindigkeit");
         beschickungsHoheLabel = new JLabel("Beschickungshöhe/mittlere Filterbelastung");
