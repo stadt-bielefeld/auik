@@ -66,16 +66,11 @@ public class RKBPanel extends AbstractSonderbauwerkTypPanel {
     private JComboBox<CBoxItem> drosselabflussBox;
     private DefaultComboBoxModel<CBoxItem> drosselabflussModel;
     private CBoxItem[] drosselabfluss;
-    
-    
-    //Fields
-//    JComboBox<CBoxItem> betriebsartBox;
-//    JComboBox<CBoxItem> beckenartBox;
-//    JComboBox<CBoxItem> entlastungsartBox;
-//    JComboBox<CBoxItem> anordnungBox;
-//    JComboBox<CBoxItem> drosselabflussBox;
-    private JCheckBox drosselschluss;
+        
+    //CheckBox
+    private JCheckBox drosselschlussCheck;
 
+    //Fields
     private JTextField behandFlaeche;
     private JTextField nBehandFlaeche;
     private JTextField kritRegenspende;
@@ -101,12 +96,7 @@ public class RKBPanel extends AbstractSonderbauwerkTypPanel {
     private JTextField minDrosselabfluss;
     private JLabel minDrosselabflussLabel;
 
-    //Models
-//    DefaultComboBoxModel<CBoxItem> betriebsartModel;
-//    DefaultComboBoxModel<CBoxItem> beckenartModel;
-//    DefaultComboBoxModel<CBoxItem> entlastungsartModel;
-//    DefaultComboBoxModel<CBoxItem> anordnungModel;
-//    DefaultComboBoxModel<CBoxItem> drosselabflussModel;
+
 
 public RKBPanel (BasisObjektBearbeiten parentModule) {
         this.name = "RKB";
@@ -131,9 +121,9 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         builder.append("Anordnung des Regenklärbeckens", anordnungBox);
         builder.nextLine();
         builder.append("Drosselabfluss zur Behandlung", drosselabflussBox);
-//        builder.nextLine();
-//        builder.append("Drosselschluss bei Überschreiten des Füllstandes oder eines Maximalzuflusses",
-//                drosselschluss);
+        builder.nextLine();
+        builder.append("Drosselschluss bei Überschreiten des Füllstandes oder eines Maximalzuflusses",
+        		drosselschlussCheck);
         builder.nextLine();
 
         builder.appendSeparator("Art und Kenndaten des Sonderbauwerks");
@@ -209,12 +199,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         anordnungBox = new JComboBox<CBoxItem>(anordnungModel);
         drosselabflussBox = new JComboBox<CBoxItem>(drosselabflussModel);
         
-//        betriebsartBox = new JComboBox<CBoxItem>(betriebsartModel);
-//        beckenartBox = new JComboBox<CBoxItem>(beckenartModel);
-//        entlastungsartBox = new JComboBox<CBoxItem>(entlastungsartModel);
-//        anordnungBox = new JComboBox<CBoxItem>(anordnungModel);
-//        drosselabflussBox = new JComboBox<CBoxItem>(drosselabflussModel);
-//        drosselschluss = new JCheckBox();
+        drosselschlussCheck =new JCheckBox();
 
         behandFlaeche = new JTextField();
         nBehandFlaeche = new JTextField();
@@ -260,13 +245,13 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         this.addMapping("beckentiefe", "beckentiefe", "java.math.BigDecimal");
         this.addMapping("beckenoberfl", "WOberflaeche", "java.lang.Integer");
         this.addMapping("drosselabflussTat", "drosselabfluss", "java.math.BigDecimal");
-//        this.addMapping("drosselschluss", "drosselTog", "java.lang.boolean");
+        this.addMapping("drosselschlussCheck", "drosselTog", "java.lang.Boolean");
         this.addMapping("behandFlaeche", "behFlaeche2u3", "java.math.BigDecimal");
         this.addMapping("nBehandFlaeche","behFlaeche1u2", "java.math.BigDecimal");
         this.addMapping("vorhandVolumen", "speichervolumen", "java.lang.Integer");
         this.addMapping("minDrosselabfluss", "minDrAbfluss", "java.math.BigDecimal");
         this.addMapping("flaechenbeschickung", "flaechenbeschickung", "java.math.BigDecimal");
-        this.addMapping("beckenvolumen", "spezBeckenvolumen", "java.lang.Integer");
+        this.addMapping("beckenvolumen", "spezBeckenvol", "java.lang.Integer");
         this.addMapping("minVolumen","nMindestV", "java.lang.Integer");
   
         
@@ -310,6 +295,12 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
                  break;      
             }}
          
+         if (this.record.isDrosselTog()) {
+             this.drosselschlussCheck.setSelected(true);
+             } else {
+             this.drosselschlussCheck.setSelected(false);
+             }
+         
          setTextFieldContent(kritRegenspende, this.record.getRkrit());
          setTextFieldContent(beckentiefe, this.record.getBeckentiefe());
          setTextFieldContent(beckenoberfl, this.record.getWOberflaeche());
@@ -321,62 +312,18 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
          setTextFieldContent(flaechenbeschickung, this.record.getFlaechenbeschickung());
          setTextFieldContent(beckenvolumen, this.record.getSpezBeckenvol());
          setTextFieldContent(minVolumen, this.record.getNMindestV());
-         
-         //HIer fehlt noch das drosseltog
+
          
          
          
     }
 
-//    /**
-//     * Get field value by field name.
-//     * @param fieldName Field name
-//     * @return Field value
-//     */
-//    public Object getFieldValue(String fieldName) {
-//        //TODO: add missing field return values
-//        switch(fieldName) {
-//            case "betriebsartBox":
-//                return ((CBoxItem) betriebsartBox.getSelectedItem()).getId();
-//            case "beckenartBox":
-//                return ((CBoxItem) beckenartBox.getSelectedItem()).getId();
-//            case "entlastungsartBox":
-//                return ((CBoxItem) entlastungsartBox.getSelectedItem()).getId();
-//            case "anordnungBox":
-//                return ((CBoxItem) anordnungBox.getSelectedItem()).getId();
-//            case "drosselabflussBox":
-//                return ((CBoxItem) drosselabflussBox.getSelectedItem()).getId();
-//            case "drosselschluss":
-//                return drosselschluss.isSelected();
-//            case "behandFlaeche":
-//                return parseBigDecimalFromString(behandFlaeche.getText());
-//            case "nBehandFlaeche":
-//                //TODO: Field
-//                return null;
-//            case "kritRegenspende":
-//                return parseBigDecimalFromString(kritRegenspende.getText());
-//            case "vorhandVolumen":
-//                //TODO: Field
-//                return null;
-//            case "beckentiefe":
-//                return parseBigDecimalFromString(beckentiefe.getText());
-//            case "beckenoberfl":
-//                return parseIntegerFromString(beckenoberfl.getText());
-//            case "drosselabflussTat":
-//                return parseBigDecimalFromString(drosselabflussTat.getText());
-//            case "spezVolumen":
-//                return null;
-//            case "minVolumen":
-//                return null;
-//            case "beckenvolumen":
-//                return null;
-//            case "flaechenbeschickung":
-//                return null;
-//            case "minDrosselabfluss":
-//                return null;
-//            default: throw new IllegalArgumentException("Unkown field name: " + fieldName);
-//        }
-//    }
+    /**
+     * Get field value by field name.
+     * @param fieldName Field name
+     * @return Field value
+     */
+
 
     private void setBetriebsArt(String betriebsart) {
         if (betriebsart == null) {
@@ -424,7 +371,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
                 beckenartBox.setEnabled(true);
                 entlastungsartBox.setEnabled(true);
                 drosselabflussBox.setEnabled(true);
-//                drosselschluss.setEnabled(true);
+                drosselschlussCheck.setEnabled(true);
                 break;
             case "ständig gefüllt":
                 spezVolumen.setVisible(false);
@@ -448,7 +395,7 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
                 beckenartBox.setEnabled(false);
                 entlastungsartBox.setEnabled(false);
                 drosselabflussBox.setEnabled(false);
-//                drosselschluss.setEnabled(false);
+                drosselschlussCheck.setEnabled(false);
                 break;
         }
     }
@@ -498,15 +445,15 @@ public RKBPanel (BasisObjektBearbeiten parentModule) {
         return this.drosselabflussTat;
     }
     
-    public JCheckBox getDrosselTog() {
-        return this.drosselschluss;
+    public JCheckBox getDrosselschlussCheck() {
+        return this.drosselschlussCheck;
     }
     
     public JTextField getBehandFlaeche() {
         return this.behandFlaeche;
     }
     
-    public JTextField getNbehandflaeche() {
+    public JTextField getNBehandFlaeche() {
         return this.nBehandFlaeche;
     }
     
