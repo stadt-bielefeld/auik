@@ -178,23 +178,17 @@ public class SettingsManager {
 		appSettings
 				.setProperty(
 						"auik.system.module",
-
-						"LageSuchen, BasisAdresseSuchen, LageNeu, "
-								+ "BasisAdresseNeu, BasisObjektBearbeiten, EinleiterAnh31Auswertung, "
-								+ "EinleiterAnh40Auswertung, EinleiterAnh49Auswertung, "
-								+ "EinleiterAnh50Auswertung, EinleiterAnh52Auswertung, "
-								+ "EinleiterAnh53Auswertung, EinleiterAnh55Auswertung, "
-								+ "EinleiterAnh56Auswertung, EinleiterBescheidAuswertung, "
-								+ "EinleiterBrennwertAuswertung, EinleiterFettabscheiderAuswertung, "
-								+ "EinleiterGenehmigungAuswertung, EinleiterPrioritaetAuswertung, "
-								+ "EinleiterSuevkanAuswertung, EinleiterUebergabestellenAuswertung, "
-								+ "KlaerschlammAuswertung, KlaerschlammFaulschlammproben, "
-								+ "KlaerschlammRohschlammproben, LaborProbeSuchen, LaborIcpImport, "
-								+ "ProbepunkteAuswertung, SielhautBearbeiten, SielhautImport, "
-								+ "VawsHerstellernummerSuchen, VawsKontrollenAuswertung, "
-								+ "VawsVerwaltungsverfAuswertung, EditorEinheiten, "
-								+ "EditorParameter, EditorStrassen, EditorObjektarten, "
-								+ "AnalyseImport, DBSyncModul");
+				
+						"BasisStandortSuchen, BasisAdresseSuchen, DirekteinleiterSuchen, BasisObjektBearbeiten, BasisAdresseNeu, BasisAuswertung,"
+						+ " AnalyseImport, AwsvChronologieAuswertung, AwsvHerstellernummerSuchen, AwsvKontrollenAuswertung, AwsvVerwaltungsverfAuswertung,"
+						+ " EditorEinheiten, EditorEntsorger, EditorGemarkungen, EditorKlaeranlagen, EditorObjektarten,"
+						+ " EditorParameter, EditorSachbearbeiter, EditorTabStreets, EditorWSG,"
+						+ " EinleiterAnfallstelleAuswertung, EinleiterAnh49Auswertung, EinleiterAnh50Auswertung,"
+						+ " EinleiterAnh56Auswertung, EinleiterBescheidAuswertung, EinleiterBrennwertAuswertung,"
+						+ " EinleiterFettabscheiderAuswertung, EinleiterGenehmigungAuswertung, EinleiterPrioritaetAuswertung,"
+						+ " KlaerschlammAuswertung, KlaerschlammFaulschlammproben, KlaerschlammRohschlammproben,"
+						+ " LaborProbeSuchen, AnalyseImport, ProbepunkteAuswertung, SielhautBearbeiten, SielhautImport"
+						+ " ELKASync");
 
 		appSettings.setProperty("auik.prefs.status_time", "40");
 		appSettings.setProperty("auik.prefs.sielhaut_labor", "Eurofins");
