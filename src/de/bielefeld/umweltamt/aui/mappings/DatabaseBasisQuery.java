@@ -931,6 +931,18 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	}
 
 	/**
+	 * Get next id for new Sachbearbeiter
+	 * 
+	 * @return <code>SachbearbeiterID</code>
+	 */
+	public static Integer newSachbearbeiterID() {
+		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+				DetachedCriteria.forClass(Sachbearbeiter.class).setProjection(Property.forName("id").max()),
+				new Integer(0));
+		return id + 1;
+	}
+
+	/**
 	 * Get all Sachbearbeiter and sort them by their name
 	 * 
 	 * @return <code>Eine Liste aller Parameter</code>
