@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.2.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="probenahmeauftrag" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="50" rightMargin="30" topMargin="20" bottomMargin="20" uuid="683e1425-d3f3-4a9e-8b5b-89e73bdde4f9">
 	<property name="ireport.scriptlethandling" value="2"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -45,9 +46,9 @@
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Angebot Eurofins: GMSO2017011207
+				<text><![CDATA[UCL Umwelt Control Labor GmbH 
 CF: RÖBKE/AUTH/KLIPKER/DEEKE/EWES - Abwasser
-Stadt Bielefeld Umweltamt]]></text>
+Stadt Bielefeld - Umweltamt 360.33]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-3" x="393" y="3" width="107" height="13" uuid="c021ae63-2d6a-480b-90e2-6d7796b8da2b"/>
@@ -881,7 +882,7 @@ Stadt Bielefeld Umweltamt]]></text>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Eurofins]]></text>
+				<text><![CDATA[UCL]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="6" y="618" width="507" height="15" uuid="e82d6414-2018-426e-b85f-ae137047b452"/>
