@@ -933,11 +933,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	/**
 	 * Get next id for new Sachbearbeiter
 	 * 
-<<<<<<< HEAD
 	 * @return <code>SachbearbeiterID</code>
-=======
-	 * @return <code>KlaeranlageID</code>
->>>>>>> branch 'master' of https://github.com/stadt-bielefeld/auik
 	 */
 	public static Integer newSachbearbeiterID() {
 		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
