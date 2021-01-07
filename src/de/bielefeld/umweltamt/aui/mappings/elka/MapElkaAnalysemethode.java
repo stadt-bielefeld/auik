@@ -30,6 +30,9 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 /**
  * A class that represents a row in the MapElkaStoff database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -250,10 +253,13 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static MapElkaAnalysemethode findByMethodenNr(java.lang.String methode) {
-        log.debug("Getting MapElkaStoff instance with id: " + methode);
-        return (MapElkaAnalysemethode)
-            new DatabaseAccess().get(MapElkaAnalysemethode.class, methode);
+    public static MapElkaAnalysemethode findByMethodenNr(String methode) {
+        log.debug("Getting MapElkaStoff instance with methodenNr: " + methode);
+		return new DatabaseAccess().executeCriteriaToUniqueResult(
+				DetachedCriteria.forClass(
+						MapElkaAnalysemethode.class)
+						.add(Restrictions.eq("methodenNr", methode)),
+				new MapElkaAnalysemethode());
     }
 
     /**
