@@ -358,8 +358,18 @@ public class SielhautImport extends AbstractModul {
                         
                         // Analysemethode
                         
-                        pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findByMethodenNr(methodeAusZeile(current)));
-
+                        if (MapElkaAnalysemethode.findByMethodenNr(methodeAusZeile(current)) != null) {
+                        	pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findByMethodenNr(methodeAusZeile(current)));
+                        } else {
+                        	MapElkaAnalysemethode mapAna = new MapElkaAnalysemethode();
+                        	mapAna.setMethodenNr(methodeAusZeile(current));
+                        	mapAna.setGruppeDevId("000");
+                        	mapAna.setRegelwerkId("00");
+                        	mapAna.setVariantenId("0");
+                        	mapAna.merge();
+                        	pos.setMapElkaAnalysemethode(mapAna);
+                        }
+                        
                         // Einheit
                         Einheiten einheit =
                             DatabaseQuery.getEinheitByDescription(

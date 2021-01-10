@@ -65,6 +65,7 @@ public class AnalyseProcessor {
         String grkl                 = unquote(columns[4]);
         String wert                 = unquote(columns[5]);
         String einheitId            = unquote(columns[6]);
+        String methodeNr            = unquote(columns[7]);
 
         int id = -1;
         if (einheitId != null && !einheitId.equals("")) {
@@ -87,6 +88,7 @@ public class AnalyseProcessor {
 
         Parameter parameter = Parameter.findById(ordnungsbegriff);
         Einheiten einheit   = Einheiten.findById(id);
+        MapElkaAnalysemethode mapAna = MapElkaAnalysemethode.findByMethodenNr(methodeNr);
 
         Analyseposition position = DatabaseQuery.findAnalyseposition(
             probe, parameter, einheit, true);
@@ -97,10 +99,16 @@ public class AnalyseProcessor {
             position.setGrkl(grkl);
             position.setEinheiten(einheit);
             position.setAnalyseVon("E-Satzung");
-            if (parameter.getMapElkaAnalysemethode() != null) {
-            	position.setMapElkaAnalysemethode(parameter.getMapElkaAnalysemethode());
+            if (mapAna != null) {
+            	position.setMapElkaAnalysemethode(mapAna);
             } else {
-            	position.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
+            	mapAna = new MapElkaAnalysemethode();
+            	mapAna.setMethodenNr(methodeNr);
+            	mapAna.setGruppeDevId("000");
+            	mapAna.setRegelwerkId("00");
+            	mapAna.setVariantenId("0");
+            	mapAna.merge();
+            	position.setMapElkaAnalysemethode(mapAna);
             }
             
             position.merge();

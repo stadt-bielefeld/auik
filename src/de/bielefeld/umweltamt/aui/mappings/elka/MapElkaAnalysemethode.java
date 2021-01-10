@@ -247,7 +247,7 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
     }
 
     /**
-     * Find an <code>MapElkaStoff</code> instance by its primary key
+     * Find an <code>MapElkaStoff</code> instance by its methodeNr
      * @param id the primary key value
      * @return <code>MapElkaStoff</code> the requested instance,
      *         if one exists,
