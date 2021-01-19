@@ -1041,10 +1041,8 @@ public class ProbenEditor extends AbstractApplyEditor {
             probe.getMessstelle().getObjekt().getBetreiberid();
 
         Date rechnungsdatum = DateUtils.getDateOfBill(probe.getBescheid());
-        double cd = getRechnungsbetrag(probe);
-        cd = cd*100;
-        cd = Math.round(cd);
-        cd = cd/100;
+        Integer cd = (int) getRechnungsbetrag(probe);
+
 
         String kassenzeichen = basisBetr.getKassenzeichen().toString();
         kassenzeichen = kassenzeichen.replace(".", "");
@@ -1782,8 +1780,8 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public double getRechnungsbetrag(Probenahme probe)
         throws ParseException, IllegalArgumentException {
-        return Math.round(getSachUndPersonalkosten() * 100.) / 100.
-            + Math.round(getAnalysekosten(probe) * 100.) / 100.;
+        return Math.round(getSachUndPersonalkosten() * 100.)
+            + Math.round(getAnalysekosten(probe) * 100.);
     }
 
     /**
@@ -1792,7 +1790,7 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     protected void updateRechnungsbetrag(Probenahme probe)
         throws ParseException {
-        double betrag = getRechnungsbetrag(probe);
+        double betrag = getRechnungsbetrag(probe) / 100;
 
         probe.setKosten(betrag);
 
