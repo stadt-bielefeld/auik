@@ -99,9 +99,9 @@ public class BasisObjektModel extends ListTableModel {
 				} else if (bo.getAnfallstelles().size() > 0) {
 					Set<Anfallstelle> list = bo.getAnfallstelles();
 					Anfallstelle anfallstelle = list.iterator().next();
-					if (anfallstelle.getNwHerBereichOpt() != null && anfallstelle.getNwHerBereichOpt() < 3) {
+					if (anfallstelle.getNwHerBereichOpt() != null && anfallstelle.getNwHerBereichOpt() != 0 && anfallstelle.getNwHerBereichOpt() < 3) {
 						tmp = "Anfallstelle (NW nicht behandlungsbedürftig)";
-					} else if (anfallstelle.getNwHerBereichOpt() != null && anfallstelle.getNwHerBereichOpt() > 2) {
+					} else if (anfallstelle.getNwHerBereichOpt() != null && anfallstelle.getNwHerBereichOpt() != 0 && anfallstelle.getNwHerBereichOpt() > 2) {
 						tmp = "Anfallstelle (NW behandlungsbedürftig)";
 					} else if (!anfallstelle.getAnhangId().equals("99")) {
 						tmp = "Anfallstelle (Anh " + anfallstelle.getAnhangId() + ")";
