@@ -11,11 +11,35 @@ jobs:
     name: Create Release
     runs-on: windows-latest
     steps:
+      - name: Get Version
+        id: get_version
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        shell: bash
       - name: Checkout code
         uses: actions/checkout@master
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11' # The JDK version to make available on the path.
+          java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+          architecture: x64 # (x64 or x86) - defaults to x64
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build with Maven
+        run: |
+          mvn validate && mvn -B package --file pom.xml
+          cp target/*-jar-with-dependencies.jar target/auik-${{ steps.get_version.outputs.VERSION }}.jar
+          cd target
+          sha256sum -b auik-${{ steps.get_version.outputs.VERSION }}.jar > auik-${{ steps.get_version.outputs.VERSION }}.jar.sha256sum
+          ls
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
@@ -26,3 +50,23 @@ jobs:
             "Wir haben Fehler behoben, die Leistung gesteigert, den Müll runtergebracht und den Rasen gemäht – Zeit für ein Nickerchen"
           draft: true
           prerelease: true
+      - name: Upload Release Assets
+        id: upload-release-asset-jar
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./target/auik-${{ steps.get_version.outputs.VERSION }}.jar
+          asset_name: auik-${{ steps.get_version.outputs.VERSION }}.jar
+          asset_content_type: application/java-archive
+      - name: Upload Release Assets
+        id: upload-release-asset-sha256
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./target/auik-${{ steps.get_version.outputs.VERSION }}.jar.sha256sum
+          asset_name: auik-${{ steps.get_version.outputs.VERSION }}.jar.sha256sum
+          asset_content_type: text/plain
