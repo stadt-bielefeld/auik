@@ -49,7 +49,7 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
     private String gruppeDevId;
     private String regelwerkId;
     private String variantenId;
-    private String methodenNr;
+    private String methode;
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -67,12 +67,12 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
 
     /** Full constructor */
     public MapElkaAnalysemethode(
-        Integer id, String gruppeDevId, String regelwerkId, String variantenId, String methodenNr) {
+        Integer id, String gruppeDevId, String regelwerkId, String variantenId, String methode) {
         this.id = id;
         this.gruppeDevId = gruppeDevId;
         this.regelwerkId = regelwerkId;
         this.variantenId = variantenId;
-        this.methodenNr = methodenNr;
+        this.methode = methode;
     }
 
     /* Setter and getter methods */
@@ -108,12 +108,12 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
         this.variantenId = variantenId;
     }
 
-    public String getMethodenNr() {
-        return this.methodenNr;
+    public String getMethode() {
+        return this.methode;
     }
 
-    public void setMethodenNr(String methodenNr) {
-        this.methodenNr = methodenNr;
+    public void setMethode(String methode) {
+        this.methode = methode;
     }
 
     /**
@@ -140,7 +140,7 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
         buffer.append("gruppeDevId").append("='").append(getGruppeDevId()).append("' ");			
         buffer.append("regelwerkId").append("='").append(getRegelwerkId()).append("' ");			
         buffer.append("variantenId").append("='").append(getVariantenId()).append("' ");			
-        buffer.append("methodenNr").append("='").append(getMethodenNr()).append("' ");			
+        buffer.append("methode").append("='").append(getMethode()).append("' ");			
         buffer.append("]");
 
         return buffer.toString();
@@ -210,7 +210,7 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
         this.gruppeDevId = copy.getGruppeDevId();            
         this.regelwerkId = copy.getRegelwerkId();            
         this.variantenId = copy.getVariantenId();             
-        this.methodenNr = copy.getMethodenNr();          
+        this.methode = copy.getMethode();          
     }    
 
     /**
@@ -253,12 +253,12 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static MapElkaAnalysemethode findByMethodenNr(String methode) {
-        log.debug("Getting MapElkaStoff instance with methodenNr: " + methode);
+    public static MapElkaAnalysemethode findByMethoden(String methode) {
+        log.debug("Getting MapElkaStoff instance with methoden: " + methode);
 		return new DatabaseAccess().executeCriteriaToUniqueResult(
 				DetachedCriteria.forClass(
 						MapElkaAnalysemethode.class)
-						.add(Restrictions.eq("methodenNr", methode)),
+						.add(Restrictions.eq("methode", methode)),
 				new MapElkaAnalysemethode());
     }
 
@@ -275,7 +275,7 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
     
 
 	public String toGuiString() {
-		return getMethodenNr();
+		return getMethode();
 	}
 
 }

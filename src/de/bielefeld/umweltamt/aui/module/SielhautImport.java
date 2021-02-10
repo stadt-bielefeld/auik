@@ -358,11 +358,11 @@ public class SielhautImport extends AbstractModul {
                         
                         // Analysemethode
                         
-                        if (MapElkaAnalysemethode.findByMethodenNr(methodeAusZeile(current)) != null) {
-                        	pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findByMethodenNr(methodeAusZeile(current)));
+                        if (MapElkaAnalysemethode.findByMethoden(methodeAusZeile(current)) != null) {
+                        	pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findByMethoden(methodeAusZeile(current)));
                         } else {
                         	MapElkaAnalysemethode mapAna = new MapElkaAnalysemethode();
-                        	mapAna.setMethodenNr(methodeAusZeile(current));
+                        	mapAna.setMethode(methodeAusZeile(current));
                         	mapAna.setGruppeDevId("000");
                         	mapAna.setRegelwerkId("00");
                         	mapAna.setVariantenId("0");

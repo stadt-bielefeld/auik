@@ -15,7 +15,7 @@
         <property name="variantenId" type="java.lang.String">
             <column name="varianten_id" />
         </property>
-        <property name="methodenNr" type="java.lang.String">
+        <property name="methode" type="java.lang.String">
             <column name="methoden_nr" />
         </property>
     </class>
