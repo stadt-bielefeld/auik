@@ -33,7 +33,7 @@ jobs:
       - name: Build with Maven
         run: |
           mvn validate && mvn -B package --file pom.xml
-          cp target/*-jar-with-dependencies.jar target/auik-${{ steps.get_version.outputs.VERSION }}.jar
+          cp target/auik_prod*.jar target/auik-${{ steps.get_version.outputs.VERSION }}.jar
           cd target
           sha256sum -b auik-${{ steps.get_version.outputs.VERSION }}.jar > auik-${{ steps.get_version.outputs.VERSION }}.jar.sha256sum
           ls
