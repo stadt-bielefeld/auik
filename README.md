@@ -11,7 +11,7 @@
 
 Das freie Anlagen- und Indirekteinleiterkataster (AUI-K) erfasst
 standortbezogene Informationen zu Anlagen zum Umgang mit wassergefährdenden
-Stoffen (VAwS) und Indirekteinleitern. Durch die gemeinsame Datenbasis mit
+Stoffen (AwsV) und Indirekteinleitern. Durch die gemeinsame Datenbasis mit
 geografischen Daten können Sachdaten mit den erfassten Informationen
 verschnitten werden. Darüber hinaus können automatisch Einträge in Datensätze
 aufgrund ihrer räumlichen Zugehörigkeit zu beispielsweise
