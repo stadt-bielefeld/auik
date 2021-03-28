@@ -387,7 +387,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String query = "SELECT adresse FROM Adresse adresse WHERE ";
 		query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' AND ";
 		query += "adresse.hausnr = " + hausnr + " AND ";
-		query += "adresse.hausnrzus = '" + zusatz + "' AND ";
+		if (!zusatz.equals("")) {
+			query += "adresse.hausnrzus = '" + zusatz + "' AND ";
+		}		
 		query += "adresse.plz = '" + plz + "' AND ";
 		query += "adresse.deleted = false ";
 	

@@ -469,8 +469,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
             };
             standortNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(
                 KeyEvent.VK_N));
-            // abscheiderNeuAction.putValue(Action.ACCELERATOR_KEY,
-            // KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+
         }
 
         return standortNeuAction;

@@ -217,6 +217,7 @@ public class StandortEditor extends AbstractBaseEditor
 		if (bsta != null)
 		{
 			setEditedObject(bsta);
+			Standort.merge(bsta);
 			log.debug("Änderungen gespeichert!");
 			return true;
 		}
