@@ -1817,6 +1817,9 @@ public class ProbenEditor extends AbstractApplyEditor {
     @Override
     protected void doApply() {
         ParameterChooser chooser = new ParameterChooser(this.frame);
+        if (parameterTabelle.isEditing()) {
+        	parameterTabelle.getCellEditor().stopCellEditing();
+        }
         chooser.addOKListener(new OKListener() {
             @Override
             public void onOK(Parameter[] params) {
