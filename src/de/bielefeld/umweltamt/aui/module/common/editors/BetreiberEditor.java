@@ -1137,11 +1137,12 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		Adresse adr = chooser.getChosenAdresse();
 		if (adr != null) {
 			inhaber.setAdresse(adr);
-			TabStreets ts = DatabaseQuery.getSingleTabStreet(adr.getStrasse(), adr.getHausnr(), adr.getHausnrzus());
-			Standort std = DatabaseQuery.findStandort(inhaber);
-			std.setE32(ts.getX());
-			std.setN32(ts.getY());
-			std.merge();
+			inhaber.merge();
+//			TabStreets ts = DatabaseQuery.getSingleTabStreet(adr.getStrasse(), adr.getHausnr(), adr.getHausnrzus());
+//			Standort std = DatabaseQuery.findStandort(inhaber);
+//			std.setE32(ts.getX());
+//			std.setN32(ts.getY());
+//			std.merge();
 //			standorteModel.updateList();
 			fillForm();
 		}

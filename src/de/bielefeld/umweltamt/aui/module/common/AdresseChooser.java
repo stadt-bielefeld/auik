@@ -158,11 +158,12 @@ public class AdresseChooser extends JDialog {
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
 
-		if (caller.equals("betreiber")) {
+		if (caller.equals("standort") || caller.equals("betreiber")) {
 			builder.addLabel("Name:", cc.xy(1, 1));
 			builder.add(getSuchFeld(), cc.xyw(3, 1, 5));
 			builder.add(getSubmitButton(), cc.xy(9, 1));
 		}
+		
 		builder.addLabel("Straße:", cc.xy(1, 3));
 		builder.add(getStrassenFeld(), cc.xy(3, 3));
 		builder.addLabel("Hausnr.:", cc.xy(5, 3));
@@ -186,6 +187,8 @@ public class AdresseChooser extends JDialog {
 	private void choose(int row) {
 		if (row != -1) {
 			if (this.betreiberAdresse != null && caller == "adresse") {
+				this.adresse = this.adresseModel.getRow(row);
+			} else if (this.adresse != null && caller == "adresse") {
 				this.adresse = this.adresseModel.getRow(row);
 			} else if (this.betreiberAdresse != null && caller == "betreiber") {
 				this.betreiberAdresse = this.betreiberModel.getRow(row);
@@ -213,8 +216,10 @@ public class AdresseChooser extends JDialog {
 			};
 			worker.start();
 
+			getSuchFeld().setText("");
 			getStrassenFeld().setText("");
 			getHausnrFeld().setText("");
+			getStandortFeld().setText("");
 
 		} else if (caller == "standort") {
 			SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
@@ -230,8 +235,10 @@ public class AdresseChooser extends JDialog {
 			};
 			worker.start();
 
+			getSuchFeld().setText("");
 			getStrassenFeld().setText("");
 			getHausnrFeld().setText("");
+			getStandortFeld().setText("");
 		}
 	}
 
@@ -259,8 +266,10 @@ public class AdresseChooser extends JDialog {
 			};
 			worker.start();
 
+			getSuchFeld().setText("");
 			getStrassenFeld().setText("");
 			getHausnrFeld().setText("");
+			getStandortFeld().setText("");
 
 		} else if (caller == "betreiber") {
 			SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
@@ -293,8 +302,10 @@ public class AdresseChooser extends JDialog {
 			};
 			worker.start();
 
+			getSuchFeld().setText("");
 			getStrassenFeld().setText("");
 			getHausnrFeld().setText("");
+			getStandortFeld().setText("");
 		}
 	}
 
@@ -315,8 +326,10 @@ public class AdresseChooser extends JDialog {
 			};
 			worker.start();
 
+			getSuchFeld().setText("");
 			getStrassenFeld().setText("");
 			getHausnrFeld().setText("");
+			getStandortFeld().setText("");
 
 
 	}
@@ -371,7 +384,9 @@ public class AdresseChooser extends JDialog {
 			this.suchFeld.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					doSearchName();
+					if (!getSuchFeld().equals("")) {
+						doSearchName();
+					}
 				}
 			});
 		}
@@ -385,7 +400,9 @@ public class AdresseChooser extends JDialog {
 			this.standortFeld.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					doSearchName();
+					if (!getStandortFeld().equals("") && !getStandortFeld().equals("Adresse")) {
+						doSearchStandort();
+					}
 				}
 			});
 		}
@@ -403,7 +420,9 @@ public class AdresseChooser extends JDialog {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					getSuchTimer().stop();
-					doSearchStrasse();
+					if (!getStrassenFeld().equals("")) {
+						doSearchStrasse();
+					}
 				}
 			});
 
@@ -453,7 +472,9 @@ public class AdresseChooser extends JDialog {
 			this.submitButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					doSearchName();
+					if (!getSuchFeld().equals("")) {
+						doSearchName();
+					}
 				}
 			});
 		}
@@ -468,7 +489,9 @@ public class AdresseChooser extends JDialog {
 			this.submitButtonAdresse.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					doSearchStrasse();
+					if (!getStrassenFeld().equals("")) {
+						doSearchStrasse();
+					}
 				}
 			});
 		}
@@ -483,7 +506,7 @@ public class AdresseChooser extends JDialog {
 			this.submitButtonStandort.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (!getStandortFeld().equals("")) {
+					if (!getStandortFeld().equals("") && !getStandortFeld().equals("Adresse")) {
 						doSearchStandort();
 					}					
 				}
