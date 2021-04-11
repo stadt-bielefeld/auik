@@ -567,7 +567,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            String
 	 * @return <code>List&lt;Fachdaten&gt;</code>
 	 */
-	public static List<Standort> findStandorteNachAZ(String search) {
+	public static List<Standort> findStandorteNachBezeichnung(String search) {
 	
 		if (search == null || search == "") {
 			return new DatabaseAccess().executeCriteriaToList(

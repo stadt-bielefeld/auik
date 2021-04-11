@@ -186,7 +186,7 @@ public class BasisStandortModel extends ListTableModel {
     
     public void filterAllList(String suche) {
         log.debug("Start filterList");
-        setList(DatabaseQuery.findStandorteNachAZ(suche));
+        setList(DatabaseQuery.findStandorteNachBezeichnung(suche));
         lastSuchWort = suche;
         log.debug("End filterList");
     }
