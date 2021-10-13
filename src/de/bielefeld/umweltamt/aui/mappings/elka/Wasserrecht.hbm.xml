@@ -14,6 +14,9 @@
         <property name="bemerkungen" type="java.lang.String">
             <column name="bemerkungen" />
         </property>
+        <property name="nebenbest" type="java.lang.String">
+            <column name="nebenbest" />
+        </property>
         <property name="erstellungsDatum" type="java.util.Date">
             <column name="erstellungs_datum" length="13" />
         </property>

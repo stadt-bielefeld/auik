@@ -92,11 +92,10 @@ public class ZuordnungChooser<T> extends JPanel{
         if (this.title != null) {
             builder.appendSeparator(title);
         }
-        builder.add(new JScrollPane(leftList), cc.xywh(1, 1, 1,9));
-        builder.add(new JScrollPane(rightList), cc.xywh(5, 1, 1, 9));
+        builder.add(new JScrollPane(leftList), cc.xywh(1, 3, 1,9));
+        builder.add(new JScrollPane(rightList), cc.xywh(5, 3, 1, 9));
         builder.add(addButton, cc.xy(3, 3));
         builder.add(removeButton, cc.xy(3, 5));
-        builder.nextLine();
 
 
         addButton.addActionListener(new ActionListener(){
@@ -188,6 +187,11 @@ public class ZuordnungChooser<T> extends JPanel{
 
     public void setSortComparator(Comparator<T> sortComparator) {
         this.sortComparator = sortComparator;
+    }
+    
+    public void setListData (List<T> data) {
+    	applyEntries(data);
+    	updateLists();
     }
 
 }

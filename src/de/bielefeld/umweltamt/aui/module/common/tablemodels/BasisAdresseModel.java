@@ -56,6 +56,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class BasisAdresseModel extends ListTableModel {
     private AuikLogger log = AuikLogger.getLogger();
+    private Integer id = null;
     private String strasse = null;
     private String lastSuchWort = null;
     private String lastProperty = null;
@@ -71,6 +72,7 @@ public class BasisAdresseModel extends ListTableModel {
 
 	public BasisAdresseModel() {
         super(new String[]{
+        		"id",
                 "Strasse",
                 "Nr",
                 "Zus",
@@ -104,27 +106,30 @@ public class BasisAdresseModel extends ListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = adr.getStrasse();
+            tmp = adr.getId();
             break;
         case 1:
-            tmp = adr.getHausnr();
+            tmp = adr.getStrasse();
             break;
         case 2:
-            tmp = adr.getHausnrzus();
+            tmp = adr.getHausnr();
             break;
         case 3:
-            tmp = adr.getPlz();
+            tmp = adr.getHausnrzus();
             break;
         case 4:
-            tmp = adr.getEntgebid();
+            tmp = adr.getPlz();
             break;
         case 5:
-            tmp = adr.getStandortgghwsg();
+            tmp = adr.getEntgebid();
             break;
         case 6:
-            tmp = adr.getWassereinzugsgebiet();
+            tmp = adr.getStandortgghwsg();
             break;
         case 7:
+            tmp = adr.getWassereinzugsgebiet();
+            break;
+        case 8:
             tmp = adr.getBemerkungen();
             break;
 
@@ -164,21 +169,7 @@ public class BasisAdresseModel extends ListTableModel {
      * @param suche Der Such-String
      * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
      */
-    public void filterList(String suche, String property) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.getAdresse(property, suche));
-        lastSuchWort = suche;
-        lastProperty = property;
-        log.debug("End filterList");
-    }
-    
-    public void filterAllList(String suche, String property) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.findAdressen(suche, property, null, null));
-        lastSuchWort = suche;
-        lastProperty = property;
-        log.debug("End filterList");
-    }
+
     
     public void filterStandort(String strasse, Integer hausnr) {
         log.debug("Start filterList");

@@ -26,37 +26,13 @@
         <property name="gewaessernameAlias3" type="java.lang.String">
             <column name="gewaessername_alias_3" />
         </property>
-        <property name="gewaessernameNs" type="java.lang.String">
-            <column name="gewaessername_ns" />
-        </property>
-        <property name="nadiaId" type="java.lang.String">
-            <column name="nadia_id" />
-        </property>
         <property name="stillgelegtAm" type="java.util.Date">
             <column name="stillgelegt_am" length="13" />
-        </property>
-        <property name="typIndirekt" type="java.lang.Boolean">
-            <column name="typ_indirekt" />
-        </property>
-        <property name="typIndGewDirekt" type="java.lang.Boolean">
-            <column name="typ_ind_gew_direkt" />
-        </property>
-        <property name="typKommTrenn" type="java.lang.Boolean">
-            <column name="typ_komm_trenn" />
-        </property>
-        <property name="typPrivatTrenn" type="java.lang.Boolean">
-            <column name="typ_privat_trenn" />
-        </property>
-        <property name="typSonstige" type="java.lang.Boolean">
-            <column name="typ_sonstige" />
-        </property>
-        <property name="typAusserortStrasseneinl" type="java.lang.Boolean">
-            <column name="typ_ausserort_strasseneinl" />
         </property>
         <property name="stationierungNs3" type="java.lang.Double">
             <column name="stationierung_ns_3" precision="17" scale="17" />
         </property>
-        <property name="einzugsgebiet" type="java.lang.Double">
+        <property name="einzugsgebiet" type="double">
             <column name="einzugsgebiet" precision="17" scale="17" />
         </property>
         <property name="stationierungSt3" type="java.lang.Double">
@@ -64,12 +40,6 @@
         </property>
         <property name="abgaberelEinl" type="java.lang.Integer">
             <column name="abgaberel_einl" />
-        </property>
-        <property name="e32" type="java.lang.Integer">
-            <column name="e32" />
-        </property>
-        <property name="n32" type="java.lang.Integer">
-            <column name="n32" />
         </property>
         <property name="kanalArtOpt" type="java.lang.Integer">
             <column name="kanal_art_opt" />
@@ -121,9 +91,6 @@
         </property>
         <property name="typSonstigeTog" type="boolean">
             <column name="typ_sonstige_tog" not-null="true" />
-        </property>
-        <property name="abgaberelevanteEltOpt" type="java.lang.Integer">
-            <column name="abgaberelevante_elt_opt" />
         </property>
         <property name="gewaesser3Id" type="java.lang.String">
             <column name="gewaesser_3_id" length="20" />
@@ -182,7 +149,42 @@
         <property name="externalNr" type="java.lang.String">
             <column name="external_nr" length="50" />
         </property>
-        <set name="versickerungsanlages" table="versickerungsanlage" schema="oberflgw" inverse="true" lazy="true" fetch="select">
+        <property name="gewnameStat" type="java.lang.String">
+            <column name="gewname_stat" length="50" />
+        </property>
+        <property name="gewkennzStat" type="java.lang.String">
+            <column name="gewkennz_stat" length="50" />
+        </property>
+        <property name="gewNameStadt" type="java.lang.String">
+            <column name="gew_name_stadt" length="50" />
+        </property>
+        <property name="gewKennzStadt" type="java.lang.String">
+            <column name="gew_kennz_stadt" length="50" />
+        </property>
+        <property name="hwrMassnahme" type="java.lang.String">
+            <column name="hwr_massnahme" length="50" />
+        </property>
+       <property name="entfEinlStatGew" type="java.lang.Double">
+            <column name="entf_einl_stat_gew" precision="17" scale="17" />
+        </property>
+         <property name="mwq" type="java.lang.Double">
+            <column name="mwq" precision="17" scale="17" />
+        </property>
+         <property name="hq1" type="java.lang.Double">
+            <column name="hq1" precision="17" scale="17" />
+        </property>
+         <property name="abwAgEinl" type="java.lang.String">
+            <column name="abw_ag_einl" />
+        </property>
+        <property name="bemerkungGewDaten" type="java.lang.String">
+            <column name="bemerkung_gew_daten" length="1000" />
+        </property>
+       
+        
+        
+        
+        
+        <set name="versickerungsanlages" table="versickerungsanlage" schema="oberflgw" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="els_nr" not-null="true" />
             </key>

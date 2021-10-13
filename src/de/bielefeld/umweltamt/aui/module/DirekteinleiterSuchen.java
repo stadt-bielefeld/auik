@@ -78,6 +78,11 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
     public String getName() {
         return "Aktenzeichen suchen";
     }
+    
+    @Override
+    public String getCategory() {
+        return "Betriebe";
+    }
 
     @Override
     public String getIdentifier() {
@@ -97,7 +102,7 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
         String aktenzeichen = azFeld.getText();
         log.debug(" Suche nach Aktenzeichen " + aktenzeichen);
         ((DirekteinleiterModel)getTableModel()).setList(
-            DatabaseQuery.findAktenzeichen(aktenzeichen));// Aufruf der Suchfunktion. Startet eine Query in der Datenbank
+            DatabaseQuery.findWasserrechtAktenzeichen(aktenzeichen));// Aufruf der Suchfunktion. Startet eine Query in der Datenbank
         ((DirekteinleiterModel)getTableModel()).fireTableDataChanged();
         frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der gefundenen Objekte
         log.debug(getTableModel().getRowCount()

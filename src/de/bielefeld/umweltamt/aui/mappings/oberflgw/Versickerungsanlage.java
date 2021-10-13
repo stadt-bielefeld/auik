@@ -47,22 +47,21 @@ public class Versickerungsanlage  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Long nr;
     private Einleitungsstelle einleitungsstelle;
-    private BigDecimal flurabstand;
-    private BigDecimal gelaendeVerAnlage;
-    private BigDecimal abstGrGrenze;
-    private BigDecimal abstUnterkGebaeude;
-    private BigDecimal abstVerAnlage;
+    private Double flurabstand;
+    private Double gelaendeVerAnlage;
+    private Double abstGrGrenze;
+    private Double abstUnterkGebaeude;
+    private Double abstVerAnlage;
     private boolean landesfoerderungTog;
     private boolean notueberlaufTog;
     private String notueberlaufZiel;
     private Date erstellDat;
-    private BigDecimal durchlaessigkeit;
+    private Double durchlaessigkeit;
     private String untergrundart;
     private Integer verAnlageOpt;
     private String sonstigesVers;
     private String bauartzulId;
     private Date aktualDat;
-    private String herkunft;
     private String externalNr;
 
     /** Logging */
@@ -82,12 +81,12 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.notueberlaufTog = notueberlaufTog;
         this.erstellDat = erstellDat;
         this.aktualDat = aktualDat;
-        this.herkunft = herkunft;
+        
     }
 
     /** Full constructor */
     public Versickerungsanlage(
-        Long nr, Einleitungsstelle einleitungsstelle, BigDecimal flurabstand, BigDecimal gelaendeVerAnlage, BigDecimal abstGrGrenze, BigDecimal abstUnterkGebaeude, BigDecimal abstVerAnlage, boolean landesfoerderungTog, boolean notueberlaufTog, String notueberlaufZiel, Date erstellDat, BigDecimal durchlaessigkeit, String untergrundart, Integer verAnlageOpt, String sonstigesVers, String bauartzulId, Date aktualDat, String herkunft, String externalNr) {
+        Long nr, Einleitungsstelle einleitungsstelle, Double flurabstand, Double gelaendeVerAnlage, Double abstGrGrenze, Double abstUnterkGebaeude, Double abstVerAnlage, boolean landesfoerderungTog, boolean notueberlaufTog, String notueberlaufZiel, Date erstellDat, Double durchlaessigkeit, String untergrundart, Integer verAnlageOpt, String sonstigesVers, String bauartzulId, Date aktualDat,  String externalNr) {
         this.nr = nr;
         this.einleitungsstelle = einleitungsstelle;
         this.flurabstand = flurabstand;
@@ -105,7 +104,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.sonstigesVers = sonstigesVers;
         this.bauartzulId = bauartzulId;
         this.aktualDat = aktualDat;
-        this.herkunft = herkunft;
+  
         this.externalNr = externalNr;
     }
 
@@ -126,47 +125,47 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.einleitungsstelle = einleitungsstelle;
     }
 
-    public BigDecimal getFlurabstand() {
+    public Double getFlurabstand() {
         return this.flurabstand;
     }
 
-    public void setFlurabstand(BigDecimal flurabstand) {
-        this.flurabstand = flurabstand;
+    public void setFlurabstand(Double flurabstand2) {
+        this.flurabstand = flurabstand2;
     }
 
-    public BigDecimal getGelaendeVerAnlage() {
+    public Double getGelaendeVerAnlage() {
         return this.gelaendeVerAnlage;
     }
 
-    public void setGelaendeVerAnlage(BigDecimal gelaendeVerAnlage) {
-        this.gelaendeVerAnlage = gelaendeVerAnlage;
+    public void setGelaendeVerAnlage(Double gelaendeVerAnlage2) {
+        this.gelaendeVerAnlage = gelaendeVerAnlage2;
     }
 
-    public BigDecimal getAbstGrGrenze() {
+    public Double getAbstGrGrenze() {
         return this.abstGrGrenze;
     }
 
-    public void setAbstGrGrenze(BigDecimal abstGrGrenze) {
-        this.abstGrGrenze = abstGrGrenze;
+    public void setAbstGrGrenze(Double abstGrGrenze2) {
+        this.abstGrGrenze = abstGrGrenze2;
     }
 
-    public BigDecimal getAbstUnterkGebaeude() {
+    public Double getAbstUnterkGebaeude() {
         return this.abstUnterkGebaeude;
     }
 
-    public void setAbstUnterkGebaeude(BigDecimal abstUnterkGebaeude) {
-        this.abstUnterkGebaeude = abstUnterkGebaeude;
+    public void setAbstUnterkGebaeude(Double abstUnterkGebaeude2) {
+        this.abstUnterkGebaeude = abstUnterkGebaeude2;
     }
 
-    public BigDecimal getAbstVerAnlage() {
+    public Double getAbstVerAnlage() {
         return this.abstVerAnlage;
     }
 
-    public void setAbstVerAnlage(BigDecimal abstVerAnlage) {
-        this.abstVerAnlage = abstVerAnlage;
+    public void setAbstVerAnlage(Double abstVerAnlage2) {
+        this.abstVerAnlage = abstVerAnlage2;
     }
 
-    public boolean isLandesfoerderungTog() {
+    public Boolean isLandesfoerderungTog() {
         return this.landesfoerderungTog;
     }
 
@@ -174,7 +173,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.landesfoerderungTog = landesfoerderungTog;
     }
 
-    public boolean isNotueberlaufTog() {
+    public Boolean isNotueberlaufTog() {
         return this.notueberlaufTog;
     }
 
@@ -198,12 +197,12 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.erstellDat = erstellDat;
     }
 
-    public BigDecimal getDurchlaessigkeit() {
+    public Double getDurchlaessigkeit() {
         return this.durchlaessigkeit;
     }
 
-    public void setDurchlaessigkeit(BigDecimal durchlaessigkeit) {
-        this.durchlaessigkeit = durchlaessigkeit;
+    public void setDurchlaessigkeit(Double durchlaessigkeit2) {
+        this.durchlaessigkeit = durchlaessigkeit2;
     }
 
     public String getUntergrundart() {
@@ -244,14 +243,6 @@ public class Versickerungsanlage  implements java.io.Serializable {
 
     public void setAktualDat(Date aktualDat) {
         this.aktualDat = aktualDat;
-    }
-
-    public String getHerkunft() {
-        return this.herkunft;
-    }
-
-    public void setHerkunft(String herkunft) {
-        this.herkunft = herkunft;
     }
 
     public String getExternalNr() {
@@ -298,8 +289,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         buffer.append("verAnlageOpt").append("='").append(getVerAnlageOpt()).append("' ");			
         buffer.append("sonstigesVers").append("='").append(getSonstigesVers()).append("' ");			
         buffer.append("bauartzulId").append("='").append(getBauartzulId()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");			
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");	
         buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
         buffer.append("]");
 
@@ -382,8 +372,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.verAnlageOpt = copy.getVerAnlageOpt();            
         this.sonstigesVers = copy.getSonstigesVers();            
         this.bauartzulId = copy.getBauartzulId();            
-        this.aktualDat = copy.getAktualDat();            
-        this.herkunft = copy.getHerkunft();            
+        this.aktualDat = copy.getAktualDat(); 
         this.externalNr = copy.getExternalNr();            
     }    
 

@@ -59,7 +59,7 @@ public final class GUIManager
 	/** Der lange Name des Programms */
 	public static final String LONG_NAME = "Anlagen- und Indirekteinleiter-Kataster";
 	/** Program version */
-	private static final String VERSION = null;
+	private static final String VERSION = "1.1.0";
 	/** Program authors */
 	private static final Vector<String> AUTHORS = new Vector<String>();
 	/** Program authors as a HTML table */

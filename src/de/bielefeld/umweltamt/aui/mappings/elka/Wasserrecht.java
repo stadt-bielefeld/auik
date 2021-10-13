@@ -52,6 +52,7 @@ public class Wasserrecht  implements java.io.Serializable {
     private Integer id;
     private Objekt objekt;
     private String bemerkungen;
+    private String nebenbest;
     private Date erstellungsDatum;
     private Date aenderungsDatum;
     private Date antragDatum;
@@ -99,10 +100,11 @@ public class Wasserrecht  implements java.io.Serializable {
 
     /** Full constructor */
     public Wasserrecht(
-        Integer id, Objekt objekt, String bemerkungen, Date erstellungsDatum, Date aenderungsDatum, Date antragDatum, Boolean befristet, Date befristetBis, Integer anhang, Integer genMenge, Boolean gen58, Boolean gen59, Boolean selbstueberw, Boolean ESatzung, boolean enabled, boolean deleted, Integer uebergabestelleE32, Integer uebergabestelleN32, String rechtBehoerdenId, String wrBeschreibung, Integer rechtArtOpt, String aktenzeichen, String bemerkung, String wasserbuchId, String beerWrNr, Date erstellDat, Date aktualDat, Set<Entwaesserungsgrundstueck> entwaesserungsgrundstuecks, Set<Sonderbauwerk> sonderbauwerks) {
+        Integer id, Objekt objekt, String bemerkungen, String nebenbest, Date erstellungsDatum, Date aenderungsDatum, Date antragDatum, Boolean befristet, Date befristetBis, Integer anhang, Integer genMenge, Boolean gen58, Boolean gen59, Boolean selbstueberw, Boolean ESatzung, boolean enabled, boolean deleted, Integer uebergabestelleE32, Integer uebergabestelleN32, String rechtBehoerdenId, String wrBeschreibung, Integer rechtArtOpt, String aktenzeichen, String bemerkung, String wasserbuchId, String beerWrNr, Date erstellDat, Date aktualDat, Set<Entwaesserungsgrundstueck> entwaesserungsgrundstuecks, Set<Sonderbauwerk> sonderbauwerks) {
         this.id = id;
         this.objekt = objekt;
         this.bemerkungen = bemerkungen;
+        this.nebenbest = nebenbest;
         this.erstellungsDatum = erstellungsDatum;
         this.aenderungsDatum = aenderungsDatum;
         this.antragDatum = antragDatum;
@@ -154,6 +156,14 @@ public class Wasserrecht  implements java.io.Serializable {
 
     public void setBemerkungen(String bemerkungen) {
         this.bemerkungen = bemerkungen;
+    }
+    
+    public String getNebenbest() {
+        return this.nebenbest;
+    }
+
+    public void setNebenbest(String nebenbest) {
+        this.nebenbest = nebenbest;
     }
 
     public Date getErstellungsDatum() {
@@ -394,7 +404,8 @@ public class Wasserrecht  implements java.io.Serializable {
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");			
         buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
+        buffer.append("nebenbest").append("='").append(getNebenbest()).append("' ");	
         buffer.append("erstellungsDatum").append("='").append(getErstellungsDatum()).append("' ");			
         buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
         buffer.append("antragDatum").append("='").append(getAntragDatum()).append("' ");			
@@ -488,7 +499,8 @@ public class Wasserrecht  implements java.io.Serializable {
     private void copy(Wasserrecht copy) {
         this.id = copy.getId();            
         this.objekt = copy.getObjekt();            
-        this.bemerkungen = copy.getBemerkungen();            
+        this.bemerkungen = copy.getBemerkungen();  
+        this.nebenbest = copy.getNebenbest();   
         this.erstellungsDatum = copy.getErstellungsDatum();            
         this.aenderungsDatum = copy.getAenderungsDatum();            
         this.antragDatum = copy.getAntragDatum();            
@@ -566,4 +578,5 @@ public class Wasserrecht  implements java.io.Serializable {
         Set<Wasserrecht> list = objekt.getWasserrechts();
         return list.iterator().next();
     }
+
 }

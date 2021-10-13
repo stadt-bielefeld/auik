@@ -410,8 +410,8 @@ public class BasisPanel extends JPanel {
             }
 
             if (!neu) {
-                if (this.hauptModul.getObjekt().getObjektarten()
-                        .getAbteilung().equals("Indirekt-Einl.")) {
+                if (!this.hauptModul.getObjekt().getObjektarten()
+                        .getAbteilung().equals("AwSV")) {
                     getPrioritaetFeld().setVisible(true);
                     getPrioritaetLabel().setVisible(true);
                     getElkarelevantBox().setVisible(true);
@@ -642,37 +642,15 @@ public class BasisPanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Standort standort = BasisPanel.this.hauptModul.getObjekt().getStandortid();
-					if (BasisPanel.this.hauptModul.getObjekt().getBetreiberid() != null && standort == null) {
-						standort = new Standort();
-						standort.setInhaber(BasisPanel.this.hauptModul.getObjekt().getBetreiberid());
-					}
 					if (standort == null) {
 						standort = new Standort();
-						standort.getInhaber().setAdresse(new Adresse());
 					}
-					if (standort.getInhaber() != null) {
-						AdresseChooser chooser = new AdresseChooser(standort,
-								BasisPanel.this.hauptModul.getFrame(), "standort");
-						chooser.setVisible(true);
+                    AdresseChooser chooser = new AdresseChooser(standort,
+                            BasisPanel.this.hauptModul.getFrame(), "standort");
+                        chooser.setVisible(true);
 
-						if (chooser.getChosenStandort().getInhaber().getAdresse() != null) {
-							standortFeld.setText(chooser.getChosenStandort().getInhaber().toString());
-							BasisPanel.this.hauptModul.getObjekt()
-									.setStandortid(chooser.getChosenStandort());
-						}
-					} else {
-	                    Inhaber betreiber = BasisPanel.this.hauptModul
-	                            .getObjekt().getBetreiberid();
-	                        if (betreiber == null) {
-	                            betreiber = new Inhaber();
-	                        }
-	                        AdresseChooser chooser = new AdresseChooser(betreiber,
-	                            BasisPanel.this.hauptModul.getFrame(), "betreiber");
-	                        chooser.setVisible(true);
-
-	                        BasisPanel.this.hauptModul.getObjekt().setStandortid(
-	                            chooser.getChosenBetreiber().getStandort());
-					}
+                        BasisPanel.this.hauptModul.getObjekt().setStandortid(
+                            chooser.getChosenStandort());
 					updateForm();
 				}
 			});
@@ -722,17 +700,6 @@ public class BasisPanel extends JPanel {
                                     .intValue(), false);
                     }
                     if (BasisPanel.this.hauptModul.getObjekt()
-                        .getStandortid() != null) {
-                        BasisPanel.this.hauptModul
-                            .getManager()
-                            .getSettingsManager()
-                            .setSetting(
-                                "auik.imc.use_lage",
-                                BasisPanel.this.hauptModul.getObjekt()
-                                    .getStandortid().getId()
-                                    .intValue(), false);
-                    }
-                    if (BasisPanel.this.hauptModul.getObjekt()
                             .getStandortid() != null) {
                             BasisPanel.this.hauptModul
                                 .getManager()
@@ -745,6 +712,7 @@ public class BasisPanel extends JPanel {
                         }
                     BasisPanel.this.hauptModul.getManager().switchModul(
                         "m_betreiber_neu");
+                    saveObjektDaten();
                 }
             });
         }
@@ -797,58 +765,30 @@ public class BasisPanel extends JPanel {
         return this.standortEditButton;
     }
 
-    private JButton getStandortNewButton() {
-        if (this.standortNewButton == null) {
-            this.standortNewButton = new JButton(AuikUtils.getIcon(16,
-                "filenew.png", ""));
-            this.standortNewButton
-                .setHorizontalAlignment(SwingConstants.CENTER);
-            this.standortNewButton.setToolTipText("Neuen Standort anlegen");
+	private JButton getStandortNewButton() {
+		if (this.standortNewButton == null) {
+			this.standortNewButton = new JButton(AuikUtils.getIcon(16, "filenew.png", ""));
+			this.standortNewButton.setHorizontalAlignment(SwingConstants.CENTER);
+			this.standortNewButton.setToolTipText("Neuen Standort anlegen");
 
-            this.standortNewButton.addActionListener(new ActionListener() {
+			this.standortNewButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-                    BasisPanel.this.hauptModul.getManager()
-                        .getSettingsManager()
-                        .setSetting("auik.imc.return_to_objekt_betreiber", true, false);
-                    if (BasisPanel.this.hauptModul.getObjekt()
-                        .getBetreiberid() != null) {
-                        BasisPanel.this.hauptModul
-                            .getManager()
-                            .getSettingsManager()
-                            .setSetting(
-                                "auik.imc.use_betreiber",
-                                BasisPanel.this.hauptModul.getObjekt()
-                                    .getBetreiberid().getId()
-                                    .intValue(), false);
-                    }
-                    if (BasisPanel.this.hauptModul.getObjekt()
-                        .getStandortid() != null) {
-                        BasisPanel.this.hauptModul
-                            .getManager()
-                            .getSettingsManager()
-                            .setSetting(
-                                "auik.imc.use_lage",
-                                BasisPanel.this.hauptModul.getObjekt()
-                                    .getStandortid().getId()
-                                    .intValue(), false);
-                    }
-                    if (BasisPanel.this.hauptModul.getObjekt()
-                            .getStandortid() != null) {
-                            BasisPanel.this.hauptModul
-                                .getManager()
-                                .getSettingsManager()
-                                .setSetting(
-                                    "auik.imc.use_standort",
-                                    BasisPanel.this.hauptModul.getObjekt()
-                                        .getStandortid().getId()
-                                        .intValue(), false);
-                        }
-                    BasisPanel.this.hauptModul.getManager().switchModul(
-                        "m_betreiber_neu");
+
+					Standort std = new Standort();
+					StandortEditor editDialog = new StandortEditor(std,
+							BasisPanel.this.hauptModul.getFrame());
+
+					editDialog.setVisible(true);
+					if (std.getBezeichnung() != null && !std.getBezeichnung().equals("")) {
+						std = Standort.merge(std);
+						hauptModul.getObjekt().setStandortid(std);
+						updateForm();
+					}
+
 				}
 			});
-        }
+		}
 
         return this.standortNewButton;
     }

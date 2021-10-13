@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.10.0  -->
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.2.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vaws_standortliste_details" language="groovy" pageWidth="483" pageHeight="802" columnWidth="483" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9ef285c7-b3d7-4cfc-9588-557674c664ea">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -13,7 +13,7 @@ fachdaten.menge, fachdaten.stillegungsdatum, objektarten.objektart,
 adresse.betrname, fachdaten.objektid, (select count(*)
     from basis.standort
     inner join basis.objekt on objekt.standortid = standort.id
-    inner join basis.adresse on adresse.id = objekt.betreiberid
+    inner join basis.inhaber on inhaber.id = objekt.betreiberid
     inner join awsv.fachdaten on fachdaten.objektid = objekt.id
     inner join basis.objektarten on objektarten.id = objekt.objektartid
     where standort.id = $P{StandortId}
@@ -21,7 +21,7 @@ adresse.betrname, fachdaten.objektid, (select count(*)
           and objektarten.abteilung = 'AwSV') as anzahl
 from basis.standort
 inner join basis.objekt on objekt.standortid = standort.id
-inner join basis.adresse on adresse.id = objekt.betreiberid
+inner join basis.inhaber on inhaber.id = objekt.betreiberid
 inner join awsv.fachdaten on fachdaten.objektid = objekt.id
 inner join basis.objektarten on objektarten.id = objekt.objektartid
 where standort.id = $P{StandortId}

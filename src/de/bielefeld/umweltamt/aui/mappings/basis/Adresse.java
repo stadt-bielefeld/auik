@@ -505,5 +505,11 @@ public class Adresse  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
+    
+    public String getE32(Adresse adr) {
+    	String e32 = null;
+    	
+		return e32;    	
+    }
 
 }

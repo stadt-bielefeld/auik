@@ -22,6 +22,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -39,6 +40,7 @@ public class EditorParameterModel extends EditableListTableModel {
         super(new String[]{
                 "ID",
                 "Parameter",
+                "Analysemethode",
                 "Abwasser-Grenzwert",
                 "Sielhaut-Grenzwert"
         },
@@ -61,8 +63,11 @@ public class EditorParameterModel extends EditableListTableModel {
             tmp = para.getBezeichnung();
             break;
         case 2:
-        	return para.getGrenzwert();
+            tmp = para.getMapElkaAnalysemethode();
+            break;
         case 3:
+        	return para.getGrenzwert();
+        case 4:
         	return para.getSielhautGw();
 
         default:
@@ -92,12 +97,17 @@ public class EditorParameterModel extends EditableListTableModel {
         	tmp.setBezeichnung(tmpArt);
         	break;
         	
-        case 2:
+        case 2:        	
+        	MapElkaAnalysemethode tmpMethode = (MapElkaAnalysemethode) newValue;
+            tmp.setMapElkaAnalysemethode(tmpMethode);
+            break;
+            
+        case 3:
         	Double tmpGW = (Double) newValue;
         	tmp.setGrenzwert(tmpGW);
         	break;
         	
-        case 3:
+        case 4:
         	Double tmpSielGW = (Double) newValue;
         	tmp.setSielhautGw(tmpSielGW);
         	break;
@@ -143,10 +153,14 @@ public class EditorParameterModel extends EditableListTableModel {
 	            break;
 	
 	        case 2:
-	            tmp = Double.class;
+	        	tmp = MapElkaAnalysemethode.class;
 	            break;
 	
 	        case 3:
+	            tmp = Double.class;
+	            break;
+	
+	        case 4:
 	            tmp = Double.class;
 	            break;
 	

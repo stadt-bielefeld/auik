@@ -34,6 +34,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 
@@ -64,6 +65,7 @@ public class AnalyseProcessor {
         String grkl                 = unquote(columns[4]);
         String wert                 = unquote(columns[5]);
         String einheitId            = unquote(columns[6]);
+        String methode              = unquote(columns[8]);
 
         int id = -1;
         if (einheitId != null && !einheitId.equals("")) {
@@ -86,6 +88,7 @@ public class AnalyseProcessor {
 
         Parameter parameter = Parameter.findById(ordnungsbegriff);
         Einheiten einheit   = Einheiten.findById(id);
+        MapElkaAnalysemethode mapAna = MapElkaAnalysemethode.findByMethoden(methode);
 
         Analyseposition position = DatabaseQuery.findAnalyseposition(
             probe, parameter, einheit, true);
@@ -96,6 +99,22 @@ public class AnalyseProcessor {
             position.setGrkl(grkl);
             position.setEinheiten(einheit);
             position.setAnalyseVon("E-Satzung");
+            if (mapAna != null) {
+            	position.setMapElkaAnalysemethode(mapAna);
+            } else {
+            	if (methode != "") {
+                	mapAna = new MapElkaAnalysemethode();
+            		mapAna.setMethode(methode);            	
+                	mapAna.setGruppeDevId("000");
+                	mapAna.setRegelwerkId("00");
+                	mapAna.setVariantenId("0");
+                	mapAna.merge();
+                	position.setMapElkaAnalysemethode(mapAna);
+            	} else {
+            		position.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
+            	}
+            }
+            
             position.merge();
 
             probe.setStatus(DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN);

@@ -130,6 +130,7 @@ public class HibernateSessionFactory {
                 catch (Exception e) {
                     log.error("%%%% Error Creating SessionFactory %%%%");
                     e.printStackTrace();
+                    return null;
                 }
             }
             session = sessionFactory.openSession();
@@ -194,6 +195,10 @@ public class HibernateSessionFactory {
      */
     public static void setDBDialect(String dialect) {
         DB_Dialect = dialect;
+    }
+
+    public static String getDBUser() {
+        return DB_USER;
     }
 
     /**
@@ -264,6 +269,19 @@ public class HibernateSessionFactory {
      * @return <code>true</code>, wenn die Benutzerdaten korrekt sind, sonst <code>false</code>
      */
     public static boolean checkCredentials(String user, String pass) throws HibernateException {
+        return checkCredentials(user, pass, true);
+    }
+
+    /**
+     * überprüft die Benutzerdaten für die Datenbank.
+     * @param user Der Datenbank-Benutzer
+     * @param pass Das Passwort des Datenbank-Benutzers
+     * @param save True wenn korrekte Benuterdaten gespeichert werden sollen
+     * @return <code>true</code>, wenn die Benutzerdaten korrekt sind, sonst <code>false</code>
+     */
+    public static boolean checkCredentials(String user, String pass, boolean save) throws HibernateException {
+        String currentUser = DB_USER;
+        String currentPw = DB_PASS;
         setDBData(user, pass);
         //AUIKataster.debugOutput("User: " + DB_USER + ", Pass: " + DB_PASS, "HSF.checkCredentials");
 
@@ -275,12 +293,21 @@ public class HibernateSessionFactory {
                     "select count(*) from basis.adresse"
             ).list();
             tmp = true;
+            //If credentials are not save, reset
+            if (!save) {
+                setDBData(currentUser, currentPw);
+            }
         } catch (Exception e) {
             if (e.getClass().equals(org.hibernate.exception.JDBCConnectionException.class)) {
                 tmp = false;
-                setDBData("", "");
+                if (save) {
+                    setDBData("", "");
+                }
             }
         } finally {
+            if (!save) {
+                setDBData(currentUser, currentPw);
+            }
             closeSession();
         }
 

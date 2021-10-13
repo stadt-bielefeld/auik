@@ -21,6 +21,10 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
@@ -35,6 +39,7 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 99251332998082843L;
+	boolean isnew = new Boolean(false);
 
 	public EditorSachbearbeiterModel() {
         super(new String[]{
@@ -99,7 +104,17 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
 		switch (columnIndex) {
         case 0:
         	String tmpID = (String) newValue;
-        	tmp.setKennummer(tmpID);
+        	if (Sachbearbeiter.findByKennummer(tmpID) != null && isnew) {
+                JOptionPane.showMessageDialog(
+                        new JPanel(),
+                        "Die Kennummer existiert bereits.",
+                        "Speicherfehler",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+        	}else {
+        		tmp.setKennummer(tmpID);
+    		}
+        	
         	break;
         	
         case 1:
@@ -136,12 +151,17 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
             break;        	
         	
 		}
-		Sachbearbeiter.merge(tmp);
+
+		tmp.merge();
+		isnew = false;
+		
 	}
 
 	@Override
 	public Object newObject() {
 		Sachbearbeiter tmp = new Sachbearbeiter();
+        tmp.setId(DatabaseQuery.newSachbearbeiterID());
+        isnew = true;
 		return tmp;
 	}
 

@@ -137,6 +137,7 @@ import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageModel;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
+import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.BasicEntryField;
@@ -159,9 +160,11 @@ public class BasisStandortSuchen extends AbstractModul
 	private JTextField hausnrFeld;
 	private JTextField ortFeld;
 	private JButton submitButton;
-	private JButton dreiButton;
-	private JButton vierButton;
+	private JButton indirektButton;
+	private JButton awsvButton;
 	private JButton probepktButton;
+	private JButton anfallButton;
+	private JButton genButton;
 	private JTable standortTabelle;
 	private JTable objektTabelle;
 	private JSplitPane tabellenSplit;
@@ -189,7 +192,6 @@ public class BasisStandortSuchen extends AbstractModul
 
 	private Timer suchTimer;
 
-	private JButton reportStandortListeButton;
 	protected String betreiber;
 	protected String standort;
 	protected int standortID;
@@ -269,14 +271,11 @@ public class BasisStandortSuchen extends AbstractModul
 			JPanel restrictPanel = new JPanel(new BorderLayout());
 
 			JComponent restrictButtonBar = ComponentFactory.buildLeftAlignedBar(
-							getDreiButton(),getVierButton(),getProbepktButton());
-			JComponent restrictButtonBar2 =
-					ComponentFactory.buildRightAlignedBar(getReportListeButton());
+					getAwsvButton(), getIndirektButton(), getProbepktButton(), getAnfallButton(), getGenButton());
 
 			restrictPanel.add(new Label("Objekte einschränken:"),
 								BorderLayout.WEST);
 			restrictPanel.add(restrictButtonBar, BorderLayout.CENTER);
-			restrictPanel.add(restrictButtonBar2, BorderLayout.EAST);
 
 			// Die Tab-Action ist in eine neue Klasse ausgelagert,
 			// weil man sie evtl. öfters brauchen wird.
@@ -859,13 +858,13 @@ public class BasisStandortSuchen extends AbstractModul
 		return this.submitButton;
 	}
 
-	private JButton getDreiButton()
+	private JButton getIndirektButton()
 	{
-		if (this.dreiButton == null)
+		if (this.indirektButton == null)
 		{
-			this.dreiButton = new JButton("Indirekt-Einl.");
-			this.dreiButton.setToolTipText("nur Indirekteinleiter Objekt");
-			this.dreiButton.addActionListener(new ActionListener()
+			this.indirektButton = new JButton("Indirekt-Einl.");
+			this.indirektButton.setToolTipText("nur Indirekteinleiter Objekt");
+			this.indirektButton.addActionListener(new ActionListener()
 			{
 				@Override
 				public void actionPerformed(ActionEvent e)
@@ -886,16 +885,16 @@ public class BasisStandortSuchen extends AbstractModul
 			});
 		}
 
-		return this.dreiButton;
+		return this.indirektButton;
 	}
 
-	private JButton getVierButton()
+	private JButton getAwsvButton()
 	{
-		if (this.vierButton == null)
+		if (this.awsvButton == null)
 		{
-			this.vierButton = new JButton("AwSV");
-			this.vierButton.setToolTipText("nur AwSV Objekte");
-			this.vierButton.addActionListener(new ActionListener()
+			this.awsvButton = new JButton("AwSV");
+			this.awsvButton.setToolTipText("nur AwSV Objekte");
+			this.awsvButton.addActionListener(new ActionListener()
 			{
 				@Override
 				public void actionPerformed(ActionEvent e)
@@ -916,7 +915,7 @@ public class BasisStandortSuchen extends AbstractModul
 			});
 		}
 
-		return this.vierButton;
+		return this.awsvButton;
 	}
 
 	private JButton getProbepktButton()
@@ -949,27 +948,64 @@ public class BasisStandortSuchen extends AbstractModul
 		return this.probepktButton;
 	}
 
-	private JButton getReportListeButton()
+	private JButton getAnfallButton()
 	{
-		if (this.reportStandortListeButton == null)
+		if (this.anfallButton == null)
 		{
-
-			this.reportStandortListeButton = new JButton("PDF-Liste generieren");
-			this.reportStandortListeButton
-					.setToolTipText("Liste der AwSV-Objekte am Standort");
-			this.reportStandortListeButton
-					.addActionListener(new ActionListener()
+			this.anfallButton = new JButton("Anfallstellen");
+			this.anfallButton
+					.setToolTipText("nur die Anfallstellen anzeigen");
+			this.anfallButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ListSelectionModel lsm = getStandortTabelle()
+							.getSelectionModel();
+					if (!lsm.isSelectionEmpty())
 					{
-
-						@Override
-						public void actionPerformed(ActionEvent e)
-						{
-							showReportListe();
-						}
-						// }
-					});
+						int selectedRow = lsm.getMinSelectionIndex();
+						Adresse adr = BasisStandortSuchen.this.standortModel
+								.getRow(selectedRow);
+						log.debug("Standort " + adr + " angewählt.");
+						searchObjekteByStandort(adr,
+												DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE);
+					}
+				}
+			});
 		}
-		return this.reportStandortListeButton;
+
+		return this.anfallButton;
+	}
+
+	private JButton getGenButton()
+	{
+		if (this.genButton == null)
+		{
+			this.genButton = new JButton("Genehmigungen");
+			this.genButton
+					.setToolTipText("nur die Genehmigungen anzeigen");
+			this.genButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ListSelectionModel lsm = getStandortTabelle()
+							.getSelectionModel();
+					if (!lsm.isSelectionEmpty())
+					{
+						int selectedRow = lsm.getMinSelectionIndex();
+						Adresse adr = BasisStandortSuchen.this.standortModel
+								.getRow(selectedRow);
+						log.debug("Standort " + adr + " angewählt.");
+						searchObjekteByStandort(adr,
+												DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG);
+					}
+				}
+			});
+		}
+
+		return this.genButton;
 	}
 
 	private JTable getStandortTabelle()
@@ -1364,8 +1400,9 @@ public class BasisStandortSuchen extends AbstractModul
 							proj);
 
 					Map<String, String> env = pb.environment();
-					env.put("RECHTS", adr.getInhabers().iterator().next().getStandort().getE32().toString());
-					env.put("HOCH", adr.getInhabers().iterator().next().getStandort().getN32().toString());
+					TabStreets ts = DatabaseQuery.getSingleTabStreet(adr.getStrasse(), adr.getHausnr(), adr.getHausnrzus());
+					env.put("RECHTS", ts.getX().toString());
+					env.put("HOCH", ts.getY().toString());
 
 					try
 					{

@@ -42,13 +42,18 @@ package de.bielefeld.umweltamt.aui.module;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -68,8 +73,10 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorParameterModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -92,6 +99,7 @@ public class EditorParameter extends AbstractModul {
     
     private Action resultLoeschAction;
     private JPopupMenu resultPopup;
+    private JComboBox methodeBox;
 
 	
 	
@@ -215,6 +223,25 @@ public class EditorParameter extends AbstractModul {
 					column.setPreferredWidth(200);
 				}
 			}
+			
+	        // Methode
+	        TableColumn methodeColumn = this.resultTable.getColumnModel()
+	            .getColumn(2);
+	        methodeColumn.setPreferredWidth(200);
+	        
+	        methodeBox = new JComboBox(DatabaseQuery.getMapElkaAnalysemethode());
+	        methodeBox.setEditable(false);
+	        methodeBox.addFocusListener(new FocusAdapter() {
+	            @Override
+	            public void focusGained(FocusEvent e) {
+	                EditorParameter.this.methodeBox.showPopup();
+	            }
+	        });
+	        methodeBox.setBorder(BorderFactory.createEmptyBorder());
+
+	        methodeColumn.setCellEditor(new DefaultCellEditor(methodeBox));
+	        methodeColumn.setCellRenderer(new ComboBoxRenderer());
+
 			
             resultTable.getInputMap().put(
                 (KeyStroke) getResultLoeschAction().getValue(
