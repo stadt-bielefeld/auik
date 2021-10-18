@@ -68,7 +68,7 @@ public class ProbepunkteModel extends ListTableModel {
                 "Kassenzeichen",
                 "Branche",
                 "Beschreibung",
-                "Sachb.(Rav)",
+                "Sachb.(ABS)",
                 "Sachb.(Heepen)"
         },
         false);
