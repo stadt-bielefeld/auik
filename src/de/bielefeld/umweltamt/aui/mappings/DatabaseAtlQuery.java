@@ -627,7 +627,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		if (probe.getMessstelle().getProbeart() != null) {
 			return (probe.getMessstelle().getProbeart().getId().equals(DatabaseConstants.ATL_PROBEART_ID_FAULSCHLAMM)
 					|| probe.getMessstelle().getProbeart().getId()
-							.equals(DatabaseConstants.ATL_PROBEART_ID_ROHRSCHLAMM));
+							.equals(DatabaseConstants.ATL_PROBEART_ID_ROHSCHLAMM));
 		}
 		else return false;
 	}

@@ -994,7 +994,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 		if (this.artBox == null)
 		{
 			Integer[] artIDs = new Integer[] {
-					DatabaseConstants.ATL_PROBEART_ID_ROHRSCHLAMM,
+					DatabaseConstants.ATL_PROBEART_ID_ROHSCHLAMM,
 					DatabaseConstants.ATL_PROBEART_ID_FAULSCHLAMM,
 					DatabaseConstants.ATL_PROBEART_ID_ANLIEFERUNG,
 					DatabaseConstants.ATL_PROBEART_ID_ZULAUF

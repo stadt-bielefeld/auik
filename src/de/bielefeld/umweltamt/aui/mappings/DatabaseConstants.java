@@ -91,7 +91,7 @@ public class DatabaseConstants {
     public static final Integer ATL_PROBEART_ID_ABWASSER_E_SATZUNG = 3;
     public static final Integer ATL_PROBEART_ID_ANLIEFERUNG = 4;
     public static final Integer ATL_PROBEART_ID_FAULSCHLAMM = 5;
-    public static final Integer ATL_PROBEART_ID_ROHRSCHLAMM = 6;
+    public static final Integer ATL_PROBEART_ID_ROHSCHLAMM = 6;
     public static final Integer ATL_PROBEART_ID_SIELHAUT = 7;
     public static final Integer ATL_PROBEART_ID_ZULAUF = 9;
 

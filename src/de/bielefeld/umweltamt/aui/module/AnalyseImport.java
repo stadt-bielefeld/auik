@@ -82,7 +82,7 @@ public class AnalyseImport extends AbstractModul {
 
         public AnalyseImporter() {
             super(new String[] {"Kennnummer", "Ordnungsbegriff", "Parameter",
-                    "GrKl", "Wert", "Einheit", "Plausibel"}, false);
+                    "GrKl", "Wert", "Einheit","Analysemethode", "Plausibel"}, false);
         }
 
         @Override
@@ -116,6 +116,9 @@ public class AnalyseImport extends AbstractModul {
                     return getColoredColumn(status,
                         AnalyseProcessor.unquote(columns[7]));
                 case 6:
+                    return getColoredColumn(status,
+                        AnalyseProcessor.unquote(columns[8]));    
+                case 7:
                     return this.selection[row];
             }
 
@@ -197,7 +200,7 @@ public class AnalyseImport extends AbstractModul {
          */
         @Override
         public void setValueAt(Object value, int row, int col) {
-            if (col != 6) {
+            if (col != 7) {
                 return;
             }
 
@@ -224,7 +227,7 @@ public class AnalyseImport extends AbstractModul {
             List<String[]> selected = new ArrayList<String[]>();
 
             for (int i = 0; i < this.selection.length; i++) {
-                boolean s = Boolean.TRUE.equals(getValueAt(i, 6));
+                boolean s = Boolean.TRUE.equals(getValueAt(i, 7));
                 if (s) {
                     selected.add((String[]) getObjectAtRow(i));
                 }
@@ -243,7 +246,7 @@ public class AnalyseImport extends AbstractModul {
          */
         @Override
         public Class<?> getColumnClass(int col) {
-            return col == 6 ? Boolean.class : String.class;
+            return col == 7 ? Boolean.class : String.class;
         }
 
         /**
@@ -257,7 +260,7 @@ public class AnalyseImport extends AbstractModul {
          */
         @Override
         public boolean isCellEditable(int row, int col) {
-            return (col == 6 && getRowStatus(row) > 0) ? true : false;
+            return (col == 7 && getRowStatus(row) > 0) ? true : false;
         }
 
         /**

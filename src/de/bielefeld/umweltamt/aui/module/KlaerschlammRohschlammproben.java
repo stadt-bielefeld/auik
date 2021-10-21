@@ -90,7 +90,7 @@ public class KlaerschlammRohschlammproben extends AbstractModul {
         if (panel == null) {
             panel = new SchlammPanel(
                 Probeart.findById(
-                    DatabaseConstants.ATL_PROBEART_ID_ROHRSCHLAMM),
+                    DatabaseConstants.ATL_PROBEART_ID_ROHSCHLAMM),
                 frame);
         }
         return panel;
