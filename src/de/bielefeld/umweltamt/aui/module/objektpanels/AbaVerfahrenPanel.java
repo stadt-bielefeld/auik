@@ -266,7 +266,7 @@ public class AbaVerfahrenPanel extends JPanel {
             this.rightData.add(verfahren);
             this.leftData.remove(verfahren);
         });
-        this.updateLists();
+        //this.updateLists();
         leftList.clearSelection();
         Set set = new HashSet(rightData);
         fachdaten.setAbaverfahrens(null);
