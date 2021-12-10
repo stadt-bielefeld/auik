@@ -176,21 +176,20 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     }
 
     /**
-     * Get all Anh49Fachdaten that are Fettabscheider
-     * @return <code>List&lt;Anh49Fachdaten&gt;</code>
+     * Get all Anfallstelle that are Fettabscheider
+     * @return <code>List&lt;Anfallstelle;</code>
      */
-    public static List<Anh49Fachdaten> getFettabscheider() {
+    public static List<Anfallstelle> getFettabscheider() {
         return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anh49Fachdaten.class)
-                .createAlias("anfallstelle", "anf")
-                .createAlias("anf.objekt", "objekt")
+            DetachedCriteria.forClass(Anfallstelle.class)
+                .createAlias("objekt", "objekt")
                 .createAlias("objekt.objektarten", "art")
                 .createAlias("objekt.betreiberid", "adresse")
                 .add(Restrictions.eq("objekt.deleted", false))
-                .add(Restrictions.eq("anf.anlagenart", "Fettabscheider"))
+                .add(Restrictions.eq("anlagenart", "Fettabscheider"))
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("adresse.name")),
-            new Anh49Fachdaten());
+            new Anfallstelle());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

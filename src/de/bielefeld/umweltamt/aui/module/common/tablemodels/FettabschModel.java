@@ -22,6 +22,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
@@ -38,9 +39,6 @@ public class FettabschModel extends ListTableModel {
                 "Betreiber",
                 "Standort",
                 "Bemerkungen",
-                "Genehmigungsdatum",
-                "Abfuhrdatum",
-                "nächste Abfuhr",
                 "letztes Chrono-Datum"
         },
         false);
@@ -51,39 +49,28 @@ public class FettabschModel extends ListTableModel {
      */
 	@Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Anh49Fachdaten fd = (Anh49Fachdaten) objectAtRow;
+		Anfallstelle fd = (Anfallstelle) objectAtRow;
 		Object tmp = null;
 		switch (columnIndex) {
     		case 0:
-    			tmp = fd.getAnfallstelle().getObjekt().getBetreiberid();
+    			tmp = fd.getObjekt().getBetreiberid();
     			break;
     		case 1:
-    			tmp = DatabaseQuery.getStandortString(fd.getAnfallstelle().getObjekt().getStandortid());
+    			tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
     			break;
     		case 2:
     			tmp = fd.getBemerkungen();
     			break;
     		case 3:
-    			tmp = fd.getGenehmigung();
-    			break;
-    		case 4:
-    			tmp = DatabaseQuery.getLastAbfuhrDateForObjekt(
-    		    		fd);
-    			break;
-    		case 5:
-    			tmp = DatabaseQuery.getNextAbfuhrDateForObjekt(
-    		    		fd);
-    			break;
-    		case 6:
     		    tmp = DatabaseQuery.getLastChronoDateForObjekt(
-    		    		fd.getAnfallstelle().getObjekt());
+    		    		fd.getObjekt());
     		    break;
     		default:
     			tmp = "ERROR";
 		}
 
 		if (tmp != null &&
-			fd.getAnfallstelle().getObjekt().isInaktiv()) {
+			fd.getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
 		}
 		return tmp;
