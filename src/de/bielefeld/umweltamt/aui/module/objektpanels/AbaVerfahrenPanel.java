@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -166,7 +167,7 @@ public class AbaVerfahrenPanel extends JPanel {
 
     private JList getLeftList()
     {
-        if (this.leftList == null)
+    	if (this.leftList == null)
         {
 
             if (this.verfahrens == null || this.verfahrens.length == 0) {
@@ -298,6 +299,19 @@ public class AbaVerfahrenPanel extends JPanel {
                 return v1.getNr() - v2.getNr();
             });
         }
+        
+        this.verfahrens = DatabaseQuery.getVerfahren();
+        this.leftData.clear();
+        for (Abaverfahren verfahren: verfahrens) {
+            this.leftData.add(verfahren);
+            this.leftListModel.addElement(verfahren);
+        }
+        
+        List<Abaverfahren> removesaved = new ArrayList<Abaverfahren> (fachdaten.getAbaverfahrens());
+        removesaved.forEach((verfahren) -> {
+            this.leftData.remove(verfahren);
+        });
+        
         leftData.sort((v1, v2) -> {
             return v1.getNr() - v2.getNr();
         });
