@@ -348,7 +348,8 @@ public class EinleitungsstellePanel extends JPanel {
 
 			if (this.klaeranlagen != null) {
 				getKlaeranlageBox().setModel(new DefaultComboBoxModel<Klaeranlage>(this.klaeranlagen));
-
+			} else {
+				getKlaeranlageBox().setSelectedIndex(-1);
 			}
 
 			if (this.referenz != null) {
@@ -769,11 +770,12 @@ public class EinleitungsstellePanel extends JPanel {
 	 */
 
 	public void switchEinleitungItems(String type) {
-		if (type == null) {
-			return;
-		}
+// 		if (type == null) {
+//			return;
+//		}
 
 		if (type == "Indirekteinleitung") {
+			
 			klaeranlageLb.setVisible(true);
 			klaeranlageBox.setVisible(true);
 			kanalArtLb.setVisible(true);
@@ -783,7 +785,7 @@ public class EinleitungsstellePanel extends JPanel {
 			abwAgLb.setVisible(false);
 			abwAgEinlFeld.setVisible(false);
 
-		} else {
+		} else if (type != "Indirekteinleitung" && type != null) {
 
 			klaeranlageLb.setVisible(false);
 			klaeranlageBox.setVisible(false);
@@ -793,7 +795,21 @@ public class EinleitungsstellePanel extends JPanel {
 			abgaberelEinlBox.setVisible(true);
 			abwAgLb.setVisible(true);
 			abwAgEinlFeld.setVisible(true);
+			
+		} 
+		else {
 
+			klaeranlageLb.setVisible(false);
+			klaeranlageBox.setVisible(false);
+			kanalArtLb.setVisible(false);
+			kanalArtOptBox.setVisible(false);
+			abgabeLb.setVisible(false);
+			abgaberelEinlBox.setVisible(false);
+			abwAgLb.setVisible(false);
+			abwAgEinlFeld.setVisible(false);
+			
+		} 
+		
 			this.einleitungsstelle.setTypAusseroertlicheStrasseneinleitungTog(false);
 			this.einleitungsstelle.setTypGrubenwasserTog(false);
 			this.einleitungsstelle.setTypIndirekteinleitungTog(false);
@@ -850,7 +866,7 @@ public class EinleitungsstellePanel extends JPanel {
 			getGewaesserTab().updateForm(einleitungsstelle);
 			hauptModul.getTabbedPane().setSelectedIndex(2);
 
-		}
+		
 	}
 
 	public GewaesserdatenPanel getGewaesserTab() {
