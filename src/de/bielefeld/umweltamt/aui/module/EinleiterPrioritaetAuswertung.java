@@ -49,7 +49,9 @@ package de.bielefeld.umweltamt.aui.module;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
@@ -57,6 +59,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.PrioritaetModel;
@@ -74,8 +77,8 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
 
     // Widgets für die Abfrage
     private JButton submitButton;
-//    private JComboBox sachbearbeiterBox;
-//    private JButton suchButton;
+    private JComboBox sachbearbeiterBox;
+    private JComboBox prioritaetBox;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private PrioritaetModel tmodel;
@@ -104,13 +107,21 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
 
+            sachbearbeiterBox = new JComboBox();
+            sachbearbeiterBox.setModel(new DefaultComboBoxModel(
+                    DatabaseQuery.getOrderedAll(new Sachbearbeiter(), "name")
+                        .toArray(new Sachbearbeiter[0])));
+            sachbearbeiterBox.setSelectedItem(DatabaseQuery.getCurrentSachbearbeiter());
+            sachbearbeiterBox.setSelectedItem(-1);
+            sachbearbeiterBox.setEditable(true);
 
-//            sachbearbeiterBox = new JComboBox(BasisSachbearbeiter.getSachbearbeiter());
-//            sachbearbeiterBox.setSelectedItem(-1);
-//            sachbearbeiterBox.setEditable(true);
+            prioritaetBox = new JComboBox();
+            String[] items = {"1","2","3"};
+            prioritaetBox = new JComboBox(items);
+            prioritaetBox.setSelectedItem(-1);
+            prioritaetBox.setEditable(true);
 
-            submitButton = new JButton("Alle auswählen");
-//            suchButton = new JButton("suchen");
+            submitButton = new JButton("suchen");
 
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
@@ -122,7 +133,7 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
                         @Override
                         protected void doNonUILogic() {
                             ((PrioritaetModel)getTableModel()).setList(
-                                DatabaseQuery.getObjektsWithPriority());
+                                DatabaseQuery.getObjektsWithPriority((String) prioritaetBox.getSelectedItem(), (Sachbearbeiter) sachbearbeiterBox.getSelectedItem()));
                         }
 
                         @Override
@@ -139,8 +150,7 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
             FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(submitButton);
-//            builder.append("Sachbearbeiter:", sachbearbeiterBox, suchButton);
+            builder.append("SachbearbeiterIn:", sachbearbeiterBox, prioritaetBox, submitButton);
 
             queryPanel = builder.getPanel();
         }

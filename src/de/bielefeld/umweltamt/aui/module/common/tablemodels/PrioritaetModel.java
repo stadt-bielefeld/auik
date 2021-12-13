@@ -43,9 +43,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -58,8 +61,9 @@ public class PrioritaetModel extends ListTableModel {
     public PrioritaetModel() {
         super(new String[]{
                 "Betreiber",
-                "Priorität",
-                "Sachbearbeiter/in"
+                "Standort",
+                "Sachbearbeiter/in",
+                "Priorität"
         },
         false);
     }
@@ -69,13 +73,40 @@ public class PrioritaetModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Object[] field = (Object[]) objectAtRow;
+    	Objekt obj = (Objekt) objectAtRow;
+        Object tmp;
+
         switch (columnIndex) {
-            case 0: return ((Standort) field[columnIndex]);
-            case 1: return ((String) field[columnIndex]); // Priority
-            case 2: return ((Sachbearbeiter) field[columnIndex]);
-            default: return "ERROR";
+        case 0:
+            tmp = obj.getBetreiberid();
+            break;
+		case 1:
+			tmp = "";
+			if (obj.getStandortid() != null) {
+				tmp = DatabaseQuery.getStandortString(obj.getStandortid());
+			}
+			break;
+        case 2:
+			tmp = "";
+			if (obj.getSachbearbeiter() != null) {
+				tmp = obj.getSachbearbeiter().getName();
+			}
+			break;
+        case 3:
+			tmp = "";
+			if (obj.getPrioritaet() != null) {
+				tmp = obj.getPrioritaet();
+			}
+			break;
+
+        default:
+            tmp = "ERROR";
+            break;
         }
+        if (obj.isInaktiv()) {
+            tmp = StringUtils.setStrike(tmp.toString());
+        }
+        return tmp;
     }
 
     /*
