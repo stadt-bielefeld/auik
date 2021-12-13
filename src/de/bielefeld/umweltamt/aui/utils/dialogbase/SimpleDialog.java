@@ -60,6 +60,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import com.jgoodies.forms.factories.Paddings;
 
@@ -117,7 +118,8 @@ public abstract class SimpleDialog extends JDialog {
         tmp.add(buttonBar, BorderLayout.SOUTH);
 
         this.addWindowListener(new SimpleDialogListener());
-        this.setContentPane(tmp);
+        JScrollPane scroller = new JScrollPane(tmp);
+        this.setContentPane(scroller);
         this.pack();
         this.setLocationRelativeTo(frame);
     }
