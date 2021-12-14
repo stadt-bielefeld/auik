@@ -464,8 +464,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		str = str.replace("'", "''");
 	
 		String query = "SELECT DISTINCT a "
-				+ "FROM Adresse a, Inhaber i, Standort s "
-				+ "WHERE a.id = i.adresse AND i.id = s.inhaber";
+				+ "FROM Adresse a, Inhaber i, Standort s, Objekt o "
+				+ "WHERE a.id = i.adresse AND i.id = s.inhaber AND s.id = o.standortid ";
 		if (bStrasse || bHausnr || bOrt) {
 			query += " AND ";
 			if (bStrasse) {
@@ -483,6 +483,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				query += " AND LOWER(a.ort) like 'bielefeld' ";
 			}
 			query += " AND a.deleted = false";
+			query += " AND o.deleted = false";
 		}
 		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC";
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
