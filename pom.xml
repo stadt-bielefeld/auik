@@ -446,6 +446,13 @@
     </repository>
   </repositories>
 
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jaspersoft-third-party</id>
+      <url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
+    </pluginRepository>
+  </pluginRepositories>
+
   <build>
     <sourceDirectory>src</sourceDirectory>
     <resources>
