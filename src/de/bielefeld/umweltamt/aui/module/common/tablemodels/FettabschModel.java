@@ -38,8 +38,11 @@ public class FettabschModel extends ListTableModel {
         super(new String[]{
                 "Betreiber",
                 "Standort",
-                "Bemerkungen",
-                "letztes Chrono-Datum"
+                "Entwässerungsgebiet",
+                "Sachbearbeiter:in",
+                "Bemerkungen (Fettabscheider)",
+                "Beschreibung (Objekt)",
+                "letzte Änderung (Chronologie)"
         },
         false);
     }
@@ -59,9 +62,18 @@ public class FettabschModel extends ListTableModel {
     			tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
     			break;
     		case 2:
-    			tmp = fd.getBemerkungen();
+    			tmp= fd.getObjekt().getStandortid().getInhaber().getAdresse().getEntgebid();
     			break;
     		case 3:
+            	tmp= fd.getObjekt().getSachbearbeiter();
+                break;
+    		case 4:
+    			tmp = fd.getBemerkungen();
+    			break;
+    		case 5: 
+    			tmp= fd.getObjekt().getBeschreibung();
+    			break;
+    		case 6:
     		    tmp = DatabaseQuery.getLastChronoDateForObjekt(
     		    		fd.getObjekt());
     		    break;

@@ -75,6 +75,7 @@ public class BasisStandortModel extends ListTableModel {
                 "Vorname",
                 "Straße",
                 "Hausnr",
+                "HnrZus",
                 "Wassereinzugsgebiet",
                 "Entwässerungsgebiet"
         },
@@ -126,12 +127,19 @@ public class BasisStandortModel extends ListTableModel {
             break;
         case 6:
         	if (std.getInhaber() != null) {
-        		tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
+        		tmp = std.getInhaber().getAdresse().getHausnrzus();
         	} else {
         		tmp = "";
         	}  
             break;
         case 7:
+        	if (std.getInhaber() != null) {
+        		tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
+        	} else {
+        		tmp = "";
+        	}  
+            break;
+        case 8:
         	if (std.getInhaber() != null) {
         		tmp = std.getInhaber().getAdresse().getEntgebid();
         	} else {

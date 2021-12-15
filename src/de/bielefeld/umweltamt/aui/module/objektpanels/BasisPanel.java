@@ -158,6 +158,7 @@ public class BasisPanel extends JPanel {
     private JLabel elkarelevantLabel;
     private JTextArea beschreibungsArea;
     private JButton saveButton;
+    private JCheckBox abwasserfreiBox;
 
     // Normaler und kursiver Font für die Sachbearbeiter ComboBox
     // Normal: gespeichert, kursiv: nur angezeigt
@@ -213,14 +214,18 @@ public class BasisPanel extends JPanel {
         builder.nextLine();
 
         builder.append("Inaktiv:", getInaktivBox());
+        builder.nextLine();    
+        
+        builder.append("Abwasserfrei:", getAbwasserfreiBox());
         builder.nextLine();
-
+        
         builder.append(getElkarelevantLabel(), getElkarelevantBox());
         builder.nextLine();
 
         builder.append(getPrioritaetLabel(), getPrioritaetFeld());
         builder.nextLine();
-
+        
+       
         builder.appendSeparator("Beschreibung");
         builder.appendRow("3dlu");
         builder.nextLine(2);
@@ -389,6 +394,9 @@ public class BasisPanel extends JPanel {
 
             getInaktivBox().setSelected(
                 this.hauptModul.getObjekt().isInaktiv());
+            
+            getAbwasserfreiBox().setSelected(
+                    this.hauptModul.getObjekt().getAbwasserfrei());
 
             if(this.hauptModul == null)
                 log.debug("hauptModul null");
@@ -454,6 +462,7 @@ public class BasisPanel extends JPanel {
         }
         getWiedervorlageDatum().setDate(null);
         getInaktivBox().setSelected(false);
+        getAbwasserfreiBox().setSelected(false);
         getPrioritaetFeld().setText("");
         getBeschreibungsArea().setText(null);
     }
@@ -475,6 +484,7 @@ public class BasisPanel extends JPanel {
             } else
                 getWiedervorlageDatum().setEnabled(false);
             getInaktivBox().setEnabled(enabled);
+            getAbwasserfreiBox().setEnabled(enabled);
             getPrioritaetFeld().setEnabled(enabled);
             getBeschreibungsArea().setEnabled(enabled);
         }
@@ -502,6 +512,7 @@ public class BasisPanel extends JPanel {
         Date wiedervorlage = this.wiedervorlageDatum.getDate();
         this.hauptModul.getObjekt().setWiedervorlage(wiedervorlage);
         this.hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
+        this.hauptModul.getObjekt().setAbwasserfrei(getAbwasserfreiBox().isSelected());
         this.hauptModul.getObjekt().setElkarelevant(getElkarelevantBox().isSelected());
 
 //        Objekt tmp = Objekt.saveObjekt(
@@ -830,6 +841,13 @@ public class BasisPanel extends JPanel {
             this.inaktivBox = new JCheckBox();
         }
         return this.inaktivBox;
+    }
+    
+    private JCheckBox getAbwasserfreiBox() {
+        if (this.abwasserfreiBox == null) {
+            this.abwasserfreiBox = new JCheckBox();
+        }
+        return this.abwasserfreiBox;
     }
 
     private JCheckBox getElkarelevantBox() {
