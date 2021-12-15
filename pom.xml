@@ -433,7 +433,7 @@
     <repository>
       <id>repository.jboss.org-public</id>
       <name>JBoss.org Maven repository</name>
-      <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+      <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
     </repository>
     <repository>
       <id>repository.mavencentral</id>
@@ -442,7 +442,7 @@
     </repository>
     <repository>
       <id>jaspersoft-third-party</id>
-      <url>http://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
+      <url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
     </repository>
   </repositories>
 
