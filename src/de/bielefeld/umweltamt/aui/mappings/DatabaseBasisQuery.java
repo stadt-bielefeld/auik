@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.hibernate.Criteria;
 import org.hibernate.NullPrecedence;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
@@ -756,16 +757,23 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * 
 	 * @return <code>List&lt;?&gt;</code>
 	 */
-	public static List<Objekt> getObjektsWithPriority(String prioritaet, Sachbearbeiter sachbearbeiter) {
+	public static List<?> getObjektsWithPriority(String prioritaet, Sachbearbeiter sachbearbeiter) {
 		return new DatabaseAccess().executeCriteriaToList(
 				DetachedCriteria.forClass(Objekt.class)
+//						.createAlias("betreiberid", "inhaber")
 						.add(Restrictions.eq("inaktiv", false))
 						.add(Restrictions.eq("deleted", false))
 						.add(Restrictions.eq("prioritaet", prioritaet.toString()))
 						.add(Restrictions.eq("sachbearbeiter", sachbearbeiter))
-						.addOrder(Order.asc("prioritaet"))
-						.addOrder(Order.asc("standortid")),
-				new Objekt());
+						.setProjection(Projections.distinct(Projections.projectionList()
+								.add(Projections.property("betreiberid"), "betreiberid")
+								.add(Projections.property("standortid"), "standortid")
+								.add(Projections.property("prioritaet"), "prioritaet")
+								.add(Projections.property("sachbearbeiter"), "sachbearbeiter")))
+						.addOrder(Order.asc("betreiberid"))
+						.addOrder(Order.asc("standortid"))
+						.setResultTransformer(Transformers.aliasToBean(Objekt.class)),
+						new Objekt());
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

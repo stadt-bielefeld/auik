@@ -116,7 +116,7 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
             sachbearbeiterBox.setEditable(true);
 
             prioritaetBox = new JComboBox();
-            String[] items = {"1","2","3"};
+            String[] items = {"1","2","3", "4"};
             prioritaetBox = new JComboBox(items);
             prioritaetBox.setSelectedItem(-1);
             prioritaetBox.setEditable(true);
