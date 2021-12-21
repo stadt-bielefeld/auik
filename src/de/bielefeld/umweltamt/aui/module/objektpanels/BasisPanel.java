@@ -395,8 +395,9 @@ public class BasisPanel extends JPanel {
             getInaktivBox().setSelected(
                 this.hauptModul.getObjekt().isInaktiv());
             
-            getAbwasserfreiBox().setSelected(
-                    this.hauptModul.getObjekt().getAbwasserfrei());
+			if (this.hauptModul.getObjekt().getAbwasserfrei() != null) {
+				getAbwasserfreiBox().setSelected(this.hauptModul.getObjekt().getAbwasserfrei());
+			}
 
             if(this.hauptModul == null)
                 log.debug("hauptModul null");
