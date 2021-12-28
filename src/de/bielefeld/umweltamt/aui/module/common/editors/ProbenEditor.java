@@ -1795,8 +1795,8 @@ public class ProbenEditor extends AbstractApplyEditor {
      */
     public double getRechnungsbetrag(Probenahme probe)
         throws ParseException, IllegalArgumentException {
-        return Math.round(calculateSachUndPersonalkosten() * 100.) / 100.
-            + Math.round(getAnalysekosten(probe) * 100.) / 100.;
+        return Math.round(calculateSachUndPersonalkosten() * 100.)
+            + Math.round(getAnalysekosten(probe) * 100.);
     }
 
     /**
