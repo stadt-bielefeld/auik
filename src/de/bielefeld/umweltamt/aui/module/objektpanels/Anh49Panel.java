@@ -396,11 +396,11 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 cc.xy(fieldCol, row, "l,d"));
         row += 2;
 
-        builder.addSeparator("Wiedervorlage", cc.xyw(labelCol, row, colWidth));
-        row += 2;
-        builder.addLabel(this.WIEDERVORLAGEDATUM, cc.xy(labelCol, row));
-        builder.add(super.getComponent(this.WIEDERVORLAGEDATUM),
-            cc.xy(fieldCol, row));
+       // builder.addSeparator("Wiedervorlage", cc.xyw(labelCol, row, colWidth));
+       // row += 2;
+       // builder.addLabel(this.WIEDERVORLAGEDATUM, cc.xy(labelCol, row));
+       // builder.add(super.getComponent(this.WIEDERVORLAGEDATUM),
+       //    cc.xy(fieldCol, row));
 
         builder.nextLine();
     }

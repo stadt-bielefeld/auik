@@ -156,7 +156,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                         aktivCheck.isSelected(),
                         abgemeldetCheck.isSelected(),
                         abwasserfreiCheck.isSelected(),
-                        wiedervorlageCheck.isSelected(),
+                       wiedervorlageCheck.isSelected(),
 //                        (Integer) dekraTuevBox.getSelectedItem(),
                         (Sachbearbeiter) sachbBox.getSelectedItem()));
                     model.fireTableDataChanged();
@@ -179,7 +179,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             builder.append("");
 //            builder.append("TÜV/DEKRA Termin:", dekraTuevBox);
             builder.append(getTabelleExportButton());
-            builder.append(wiedervorlageCheck);
+//            builder.append(wiedervorlageCheck);
             builder.append(abwasserfreiCheck);
 
             queryPanel = builder.getPanel();

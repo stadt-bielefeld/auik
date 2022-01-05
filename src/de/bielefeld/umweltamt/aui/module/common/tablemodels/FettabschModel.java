@@ -42,6 +42,7 @@ public class FettabschModel extends ListTableModel {
                 "Sachbearbeiter:in",
                 "Bemerkungen (Fettabscheider)",
                 "Beschreibung (Objekt)",
+                "Wiedervorlage (Objekt)",
                 "letzte Änderung (Chronologie)"
         },
         false);
@@ -68,12 +69,15 @@ public class FettabschModel extends ListTableModel {
             	tmp= fd.getObjekt().getSachbearbeiter();
                 break;
     		case 4:
-    			tmp = fd.getBemerkungen();
+    			tmp = fd.getAnh49Fachdatens().iterator().next().getBemerkungen();
     			break;
     		case 5: 
     			tmp= fd.getObjekt().getBeschreibung();
     			break;
     		case 6:
+    			tmp = fd.getObjekt().getWiedervorlage();
+    			break;
+    		case 7:
     		    tmp = DatabaseQuery.getLastChronoDateForObjekt(
     		    		fd.getObjekt());
     		    break;
