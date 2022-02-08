@@ -6,4 +6,4 @@ updates:
       interval: "daily"
     # Raise pull requests for version updates
     # to pip against the `develop` branch
-    target-branch: "dependabot-test"
+    target-branch: "dependabot-update"
