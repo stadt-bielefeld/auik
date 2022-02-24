@@ -52,6 +52,7 @@
 package de.bielefeld.umweltamt.aui.utils.charts;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 import org.jfree.chart.ChartFactory;
@@ -352,16 +353,25 @@ class APosToolTipGenerator implements XYToolTipGenerator {
      * Probe: <b>2342/05</b>, 23.04.05 00:00<br>
      */
     public String generateToolTip(XYDataset dataset, int series, int item) {
+    	final DecimalFormat df = new DecimalFormat("0.00");
         TimeSeriesCollection col = (TimeSeriesCollection) dataset;
         TimeSeries ser = col.getSeries(series);
         APosDataItem it = (APosDataItem) ser.getItems().get(item);
         Analyseposition pos = it.getAnalysePosition();
         Probenahme probe = pos.getProbenahme();
         //TODO: TimeSeries key == name?
-		return "<html>" +
-                "<b>"+it.getValue()+" "+pos.getEinheiten()+"</b><br>" +
-                ser.getKey().toString() + "<br>" +
-                "Probe: <b>"+probe.getKennummer()+"</b>, "+AuikUtils.getStringFromDate(probe.getDatumDerEntnahme())+((probe.getZeitDerEntnahmen() != null) ?  " "+probe.getZeitDerEntnahmen().substring(0,5) : "")+"<br>" +
-                "</html>";
+        if (probe.getArt() != null && probe.getArt().equals("Sielhaut")) {
+			return "<html>" +
+	                "<b>"+"Verhältnis zum Hintergrundwert "+df.format(it.getValue())+"</b><br>" +
+	                ser.getKey().toString() + "<br>" +
+	                "Probe: <b>"+probe.getKennummer()+"</b>, "+AuikUtils.getStringFromDate(probe.getDatumDerEntnahme())+((probe.getZeitDerEntnahmen() != null) ?  " "+probe.getZeitDerEntnahmen().substring(0,5) : "")+"<br>" +
+	                "</html>";
+        } else {
+    		return "<html>" +
+                    "<b>"+it.getValue()+" "+pos.getEinheiten()+"</b><br>" +
+                    ser.getKey().toString() + "<br>" +
+                    "Probe: <b>"+probe.getKennummer()+"</b>, "+AuikUtils.getStringFromDate(probe.getDatumDerEntnahme())+((probe.getZeitDerEntnahmen() != null) ?  " "+probe.getZeitDerEntnahmen().substring(0,5) : "")+"<br>" +
+                    "</html>";
+        }
     }
 }
