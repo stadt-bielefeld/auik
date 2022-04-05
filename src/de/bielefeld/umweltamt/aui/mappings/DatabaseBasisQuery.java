@@ -982,7 +982,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	/* Queries for package BASIS : class BasisTabStreets */
+	/* Queries for package BASIS : class TabStreets */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	public static List<TabStreets> getTabStreetslist(MatchMode mm) {
@@ -996,7 +996,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	}
 
 	/**
-	 * Get BasisTabStreets
+	 * Get TabStreets
 	 * 
 	 * @return <code>Eine Liste aller Strassennamen</code>
 	 */
@@ -1023,7 +1023,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	}
 
 	/**
-	 * Get all BasisTabStreets and sort them by their name
+	 * Get all TabStreets and sort them by their name
 	 * 
 	 * @return <code>Eine Liste aller Stassen</code>
 	 */
@@ -1040,7 +1040,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	}
 
 	/**
-	 * Get all BasisTabStreets and sort them by their name
+	 * Get all TabStreets and sort them by their name
 	 * 
 	 * @return <code>Eine Liste aller Stassen</code>
 	 */
@@ -1181,9 +1181,18 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 */
 
 	public static List<Anhang> allActiveAnhangs() {
+		
+		String query;
 
-		String query = "FROM Anhang WHERE anh_gueltig_bis IS NULL " + 
-				"ORDER BY CAST (NULLIF(regexp_replace(anhang_id, '\\D', '', 'g'), '') as int) asc";
+		if(HibernateSessionFactory.getDBDialect() == "org.hibernate.dialect.PostgreSQLDialect") {
+			
+			query = "FROM Anhang WHERE anh_gueltig_bis IS NULL " + 
+			"ORDER BY CAST (NULLIF(regexp_replace(anhang_id, '\\D', '', 'g'), '') as int) asc";
+	
+		}else {
+			query = "FROM Anhang WHERE anh_gueltig_bis IS NULL " + 
+			"ORDER BY anhang_id";
+		}
 
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
