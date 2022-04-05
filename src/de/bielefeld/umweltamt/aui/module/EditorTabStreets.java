@@ -235,13 +235,13 @@ public class EditorTabStreets extends AbstractModul
 				 */
 				if (i == 0)
 				{
-					column.setMaxWidth(50);
+					column.setPreferredWidth(200);
 					// column.setCellRenderer(centerRenderer);
 				}
 				else if (i == 1)
 				{
 					// column.setMaxWidth(70);
-					column.setPreferredWidth(200);
+					column.setPreferredWidth(50);
 				}
 			}
 			

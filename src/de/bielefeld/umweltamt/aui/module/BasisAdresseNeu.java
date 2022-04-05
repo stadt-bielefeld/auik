@@ -664,7 +664,9 @@ public class BasisAdresseNeu extends AbstractModul {
           	this.gemarkungBox.setSelectedIndex(0);
           	this.standortGgBox.setSelectedIndex(0);
           	this.wEinzugsGebBox.setSelectedIndex(0);
-          	this.entwGebBox.setSelectedIndex(0);
+          	if (entwGebBox.getItemCount() != 0) {
+          		this.entwGebBox.setSelectedIndex(0);
+          	}
 		}
 
 		this.standorteModel.fireTableDataChanged();

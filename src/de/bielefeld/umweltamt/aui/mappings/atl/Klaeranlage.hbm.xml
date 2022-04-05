@@ -9,7 +9,7 @@
             <generator class="assigned" />
         </id>
         <property name="anlage" type="java.lang.String">
-            <column name="anlage" not-null="true" />
+            <column name="anlage" />
         </property>
         <property name="deaKlaeranlageNr" type="java.lang.Integer">
             <column name="dea_klaeranlage_nr" />

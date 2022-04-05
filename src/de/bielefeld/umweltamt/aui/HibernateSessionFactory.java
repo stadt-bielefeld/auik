@@ -83,7 +83,8 @@ public class HibernateSessionFactory {
      */
     private static final Map<String, String> DIALECTS = Map.of(
         "postgresql", "org.hibernate.dialect.PostgreSQLDialect",
-        "sqlite", "org.hibernate.dialect.SQLiteDialect"
+        "sqlite", "org.hibernate.dialect.SQLiteDialect",
+        "h2", "org.hibernate.dialect.H2Dialect"
     );
 
     /**
@@ -91,7 +92,8 @@ public class HibernateSessionFactory {
      */
     private static final Map<String, String> DIALECT_TO_DRIVER = Map.of(
         "org.hibernate.dialect.PostgreSQLDialect", "org.postgresql.Driver",
-        "org.hibernate.dialect.SQLiteDialect", "org.sqlite.JDBC"
+        "org.hibernate.dialect.SQLiteDialect", "org.sqlite.JDBC",
+        "org.hibernate.dialect.H2Dialect", "org.h2.Driver"
     );
 
     /**
@@ -191,6 +193,7 @@ public class HibernateSessionFactory {
      * Support dialects are:
      *   - org.hibernate.dialect.PostgreSQLDialect
      *   - org.hibernate.dialect.SQLiteDialect
+     *   - org.hibernate.dialect.H2Dialect
      * @param dialect Dialect class name
      */
     public static void setDBDialect(String dialect) {

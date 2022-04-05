@@ -22,6 +22,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
@@ -32,11 +33,14 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 public class EditorTabStreetsModel extends EditableListTableModel {
 
 	private static final long serialVersionUID = -4403670639078583652L;
+	boolean isnew = new Boolean(false);
 
 	public EditorTabStreetsModel() {
         super(new String[]{
+        		"ID",
                 "Strassenname",
                 "Nummer",
+                "Zusatz",
                 "X",
                 "Y"
         },
@@ -51,10 +55,12 @@ public class EditorTabStreetsModel extends EditableListTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
-            case 0: return String.class;
+        	case 0: return String.class;
             case 1: return String.class;
-            case 2: return Float.class;
-            case 3: return Float.class;
+            case 2: return String.class;
+            case 3: return String.class;
+            case 4: return Float.class;
+            case 5: return Float.class;
             default: return null;
         }
     }
@@ -69,15 +75,21 @@ public class EditorTabStreetsModel extends EditableListTableModel {
 
         switch (columnIndex) {
         case 0:
-            tmp = str.getName();
+            tmp = str.getAbgleich();
             break;
         case 1:
-            tmp = str.getNr();
+            tmp = str.getName();
             break;
         case 2:
-            tmp = str.getX();
+            tmp = str.getHausnr();
             break;
         case 3:
+            tmp = str.getHausnrZusatz();
+            break;
+        case 4:
+            tmp = str.getX();
+            break;
+        case 5:
             tmp = str.getY();
             break;
 
@@ -99,21 +111,31 @@ public class EditorTabStreetsModel extends EditableListTableModel {
 		TabStreets tmp = (TabStreets) objectAtRow;
 		switch (columnIndex) {
         case 0:
+        	String tmpAbgleich = (String) newValue;
+        	tmp.setAbgleich(tmpAbgleich);
+        	break;
+        	
+        case 1:
         	String tmpStrasse = (String) newValue;
         	tmp.setName(tmpStrasse);
         	break;
         	
-        case 1:
+        case 2:
         	String tmpNr = (String) newValue;
-        	tmp.setNr(tmpNr);
+        	tmp.setHausnr(null);
         	break;
         	
-        case 2:
+        case 3:
+        	String tmpZus = (String) newValue;
+        	tmp.setHausnrZusatz(tmpZus);
+        	break;
+        	
+        case 4:
         	Float x = (Float) newValue;
         	tmp.setX(x);
         	break;
         	
-        case 3:
+        case 5:
         	Float y = (Float) newValue;
         	tmp.setY(y);
         	break;
@@ -136,7 +158,8 @@ public class EditorTabStreetsModel extends EditableListTableModel {
 
 	@Override
 	public Object newObject() {
-		// TODO Auto-generated method stub
-		return null;
+		TabStreets tmp = new TabStreets();
+        isnew = true;
+		return tmp;
 	}
 }
