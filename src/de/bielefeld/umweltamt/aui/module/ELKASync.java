@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -1102,7 +1103,7 @@ public class ELKASync extends AbstractModul {
     private <T> T prependIdentifierToNr(T object) {
         try {
             Method mGetter = object.getClass().getMethod("getOrigNr");
-            Method mSetter = object.getClass().getMethod("setNr", Integer.class);
+            Method mSetter = object.getClass().getMethod("setNr", BigInteger.class);
             Integer nr = (Integer)mGetter.invoke(object);
             if(nr == null) {
                 mGetter = object.getClass().getMethod("getNr");
@@ -1110,7 +1111,8 @@ public class ELKASync extends AbstractModul {
                 object.getClass().getMethod("setOrigNr", Integer.class).invoke(object, nr);
             }
             String newNr = IDENTIFIER + nr.toString();
-            mSetter.invoke(object, Integer.valueOf(newNr));
+            BigInteger newBI = new BigInteger(newNr);
+            mSetter.invoke(object, newBI);
         } catch (NoSuchMethodException e){
         } catch (SecurityException e) {
         } catch (IllegalAccessException e) {
