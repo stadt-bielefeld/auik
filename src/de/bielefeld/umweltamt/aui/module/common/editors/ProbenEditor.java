@@ -1584,7 +1584,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         params.put("maxdatum", DateUtils.format(DateUtils.getDateOfBill(now),
             DateUtils.FORMAT_DATE));
         params.put("kosten",
-            Double.toString(getPersonalkosten()/100).replace(".", ","));
+        		nf.format(getPersonalkosten()/100));
         params.put("kassenzeichen", betr.getKassenzeichen());
         params.put("firmaAnrede", betr.getAnrede());
         if (betr.getVorname() != null)
