@@ -770,9 +770,9 @@ public class EinleitungsstellePanel extends JPanel {
 	 */
 
 	public void switchEinleitungItems(String type) {
-// 		if (type == null) {
-//			return;
-//		}
+ 		if (type == null) {
+			return;
+		}
 
 		if (type == "Indirekteinleitung") {
 			
