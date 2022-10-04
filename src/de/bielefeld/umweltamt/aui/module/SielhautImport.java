@@ -60,6 +60,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.Icon;
@@ -103,6 +104,8 @@ public class SielhautImport extends AbstractModul {
 
         // Als Cache
         private Map<String[], Boolean> importableRows = null;
+
+        private Map<String, ImportResult> importResults;
 
         public FileImporter() {
             super(new String[] {"Probe", "Parameter", "Wert", "Einheit"}, false);
@@ -255,7 +258,7 @@ public class SielhautImport extends AbstractModul {
 
         public void openFile(File file) {
             if (file.isFile() && file.canRead()) {
-            	
+
                 getDateiLabel().setText("Datei: " + file.getName());
                 this.importFile = file;
                 try {
@@ -287,6 +290,7 @@ public class SielhautImport extends AbstractModul {
         public void doImport() throws Exception {
             if (SielhautImport.this.step == 3 && this.importFile != null
                 && getList() != null) {
+                importResults = new HashMap<String, ImportResult>();
                 int importCount = 0;
                 int[] selectedRows = SielhautImport.this.importTabelle
                     .getSelectedRows();
@@ -298,13 +302,20 @@ public class SielhautImport extends AbstractModul {
                     String[] current = (String[]) getObjectAtRow(selectedRows[i]);
                     if (isPositionImportable(current)) {
                         Analyseposition pos = new Analyseposition();
+                        ImportResult result;
 
                         // Kennnummer
-                        String kennumer = kennummerAusZeile(current);
+                        String kennnummer = kennummerAusZeile(current);
+                        if (importResults.containsKey(kennnummer)) {
+                            result = importResults.get(kennnummer);
+                        } else {
+                            result = new ImportResult(kennnummer);
+                            importResults.put(kennnummer, result);
+                        }
 
                         // Probenahme
                         Probenahme probe = DatabaseQuery.findProbenahme(
-                            kennumer);
+                            kennnummer);
                         if (probe == null) {
                             // Sollte eigentlich nicht vorkommen, nötig?
                             throw new Exception("Probenahme nicht gefunden!");
@@ -331,6 +342,10 @@ public class SielhautImport extends AbstractModul {
                                 .getParameterByDescription(sPara)
                                     .getSielhautGw();
                         }
+                        if (sielhautgw == null) {
+                            result.addSkipped(sPara);
+                            continue;
+                        }
                         dwert = new Double(decform.parse(strWert).doubleValue());
                         normwert = dwert / sielhautgw;
                         pos.setNormwert(normwert);
@@ -355,9 +370,9 @@ public class SielhautImport extends AbstractModul {
                             // Sollte eigentlich auch nicht vorkommen, nötig?
                             throw new Exception("Importdatei beschädigt!");
                         }
-                        
+
                         // Analysemethode
-                        
+
                         if (MapElkaAnalysemethode.findByMethoden(methodeAusZeile(current)) != null) {
                         	pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findByMethoden(methodeAusZeile(current)));
                         } else {
@@ -369,7 +384,7 @@ public class SielhautImport extends AbstractModul {
                         	mapAna.merge();
                         	pos.setMapElkaAnalysemethode(mapAna);
                         }
-                        
+
                         // Einheit
                         Einheiten einheit =
                             DatabaseQuery.getEinheitByDescription(
@@ -396,14 +411,35 @@ public class SielhautImport extends AbstractModul {
                             if (pos.merge()) {
                                 importCount++;
                                 log.debug("Habe " + pos + " gespeichert!");
+                                result.addSuccess(sPara);
                             } else {
                                 throw new Exception(
                                     "Konnte Analyseposition nicht in der Datenbank speichern!");
                             }
+                        } else {
+                            result.getSkipped().add(sPara);
                         }
                     }
                 }
+                //Create import result message
+                StringBuilder resultBuilder = new StringBuilder();
+                resultBuilder.append("<html>");
+                importResults.forEach((kennnummer, result) -> {
+                    resultBuilder.append(
+                        String.format("<b>Kennnummer: %s </b><br>", result.getKennnummer()))
+                    .append("<ul>")
+                    .append(String.format(
+                            "<li>erfolgreich importiert: %d</li>",
+                            result.getSuccess().size()));
+                    if(result.getSkipped().size() > 0) {
+                        String skipped = String.join(", ", result.getSkipped());
+                        resultBuilder.append(String.format("<li>übersprungen: %s</li>", skipped));
+                    }
+                    resultBuilder.append("</ul>");
 
+                });
+                resultBuilder.append("</html>");
+                GUIManager.getInstance().showInfoMessage(resultBuilder.toString(), "Importergebnis");
                 SielhautImport.this.frame.changeStatus(importCount
                     + " Datensätze importiert!");
                 switchToStep(1);
@@ -711,6 +747,35 @@ public class SielhautImport extends AbstractModul {
 
             default:
                 break;
+        }
+    }
+
+    /**
+     * Class used to store import results;
+     */
+    private class ImportResult {
+        private String kennnummer;
+        private List<String> success;
+        private List<String> skipped;
+        public ImportResult(String kennnummer) {
+            this.kennnummer = kennnummer;
+            success = new ArrayList<String>();
+            skipped = new ArrayList<String>();
+        }
+        public String getKennnummer() {
+            return kennnummer;
+        }
+        public void addSuccess(String param) {
+            this.success.add(param);
+        }
+        public void addSkipped(String param) {
+            this.skipped.add(param);
+        }
+        public List<String> getSuccess() {
+            return success;
+        }
+        public List<String> getSkipped() {
+            return skipped;
         }
     }
 }
