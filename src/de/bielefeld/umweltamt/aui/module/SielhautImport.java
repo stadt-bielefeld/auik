@@ -58,6 +58,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -329,14 +330,23 @@ public class SielhautImport extends AbstractModul {
                             pos.setGrkl("<");
                             strWert = strWert.replaceFirst("< *", "");
                         }
-                        wert = new Float(decform.parse(strWert).floatValue());
-                        pos.setWert(wert);
 
                         // Normwert
                         Double dwert;
                         Double normwert;
                         Double sielhautgw = null;
                         String sPara = paramAusZeile(current);
+
+                        try {
+                            wert = new Float(decform.parse(strWert).floatValue());
+                            dwert = new Double(decform.parse(strWert).doubleValue());
+                        } catch(ParseException pe) {
+                            result.addError(sPara,
+                                String.format("Ungültiger Wert: %s", strWert));
+                            continue;
+                        }
+                        pos.setWert(wert);
+
                         if (sPara != null) {
                             sielhautgw = DatabaseQuery
                                 .getParameterByDescription(sPara)
@@ -346,7 +356,7 @@ public class SielhautImport extends AbstractModul {
                             result.addSkipped(sPara);
                             continue;
                         }
-                        dwert = new Double(decform.parse(strWert).doubleValue());
+
                         normwert = dwert / sielhautgw;
                         pos.setNormwert(normwert);
 
@@ -360,11 +370,9 @@ public class SielhautImport extends AbstractModul {
                                 pos.setParameter(para);
                             } else {
                                 problem = true;
-                                if (!problemMessage.equals("")) {
-                                    problemMessage += "<br>";
-                                }
-                                problemMessage += "Unbekannter Parameter: "
-                                    + sParam;
+                                result.addError(sParam,
+                                    String.format("Unbekannter Parameter: %s", sParam));
+                                continue;
                             }
                         } else {
                             // Sollte eigentlich auch nicht vorkommen, nötig?
@@ -374,15 +382,15 @@ public class SielhautImport extends AbstractModul {
                         // Analysemethode
 
                         if (MapElkaAnalysemethode.findByMethoden(methodeAusZeile(current)) != null) {
-                        	pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findByMethoden(methodeAusZeile(current)));
+                            pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findByMethoden(methodeAusZeile(current)));
                         } else {
-                        	MapElkaAnalysemethode mapAna = new MapElkaAnalysemethode();
-                        	mapAna.setMethode(methodeAusZeile(current));
-                        	mapAna.setGruppeDevId("000");
-                        	mapAna.setRegelwerkId("00");
-                        	mapAna.setVariantenId("0");
-                        	mapAna.merge();
-                        	pos.setMapElkaAnalysemethode(mapAna);
+                            MapElkaAnalysemethode mapAna = new MapElkaAnalysemethode();
+                            mapAna.setMethode(methodeAusZeile(current));
+                            mapAna.setGruppeDevId("000");
+                            mapAna.setRegelwerkId("00");
+                            mapAna.setVariantenId("0");
+                            mapAna.merge();
+                            pos.setMapElkaAnalysemethode(mapAna);
                         }
 
                         // Einheit
@@ -394,11 +402,9 @@ public class SielhautImport extends AbstractModul {
                             pos.setEinheiten(einheit);
                         } else {
                             problem = true;
-                            if (!problemMessage.equals("")) {
-                                problemMessage += "<br>";
-                            }
-                            problemMessage += "Unbekannte Einheit: " +
-                                einheitAusZeile(current);
+                            result.addError(sParam,
+                                String.format("Unbekannte Einheit: %s", einheitAusZeile(current)));
+                            continue;
                         }
 
                         // Analyse von
@@ -435,6 +441,13 @@ public class SielhautImport extends AbstractModul {
                         String skipped = String.join(", ", result.getSkipped());
                         resultBuilder.append(String.format("<li>übersprungen: %s</li>", skipped));
                     }
+                    if(result.getErrors().size() > 0) {
+                        resultBuilder.append("<li>Fehler:<br><ul>");
+                        result.getErrors().forEach((param, error) -> {
+                            resultBuilder.append(String.format("<li>%s - %s</li>", param, error));
+                        });
+                        resultBuilder.append("</ul></li>");
+                    }
                     resultBuilder.append("</ul>");
 
                 });
@@ -443,9 +456,6 @@ public class SielhautImport extends AbstractModul {
                 SielhautImport.this.frame.changeStatus(importCount
                     + " Datensätze importiert!");
                 switchToStep(1);
-                if (!problemMessage.equals("")) {
-                    throw new Exception(problemMessage);
-                }
             }
         }
     }
@@ -589,10 +599,10 @@ public class SielhautImport extends AbstractModul {
                     File file = SielhautImport.this.frame
                         .openFile(new String[] {"csv"});
                     if (file != null) {
-                    	panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                        panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                         switchToStep(1);
                         SielhautImport.this.fileImporter.openFile(file);
-                    	panel.setCursor(Cursor.getDefaultCursor());
+                        panel.setCursor(Cursor.getDefaultCursor());
                     }
                 }
             });
@@ -616,9 +626,9 @@ public class SielhautImport extends AbstractModul {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                    	panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                        panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                         SielhautImport.this.fileImporter.doImport();
-                    	panel.setCursor(Cursor.getDefaultCursor());
+                        panel.setCursor(Cursor.getDefaultCursor());
                     } catch (Exception e1) {
                         GUIManager.getInstance().showErrorMessage(
                             "<html>Beim importieren ist ein Fehler aufgetreten:<br>"
@@ -757,10 +767,15 @@ public class SielhautImport extends AbstractModul {
         private String kennnummer;
         private List<String> success;
         private List<String> skipped;
+        private Map<String, String> errors;
         public ImportResult(String kennnummer) {
             this.kennnummer = kennnummer;
             success = new ArrayList<String>();
             skipped = new ArrayList<String>();
+            errors = new HashMap<String, String>();
+        }
+        public void addError(String param, String error) {
+            this.errors.put(param, error);
         }
         public String getKennnummer() {
             return kennnummer;
@@ -776,6 +791,9 @@ public class SielhautImport extends AbstractModul {
         }
         public List<String> getSkipped() {
             return skipped;
+        }
+        public Map<String, String> getErrors() {
+            return errors;
         }
     }
 }
