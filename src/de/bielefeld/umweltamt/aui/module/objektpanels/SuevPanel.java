@@ -64,7 +64,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "Zahnarzt"-Tab des BasisObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class SuevPanel extends JPanel {
+public class SuevPanel extends JPanel implements ObjectPanel {
     private static final long serialVersionUID = -6379153046356849276L;
 
     /** Logging */
@@ -251,7 +251,7 @@ public class SuevPanel extends JPanel {
         return this.name;
     }
 
-    private boolean saveSuevDaten() {
+    public boolean savePanelData() {
         boolean success;
 
         Integer versfl = ((IntegerField) this.versFlaecheFeld).getIntValue();
@@ -434,7 +434,7 @@ public class SuevPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
-                    if (saveSuevDaten()) {
+                    if (hauptModul.saveAllTabs()) {
                         SuevPanel.this.hauptModul.getFrame().changeStatus(
                             "SuevKan Verfahren "
                                 + SuevPanel.this.fachdaten.getId()

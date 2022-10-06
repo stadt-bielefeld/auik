@@ -117,7 +117,7 @@ import de.bielefeld.umweltamt.aui.utils.PDFExporter;
  * Das "Objekt-Chronologie"-Panel des Objekt-Bearbeiten-Moduls.
  * @author Gerd Genuit
  */
-public class ChronoPanel extends JPanel {
+public class ChronoPanel extends JPanel implements ObjectPanel {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     private static final long serialVersionUID = 5763325969928267241L;
@@ -379,7 +379,7 @@ public class ChronoPanel extends JPanel {
      * aus der Datenbank.
      */
 
-    public void speichernChronologie() {
+    public boolean savePanelData() {
         if (this.chronoTable.getCellEditor() != null) {
             this.chronoTable.getCellEditor().stopCellEditing();
         }
@@ -411,14 +411,18 @@ public class ChronoPanel extends JPanel {
             GUIManager.getInstance().showErrorMessage(
                 "Es muss ein Sachbearbeiter angegeben werden!",
                 "Sachbearbeiter fehlt");
+            return false;
         } else if (sachbear && gespeichert) {
             this.hauptModul.getFrame().changeStatus("Speichern erfolgreich",
                 HauptFrame.SUCCESS_COLOR);
+            return true;
         } else if (!gespeichert) {
             this.hauptModul.getFrame().changeStatus(
                 "Chronologie konnte nicht gespeichert werden",
                 HauptFrame.ERROR_COLOR);
+            return false;
         }
+        return false;
     }
 
     public void showReportListe() {
@@ -516,7 +520,7 @@ public class ChronoPanel extends JPanel {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    speichernChronologie();
+                    hauptModul.saveAllTabs();
                 }
             };
             this.chronoSaveAction.putValue(Action.MNEMONIC_KEY, new Integer(
@@ -601,7 +605,7 @@ public class ChronoPanel extends JPanel {
             this.saveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    speichernChronologie();
+                    hauptModul.saveAllTabs();
                 }
             });
         }

@@ -80,7 +80,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  * @date 15.01.2018
  */
-public class EntwaesserungsgrundstueckPanel extends JPanel {
+public class EntwaesserungsgrundstueckPanel extends JPanel implements ObjectPanel {
 	private static final long serialVersionUID = 7997458251785488488L;
 
 	/** Logging */
@@ -462,7 +462,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 	 * 
 	 * @return boolean
 	 */
-	private boolean saveEntwaesserungsgrundstueckDaten() {
+	public boolean savePanelData() {
 		boolean success;
 		if (this.entwaesserungsgrundstueck == null) {
 			this.entwaesserungsgrundstueck = new Entwaesserungsgrundstueck();
@@ -985,7 +985,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					enableAll(true);
 					String status = "";
-					if (saveEntwaesserungsgrundstueckDaten()) {
+					if (hauptModul.saveAllTabs()) {
 						status = "Entwässerungsgrundstück "
 								+ EntwaesserungsgrundstueckPanel.this.entwaesserungsgrundstueck.getNr()
 								+ " erfolgreich gespeichert.";

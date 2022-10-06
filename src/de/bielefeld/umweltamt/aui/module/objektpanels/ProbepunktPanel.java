@@ -89,7 +89,7 @@ import de.bielefeld.umweltamt.aui.utils.PDFExporter;
  * Das "Probepunkt"-Tab des BasisObjektBearbeiten-Moduls
  * @author David Klotz
  */
-public class ProbepunktPanel extends JPanel {
+public class ProbepunktPanel extends JPanel implements ObjectPanel {
     private static final long serialVersionUID = 3663375435585578751L;
 
     /** Logging */
@@ -334,7 +334,7 @@ public class ProbepunktPanel extends JPanel {
         }
     }
 
-    private boolean saveProbepunktDaten() {
+    public boolean savePanelData() {
         boolean success;
 
         if (this.probepkt != null) {
@@ -606,7 +606,7 @@ public class ProbepunktPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
-                    if (saveProbepunktDaten()) {
+                    if (hauptModul.saveAllTabs()) {
                         ProbepunktPanel.this.hauptModul.getFrame()
                             .changeStatus(
                                 "Probepunkt "

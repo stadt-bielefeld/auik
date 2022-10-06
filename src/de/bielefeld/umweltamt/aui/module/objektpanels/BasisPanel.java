@@ -122,7 +122,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author David Klotz
  */
 
-public class BasisPanel extends JPanel {
+public class BasisPanel extends JPanel implements ObjectPanel {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     private static final long serialVersionUID = 2520878475016486007L;
@@ -498,7 +498,7 @@ public class BasisPanel extends JPanel {
         return this.name;
     }
 
-    private boolean saveObjektDaten() {
+    public boolean savePanelData() {
         boolean success;
 
         // Eingegebene Daten für das Objekt übernehmen
@@ -724,7 +724,7 @@ public class BasisPanel extends JPanel {
                         }
                     BasisPanel.this.hauptModul.getManager().switchModul(
                         "m_betreiber_neu");
-                    saveObjektDaten();
+                    savePanelData();
                 }
             });
         }
@@ -902,7 +902,7 @@ public class BasisPanel extends JPanel {
                         && (BasisPanel.this.hauptModul.getObjekt()
                             .getStandortid() != null)) {
                         enableAll(false);
-                        if (saveObjektDaten()) {
+                        if (hauptModul.saveAllTabs()) {
                             BasisPanel.this.hauptModul.getFrame().changeStatus(
                                 "Objekt "
                                     + BasisPanel.this.hauptModul.getObjekt()

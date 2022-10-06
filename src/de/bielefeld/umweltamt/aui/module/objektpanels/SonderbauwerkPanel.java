@@ -82,7 +82,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  * @date 15.01.2018
  */
-public class SonderbauwerkPanel extends JPanel {
+public class SonderbauwerkPanel extends JPanel implements ObjectPanel {
     private static final long serialVersionUID = 7997458251785488488L;
 
     /** Logging */
@@ -376,7 +376,7 @@ public class SonderbauwerkPanel extends JPanel {
      * in das Sonderbauwerk der Datenbank schreibt.
      * @return boolean
      */
-    private boolean saveSonderbauwerkDaten() {
+    public boolean savePanelData() {
         boolean success;
 
         completeObjekt();
@@ -582,7 +582,7 @@ public class SonderbauwerkPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                     enableAll(false);
                     String status = "";
-                    if(saveSonderbauwerkDaten()) {
+                    if(hauptModul.saveAllTabs()) {
                         status = "Sonderbauwerk " +
                     SonderbauwerkPanel.this.sonderbauwerk.getNr()
                     + " erfolgreich gespeichert.";

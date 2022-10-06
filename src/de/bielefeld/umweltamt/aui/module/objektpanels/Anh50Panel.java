@@ -79,7 +79,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * 
  * @author Gerd Genuit
  */
-public class Anh50Panel extends JPanel {
+public class Anh50Panel extends JPanel implements ObjectPanel {
 	private static final long serialVersionUID = 7997458251785488488L;
 
 	/** Logging */
@@ -210,7 +210,7 @@ public class Anh50Panel extends JPanel {
 		return this.name;
 	}
 
-	private boolean saveAnh50Daten() {
+	public boolean savePanelData() {
 		boolean success;
 
 		String bemerkungen = this.anh50BemerkungArea.getText();
@@ -338,7 +338,7 @@ public class Anh50Panel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					enableAll(false);
-					if (saveAnh50Daten()) {
+					if (hauptModul.saveAllTabs()) {
 						Anh50Panel.this.hauptModul.getFrame().changeStatus(
 								"Zahnarzt " + Anh50Panel.this.fachdaten.getId() + " erfolgreich gespeichert.",
 								HauptFrame.SUCCESS_COLOR);

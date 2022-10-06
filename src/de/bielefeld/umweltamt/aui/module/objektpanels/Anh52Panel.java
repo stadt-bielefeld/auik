@@ -80,7 +80,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das Panel zum Bearbeiten von Druckereien
  * @author u633d
  */
-public class Anh52Panel extends JPanel{
+public class Anh52Panel extends JPanel implements ObjectPanel {
     private static final long serialVersionUID = -1240254202213465142L;
 
     /** Logging */
@@ -158,7 +158,7 @@ public class Anh52Panel extends JPanel{
 
     }
 
-    private boolean saveAnh52Daten() {
+    public boolean savePanelData() {
         boolean success;
 
         String bemerkungen = BemerkungenArea.getText();
@@ -293,7 +293,7 @@ public class Anh52Panel extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent e) {
 //                    enableAll(false);
-                    if (saveAnh52Daten()) {
+                    if (hauptModul.saveAllTabs()) {
                         hauptModul.getFrame().changeStatus("Anh 52 Objekt "+fachdaten.getId()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
                     } else {
                         hauptModul.getFrame().changeStatus("Fehler beim Speichern des Anh 40 Objekt!", HauptFrame.ERROR_COLOR);

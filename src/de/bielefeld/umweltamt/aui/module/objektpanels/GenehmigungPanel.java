@@ -67,7 +67,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "Genehmigung"-Tab des BasisObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class GenehmigungPanel extends JPanel {
+public class GenehmigungPanel extends JPanel implements ObjectPanel{
     private static final long serialVersionUID = -1132786436313164359L;
 
     /** Logging */
@@ -300,7 +300,7 @@ public class GenehmigungPanel extends JPanel {
         getEsaCheckBox().setEnabled(enabled);
     }
 
-    private boolean saveGenehmigungDaten() {
+    public boolean savePanelData() {
         boolean success;
 
         String aktenzeichen = this.aktenzeichenFeld.getText();
@@ -410,7 +410,7 @@ public class GenehmigungPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
-                    if (saveGenehmigungDaten()) {
+                    if (hauptModul.saveAllTabs()) {
                         GenehmigungPanel.this.hauptModul.getFrame()
                             .changeStatus(
                                 "Genehmigung "

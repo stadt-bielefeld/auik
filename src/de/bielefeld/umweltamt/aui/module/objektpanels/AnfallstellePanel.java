@@ -75,7 +75,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Tobias Kaps
  * @date 29.09.2017
  */
-public class AnfallstellePanel extends JPanel {
+public class AnfallstellePanel extends JPanel implements ObjectPanel {
     private static final long serialVersionUID = 7997458251785488488L;
 
     /** Logging */
@@ -101,14 +101,14 @@ public class AnfallstellePanel extends JPanel {
     private DoubleField qmProHFeld = null;
     private DoubleField qmProDFeld = null;
     private IntegerField qmProAFeld = null;
-    
+
     private JFormattedTextField bezeichnungFeld = null;
     private TextFieldDateChooser stillgelegtAmDatum = null;
     private JFormattedTextField abwaBeschaffOptFeld = null;
     private JFormattedTextField betriebsweiseOptFeld = null;
     private JTextArea bemerkungenArea = null;
     private JButton saveAnfallstelleButton = null;
-    
+
     // Daten
     private Anfallstelle anfallstelle = null;
     private Anh40Panel anhang40Tab;
@@ -120,7 +120,7 @@ public class AnfallstellePanel extends JPanel {
     private Anh55Panel anhang55Tab;
     private Anh56Panel anhang56Tab;
     private BWKPanel bwkTab;
-    
+
     //Label
     private JLabel anhangLb = new JLabel("Anhang AbwV:");
     private JLabel anlagenartLb = new JLabel("Anlagenart:");
@@ -199,7 +199,7 @@ public class AnfallstellePanel extends JPanel {
         builder.appendRow("fill:30dlu");
         builder.append(bemerkungsScroller, 13);
         builder.nextLine();
-        
+
         builder.appendSeparator("Verknüpfte Objekte");
         builder.appendRow("3dlu");
         builder.nextLine(2);
@@ -210,28 +210,28 @@ public class AnfallstellePanel extends JPanel {
         builder.appendRow("fill:100dlu");
         builder.append(objektverknuepfungScroller, 13);
         builder.nextLine();
-        
+
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-        		getSelectObjektButton(), getSaveAnfallstelleButton());
+                getSelectObjektButton(), getSaveAnfallstelleButton());
         builder.append(buttonBar,6);
-        
+
         this.beschaffenheitBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	String  besch = (String) beschaffenheitBox.getSelectedItem();
+                String  besch = (String) beschaffenheitBox.getSelectedItem();
                 switchBeschaffenheit(besch);
             }
         });
-        
+
         this.anhangBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	Anhang  anh = (Anhang) anhangBox.getSelectedItem();
-            	anlagenart = anlagenartBox.getSelectedItem().toString();
+                Anhang  anh = (Anhang) anhangBox.getSelectedItem();
+                anlagenart = anlagenartBox.getSelectedItem().toString();
                 switchAnhangPanel(anh.getAnhangId(), anlagenart);
             }
         });
-  
+
     }
 
     /**
@@ -240,9 +240,9 @@ public class AnfallstellePanel extends JPanel {
      * @throws RuntimeException
      */
     public void fetchFormData() throws RuntimeException {
-    	this.anfallstelle = Anfallstelle.findByObjektId(
-    			this.hauptModul.getObjekt().getId());
-    	log.debug("Anfallstelle aus DB geholt: " + this.anfallstelle);
+        this.anfallstelle = Anfallstelle.findByObjektId(
+                this.hauptModul.getObjekt().getId());
+        log.debug("Anfallstelle aus DB geholt: " + this.anfallstelle);
     }
 
     /**
@@ -251,162 +251,162 @@ public class AnfallstellePanel extends JPanel {
      * @throws RuntimeException
      */
     public void updateForm() throws RuntimeException {
-    	if(this.anfallstelle != null) {    		
-    		if(this.anfallstelle.getErstellDat() != null) {
-    			getErstellDatDatum().setDate(this.anfallstelle.getErstellDat());
-    		}
+        if(this.anfallstelle != null) {
+            if(this.anfallstelle.getErstellDat() != null) {
+                getErstellDatDatum().setDate(this.anfallstelle.getErstellDat());
+            }
 
             String[] betriebsweise = {"-", "Chargenbetrieb", "Durchlaufbetrieb", "Kampagnebetrieb"};
             getBetriebsweiseBox().setModel(new DefaultComboBoxModel(betriebsweise));
-            
+
             getBetriebsweiseBox().setSelectedItem(anfallstelle.getBetriebsweiseDescriptionFromId(this.anfallstelle.getBetriebsweiseOpt()));
-            
-            String[] beschaffenheit = {"Produktionsabwasser",  "Kühlwasser", "Sanitärwasser", 
-            		"Niederschlagswasser mit Sonderbauwerk", "Niederschlagswasser ohne Sonderbauwerk", 
-            		"Grubenwasser", "Fischteiche", "sonstiges Wasser"};
+
+            String[] beschaffenheit = {"Produktionsabwasser",  "Kühlwasser", "Sanitärwasser",
+                    "Niederschlagswasser mit Sonderbauwerk", "Niederschlagswasser ohne Sonderbauwerk",
+                    "Grubenwasser", "Fischteiche", "sonstiges Wasser"};
             getBeschaffenheitBox().setModel(new DefaultComboBoxModel(beschaffenheit));
-            
+
             getBeschaffenheitBox().setSelectedItem(anfallstelle.getBeschaffenheitDescriptionFromId(this.anfallstelle.getAbwaBeschaffOpt()));
-            
-            String[] arten = {"-", "Aufbereitung Medizinprodukte", "Brennwertkessel", "Blockheizkraftwerk", 
-            		"Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor", 
-            		"RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
+
+            String[] arten = {"-", "Aufbereitung Medizinprodukte", "Brennwertkessel", "Blockheizkraftwerk",
+                    "Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor",
+                    "RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
             getAnlagenartBox().setModel(new DefaultComboBoxModel(arten));
-            
+
             if (this.anfallstelle.getAnlagenart() != null) {
-            	getAnlagenartBox().setSelectedItem(this.anfallstelle.getAnlagenart());
+                getAnlagenartBox().setSelectedItem(this.anfallstelle.getAnlagenart());
             }
-            
+
             List<Anhang> anhang = Anhang.getAll();
             getAnhangBox().setModel(new DefaultComboBoxModel(anhang.toArray()));
-                        
-    		if(this.anfallstelle.getAnhangId() != null) {
-    			getAnhangBox().setSelectedItem(Anhang.findByAnhangId(this.anfallstelle.getAnhangId()));
-    		}
-            
-            String[] herkunft = {"-", "Kategorie I: Unbelastetes NW", "Kategorie IIa: Schwach belastetes NW (nicht behandlungsbedürftig)", 
-            		"Kategorie IIb: Schwach belastetes NW (behandlungsbedürftig)", 
-            		"Kategorie III: Stark belastetes NW"};
+
+            if(this.anfallstelle.getAnhangId() != null) {
+                getAnhangBox().setSelectedItem(Anhang.findByAnhangId(this.anfallstelle.getAnhangId()));
+            }
+
+            String[] herkunft = {"-", "Kategorie I: Unbelastetes NW", "Kategorie IIa: Schwach belastetes NW (nicht behandlungsbedürftig)",
+                    "Kategorie IIb: Schwach belastetes NW (behandlungsbedürftig)",
+                    "Kategorie III: Stark belastetes NW"};
             getHerkunftBox().setModel(new DefaultComboBoxModel(herkunft));
-    		
-    		if(this.anfallstelle.getNwHerBereichOpt() != null) {
-    			getHerkunftBox().setSelectedIndex(this.anfallstelle.getNwHerBereichOpt());
-    		}
-    		
-    		if(this.anfallstelle.getAnwendungsbereich() != null) {
-    			getAnwendungsbereichFeld().setText(this.anfallstelle.getAnwendungsbereich());
-    		}
-    		
-    		if(this.anfallstelle.getBezeichnung() != null) {
-    			getBezeichnungFeld().setText(this.anfallstelle.getBezeichnung());
-    		}
-    		
-    		if(this.anfallstelle.getBefFlaeche() != null) {
-    			getBefestFlaecheFeld().setText(this.anfallstelle.getBefFlaeche().toString());
-    		}
-    		
-    		if(this.anfallstelle.getAbflussmenge() != null) {
-    			getLProSFeld().setText(this.anfallstelle.getAbflussmenge().toString());
-    		}
-    		
-    		if(this.anfallstelle.getVolJahr() != null) {
-    			getQmProAFeld().setText(this.anfallstelle.getVolJahr().toString());
-    		}
-    		
-    		if(this.anfallstelle.getMaxVolStunde() != null) {
-    			getQmProHFeld().setText(this.anfallstelle.getMaxVolStunde().toString());
-    		}
-    		
-    		if(this.anfallstelle.getMaxVolTag() != null) {
-    			getQmProDFeld().setText(this.anfallstelle.getMaxVolTag().toString());
-    		}
-    		
-    		if(this.anfallstelle.getStillgelegtAm() != null) {
-    			getStillgelegtAmDatum().setDate(this.anfallstelle.getStillgelegtAm());
-    		}
-    		
-    		if(this.anfallstelle.getAbwaBeschaffOpt() != null) {
-    			getAbwaBeschaffOptFeld().setText(this.anfallstelle.getAbwaBeschaffOpt().toString());
-    		}
-    		
-    		if(this.anfallstelle.getBemerkungen() != null) {
-    			getBemerkungenArea().setText(this.anfallstelle.getBemerkungen());
-    		}
-    		
-    		if(this.anfallstelle.getBetriebsweiseOpt() != null) {
-    			getBetriebsweiseOptFeld().setText(this.anfallstelle.getBetriebsweiseOpt().toString());
-    		}
+
+            if(this.anfallstelle.getNwHerBereichOpt() != null) {
+                getHerkunftBox().setSelectedIndex(this.anfallstelle.getNwHerBereichOpt());
+            }
+
+            if(this.anfallstelle.getAnwendungsbereich() != null) {
+                getAnwendungsbereichFeld().setText(this.anfallstelle.getAnwendungsbereich());
+            }
+
+            if(this.anfallstelle.getBezeichnung() != null) {
+                getBezeichnungFeld().setText(this.anfallstelle.getBezeichnung());
+            }
+
+            if(this.anfallstelle.getBefFlaeche() != null) {
+                getBefestFlaecheFeld().setText(this.anfallstelle.getBefFlaeche().toString());
+            }
+
+            if(this.anfallstelle.getAbflussmenge() != null) {
+                getLProSFeld().setText(this.anfallstelle.getAbflussmenge().toString());
+            }
+
+            if(this.anfallstelle.getVolJahr() != null) {
+                getQmProAFeld().setText(this.anfallstelle.getVolJahr().toString());
+            }
+
+            if(this.anfallstelle.getMaxVolStunde() != null) {
+                getQmProHFeld().setText(this.anfallstelle.getMaxVolStunde().toString());
+            }
+
+            if(this.anfallstelle.getMaxVolTag() != null) {
+                getQmProDFeld().setText(this.anfallstelle.getMaxVolTag().toString());
+            }
+
+            if(this.anfallstelle.getStillgelegtAm() != null) {
+                getStillgelegtAmDatum().setDate(this.anfallstelle.getStillgelegtAm());
+            }
+
+            if(this.anfallstelle.getAbwaBeschaffOpt() != null) {
+                getAbwaBeschaffOptFeld().setText(this.anfallstelle.getAbwaBeschaffOpt().toString());
+            }
+
+            if(this.anfallstelle.getBemerkungen() != null) {
+                getBemerkungenArea().setText(this.anfallstelle.getBemerkungen());
+            }
+
+            if(this.anfallstelle.getBetriebsweiseOpt() != null) {
+                getBetriebsweiseOptFeld().setText(this.anfallstelle.getBetriebsweiseOpt().toString());
+            }
 
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
 
-        	Anhang  anh = (Anhang) anhangBox.getSelectedItem();
-        	anlagenart = anlagenartBox.getSelectedItem().toString();
+            Anhang  anh = (Anhang) anhangBox.getSelectedItem();
+            anlagenart = anlagenartBox.getSelectedItem().toString();
             switchAnhangPanel(anh.getAnhangId(), anlagenart);
             switchBeschaffenheit((String) getBeschaffenheitBox().getSelectedItem());
 
-    	}
+        }
     }
 
     /**
      * Methode die alle Eingabefelder des Panels auf den Standard zurücksetzt.
      */
-	public void clearForm() {
-		getErstellDatDatum().setDate(null);
-		getAnhangIdFeld().setText(null);
-		getAnwendungsbereichFeld().setText(null);
-		getBezeichnungFeld().setText(null);
-		getStillgelegtAmDatum().setDate(null);
-		getAbwaBeschaffOptFeld().setText(null);
-		getBetriebsweiseOptFeld().setText(null);
+    public void clearForm() {
+        getErstellDatDatum().setDate(null);
+        getAnhangIdFeld().setText(null);
+        getAnwendungsbereichFeld().setText(null);
+        getBezeichnungFeld().setText(null);
+        getStillgelegtAmDatum().setDate(null);
+        getAbwaBeschaffOptFeld().setText(null);
+        getBetriebsweiseOptFeld().setText(null);
 //		getHerkunftBox().setSelectedIndex(1);
-		getBefestFlaecheFeld().setText(null);
-		getLProSFeld().setText(null);
-		getQmProHFeld().setText(null);
-		getQmProDFeld().setText(null);
-		getQmProAFeld().setText(null);
-		getBemerkungenArea().setText(null);
+        getBefestFlaecheFeld().setText(null);
+        getLProSFeld().setText(null);
+        getQmProHFeld().setText(null);
+        getQmProDFeld().setText(null);
+        getQmProAFeld().setText(null);
+        getBemerkungenArea().setText(null);
 
-		if (anfallstelle != null && anfallstelle.getAnhangId() != null) {
-			switch (anfallstelle.getAnhangId()) {
-			case "40":
-				getAnh40Tab().clearForm();
-				break;
-			case "49":
-				getAnh49Tab().clearForm();
-				getAnh49AnalyseTab().clearForm();
-				break;
-			case "50":
-				getAnh50Tab().clearForm();
-				break;
-			case "52":
-				getAnh52Tab().clearForm();
-				break;
-			case "55":
-				getAnh55Tab().clearForm();
-				break;
-			case "56":
-				getAnh56Tab().clearForm();
-				break;
-			case "99":
-				if (anlagenart != null) {
-					switch ((String) anlagenart) {
-					case "Brennwertkessel":
-						getBWKTab().clearForm();
-						break;
-					case "BHKW":
-						getBWKTab().clearForm();
-						break;
-					case "Fettabscheider":
-						getAnh49Tab().clearForm();
-						getAnh49AbfuhrTab().clearForm();
-						break;
-					}
-				}
-			default:
-				log.debug("Unknown Anfallstelle: " + anfallstelle);
-			}
-		}
-	}
+        if (anfallstelle != null && anfallstelle.getAnhangId() != null) {
+            switch (anfallstelle.getAnhangId()) {
+            case "40":
+                getAnh40Tab().clearForm();
+                break;
+            case "49":
+                getAnh49Tab().clearForm();
+                getAnh49AnalyseTab().clearForm();
+                break;
+            case "50":
+                getAnh50Tab().clearForm();
+                break;
+            case "52":
+                getAnh52Tab().clearForm();
+                break;
+            case "55":
+                getAnh55Tab().clearForm();
+                break;
+            case "56":
+                getAnh56Tab().clearForm();
+                break;
+            case "99":
+                if (anlagenart != null) {
+                    switch ((String) anlagenart) {
+                    case "Brennwertkessel":
+                        getBWKTab().clearForm();
+                        break;
+                    case "BHKW":
+                        getBWKTab().clearForm();
+                        break;
+                    case "Fettabscheider":
+                        getAnh49Tab().clearForm();
+                        getAnh49AbfuhrTab().clearForm();
+                        break;
+                    }
+                }
+            default:
+                log.debug("Unknown Anfallstelle: " + anfallstelle);
+            }
+        }
+    }
 
     /**
      * Methode die je nach Eingabewert alle Eingabefelder des Panels aktiviert
@@ -422,12 +422,12 @@ public class AnfallstellePanel extends JPanel {
         getStillgelegtAmDatum().setEnabled(enabled);
         getAbwaBeschaffOptFeld().setEnabled(enabled);
         getBetriebsweiseOptFeld().setEnabled(enabled);
-		getHerkunftBox().setEnabled(enabled);
-		getBefestFlaecheFeld().setEnabled(enabled);
-		getLProSFeld().setEnabled(enabled);
-		getQmProHFeld().setEnabled(enabled);
-		getQmProDFeld().setEnabled(enabled);
-		getQmProAFeld().setEnabled(enabled);
+        getHerkunftBox().setEnabled(enabled);
+        getBefestFlaecheFeld().setEnabled(enabled);
+        getLProSFeld().setEnabled(enabled);
+        getQmProHFeld().setEnabled(enabled);
+        getQmProDFeld().setEnabled(enabled);
+        getQmProAFeld().setEnabled(enabled);
         getBemerkungenArea().setEnabled(enabled);
     }
 
@@ -436,52 +436,52 @@ public class AnfallstellePanel extends JPanel {
         return this.name;
     }
 
-    private boolean saveAnfallstelleDaten() {
+    public boolean savePanelData() {
         boolean success;
-        
+
         this.anfallstelle.setAktualDat(new Date());
-        
+
         Date erstellDat = this.erstellDatDatum.getDate();
         this.anfallstelle.setErstellDat(erstellDat);
-        
-                
+
+
         anhang = (Anhang) this.anhangBox.getSelectedItem();
         if(getAnhangBox().getSelectedItem() == null) {
-        	this.anfallstelle.setAnhangId(null);
+            this.anfallstelle.setAnhangId(null);
         } else {
-        	this.anfallstelle.setAnhangId(anhang.getAnhangId());
+            this.anfallstelle.setAnhangId(anhang.getAnhangId());
         }
-        
+
         this.anfallstelle.setAbwaBeschaffOpt(
                 Anfallstelle.getBeschaffenheitIdFromDescription((String) getBeschaffenheitBox().getSelectedItem()));
-        
+
         this.anfallstelle.setBetriebsweiseOpt(
                 Anfallstelle.getBetriebsweiseIdFromDescription((String) getBetriebsweiseBox().getSelectedItem()));
-  
+
         if (getAnlagenartBox().getSelectedItem() == null) {
-        	this.anfallstelle.setAnlagenart(null);
+            this.anfallstelle.setAnlagenart(null);
         } else {
-        	this.anfallstelle.setAnlagenart((String) getAnlagenartBox().getSelectedItem());
+            this.anfallstelle.setAnlagenart((String) getAnlagenartBox().getSelectedItem());
         }
-        
+
         if (getHerkunftBox().getSelectedIndex() == 0) {
-        	this.anfallstelle.setNwHerBereichOpt(0);
+            this.anfallstelle.setNwHerBereichOpt(0);
         } else {
-        	this.anfallstelle.setNwHerBereichOpt(getHerkunftBox().getSelectedIndex());
+            this.anfallstelle.setNwHerBereichOpt(getHerkunftBox().getSelectedIndex());
         }
-        
+
         String anwendungsbereich = this.anwendungsbereichFeld.getText();
         if("".equals(anwendungsbereich)) {
-        	this.anfallstelle.setAnwendungsbereich(null);
+            this.anfallstelle.setAnwendungsbereich(null);
         } else {
-        	this.anfallstelle.setAnwendungsbereich(anwendungsbereich);
+            this.anfallstelle.setAnwendungsbereich(anwendungsbereich);
         }
-        
+
         String bezeichnung = this.bezeichnungFeld.getText();
         if("".equals(bezeichnung)) {
-        	this.anfallstelle.setBezeichnung(null);
+            this.anfallstelle.setBezeichnung(null);
         } else {
-        	this.anfallstelle.setBezeichnung(bezeichnung);
+            this.anfallstelle.setBezeichnung(bezeichnung);
         }
 
         Integer qmproa = ((IntegerField) this.qmProAFeld)
@@ -491,60 +491,60 @@ public class AnfallstellePanel extends JPanel {
         Integer beffl = ((IntegerField) this.befestFlaecheFeld)
             .getIntValue();
         this.anfallstelle.setBefFlaeche(beffl);
-        
-		Float abfluss = ((DoubleField) getLProSFeld()).getFloatValue();
+
+        Float abfluss = ((DoubleField) getLProSFeld()).getFloatValue();
         this.anfallstelle.setAbflussmenge(abfluss);
         Float maxVolH = ((DoubleField) getQmProHFeld()).getFloatValue();
         this.anfallstelle.setMaxVolStunde(maxVolH);
         Float maxVolD = ((DoubleField) getQmProDFeld()).getFloatValue();
         this.anfallstelle.setMaxVolTag(maxVolD);
-        
+
         Date stillgelegtAm = this.stillgelegtAmDatum.getDate();
         this.anfallstelle.setStillgelegtAm(stillgelegtAm);
-        
+
         String bemerkungen = this.bemerkungenArea.getText();
         if("".equals(bemerkungen)) {
-        	this.anfallstelle.setBemerkungen(null);
+            this.anfallstelle.setBemerkungen(null);
         } else {
-        	this.anfallstelle.setBemerkungen(bemerkungen);
+            this.anfallstelle.setBemerkungen(bemerkungen);
         }
 
         success = this.anfallstelle.merge();
-        
+
         if(success) {
-        	log.debug("Anfallstelle "
+            log.debug("Anfallstelle "
                   + this.anfallstelle.getObjekt().getBetreiberid()
-                      .getName() + " gespeichert.");     	
+                      .getName() + " gespeichert.");
         } else {
-        	log.debug("Anfallstelle " + this.anfallstelle
-        			+ " konnte nicht gespeichert werden!");
+            log.debug("Anfallstelle " + this.anfallstelle
+                    + " konnte nicht gespeichert werden!");
         }
         return success;
     }
 
     public void completeObjekt() {
-    	if (this.hauptModul.isNew() || this.anfallstelle == null) {
-    		// Neue Anfallstelle erzeugen
-    		this.anfallstelle = new Anfallstelle();
-    		this.anfallstelle.setAnhangId("99");
-    		this.anfallstelle.setErstellDat(new Date());
-    		// Objekt_Id setzen
-    		this.anfallstelle.setObjekt(this.hauptModul.getObjekt());
-    		// Anfallstelle speichern
-    		this.anfallstelle.merge();
-    		log.debug("Neue Anfallstelle " + this.anfallstelle + " gespeichert.");
-    	}
+        if (this.hauptModul.isNew() || this.anfallstelle == null) {
+            // Neue Anfallstelle erzeugen
+            this.anfallstelle = new Anfallstelle();
+            this.anfallstelle.setAnhangId("99");
+            this.anfallstelle.setErstellDat(new Date());
+            // Objekt_Id setzen
+            this.anfallstelle.setObjekt(this.hauptModul.getObjekt());
+            // Anfallstelle speichern
+            this.anfallstelle.merge();
+            log.debug("Neue Anfallstelle " + this.anfallstelle + " gespeichert.");
+        }
     }
-    
+
     /**
      * Get-Methode die das erstellDatDatum des Panels zurückgibt:
      * @return {@link TextFieldDateChooser}
      */
     private TextFieldDateChooser getErstellDatDatum() {
-    	if (this.erstellDatDatum == null) {
-    		this.erstellDatDatum = new TextFieldDateChooser();
-    	}
-    	return this.erstellDatDatum;
+        if (this.erstellDatDatum == null) {
+            this.erstellDatDatum = new TextFieldDateChooser();
+        }
+        return this.erstellDatDatum;
     }
 
     /**
@@ -587,16 +587,16 @@ public class AnfallstellePanel extends JPanel {
         }
         return anlagenartBox;
     }
-    
+
     /**
      * Get-Methode die das anhangIdFeld des Panels zurückgibt:
      * @return {@link JTextField}
      */
     private JTextField getAnhangIdFeld() {
-    	if (this.anhangIdFeld == null) {
-    		this.anhangIdFeld = new LimitedTextField(50);
-    	}
-    	return this.anhangIdFeld;
+        if (this.anhangIdFeld == null) {
+            this.anhangIdFeld = new LimitedTextField(50);
+        }
+        return this.anhangIdFeld;
     }
 
     /**
@@ -609,106 +609,106 @@ public class AnfallstellePanel extends JPanel {
         }
         return herkunftBox;
     }
-    
+
     private JTextField getAnwendungsbereichFeld() {
-    	if (this.anwendungsbereichFeld == null) {
-    		this.anwendungsbereichFeld = new LimitedTextField(50);
-    	}
-    	return this.anwendungsbereichFeld;
+        if (this.anwendungsbereichFeld == null) {
+            this.anwendungsbereichFeld = new LimitedTextField(50);
+        }
+        return this.anwendungsbereichFeld;
     }
-    
+
     private IntegerField getBefestFlaecheFeld() {
-    	if (this.befestFlaecheFeld == null) {
-    		this.befestFlaecheFeld = new IntegerField();
-    	}
-    	return this.befestFlaecheFeld;
+        if (this.befestFlaecheFeld == null) {
+            this.befestFlaecheFeld = new IntegerField();
+        }
+        return this.befestFlaecheFeld;
     }
-    
+
     private JFormattedTextField getLProSFeld() {
-    	if (this.lProSFeld == null) {
-    		this.lProSFeld = new DoubleField(1);
-    	}
-    	return this.lProSFeld;
+        if (this.lProSFeld == null) {
+            this.lProSFeld = new DoubleField(1);
+        }
+        return this.lProSFeld;
     }
-    
+
     private JFormattedTextField getQmProHFeld() {
-    	if (this.qmProHFeld == null) {
-    		this.qmProHFeld = new DoubleField(1);
-    	}
-    	return this.qmProHFeld;
+        if (this.qmProHFeld == null) {
+            this.qmProHFeld = new DoubleField(1);
+        }
+        return this.qmProHFeld;
     }
-    
+
     private JFormattedTextField getQmProDFeld() {
-    	if (this.qmProDFeld == null) {
-    		this.qmProDFeld = new DoubleField(1);
-    	}
-    	return this.qmProDFeld;
+        if (this.qmProDFeld == null) {
+            this.qmProDFeld = new DoubleField(1);
+        }
+        return this.qmProDFeld;
     }
-    
+
     private IntegerField getQmProAFeld() {
-    	if (this.qmProAFeld == null) {
-    		this.qmProAFeld = new IntegerField();
-    	}
-    	return this.qmProAFeld;
+        if (this.qmProAFeld == null) {
+            this.qmProAFeld = new IntegerField();
+        }
+        return this.qmProAFeld;
     }
-        
+
     /**
      * Get-Methode die das bezeichnungFeld des Panels zurückgibt:
      * @return {@link JTextField}
      */
     private JTextField getBezeichnungFeld() {
-    	if (this.bezeichnungFeld == null) {
-    		this.bezeichnungFeld = new JFormattedTextField();
-    	}
-    	return this.bezeichnungFeld;
+        if (this.bezeichnungFeld == null) {
+            this.bezeichnungFeld = new JFormattedTextField();
+        }
+        return this.bezeichnungFeld;
     }
-    
+
     /**
      * Get-Methode die das stillgelegtAmDatum des Panels zurückgibt:
      * @return {@link TextFieldDateChooser}
      */
     private TextFieldDateChooser getStillgelegtAmDatum() {
-    	if (this.stillgelegtAmDatum == null) {
-    		this.stillgelegtAmDatum = new TextFieldDateChooser();
-    	}
-    	return this.stillgelegtAmDatum;
+        if (this.stillgelegtAmDatum == null) {
+            this.stillgelegtAmDatum = new TextFieldDateChooser();
+        }
+        return this.stillgelegtAmDatum;
     }
-    
+
     /**
      * Get-Methode die das abwaBeschaffOptFeld des Panels zurückgibt:
      * @return {@link JFormattedTextField}
      */
     private JFormattedTextField getAbwaBeschaffOptFeld() {
-    	if (this.abwaBeschaffOptFeld == null) {
-    		this.abwaBeschaffOptFeld = new IntegerField();
-    	}
-    	return this.abwaBeschaffOptFeld;
+        if (this.abwaBeschaffOptFeld == null) {
+            this.abwaBeschaffOptFeld = new IntegerField();
+        }
+        return this.abwaBeschaffOptFeld;
     }
-    
+
     /**
      * Get-Methode die das betriebsweiseOptFeld des Panels zurückgibt:
      * @return {@link JFormattedTextField}
      */
     private JFormattedTextField getBetriebsweiseOptFeld() {
-    	if (this.betriebsweiseOptFeld == null) {
-    		this.betriebsweiseOptFeld = new IntegerField();
-    	}
-    	return this.betriebsweiseOptFeld;
+        if (this.betriebsweiseOptFeld == null) {
+            this.betriebsweiseOptFeld = new IntegerField();
+        }
+        return this.betriebsweiseOptFeld;
     }
-    
+
     /**
      * Get-Methode die das bemerkungenFeld des Panels zurückgibt:
      * @return {@link JTextField}
      */
     private JTextArea getBemerkungenArea() {
-    	if (this.bemerkungenArea == null) {
-    		this.bemerkungenArea = new LimitedTextArea(150);
+        if (this.bemerkungenArea == null) {
+            this.bemerkungenArea = new LimitedTextArea(150);
             this.bemerkungenArea.setLineWrap(true);
             this.bemerkungenArea.setWrapStyleWord(true);
-    	}
-    	return this.bemerkungenArea;
+        }
+        return this.bemerkungenArea;
     }
-    
+
     /**
      * Methode die den SaveAnfallstelleButton zurückgibt sofern er existiert,
      * ansonsten wird ein neuer erstellt und diesem einen {@link ActionListener} hinzugefügt,
@@ -717,29 +717,29 @@ public class AnfallstellePanel extends JPanel {
      * @return {@link JButton}
      */
     private JButton getSaveAnfallstelleButton() {
-    	if (this.saveAnfallstelleButton == null) {
-    		this.saveAnfallstelleButton = new JButton("Speichern");
-    		
-    		this.saveAnfallstelleButton.addActionListener(new ActionListener() {
-    			@Override
-    			public void actionPerformed(ActionEvent e) {
-    				enableAll(false);;
-    				if(saveAnfallstelleDaten()) {
-    					AnfallstellePanel.this.hauptModul.getFrame().changeStatus(
-    							"Anfallstelle "
-    							+ AnfallstellePanel.this.anfallstelle.getId()
-    							+ " erfolgreich gespeichert.",
-    							HauptFrame.SUCCESS_COLOR);
-    				} else {
-    					AnfallstellePanel.this.hauptModul.getFrame().changeStatus(
-    							"Fehler beim Speichern der Anfallstelle!",
-    							HauptFrame.ERROR_COLOR);
-    				}
-    				AnfallstellePanel.this.hauptModul.fillForm();
-    			}
-    		});
-    	}
-    	return this.saveAnfallstelleButton;
+        if (this.saveAnfallstelleButton == null) {
+            this.saveAnfallstelleButton = new JButton("Speichern");
+
+            this.saveAnfallstelleButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    enableAll(false);;
+                    if(hauptModul.saveAllTabs()) {
+                        AnfallstellePanel.this.hauptModul.getFrame().changeStatus(
+                                "Anfallstelle "
+                                + AnfallstellePanel.this.anfallstelle.getId()
+                                + " erfolgreich gespeichert.",
+                                HauptFrame.SUCCESS_COLOR);
+                    } else {
+                        AnfallstellePanel.this.hauptModul.getFrame().changeStatus(
+                                "Fehler beim Speichern der Anfallstelle!",
+                                HauptFrame.ERROR_COLOR);
+                    }
+                    AnfallstellePanel.this.hauptModul.fillForm();
+                }
+            });
+        }
+        return this.saveAnfallstelleButton;
     }
 
     private JTable getObjektverknuepungTabelle() {
@@ -773,12 +773,12 @@ public class AnfallstellePanel extends JPanel {
 
                             if (row != -1) {
                                 Objektverknuepfung obj =
-                                	AnfallstellePanel.this.objektVerknuepfungModel
+                                    AnfallstellePanel.this.objektVerknuepfungModel
                                     .getRow(row);
                                 if (obj.getObjektByIstVerknuepftMit()
                                     .getId().intValue() != AnfallstellePanel.this.hauptModul
                                     .getObjekt().getId().intValue())
-                                	AnfallstellePanel.this.hauptModul
+                                    AnfallstellePanel.this.hauptModul
                                         .getManager()
                                         .getSettingsManager()
                                         .setSetting(
@@ -787,7 +787,7 @@ public class AnfallstellePanel extends JPanel {
                                                 .getId().intValue(),
                                             false);
                                 else
-                                	AnfallstellePanel.this.hauptModul
+                                    AnfallstellePanel.this.hauptModul
                                         .getManager()
                                         .getSettingsManager()
                                         .setSetting(
@@ -795,8 +795,8 @@ public class AnfallstellePanel extends JPanel {
                                             obj.getObjektByObjekt()
                                                 .getId().intValue(),
                                             false);
-                                	AnfallstellePanel.this.hauptModul.getManager()
-                                    	.switchModul("m_objekt_bearbeiten");
+                                    AnfallstellePanel.this.hauptModul.getManager()
+                                        .switchModul("m_objekt_bearbeiten");
                             }
                         }
                     }
@@ -856,7 +856,7 @@ public class AnfallstellePanel extends JPanel {
                     if (row != -1
                         && getObjektverknuepungTabelle().getEditingRow() == -1) {
                         Objektverknuepfung verknuepfung =
-                        		AnfallstellePanel.this.objektVerknuepfungModel.getRow(row);
+                                AnfallstellePanel.this.objektVerknuepfungModel.getRow(row);
                         if (GUIManager.getInstance().showQuestion(
                             "Soll die Verknüpfung wirklich gelöscht werden?\n"
                                 + "Hinweis: Die Aktion betrifft nur die "
@@ -865,13 +865,13 @@ public class AnfallstellePanel extends JPanel {
                             "Löschen bestätigen")) {
                             if (AnfallstellePanel.this.objektVerknuepfungModel
                                 .removeRow(row)) {
-                            	AnfallstellePanel.this.hauptModul.getFrame()
+                                AnfallstellePanel.this.hauptModul.getFrame()
                                     .changeStatus("Objekt gelöscht.",
                                         HauptFrame.SUCCESS_COLOR);
                                 log.debug("Objekt " + verknuepfung.getId()
                                     + " wurde gelöscht!");
                             } else {
-                            	AnfallstellePanel.this.hauptModul.getFrame()
+                                AnfallstellePanel.this.hauptModul.getFrame()
                                     .changeStatus(
                                         "Konnte das Objekt nicht löschen!",
                                         HauptFrame.ERROR_COLOR);
@@ -897,9 +897,9 @@ public class AnfallstellePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     ObjektChooser chooser = new ObjektChooser(
-                    		AnfallstellePanel.this.hauptModul.getFrame(),
-                    		AnfallstellePanel.this.anfallstelle.getObjekt(),
-                    		AnfallstellePanel.this.objektVerknuepfungModel);
+                            AnfallstellePanel.this.hauptModul.getFrame(),
+                            AnfallstellePanel.this.anfallstelle.getObjekt(),
+                            AnfallstellePanel.this.objektVerknuepfungModel);
                     chooser.setVisible(true);
                 }
             });
@@ -907,235 +907,235 @@ public class AnfallstellePanel extends JPanel {
         return this.selectObjektButton;
     }
 
-	/**
-	 * Switch the panel content according to the given type and anlagenart string
-	 * 
-	 * @param type       New panel content type
-	 * @param anlagenart New panel content anlagenart
-	 */
-	public void switchAnhangPanel(String type, String anlagenart) {
-		if (type == null) {
-			return;
-		}
+    /**
+     * Switch the panel content according to the given type and anlagenart string
+     *
+     * @param type       New panel content type
+     * @param anlagenart New panel content anlagenart
+     */
+    public void switchAnhangPanel(String type, String anlagenart) {
+        if (type == null) {
+            return;
+        }
 
-		int i = hauptModul.getTabbedPane().getTabCount();
-		if (i > 5) {
-			hauptModul.getTabbedPane().removeTabAt(5);
-		}
-		if (i > 4) {
-			hauptModul.getTabbedPane().removeTabAt(4);
-		}
-		if (i > 3) {
-			hauptModul.getTabbedPane().removeTabAt(3);
-		}
+        int i = hauptModul.getTabbedPane().getTabCount();
+        if (i > 5) {
+            hauptModul.getTabbedPane().removeTabAt(5);
+        }
+        if (i > 4) {
+            hauptModul.getTabbedPane().removeTabAt(4);
+        }
+        if (i > 3) {
+            hauptModul.getTabbedPane().removeTabAt(3);
+        }
 
-		this.anlagenartBox.enable(false);
+        this.anlagenartBox.enable(false);
 
-		switch ((String) type) {
-		case "40":
-			hauptModul.getTabbedPane().addTab(getAnh40Tab().getName(), getAnh40Tab());
-			if (anfallstelle.getAnh40Fachdatens().size() > 0) {
-				getAnh40Tab().enableAll(true);
-				getAnh40Tab().updateForm(anfallstelle);
-			} else {
-				anfallstelle.setAnhangId("40");
-				getAnh40Tab().clearForm();
-				getAnh40Tab().completeObjekt(anfallstelle);
-				hauptModul.getTabbedPane().setSelectedIndex(3);
-			}
-			break;
-		case "49":
-			hauptModul.getTabbedPane().addTab(getAnh49Tab().getName(), getAnh49Tab());
-			hauptModul.getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
-			if (anfallstelle.getAnh49Fachdatens().size() > 0) {
-				getAnh49Tab().enableAll(true);
-				getAnh49Tab().updateForm(anfallstelle);
-				getAnh49AnalyseTab().clearForm();
-				getAnh49AnalyseTab().updateForm(getAnh49Tab().getFachdaten());
-			} else {
-				anfallstelle.setAnhangId("49");
-				getAnh49Tab().clearForm();
-				getAnh49Tab().completeObjekt(anfallstelle);
-				getAnh49AnalyseTab().clearForm();
-				hauptModul.getTabbedPane().setSelectedIndex(3);
-			}
-			break;
-		case "50":
-			hauptModul.getTabbedPane().addTab(getAnh50Tab().getName(), getAnh50Tab());
-			if (anfallstelle.getAnh50Fachdatens().size() > 0) {
-				getAnh50Tab().enableAll(true);
-				getAnh50Tab().fetchFormData();
-				getAnh50Tab().updateForm(anfallstelle);
-			} else {
-				anfallstelle.setAnhangId("50");
-				getAnh50Tab().clearForm();
-				getAnh50Tab().completeObjekt(anfallstelle);
-				hauptModul.getTabbedPane().setSelectedIndex(3);
-			}
-			break;
-		case "52":
-			hauptModul.getTabbedPane().addTab(getAnh52Tab().getName(), getAnh52Tab());
-			if (anfallstelle.getAnh52Fachdatens().size() > 0) {
-				getAnh52Tab().enableAll(true);
-				getAnh52Tab().updateForm(anfallstelle);
-			} else {
-				anfallstelle.setAnhangId("52");
-				getAnh52Tab().clearForm();
-				getAnh52Tab().completeObjekt(anfallstelle);
-				hauptModul.getTabbedPane().setSelectedIndex(3);
-			}
-			break;
-		case "55":
-			hauptModul.getTabbedPane().addTab(getAnh55Tab().getName(), getAnh55Tab());
-			if (anfallstelle.getAnh55Fachdatens().size() > 0) {
-				getAnh55Tab().enableAll(true);
-				getAnh55Tab().updateForm(anfallstelle);
-			} else {
-				anfallstelle.setAnhangId("55");
-				getAnh55Tab().clearForm();
-				getAnh55Tab().completeObjekt(anfallstelle);
-				hauptModul.getTabbedPane().setSelectedIndex(3);
-			}
-			break;
-		case "56":
-			hauptModul.getTabbedPane().addTab(getAnh56Tab().getName(), getAnh56Tab());
-			if (anfallstelle.getAnh56Fachdatens().size() > 0) {
-				getAnh56Tab().enableAll(true);
-				getAnh56Tab().updateForm(anfallstelle);
-			} else {
-				anfallstelle.setAnhangId("56");
-				getAnh56Tab().clearForm();
-				getAnh56Tab().completeObjekt(anfallstelle);
-				hauptModul.getTabbedPane().setSelectedIndex(3);
-			}
-			break;
-		case "99":
-			this.anlagenartBox.enable(true);
-			switch ((String) anlagenart) {
-			case "Brennwertkessel":
-				hauptModul.getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
-				if (anfallstelle.getBwkFachdatens().size() > 0) {
-					getBWKTab().enableAll(true);
-					getBWKTab().updateForm(anfallstelle);
-				} else {
-					anfallstelle.setAnhangId("99");
-					anfallstelle.setAnlagenart("Brennwertkessel");
-					getBWKTab().clearForm();
-					getBWKTab().completeObjekt(anfallstelle);
-					hauptModul.getTabbedPane().setSelectedIndex(3);
-				}
-				break;
-			case "Blockheizkraftwerk":
-				hauptModul.getTabbedPane().addTab("Blockheizkraftwerk", getBWKTab());
-				if (anfallstelle.getBwkFachdatens().size() > 0) {
-					getBWKTab().enableAll(true);
-					getBWKTab().updateForm(anfallstelle);
-				} else {
-					anfallstelle.setAnhangId("99");
-					anfallstelle.setAnlagenart("Blockheizkraftwerk");
-					getBWKTab().clearForm();
-					getBWKTab().completeObjekt(anfallstelle);
-					hauptModul.getTabbedPane().setSelectedIndex(3);
-				}
-				break;
-			case "Fettabscheider":
-				hauptModul.getTabbedPane().addTab("Fettabscheider", getAnh49Tab());
-				hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
-				if (anfallstelle.getAnh49Fachdatens().size() > 0) {
-					getAnh49Tab().enableAll(true);
-					getAnh49Tab().updateForm(anfallstelle);
-					getAnh49AbfuhrTab().clearForm();
-					getAnh49AbfuhrTab().updateForm(getAnh49Tab().getFachdaten());
-				} else {
-					anfallstelle.setAnhangId("99");
-					anfallstelle.setAnlagenart("Fettabscheider");
-					getAnh49Tab().clearForm();
-					getAnh49Tab().enableAll(true);
-					getAnh49Tab().completeObjekt(anfallstelle);
-					hauptModul.getTabbedPane().setSelectedIndex(3);
-				}
-				break;
-			case "Abscheider":
-				hauptModul.getTabbedPane().addTab("Abscheider", getAnh49Tab());
-				hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
-				if (anfallstelle.getAnh49Fachdatens().size() > 0) {
-					getAnh49Tab().fetchFormData();
-					getAnh49Tab().enableAll(true);
-					getAnh49Tab().updateForm(anfallstelle);
-					getAnh49AbfuhrTab().clearForm();
-					getAnh49AbfuhrTab().updateForm(getAnh49Tab().getFachdaten());
-				} else {
-					anfallstelle.setAnhangId("99");
-					anfallstelle.setAnlagenart("Abscheider");
-					getBWKTab().clearForm();
-					getAnh49Tab().completeObjekt(anfallstelle);
-					hauptModul.getTabbedPane().setSelectedIndex(3);
-				}
-				break;
-			}
-		}
-	}
+        switch ((String) type) {
+        case "40":
+            hauptModul.getTabbedPane().addTab(getAnh40Tab().getName(), getAnh40Tab());
+            if (anfallstelle.getAnh40Fachdatens().size() > 0) {
+                getAnh40Tab().enableAll(true);
+                getAnh40Tab().updateForm(anfallstelle);
+            } else {
+                anfallstelle.setAnhangId("40");
+                getAnh40Tab().clearForm();
+                getAnh40Tab().completeObjekt(anfallstelle);
+                hauptModul.getTabbedPane().setSelectedIndex(3);
+            }
+            break;
+        case "49":
+            hauptModul.getTabbedPane().addTab(getAnh49Tab().getName(), getAnh49Tab());
+            hauptModul.getTabbedPane().addTab(getAnh49AnalyseTab().getName(), getAnh49AnalyseTab());
+            if (anfallstelle.getAnh49Fachdatens().size() > 0) {
+                getAnh49Tab().enableAll(true);
+                getAnh49Tab().updateForm(anfallstelle);
+                getAnh49AnalyseTab().clearForm();
+                getAnh49AnalyseTab().updateForm(getAnh49Tab().getFachdaten());
+            } else {
+                anfallstelle.setAnhangId("49");
+                getAnh49Tab().clearForm();
+                getAnh49Tab().completeObjekt(anfallstelle);
+                getAnh49AnalyseTab().clearForm();
+                hauptModul.getTabbedPane().setSelectedIndex(3);
+            }
+            break;
+        case "50":
+            hauptModul.getTabbedPane().addTab(getAnh50Tab().getName(), getAnh50Tab());
+            if (anfallstelle.getAnh50Fachdatens().size() > 0) {
+                getAnh50Tab().enableAll(true);
+                getAnh50Tab().fetchFormData();
+                getAnh50Tab().updateForm(anfallstelle);
+            } else {
+                anfallstelle.setAnhangId("50");
+                getAnh50Tab().clearForm();
+                getAnh50Tab().completeObjekt(anfallstelle);
+                hauptModul.getTabbedPane().setSelectedIndex(3);
+            }
+            break;
+        case "52":
+            hauptModul.getTabbedPane().addTab(getAnh52Tab().getName(), getAnh52Tab());
+            if (anfallstelle.getAnh52Fachdatens().size() > 0) {
+                getAnh52Tab().enableAll(true);
+                getAnh52Tab().updateForm(anfallstelle);
+            } else {
+                anfallstelle.setAnhangId("52");
+                getAnh52Tab().clearForm();
+                getAnh52Tab().completeObjekt(anfallstelle);
+                hauptModul.getTabbedPane().setSelectedIndex(3);
+            }
+            break;
+        case "55":
+            hauptModul.getTabbedPane().addTab(getAnh55Tab().getName(), getAnh55Tab());
+            if (anfallstelle.getAnh55Fachdatens().size() > 0) {
+                getAnh55Tab().enableAll(true);
+                getAnh55Tab().updateForm(anfallstelle);
+            } else {
+                anfallstelle.setAnhangId("55");
+                getAnh55Tab().clearForm();
+                getAnh55Tab().completeObjekt(anfallstelle);
+                hauptModul.getTabbedPane().setSelectedIndex(3);
+            }
+            break;
+        case "56":
+            hauptModul.getTabbedPane().addTab(getAnh56Tab().getName(), getAnh56Tab());
+            if (anfallstelle.getAnh56Fachdatens().size() > 0) {
+                getAnh56Tab().enableAll(true);
+                getAnh56Tab().updateForm(anfallstelle);
+            } else {
+                anfallstelle.setAnhangId("56");
+                getAnh56Tab().clearForm();
+                getAnh56Tab().completeObjekt(anfallstelle);
+                hauptModul.getTabbedPane().setSelectedIndex(3);
+            }
+            break;
+        case "99":
+            this.anlagenartBox.enable(true);
+            switch ((String) anlagenart) {
+            case "Brennwertkessel":
+                hauptModul.getTabbedPane().addTab(getBWKTab().getName(), getBWKTab());
+                if (anfallstelle.getBwkFachdatens().size() > 0) {
+                    getBWKTab().enableAll(true);
+                    getBWKTab().updateForm(anfallstelle);
+                } else {
+                    anfallstelle.setAnhangId("99");
+                    anfallstelle.setAnlagenart("Brennwertkessel");
+                    getBWKTab().clearForm();
+                    getBWKTab().completeObjekt(anfallstelle);
+                    hauptModul.getTabbedPane().setSelectedIndex(3);
+                }
+                break;
+            case "Blockheizkraftwerk":
+                hauptModul.getTabbedPane().addTab("Blockheizkraftwerk", getBWKTab());
+                if (anfallstelle.getBwkFachdatens().size() > 0) {
+                    getBWKTab().enableAll(true);
+                    getBWKTab().updateForm(anfallstelle);
+                } else {
+                    anfallstelle.setAnhangId("99");
+                    anfallstelle.setAnlagenart("Blockheizkraftwerk");
+                    getBWKTab().clearForm();
+                    getBWKTab().completeObjekt(anfallstelle);
+                    hauptModul.getTabbedPane().setSelectedIndex(3);
+                }
+                break;
+            case "Fettabscheider":
+                hauptModul.getTabbedPane().addTab("Fettabscheider", getAnh49Tab());
+                hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
+                if (anfallstelle.getAnh49Fachdatens().size() > 0) {
+                    getAnh49Tab().enableAll(true);
+                    getAnh49Tab().updateForm(anfallstelle);
+                    getAnh49AbfuhrTab().clearForm();
+                    getAnh49AbfuhrTab().updateForm(getAnh49Tab().getFachdaten());
+                } else {
+                    anfallstelle.setAnhangId("99");
+                    anfallstelle.setAnlagenart("Fettabscheider");
+                    getAnh49Tab().clearForm();
+                    getAnh49Tab().enableAll(true);
+                    getAnh49Tab().completeObjekt(anfallstelle);
+                    hauptModul.getTabbedPane().setSelectedIndex(3);
+                }
+                break;
+            case "Abscheider":
+                hauptModul.getTabbedPane().addTab("Abscheider", getAnh49Tab());
+                hauptModul.getTabbedPane().addTab(getAnh49AbfuhrTab().getName(), getAnh49AbfuhrTab());
+                if (anfallstelle.getAnh49Fachdatens().size() > 0) {
+                    getAnh49Tab().fetchFormData();
+                    getAnh49Tab().enableAll(true);
+                    getAnh49Tab().updateForm(anfallstelle);
+                    getAnh49AbfuhrTab().clearForm();
+                    getAnh49AbfuhrTab().updateForm(getAnh49Tab().getFachdaten());
+                } else {
+                    anfallstelle.setAnhangId("99");
+                    anfallstelle.setAnlagenart("Abscheider");
+                    getBWKTab().clearForm();
+                    getAnh49Tab().completeObjekt(anfallstelle);
+                    hauptModul.getTabbedPane().setSelectedIndex(3);
+                }
+                break;
+            }
+        }
+    }
 
-	/**
-	 * Switch the panel content according to the given type
-	 * 
-	 * @param type       New panel content type
-	 */
-	public void switchBeschaffenheit(String type) {
-		if (type == null) {
-			return;
-		}
+    /**
+     * Switch the panel content according to the given type
+     *
+     * @param type       New panel content type
+     */
+    public void switchBeschaffenheit(String type) {
+        if (type == null) {
+            return;
+        }
 
-		if (type == "Niederschlagswasser mit Sonderbauwerk" || type == "Niederschlagswasser ohne Sonderbauwerk") {
+        if (type == "Niederschlagswasser mit Sonderbauwerk" || type == "Niederschlagswasser ohne Sonderbauwerk") {
 
-			anhangLb.setVisible(false);
-			getAnhangBox().setVisible(false);
-			anlagenartLb.setVisible(false);
-			getAnlagenartBox().setVisible(false);
-			anwendungsbereichLb.setVisible(false);
-			getAnwendungsbereichFeld().setVisible(false);
-			
-			herkunftsbereichLb.setVisible(true);
-			getHerkunftBox().setVisible(true);
-			befestFlaecheLb.setVisible(true);
-			getBefestFlaecheFeld().setVisible(true);
-			maxAbflussmengeLb.setVisible(true);
-			getLProSFeld().setVisible(true);
-			lProSLb.setVisible(true);
-			getQmProHFeld().setVisible(true);
-			qmProHLb.setVisible(true);
-			getQmProDFeld().setVisible(true);
-			qmProDLb.setVisible(true);
-			getQmProAFeld().setVisible(true);
-			abwasserProALb.setVisible(true);
+            anhangLb.setVisible(false);
+            getAnhangBox().setVisible(false);
+            anlagenartLb.setVisible(false);
+            getAnlagenartBox().setVisible(false);
+            anwendungsbereichLb.setVisible(false);
+            getAnwendungsbereichFeld().setVisible(false);
 
-		} else {
+            herkunftsbereichLb.setVisible(true);
+            getHerkunftBox().setVisible(true);
+            befestFlaecheLb.setVisible(true);
+            getBefestFlaecheFeld().setVisible(true);
+            maxAbflussmengeLb.setVisible(true);
+            getLProSFeld().setVisible(true);
+            lProSLb.setVisible(true);
+            getQmProHFeld().setVisible(true);
+            qmProHLb.setVisible(true);
+            getQmProDFeld().setVisible(true);
+            qmProDLb.setVisible(true);
+            getQmProAFeld().setVisible(true);
+            abwasserProALb.setVisible(true);
 
-			anhangLb.setVisible(true);
-			getAnhangBox().setVisible(true);
-			anlagenartLb.setVisible(true);
-			getAnlagenartBox().setVisible(true);
-			anwendungsbereichLb.setVisible(true);
-			getAnwendungsbereichFeld().setVisible(true);
-			
-			herkunftsbereichLb.setVisible(false);
-			getHerkunftBox().setVisible(false);
-			befestFlaecheLb.setVisible(false);
-			getBefestFlaecheFeld().setVisible(false);
-			maxAbflussmengeLb.setVisible(false);
-			getLProSFeld().setVisible(false);
-			lProSLb.setVisible(false);
-			getQmProHFeld().setVisible(false);
-			qmProHLb.setVisible(false);
-			getQmProDFeld().setVisible(false);
-			qmProDLb.setVisible(false);
-			getQmProAFeld().setVisible(false);
-			abwasserProALb.setVisible(false);
-			
-		}
+        } else {
 
-	}
-	
+            anhangLb.setVisible(true);
+            getAnhangBox().setVisible(true);
+            anlagenartLb.setVisible(true);
+            getAnlagenartBox().setVisible(true);
+            anwendungsbereichLb.setVisible(true);
+            getAnwendungsbereichFeld().setVisible(true);
+
+            herkunftsbereichLb.setVisible(false);
+            getHerkunftBox().setVisible(false);
+            befestFlaecheLb.setVisible(false);
+            getBefestFlaecheFeld().setVisible(false);
+            maxAbflussmengeLb.setVisible(false);
+            getLProSFeld().setVisible(false);
+            lProSLb.setVisible(false);
+            getQmProHFeld().setVisible(false);
+            qmProHLb.setVisible(false);
+            getQmProDFeld().setVisible(false);
+            qmProDLb.setVisible(false);
+            getQmProAFeld().setVisible(false);
+            abwasserProALb.setVisible(false);
+
+        }
+
+    }
+
 
 
     public Anh40Panel getAnh40Tab() {
@@ -1147,7 +1147,7 @@ public class AnfallstellePanel extends JPanel {
     }
 
     public Anh49Panel getAnh49Tab() {
-		if (anhang49Tab == null) {
+        if (anhang49Tab == null) {
             anhang49Tab = new Anh49Panel(hauptModul, anfallstelle);
             anhang49Tab.setBorder(Paddings.DIALOG);
         }
@@ -1204,8 +1204,8 @@ public class AnfallstellePanel extends JPanel {
 
     public BWKPanel getBWKTab() {
         if (bwkTab == null) {
-        	bwkTab = new BWKPanel(hauptModul, anfallstelle);
-        	bwkTab.setBorder(Paddings.DIALOG);
+            bwkTab = new BWKPanel(hauptModul, anfallstelle);
+            bwkTab.setBorder(Paddings.DIALOG);
         }
         return bwkTab;
     }

@@ -74,7 +74,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "BWK"-Tab des BasisObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class BWKPanel extends JPanel {
+public class BWKPanel extends JPanel implements ObjectPanel {
     private static final long serialVersionUID = -6831726331391740934L;
 
     /** Logging */
@@ -307,7 +307,7 @@ public class BWKPanel extends JPanel {
 
     }
 
-    private boolean saveBwkDaten() {
+    public boolean savePanelData() {
 	    boolean success;
 	
 	    String hersteller = this.herstellerFeld.getText();
@@ -533,7 +533,7 @@ public class BWKPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 //                    enableAll(false);
-                    if (saveBwkDaten()) {
+                    if (hauptModul.saveAllTabs()) {
                         BWKPanel.this.hauptModul.getFrame().changeStatus(
                             "Brennwertkessel " + BWKPanel.this.bwk.getId()
                                 + " erfolgreich gespeichert.",

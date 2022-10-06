@@ -68,7 +68,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "Anhang 40"-Tab des BasisObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class Anh40Panel extends JPanel {
+public class Anh40Panel extends JPanel implements ObjectPanel {
     private static final long serialVersionUID = -8519254704315572879L;
 
     /** Logging */
@@ -274,7 +274,7 @@ public class Anh40Panel extends JPanel {
         getGen59Datum().setEnabled(enabled);
     }
 
-    private boolean saveAnh40Daten() {
+    public boolean savePanelData() {
         boolean success;
 
         String bemerkungen = this.anh40BemerkungArea.getText();
@@ -392,9 +392,7 @@ public class Anh40Panel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
-                    
-                    saveAnh40Daten();
-                    if (saveAnh40Daten()) {
+                    if (hauptModul.saveAllTabs()) {
                         Anh40Panel.this.hauptModul.getFrame().changeStatus(
                             "Anh 40 Objekt "
                                 + Anh40Panel.this.fachdaten.getId()

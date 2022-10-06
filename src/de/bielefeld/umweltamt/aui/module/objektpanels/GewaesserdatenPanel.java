@@ -76,7 +76,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
  * @date 27.07.2020
  */
 
-public class GewaesserdatenPanel extends JPanel {
+public class GewaesserdatenPanel extends JPanel implements ObjectPanel {
 	private static final long serialVersionUID = 7997458251785488488L;
 
 	/** Logging */
@@ -571,7 +571,7 @@ public class GewaesserdatenPanel extends JPanel {
 
 	
 
-	private boolean saveGewDaten() {
+	public boolean savePanelData() {
 		boolean success = false;
 
 //		getEinleitungsstelleTab().setObjektValues(this.einleitungsstelle);
@@ -820,7 +820,7 @@ public class GewaesserdatenPanel extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					enableAll(false);
 					;
-					if (saveGewDaten()) {
+					if (hauptModul.saveAllTabs()) {
 						GewaesserdatenPanel.this.hauptModul.getFrame().changeStatus("Gewaessserdaten "
 								+ GewaesserdatenPanel.this.einleitungsstelle + " erfolgreich gespeichert.",
 								HauptFrame.SUCCESS_COLOR);

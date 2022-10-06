@@ -121,7 +121,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * Das Panel zum Bearbeiten von Druckereien
  * @author u633d
  */
-public class Anh55Panel extends JPanel {
+public class Anh55Panel extends JPanel implements ObjectPanel {
     private static final long serialVersionUID = 3345458422378912073L;
 
     /** Logging */
@@ -260,7 +260,7 @@ public class Anh55Panel extends JPanel {
         	this.fachdaten.setAnfallstelle(this.anfallstelle);
     }
 
-    private boolean saveAnh55Daten() {
+    public boolean savePanelData() {
         boolean success;
 
         String bemerkungen = this.BemerkungenArea.getText();
@@ -707,7 +707,7 @@ public class Anh55Panel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
-                    if (saveAnh55Daten()) {
+                    if (hauptModul.saveAllTabs()) {
                         Anh55Panel.this.hauptModul.getFrame().changeStatus(
                             "Anh 55 Objekt "
                                 + Anh55Panel.this.fachdaten.getId()

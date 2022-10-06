@@ -122,7 +122,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Das "Anhang 49"-Tab des BasisObjektBearbeiten-Moduls.
  * @author Gerd Genuit
  */
-public class Anh49Panel extends AbstractAnhangPanel {
+public class Anh49Panel extends AbstractAnhangPanel implements ObjectPanel {
     private static final long serialVersionUID = 2262140075740338093L;
 
     private class Anh49AbscheiderModel extends ListTableModel {
@@ -692,7 +692,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         return this.fachdaten;
     }
 
-    private boolean saveAnh49Daten() {
+    public boolean savePanelData() {
         boolean success;
 
         this.fachdaten.setAnsprechpartnerIn((String) super
@@ -761,7 +761,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 //                    enableAll(false);
-                    if (saveAnh49Daten()) {
+                    if (hauptModul.saveAllTabs()) {
                         Anh49Panel.this.hauptModul.getFrame().changeStatus(
                             "Anhang 49-Objekt erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
