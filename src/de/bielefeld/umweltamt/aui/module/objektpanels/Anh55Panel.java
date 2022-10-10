@@ -121,7 +121,7 @@ import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
  * Das Panel zum Bearbeiten von Druckereien
  * @author u633d
  */
-public class Anh55Panel extends JPanel implements ObjectPanel {
+public class Anh55Panel extends ObjectPanel {
     private static final long serialVersionUID = 3345458422378912073L;
 
     /** Logging */
@@ -247,6 +247,14 @@ public class Anh55Panel extends JPanel implements ObjectPanel {
 
         // JComponent buttonBar = ComponentFactory.buildOKBar(getSaveAnh55Button());
         builder.append(buttonBar, 7);
+        addChangeListeners(getAbgemeldetCheck(), getSachbearbeiterFeld(),
+            getEntgebIdFeld(), getMengeFeld(), getSonsttexFeld(),
+            getMonatwasserverbFeld(), getWaschsituationArea(), getAnsprechpartnerFeld(),
+            getBrancheFeld(), getPutztuecherCheck(), getTeppichCheck(), getMattenCheck(),
+            getHaushaltstexCheck(), getBerufsklCheck(), getGasthotelCheck(), getKrankenhausCheck(),
+            getHeimwaescheCheck(), getAnteilwaschgutFeld(), getGesamtwaschgutFeld(), getBetrwasseraufberCheck(),
+            getChlorCheck(), getAktivchlorCheck(), getVliesCheck(), getFischCheck(), getBemerkungenArea(),
+            getAbgemeldetCheck());
 
     }
 
@@ -260,7 +268,7 @@ public class Anh55Panel extends JPanel implements ObjectPanel {
         	this.fachdaten.setAnfallstelle(this.anfallstelle);
     }
 
-    public boolean savePanelData() {
+    protected boolean doSavePanelData() {
         boolean success;
 
         String bemerkungen = this.BemerkungenArea.getText();
@@ -689,7 +697,7 @@ public class Anh55Panel extends JPanel implements ObjectPanel {
 //        }
 //            this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         }
-
+        setDirty(false);
     }
 
     public void fetchFormData() throws RuntimeException {

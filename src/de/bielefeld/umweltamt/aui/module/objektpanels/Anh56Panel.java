@@ -84,7 +84,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das Panel zum Bearbeiten von Druckereien
  * @author u633d
  */
-public class Anh56Panel extends JPanel implements ObjectPanel {
+public class Anh56Panel extends ObjectPanel {
     private static final long serialVersionUID = -6981678796941528077L;
 
     /** Logging */
@@ -154,7 +154,9 @@ public class Anh56Panel extends JPanel implements ObjectPanel {
 
         // JComponent buttonBar = ComponentFactory.buildOKBar(getSaveAnh56Button());
         builder.append(buttonBar, 7);
-
+        addChangeListeners(getBemerkungenArea(), getDruckverfahrenFeld(),
+            getVerbrauchFeld(), getEntsorgungFeld(), getGen58Datum(), getGen59Datum(),
+            getAbaCheck(), getGenpflichtCheck(), getAbwasseranfallCheck());
     }
 
     public void completeObjekt(Anfallstelle anfallstelle) {
@@ -167,7 +169,7 @@ public class Anh56Panel extends JPanel implements ObjectPanel {
         	this.fachdaten.setAnfallstelle(this.anfallstelle);
     }
 
-    public boolean savePanelData() {
+    protected boolean doSavePanelData() {
         boolean success;
 
         String bemerkungen = this.BemerkungenArea.getText();
@@ -300,6 +302,7 @@ public class Anh56Panel extends JPanel implements ObjectPanel {
                 }
             }
         }
+        setDirty(false);
     }
 
     public void fetchFormData() throws RuntimeException {

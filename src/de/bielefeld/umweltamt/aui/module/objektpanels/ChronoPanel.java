@@ -117,7 +117,7 @@ import de.bielefeld.umweltamt.aui.utils.PDFExporter;
  * Das "Objekt-Chronologie"-Panel des Objekt-Bearbeiten-Moduls.
  * @author Gerd Genuit
  */
-public class ChronoPanel extends JPanel implements ObjectPanel {
+public class ChronoPanel extends ObjectPanel {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     private static final long serialVersionUID = 5763325969928267241L;
@@ -378,8 +378,8 @@ public class ChronoPanel extends JPanel implements ObjectPanel {
      * Speichert die Objekt-Chronologie-Einträge und löscht gelöschte Datensätze
      * aus der Datenbank.
      */
-
-    public boolean savePanelData() {
+    @Override
+    protected boolean doSavePanelData() {
         if (this.chronoTable.getCellEditor() != null) {
             this.chronoTable.getCellEditor().stopCellEditing();
         }

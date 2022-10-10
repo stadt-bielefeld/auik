@@ -82,7 +82,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  * @date 15.01.2018
  */
-public class SonderbauwerkPanel extends JPanel implements ObjectPanel {
+public class SonderbauwerkPanel extends ObjectPanel {
     private static final long serialVersionUID = 7997458251785488488L;
 
     /** Logging */
@@ -179,6 +179,7 @@ public class SonderbauwerkPanel extends JPanel implements ObjectPanel {
                 typePanel.switchTypDetailPanel((String) typBox.getSelectedItem());
             }
         });
+        addChangeListeners(getErstellDatDatum(), getBezeichnungFeld());
     }
 
     /**
@@ -345,6 +346,7 @@ public class SonderbauwerkPanel extends JPanel implements ObjectPanel {
                    Sonderbauwerk.getTypDescriptionFromInteger(this.sonderbauwerk.getTypOpt()));
             this.typePanel.switchTypDetailPanel((String) typBox.getSelectedItem());
         }
+        setDirty(false);
     }
 
     /**
@@ -353,7 +355,6 @@ public class SonderbauwerkPanel extends JPanel implements ObjectPanel {
     public void clearForm() {
         getErstellDatDatum().setDate(null);
         getBezeichnungFeld().setText(null);
-
     }
 
     /**
@@ -376,7 +377,7 @@ public class SonderbauwerkPanel extends JPanel implements ObjectPanel {
      * in das Sonderbauwerk der Datenbank schreibt.
      * @return boolean
      */
-    public boolean savePanelData() {
+    protected boolean doSavePanelData() {
         boolean success;
 
         completeObjekt();

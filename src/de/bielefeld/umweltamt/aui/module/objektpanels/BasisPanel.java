@@ -122,7 +122,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author David Klotz
  */
 
-public class BasisPanel extends JPanel implements ObjectPanel {
+public class BasisPanel extends ObjectPanel {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     private static final long serialVersionUID = 2520878475016486007L;
@@ -255,6 +255,10 @@ public class BasisPanel extends JPanel implements ObjectPanel {
             getSelectObjektButton(), getSaveButton());
 
         builder.append(buttonBar, 5);
+        addChangeListeners(
+            getBetreiberFeld(), getStandortFeld(), getLageFeld(), getArtBox(),
+            getSachbearbeiterBox(), getWiedervorlageDatum(), getInaktivBox(),
+            getElkarelevantBox(), getPrioritaetFeld(), getAbwasserfreiBox());
     }
 
     public void fetchFormData() {
@@ -498,7 +502,8 @@ public class BasisPanel extends JPanel implements ObjectPanel {
         return this.name;
     }
 
-    public boolean savePanelData() {
+    @Override
+    protected boolean doSavePanelData() {
         boolean success;
 
         // Eingegebene Daten für das Objekt übernehmen

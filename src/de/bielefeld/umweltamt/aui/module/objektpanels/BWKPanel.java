@@ -74,7 +74,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "BWK"-Tab des BasisObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class BWKPanel extends JPanel implements ObjectPanel {
+public class BWKPanel extends ObjectPanel {
     private static final long serialVersionUID = -6831726331391740934L;
 
     /** Logging */
@@ -185,7 +185,12 @@ public class BWKPanel extends JPanel implements ObjectPanel {
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSaveBwkButton());
         builder.add(buttonBar, cc.xyw(1, 25, 7));
-
+        addChangeListeners(getHerstellerFeld(), getTypFeld(),
+            getBrennmittelFeld(), getLeistungFeld(), getBrennerFeld(),
+            getWaermetauscherFeld(), getAbgasleitungFeld(), getKondensatltgFeld(),
+            getJahrgangFeld(), getAbnahmeFeld(), getAnschreibenFeld(),
+            getGenehmigungDatum(), getAbaCheck(), getgenehmpflichtCheck(),
+            getBwkBeschreibungsArea());
     }
 
     public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
@@ -248,7 +253,7 @@ public class BWKPanel extends JPanel implements ObjectPanel {
                 }
             }
         }
-
+        setDirty(false);
     }
 
 	public void clearForm() {
@@ -307,7 +312,8 @@ public class BWKPanel extends JPanel implements ObjectPanel {
 
     }
 
-    public boolean savePanelData() {
+    @Override
+    protected boolean doSavePanelData() {
 	    boolean success;
 	
 	    String hersteller = this.herstellerFeld.getText();

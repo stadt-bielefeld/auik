@@ -79,7 +79,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * 
  * @author Gerd Genuit
  */
-public class Anh50Panel extends JPanel implements ObjectPanel {
+public class Anh50Panel extends ObjectPanel {
 	private static final long serialVersionUID = 7997458251785488488L;
 
 	/** Logging */
@@ -144,6 +144,9 @@ public class Anh50Panel extends JPanel implements ObjectPanel {
 
 		JComponent buttonBar = ComponentFactory.buildRightAlignedBar(getSaveAnh50Button());
 		builder.append(buttonBar, 6);
+		addChangeListeners(getGefaehrdungsklasseFeld(), getAnh50BemerkungArea(),
+		getAntragDatum(), getGenehmigungDatum(), getWiedervorlageDatum(),
+		getErloschenCheck());
 	}
 
 	public void fetchFormData() throws RuntimeException {
@@ -189,7 +192,7 @@ public class Anh50Panel extends JPanel implements ObjectPanel {
 				}
 			}
 		}
-
+		setDirty(false);
 	}
 
 	public void clearForm() {
@@ -210,7 +213,7 @@ public class Anh50Panel extends JPanel implements ObjectPanel {
 		return this.name;
 	}
 
-	public boolean savePanelData() {
+	protected boolean doSavePanelData() {
 		boolean success;
 
 		String bemerkungen = this.anh50BemerkungArea.getText();

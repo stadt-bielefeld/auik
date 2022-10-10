@@ -68,7 +68,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "Anhang 40"-Tab des BasisObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class Anh40Panel extends JPanel implements ObjectPanel {
+public class Anh40Panel extends ObjectPanel {
     private static final long serialVersionUID = -8519254704315572879L;
 
     /** Logging */
@@ -153,7 +153,14 @@ public class Anh40Panel extends JPanel implements ObjectPanel {
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
         		getSaveAnh40Button());
         builder.append(buttonBar,7);
-
+        addChangeListeners(getAnh40BemerkungArea(),
+            getAnsprechpartnerFeld(), getSachbearbeiterravFeld(),
+            getSachbearbeiterheepenFeld(), getKlaeranlageFeld(),
+            getHerkunftsbereichFeld(), getWsgCheck(),
+            getGenehmigungspflichtCheck(), getNachtragCheck(),
+            getBimschCheck(), getAbwmengegenehmigtFeld(),
+            getAbwmengeprodspezFeld(), getAbwmengegesamtFeld(),
+            getGen58Datum(), getGen59Datum());
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -236,6 +243,7 @@ public class Anh40Panel extends JPanel implements ObjectPanel {
                 getGen59Datum().setDate(this.fachdaten.getGen59());
             }
         }
+        setDirty(false);
     }
 
     public void clearForm() {
@@ -274,7 +282,8 @@ public class Anh40Panel extends JPanel implements ObjectPanel {
         getGen59Datum().setEnabled(enabled);
     }
 
-    public boolean savePanelData() {
+    @Override
+    protected boolean doSavePanelData() {
         boolean success;
 
         String bemerkungen = this.anh40BemerkungArea.getText();

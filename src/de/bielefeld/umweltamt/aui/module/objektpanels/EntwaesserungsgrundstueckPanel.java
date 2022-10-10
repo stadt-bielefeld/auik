@@ -80,7 +80,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Gerd Genuit
  * @date 15.01.2018
  */
-public class EntwaesserungsgrundstueckPanel extends JPanel implements ObjectPanel {
+public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private static final long serialVersionUID = 7997458251785488488L;
 
 	/** Logging */
@@ -242,6 +242,13 @@ public class EntwaesserungsgrundstueckPanel extends JPanel implements ObjectPane
 				switchEinlBereichItems(einlBer);
 			}
 		});
+		addChangeListeners(getErstellDatDatum(), getBezeichnungFeld(),
+		getDtvWertFeld(), getEinleitungsbereichBox(), getGebNameFeld(),
+		getKonzeptNrFeld(), getGebGroesseFeld(), getRegenspendeFeld(),
+		getRegenhaufigkeitFeld(), getRegendauerFeld(), getErlaubnisfreiBox(),
+		getEinbauartBox(), getWoTog(), getMiTog(), getGeTog(), getGiTog(),
+		getGemTog(), getStrTog(), getParkplatzTog());
+
 	}
 
 	/**
@@ -260,6 +267,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel implements ObjectPane
 			Set<Abaverfahren> verfs = this.entwaesserungsgrundstueck.getAbaverfahrens();
 			this.abaverfahrens.applyEntries(selected);
 		}
+		setDirty(false);
 	}
 
 	/**
@@ -418,7 +426,6 @@ public class EntwaesserungsgrundstueckPanel extends JPanel implements ObjectPane
 		getGemTog().setSelected(false);
 		getStrTog().setSelected(false);
 		getParkplatzTog().setSelected(false);
-
 	}
 
 	/**
@@ -462,7 +469,7 @@ public class EntwaesserungsgrundstueckPanel extends JPanel implements ObjectPane
 	 * 
 	 * @return boolean
 	 */
-	public boolean savePanelData() {
+	protected boolean doSavePanelData() {
 		boolean success;
 		if (this.entwaesserungsgrundstueck == null) {
 			this.entwaesserungsgrundstueck = new Entwaesserungsgrundstueck();

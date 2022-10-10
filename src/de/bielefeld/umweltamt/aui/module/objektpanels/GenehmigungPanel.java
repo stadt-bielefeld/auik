@@ -67,7 +67,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "Genehmigung"-Tab des BasisObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class GenehmigungPanel extends JPanel implements ObjectPanel{
+public class GenehmigungPanel extends ObjectPanel{
     private static final long serialVersionUID = -1132786436313164359L;
 
     /** Logging */
@@ -172,6 +172,11 @@ public class GenehmigungPanel extends JPanel implements ObjectPanel{
             getSelectObjektButton(), getsaveGenehmigungButton());
 
         builder.append(buttonBar, 7);
+        addChangeListeners(getAktenzeichenFeld(), getGenBemerkungArea(),
+            getNebenbestArea(), getAnhangFeld(), getGenMengeFeld(), getAntragsDatum(),
+            getAenderungsDatum(), getGenehmigungsDatum(), getBefristetDatum(), getBefCheckBox(),
+            getGen58CheckBox(), getGen59CheckBox(), getGen8CheckBox(), getSelbCheckBox(),
+            getEsaCheckBox());
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -261,7 +266,7 @@ public class GenehmigungPanel extends JPanel implements ObjectPanel{
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
 
         }
-
+        setDirty(false);
     }
 
     public void clearForm() {
@@ -300,7 +305,7 @@ public class GenehmigungPanel extends JPanel implements ObjectPanel{
         getEsaCheckBox().setEnabled(enabled);
     }
 
-    public boolean savePanelData() {
+    protected boolean doSavePanelData() {
         boolean success;
 
         String aktenzeichen = this.aktenzeichenFeld.getText();

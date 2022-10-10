@@ -75,7 +75,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Tobias Kaps
  * @date 29.09.2017
  */
-public class AnfallstellePanel extends JPanel implements ObjectPanel {
+public class AnfallstellePanel extends ObjectPanel {
     private static final long serialVersionUID = 7997458251785488488L;
 
     /** Logging */
@@ -343,7 +343,14 @@ public class AnfallstellePanel extends JPanel implements ObjectPanel {
             anlagenart = anlagenartBox.getSelectedItem().toString();
             switchAnhangPanel(anh.getAnhangId(), anlagenart);
             switchBeschaffenheit((String) getBeschaffenheitBox().getSelectedItem());
-
+            addChangeListeners(
+                getErstellDatDatum(), getAnhangIdFeld(),
+                getAnwendungsbereichFeld(), getBezeichnungFeld(),
+                getStillgelegtAmDatum(), getAbwaBeschaffOptFeld(),
+                getBetriebsweiseBox(), getBefestFlaecheFeld(),
+                getLProSFeld(), getQmProHFeld(),
+                getQmProDFeld(), getQmProAFeld(),
+                getBemerkungenArea());
         }
     }
 
@@ -436,7 +443,8 @@ public class AnfallstellePanel extends JPanel implements ObjectPanel {
         return this.name;
     }
 
-    public boolean savePanelData() {
+    @Override
+    protected boolean doSavePanelData() {
         boolean success;
 
         this.anfallstelle.setAktualDat(new Date());

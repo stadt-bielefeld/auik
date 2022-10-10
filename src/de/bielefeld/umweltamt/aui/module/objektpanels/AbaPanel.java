@@ -80,7 +80,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "Abwasserbehandlungsanlage"-Tab des ObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class AbaPanel extends JPanel implements ObjectPanel {
+public class AbaPanel extends ObjectPanel {
 
 private static final long serialVersionUID = -4030805403749508467L;
 
@@ -162,6 +162,9 @@ private static final long serialVersionUID = -4030805403749508467L;
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSelectObjektButton(), getSaveAbaButton());
         builder.append(buttonBar, 6);
+        addChangeListeners(
+            getErstellDat(), getAktualDat(), getGenehmigungdpflichtCheck(),
+            getWartungsvertragCheck(), getEinzelabnahmeCheck());
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -229,7 +232,7 @@ private static final long serialVersionUID = -4030805403749508467L;
         return this.name;
     }
 
-    public boolean savePanelData() {
+    public boolean doSavePanelData() {
         boolean success;
 
         String bezeichnungn = this.abaBezeichnungArea.getText();

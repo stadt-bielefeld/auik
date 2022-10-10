@@ -90,7 +90,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author Tobias Kaps
  * @date 15.01.2018
  */
-public class EinleitungsstellePanel extends JPanel implements ObjectPanel {
+public class EinleitungsstellePanel extends ObjectPanel {
 	private static final long serialVersionUID = 7997458251785488488L;
 
 	/** Logging */
@@ -226,7 +226,10 @@ public class EinleitungsstellePanel extends JPanel implements ObjectPanel {
 				switchEinleitungItems(einleit);
 			}
 		});
-
+		addChangeListeners(getErstellDatDatum(), getBezeichnungFeld(),
+			getStillgelegtAmDatum(), getAbwAgEinlFeld(),
+			getAbgaberelEinlBox(), getKanalArtOptBox(), getKlaeranlageBox(),
+			getEinleitungsartBox(), getBemerkungenArea());
 	};
 
 	/**
@@ -378,7 +381,6 @@ public class EinleitungsstellePanel extends JPanel implements ObjectPanel {
 		getKlaeranlageBox().setSelectedIndex(-1);
 		getEinleitungsartBox().setSelectedIndex(-1);
 		getBemerkungenArea().setText(null);
-
 	}
 
 	/**
@@ -504,7 +506,7 @@ public class EinleitungsstellePanel extends JPanel implements ObjectPanel {
 	 * 
 	 * @return boolean
 	 */
-	public boolean savePanelData() {
+	protected boolean doSavePanelData() {
 		boolean success;
 
 		setObjektValues(this.einleitungsstelle);

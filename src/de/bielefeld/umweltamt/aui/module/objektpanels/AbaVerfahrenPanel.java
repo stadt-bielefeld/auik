@@ -58,7 +58,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * Das "Abwasserbehandlungsverfahren"-Tab des ObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class AbaVerfahrenPanel extends JPanel implements ObjectPanel {
+public class AbaVerfahrenPanel extends ObjectPanel {
 
     private static final long serialVersionUID = 3548243605243275016L;
 
@@ -127,6 +127,7 @@ public class AbaVerfahrenPanel extends JPanel implements ObjectPanel {
             }
         });
         fetchFormData();
+        addChangeListeners(rightList);
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -136,7 +137,7 @@ public class AbaVerfahrenPanel extends JPanel implements ObjectPanel {
             log.debug("Abwasserbehandlungsanlage aus DB geholt: " + this.fachdaten);
 
         applyEntries(new ArrayList<Abaverfahren> (fachdaten.getAbaverfahrens()));
-
+        setDirty(false);
     }
 
     public void updateForm() throws RuntimeException {
@@ -212,7 +213,7 @@ public class AbaVerfahrenPanel extends JPanel implements ObjectPanel {
         return this.saveAbaverfButton;
     }
 
-    public boolean savePanelData() {
+    public boolean doSavePanelData() {
         boolean success;
 
         success = fachdaten.merge();

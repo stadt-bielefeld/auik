@@ -69,6 +69,8 @@ import javax.swing.JToggleButton;
 import com.jgoodies.forms.factories.Paddings;
 import com.l2fprod.common.swing.JButtonBar;
 
+import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.module.objektpanels.ObjectPanel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -302,6 +304,28 @@ public class ModulManager {
      * @param addToHistory Soll dieser Wechsel einen neuen Eintrag in der History erzeugen?
      */
     private void switchModul(String identifier, boolean addToHistory) {
+        System.out.println("Switch module");
+        if (currentModul != null
+                && !currentModul.isEmpty()
+                && getCurrentModul() instanceof BasisObjektBearbeiten) {
+            List<ObjectPanel> dirtyTabs
+                    = ((BasisObjektBearbeiten) getCurrentModul()).getTabs();
+            dirtyTabs.removeIf(tab -> !tab.isDirty());
+            if (dirtyTabs.size() > 0) {
+                StringBuilder tabTitles = new StringBuilder();
+                dirtyTabs.forEach(tab -> {
+                    if (tabTitles.length() > 0) {
+                        tabTitles.append(",");
+                    }
+                    tabTitles.append(tab.getName());
+                });
+                String question = String.format(
+                        "In den folgenden Tabs sind noch ungespeicherte Änderungen: %s\n"
+                        + "Vor dem Verlassen speichern?",
+                        tabTitles);
+                GUIManager.getInstance().showQuestion(question);
+            }
+        }
         // Alle vorhandenen Module durchgehen ...
         for (Enumeration<Modul> e1 = module.elements(); e1.hasMoreElements(); ) {
             Modul m = e1.nextElement();

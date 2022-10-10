@@ -839,6 +839,14 @@ public class BasisObjektBearbeiten extends AbstractModul {
     }
 
     /**
+     * Get all active tabs.
+     * @return Tabs as list
+     */
+    public List<ObjectPanel> getTabs() {
+        return activePanels;
+    }
+
+    /**
      * Save all active tabs.
      *
      * Opens a notification window if a tabs data could not be saved.

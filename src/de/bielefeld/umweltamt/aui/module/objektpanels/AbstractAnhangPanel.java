@@ -41,7 +41,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  *
  * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  */
-public abstract class AbstractAnhangPanel extends JPanel {
+public abstract class AbstractAnhangPanel extends ObjectPanel {
 	private static final long serialVersionUID = 783029677516911773L;
 
 	/** Logging */
@@ -86,6 +86,7 @@ public abstract class AbstractAnhangPanel extends JPanel {
     	}
     	return wasNewComponent;
     	*/
+		addChangeListeners(component);
     	return (this.componentMap.put(name, component) == null ? true : false);
     }
 

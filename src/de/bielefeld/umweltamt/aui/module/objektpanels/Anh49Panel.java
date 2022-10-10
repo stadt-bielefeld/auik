@@ -122,7 +122,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Das "Anhang 49"-Tab des BasisObjektBearbeiten-Moduls.
  * @author Gerd Genuit
  */
-public class Anh49Panel extends AbstractAnhangPanel implements ObjectPanel {
+public class Anh49Panel extends AbstractAnhangPanel {
     private static final long serialVersionUID = 2262140075740338093L;
 
     private class Anh49AbscheiderModel extends ListTableModel {
@@ -636,6 +636,7 @@ public class Anh49Panel extends AbstractAnhangPanel implements ObjectPanel {
                 "FEHLER: Kein Anhang 49 Objekt gefunden!",
                 HauptFrame.ERROR_COLOR);
         }
+        setDirty(false);
     }
 
     public void updateForm(Anfallstelle anfallstelle) {
@@ -673,6 +674,7 @@ public class Anh49Panel extends AbstractAnhangPanel implements ObjectPanel {
                 "FEHLER: Kein Anhang 49 Objekt gefunden!",
                 HauptFrame.ERROR_COLOR);
         }
+        setDirty(false);
     }
 
 	public void clearForm() {
@@ -692,7 +694,7 @@ public class Anh49Panel extends AbstractAnhangPanel implements ObjectPanel {
         return this.fachdaten;
     }
 
-    public boolean savePanelData() {
+    protected boolean doSavePanelData() {
         boolean success;
 
         this.fachdaten.setAnsprechpartnerIn((String) super
