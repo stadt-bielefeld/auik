@@ -149,7 +149,7 @@
     <dependency>
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
-      <version>3.18.1-GA</version>
+      <version>3.29.2-GA</version>
     </dependency>
     <dependency>
       <groupId>javax.annotation</groupId>
@@ -229,7 +229,7 @@
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy</artifactId>
-      <version>2.4.21</version>
+      <version>3.0.13</version>
     </dependency>
 
     <dependency>
