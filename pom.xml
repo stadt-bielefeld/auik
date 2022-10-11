@@ -626,7 +626,7 @@
 
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.8</version>
+        <version>3.1.0</version>
         <executions>
           <!--run hibernate tools via antrun plugin-->
           <!-- TODO: run with mvn antrun:run@db2mapping -->
