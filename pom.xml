@@ -43,7 +43,7 @@
     <dependency>
       <groupId>org.apache.axis</groupId>
       <artifactId>axis-jaxrpc</artifactId>
-      <version>1.4</version>
+      <version>1.4-JS-1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.axis2</groupId>
@@ -64,7 +64,7 @@
     <dependency>
       <groupId>wsdl4j</groupId>
       <artifactId>wsdl4j</artifactId>
-      <version>1.5.1</version>
+      <version>1.6.3</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -149,7 +149,7 @@
     <dependency>
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
-      <version>3.18.1-GA</version>
+      <version>3.29.2-GA</version>
     </dependency>
     <dependency>
       <groupId>javax.annotation</groupId>
@@ -179,12 +179,12 @@
     <dependency>
       <groupId>org.glassfish.hk2.external</groupId>
       <artifactId>aopalliance-repackaged</artifactId>
-      <version>2.4.0-b34</version>
+      <version>3.0.3</version>
     </dependency>
     <dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm</artifactId>
-      <version>5.1</version>
+      <version>9.4</version>
     </dependency>
     <dependency>
       <groupId>org.ow2.asm</groupId>
@@ -199,7 +199,7 @@
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib</artifactId>
-      <version>3.2.2</version>
+      <version>3.3.0</version>
     </dependency>
     <dependency>
       <groupId>commons-beanutils</groupId>
@@ -209,7 +209,7 @@
     <dependency>
       <groupId>commons-cli</groupId>
       <artifactId>commons-cli</artifactId>
-      <version>1.3.1</version>
+      <version>1.5.0</version>
     </dependency>
     <dependency>
       <groupId>commons-collections</groupId>
@@ -229,7 +229,7 @@
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy</artifactId>
-      <version>2.4.21</version>
+      <version>3.0.13</version>
     </dependency>
 
     <dependency>
@@ -260,7 +260,7 @@
     <dependency>
       <groupId>org.hibernate.javax.persistence</groupId>
       <artifactId>hibernate-jpa-2.1-api</artifactId>
-      <version>1.0.0.Final</version>
+      <version>1.0.2.Final</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -285,7 +285,7 @@
     <dependency>
       <groupId>com.ibm.icu</groupId>
       <artifactId>icu4j</artifactId>
-      <version>57.1</version>
+      <version>71.1</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -320,7 +320,7 @@
     <dependency>
       <groupId>org.glassfish.hk2.external</groupId>
       <artifactId>javax.inject</artifactId>
-      <version>2.4.0-b34</version>
+      <version>2.5.0-b62</version>
     </dependency>
     <dependency>
       <groupId>org.jboss.logging</groupId>
@@ -375,7 +375,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.4.1</version>
+      <version>42.5.0</version>
     </dependency>
     <dependency>
       <groupId>com.cloudhopper.proxool</groupId>
@@ -549,7 +549,7 @@
           <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
-            <version>2.0.1</version>
+            <version>2.4.21</version>
             <scope>compile</scope>
             <optional>true</optional>
           </dependency>
@@ -626,7 +626,7 @@
 
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.8</version>
+        <version>3.1.0</version>
         <executions>
           <!--run hibernate tools via antrun plugin-->
           <!-- TODO: run with mvn antrun:run@db2mapping -->
