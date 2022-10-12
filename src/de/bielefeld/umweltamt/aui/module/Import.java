@@ -31,15 +31,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.module.importer.AbstractImporter;
 import de.bielefeld.umweltamt.aui.module.importer.AbwasserImporter;
 import de.bielefeld.umweltamt.aui.module.importer.SielhautImporter;
+import de.bielefeld.umweltamt.aui.module.importer.AbstractImporter.ImporterException;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 
 /**
@@ -52,12 +56,15 @@ public class Import extends AbstractModul {
     protected JButton fileButton;
     protected JButton importButton;
     protected JLabel fileLabel;
-    protected JLabel parseLabel;
-    protected JLabel importLabel;
+    protected JLabel chooseFileStepLabel;
+    protected JLabel importStepLabel;
     protected JLabel descriptionLabel;
     protected JScrollPane listScroller;
+    protected JLabel chooseRecordStepLabel;
     protected JTable table;
     private AbstractImporter importer;
+
+    private File importFile;
 
     private enum ImportType {
         SIELHAUT("Sielhaut"),
@@ -72,18 +79,16 @@ public class Import extends AbstractModul {
         }
     }
 
+    private enum ImportStep {CHOOSE_FILE, CHOOSE_RECORDS, IMPORT, DONE}
+
     public Import() {
         this.fileButton = new JButton("Datei wählen");
         this.fileLabel = new JLabel();
-        this.parseLabel = new JLabel();
+        this.chooseFileStepLabel = new JLabel();
         this.typeCBox = new JComboBox<ImportType>(ImportType.values());
-        this.typeCBox.addActionListener (new ActionListener () {
-            public void actionPerformed(ActionEvent e) {
-                switchImporter((ImportType)typeCBox.getSelectedItem());
-            }
-        });
         this.switchImporter((ImportType)typeCBox.getSelectedItem());
         this.listScroller = new JScrollPane(this.table);
+        this.chooseRecordStepLabel = new JLabel();
         this.typeLabel = new JLabel("Typ");
 
         this.descriptionLabel = new JLabel("<html><table width='100%'>"
@@ -97,9 +102,18 @@ public class Import extends AbstractModul {
             + "<td>Zeile nicht importierbar.</td></tr>" + "</table></html>");
 
         this.importButton = new JButton("Importieren");
-        this.importLabel = new JLabel(AuikUtils.getIcon("step3_grey.png",
+        this.importStepLabel = new JLabel(AuikUtils.getIcon("step3_grey.png",
             "Schritt Drei"));
 
+        //Action listeners
+        this.typeCBox.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                switchImporter((ImportType)typeCBox.getSelectedItem());
+                if (Import.this.importFile != null) {
+                    parseFile(Import.this.importFile);
+                }
+            }
+        });
         this.fileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -107,12 +121,63 @@ public class Import extends AbstractModul {
                     .openFile(new String[] {"txt"});
 
                 if (file != null) {
-                    panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                    Import.this.importer.parseFile(file);
-                    panel.setCursor(Cursor.getDefaultCursor());
+                    parseFile(file);
                 }
             }
         });
+
+        this.importButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Import.this.importer.doImport();
+                    setImportStep(ImportStep.DONE);
+                } catch (ImporterException ie) {
+                    GUIManager.getInstance().showErrorMessage(
+                        String.format("Beim Import ist ein Fehler aufgetreten: %s", ie.getMsg()),
+                        "Import fehlgeschlagen");
+                }
+            }
+        });
+
+        //Update number labels
+        setImportStep(ImportStep.CHOOSE_FILE);
+
+    }
+
+    /**
+     * Create import table with action listener
+     * @param importer Importer to use
+     * @return New table
+     */
+    private JTable createImportTable(AbstractImporter importer) {
+        JTable table = new JTable(importer);
+        table.getSelectionModel().addListSelectionListener(
+            new ListSelectionListener() {
+
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if (e.getValueIsAdjusting()) {
+                        return;
+                    }
+                    if (table.getSelectedRowCount() > 0) {
+                        int[] selectedRowIndices = table.getSelectedRows();
+                        for (int index: selectedRowIndices) {
+                            if (!importer.isRowSelectable(index)) {
+                                table.removeRowSelectionInterval(index, index);
+                            }
+                        }
+                        //If rows are still selected, update labels
+                        if (table.getSelectedRowCount() > 0) {
+                            setImportStep(ImportStep.IMPORT);
+                        } else {
+                            setImportStep(ImportStep.CHOOSE_RECORDS);
+                        }
+                    }
+                }
+
+        });
+        return table;
     }
 
     @Override
@@ -135,13 +200,13 @@ public class Import extends AbstractModul {
         FormLayout layout = new FormLayout("40px,5dlu,65dlu,5dlu,175dlu:g", "");
         DefaultFormBuilder b = new DefaultFormBuilder(layout);
 
-        b.append(parseLabel, fileButton, fileLabel);
-        b.append(typeLabel, typeCBox);
+        b.append(chooseFileStepLabel, fileButton, fileLabel);
+        b.append("", typeLabel, typeCBox);
         b.appendRelatedComponentsGapRow();
         b.appendRow("f:50dlu:g");
         b.nextLine(2);
 
-        b.append(""); // no label in front of the list
+        b.append(chooseRecordStepLabel);
         b.append(listScroller, 3);
         b.appendRelatedComponentsGapRow();
         b.nextLine(2);
@@ -151,7 +216,7 @@ public class Import extends AbstractModul {
         b.appendRelatedComponentsGapRow();
         b.nextLine(2);
 
-        b.append(importLabel, importButton);
+        b.append(importStepLabel, importButton);
 
         this.panel = b.getPanel();
         this.panel.setBorder(Paddings.DIALOG);
@@ -159,7 +224,21 @@ public class Import extends AbstractModul {
         return this.panel;
     }
 
-    public void switchImporter(ImportType type) {
+    /**
+     * Parse the given file using the current importer.
+     * @param file File to parse
+     */
+    private void parseFile(File file) {
+        importFile = file;
+        panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        fileLabel.setText(file.getName());
+        importer.parseFile(file);
+        setImportStep(ImportStep.CHOOSE_RECORDS);
+        table.selectAll();
+        panel.setCursor(Cursor.getDefaultCursor());
+    }
+
+    private void switchImporter(ImportType type) {
         switch (type) {
             case ABWASSER:
                 this.importer = new AbwasserImporter();
@@ -170,11 +249,64 @@ public class Import extends AbstractModul {
             default:
                 return;
         }
-        this.table = new JTable(this.importer);
+        this.table = createImportTable(this.importer);
+        this.importer.setParentTable(this.table);
         if (this.listScroller != null) {
             this.listScroller.setViewportView(this.table);
         } else {
             this.listScroller= new JScrollPane(this.table);
         }
+    }
+
+    private void setImportStep(ImportStep step) {
+        switch(step) {
+            case CHOOSE_FILE:
+                this.chooseFileStepLabel.setIcon(
+                    AuikUtils.getIcon("step1_w.png",
+                    "Schritt Eins"));
+                this.chooseRecordStepLabel.setIcon(
+                    AuikUtils.getIcon("step2_grey.png",
+                    "Schritt Zwei"));
+                this.importStepLabel.setIcon(
+                    AuikUtils.getIcon("step3_grey.png",
+                    "Schritt Drei"));
+                break;
+            case CHOOSE_RECORDS:
+                this.chooseFileStepLabel.setIcon(
+                    AuikUtils.getIcon("step1_g.png",
+                    "Schritt Eins"));
+                this.chooseRecordStepLabel.setIcon(
+                    AuikUtils.getIcon("step2_w.png",
+                    "Schritt Zwei"));
+                this.importStepLabel.setIcon(
+                    AuikUtils.getIcon("step3_grey.png",
+                    "Schritt Drei"));
+                break;
+            case IMPORT:
+                this.chooseFileStepLabel.setIcon(
+                    AuikUtils.getIcon("step1_g.png",
+                    "Schritt Eins"));
+                this.chooseRecordStepLabel.setIcon(
+                    AuikUtils.getIcon("step2_g.png",
+                    "Schritt Zwei"));
+                this.importStepLabel.setIcon(
+                    AuikUtils.getIcon("step3_w.png",
+                    "Schritt Drei"));
+                break;
+            case DONE:
+                this.chooseFileStepLabel.setIcon(
+                    AuikUtils.getIcon("step1_g.png",
+                    "Schritt Eins"));
+                this.chooseRecordStepLabel.setIcon(
+                    AuikUtils.getIcon("step2_g.png",
+                    "Schritt Zwei"));
+                this.importStepLabel.setIcon(
+                    AuikUtils.getIcon("step3_g.png",
+                    "Schritt Drei"));
+                break;
+            default:
+                break;
+        }
+
     }
 }

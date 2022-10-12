@@ -61,7 +61,7 @@ public class AbwasserImporter extends AbstractImporter {
 
         try {
             in = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(this.file), "UTF-8"));
+                    new FileInputStream(this.importFile), "UTF-8"));
             List<String[]> dataList = getList();
             String line = null;
             int count = 0;
@@ -234,7 +234,7 @@ public class AbwasserImporter extends AbstractImporter {
 
     @Override
     public void parseFile(File file) {
-        this.file = file;
+        this.importFile = file;
         try {
             updateList();
         } catch (Exception e) {

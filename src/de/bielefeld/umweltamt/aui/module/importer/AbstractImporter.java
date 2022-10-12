@@ -25,6 +25,8 @@ import java.io.File;
 
 import javax.swing.JTable;
 
+import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public abstract class AbstractImporter extends ListTableModel {
@@ -32,7 +34,7 @@ public abstract class AbstractImporter extends ListTableModel {
     /**
      * File to import
      */
-    protected File file;
+    protected File importFile;
 
     protected JTable parentTable;
 
@@ -45,8 +47,9 @@ public abstract class AbstractImporter extends ListTableModel {
 
     /**
      * Save data to database.
+     * @throws ImporterException Thrown if an error occured during saving
      */
-    public abstract void doImport();
+    public abstract void doImport() throws ImporterException;
 
     /**
      * Check if a row is selectable
@@ -65,7 +68,14 @@ public abstract class AbstractImporter extends ListTableModel {
         this.parentTable = parentTable;
     }
 
-    public class ImporterParseException extends Exception {
+    public class ImporterException extends Exception {
+        private String msg;
         private static final long serialVersionUID = 1L;
+        public ImporterException(String msg) {
+            this.msg = msg;
+        }
+        public String getMsg() {
+            return this.msg;
+        }
     }
 }
