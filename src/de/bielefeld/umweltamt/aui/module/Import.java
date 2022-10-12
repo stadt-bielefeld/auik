@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -85,21 +86,12 @@ public class Import extends AbstractModul {
         this.fileButton = new JButton("Datei wählen");
         this.fileLabel = new JLabel();
         this.chooseFileStepLabel = new JLabel();
+        this.descriptionLabel = new JLabel();
         this.typeCBox = new JComboBox<ImportType>(ImportType.values());
         this.switchImporter((ImportType)typeCBox.getSelectedItem());
         this.listScroller = new JScrollPane(this.table);
         this.chooseRecordStepLabel = new JLabel();
         this.typeLabel = new JLabel("Typ");
-
-        this.descriptionLabel = new JLabel("<html><table width='100%'>"
-            + "<tr><td style='color: green;'>Grün:</td>"
-            + "<td>Import m&ouml;glich: Kennnummer und Parameter "
-            + "vorhanden.</td></tr>"
-            + "<tr><td style='color: FF8200;'>Orange:</td>"
-            + "<td>Import m&ouml;glich: Kennnummer vorhanden, "
-            + "Parameter wird angelegt.</td></tr>"
-            + "<tr><td style='color: red;'>Rot:</td>"
-            + "<td>Zeile nicht importierbar.</td></tr>" + "</table></html>");
 
         this.importButton = new JButton("Importieren");
         this.importStepLabel = new JLabel(AuikUtils.getIcon("step3_grey.png",
@@ -121,6 +113,8 @@ public class Import extends AbstractModul {
                     .openFile(new String[] {"txt"});
 
                 if (file != null) {
+                    setImportStep(ImportStep.CHOOSE_FILE);
+                    importer.reset();
                     parseFile(file);
                 }
             }
@@ -132,6 +126,13 @@ public class Import extends AbstractModul {
                 try {
                     Import.this.importer.doImport();
                     setImportStep(ImportStep.DONE);
+                    String importResult = importer.createResultHtml();
+                    GUIManager.getInstance().showInfoMessage(
+                            importResult, "Importergebnis");
+                    Import.this.frame.changeStatus(
+                        String.format("%d Datensätze importiert!",
+                        importer.getResultCount())
+                    );
                 } catch (ImporterException ie) {
                     GUIManager.getInstance().showErrorMessage(
                         String.format("Beim Import ist ein Fehler aufgetreten: %s", ie.getMsg()),
@@ -191,6 +192,11 @@ public class Import extends AbstractModul {
     }
 
     @Override
+    public Icon getIcon() {
+        return super.getIcon("ksysguard.png");
+    }
+
+    @Override
     @SuppressWarnings("deprecation")
     public JPanel getPanel() {
         if (this.panel != null) {
@@ -230,12 +236,19 @@ public class Import extends AbstractModul {
      */
     private void parseFile(File file) {
         importFile = file;
-        panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        fileLabel.setText(file.getName());
-        importer.parseFile(file);
-        setImportStep(ImportStep.CHOOSE_RECORDS);
-        table.selectAll();
-        panel.setCursor(Cursor.getDefaultCursor());
+        try {
+            panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            fileLabel.setText(file.getName());
+            importer.parseFile(file);
+            setImportStep(ImportStep.CHOOSE_RECORDS);
+            table.selectAll();
+        } catch (ImporterException e) {
+            GUIManager.getInstance()
+                .showErrorMessage(e.getMsg(), "Einlesen der Importdatei fehlgeschlagen");
+        } finally {
+            panel.setCursor(Cursor.getDefaultCursor());
+        }
+
     }
 
     private void switchImporter(ImportType type) {
@@ -251,6 +264,7 @@ public class Import extends AbstractModul {
         }
         this.table = createImportTable(this.importer);
         this.importer.setParentTable(this.table);
+        this.descriptionLabel.setText(this.importer.getDescriptionString());
         if (this.listScroller != null) {
             this.listScroller.setViewportView(this.table);
         } else {

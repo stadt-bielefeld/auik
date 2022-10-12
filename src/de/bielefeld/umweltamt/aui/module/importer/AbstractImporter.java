@@ -22,34 +22,54 @@
 package de.bielefeld.umweltamt.aui.module.importer;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JTable;
 
-import de.bielefeld.umweltamt.aui.AbstractModul;
-import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public abstract class AbstractImporter extends ListTableModel {
 
+    private static final long serialVersionUID = 1L;
+
     /**
-     * File to import
+     * File to import.
      */
     protected File importFile;
 
+    /**
+     * Parent table of this table model.
+     */
     protected JTable parentTable;
+
+    /**
+     * Map of id numbers - import Results.
+     */
+    protected Map<String, ImportResult> importResults;
+
+    /**
+     * Number of rows imported successfully.
+     */
+    protected int resultCount;
 
     public AbstractImporter(String[] columns, boolean updateAtInit) {
         super(columns, updateAtInit);
     }
-
-    private static final long serialVersionUID = 1L;
-
 
     /**
      * Save data to database.
      * @throws ImporterException Thrown if an error occured during saving
      */
     public abstract void doImport() throws ImporterException;
+
+    /**
+     * Get the string describing the different row colors.
+     * @return Description string
+     */
+    public abstract String getDescriptionString();
 
     /**
      * Check if a row is selectable
@@ -61,11 +81,61 @@ public abstract class AbstractImporter extends ListTableModel {
     /**
      * Parse import file and fill table.
      * @param file File to import
+     * @throws ImporterException Thrown if parsing fails
      */
-    public abstract void parseFile(File file);
+    public abstract void parseFile(File file) throws ImporterException;
 
+    /**
+     * Reset the importer table.
+     */
+    public abstract void reset();
+
+    /**
+     * Set the parent table
+     * @param parenTable Parent table
+     */
     public void setParentTable(JTable parentTable) {
         this.parentTable = parentTable;
+    }
+
+    /**
+     * Create a result html string from the stored result objects.
+     * @return Html string
+     */
+    public String createResultHtml() {
+        StringBuilder resultBuilder = new StringBuilder();
+        resultBuilder.append("<html>");
+        importResults.forEach((kennnummer, result) -> {
+            resultBuilder.append(
+                String.format("<b>Kennnummer: %s </b><br>", result.getKennnummer()))
+            .append("<ul>")
+            .append(String.format(
+                    "<li>erfolgreich importiert: %d</li>",
+                    result.getSuccess().size()));
+            if(result.getSkipped().size() > 0) {
+                String skipped = String.join(", ", result.getSkipped());
+                resultBuilder.append(String.format("<li>übersprungen: %s</li>", skipped));
+            }
+            if(result.getErrors().size() > 0) {
+                resultBuilder.append("<li>Fehler:<br><ul>");
+                result.getErrors().forEach((param, error) -> {
+                    resultBuilder.append(String.format("<li>%s - %s</li>", param, error));
+                });
+                resultBuilder.append("</ul></li>");
+            }
+            resultBuilder.append("</ul>");
+
+        });
+        resultBuilder.append("</html>");
+        return resultBuilder.toString();
+    }
+
+    /**
+     * Get the number of rows imported successfully
+     * @return
+     */
+    public int getResultCount() {
+        return this.resultCount;
     }
 
     public class ImporterException extends Exception {
@@ -78,4 +148,42 @@ public abstract class AbstractImporter extends ListTableModel {
             return this.msg;
         }
     }
+
+    /**
+     * Class used to store import results;
+     */
+    public class ImportResult {
+        private String kennnummer;
+        private List<String> success;
+        private List<String> skipped;
+        private Map<String, String> errors;
+        public ImportResult(String kennnummer) {
+            this.kennnummer = kennnummer;
+            success = new ArrayList<String>();
+            skipped = new ArrayList<String>();
+            errors = new HashMap<String, String>();
+        }
+        public void addError(String param, String error) {
+            this.errors.put(param, error);
+        }
+        public String getKennnummer() {
+            return kennnummer;
+        }
+        public void addSuccess(String param) {
+            this.success.add(param);
+        }
+        public void addSkipped(String param) {
+            this.skipped.add(param);
+        }
+        public List<String> getSuccess() {
+            return success;
+        }
+        public List<String> getSkipped() {
+            return skipped;
+        }
+        public Map<String, String> getErrors() {
+            return errors;
+        }
+    }
+
 }

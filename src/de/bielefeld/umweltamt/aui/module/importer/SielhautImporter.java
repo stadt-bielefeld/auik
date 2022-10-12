@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -124,13 +125,12 @@ public class SielhautImporter extends AbstractImporter {
     }
 
     @Override
-    public void parseFile(File file) {
+    public void parseFile(File file) throws ImporterException {
         this.importFile = file;
         try {
             updateList();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new ImporterException(e.getMessage());
         }
     }
 
@@ -140,17 +140,25 @@ public class SielhautImporter extends AbstractImporter {
         int[] selectedRows = parentTable.getSelectedRows();
         NumberFormat decform = DecimalFormat.getInstance();
         String problemMessage = "";
+        importResults = new HashMap<String, ImportResult>();
 
         for (int i = 0; i < selectedRows.length; i++) {
             boolean problem = false;
             String[] current = (String[]) getObjectAtRow(selectedRows[i]);
             if (isPositionImportable(current)) {
                 Analyseposition pos = new Analyseposition();
+                ImportResult result;
 
-                String kennumer = getIdNumberFromLine(current);
+                String idNumber = getIdNumberFromLine(current);
+                if (importResults.containsKey(idNumber)) {
+                    result = importResults.get(idNumber);
+                } else {
+                    result = new ImportResult(idNumber);
+                    importResults.put(idNumber, result);
+                }
 
                 Probenahme probe = DatabaseQuery.findProbenahme(
-                    kennumer);
+                    idNumber);
                 if (probe == null) {
                     // Sollte eigentlich nicht vorkommen, nötig?
                     throw new ImporterException("Probenahme nicht gefunden!");
@@ -164,28 +172,34 @@ public class SielhautImporter extends AbstractImporter {
                     pos.setGrkl("<");
                     strWert = strWert.replaceFirst("< *", "");
                 }
+
+                // Normwert
+                Double dwert;
+                Double normwert;
+                Double sielhautgw = null;
+                String sPara = getParamFromLine(current);
+
                 try {
                     wert = Float.valueOf(decform.parse(strWert).floatValue());
-
-                    pos.setWert(wert);
-
-                    // Normwert
-                    Double dwert;
-                    Double normwert;
-                    Double sielhautgw = null;
-                    String sPara = getParamFromLine(current);
-                    if (sPara != null) {
-                        sielhautgw = DatabaseQuery
-                            .getParameterByDescription(sPara)
-                                .getSielhautGw();
-                    }
                     dwert = Double.valueOf(decform.parse(strWert).doubleValue());
-                    normwert = dwert / sielhautgw;
-                    pos.setNormwert(normwert);
-
-                } catch (ParseException e) {
+                } catch(ParseException pe) {
+                    result.addError(sPara,
+                        String.format("Ungültiger Wert: %s", strWert));
                     continue;
                 }
+                pos.setWert(wert);
+
+                if (sPara != null) {
+                    sielhautgw = DatabaseQuery
+                        .getParameterByDescription(sPara)
+                            .getSielhautGw();
+                }
+                if (sielhautgw == null) {
+                    result.addSkipped(sPara);
+                    continue;
+                }
+                normwert = dwert / sielhautgw;
+                pos.setNormwert(normwert);
 
                 // Parameter
                 String sParam = getParamFromLine(current);
@@ -197,11 +211,9 @@ public class SielhautImporter extends AbstractImporter {
                         pos.setParameter(para);
                     } else {
                         problem = true;
-                        if (!problemMessage.equals("")) {
-                            problemMessage += "<br>";
-                        }
-                        problemMessage += "Unbekannter Parameter: "
-                            + sParam;
+                        result.addError(sParam,
+                            String.format("Unbekannter Parameter: %s", sParam));
+                        continue;
                     }
                 } else {
                     throw new ImporterException("Importdatei beschädigt!");
@@ -230,11 +242,9 @@ public class SielhautImporter extends AbstractImporter {
                     pos.setEinheiten(einheit);
                 } else {
                     problem = true;
-                    if (!problemMessage.equals("")) {
-                        problemMessage += "<br>";
-                    }
-                    problemMessage += "Unbekannte Einheit: " +
-                        getUnitFromLine(current);
+                    result.addError(sParam,
+                        String.format("Unbekannte Einheit: %s", getUnitFromLine(current)));
+                    continue;
                 }
 
                 // Analyse von
@@ -242,21 +252,32 @@ public class SielhautImporter extends AbstractImporter {
                     .getSetting("auik.prefs.sielhaut_labor"));
 
                 if (!problem) {
-                    // Speichern...
                     if (pos.merge()) {
                         importCount++;
                         log.debug("Habe " + pos + " gespeichert!");
+                        result.addSuccess(sPara);
                     } else {
                         throw new ImporterException(
                             "Konnte Analyseposition nicht in der Datenbank speichern!");
                     }
+                } else {
+                    result.getSkipped().add(sPara);
                 }
+                this.resultCount = importCount;
             }
         }
 
         if (!problemMessage.equals("")) {
             throw new ImporterException(problemMessage);
         }
+    }
+
+    public String getDescriptionString() {
+        return
+            "<html>"
+            + "<font color=green>Grün:</font> Position kann problemlos importiert werden.<br>"
+            + "<font color=red>Rot:</font> Probenahme nicht gefunden oder Parameter/Einheit unbekannt."
+            + "</html>";
     }
 
     private boolean isPositionImportable(String[] pos) {
@@ -303,6 +324,13 @@ public class SielhautImporter extends AbstractImporter {
 
     private String getMethodFromLine(String[] line) {
         return line[6].trim();
+    }
+
+    public void reset() {
+        setList(new ArrayList<String[]>());
+        this.importFile = null;
+        this.importableRows = null;
+        fireTableDataChanged();
     }
 
 }

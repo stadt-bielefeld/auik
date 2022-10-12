@@ -154,6 +154,19 @@ public class AbwasserImporter extends AbstractImporter {
         return sb.toString();
     }
 
+    public String getDescriptionString() {
+        return
+            "<html><table width='100%'>"
+            + "<tr><td style='color: green;'>Grün:</td>"
+            + "<td>Import m&ouml;glich: Kennnummer und Parameter "
+            + "vorhanden.</td></tr>"
+            + "<tr><td style='color: FF8200;'>Orange:</td>"
+            + "<td>Import m&ouml;glich: Kennnummer vorhanden, "
+            + "Parameter wird angelegt.</td></tr>"
+            + "<tr><td style='color: red;'>Rot:</td>"
+            + "<td>Zeile nicht importierbar.</td></tr>" + "</table></html>";
+    }
+
     protected int getRowStatus(int row) {
         if (this.status[row] == 0) {
             String[] columns = (String[]) getObjectAtRow(row);
@@ -233,13 +246,12 @@ public class AbwasserImporter extends AbstractImporter {
     }
 
     @Override
-    public void parseFile(File file) {
+    public void parseFile(File file) throws ImporterException {
         this.importFile = file;
         try {
             updateList();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new ImporterException(e.getMessage());
         }
     }
 
@@ -266,5 +278,13 @@ public class AbwasserImporter extends AbstractImporter {
     @Override
     public boolean isRowSelectable(int rowIndex) {
         return Boolean.TRUE.equals(getValueAt(rowIndex, 7));
+    }
+
+    @Override
+    public void reset() {
+        setList(new ArrayList<String[]>());
+        this.importFile = null;
+
+        fireTableDataChanged();
     }
 }
