@@ -20,10 +20,26 @@
  */
 package de.bielefeld.umweltamt.aui.module.importer;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.bielefeld.umweltamt.aui.GUIManager;
+import de.bielefeld.umweltamt.aui.module.AnalyseProcessor;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 public class AbwasserImporter extends AbstractImporter {
+
     private static final long serialVersionUID = 1L;
+
+    private static final AuikLogger log = AuikLogger.getLogger();
+
+    protected int[] status;
+    protected boolean[] selection;
 
     /**
      * Constructor.
@@ -41,26 +57,214 @@ public class AbwasserImporter extends AbstractImporter {
 
     @Override
     public void updateList() throws Exception {
-        // TODO Auto-generated method stub
+        BufferedReader in = null;
 
+        try {
+            in = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(this.file), "UTF-8"));
+            List<String[]> dataList = getList();
+            String line = null;
+            int count = 0;
+            int bad = 0;
+
+            while ((line = in.readLine()) != null) {
+                if (line.startsWith("\uFEFF")) {
+                    line = line.substring(1);
+                }
+                if (line.startsWith(".")) {
+                    continue;
+                }
+
+                String[] columns = line.split("','");
+
+                if (columns == null) {
+                    log.error("Fehler beim Lesen einer Analyse-Zeile: "
+                        + "Es konnte keine komma-serparierten Spalten "
+                        + "gefunden werden!");
+                    bad++;
+                } else if (columns.length < 9) {
+                    log.error("Fehler beim Lesen einer Analyse-Zeile: "
+                        + "Es wurden eine kaputte Analyse-Zeile "
+                        + "gefunden!");
+                    bad++;
+                } else {
+                    dataList.add(columns);
+                }
+
+                count++;
+            }
+
+            if (bad > 0) {
+                GUIManager
+                    .getInstance()
+                    .showInfoMessage(
+                        "Beim Lesen des Analyse-Imports war/en "
+                            + bad
+                            + " kaputte "
+                            + "Zeile/n enthalten. Diese wurde/n ignoriert.\n"
+                            + "Weitere Informationen sind im Logfile enthalten.",
+                        "Ungültige Zeilen im Analyse-Import");
+            }
+
+            log.debug(count + " Zeilen eingelesen.");
+
+            fireTableDataChanged();
+
+            this.status = new int[dataList.size()];
+            initSelection();
+        } catch (FileNotFoundException fnfe) {
+            log.error("Fehler beim Lesen der Probenahme-Analyseergebnisse: "
+                + fnfe.getMessage());
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e) {
+                // do nothing
+            }
+        }
+    }
+
+
+    protected String getColoredColumn(int status, String txt) {
+        StringBuilder sb = new StringBuilder("<html>");
+
+        switch (status) {
+            case -1:
+                sb.append("<font color='red'>");
+                sb.append(txt);
+                sb.append("</font>");
+                break;
+            case 1:
+                sb.append("<font color='green'>");
+                sb.append(txt);
+                sb.append("</font>");
+                break;
+            case 2:
+                sb.append("<font color='FF8200'>");
+                sb.append(txt);
+                sb.append("</font>");
+                break;
+            default:
+                sb.append(txt);
+                break;
+        }
+        sb.append("</html>");
+        return sb.toString();
+    }
+
+    protected int getRowStatus(int row) {
+        if (this.status[row] == 0) {
+            String[] columns = (String[]) getObjectAtRow(row);
+
+            this.status[row] = (columns.length < 8) ? -1 :
+                AnalyseProcessor.importStatus(
+                    AnalyseProcessor.unquote(columns[0]),
+                    AnalyseProcessor.unquote(columns[2]),
+                    AnalyseProcessor.unquote(columns[6]));
+        }
+
+        return this.status[row];
     }
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        // TODO Auto-generated method stub
+    public Object getValueAt(int row, int col) {
+        if (!rowExists(row)) {
+            return null;
+        }
+
+        String[] columns = (String[]) getObjectAtRow(row);
+
+        int status = getRowStatus(row);
+
+        switch (col) {
+            case 0:
+                return getColoredColumn(status,
+                    AnalyseProcessor.unquote(columns[0]));
+            case 1:
+                return getColoredColumn(status,
+                    AnalyseProcessor.unquote(columns[2]));
+            case 2:
+                return getColoredColumn(status,
+                    AnalyseProcessor.unquote(columns[3]));
+            case 3:
+                return getColoredColumn(status,
+                    AnalyseProcessor.unquote(columns[4]));
+            case 4:
+                return getColoredColumn(status,
+                    AnalyseProcessor.unquote(columns[5]));
+            case 5:
+                return getColoredColumn(status,
+                    AnalyseProcessor.unquote(columns[7]));
+            case 6:
+                return getColoredColumn(status,
+                    AnalyseProcessor.unquote(columns[8]));
+            case 7:
+                return this.selection[row];
+        }
+
         return null;
+    }
+
+
+    @Override
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+        return null;
+    }
+
+    public List<String[]> getSelectedRows() {
+        List<String[]> selected = new ArrayList<String[]>();
+        int[] selectedRowIndices = this.parentTable.getSelectedRows();
+        for (int index: selectedRowIndices) {
+            selected.add((String[]) getObjectAtRow(index));
+        }
+
+        return selected;
+    }
+
+    protected void initSelection() {
+        int rows = getRowCount();
+        this.selection = new boolean[rows];
+
+        for (int i = 0; i < rows; i++) {
+            this.selection[i] = getRowStatus(i) > 0 ? true : false;
+        }
     }
 
     @Override
     public void parseFile(File file) {
-        // TODO Auto-generated method stub
-
+        this.file = file;
+        try {
+            updateList();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void doImport(File file) {
-        // TODO Auto-generated method stub
+    public void doImport() {
+        log.debug("Speichere die importieren Daten.");
 
+        List<?> data = this.getSelectedRows();
+        int size = data.size();
+        int count = 0;
+
+        for (int i = 0; i < size; i++) {
+            String[] row = (String[]) data.get(i);
+            if (AnalyseProcessor.process(row)) {
+                count++;
+            }
+        }
+
+        GUIManager.getInstance().showInfoMessage(
+            "Es wurden " + count + " Zeilen der Analyseergebnisse erfolgreich"
+                + "\nin die Datenbank gespeichert.", "Import erfolgreich");
     }
 
+    @Override
+    public boolean isRowSelectable(int rowIndex) {
+        return Boolean.TRUE.equals(getValueAt(rowIndex, 7));
+    }
 }

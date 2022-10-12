@@ -23,18 +23,49 @@ package de.bielefeld.umweltamt.aui.module.importer;
 
 import java.io.File;
 
+import javax.swing.JTable;
+
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public abstract class AbstractImporter extends ListTableModel {
 
+    /**
+     * File to import
+     */
+    protected File file;
+
+    protected JTable parentTable;
+
     public AbstractImporter(String[] columns, boolean updateAtInit) {
         super(columns, updateAtInit);
-        //TODO Auto-generated constructor stub
     }
 
     private static final long serialVersionUID = 1L;
 
+
+    /**
+     * Save data to database.
+     */
+    public abstract void doImport();
+
+    /**
+     * Check if a row is selectable
+     * @param rowIndex Row index
+     * @return True if selectable, else false
+     */
+    public abstract boolean isRowSelectable(int rowIndex);
+
+    /**
+     * Parse import file and fill table.
+     * @param file File to import
+     */
     public abstract void parseFile(File file);
 
-    public abstract void doImport(File file);
+    public void setParentTable(JTable parentTable) {
+        this.parentTable = parentTable;
+    }
+
+    public class ImporterParseException extends Exception {
+        private static final long serialVersionUID = 1L;
+    }
 }

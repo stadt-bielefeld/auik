@@ -58,9 +58,15 @@ public class SielhautImporter extends AbstractImporter {
     }
 
     @Override
-    public void doImport(File file) {
+    public void doImport() {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public boolean isRowSelectable(int rowIndex) {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }
