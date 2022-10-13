@@ -214,18 +214,18 @@ public class BasisPanel extends ObjectPanel {
         builder.nextLine();
 
         builder.append("Inaktiv:", getInaktivBox());
-        builder.nextLine();    
-        
+        builder.nextLine();
+
         builder.append("Abwasserfrei:", getAbwasserfreiBox());
         builder.nextLine();
-        
+
         builder.append(getElkarelevantLabel(), getElkarelevantBox());
         builder.nextLine();
 
         builder.append(getPrioritaetLabel(), getPrioritaetFeld());
         builder.nextLine();
-        
-       
+
+
         builder.appendSeparator("Beschreibung");
         builder.appendRow("3dlu");
         builder.nextLine(2);
@@ -302,10 +302,10 @@ public class BasisPanel extends ObjectPanel {
                 DatabaseQuery.getEnabledSachbearbeiter()));
 
             getArtBox().removeAllItems();
-            
+
             getArtBox().addItem(
                 this.hauptModul.getObjekt().getObjektarten());
-            
+
         }
 
         if (this.hauptModul.getObjekt() != null) {
@@ -398,7 +398,7 @@ public class BasisPanel extends ObjectPanel {
 
             getInaktivBox().setSelected(
                 this.hauptModul.getObjekt().isInaktiv());
-            
+
 			if (this.hauptModul.getObjekt().getAbwasserfrei() != null) {
 				getAbwasserfreiBox().setSelected(this.hauptModul.getObjekt().getAbwasserfrei());
 			}
@@ -449,6 +449,7 @@ public class BasisPanel extends ObjectPanel {
                 this.objektVerknuepfungModel.clearList();
             }
         }
+        this.setDirty(false);
     }
 
     public void clearForm() {
@@ -573,7 +574,7 @@ public class BasisPanel extends ObjectPanel {
                     } else if ("standort_edit".equals(action)
 							&& standort != null) {
 						if (inhaber != null) {
-							BetreiberEditor editDialog = new BetreiberEditor(inhaber, 
+							BetreiberEditor editDialog = new BetreiberEditor(inhaber,
 									BasisPanel.this.hauptModul.getFrame());
 							editDialog.setLocationRelativeTo(BasisPanel.this.hauptModul.getFrame());
 
@@ -848,7 +849,7 @@ public class BasisPanel extends ObjectPanel {
         }
         return this.inaktivBox;
     }
-    
+
     private JCheckBox getAbwasserfreiBox() {
         if (this.abwasserfreiBox == null) {
             this.abwasserfreiBox = new JCheckBox();

@@ -169,7 +169,7 @@ public class ChronoPanel extends ObjectPanel {
 
         builder.append(chronoScroller, 7);
         builder.nextLine(2);
-        builder.append(this.reportListeButton, getSaveButton(), getAllButton());
+        builder.append(this.reportListeButton, getAllButton(), getSaveButton());
     }
 
     public class ChronoModel extends EditableListTableModel {
@@ -201,7 +201,7 @@ public class ChronoPanel extends ObjectPanel {
 
     	/**
     	 * Liefert das Objekt aus einer bestimmten Zeile.
-    	 * 
+    	 *
     	 * @param rowIndex
     	 *            Die Zeile
     	 * @return Das Objekt bei rowIndex
@@ -369,7 +369,7 @@ public class ChronoPanel extends ObjectPanel {
     public void updateForm() {
         this.chronoModel.fireTableDataChanged();
     }
-    
+
     public void clearForm() {
         // Hier füllen wir das Abscheider-TableModel mit einer leeren Liste
     	chronoModel.setList(new ArrayList<Objektchrono>());
@@ -601,7 +601,7 @@ public class ChronoPanel extends ObjectPanel {
 
     private JButton getSaveButton() {
         if (this.saveButton == null) {
-            this.saveButton = new JButton("Objekt-Chronologie speichern");
+            this.saveButton = new JButton("Objekt speichern");
             this.saveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -627,7 +627,7 @@ public class ChronoPanel extends ObjectPanel {
 
         return this.allButton;
     }
-    
+
     private Action getOpenDocAction()
 	{
 
@@ -671,7 +671,7 @@ public class ChronoPanel extends ObjectPanel {
 
 		return this.openDocAction;
 	}
-    
+
     private Action getSelectAction()
 	{
 
@@ -682,20 +682,20 @@ public class ChronoPanel extends ObjectPanel {
 			{
 
 				@Override
-				  public void actionPerformed(ActionEvent e) {            
-			        
+				  public void actionPerformed(ActionEvent e) {
+
 					JFileChooser f = new JFileChooser();
 					f.setCurrentDirectory(new File("X:\\Orga\\360\\360-3\\360-3-3\\Alle\\Standorte"));
-			        f.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); 
+			        f.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			        f.showOpenDialog(null);
 
 			        System.out.println(f.getSelectedFile());
 			        System.out.println(chronoTable.getSelectedRow());
-			        
+
 			        Objektchrono oc = chronoModel.getRow(chronoTable.getSelectedRow());
 			        oc.setPfad(f.getSelectedFile().toString());
 			        chronoModel.fireTableDataChanged();
-				    			        
+
 				}
 			};
 		}

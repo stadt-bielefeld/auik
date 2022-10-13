@@ -25,7 +25,7 @@ public abstract class ObjectPanel extends JPanel {
 
     /**
      * Add change listeners to the given components.
-     * 
+     *
      * Fields updated by this function will the dirty attribute to be updated
      * if the fields are edited.
      * @param components Components to add listeners to

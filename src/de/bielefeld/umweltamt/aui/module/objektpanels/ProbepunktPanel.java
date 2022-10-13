@@ -179,9 +179,6 @@ public class ProbepunktPanel extends ObjectPanel {
         builder.addLabel("Branche:", cc.xy(1, 9));
         builder.add(getBrancheFeld(), cc.xy(3, 9));
 
-        JComponent buttonBar = ComponentFactory.buildOKBar(getSavePktButton());
-        builder.add(buttonBar, cc.xyw(1, 11, 6));
-
         builder.addSeparator("Beschreibung", cc.xyw(1, 13, 6));
         JScrollPane beschScroller = new JScrollPane(
             getProbePktBeschreibungsArea(),
@@ -205,11 +202,12 @@ public class ProbepunktPanel extends ObjectPanel {
         builder.add(objektverknuepfungScroller, cc.xyw(1, 25, 6));
 
         JComponent buttonBarOv = ComponentFactory
-            .buildRightAlignedBar(getPrintDeckblattButton(), getSelectObjektButton());
+            .buildRightAlignedBar(getPrintDeckblattButton(), getSelectObjektButton(), getSavePktButton());
 
         builder.add(buttonBarOv, cc.xyw(1, 27, 6));
         addChangeListeners(getProbePktNrFeld(), getProbePktBeschreibungsArea(),
-        getKennummerFeld(), getBrancheFeld());
+            getKennummerFeld(), getBrancheFeld(),
+            getProbeKABox(), getProbePktArtBox(), getSachbearbeiterBox());
 
     }
 
@@ -604,7 +602,7 @@ public class ProbepunktPanel extends ObjectPanel {
 
     private JButton getSavePktButton() {
         if (this.savePktButton == null) {
-            this.savePktButton = new JButton("Probepunkt speichern");
+            this.savePktButton = new JButton("Objekt speichern");
 
             this.savePktButton.addActionListener(new ActionListener() {
                 @Override
@@ -797,7 +795,7 @@ public class ProbepunktPanel extends ObjectPanel {
         }
         return this.selectObjektButton;
     }
-    
+
     private JButton getPrintDeckblattButton() {
         if (this.printDeckblattButton == null) {
             this.printDeckblattButton = new JButton("Deckblatt drucken");
@@ -815,7 +813,7 @@ public class ProbepunktPanel extends ObjectPanel {
         }
         return this.printDeckblattButton;
     }
-    
+
     public void showReport() {
         if (hauptModul.getObjekt().getId() != null) {
             SettingsManager sm = SettingsManager.getInstance();
