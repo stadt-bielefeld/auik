@@ -304,10 +304,11 @@ public class ModulManager {
      * @param addToHistory Soll dieser Wechsel einen neuen Eintrag in der History erzeugen?
      */
     private void switchModul(String identifier, boolean addToHistory) {
-        System.out.println("Switch module");
+        //If there is currently an object panel shown
         if (currentModul != null
                 && !currentModul.isEmpty()
                 && getCurrentModul() instanceof BasisObjektBearbeiten) {
+            //Check if there are dirty tabs
             List<ObjectPanel> dirtyTabs
                     = ((BasisObjektBearbeiten) getCurrentModul()).getTabs();
             dirtyTabs.removeIf(tab -> !tab.isDirty());
@@ -319,11 +320,14 @@ public class ModulManager {
                     }
                     tabTitles.append(tab.getName());
                 });
+                //Show question if tabs should be saved before leaving
                 String question = String.format(
                         "In den folgenden Tabs sind noch ungespeicherte Änderungen: %s\n"
                         + "Vor dem Verlassen speichern?",
                         tabTitles);
-                GUIManager.getInstance().showQuestion(question);
+                if (GUIManager.getInstance().showQuestion(question)) {
+                    ((BasisObjektBearbeiten)getCurrentModul()).saveAllTabs();
+                }
             }
         }
         // Alle vorhandenen Module durchgehen ...
@@ -437,7 +441,7 @@ public class ModulManager {
             frame.getViewMenuButton().setText(title);
             currentCategory = title;
             frame.resetLeftScroller();
-            
+
             if (switchToFirstMask) {
                 ModulKategorie mk = getCategory(title);
                 switchModul(mk.getFirstModul().getIdentifier());
