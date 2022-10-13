@@ -26,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -258,21 +259,27 @@ public class AbwasserImporter extends AbstractImporter {
     @Override
     public void doImport() {
         log.debug("Speichere die importieren Daten.");
-
+        importResults = new HashMap<String, ImportResult>();
         List<?> data = this.getSelectedRows();
         int size = data.size();
-        int count = 0;
 
         for (int i = 0; i < size; i++) {
             String[] row = (String[]) data.get(i);
+            String idNumber = AnalyseProcessor.getIdNumberOfRow(row);
+            String param = AnalyseProcessor.getParamOfRow(row);
+            ImportResult result;
+            if (importResults.containsKey(idNumber)) {
+                result = importResults.get(idNumber);
+            } else {
+                result = new ImportResult(idNumber);
+                importResults.put(idNumber, result);
+            }
             if (AnalyseProcessor.process(row)) {
-                count++;
+                result.addSuccess(param);
+            } else {
+                result.addSkipped(param);
             }
         }
-
-        GUIManager.getInstance().showInfoMessage(
-            "Es wurden " + count + " Zeilen der Analyseergebnisse erfolgreich"
-                + "\nin die Datenbank gespeichert.", "Import erfolgreich");
     }
 
     @Override
