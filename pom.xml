@@ -56,7 +56,7 @@
     <dependency>
       <groupId>commons-digester</groupId>
       <artifactId>commons-digester</artifactId>
-      <version>1.7</version>
+      <version>1.7-brew</version>
     </dependency>
     <dependency>
       <groupId>commons-discovery</groupId>
