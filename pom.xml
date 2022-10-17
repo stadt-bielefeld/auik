@@ -8,6 +8,8 @@
     <jersey.version>2.5</jersey.version>
     <jasper.version>6.13.0</jasper.version>
     <log4j.version>2.17.1</log4j.version>
+    <hibernate-search.version>5.11.9.Final</hibernate-search.version>
+    <lucene.version>5.5.5</lucene.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
@@ -15,7 +17,7 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-tools</artifactId>
-      <version>5.0.0.Final</version>
+      <version>5.4.33.Final</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -265,12 +267,12 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-search-engine</artifactId>
-      <version>5.4.0.Final</version>
+      <version>${hibernate-search.version}</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-search-orm</artifactId>
-      <version>5.4.0.Final</version>
+      <version>${hibernate-search.version}</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.hk2</groupId>
@@ -355,12 +357,12 @@
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-analyzers-common</artifactId>
-      <version>4.10.4</version>
+      <version>${lucene.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
-      <version>4.10.4</version>
+      <version>${lucene.version}</version>
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>
