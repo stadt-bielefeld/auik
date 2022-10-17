@@ -244,7 +244,7 @@
     </dependency>
 
     <!-- A repacked jasperreports jar file with necessary fonts included, workaround for font problems on Windows systems-->
-    <!-- 
+    <!--
     <dependency>
         <groupId>de.bielefeld.umweltamt.aui</groupId>
         <artifactId>jasperreports-auik-font-repack</artifactId>
@@ -484,7 +484,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.10.1</version>
         <configuration>
           <source>11</source>
           <target>11</target>
