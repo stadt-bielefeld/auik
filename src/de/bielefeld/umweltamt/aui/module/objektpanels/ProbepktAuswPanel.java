@@ -839,8 +839,7 @@ public class ProbepktAuswPanel extends JPanel {
 
     private JDateChooser getVonDateChooser() {
         if (this.vonDateChooser == null) {
-            this.vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
-                false);
+            this.vonDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
         }
 
         return this.vonDateChooser;
@@ -848,8 +847,7 @@ public class ProbepktAuswPanel extends JPanel {
 
     private JDateChooser getBisDateChooser() {
         if (this.bisDateChooser == null) {
-            this.bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
-                false);
+            this.bisDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
         }
 
         return this.bisDateChooser;
