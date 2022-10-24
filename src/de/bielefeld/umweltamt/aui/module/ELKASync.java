@@ -36,7 +36,6 @@ import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-import javax.security.auth.Refreshable;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -48,19 +47,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.ws.rs.ProcessingException;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-import org.apache.logging.log4j.core.config.yaml.YamlConfiguration;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
+import org.glassfish.jersey.client.JerseyInvocation;
 import org.glassfish.jersey.client.JerseyWebTarget;
-import org.glassfish.jersey.filter.LoggingFilter;
-
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
+import org.glassfish.jersey.logging.LoggingFeature;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Paddings;
@@ -68,12 +61,10 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
-import de.bielefeld.umweltamt.aui.mappings.elka_sync.EZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
@@ -93,7 +84,6 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbRegeln;
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbVerfahren;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAbwasserbehandlungsanlageModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAdresseModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EAnfallstelleModel;
@@ -105,6 +95,9 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ESonderbauwerkModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
+
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Response;
 
 public class ELKASync extends AbstractModul {
 
@@ -337,7 +330,7 @@ public class ELKASync extends AbstractModul {
                             catch(IOException e){
                                 log.debug(e);
                             }
-                            client.register(new LoggingFilter(l, true));
+                            client.register(new LoggingFeature(l));
 
                             List<Entity<?>> entityList =
                                 new ArrayList<Entity<?>>();
@@ -458,7 +451,7 @@ public class ELKASync extends AbstractModul {
                             catch(IOException e){
                                 log.debug(e);
                             }
-                            client.register(new LoggingFilter(l, true));
+                            client.register(new LoggingFeature(l));
 
                             List<Entity<?>> entityList =
                                 new ArrayList<Entity<?>>();
@@ -591,7 +584,7 @@ public class ELKASync extends AbstractModul {
                             catch(IOException e){
                                 log.debug(e);
                             }
-                            client.register(new LoggingFilter(l, true));
+                            client.register(new LoggingFeature(l));
 
                             List<Entity<?>> entityList =
                                 new ArrayList<Entity<?>>();
@@ -712,7 +705,7 @@ public class ELKASync extends AbstractModul {
                             client.target(deleteUrl)
                             .queryParam("username", user)
                             .queryParam("password", password);
-                        Invocation inv =
+                        JerseyInvocation inv =
                             target.request(
                                     MediaType.APPLICATION_JSON +
                                     ";charset=UTF-8")
@@ -781,7 +774,7 @@ public class ELKASync extends AbstractModul {
                     printStream.append("Sende " + type + "\n");
                     printStream.append("--------------------------------------\n");
                     for (int i = 0; i < entities.size(); i++) {
-                            Invocation inv =
+                            JerseyInvocation inv =
                             target.request(
                                     MediaType.APPLICATION_JSON +
                                     ";charset=UTF-8")
@@ -838,7 +831,7 @@ public class ELKASync extends AbstractModul {
             if (referenzs.size() > 0) {
                 JerseyClient client = new JerseyClientBuilder().build();
                 Logger l = Logger.getAnonymousLogger();
-                client.register(new LoggingFilter(l, true));
+                client.register(new LoggingFeature(l));
                 JerseyWebTarget target =
                     client.target(referenceUrl)
                         .queryParam("username", user)
@@ -846,12 +839,12 @@ public class ELKASync extends AbstractModul {
                 prependIdentifierReferenz(referenzs);
                 for (int i = 0; i < referenzs.size(); i++) {
                     Referenz ref = referenzs.get(i);
-   
+
                     Entity<Referenz> refEntity = Entity.entity(ref,
-                    MediaType.APPLICATION_JSON + 
+                    MediaType.APPLICATION_JSON +
                         ";charset=UTF-8");
-                    Invocation inv = target.request(
-                        MediaType.APPLICATION_JSON + 
+                    JerseyInvocation inv = target.request(
+                        MediaType.APPLICATION_JSON +
                         ";charset=UTF-8")
                         .buildPost(refEntity);
                     Response response= inv.invoke();
@@ -884,7 +877,7 @@ public class ELKASync extends AbstractModul {
     }
 
     /**
-     * Converts references in a Referenz entitiy into ELKA compatible references 
+     * Converts references in a Referenz entitiy into ELKA compatible references
      */
     private Referenz convertReferenzReferences(Referenz ref) {
         //Set source EEinleitungsstelle
