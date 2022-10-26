@@ -184,7 +184,7 @@ import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 
 /**
  * Ein Modul zum Anzeigen und Bearbeiten von SielhautBearbeiten-Punkten.
- * 
+ *
  * @author David Klotz
  */
 public class SielhautBearbeiten extends AbstractModul {
@@ -336,7 +336,7 @@ public class SielhautBearbeiten extends AbstractModul {
 		}else {
 			getSpN32Feld().setValue(0);
 		}
-		
+
 		getSpHaltungsnrFeld().setText(spunkt.getHaltungsnr());
 		getSpAlarmplannrFeld().setText(spunkt.getAlarmplannr());
 
@@ -420,7 +420,7 @@ public class SielhautBearbeiten extends AbstractModul {
 		}
 		sprobePkt = Messstelle.merge(sprobePkt);
 		spunkt.setMessstelle(sprobePkt);
-		
+
 		saved = true;
 
 		return saved;
@@ -481,7 +481,7 @@ public class SielhautBearbeiten extends AbstractModul {
 			// SielhautBearbeiten, Nachprobe & Alarmplan
 			spunkt.setPSielhaut(getSpSielhautCheck().isSelected());
 			spunkt.setPNachprobe(getSpNachprobeCheck().isSelected());
-			spunkt.setPFirmenprobe(getSpFirmenprobeCheck().isSelected());			
+			spunkt.setPFirmenprobe(getSpFirmenprobeCheck().isSelected());
 
 			spunkt.setMessstelle(sprobePkt);
 
@@ -724,7 +724,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	@Override
@@ -734,7 +734,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
 	 */
 	@Override
@@ -744,7 +744,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
 	 */
 	@Override
@@ -758,7 +758,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
 	 */
 	@Override
@@ -901,9 +901,9 @@ public class SielhautBearbeiten extends AbstractModul {
 					if (spunkt.getMessstelle() == null) {
 						saveNeuenProbepunkt();
 					}
-						
+
 					saveSielhautPunkt();
-					
+
 				}
 			});
 		}
@@ -1200,7 +1200,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 		/**
 		 * Ein Listener für die Events des Dialogs.
-		 * 
+		 *
 		 * @author David Klotz
 		 */
 		private class DialogListener extends WindowAdapter implements ActionListener {
@@ -1225,7 +1225,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 		/**
 		 * Ein Tablemodel
-		 * 
+		 *
 		 * @author David Klotz
 		 */
 		private class ExportTableModel extends AbstractTableModel {
@@ -1653,7 +1653,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	private JDateChooser getVonDateChooser() {
 		if (vonDateChooser == null) {
-			vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+			vonDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
 		}
 
 		return vonDateChooser;
@@ -1662,7 +1662,7 @@ public class SielhautBearbeiten extends AbstractModul {
 	private JDateChooser getBisDateChooser() {
 
 		if (bisDateChooser == null) {
-			bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+			bisDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
 		}
 
 		return bisDateChooser;
@@ -1726,7 +1726,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	private JDateChooser getPrDateChooser() {
 		if (prDateChooser == null) {
-			prDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+			prDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
 		}
 		return prDateChooser;
 	}

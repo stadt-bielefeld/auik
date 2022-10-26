@@ -434,7 +434,7 @@ public class SchlammPanel extends JPanel {
 
     private JDateChooser getDatumsChooser() {
         if (datumsChooser == null) {
-            datumsChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+            datumsChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
         }
 
         return datumsChooser;

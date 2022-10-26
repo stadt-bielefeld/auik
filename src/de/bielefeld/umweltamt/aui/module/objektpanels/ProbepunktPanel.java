@@ -565,8 +565,7 @@ public class ProbepunktPanel extends JPanel {
 
     private JDateChooser getDatumsChooser() {
         if (this.datumsChooser == null) {
-            this.datumsChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
-                false);
+            this.datumsChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
         }
 
         return this.datumsChooser;
@@ -793,7 +792,7 @@ public class ProbepunktPanel extends JPanel {
         }
         return this.selectObjektButton;
     }
-    
+
     private JButton getPrintDeckblattButton() {
         if (this.printDeckblattButton == null) {
             this.printDeckblattButton = new JButton("Deckblatt drucken");
@@ -811,7 +810,7 @@ public class ProbepunktPanel extends JPanel {
         }
         return this.printDeckblattButton;
     }
-    
+
     public void showReport() {
         if (hauptModul.getObjekt().getId() != null) {
             SettingsManager sm = SettingsManager.getInstance();
