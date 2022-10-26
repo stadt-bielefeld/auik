@@ -82,7 +82,6 @@ public class ChartDataSets {
      */
     public static TimeSeriesCollection createDataset(TimeSeries series) {
         TimeSeriesCollection dataset = new TimeSeriesCollection(series);
-        dataset.setDomainIsPointsInTime(true);
 
         return dataset;
     }
@@ -97,7 +96,7 @@ public class ChartDataSets {
      * @return Eine Analysepositionen-Datenreihe
      */
     public static TimeSeries createAnalysePositionenSeries(List<?> list, String name, String einheit) {
-        TimeSeries result = new TimeSeries(name, "Datum", "["+einheit+"]", Minute.class);
+        TimeSeries result = new TimeSeries(name, "Datum", "["+einheit+"]");
         log.debug("Erzeuge TimeSeries: " + name);
         Calendar cal = GregorianCalendar.getInstance();
         if (list != null) {
