@@ -184,6 +184,8 @@ public class ModulManager {
             }
         } catch (Exception e) {
             m = null;
+            log.error(String.format("Fehler beim Laden des Moduls \"%s\"", modulName));
+            e.printStackTrace();
         }
 
         if (m != null) {
