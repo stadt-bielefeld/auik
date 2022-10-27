@@ -92,7 +92,6 @@ public class ChartDataSets {
      */
     public static TimeSeriesCollection createDataset(TimeSeries series) {
         TimeSeriesCollection dataset = new TimeSeriesCollection(series);
-        dataset.setDomainIsPointsInTime(true);
 
         return dataset;
     }
@@ -108,7 +107,7 @@ public class ChartDataSets {
      */
     // Bei der Auswertung der SielhautBearbeiten werden statt der Messwerte, die Normwerte ausgegeben
     public static TimeSeries createAnalysePositionenSeries(List<?> list, String name, String einheit) {
-        TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
+        TimeSeries result = new TimeSeries(name, "Datum", einheit);
         log.debug("Erzeuge TimeSeries: " + name);
 
         if (list != null) {
@@ -129,7 +128,7 @@ public class ChartDataSets {
 
     public static TimeSeries createAnalysePositionenSielhautSeries(
         List<Analyseposition> list, String name, String einheit) {
-        TimeSeries result = new TimeSeries(name, "Datum", einheit, Minute.class);
+        TimeSeries result = new TimeSeries(name, "Datum", einheit);
         log.debug("Erzeuge TimeSeries: " + name);
 
         if (list != null) {

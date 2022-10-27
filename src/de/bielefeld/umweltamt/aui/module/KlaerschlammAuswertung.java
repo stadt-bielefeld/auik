@@ -153,7 +153,7 @@ import de.bielefeld.umweltamt.aui.utils.charts.Charts;
 
 /**
  * Ein Modul um Analysedaten der Klärschlämme auszuwerten.
- * 
+ *
  * @author David Klotz
  */
 public class KlaerschlammAuswertung extends AbstractModul
@@ -166,7 +166,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 	/**
 	 * Ein Dialog um die Auswertung der Klärschlamm-Parameter zu betrachten.
-	 * 
+	 *
 	 * @author David Klotz
 	 */
 	private class AuswertungsDialog extends JDialog
@@ -175,7 +175,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 		/**
 		 * Ein Listener für die Events des Dialogs.
-		 * 
+		 *
 		 * @author David Klotz
 		 */
 		private class DialogListener extends WindowAdapter implements
@@ -205,7 +205,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 		/**
 		 * Ein Tablemodel für die
-		 * 
+		 *
 		 * @author David Klotz
 		 */
 		private class ExportTableModel extends AbstractTableModel
@@ -318,7 +318,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 				 * break;
 				 * }
 				 * }
-				 * 
+				 *
 				 * if (probe == null && col2 != null) {
 				 * for (int i = 0; i < col2.getSeriesCount(); i++) {
 				 * item = (APosDataItem) col2.getSeries(i).getDataItem(min);
@@ -547,11 +547,11 @@ public class KlaerschlammAuswertung extends AbstractModul
 			 * "pref:grow",
 			 * "pref:grow"
 			 * );
-			 * 
+			 *
 			 * PanelBuilder builder = new PanelBuilder(layout);
-			 * 
+			 *
 			 * CellConstraints cc = new CellConstraints();
-			 * 
+			 *
 			 * builder.add(tabellenScroller, cc.xy( 1, 1));
 			 */
 
@@ -707,7 +707,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	@Override
@@ -718,7 +718,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
 	 */
 	@Override
@@ -735,7 +735,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
 	 */
 	@Override
@@ -746,7 +746,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
 	 */
 	@Override
@@ -953,8 +953,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 	{
 		if (this.vonDateChooser == null)
 		{
-			this.vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
-					false);
+			this.vonDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
 		}
 
 		return this.vonDateChooser;
@@ -964,8 +963,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 	{
 		if (this.bisDateChooser == null)
 		{
-			this.bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
-					false);
+			this.bisDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
 		}
 
 		return this.bisDateChooser;
