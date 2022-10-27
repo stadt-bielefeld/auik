@@ -59,7 +59,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.block.BlockContainer;
 import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.XYPlot;
@@ -67,11 +66,11 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.CompositeTitle;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
@@ -181,9 +180,9 @@ public class Charts {
         // Den Renderer für die Messwerte/-linien anpassen
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
         //TODO: defaultShapes == baseShapes?
-		renderer.setBaseShapesVisible(true);
-        renderer.setBaseShapesFilled(true);
-        renderer.setToolTipGenerator(ttgen);
+		renderer.setDefaultShapesVisible(true);
+        renderer.setDefaultShapesFilled(true);
+        renderer.setDefaultToolTipGenerator(ttgen);
 
         // Die Datumsachse anpassen
         DateAxis datumsAchse = (DateAxis) plot.getDomainAxis();
@@ -300,9 +299,9 @@ public class Charts {
         // Den Renderer für die Messwerte/-linien der ersten Achse anpassen
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
         //TODO: defaultShapes == baseShapes?
-		renderer.setBaseShapesVisible(true);
-        renderer.setBaseShapesFilled(true);
-        renderer.setToolTipGenerator(ttgen);
+		renderer.setDefaultShapesVisible(true);
+        renderer.setDefaultShapesFilled(true);
+        renderer.setDefaultToolTipGenerator(ttgen);
 //        if (dataset1.getSeriesCount() == 1) {
 //            axis1.setLabelPaint(renderer.getSeriesPaint(0));
 //        }
@@ -310,8 +309,8 @@ public class Charts {
         // Den Renderer für die Messwerte/-linien der zweiten Achse anpassen
         XYLineAndShapeRenderer renderer2 = (XYLineAndShapeRenderer) plot.getRenderer(1);
         //TODO: defaultShapes == baseShapes?
-		renderer2.setBaseShapesVisible(true);
-        renderer2.setBaseShapesFilled(true);
+		renderer2.setDefaultShapesVisible(true);
+        renderer2.setDefaultShapesFilled(true);
 //        renderer2.setToolTipGenerator(ttgen);
 //        if (dataset2.getSeriesCount() == 1) {
 //            axis2.setLabelPaint(renderer2.getSeriesPaint(0));
@@ -320,11 +319,11 @@ public class Charts {
         // Die Legende anpassen
         LegendTitle l1 = new LegendTitle(renderer);
         l1.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 5.0));
-        l1.setBorder(new BlockBorder());
+        l1.setBorder(1, 1, 1, 1);
 
         LegendTitle l2 = new LegendTitle(renderer2);
         l2.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 5.0));
-        l2.setBorder(new BlockBorder());
+        l2.setBorder(1, 1, 1, 1);
 
         BlockContainer cont = new BlockContainer();
         cont.add(l1, RectangleEdge.LEFT);
