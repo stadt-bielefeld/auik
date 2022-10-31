@@ -309,8 +309,8 @@ public class ModulManager {
                 && !currentModul.isEmpty()
                 && getCurrentModul() instanceof BasisObjektBearbeiten) {
             //Check if there are dirty tabs
-            List<ObjectPanel> dirtyTabs
-                    = ((BasisObjektBearbeiten) getCurrentModul()).getTabs();
+            List<ObjectPanel> dirtyTabs = new ArrayList<ObjectPanel>();
+            dirtyTabs.addAll(((BasisObjektBearbeiten) getCurrentModul()).getTabs());
             dirtyTabs.removeIf(tab -> !tab.isDirty());
             if (dirtyTabs.size() > 0) {
                 StringBuilder tabTitles = new StringBuilder();
