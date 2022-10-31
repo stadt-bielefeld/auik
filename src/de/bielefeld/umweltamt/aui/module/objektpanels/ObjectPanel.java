@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
+
 /**
  * Base class for object panels that have their own models that can be saved to
  * the database.
@@ -43,6 +45,9 @@ public abstract class ObjectPanel extends JPanel {
             }
             if (component instanceof JTextField) {
                 ((JTextField) component).getDocument().addDocumentListener(new TextDirtyListener(this));
+            }
+            if (component instanceof TextFieldDateChooser) {
+                ((TextFieldDateChooser) component).addChangeListener(new TextDirtyListener(this));
             }
         }
     }

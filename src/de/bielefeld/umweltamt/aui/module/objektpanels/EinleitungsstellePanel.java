@@ -86,7 +86,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
  * Das "Einleitungsstelle"-Tab des BasisObjektBearbeiten-Moduls
- * 
+ *
  * @author Tobias Kaps
  * @date 15.01.2018
  */
@@ -236,7 +236,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	 * Methode verknüpft das lokal erstelle Objekt einleitungstelle mit der
 	 * ElkaEinleitungsstelle der Datenbank und holt sich die Klaeranlagen aus der
 	 * Datenbank
-	 * 
+	 *
 	 * @throws RuntimeException
 	 */
 	public void fetchFormData() throws RuntimeException {
@@ -262,7 +262,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	 * Methode setzt die Attribute der Einleitungsstelle aus der Datenbank auf die
 	 * der lokalen Einleitungstelle und die Verknüpfung mit der Kläranlage über die
 	 * Tabelle referenz
-	 * 
+	 *
 	 * @throws RuntimeException
 	 */
 
@@ -342,7 +342,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 				this.einleitungsartBox.setSelectedIndex(11);
 			}
 
-			
+
 			if (this.einleitungsstelle.getKanalArtOpt() != null) {
 				getKanalArtOptBox().setSelectedIndex(this.einleitungsstelle.getKanalArtOpt());
 			} else {
@@ -363,8 +363,8 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			if(this.einleitungsstelle.getBemerkung() != null) {
     			getBemerkungenArea().setText(this.einleitungsstelle.getBemerkung());
     		}
-    		
-			
+
+
 		}
 	}
 
@@ -386,7 +386,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	/**
 	 * Methode die je nach Eingabewert alles Eingabefelder des Panels aktiviert oder
 	 * deaktiviert.
-	 * 
+	 *
 	 * @param enabled
 	 */
 	public void enableAll(boolean enabled) {
@@ -435,14 +435,14 @@ public class EinleitungsstellePanel extends ObjectPanel {
 		} else {
 			this.einleitungsstelle.setBezeichnung(bezeichnung);
 		}
-		
+
 		String bemerkung = this.bemerkungenArea.getText();
 		if ("".equals(bemerkung)) {
 			this.einleitungsstelle.setBemerkung(null);
 		} else {
 			this.einleitungsstelle.setBemerkung(bemerkung);
 		}
-		
+
 		String abwAgEinl = this.abwAgEinlFeld.getText();
 		if ("".equals(abwAgEinl)) {
 			this.einleitungsstelle.setAbwAgEinl(null);
@@ -503,7 +503,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	/**
 	 * Methode die, die Eingabefelder des Panels welche einen Wert haben in die
 	 * Einleitungsstelle der Datenbank schreibt.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	protected boolean doSavePanelData() {
@@ -537,7 +537,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	/**
 	 * Methode, die die Verknüpfung der Einleitungsstelle mit der Kläranlage in der
 	 * Relation elka_referenz herstellt
-	 * 
+	 *
 	 * @return booleanS
 	 */
 	private boolean saveKlaeranlageDaten() {
@@ -573,7 +573,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	/**
 	 * Get-Methode die das ErstellDatDatum des Panels zurückgibt:
-	 * 
+	 *
 	 * @return {@link TextFieldDateChooser}
 	 */
 	private TextFieldDateChooser getErstellDatDatum() {
@@ -585,7 +585,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	/**
 	 * Get-Methode die das Bezeichnungsfeld des Panels zurückgibt:
-	 * 
+	 *
 	 * @return {@link JTextField}
 	 */
 	private JTextField getBezeichnungFeld() {
@@ -597,7 +597,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	/**
 	 * Get-Methode die das ABW AG Einleitungsfeld des Panels zurückgibt:
-	 * 
+	 *
 	 * @return {@link JTextField}
 	 */
 	private JTextField getAbwAgEinlFeld() {
@@ -610,7 +610,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	/**
 	 * Get-Methode die das StillgelegtAmDattum des Panels zurückgibt:
-	 * 
+	 *
 	 * @return {@link TextFieldDateChooser}
 	 */
 	private TextFieldDateChooser getStillgelegtAmDatum() {
@@ -622,7 +622,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	/**
 	 * Get-Methode die das AbgaberelEinlFeld des Panels zurückgibt:
-	 * 
+	 *
 	 * @return {@link JFormattedTextField}
 	 */
 	private JComboBox getAbgaberelEinlBox() {
@@ -635,7 +635,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	/**
 	 * Get-Methode die das KanalArtOptBox des Panels zurückgibt:
-	 * 
+	 *
 	 * @return {@link JComboBox}
 	 */
 	private JComboBox getKanalArtOptBox() {
@@ -648,7 +648,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	/**
 	 * Get-Methode die die Einleitungsart des Panels zurückgibt:
-	 * 
+	 *
 	 * @return {@link JComboBox}
 	 */
 	private JComboBox getEinleitungsartBox() {
@@ -661,7 +661,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	/**
 	 * Get-Methode die die KlaeranlageBox des Panels zurückgibt
-	 * 
+	 *
 	 * @return {@link JComboBox}
 	 */
 	private JComboBox<Klaeranlage> getKlaeranlageBox() {
@@ -676,7 +676,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	/**
 	 * Get-Methode die das bemerkungenFeld des Panels zurückgibt:
-	 * 
+	 *
 	 * @return {@link JTextField}
 	 */
 	private JTextArea getBemerkungenArea() {
@@ -767,7 +767,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	/**
 	 * Switch the panel content according to the given type
-	 * 
+	 *
 	 * @param type New panel content type
 	 */
 
@@ -777,7 +777,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 		}
 
 		if (type == "Indirekteinleitung") {
-			
+
 			klaeranlageLb.setVisible(true);
 			klaeranlageBox.setVisible(true);
 			kanalArtLb.setVisible(true);
@@ -797,8 +797,8 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			abgaberelEinlBox.setVisible(true);
 			abwAgLb.setVisible(true);
 			abwAgEinlFeld.setVisible(true);
-			
-		} 
+
+		}
 		else {
 
 			klaeranlageLb.setVisible(false);
@@ -809,9 +809,9 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			abgaberelEinlBox.setVisible(false);
 			abwAgLb.setVisible(false);
 			abwAgEinlFeld.setVisible(false);
-			
-		} 
-		
+
+		}
+
 			this.einleitungsstelle.setTypAusseroertlicheStrasseneinleitungTog(false);
 			this.einleitungsstelle.setTypGrubenwasserTog(false);
 			this.einleitungsstelle.setTypIndirekteinleitungTog(false);
@@ -862,13 +862,13 @@ public class EinleitungsstellePanel extends ObjectPanel {
 				this.einleitungsstelle.setTypSonstigeTog(true);
 			}
 
-			hauptModul.getTabbedPane().addTab("Gewässerdaten", getGewaesserTab());
+			hauptModul.addTab("Gewässerdaten", getGewaesserTab());
 			getGewaesserTab().enableAll(true);
 			getGewaesserTab().clearForm();
 			getGewaesserTab().updateForm(einleitungsstelle);
-			hauptModul.getTabbedPane().setSelectedIndex(2);
+			hauptModul.setSelectedIndex(2);
 
-		
+
 	}
 
 	public GewaesserdatenPanel getGewaesserTab() {
@@ -885,7 +885,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	 * {@link ActionListener} hinzugefügt, der bei einem Klick die Methoden
 	 * <code>saveElkaEinleitungsstelleDaten</code> und
 	 * <code>saveKlaeranlageDaten</code> ausführt.
-	 * 
+	 *
 	 * @see #saveElkaEinleitungsstelle()
 	 * @see #saveKlaeranlageDaten()
 	 * @return {@link JButton}

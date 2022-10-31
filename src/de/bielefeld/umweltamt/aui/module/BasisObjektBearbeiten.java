@@ -412,7 +412,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         }
         return einleitungsstelleTab;
     }
-    
+
     public AnfallstellePanel getAnfallstelleTab() {
         if (anfallstelleTab == null) {
             anfallstelleTab = new AnfallstellePanel(this);
@@ -420,7 +420,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         }
         return anfallstelleTab;
     }
-    
+
     public SonderbauwerkPanel getSonderbauwerkTab() {
         if (sonderbauwerkTab == null) {
             sonderbauwerkTab = new SonderbauwerkPanel(this, this.getSonderbauwerkTypTab());
@@ -438,7 +438,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         }
         return this.sonderbauwerkTypTab;
     }
-    
+
     public EntwaesserungsgrundstueckPanel getEntwaesserungsgrundstueckTab() {
         if (entwaesserungsgrundstueckTab == null) {
             entwaesserungsgrundstueckTab = new EntwaesserungsgrundstueckPanel(this);
@@ -449,7 +449,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
 
     //Erzeuge einen Registerbereich
-    public JTabbedPane getTabbedPane() {
+    private JTabbedPane getTabbedPane() {
         if (tabbedPane == null) {
             tabbedPane = new JTabbedPane();
 
@@ -501,7 +501,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 getBasisTab().fetchFormData();
-                
+
                 if (objekt.getAnfallstelles().size() > 0) {
                     Set<Anfallstelle> list = objekt.getAnfallstelles();
                     anfallstelle = list.iterator().next();
@@ -872,11 +872,52 @@ public class BasisObjektBearbeiten extends AbstractModul {
      * @param title Tab title
      * @param Panel Panel to add
      */
-    private void addTab(String title, Component panel) {
+    public void addTab(String title, Component panel) {
         getTabbedPane().addTab(title, panel);
         if (panel instanceof ObjectPanel) {
             activePanels.add((ObjectPanel) panel);
         }
+    }
+
+    /**
+     * Get the number of tabs.
+     * @return Count as int
+     */
+    public int getTabCount() {
+        return getTabbedPane().getTabCount();
+    }
+
+    /**
+     * Get the index of the given component.
+     * @return index
+     */
+    public int indexOfComponent(Component component) {
+        return getTabbedPane().indexOfComponent(component);
+    }
+
+    /**
+     * Set the selected tab index.
+     * @param index Index to select
+     */
+    public void setSelectedIndex(int index) {
+        getTabbedPane().setSelectedIndex(index);
+    }
+
+    /**
+     * Set the tab title of the component with the given index.
+     * @param index Index
+     * @param title Title
+     */
+    public void setTitleAt(int index, String title) {
+        getTabbedPane().setTitleAt(index, title);
+    }
+
+    /**
+     * Remove the tab at the given index.
+     * @param index Index to remove
+     */
+    public void removeTabAt(int index) {
+        getTabbedPane().removeTabAt(index);
     }
 }
 
