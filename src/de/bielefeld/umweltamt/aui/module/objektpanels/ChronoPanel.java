@@ -260,6 +260,7 @@ public class ChronoPanel extends ObjectPanel {
                 default:
                     break;
             }
+            setDirty(true);
         }
 
         @Override
@@ -267,6 +268,7 @@ public class ChronoPanel extends ObjectPanel {
             Objektchrono chr = new Objektchrono();
             chr.setObjekt(ChronoPanel.this.hauptModul.getObjekt());
             chr.setDatum(new Date());
+            setDirty(true);
             return chr;
         }
 
@@ -280,7 +282,7 @@ public class ChronoPanel extends ObjectPanel {
             } else {
                 removed = true;
             }
-
+            setDirty(true);
             return removed;
         }
 
