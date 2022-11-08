@@ -258,7 +258,8 @@ public class BasisPanel extends ObjectPanel {
         addChangeListeners(
             getBetreiberFeld(), getStandortFeld(), getLageFeld(), getArtBox(),
             getSachbearbeiterBox(), getWiedervorlageDatum(), getInaktivBox(),
-            getElkarelevantBox(), getPrioritaetFeld(), getAbwasserfreiBox());
+            getElkarelevantBox(), getPrioritaetFeld(), getAbwasserfreiBox(),
+            getBeschreibungsArea());
     }
 
     public void fetchFormData() {
