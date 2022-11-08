@@ -363,8 +363,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			if(this.einleitungsstelle.getBemerkung() != null) {
     			getBemerkungenArea().setText(this.einleitungsstelle.getBemerkung());
     		}
-
-
+			setDirty(false);
 		}
 	}
 
