@@ -522,6 +522,7 @@ public class BasisPanel extends ObjectPanel {
         this.hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
         this.hauptModul.getObjekt().setAbwasserfrei(getAbwasserfreiBox().isSelected());
         this.hauptModul.getObjekt().setElkarelevant(getElkarelevantBox().isSelected());
+        this.hauptModul.getObjekt().setPrioritaet(getPrioritaetFeld().getText());
 
 //        Objekt tmp = Objekt.saveObjekt(
 //            this.hauptModul.getObjekt(), prio);
