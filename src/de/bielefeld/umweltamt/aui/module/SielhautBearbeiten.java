@@ -184,10 +184,10 @@ import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 
 /**
  * Ein Modul zum Anzeigen und Bearbeiten von SielhautBearbeiten-Punkten.
- * 
+ *
  * @author David Klotz
  */
-public class SielhautBearbeiten extends AbstractModul {
+public class SielhautBearbeiten extends ObjectModule {
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -336,7 +336,7 @@ public class SielhautBearbeiten extends AbstractModul {
 		}else {
 			getSpN32Feld().setValue(0);
 		}
-		
+
 		getSpHaltungsnrFeld().setText(spunkt.getHaltungsnr());
 		getSpAlarmplannrFeld().setText(spunkt.getAlarmplannr());
 
@@ -375,6 +375,7 @@ public class SielhautBearbeiten extends AbstractModul {
 		getPunktSaveButton().setEnabled(true);
 		getPunktEditButton().setEnabled(true);
 		punktPrintButton.setEnabled(true);
+		setDirty(false);
 	}
 
 	/**
@@ -420,7 +421,7 @@ public class SielhautBearbeiten extends AbstractModul {
 		}
 		sprobePkt = Messstelle.merge(sprobePkt);
 		spunkt.setMessstelle(sprobePkt);
-		
+
 		saved = true;
 
 		return saved;
@@ -429,7 +430,7 @@ public class SielhautBearbeiten extends AbstractModul {
 	/**
 	 * Speichert den aktuellen SielhautBearbeiten-Punkt.
 	 */
-	public void saveSielhautPunkt() {
+	protected void doSave() {
 		// Nur Speichern, wenn der Name nicht leer ist
 		if (getSpNamenFeld().getText() == null || getSpNamenFeld().getText().equals("")) {
 			GUIManager.getInstance().showErrorMessage("Der Name darf nicht leer sein!");
@@ -481,7 +482,7 @@ public class SielhautBearbeiten extends AbstractModul {
 			// SielhautBearbeiten, Nachprobe & Alarmplan
 			spunkt.setPSielhaut(getSpSielhautCheck().isSelected());
 			spunkt.setPNachprobe(getSpNachprobeCheck().isSelected());
-			spunkt.setPFirmenprobe(getSpFirmenprobeCheck().isSelected());			
+			spunkt.setPFirmenprobe(getSpFirmenprobeCheck().isSelected());
 
 			spunkt.setMessstelle(sprobePkt);
 
@@ -724,7 +725,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	@Override
@@ -734,7 +735,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
 	 */
 	@Override
@@ -744,7 +745,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
 	 */
 	@Override
@@ -758,7 +759,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
 	 */
 	@Override
@@ -901,9 +902,9 @@ public class SielhautBearbeiten extends AbstractModul {
 					if (spunkt.getMessstelle() == null) {
 						saveNeuenProbepunkt();
 					}
-						
-					saveSielhautPunkt();
-					
+
+					save();
+
 				}
 			});
 		}
@@ -959,6 +960,12 @@ public class SielhautBearbeiten extends AbstractModul {
 			// builder.getPanel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			this.datenPanel = builder.getPanel();
 			this.datenPanel.setBorder(Paddings.DIALOG);
+
+			//Add change listeners
+			addChangeListeners(getSpNamenFeld(), getSpEntgebFeld(),
+				getSpBemerkungsArea(), getSpLageFeld(), getSpE32Feld(),
+				getSpN32Feld(), getSpHaltungsnrFeld(), getSpFirmenprobeCheck(),
+				getSpNachprobeCheck(), getSpSielhautCheck(), getSpAlarmplannrFeld());
 		}
 		return this.datenPanel;
 	}
@@ -1200,7 +1207,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 		/**
 		 * Ein Listener für die Events des Dialogs.
-		 * 
+		 *
 		 * @author David Klotz
 		 */
 		private class DialogListener extends WindowAdapter implements ActionListener {
@@ -1225,7 +1232,7 @@ public class SielhautBearbeiten extends AbstractModul {
 
 		/**
 		 * Ein Tablemodel
-		 * 
+		 *
 		 * @author David Klotz
 		 */
 		private class ExportTableModel extends AbstractTableModel {

@@ -70,6 +70,7 @@ import com.jgoodies.forms.factories.Paddings;
 import com.l2fprod.common.swing.JButtonBar;
 
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.module.ObjectModule;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ObjectPanel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -305,28 +306,39 @@ public class ModulManager {
      */
     private void switchModul(String identifier, boolean addToHistory) {
         //If there is currently an object panel shown
-        if (currentModul != null
-                && !currentModul.isEmpty()
-                && getCurrentModul() instanceof BasisObjektBearbeiten) {
-            //Check if there are dirty tabs
-            List<ObjectPanel> dirtyTabs = new ArrayList<ObjectPanel>();
-            dirtyTabs.addAll(((BasisObjektBearbeiten) getCurrentModul()).getTabs());
-            dirtyTabs.removeIf(tab -> !tab.isDirty());
-            if (dirtyTabs.size() > 0) {
-                StringBuilder tabTitles = new StringBuilder();
-                dirtyTabs.forEach(tab -> {
-                    if (tabTitles.length() > 0) {
-                        tabTitles.append(",");
+        if (currentModul != null && !currentModul.isEmpty()) {
+            if (getCurrentModul() instanceof BasisObjektBearbeiten) {
+                //Check if there are dirty tabs
+                List<ObjectPanel> dirtyTabs = new ArrayList<ObjectPanel>();
+                dirtyTabs.addAll(((BasisObjektBearbeiten) getCurrentModul()).getTabs());
+                dirtyTabs.removeIf(tab -> !tab.isDirty());
+                if (dirtyTabs.size() > 0) {
+                    StringBuilder tabTitles = new StringBuilder();
+                    dirtyTabs.forEach(tab -> {
+                        if (tabTitles.length() > 0) {
+                            tabTitles.append(",");
+                        }
+                        tabTitles.append(tab.getName());
+                    });
+                    //Show question if tabs should be saved before leaving
+                    String question = String.format(
+                            "In den folgenden Tabs sind noch ungespeicherte Änderungen: %s\n"
+                            + "Vor dem Verlassen speichern?",
+                            tabTitles);
+                    if (GUIManager.getInstance().showQuestion(question)) {
+                        ((BasisObjektBearbeiten)getCurrentModul()).saveAllTabs();
                     }
-                    tabTitles.append(tab.getName());
-                });
-                //Show question if tabs should be saved before leaving
-                String question = String.format(
-                        "In den folgenden Tabs sind noch ungespeicherte Änderungen: %s\n"
-                        + "Vor dem Verlassen speichern?",
-                        tabTitles);
+                }
+            }
+            //If there is a module holding unsaved data changes
+            if (getCurrentModul() instanceof ObjectModule
+                && ((ObjectModule)getCurrentModul()).isDirty()) {
+                //Show question if module should be saved before leaving
+                String question =
+                    "Im aktuellen Modul sind noch ungespeicherte Änderungen vorhanden.\n"
+                    + "Vor dem Verlassen speichern?";
                 if (GUIManager.getInstance().showQuestion(question)) {
-                    ((BasisObjektBearbeiten)getCurrentModul()).saveAllTabs();
+                    ((ObjectModule)getCurrentModul()).save();
                 }
             }
         }
