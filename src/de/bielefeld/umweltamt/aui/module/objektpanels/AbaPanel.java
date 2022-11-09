@@ -213,7 +213,7 @@ private static final long serialVersionUID = -4030805403749508467L;
             }
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         }
-
+        this.setDirty(false);
     }
 
     public void clearForm() {
