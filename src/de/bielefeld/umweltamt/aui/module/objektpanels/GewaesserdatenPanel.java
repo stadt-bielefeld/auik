@@ -76,7 +76,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
  * @date 27.07.2020
  */
 
-public class GewaesserdatenPanel extends JPanel {
+public class GewaesserdatenPanel extends ObjectPanel {
 	private static final long serialVersionUID = 7997458251785488488L;
 
 	/** Logging */
@@ -336,7 +336,16 @@ public class GewaesserdatenPanel extends JPanel {
 				switchGewKennz(gewKennz);
 			}
 		});
-
+		addChangeListeners(getStationierung3OptBox(), getGewaessernameNs3Feld(),
+			getStationierungsNs3Feld(), getEinzugsgebietFeld(),
+			getGewNameStadtFeld(), getGewKennzStadtFeld(), getHwrMassnahmeFeld(),
+			getGewnameStatFeld(), getGewkennzStatBox(), getGewaessernameAlias3Feld(),
+			getStationierungSt3Feld(), getVerAnlageOptBox(), getSonstigesVersFeld(),
+			getBauartzulIdFeld(), isLandesfoerderungTogBox(), isNotueberlaufTogBox(),
+			getNotueberlaufZielFeld(), getDurchlaessigkeitFeld(), getUntergrundartFeld(),
+			getFlurabstandFeld(), getGelaendeVerAnlageFeld(),
+			getAbstGrGrenzeFeld(), getAbstUnterkGebaeudeFeld(), getAbstVerAnlageFeld(),
+			getEntfEinlStatGewFeld(), getMwqFeld(), getHq1Feld(), getBemerkungGewDatenArea());
 	}
 
 	private String[] typGewBezItems = { "nicht stationiertes Gewässer", "stationiertes Gewässer", "Grundwasser",
@@ -504,6 +513,7 @@ public class GewaesserdatenPanel extends JPanel {
 
 			}
 		}
+		setDirty(false);
 	}
 
 	public void clearForm() {
@@ -535,8 +545,6 @@ public class GewaesserdatenPanel extends JPanel {
 		getMwqFeld().setValue(null);
 		getHq1Feld().setValue(null);
 		getBemerkungGewDatenArea().setText(null);
-		
-
 	}
 
 	public void enableAll(boolean enabled) {
@@ -571,7 +579,7 @@ public class GewaesserdatenPanel extends JPanel {
 
 	
 
-	private boolean saveGewDaten() {
+	protected boolean doSavePanelData() {
 		boolean success = false;
 
 //		getEinleitungsstelleTab().setObjektValues(this.einleitungsstelle);
@@ -820,7 +828,7 @@ public class GewaesserdatenPanel extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					enableAll(false);
 					;
-					if (saveGewDaten()) {
+					if (hauptModul.saveAllTabs()) {
 						GewaesserdatenPanel.this.hauptModul.getFrame().changeStatus("Gewaessserdaten "
 								+ GewaesserdatenPanel.this.einleitungsstelle + " erfolgreich gespeichert.",
 								HauptFrame.SUCCESS_COLOR);
@@ -1320,8 +1328,8 @@ public class GewaesserdatenPanel extends JPanel {
 		}
 		return this.bemerkungGewDatenArea;
 	}
-    
-    
 
-
+	public String getName() {
+		return this.name;
+	}
 }

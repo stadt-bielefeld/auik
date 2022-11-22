@@ -78,46 +78,46 @@ public class SonderbauwerkTypTab extends JPanel {
             return;
         }
 
-        int typePanelIndex = this.parentModule.getTabbedPane().indexOfComponent(this);
+        int typePanelIndex = this.parentModule.indexOfComponent(this);
         if (typePanelIndex == -1) {
             this.parentModule.setSonderbauwerkTypPanelEnabled(true);
-            typePanelIndex = this.parentModule.getTabbedPane().indexOfComponent(this);
+            typePanelIndex = this.parentModule.indexOfComponent(this);
         }
         switch ((String) type) {
             case "RRB":
                 this.setContentPanel(getRRBPanel());
                 getRRBPanel().setRecord(this.sonderbauwerk);
-                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
+                this.parentModule.setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RKB":
                 this.setContentPanel(getRKBPanel());
                 getRKBPanel().setRecord(this.sonderbauwerk);
-                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
+                this.parentModule.setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RBF":
                 this.setContentPanel(getRBFPanel());
                 getRBFPanel().setRecord(this.sonderbauwerk);
-                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
+                this.parentModule.setTitleAt(typePanelIndex, getContentName());
                 break;
             case "BF":
                 this.setContentPanel(getBFPanel());
                 getBFPanel().setRecord(this.sonderbauwerk);
-                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
+                this.parentModule.setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RÜT":
                 this.setContentPanel(getRUTPanel());
                 getRUTPanel().setRecord(this.sonderbauwerk);
-                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
+                this.parentModule.setTitleAt(typePanelIndex, getContentName());
                 break;
             case "RST":
                 this.setContentPanel(getRSTPanel());
                 getRSTPanel().setRecord(this.sonderbauwerk);
-                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
+                this.parentModule.setTitleAt(typePanelIndex, getContentName());
                 break;
             case "AL":
                 this.setContentPanel(getALPanel());
                 getALPanel().setRecord(this.sonderbauwerk);
-                this.parentModule.getTabbedPane().setTitleAt(typePanelIndex, getContentName());
+                this.parentModule.setTitleAt(typePanelIndex, getContentName());
                 break;
             default:
                 this.parentModule.setSonderbauwerkTypPanelEnabled(false);

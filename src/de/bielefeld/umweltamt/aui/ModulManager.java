@@ -69,6 +69,9 @@ import javax.swing.JToggleButton;
 import com.jgoodies.forms.factories.Paddings;
 import com.l2fprod.common.swing.JButtonBar;
 
+import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.module.ObjectModule;
+import de.bielefeld.umweltamt.aui.module.objektpanels.ObjectPanel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -304,6 +307,43 @@ public class ModulManager {
      * @param addToHistory Soll dieser Wechsel einen neuen Eintrag in der History erzeugen?
      */
     private void switchModul(String identifier, boolean addToHistory) {
+        //If there is currently an object panel shown
+        if (currentModul != null && !currentModul.isEmpty()) {
+            if (getCurrentModul() instanceof BasisObjektBearbeiten) {
+                //Check if there are dirty tabs
+                List<ObjectPanel> dirtyTabs = new ArrayList<ObjectPanel>();
+                dirtyTabs.addAll(((BasisObjektBearbeiten) getCurrentModul()).getTabs());
+                dirtyTabs.removeIf(tab -> !tab.isDirty());
+                if (dirtyTabs.size() > 0) {
+                    StringBuilder tabTitles = new StringBuilder();
+                    dirtyTabs.forEach(tab -> {
+                        if (tabTitles.length() > 0) {
+                            tabTitles.append(",");
+                        }
+                        tabTitles.append(tab.getName());
+                    });
+                    //Show question if tabs should be saved before leaving
+                    String question = String.format(
+                            "In den folgenden Tabs sind noch ungespeicherte Änderungen: %s\n"
+                            + "Vor dem Verlassen speichern?",
+                            tabTitles);
+                    if (GUIManager.getInstance().showQuestion(question)) {
+                        ((BasisObjektBearbeiten)getCurrentModul()).saveAllTabs();
+                    }
+                }
+            }
+            //If there is a module holding unsaved data changes
+            if (getCurrentModul() instanceof ObjectModule
+                && ((ObjectModule)getCurrentModul()).isDirty()) {
+                //Show question if module should be saved before leaving
+                String question =
+                    "Im aktuellen Modul sind noch ungespeicherte Änderungen vorhanden.\n"
+                    + "Vor dem Verlassen speichern?";
+                if (GUIManager.getInstance().showQuestion(question)) {
+                    ((ObjectModule)getCurrentModul()).save();
+                }
+            }
+        }
         // Alle vorhandenen Module durchgehen ...
         for (Enumeration<Modul> e1 = module.elements(); e1.hasMoreElements(); ) {
             Modul m = e1.nextElement();
@@ -415,7 +455,7 @@ public class ModulManager {
             frame.getViewMenuButton().setText(title);
             currentCategory = title;
             frame.resetLeftScroller();
-            
+
             if (switchToFirstMask) {
                 ModulKategorie mk = getCategory(title);
                 switchModul(mk.getFirstModul().getIdentifier());

@@ -117,7 +117,7 @@ import de.bielefeld.umweltamt.aui.utils.PDFExporter;
  * Das "Objekt-Chronologie"-Panel des Objekt-Bearbeiten-Moduls.
  * @author Gerd Genuit
  */
-public class ChronoPanel extends JPanel {
+public class ChronoPanel extends ObjectPanel {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     private static final long serialVersionUID = 5763325969928267241L;
@@ -169,7 +169,7 @@ public class ChronoPanel extends JPanel {
 
         builder.append(chronoScroller, 7);
         builder.nextLine(2);
-        builder.append(this.reportListeButton, getSaveButton(), getAllButton());
+        builder.append(this.reportListeButton, getAllButton(), getSaveButton());
     }
 
     public class ChronoModel extends EditableListTableModel {
@@ -201,7 +201,7 @@ public class ChronoPanel extends JPanel {
 
     	/**
     	 * Liefert das Objekt aus einer bestimmten Zeile.
-    	 * 
+    	 *
     	 * @param rowIndex
     	 *            Die Zeile
     	 * @return Das Objekt bei rowIndex
@@ -260,6 +260,7 @@ public class ChronoPanel extends JPanel {
                 default:
                     break;
             }
+            setDirty(true);
         }
 
         @Override
@@ -267,6 +268,7 @@ public class ChronoPanel extends JPanel {
             Objektchrono chr = new Objektchrono();
             chr.setObjekt(ChronoPanel.this.hauptModul.getObjekt());
             chr.setDatum(new Date());
+            setDirty(true);
             return chr;
         }
 
@@ -280,7 +282,7 @@ public class ChronoPanel extends JPanel {
             } else {
                 removed = true;
             }
-
+            setDirty(true);
             return removed;
         }
 
@@ -369,7 +371,7 @@ public class ChronoPanel extends JPanel {
     public void updateForm() {
         this.chronoModel.fireTableDataChanged();
     }
-    
+
     public void clearForm() {
         // Hier füllen wir das Abscheider-TableModel mit einer leeren Liste
     	chronoModel.setList(new ArrayList<Objektchrono>());
@@ -378,8 +380,8 @@ public class ChronoPanel extends JPanel {
      * Speichert die Objekt-Chronologie-Einträge und löscht gelöschte Datensätze
      * aus der Datenbank.
      */
-
-    public void speichernChronologie() {
+    @Override
+    protected boolean doSavePanelData() {
         if (this.chronoTable.getCellEditor() != null) {
             this.chronoTable.getCellEditor().stopCellEditing();
         }
@@ -411,14 +413,18 @@ public class ChronoPanel extends JPanel {
             GUIManager.getInstance().showErrorMessage(
                 "Es muss ein Sachbearbeiter angegeben werden!",
                 "Sachbearbeiter fehlt");
+            return false;
         } else if (sachbear && gespeichert) {
             this.hauptModul.getFrame().changeStatus("Speichern erfolgreich",
                 HauptFrame.SUCCESS_COLOR);
+            return true;
         } else if (!gespeichert) {
             this.hauptModul.getFrame().changeStatus(
                 "Chronologie konnte nicht gespeichert werden",
                 HauptFrame.ERROR_COLOR);
+            return false;
         }
+        return false;
     }
 
     public void showReportListe() {
@@ -516,7 +522,7 @@ public class ChronoPanel extends JPanel {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    speichernChronologie();
+                    hauptModul.saveAllTabs();
                 }
             };
             this.chronoSaveAction.putValue(Action.MNEMONIC_KEY, new Integer(
@@ -597,11 +603,11 @@ public class ChronoPanel extends JPanel {
 
     private JButton getSaveButton() {
         if (this.saveButton == null) {
-            this.saveButton = new JButton("Objekt-Chronologie speichern");
+            this.saveButton = new JButton("Objekt speichern");
             this.saveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    speichernChronologie();
+                    hauptModul.saveAllTabs();
                 }
             });
         }
@@ -623,7 +629,7 @@ public class ChronoPanel extends JPanel {
 
         return this.allButton;
     }
-    
+
     private Action getOpenDocAction()
 	{
 
@@ -667,7 +673,7 @@ public class ChronoPanel extends JPanel {
 
 		return this.openDocAction;
 	}
-    
+
     private Action getSelectAction()
 	{
 
@@ -678,20 +684,20 @@ public class ChronoPanel extends JPanel {
 			{
 
 				@Override
-				  public void actionPerformed(ActionEvent e) {            
-			        
+				  public void actionPerformed(ActionEvent e) {
+
 					JFileChooser f = new JFileChooser();
 					f.setCurrentDirectory(new File("X:\\Orga\\360\\360-3\\360-3-3\\Alle\\Standorte"));
-			        f.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); 
+			        f.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			        f.showOpenDialog(null);
 
 			        System.out.println(f.getSelectedFile());
 			        System.out.println(chronoTable.getSelectedRow());
-			        
+
 			        Objektchrono oc = chronoModel.getRow(chronoTable.getSelectedRow());
 			        oc.setPfad(f.getSelectedFile().toString());
 			        chronoModel.fireTableDataChanged();
-				    			        
+
 				}
 			};
 		}

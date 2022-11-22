@@ -58,7 +58,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * Das "Abwasserbehandlungsverfahren"-Tab des ObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class AbaVerfahrenPanel extends JPanel {
+public class AbaVerfahrenPanel extends ObjectPanel {
 
     private static final long serialVersionUID = 3548243605243275016L;
 
@@ -127,6 +127,7 @@ public class AbaVerfahrenPanel extends JPanel {
             }
         });
         fetchFormData();
+        addChangeListeners(rightList);
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -136,7 +137,7 @@ public class AbaVerfahrenPanel extends JPanel {
             log.debug("Abwasserbehandlungsanlage aus DB geholt: " + this.fachdaten);
 
         applyEntries(new ArrayList<Abaverfahren> (fachdaten.getAbaverfahrens()));
-
+        setDirty(false);
     }
 
     public void updateForm() throws RuntimeException {
@@ -147,7 +148,7 @@ public class AbaVerfahrenPanel extends JPanel {
     }
 
     public void clearForm() {
-    	rightData.clear();
+        rightData.clear();
     }
 
     public void enableAll(boolean enabled) {
@@ -167,7 +168,7 @@ public class AbaVerfahrenPanel extends JPanel {
 
     private JList getLeftList()
     {
-    	if (this.leftList == null)
+        if (this.leftList == null)
         {
 
             if (this.verfahrens == null || this.verfahrens.length == 0) {
@@ -193,7 +194,7 @@ public class AbaVerfahrenPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
-                    if (saveAbaverf()) {
+                    if (hauptModul.saveAllTabs()) {
                         AbaVerfahrenPanel.this.hauptModul.getFrame().changeStatus(
                             "Liste der Behandlungsverfahren "
                                 + AbaVerfahrenPanel.this.fachdaten.getId()
@@ -207,25 +208,24 @@ public class AbaVerfahrenPanel extends JPanel {
 
                     AbaVerfahrenPanel.this.hauptModul.fillForm();
                 }
-
-                private boolean saveAbaverf() {
-                	
-                    boolean success;
-                    
-                    success = fachdaten.merge();
-                    if (success) {
-                        log.debug("Abwasserbehandlungsanlage "
-                            + fachdaten.getObjekt().getBetreiberid()
-                                .getName() + " gespeichert.");
-                    } else {
-                        log.debug("Abwasserbehandlungsanlage " + fachdaten
-                            + " konnte nicht gespeichert werden!");
-                    }
-                    return success;
-                }
             });
         }
         return this.saveAbaverfButton;
+    }
+
+    public boolean doSavePanelData() {
+        boolean success;
+
+        success = fachdaten.merge();
+        if (success) {
+            log.debug("Abwasserbehandlungsanlage "
+                + fachdaten.getObjekt().getBetreiberid()
+                    .getName() + " gespeichert.");
+        } else {
+            log.debug("Abwasserbehandlungsanlage " + fachdaten
+                + " konnte nicht gespeichert werden!");
+        }
+        return success;
     }
 
     /**
@@ -299,19 +299,19 @@ public class AbaVerfahrenPanel extends JPanel {
                 return v1.getNr() - v2.getNr();
             });
         }
-        
+
         this.verfahrens = DatabaseQuery.getVerfahren();
         this.leftData.clear();
         for (Abaverfahren verfahren: verfahrens) {
             this.leftData.add(verfahren);
             this.leftListModel.addElement(verfahren);
         }
-        
+
         List<Abaverfahren> removesaved = new ArrayList<Abaverfahren> (fachdaten.getAbaverfahrens());
         removesaved.forEach((verfahren) -> {
             this.leftData.remove(verfahren);
         });
-        
+
         leftData.sort((v1, v2) -> {
             return v1.getNr() - v2.getNr();
         });

@@ -42,6 +42,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentListener;
 
 import com.toedter.calendar.JCalendar;
 
@@ -143,6 +144,10 @@ public class TextFieldDateChooser extends JPanel
 
         popup.setLightWeightPopupEnabled(true);
         popup.add(jcalendar);
+    }
+
+    public void addChangeListener(DocumentListener listener) {
+        this.textField.getDocument().addDocumentListener(listener);
     }
 
     /**

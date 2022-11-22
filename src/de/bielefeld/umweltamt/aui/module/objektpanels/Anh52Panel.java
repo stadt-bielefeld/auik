@@ -80,7 +80,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das Panel zum Bearbeiten von Druckereien
  * @author u633d
  */
-public class Anh52Panel extends JPanel{
+public class Anh52Panel extends ObjectPanel {
     private static final long serialVersionUID = -1240254202213465142L;
 
     /** Logging */
@@ -144,7 +144,9 @@ public class Anh52Panel extends JPanel{
 
         JComponent buttonBar = ComponentFactory.buildOKBar(getSaveAnh52Button());
         builder.append(buttonBar, 7);
-
+        addChangeListeners(getNrBetriebsstaette(), getFirmennameFeld(),
+            getTelefonFeld(), getTelefaxFeld(), getAnsprechpartnerFeld(),
+            getGenehmigungDatum(), getBemerkungenArea());
     }
 
     public void completeObjekt(Anfallstelle anfallstelle) {
@@ -158,7 +160,7 @@ public class Anh52Panel extends JPanel{
 
     }
 
-    private boolean saveAnh52Daten() {
+    protected boolean doSavePanelData() {
         boolean success;
 
         String bemerkungen = BemerkungenArea.getText();
@@ -237,38 +239,38 @@ public class Anh52Panel extends JPanel{
 
     public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
 
-    this.fachdaten = anfallstelle.getAnh52Fachdatens().iterator().next();
-    	
-    if (fachdaten != null) {
-        if (fachdaten.getBemerkungen() != null) {
-            getBemerkungenArea().setText(fachdaten.getBemerkungen());
-        }
+        this.fachdaten = anfallstelle.getAnh52Fachdatens().iterator().next();
+            
+        if (fachdaten != null) {
+            if (fachdaten.getBemerkungen() != null) {
+                getBemerkungenArea().setText(fachdaten.getBemerkungen());
+            }
 
-        if (fachdaten.getNrbetriebsstaette() != null) {
-            getNrBetriebsstaette().setText(fachdaten.getNrbetriebsstaette().toString());
-        }
+            if (fachdaten.getNrbetriebsstaette() != null) {
+                getNrBetriebsstaette().setText(fachdaten.getNrbetriebsstaette().toString());
+            }
 
-        if (fachdaten.getFirmenname() != null) {
-            getFirmennameFeld().setText(fachdaten.getFirmenname());
-        }
+            if (fachdaten.getFirmenname() != null) {
+                getFirmennameFeld().setText(fachdaten.getFirmenname());
+            }
 
-        if (fachdaten.getTelefon() != null) {
-            getTelefonFeld().setText(fachdaten.getTelefon());
-        }
+            if (fachdaten.getTelefon() != null) {
+                getTelefonFeld().setText(fachdaten.getTelefon());
+            }
 
-        if (fachdaten.getTelefax() != null) {
-            getTelefaxFeld().setText(fachdaten.getTelefax());
-        }
+            if (fachdaten.getTelefax() != null) {
+                getTelefaxFeld().setText(fachdaten.getTelefax());
+            }
 
-        if (fachdaten.getAnsprechpartner() != null) {
-            getAnsprechpartnerFeld().setText(fachdaten.getAnsprechpartner());
-        }
+            if (fachdaten.getAnsprechpartner() != null) {
+                getAnsprechpartnerFeld().setText(fachdaten.getAnsprechpartner());
+            }
 
-        if (fachdaten.getDatumgenehmigung() != null) {
-            getGenehmigungDatum().setDate(fachdaten.getDatumgenehmigung());
+            if (fachdaten.getDatumgenehmigung() != null) {
+                getGenehmigungDatum().setDate(fachdaten.getDatumgenehmigung());
+            }
         }
-    }
-
+        setDirty(false);
     }
 
 
@@ -293,7 +295,7 @@ public class Anh52Panel extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent e) {
 //                    enableAll(false);
-                    if (saveAnh52Daten()) {
+                    if (hauptModul.saveAllTabs()) {
                         hauptModul.getFrame().changeStatus("Anh 52 Objekt "+fachdaten.getId()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
                     } else {
                         hauptModul.getFrame().changeStatus("Fehler beim Speichern des Anh 40 Objekt!", HauptFrame.ERROR_COLOR);

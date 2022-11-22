@@ -89,7 +89,7 @@ import de.bielefeld.umweltamt.aui.utils.PDFExporter;
  * Das "Probepunkt"-Tab des BasisObjektBearbeiten-Moduls
  * @author David Klotz
  */
-public class ProbepunktPanel extends JPanel {
+public class ProbepunktPanel extends ObjectPanel {
     private static final long serialVersionUID = 3663375435585578751L;
 
     /** Logging */
@@ -179,9 +179,6 @@ public class ProbepunktPanel extends JPanel {
         builder.addLabel("Branche:", cc.xy(1, 9));
         builder.add(getBrancheFeld(), cc.xy(3, 9));
 
-        JComponent buttonBar = ComponentFactory.buildOKBar(getSavePktButton());
-        builder.add(buttonBar, cc.xyw(1, 11, 6));
-
         builder.addSeparator("Beschreibung", cc.xyw(1, 13, 6));
         JScrollPane beschScroller = new JScrollPane(
             getProbePktBeschreibungsArea(),
@@ -205,9 +202,13 @@ public class ProbepunktPanel extends JPanel {
         builder.add(objektverknuepfungScroller, cc.xyw(1, 25, 6));
 
         JComponent buttonBarOv = ComponentFactory
-            .buildRightAlignedBar(getPrintDeckblattButton(), getSelectObjektButton());
+            .buildRightAlignedBar(getPrintDeckblattButton(), getSelectObjektButton(), getSavePktButton());
 
         builder.add(buttonBarOv, cc.xyw(1, 27, 6));
+        addChangeListeners(getProbePktNrFeld(), getProbePktBeschreibungsArea(),
+            getKennummerFeld(), getBrancheFeld(),
+            getProbeKABox(), getProbePktArtBox(), getSachbearbeiterBox());
+
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -261,6 +262,7 @@ public class ProbepunktPanel extends JPanel {
 
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         }
+        setDirty(false);
     }
 
     public void clearForm() {
@@ -334,7 +336,7 @@ public class ProbepunktPanel extends JPanel {
         }
     }
 
-    private boolean saveProbepunktDaten() {
+    protected boolean doSavePanelData() {
         boolean success;
 
         if (this.probepkt != null) {
@@ -600,13 +602,13 @@ public class ProbepunktPanel extends JPanel {
 
     private JButton getSavePktButton() {
         if (this.savePktButton == null) {
-            this.savePktButton = new JButton("Probepunkt speichern");
+            this.savePktButton = new JButton("Objekt speichern");
 
             this.savePktButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
-                    if (saveProbepunktDaten()) {
+                    if (hauptModul.saveAllTabs()) {
                         ProbepunktPanel.this.hauptModul.getFrame()
                             .changeStatus(
                                 "Probepunkt "
@@ -793,7 +795,7 @@ public class ProbepunktPanel extends JPanel {
         }
         return this.selectObjektButton;
     }
-    
+
     private JButton getPrintDeckblattButton() {
         if (this.printDeckblattButton == null) {
             this.printDeckblattButton = new JButton("Deckblatt drucken");
@@ -811,7 +813,7 @@ public class ProbepunktPanel extends JPanel {
         }
         return this.printDeckblattButton;
     }
-    
+
     public void showReport() {
         if (hauptModul.getObjekt().getId() != null) {
             SettingsManager sm = SettingsManager.getInstance();
