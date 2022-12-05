@@ -27,6 +27,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -201,10 +202,11 @@ public class SielhautPrinter extends AbstractModul {
                 }
 
                 Map<String, String> exportResult = createReports(targetDir);
+                JDialog resultDialog = createResultDialog(
+                    createResultHtml(exportResult, targetDir),
+                    targetDir, count.getText());
                 dialog.setVisible(false);
-                GUIManager.getInstance().showInfoMessage(
-                            createResultHtml(exportResult, targetDir),
-                            String.format("%s Sielhautsteckbrief(e) erstellt", count.getText()));
+                resultDialog.setVisible(true);
                 GUIManager.getInstance().setInfoStatus(
                     String.format("%s Sielhautsteckbrief(e) erstellt", count.getText()));
             }
@@ -282,11 +284,56 @@ public class SielhautPrinter extends AbstractModul {
         return result;
     }
 
+    @SuppressWarnings("deprecation")
+    private JDialog createResultDialog(String resultString, String targetDir, String count) {
+        JDialog dialog = new JDialog();
+        dialog.setModal(true);
+        dialog.setTitle(String.format("%s Sielhautsteckbrief(e) erstellt", count));
+        dialog.setSize(400, 600);
 
+        JLabel resultText = new JLabel(resultString);
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                dialog.setVisible(false);
+            }
+        });
+        JButton openButton = new JButton("Ordner öffnen");
+        openButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    java.awt.Desktop.getDesktop().open(new File(targetDir));
+                } catch (IOException e) {
+                    GUIManager.getInstance().setErrorStatus(
+                        "Zielpfad konnte nicht geöffnet werden");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        JScrollPane scroller = new JScrollPane(resultText,
+            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        FormLayout layout = new FormLayout(
+            "5dlu, 100dlu:g, 65dlu, 2dlu, 35dlu, 5dlu",
+            "5dlu, 100dlu:g, 2dlu, 35dlu, 5dlu");
+        PanelBuilder builder = new PanelBuilder(layout);
+        CellConstraints cc = new CellConstraints();
+
+        builder.add(scroller, cc.xyw(2,2, 4));
+        builder.add(openButton, cc.xy(3, 4));
+        builder.add(okButton, cc.xy(5, 4));
+
+        dialog.add(builder.build());
+        return dialog;
+    }
 
     private String createResultHtml(Map<String, String> result, String path) {
         StringBuilder resultBuilder = new StringBuilder("<html>");
-        resultBuilder.append(String.format("Pfad: %s <br>", path))
+        resultBuilder.append(String.format("<b>Pfad:</b> %s <br>", path))
         .append("<ul>");
 
         result.forEach((id, resultString) -> {
