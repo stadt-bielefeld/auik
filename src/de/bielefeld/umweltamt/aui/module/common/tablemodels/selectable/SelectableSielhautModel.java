@@ -103,6 +103,22 @@ public class SelectableSielhautModel extends ListTableModel {
         return tmp;
     }
 
+    public int getSelectedCount() {
+        return getSelected().length;
+    }
+
+    public Object[] getSelected() {
+        List<Object> result = new ArrayList<>();
+        List<Object[]> rows = (List<Object[]>) this.getList();
+        rows.forEach(row -> {
+            Boolean selected = (Boolean) row[0];
+            if (selected) {
+                result.add(row);
+            }
+        });
+        return result.toArray();
+    }
+
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex == 0 || columnIndex > 2) {

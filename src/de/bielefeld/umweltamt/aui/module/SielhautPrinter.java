@@ -20,16 +20,23 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.AbstractButton;
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.table.TableColumn;
 
@@ -38,6 +45,8 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.GUIManager;
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.selectable.SelectableSielhautModel;
 import de.bielefeld.umweltamt.aui.utils.CheckBoxTableHeader;
 
@@ -53,9 +62,11 @@ public class SielhautPrinter extends AbstractModul {
     private JToolBar toolbar;
     private JButton printButton;
 
+    private String outputPath = "./reports";
+
     @Override
     public String getName() {
-        return "Sielhautsteckbriefe drucken";
+        return "Sielhautsteckbriefe erstellen";
     }
 
     @Override
@@ -93,6 +104,17 @@ public class SielhautPrinter extends AbstractModul {
 
         //Toolbar
         this.printButton = new JButton("Drucken");
+        this.printButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if (sielhautModel.getSelected().length > 0) {
+                    createPrintDialog().setVisible(true);
+                } else {
+                    GUIManager.getInstance()
+                        .setInfoStatus("Bitte wählen sie einen Sielhautpunkt aus");
+                }
+            }
+        });
         this.toolbar = new JToolBar();
         this.toolbar.setFloatable(false);
         this.toolbar.setRollover(true);
@@ -110,10 +132,76 @@ public class SielhautPrinter extends AbstractModul {
         this.contentPanel = builder.build();
 
         this.loadTableData();
+
+        //Get output path
+        SettingsManager sm = SettingsManager.getInstance();
+        this.outputPath = sm.getSetting("auik.system.spath_steckbriefe");
     }
 
     private void loadTableData() {
         this.sielhautModel.filterList("");
+    }
+
+    @SuppressWarnings("deprecation")
+    private JDialog createPrintDialog() {
+        JDialog dialog = new JDialog();
+
+        JLabel countLabel = new JLabel("Sielhautpunkte ausgewählt:");
+        JLabel count = new JLabel(
+            String.valueOf(sielhautModel.getSelectedCount()));
+        JLabel pathLabel = new JLabel("Dateipfad:");
+        JTextArea path = new JTextArea(this.outputPath);
+        JButton pathButton = new JButton("Pfad wählen");
+        pathButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                JFileChooser f = new JFileChooser();
+                f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                f.showSaveDialog(null);
+                path.setText(f.getSelectedFile().getAbsolutePath());
+            }
+        });
+
+
+        JToolBar tb = new JToolBar();
+        JButton cancelButton = new JButton("abbrechen");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                dialog.setVisible(false);
+            }
+        });
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+            }
+        });
+        tb.add(Box.createHorizontalGlue());
+        tb.add(okButton);
+        tb.addSeparator();
+        tb.add(cancelButton);
+
+        FormLayout layout = new FormLayout(
+            "5dlu, 100dlu, 75dlu:g, 5dlu, 50dlu, 5dlu",
+            "5dlu, 35dlu, 35dlu, 3dlu:g, 35dlu, 5dlu");
+        PanelBuilder builder = new PanelBuilder(layout);
+        CellConstraints cc = new CellConstraints();
+        builder.add(countLabel, cc.xy(2, 2));
+        builder.add(count, cc.xy(3, 2));
+        builder.add(pathLabel, cc.xy(2, 3));
+        builder.add(path, cc.xy(3, 3));
+        builder.add(pathButton, cc.xy(5, 3));
+        builder.add(tb, cc.xyw(2, 5, 4));
+
+        JPanel dialogContent = builder.build();
+
+        dialog.setTitle("Steckbriefe erstellen");
+        dialog.setModal(true);
+        dialog.setSize(600, 250);
+
+        dialog.add(dialogContent);
+        return dialog;
     }
 
     /**
