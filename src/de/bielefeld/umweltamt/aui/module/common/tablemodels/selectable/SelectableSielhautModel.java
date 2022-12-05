@@ -20,10 +20,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels.selectable;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -38,6 +40,8 @@ public class SelectableSielhautModel extends ListTableModel {
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
+
+    private static final int ID_INDEX = 1;
 
     public SelectableSielhautModel () {
         super(new String[] {"", "Bezeichnung", "Lage", "R", "F", "N", "I"}, false);
@@ -105,6 +109,19 @@ public class SelectableSielhautModel extends ListTableModel {
 
     public int getSelectedCount() {
         return getSelected().length;
+    }
+
+    public Sielhaut getModelFromRow(Object[] row) {
+        Integer id = (Integer) row[ID_INDEX];
+        if (id == null) {
+            throw new InvalidParameterException("Keine Sielhautpunkt ID gefunden");
+        }
+        Sielhaut sielhaut = Sielhaut.findById(id);
+        if (sielhaut == null) {
+            throw new InvalidParameterException(
+                String.format("Sielhautpunkt %d nicht gefunden", id));
+        }
+        return sielhaut;
     }
 
     public Object[] getSelected() {

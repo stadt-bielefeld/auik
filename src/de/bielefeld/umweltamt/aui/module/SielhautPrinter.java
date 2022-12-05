@@ -26,6 +26,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
@@ -47,8 +54,11 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.SettingsManager;
+import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.selectable.SelectableSielhautModel;
 import de.bielefeld.umweltamt.aui.utils.CheckBoxTableHeader;
+import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 
 public class SielhautPrinter extends AbstractModul {
 
@@ -175,6 +185,28 @@ public class SielhautPrinter extends AbstractModul {
         okButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                //Check if target dir exists. If not, try to create it
+                String targetDir = path.getText();
+                Path path = Paths.get(targetDir);
+                if (!Files.exists(path)) {
+                    boolean created = new File(targetDir).mkdirs();
+                    if (!created) {
+                        GUIManager.getInstance().showErrorMessage(
+                            String.format("Das Zielverzeichnis '%s' konnte nicht erstellt werden", targetDir),
+                            "Erstellen der Sielhautsteckbriefe fehlgeschlagen");
+                        GUIManager.getInstance().setErrorStatus(
+                            "Erstellen der Sielhautsteckbriefe fehlgeschlagen");
+                        return;
+                    }
+                }
+
+                Map<String, String> exportResult = createReports(targetDir);
+                dialog.setVisible(false);
+                GUIManager.getInstance().showInfoMessage(
+                            createResultHtml(exportResult, targetDir),
+                            String.format("%s Sielhautsteckbrief(e) erstellt", count.getText()));
+                GUIManager.getInstance().setInfoStatus(
+                    String.format("%s Sielhautsteckbrief(e) erstellt", count.getText()));
             }
         });
         tb.add(Box.createHorizontalGlue());
@@ -202,6 +234,71 @@ public class SielhautPrinter extends AbstractModul {
 
         dialog.add(dialogContent);
         return dialog;
+    }
+
+    private Map<String, String> createReports(String path) {
+        Map<String, String> result = new HashMap<String, String>();
+
+        SettingsManager sm = SettingsManager.getInstance();
+        String fotoPath = sm.getSetting("auik.system.spath_fotos");
+        String mapPath = sm.getSetting("auik.system.spath_karten");
+
+        for (Object rowObj: sielhautModel.getSelected()) {
+            Object[] row = (Object[]) rowObj;
+            Sielhaut spunkt = sielhautModel.getModelFromRow(row);
+
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("id", spunkt.getId());
+            String bezeichnung = spunkt.getBezeichnung();
+            if (bezeichnung != null && new File(fotoPath + bezeichnung + ".jpg").canRead()) {
+                params.put("foto", new String(fotoPath + bezeichnung + ".jpg"));
+            } else {
+                params.put("foto", new String(fotoPath + "kein_foto.jpg"));
+            }
+
+            if (bezeichnung != null && new File(mapPath + bezeichnung + ".jpg").canRead()) {
+                params.put("karte", new String(mapPath + bezeichnung + ".jpg"));
+            } else {
+                params.put("karte", new String(mapPath + "keine_karte.jpg"));
+            }
+            String fileSeparator = FileSystems.getDefault().getSeparator();
+            StringBuilder pathBuilder = new StringBuilder(path);
+            if (!path.endsWith(fileSeparator)) {
+                pathBuilder.append(fileSeparator);
+            }
+            pathBuilder
+                .append("Sielhautsteckbrief-")
+                .append(spunkt.getId())
+                .append(".pdf");
+            try {
+                File export = new File(pathBuilder.toString());
+                PDFExporter.getInstance().exportReport(params, PDFExporter.SIELHAUT_BEARBEITEN,
+                    export.getAbsolutePath(), false);
+                result.put(spunkt.getId().toString(), "erfolgreich erstellt");
+            } catch (Exception ex) {
+                result.put(spunkt.getId().toString(), ex.getLocalizedMessage());
+            }
+        }
+        return result;
+    }
+
+
+
+    private String createResultHtml(Map<String, String> result, String path) {
+        StringBuilder resultBuilder = new StringBuilder("<html>");
+        resultBuilder.append(String.format("Pfad: %s <br>", path))
+        .append("<ul>");
+
+        result.forEach((id, resultString) -> {
+            resultBuilder
+                .append("<li>")
+                .append(
+                    String.format("<b>Sielhautpunkt %s</b>: %s <br>", id, resultString))
+                .append("</li>");
+
+        });
+        resultBuilder.append("</html>");
+        return resultBuilder.toString();
     }
 
     /**
