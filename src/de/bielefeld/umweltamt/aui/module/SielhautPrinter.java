@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.AbstractButton;
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -45,7 +44,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JToolBar;
 import javax.swing.table.TableColumn;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -56,7 +54,6 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.selectable.SelectableSielhautModel;
 import de.bielefeld.umweltamt.aui.utils.CheckBoxTableHeader;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
@@ -70,7 +67,6 @@ public class SielhautPrinter extends AbstractModul {
     private SelectableSielhautModel sielhautModel;
     private TableColumn checkBoxColumn;
 
-    private JToolBar toolbar;
     private JButton printButton;
 
     private String outputPath = "./reports";
@@ -126,10 +122,6 @@ public class SielhautPrinter extends AbstractModul {
                 }
             }
         });
-        this.toolbar = new JToolBar();
-        this.toolbar.setFloatable(false);
-        this.toolbar.setRollover(true);
-        this.toolbar.add(this.printButton);
 
         //Content panel
         FormLayout layout = new FormLayout(
@@ -138,7 +130,7 @@ public class SielhautPrinter extends AbstractModul {
         PanelBuilder builder = new PanelBuilder(layout);
         CellConstraints cc = new CellConstraints();
 
-        builder.add(toolbar, cc.xy(4, 4));
+        builder.add(printButton, cc.xy(4, 4));
         builder.add(tableScrollPane, cc.xyw(2, 2, 3));
         this.contentPanel = builder.build();
 
@@ -173,8 +165,6 @@ public class SielhautPrinter extends AbstractModul {
             }
         });
 
-
-        JToolBar tb = new JToolBar();
         JButton cancelButton = new JButton("abbrechen");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -211,22 +201,19 @@ public class SielhautPrinter extends AbstractModul {
                     String.format("%s Sielhautsteckbrief(e) erstellt", count.getText()));
             }
         });
-        tb.add(Box.createHorizontalGlue());
-        tb.add(okButton);
-        tb.addSeparator();
-        tb.add(cancelButton);
 
         FormLayout layout = new FormLayout(
-            "5dlu, 100dlu, 75dlu:g, 5dlu, 50dlu, 5dlu",
+            "5dlu, 100dlu, 75dlu:g, 25dlu, 5dlu, 25dlu, 3dlu, 25dlu, 5dlu",
             "5dlu, 35dlu, 35dlu, 3dlu:g, 35dlu, 5dlu");
         PanelBuilder builder = new PanelBuilder(layout);
         CellConstraints cc = new CellConstraints();
         builder.add(countLabel, cc.xy(2, 2));
-        builder.add(count, cc.xy(3, 2));
+        builder.add(count, cc.xyw(3, 2, 5));
         builder.add(pathLabel, cc.xy(2, 3));
-        builder.add(path, cc.xy(3, 3));
-        builder.add(pathButton, cc.xy(5, 3));
-        builder.add(tb, cc.xyw(2, 5, 4));
+        builder.add(path, cc.xyw(3, 3, 2));
+        builder.add(pathButton, cc.xyw(6, 3, 3));
+        builder.add(cancelButton, cc.xyw(4, 5, 3));
+        builder.add(okButton, cc.xy(8, 5));
 
         JPanel dialogContent = builder.build();
 
