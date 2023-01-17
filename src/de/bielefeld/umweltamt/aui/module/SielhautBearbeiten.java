@@ -1893,7 +1893,15 @@ public class SielhautBearbeiten extends ObjectModule {
 					spE32Feld.setText(e32AusZeile.substring(0, 7));
 					spN32Feld.setText(n32AusZeile.substring(0, 7));
 					this.frame.changeStatus("Rechts- und Hochwert eingetragen", HauptFrame.SUCCESS_COLOR);
-				} else {
+				} else 
+					if (tmp.length == 2) {
+						String e32AusZeile = tmp[0];
+						String n32AusZeile = tmp[1];
+						spE32Feld.setText(e32AusZeile.substring(0, 7));
+						spN32Feld.setText(n32AusZeile.substring(0, 7));
+						this.frame.changeStatus("Rechts- und Hochwert eingetragen", HauptFrame.SUCCESS_COLOR);
+				}else
+				{
 					this.frame.changeStatus("Zwischenablage enthält keine verwertbaren Daten", HauptFrame.ERROR_COLOR);
 				}
 				break;
