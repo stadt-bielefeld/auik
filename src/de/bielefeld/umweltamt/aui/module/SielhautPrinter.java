@@ -255,10 +255,17 @@ public class SielhautPrinter extends AbstractModul {
             if (!path.endsWith(fileSeparator)) {
                 pathBuilder.append(fileSeparator);
             }
-            pathBuilder
-                .append("Sielhautsteckbrief-")
-                .append(spunkt.getId())
-                .append(".pdf");
+            if (spunkt.getBezeichnung() != null && !spunkt.getBezeichnung().isEmpty()) {
+                pathBuilder
+                    .append(spunkt.getBezeichnung())
+                    .append(".pdf");
+            } else {
+                pathBuilder
+                    .append("Sielhautsteckbrief-")
+                    .append(spunkt.getId())
+                    .append(".pdf");
+            }
+
             try {
                 File export = new File(pathBuilder.toString());
                 PDFExporter.getInstance().exportReport(params, PDFExporter.SIELHAUT_BEARBEITEN,
