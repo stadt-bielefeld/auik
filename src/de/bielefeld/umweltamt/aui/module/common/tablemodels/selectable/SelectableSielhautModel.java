@@ -151,7 +151,7 @@ public class SelectableSielhautModel extends ListTableModel {
 
     public void filterList(String suche) {
         //Get Sielhaut objects
-        Object[] array = DatabaseQuery.findSielhaut(suche);
+        Object[] array = DatabaseQuery.findActiveSielhaut(suche);
         //Prepend selectable boolean
         List<Object[]> list = new ArrayList();
         for(Object rowObj: array) {
