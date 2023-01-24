@@ -270,9 +270,9 @@ public class SielhautPrinter extends AbstractModul {
                 File export = new File(pathBuilder.toString());
                 PDFExporter.getInstance().exportReport(params, PDFExporter.SIELHAUT_BEARBEITEN,
                     export.getAbsolutePath(), false);
-                result.put(spunkt.getId().toString(), "erfolgreich erstellt");
+                result.put(spunkt.getBezeichnung().toString(), "erfolgreich erstellt");
             } catch (Exception ex) {
-                result.put(spunkt.getId().toString(), ex.getLocalizedMessage());
+                result.put(spunkt.getBezeichnung().toString(), ex.getLocalizedMessage());
             }
         }
         return result;
@@ -330,11 +330,11 @@ public class SielhautPrinter extends AbstractModul {
         resultBuilder.append(String.format("<b>Pfad:</b> %s <br>", path))
         .append("<ul>");
 
-        result.forEach((id, resultString) -> {
+        result.forEach((bezeichnung, resultString) -> {
             resultBuilder
                 .append("<li>")
                 .append(
-                    String.format("<b>Sielhautpunkt %s</b>: %s <br>", id, resultString))
+                    String.format("<b>Sielhautpunkt %s</b>: %s <br>", bezeichnung, resultString))
                 .append("</li>");
 
         });
