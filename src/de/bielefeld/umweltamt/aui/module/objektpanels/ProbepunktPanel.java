@@ -567,8 +567,7 @@ public class ProbepunktPanel extends ObjectPanel {
 
     private JDateChooser getDatumsChooser() {
         if (this.datumsChooser == null) {
-            this.datumsChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT,
-                false);
+            this.datumsChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
         }
 
         return this.datumsChooser;

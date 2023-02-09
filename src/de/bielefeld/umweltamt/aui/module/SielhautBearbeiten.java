@@ -1660,7 +1660,7 @@ public class SielhautBearbeiten extends ObjectModule {
 
 	private JDateChooser getVonDateChooser() {
 		if (vonDateChooser == null) {
-			vonDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+			vonDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
 		}
 
 		return vonDateChooser;
@@ -1669,7 +1669,7 @@ public class SielhautBearbeiten extends ObjectModule {
 	private JDateChooser getBisDateChooser() {
 
 		if (bisDateChooser == null) {
-			bisDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+			bisDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
 		}
 
 		return bisDateChooser;
@@ -1733,7 +1733,7 @@ public class SielhautBearbeiten extends ObjectModule {
 
 	private JDateChooser getPrDateChooser() {
 		if (prDateChooser == null) {
-			prDateChooser = new JDateChooser(DateUtils.FORMAT_DEFAULT, false);
+			prDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
 		}
 		return prDateChooser;
 	}
