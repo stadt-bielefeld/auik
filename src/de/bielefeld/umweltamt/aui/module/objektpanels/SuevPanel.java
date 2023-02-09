@@ -64,7 +64,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "Zahnarzt"-Tab des BasisObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class SuevPanel extends JPanel {
+public class SuevPanel extends ObjectPanel {
     private static final long serialVersionUID = -6379153046356849276L;
 
     /** Logging */
@@ -143,6 +143,12 @@ public class SuevPanel extends JPanel {
 
         // JPanel buttonBar = ComponentFactory.buildOKBar(getSaveSuevButton());
         builder.append(buttonBar, 7);
+        addChangeListeners(getVersFlaecheFeld(), getDatAnschreibenDatum(),
+            getDatAnzeige58Datum(), getDirektrwCheck(), getDirektswCheck(),
+            getGroesser3haCheck(), getIndirektrwCheck(), getKeineAngabenCheck(),
+            getSanierungErfolgtCheck(), getSanierungskonzeptCheck(),
+            getSuevkanPflichtCheck());
+
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -224,7 +230,7 @@ public class SuevPanel extends JPanel {
             }
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         }
-
+        setDirty(false);
     }
 
     public void clearForm() {
@@ -251,7 +257,7 @@ public class SuevPanel extends JPanel {
         return this.name;
     }
 
-    private boolean saveSuevDaten() {
+    protected boolean doSavePanelData() {
         boolean success;
 
         Integer versfl = ((IntegerField) this.versFlaecheFeld).getIntValue();
@@ -434,7 +440,7 @@ public class SuevPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
-                    if (saveSuevDaten()) {
+                    if (hauptModul.saveAllTabs()) {
                         SuevPanel.this.hauptModul.getFrame().changeStatus(
                             "SuevKan Verfahren "
                                 + SuevPanel.this.fachdaten.getId()

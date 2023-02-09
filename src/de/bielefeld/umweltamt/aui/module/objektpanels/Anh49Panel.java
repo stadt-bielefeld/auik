@@ -636,6 +636,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 "FEHLER: Kein Anhang 49 Objekt gefunden!",
                 HauptFrame.ERROR_COLOR);
         }
+        setDirty(false);
     }
 
     public void updateForm(Anfallstelle anfallstelle) {
@@ -673,6 +674,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 "FEHLER: Kein Anhang 49 Objekt gefunden!",
                 HauptFrame.ERROR_COLOR);
         }
+        setDirty(false);
     }
 
 	public void clearForm() {
@@ -692,7 +694,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         return this.fachdaten;
     }
 
-    private boolean saveAnh49Daten() {
+    protected boolean doSavePanelData() {
         boolean success;
 
         this.fachdaten.setAnsprechpartnerIn((String) super
@@ -761,7 +763,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 //                    enableAll(false);
-                    if (saveAnh49Daten()) {
+                    if (hauptModul.saveAllTabs()) {
                         Anh49Panel.this.hauptModul.getFrame().changeStatus(
                             "Anhang 49-Objekt erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);

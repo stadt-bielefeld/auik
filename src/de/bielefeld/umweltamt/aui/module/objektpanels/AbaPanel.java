@@ -80,7 +80,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das "Abwasserbehandlungsanlage"-Tab des ObjektBearbeiten-Moduls
  * @author Gerd Genuit
  */
-public class AbaPanel extends JPanel {
+public class AbaPanel extends ObjectPanel {
 
 private static final long serialVersionUID = -4030805403749508467L;
 
@@ -114,7 +114,7 @@ private static final long serialVersionUID = -4030805403749508467L;
     private JButton selectObjektButton = null;
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
-    
+
 
     public AbaPanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Abwasserbehandlungsanlage";
@@ -162,6 +162,9 @@ private static final long serialVersionUID = -4030805403749508467L;
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSelectObjektButton(), getSaveAbaButton());
         builder.append(buttonBar, 6);
+        addChangeListeners(
+            getErstellDat(), getAktualDat(), getGenehmigungdpflichtCheck(),
+            getWartungsvertragCheck(), getEinzelabnahmeCheck());
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -210,7 +213,7 @@ private static final long serialVersionUID = -4030805403749508467L;
             }
             this.objektVerknuepfungModel.setObjekt(this.hauptModul.getObjekt());
         }
-
+        this.setDirty(false);
     }
 
     public void clearForm() {
@@ -229,7 +232,7 @@ private static final long serialVersionUID = -4030805403749508467L;
         return this.name;
     }
 
-    private boolean saveAbaDaten() {
+    public boolean doSavePanelData() {
         boolean success;
 
         String bezeichnungn = this.abaBezeichnungArea.getText();
@@ -262,7 +265,7 @@ private static final long serialVersionUID = -4030805403749508467L;
         } else {
             this.fachdaten.setEinzelabnahmeToc(false);
         }
-        
+
         success = this.fachdaten.merge();
         if (success) {
             log.debug("Abwasserbehandlungsanlage "
@@ -342,7 +345,7 @@ private static final long serialVersionUID = -4030805403749508467L;
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
-                    if (saveAbaDaten()) {
+                    if (hauptModul.saveAllTabs()) {
                         AbaPanel.this.hauptModul.getFrame().changeStatus(
                             "Abwasserbehandlungsanlage "
                                 + AbaPanel.this.fachdaten.getId()

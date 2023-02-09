@@ -72,7 +72,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Get Probenahme their Analyseposition for an Messstelle
-	 * 
+	 *
 	 * @param probepunkt
 	 *            AtlProbpkt
 	 * @return <code>Map&lt;Probenahme,
@@ -114,7 +114,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Liefert eine Liste der Analyseinstitute.
-	 * 
+	 *
 	 * @return String[]
 	 */
 	public static String[] getAnalysierer()
@@ -130,7 +130,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 * Get all <code>Analyseposition</code>s for a given
 	 * <code>Messstelle</code> and <code>Parameter</code> in a given
 	 * time interval
-	 * 
+	 *
 	 * @param param
 	 *            Parameter
 	 * @param pkt
@@ -160,7 +160,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Get all <code>Analyseposition</code>s for a given
 	 * <code>Probenahme</code> and sort them
-	 * 
+	 *
 	 * @param probe
 	 *            Probenahme
 	 * @return List&lt;Analyseposition&gt;
@@ -180,7 +180,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 * Find an Analyseposition from a given Probenahme with the given
 	 * Parameter.
 	 * If there is none and createNew is true, create a new one.
-	 * 
+	 *
 	 * @param probe
 	 *            Probenahme
 	 * @param parameter
@@ -219,7 +219,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Liefert alle in der Einheiten-Tabelle gespeicherten Einheiten.
-	 * 
+	 *
 	 * @return Ein Array mit allen Einheiten
 	 */
 	public static Einheiten[] getEinheiten()
@@ -235,7 +235,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Get an unit by its description
-	 * 
+	 *
 	 * @param description
 	 *            The description of the unit (e.g. "mg/l")
 	 * @return <code>Einheiten</code>, if an unit was found,
@@ -253,7 +253,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Check if an Einheiten with <code>description</code> exists.<br>
 	 * This is mainly used for the import.
-	 * 
+	 *
 	 * @param description
 	 *            String
 	 * @return <code>true</code>, if an Einheiten exists, <code>false</code>
@@ -279,7 +279,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Liefert alle in der MapElkaAnalysemethode-Tabelle gespeicherten Analysemethode.
-	 * 
+	 *
 	 * @return Ein Array mit allen MapElkaAnalysemethode
 	 */
 	public static MapElkaAnalysemethode[] getMapElkaAnalysemethode()
@@ -302,7 +302,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Get an array of all Klaeranlage,
 	 * omit id 7 because this is an intended duplicate
-	 * 
+	 *
 	 * @return Klaeranlage[]
 	 */
 	public static Klaeranlage[] getKlaeranlage()
@@ -326,7 +326,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Liefert alle Parameter, die für Klärschlamm-Probenahme relevant sind.
 	 * D.h. alle, deren Klärschlamm-Grenzwert nicht <code>NULL</code> ist.
-	 * 
+	 *
 	 * @return Ein Array mit allen für Klärschlamm-Probenahme relevanten
 	 *         Parametern
 	 */
@@ -399,7 +399,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Get a parameter by its description
-	 * 
+	 *
 	 * @param description
 	 *            The description of the parameter
 	 *            (e.g. "Palladium (Pd)")
@@ -419,7 +419,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Check if an Parameter with <code>description</code> exists.<br>
 	 * This is mainly used for the import.
-	 * 
+	 *
 	 * @param description
 	 *            String
 	 * @return <code>true</code>, if an Parameter exists, <code>false</code>
@@ -482,7 +482,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Liefert alle vorhandenen Probearten.
-	 * 
+	 *
 	 * @return Alle vorhandenen Probearten
 	 */
 	public static Probeart[] getProbearten()
@@ -502,7 +502,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Liefert alle Probenahme eines bestimmten Probepunktes.
-	 * 
+	 *
 	 * @param punkt
 	 *            Der Probepunkt.
 	 * @return List&lt;Probenahme&gt;
@@ -519,7 +519,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Liefert eine bestimmte Probenahme.
-	 * 
+	 *
 	 * @param kennummer
 	 *            Die Kennummer der Probenahme
 	 * @return Die Probe mit der gegebenen ID oder <code>null</code> falls diese
@@ -537,7 +537,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Liefert alle Probenahme einer bestimmten Art von einer bestimmten
 	 * Kläranlage.
-	 * 
+	 *
 	 * @param art
 	 *            Probeart
 	 * @param ka
@@ -561,7 +561,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Find Probenahme with <code>value</code> somewhere in
 	 * <code>propertyName</code> (search case insensitive).
-	 * 
+	 *
 	 * @param propertyName
 	 *            String
 	 * @param value
@@ -585,7 +585,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Find Probenahme with <code>status</code>
-	 * 
+	 *
 	 * @param status
 	 *            Status
 	 * @return List&lt;Probenahme&gt;
@@ -602,7 +602,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Check if there is an Probenahme with <code>kennnummer</code>
-	 * 
+	 *
 	 * @param kennnummer
 	 *            String
 	 * @return <code>true</code>, if an Probenahme exists,
@@ -822,7 +822,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Get all Messstelle with Probeart(ID)
-	 * 
+	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
 	public static List<Messstelle> getProbepktByArtID(Integer atlProbeartID)
@@ -841,7 +841,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Get all inactive Messstelle
-	 * 
+	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
 	public static List<Messstelle> getInaktivProbepkt()
@@ -858,7 +858,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Get all Messstelle which have Probenahme from Probenehmer
 	 * (kennummer starts with "3").
-	 * 
+	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
 	public static List<Messstelle> getProbenehmerPunkte()
@@ -880,7 +880,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Get all Messstelle which have Probenahme from ESatzung
 	 * (kennummer starts with "E").
-	 * 
+	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
 	public static List<Messstelle> getESatzungsPunkte()
@@ -900,7 +900,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Get all Messstelle which have Probenahme from UWB
 	 * (kennummer starts with "2").
-	 * 
+	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
 	public static List<Messstelle> getUWBPunkte()
@@ -920,7 +920,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	/**
 	 * Get all Messstelle which have Probenahme from Selbstueberwachung
 	 * (kennummer starts with "7").
-	 * 
+	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
 	public static List<Messstelle> getSelbstueberwPunkte()
@@ -939,7 +939,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Get the one(!) Messstelle for the Klärschlamm
-	 * 
+	 *
 	 * @param art
 	 *            AtlProbe(punkt)art
 	 * @param ka
@@ -976,16 +976,16 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Find Sielhaut starting with the <code>search</code> String
-	 * 
+	 *
 	 * @return <code>List&lt;Sielhaut&gt;</code>
 	 */
-	
-	
+
+
 	public static Object[] findSielhaut(String search)
 	{
 
 		boolean bSearch = (search != null && search.length() > 0);
-		
+
 		String query = "SELECT s.id, s.bezeichnung, s.lage, s.PSielhaut, s.PFirmenprobe, s.PNachprobe, o.inaktiv "
 				+ "FROM Sielhaut s, Messstelle m, Objekt o "
 				+ "WHERE s.messstelle = m AND m.objekt = o AND s.deleted = false ";
@@ -993,14 +993,40 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 					query += "AND s.bezeichnung like '" + search + "%' ";
 				}
 				query +=  "ORDER BY s.PSielhaut DESC, s.PFirmenprobe DESC, o.inaktiv ASC, s.bezeichnung ASC" ;
-		
-				
+
+
 		List sielhaut = HibernateSessionFactory.currentSession().createQuery(query).list();
-		
+
 		return (Object[]) sielhaut.toArray();
 	}
-	
-	
+
+
+	/**
+	 * Find Sielhaut starting with the <code>search</code> String
+	 *
+	 * @return <code>List&lt;Sielhaut&gt;</code>
+	 */
+
+
+	 public static Object[] findActiveSielhaut(String search) {
+
+		boolean bSearch = (search != null && search.length() > 0);
+
+		 String query = "SELECT s.id, s.bezeichnung, s.lage, s.PSielhaut, s.PFirmenprobe, s.PNachprobe, o.inaktiv "
+				+ "FROM Sielhaut s, Messstelle m, Objekt o "
+				+ "WHERE s.messstelle = m AND m.objekt = o AND s.deleted = false AND o.inaktiv = false";
+				if (bSearch) {
+					query += "AND s.bezeichnung like '" + search + "%' ";
+				}
+				query += " ORDER BY s.bezeichnung ASC, s.PSielhaut DESC, s.PFirmenprobe DESC, o.inaktiv ASC" ;
+
+
+		List sielhaut = HibernateSessionFactory.currentSession().createQuery(query).list();
+
+		return (Object[]) sielhaut.toArray();
+	}
+
+
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package ATL : class Status */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1009,7 +1035,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Get all Status
-	 * 
+	 *
 	 * @return <code>Status[]</code>
 	 */
 	public static Status[] getStatus()
@@ -1025,7 +1051,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 
 	/**
 	 * Hole den nächsten Status - für den Wullspuffel ;-)
-	 * 
+	 *
 	 * @param aktuellerStatus
 	 * @return <code>Status</code> nächster Status
 	 */
@@ -1055,7 +1081,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 * wurden. Wenn <code>analyseVon</code> nicht <code>null</code> oder "" ist,
 	 * werden nur Analysepositionen geliefert, die von einer bestimmten Stelle
 	 * analysiert wurden.
-	 * 
+	 *
 	 * @param param
 	 *            Der Parameter
 	 * @param einheit

@@ -92,7 +92,7 @@ public class AnfallstelleModel extends ListTableModel {
             	tmp = "ERROR";
             break;
         }
-        if (stelle.getObjekt().isInaktiv() && tmp != null && tmp instanceof Date == false) {
+        if (tmp != null && stelle.getObjekt().isInaktiv() && tmp != null && tmp instanceof Date == false) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;
