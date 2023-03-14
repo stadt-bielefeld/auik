@@ -132,6 +132,7 @@ public class ProbepktAuswPanel extends JPanel {
     private JComboBox parameterBox;
     private JComboBox leftEinheitenBox;
     private JComboBox rightEinheitenBox;
+    private Date date = new Date();
 
     private HauptFrame frame;
 
@@ -847,7 +848,7 @@ public class ProbepktAuswPanel extends JPanel {
 
     private JDateChooser getBisDateChooser() {
         if (this.bisDateChooser == null) {
-            this.bisDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
+            this.bisDateChooser = new JDateChooser(date, DateUtils.FORMAT_DEFAULT);
         }
 
         return this.bisDateChooser;
