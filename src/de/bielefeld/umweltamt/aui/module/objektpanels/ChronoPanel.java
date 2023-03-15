@@ -415,6 +415,7 @@ public class ChronoPanel extends ObjectPanel {
                 "Sachbearbeiter fehlt");
             return false;
         } else if (sachbear && gespeichert) {
+            this.setDirty(false);
             this.hauptModul.getFrame().changeStatus("Speichern erfolgreich",
                 HauptFrame.SUCCESS_COLOR);
             return true;
