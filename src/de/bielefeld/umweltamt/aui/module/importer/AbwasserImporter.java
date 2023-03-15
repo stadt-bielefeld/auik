@@ -231,6 +231,14 @@ public class AbwasserImporter extends AbstractImporter {
         return null;
     }
 
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch(columnIndex) {
+            case 7: return Boolean.class;
+            default: return String.class;
+        }
+    }
+
     public List<String[]> getSelectedRows() {
         List<String[]> selected = new ArrayList<String[]>();
         int[] selectedRowIndices = this.parentTable.getSelectedRows();

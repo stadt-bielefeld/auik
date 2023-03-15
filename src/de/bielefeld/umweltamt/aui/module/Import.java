@@ -20,6 +20,8 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableCellRenderer;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Paddings;
@@ -116,6 +119,7 @@ public class Import extends AbstractModul {
                     setImportStep(ImportStep.CHOOSE_FILE);
                     importer.reset();
                     parseFile(file);
+                    Import.this.table.clearSelection();
                 }
             }
         });
@@ -152,7 +156,17 @@ public class Import extends AbstractModul {
      * @return New table
      */
     private JTable createImportTable(AbstractImporter importer) {
-        JTable table = new JTable(importer);
+        JTable table = new JTable(importer) {
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component c = super.prepareRenderer(renderer, row, column);
+                if (isRowSelected(row)) {
+                    c.setBackground(new Color(153, 204, 255, 100));
+                } else {
+                    c.setBackground(new Color(0, 0, 0, 0));
+                }
+                return c;
+            }
+        };
         table.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
 
