@@ -160,7 +160,7 @@ public class Import extends AbstractModul {
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
                 if (isRowSelected(row)) {
-                    c.setBackground(new Color(153, 204, 255, 100));
+                    c.setBackground(new Color(228, 244, 253));
                 } else {
                     c.setBackground(new Color(0, 0, 0, 0));
                 }

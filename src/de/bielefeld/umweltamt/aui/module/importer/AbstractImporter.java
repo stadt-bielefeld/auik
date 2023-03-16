@@ -35,6 +35,10 @@ public abstract class AbstractImporter extends ListTableModel {
 
     private static final long serialVersionUID = 1L;
 
+    protected static final String COLOR_RED = "FF1027";
+    protected static final String COLOR_ORANGE = "ff6600";
+    protected static final String COLOR_GREEN = "009900";
+
     /**
      * File to import.
      */

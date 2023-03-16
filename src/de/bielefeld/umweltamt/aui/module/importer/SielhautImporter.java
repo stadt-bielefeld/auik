@@ -100,9 +100,9 @@ public class SielhautImporter extends AbstractImporter {
                 String tmp;
                 tmp = "<html><font color=";
                 if (isPositionImportable(tmpArr)) {
-                    tmp += "00cc00";
+                    tmp += COLOR_GREEN;
                 } else {
-                    tmp += "red";
+                    tmp += COLOR_RED;
                 }
                 String nr = getIdNumberFromLine(tmpArr);
                 value = tmp + ">" + nr + "</font> ";
@@ -275,8 +275,8 @@ public class SielhautImporter extends AbstractImporter {
     public String getDescriptionString() {
         return
             "<html>"
-            + "<font color=green>Grün:</font> Position kann problemlos importiert werden.<br>"
-            + "<font color=red>Rot:</font> Probenahme nicht gefunden oder Parameter/Einheit unbekannt."
+            + "<font color=" + COLOR_GREEN + ">Grün:</font> Position kann problemlos importiert werden.<br>"
+            + "<font color=" + COLOR_RED + ">Rot:</font> Probenahme nicht gefunden oder Parameter/Einheit unbekannt."
             + "</html>";
     }
 
