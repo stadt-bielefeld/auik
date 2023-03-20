@@ -32,6 +32,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -120,7 +121,7 @@ public class ProbepunktPanel extends ObjectPanel {
     private Probeart[] probearten = null;
     private Klaeranlage[] klaeranlagen = null;
     private Sachbearbeiter[] sachbearbeiter = null;
-
+  
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
     private JTable objektverknuepfungTabelle = null;
@@ -567,7 +568,7 @@ public class ProbepunktPanel extends ObjectPanel {
 
     private JDateChooser getDatumsChooser() {
         if (this.datumsChooser == null) {
-            this.datumsChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
+            this.datumsChooser = new JDateChooser(new Date(), DateUtils.FORMAT_DEFAULT);
         }
 
         return this.datumsChooser;
