@@ -121,8 +121,7 @@ public class ProbepunktPanel extends ObjectPanel {
     private Probeart[] probearten = null;
     private Klaeranlage[] klaeranlagen = null;
     private Sachbearbeiter[] sachbearbeiter = null;
-    private Date date = new Date();
-
+  
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
     private JTable objektverknuepfungTabelle = null;
@@ -569,7 +568,7 @@ public class ProbepunktPanel extends ObjectPanel {
 
     private JDateChooser getDatumsChooser() {
         if (this.datumsChooser == null) {
-            this.datumsChooser = new JDateChooser(date, DateUtils.FORMAT_DEFAULT);
+            this.datumsChooser = new JDateChooser(new Date(), DateUtils.FORMAT_DEFAULT);
         }
 
         return this.datumsChooser;
