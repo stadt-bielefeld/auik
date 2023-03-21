@@ -94,34 +94,34 @@ public class SielhautImporter extends AbstractImporter {
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         String[] tmpArr = (String[]) objectAtRow;
-        Object value;
+        StringBuilder builder = new StringBuilder();
+        String tmp = "";
+        builder.append("<html><font color=");
+        if (isPositionImportable(tmpArr)) {
+            builder.append(COLOR_GREEN);
+        } else {
+            builder.append(COLOR_RED);
+        }
+        builder.append(">");
         switch (columnIndex) {
             case 0:
-                String tmp;
-                tmp = "<html><font color=";
-                if (isPositionImportable(tmpArr)) {
-                    tmp += "00cc00";
-                } else {
-                    tmp += "red";
-                }
-                String nr = getIdNumberFromLine(tmpArr);
-                value = tmp + ">" + nr + "</font> ";
+                tmp = getIdNumberFromLine(tmpArr);
                 break;
             case 1:
-                value = getParamFromLine(tmpArr);
+                tmp = getParamFromLine(tmpArr);
                 break;
             case 2:
-                value = getValueFromLine(tmpArr);
+                tmp = getValueFromLine(tmpArr);
                 break;
             case 3:
-                value = getUnitFromLine(tmpArr);
+                tmp = getUnitFromLine(tmpArr);
                 break;
-
             default:
-                value = null;
-                break;
+                return null;
         }
-        return value;
+        builder.append(tmp)
+            .append("</font></html>");
+        return (Object) builder.toString();
     }
 
     @Override
@@ -275,8 +275,8 @@ public class SielhautImporter extends AbstractImporter {
     public String getDescriptionString() {
         return
             "<html>"
-            + "<font color=green>Grün:</font> Position kann problemlos importiert werden.<br>"
-            + "<font color=red>Rot:</font> Probenahme nicht gefunden oder Parameter/Einheit unbekannt."
+            + "<font color=" + COLOR_GREEN + ">Grün:</font> Position kann problemlos importiert werden.<br>"
+            + "<font color=" + COLOR_RED + ">Rot:</font> Probenahme nicht gefunden oder Parameter/Einheit unbekannt."
             + "</html>";
     }
 
