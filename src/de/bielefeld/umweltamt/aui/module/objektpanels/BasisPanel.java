@@ -122,7 +122,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * @author David Klotz
  */
 
-public class BasisPanel extends JPanel {
+public class BasisPanel extends ObjectPanel {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     private static final long serialVersionUID = 2520878475016486007L;
@@ -214,18 +214,18 @@ public class BasisPanel extends JPanel {
         builder.nextLine();
 
         builder.append("Inaktiv:", getInaktivBox());
-        builder.nextLine();    
-        
+        builder.nextLine();
+
         builder.append("Abwasserfrei:", getAbwasserfreiBox());
         builder.nextLine();
-        
+
         builder.append(getElkarelevantLabel(), getElkarelevantBox());
         builder.nextLine();
 
         builder.append(getPrioritaetLabel(), getPrioritaetFeld());
         builder.nextLine();
-        
-       
+
+
         builder.appendSeparator("Beschreibung");
         builder.appendRow("3dlu");
         builder.nextLine(2);
@@ -255,6 +255,11 @@ public class BasisPanel extends JPanel {
             getSelectObjektButton(), getSaveButton());
 
         builder.append(buttonBar, 5);
+        addChangeListeners(
+            getBetreiberFeld(), getStandortFeld(), getLageFeld(), getArtBox(),
+            getSachbearbeiterBox(), getWiedervorlageDatum(), getInaktivBox(),
+            getElkarelevantBox(), getPrioritaetFeld(), getAbwasserfreiBox(),
+            getBeschreibungsArea());
     }
 
     public void fetchFormData() {
@@ -298,10 +303,10 @@ public class BasisPanel extends JPanel {
                 DatabaseQuery.getEnabledSachbearbeiter()));
 
             getArtBox().removeAllItems();
-            
+
             getArtBox().addItem(
                 this.hauptModul.getObjekt().getObjektarten());
-            
+
         }
 
         if (this.hauptModul.getObjekt() != null) {
@@ -394,7 +399,7 @@ public class BasisPanel extends JPanel {
 
             getInaktivBox().setSelected(
                 this.hauptModul.getObjekt().isInaktiv());
-            
+
 			if (this.hauptModul.getObjekt().getAbwasserfrei() != null) {
 				getAbwasserfreiBox().setSelected(this.hauptModul.getObjekt().getAbwasserfrei());
 			}
@@ -445,6 +450,7 @@ public class BasisPanel extends JPanel {
                 this.objektVerknuepfungModel.clearList();
             }
         }
+        this.setDirty(false);
     }
 
     public void clearForm() {
@@ -498,7 +504,8 @@ public class BasisPanel extends JPanel {
         return this.name;
     }
 
-    private boolean saveObjektDaten() {
+    @Override
+    protected boolean doSavePanelData() {
         boolean success;
 
         // Eingegebene Daten für das Objekt übernehmen
@@ -515,6 +522,7 @@ public class BasisPanel extends JPanel {
         this.hauptModul.getObjekt().setInaktiv(getInaktivBox().isSelected());
         this.hauptModul.getObjekt().setAbwasserfrei(getAbwasserfreiBox().isSelected());
         this.hauptModul.getObjekt().setElkarelevant(getElkarelevantBox().isSelected());
+        this.hauptModul.getObjekt().setPrioritaet(getPrioritaetFeld().getText());
 
 //        Objekt tmp = Objekt.saveObjekt(
 //            this.hauptModul.getObjekt(), prio);
@@ -568,7 +576,7 @@ public class BasisPanel extends JPanel {
                     } else if ("standort_edit".equals(action)
 							&& standort != null) {
 						if (inhaber != null) {
-							BetreiberEditor editDialog = new BetreiberEditor(inhaber, 
+							BetreiberEditor editDialog = new BetreiberEditor(inhaber,
 									BasisPanel.this.hauptModul.getFrame());
 							editDialog.setLocationRelativeTo(BasisPanel.this.hauptModul.getFrame());
 
@@ -724,7 +732,7 @@ public class BasisPanel extends JPanel {
                         }
                     BasisPanel.this.hauptModul.getManager().switchModul(
                         "m_betreiber_neu");
-                    saveObjektDaten();
+                    savePanelData();
                 }
             });
         }
@@ -843,7 +851,7 @@ public class BasisPanel extends JPanel {
         }
         return this.inaktivBox;
     }
-    
+
     private JCheckBox getAbwasserfreiBox() {
         if (this.abwasserfreiBox == null) {
             this.abwasserfreiBox = new JCheckBox();
@@ -902,7 +910,7 @@ public class BasisPanel extends JPanel {
                         && (BasisPanel.this.hauptModul.getObjekt()
                             .getStandortid() != null)) {
                         enableAll(false);
-                        if (saveObjektDaten()) {
+                        if (hauptModul.saveAllTabs()) {
                             BasisPanel.this.hauptModul.getFrame().changeStatus(
                                 "Objekt "
                                     + BasisPanel.this.hauptModul.getObjekt()

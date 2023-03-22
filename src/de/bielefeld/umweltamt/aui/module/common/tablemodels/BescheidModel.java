@@ -98,7 +98,7 @@ public class BescheidModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getMessstelle().getObjekt().isInaktiv()) {
+        if (tmp != null && fd.getMessstelle().getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

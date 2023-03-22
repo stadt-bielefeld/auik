@@ -100,7 +100,7 @@ public class Anh49Model extends ListTableModel {
             	tmp = "ERROR";
             break;
         }
-        if (fd.getAnfallstelle().getObjekt().isInaktiv() && tmp != null && tmp instanceof Date == false) {
+        if (tmp != null && fd.getAnfallstelle().getObjekt().isInaktiv() && tmp != null && tmp instanceof Date == false) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

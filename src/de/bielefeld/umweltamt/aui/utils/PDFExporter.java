@@ -109,7 +109,7 @@ public class PDFExporter {
 
 	/**
 	 * Methode liefert den Vorlagenpfad für die Jasper-Vorlagen
-	 * 
+	 *
 	 * @return
 	 */
 	private String getPathToJasper() {
@@ -143,8 +143,8 @@ public class PDFExporter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} 
-		
+		}
+
 		inputStream = AUIKataster.class.getResourceAsStream(path);
 		return inputStream;
 	}
@@ -176,17 +176,43 @@ public class PDFExporter {
 	 *            Der Pfad zu einem Ort an dem das PDF gespeichert werden soll.
 	 * @param connection
 	 *            SQL connection fuer den Report
-	 *
+	 * @param show True wenn die erzeugte Datei engezeigt werden soll
 	 * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
 	 */
 	protected static JasperPrint export(Map<String, Object> fields,
 			InputStream reportFile, String dest, Connection connection)
 			throws JRException {
+		return export(fields, reportFile, dest, connection, true);
+	}
+
+	/**
+	 * Diese Funktion erzeugt ein PDF mit Hilfe von <i>JasperReport</i>. Die
+	 * dazu ben&ouml;tigten Templates m&uuml;ssen sich in <i>build/reports/</i>
+	 * befinden und bereits compiliert sein.
+	 *
+	 * @param fields
+	 *            Ein Map Objekt dessen Werte in das Template einzuf&uuml;llen
+	 *            sind.
+	 * @param reportFile
+	 *            Der Name des <i>JasperReport</i> Templates <b>ohne</b> Endung.
+	 * @param dest
+	 *            Der Pfad zu einem Ort an dem das PDF gespeichert werden soll.
+	 * @param connection
+	 *            SQL connection fuer den Report
+	 * @param show True wenn die erzeugte Datei engezeigt werden soll
+	 * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
+	 */
+	protected static JasperPrint export(Map<String, Object> fields,
+			InputStream reportFile, String dest, Connection connection,
+			boolean show)
+			throws JRException {
 		JasperPrint print = JasperFillManager.fillReport(reportFile, fields,
 				connection);
         //dest = "/home/awoestmann/test.pdf";
 		JasperExportManager.exportReportToPdfFile(print, dest);
-		AuikUtils.spawnFileProg(new File(dest));
+		if (show) {
+			AuikUtils.spawnFileProg(new File(dest));
+		}
 
 		return print;
 	}
@@ -319,13 +345,36 @@ public class PDFExporter {
 	 *            Der Name des Jasper Report templates.
 	 * @param destination
 	 *            Der Pfad zu einem Ort, an dem das PDF gespeichert werden soll.
+	 * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
+	 */
+	public JasperPrint exportReport(Map<String, Object> fields, String report,
+	String destination) throws Exception {
+		return exportReport(fields, report, destination, true);
+	}
+
+	/**
+	 * Diese Funktion erzeugt ein PDF aus einer Jasper Report Vorlage. Der
+	 * eigentliche Export wird von {@link export(Map, String, String)}
+	 * get&auml;tigt. Das verwendete Template hei&szilg;t wird als parameter
+	 * <i>report</i> &uuml;bergeben und muss sich in <i>build/reports</i> in
+	 * compilierter Form befinden. Als Datenquelle wird die jdbc verbindung
+	 * verwendet.
 	 *
+	 * @param fields
+	 *            Ein Map Objekt dessen Werte in das Template einzuf&uuml;llen
+	 *            sind.
+	 * @param report
+	 *            Der Name des Jasper Report templates.
+	 * @param destination
+	 *            Der Pfad zu einem Ort, an dem das PDF gespeichert werden soll.
+	 * @param show True wenn die erzeugte Datei angezeigt werden soll
 	 * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
 	 */
 	@SuppressWarnings("deprecation")
 	// See comment below for hibernate4
 	public JasperPrint exportReport(Map<String, Object> fields, String report,
-			String destination) throws Exception {
+			String destination, boolean show) throws Exception {
+
 		InputStream inputStream = getResourceAsStream(report);
 
 		if (inputStream == null) {
@@ -337,18 +386,18 @@ public class PDFExporter {
 			JasperPrint jprint = null;
 			//Deprecated
 			//Connection con = HibernateSessionFactory.currentSession()
-			//		.connection(); 
+			//		.connection();
 			//jprint = export(fields, inputStream, destination, con);
-			
+
 			// With Hibernate 4:
 			HibernateSessionFactory.currentSession().doWork( new Work() {
 			public void execute(Connection con) throws SQLException {
 			//jprint = export(fields, inputStream, destination, connection); }
 			connection = con;}
 			} );
-			 
-			jprint = export(fields, inputStream, destination, connection);
-			
+
+			jprint = export(fields, inputStream, destination, connection, show);
+
 			return jprint;
 		} catch (JRException jre) {
 			jre.printStackTrace();

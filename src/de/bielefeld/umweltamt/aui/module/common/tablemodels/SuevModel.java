@@ -95,7 +95,7 @@ public class SuevModel extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getObjekt().isInaktiv()) {
+        if (tmp != null && fd.getObjekt().isInaktiv()) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

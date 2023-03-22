@@ -111,7 +111,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Eine Tabelle zum Anzeigen und Erfassen von Anhang 49 Analysen
  * @author Gerd Genuit
  */
-public class Anh49AnalysenPanel extends JPanel {
+public class Anh49AnalysenPanel extends ObjectPanel {
     /**
      * Ein TableModel für eine Tabelle mit Analysen.
      * @author Gerhard Genuit
@@ -309,6 +309,7 @@ public class Anh49AnalysenPanel extends JPanel {
                 default:
                     break;
             }
+            setDirty(true);
         }
 
         /* (non-Javadoc)
@@ -319,6 +320,7 @@ public class Anh49AnalysenPanel extends JPanel {
             Anh49Analysen ana = new Anh49Analysen();
             ana.setAnh49Fachdaten(fachdaten);
             ana.setDatum(new Date());
+            setDirty(true);
             return ana;
         }
 
@@ -455,6 +457,7 @@ public class Anh49AnalysenPanel extends JPanel {
                 default:
                     break;
             }
+            setDirty(true);
         }
 
         @Override
@@ -462,6 +465,7 @@ public class Anh49AnalysenPanel extends JPanel {
             Anh49Kontrollen kt = new Anh49Kontrollen();
             kt.setAnh49Fachdaten(fachdaten);
             kt.setPruefdatum(new Date());
+            setDirty(true);
             return kt;
         }
 
@@ -691,17 +695,24 @@ public class Anh49AnalysenPanel extends JPanel {
 
     private JButton getSpeichernButton() {
         if (speichernButton == null) {
-            speichernButton = new JButton("Analysen und Kontrollen speichern");
+            speichernButton = new JButton("Speichern");
 
             speichernButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    speichernAnalyse();
-                    speichernKontrollen();
+                    hauptModul.saveAllTabs();
                 }
             });
         }
 
         return speichernButton;
+    }
+
+    @Override
+    protected boolean doSavePanelData() {
+        speichernAnalyse();
+        speichernKontrollen();
+        setDirty(false);
+        return true;
     }
 }

@@ -65,7 +65,7 @@ public class Anh55Model extends ListTableModel {
             tmp = "ERROR";
             break;
         }
-        if (fd.getAnfallstelle().getObjekt().isInaktiv() && tmp != null) {
+        if (tmp != null && fd.getAnfallstelle().getObjekt().isInaktiv() && tmp != null) {
             tmp = StringUtils.setStrike(tmp.toString());
         }
         return tmp;

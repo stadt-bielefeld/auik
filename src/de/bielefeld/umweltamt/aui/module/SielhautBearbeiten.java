@@ -187,7 +187,7 @@ import de.bielefeld.umweltamt.aui.utils.PDFExporter;
  *
  * @author David Klotz
  */
-public class SielhautBearbeiten extends AbstractModul {
+public class SielhautBearbeiten extends ObjectModule {
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -375,6 +375,7 @@ public class SielhautBearbeiten extends AbstractModul {
 		getPunktSaveButton().setEnabled(true);
 		getPunktEditButton().setEnabled(true);
 		punktPrintButton.setEnabled(true);
+		setDirty(false);
 	}
 
 	/**
@@ -429,7 +430,7 @@ public class SielhautBearbeiten extends AbstractModul {
 	/**
 	 * Speichert den aktuellen SielhautBearbeiten-Punkt.
 	 */
-	public void saveSielhautPunkt() {
+	protected void doSave() {
 		// Nur Speichern, wenn der Name nicht leer ist
 		if (getSpNamenFeld().getText() == null || getSpNamenFeld().getText().equals("")) {
 			GUIManager.getInstance().showErrorMessage("Der Name darf nicht leer sein!");
@@ -902,7 +903,7 @@ public class SielhautBearbeiten extends AbstractModul {
 						saveNeuenProbepunkt();
 					}
 
-					saveSielhautPunkt();
+					save();
 
 				}
 			});
@@ -959,6 +960,12 @@ public class SielhautBearbeiten extends AbstractModul {
 			// builder.getPanel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			this.datenPanel = builder.getPanel();
 			this.datenPanel.setBorder(Paddings.DIALOG);
+
+			//Add change listeners
+			addChangeListeners(getSpNamenFeld(), getSpEntgebFeld(),
+				getSpBemerkungsArea(), getSpLageFeld(), getSpE32Feld(),
+				getSpN32Feld(), getSpHaltungsnrFeld(), getSpFirmenprobeCheck(),
+				getSpNachprobeCheck(), getSpSielhautCheck(), getSpAlarmplannrFeld());
 		}
 		return this.datenPanel;
 	}
@@ -1886,7 +1893,15 @@ public class SielhautBearbeiten extends AbstractModul {
 					spE32Feld.setText(e32AusZeile.substring(0, 7));
 					spN32Feld.setText(n32AusZeile.substring(0, 7));
 					this.frame.changeStatus("Rechts- und Hochwert eingetragen", HauptFrame.SUCCESS_COLOR);
-				} else {
+				} else 
+					if (tmp.length == 2) {
+						String e32AusZeile = tmp[0];
+						String n32AusZeile = tmp[1];
+						spE32Feld.setText(e32AusZeile.substring(0, 7));
+						spN32Feld.setText(n32AusZeile.substring(0, 7));
+						this.frame.changeStatus("Rechts- und Hochwert eingetragen", HauptFrame.SUCCESS_COLOR);
+				}else
+				{
 					this.frame.changeStatus("Zwischenablage enthält keine verwertbaren Daten", HauptFrame.ERROR_COLOR);
 				}
 				break;

@@ -84,7 +84,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
  * Das Panel zum Bearbeiten von Druckereien
  * @author u633d
  */
-public class Anh56Panel extends JPanel {
+public class Anh56Panel extends ObjectPanel {
     private static final long serialVersionUID = -6981678796941528077L;
 
     /** Logging */
@@ -154,7 +154,9 @@ public class Anh56Panel extends JPanel {
 
         // JComponent buttonBar = ComponentFactory.buildOKBar(getSaveAnh56Button());
         builder.append(buttonBar, 7);
-
+        addChangeListeners(getBemerkungenArea(), getDruckverfahrenFeld(),
+            getVerbrauchFeld(), getEntsorgungFeld(), getGen58Datum(), getGen59Datum(),
+            getAbaCheck(), getGenpflichtCheck(), getAbwasseranfallCheck());
     }
 
     public void completeObjekt(Anfallstelle anfallstelle) {
@@ -167,7 +169,7 @@ public class Anh56Panel extends JPanel {
         	this.fachdaten.setAnfallstelle(this.anfallstelle);
     }
 
-    private boolean saveAnh56Daten() {
+    protected boolean doSavePanelData() {
         boolean success;
 
         String bemerkungen = this.BemerkungenArea.getText();
@@ -300,6 +302,7 @@ public class Anh56Panel extends JPanel {
                 }
             }
         }
+        setDirty(false);
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -317,7 +320,7 @@ public class Anh56Panel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enableAll(false);
-                    if (saveAnh56Daten()) {
+                    if (hauptModul.saveAllTabs()) {
                         Anh56Panel.this.hauptModul.getFrame().changeStatus(
                             "Anh 56 Objekt "
                                 + Anh56Panel.this.fachdaten.getId()

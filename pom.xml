@@ -225,7 +225,7 @@
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
-      <version>0.9.5.4</version>
+      <version>0.9.5.5</version>
     </dependency>
     <dependency>
       <groupId>cglib</groupId>
@@ -387,7 +387,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.5.0</version>
+      <version>42.5.1</version>
     </dependency>
     <dependency>
       <groupId>com.cloudhopper.proxool</groupId>
@@ -504,7 +504,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.4.1</version>
         <executions>
           <execution>
             <phase>package</phase>

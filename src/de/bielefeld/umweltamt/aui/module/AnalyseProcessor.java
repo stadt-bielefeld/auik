@@ -46,7 +46,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  */
 public class AnalyseProcessor {
 
-	/** Logging */
+    /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
@@ -100,21 +100,21 @@ public class AnalyseProcessor {
             position.setEinheiten(einheit);
             position.setAnalyseVon("E-Satzung");
             if (mapAna != null) {
-            	position.setMapElkaAnalysemethode(mapAna);
+                position.setMapElkaAnalysemethode(mapAna);
             } else {
-            	if (methode != "") {
-                	mapAna = new MapElkaAnalysemethode();
-            		mapAna.setMethode(methode);            	
-                	mapAna.setGruppeDevId("000");
-                	mapAna.setRegelwerkId("00");
-                	mapAna.setVariantenId("0");
-                	mapAna.merge();
-                	position.setMapElkaAnalysemethode(mapAna);
-            	} else {
-            		position.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
-            	}
+                if (methode != "") {
+                    mapAna = new MapElkaAnalysemethode();
+                    mapAna.setMethode(methode);
+                    mapAna.setGruppeDevId("000");
+                    mapAna.setRegelwerkId("00");
+                    mapAna.setVariantenId("0");
+                    mapAna.merge();
+                    position.setMapElkaAnalysemethode(mapAna);
+                } else {
+                    position.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
+                }
             }
-            
+
             position.merge();
 
             probe.setStatus(DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN);
@@ -122,6 +122,22 @@ public class AnalyseProcessor {
         }
 
         return true;
+    }
+
+    public static String getIdNumberOfRow(String[] row) {
+        if (row.length >= 1) {
+            return unquote(row[0]);
+        } else {
+            return null;
+        }
+    }
+
+    public static String getParamOfRow(String[] row) {
+        if (row.length >= 1) {
+            return unquote(row[3]);
+        } else {
+            return null;
+        }
     }
 
 
