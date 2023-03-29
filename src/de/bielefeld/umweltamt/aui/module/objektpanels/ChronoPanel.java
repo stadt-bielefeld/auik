@@ -369,6 +369,10 @@ public class ChronoPanel extends ObjectPanel {
      * Erneuert die Anzeige der Tabelle.
      */
     public void updateForm() {
+        if (this.chronoTable.getCellEditor()!= null) {
+        //Cancel cell editing and discard changes
+        this.chronoTable.getCellEditor().cancelCellEditing();
+        }
         this.chronoModel.fireTableDataChanged();
     }
 
