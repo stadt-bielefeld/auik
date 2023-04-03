@@ -373,6 +373,8 @@ public class ChronoPanel extends ObjectPanel {
         //Cancel cell editing and discard changes
         this.chronoTable.getCellEditor().cancelCellEditing();
         }
+        //Reset dirty state
+        setDirty(false);
         this.chronoModel.fireTableDataChanged();
     }
 
