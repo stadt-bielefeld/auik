@@ -475,212 +475,214 @@
       </resource>
     </resources>
 
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version>
-        <configuration>
-          <mainClass>de.bielefeld.umweltamt.aui.AUIKataster</mainClass>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
-        <configuration>
-          <source>11</source>
-          <target>11</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.4.1</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                  <resource>jasperreports_extension.properties</resource>
-                </transformer>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>de.bielefeld.umweltamt.aui.AUIKataster</mainClass>
-                </transformer>
-              </transformers>
-              <createDependencyReducedPom>false</createDependencyReducedPom>
-              <filters>
-                <filter>
-                  <artifact>*:*</artifact>
-                  <excludes>
-                    <exclude>META-INF/*.SF</exclude>
-                    <exclude>META-INF/*.DSA</exclude>
-                    <exclude>META-INF/*.RSA</exclude>
-                  </excludes>
-                </filter>
-              </filters>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- Jasper compiler-->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jasperreports-maven-plugin</artifactId>
-        <version>1.0-beta-2</version>
-        <configuration>
-          <sourceDirectory>src/de/bielefeld/umweltamt/aui/resources</sourceDirectory>
-          <outputDirectory>${project.build.directory}/classes/de/bielefeld/umweltamt/aui/resources/</outputDirectory>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile-reports</goal>
-            </goals>
-          </execution>
-        </executions>
-        <dependencies>
-          <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>${jasper.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>2.4.21</version>
-            <scope>compile</scope>
-            <optional>true</optional>
-          </dependency>
-        </dependencies>
-      </plugin>
-
-      <!--install local jars via install plugin,
-        use "mvn validate" before compiling -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-        <version>3.0.1</version>
-        <executions>
-          <!-- Install local repacked jasperreports jar file-->
-          <!--           <execution>
-            <id>install-fonts</id>
-            <goals>
-              <goal>install-file</goal>
-            </goals>
-            <phase>validate</phase>
-            <configuration>
-              <groupId>de.bielefeld.umweltamt.aui</groupId>
-              <artifactId>jasperreports-auik-font-repack</artifactId>
-              <version>1.0.0</version>
-              <packaging>jar</packaging>
-              <file>${project.basedir}/lib/jasperreports-auik-font-repack.jar</file>
-              <generatePom>true</generatePom>
-          </configuration>
-          </execution> -->
-        </executions>
-      </plugin>
-
-      <!--Copy all dependencies to the maven_lib folder-->
-      <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>compile</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>maven_lib</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>pl.project13.maven</groupId>
-        <artifactId>git-commit-id-plugin</artifactId>
-        <version>4.9.10</version>
-        <executions>
-          <execution>
-            <id>get-the-git-infos</id>
-            <goals>
-              <goal>revision</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-          <prefix>git</prefix>
-          <verbose>false</verbose>
-          <generateGitPropertiesFile>true</generateGitPropertiesFile>
-          <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-          <format>json</format>
-          <gitDescribe>
-            <skip>false</skip>
-            <always>true</always>
-            <dirty>-dirty</dirty>
-          </gitDescribe>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <!--run hibernate tools via antrun plugin-->
-          <!-- TODO: run with mvn antrun:run@db2mapping -->
-          <!-- <execution>
-        <id>db2mapping</id>
-          <phase>test-compile</phase>
-              <configuration>
-                <property name="src" location="src" />
-          <property name="resources" value="src/de/bielefeld/umweltamt/aui/resources" />
-                <property name="config" value="src/de/bielefeld/umweltamt/aui/resources/config" />
-          <property name="data" location="data" />
-          <target>
-            <property name="maven_compile_classpath" refid="maven.compile.classpath"/>
-                  <property name="maven_test_classpath" refid="maven.test.classpath"/>
-          <path id="hibernatetool.path">
-            <pathelement path="${maven_compile_classpath}"/>
-            <pathelement path="${maven_test_classpath}"/>
-                  </path>
-          <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="hibernatetool.path" />
-
-                  <hibernatetool destdir="src">
-                    <jdbcconfiguration propertyfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.properties" revengfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.reveng.xml">
-                    </jdbcconfiguration>
-                    <hbm2hbmxml />
-                    <hbm2cfgxml destdir="src/de/bielefeld/umweltamt/aui/resources/config/generated" />
-            <hbm2java />
-                  </hibernatetool>
-            </target>
-              </configuration>
-          <goals>
-            <goal>run</goal>
-          </goals>
-        </execution>
-        -->
-          <execution>
-            <id>copy-jars</id>
-            <phase>install</phase>
-            <configuration>
-              <target>
-                <copy todir="X:\Applikationen\Anlagenkataster\AUIK">
-                  <fileset dir="target">
-                    <include name="*.jar"/>
-                  </fileset>
-                </copy>
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
+    <pluginManagement>
+	    <plugins>
+	      <plugin>
+	        <groupId>org.codehaus.mojo</groupId>
+	        <artifactId>exec-maven-plugin</artifactId>
+	        <version>1.6.0</version>
+	        <configuration>
+	          <mainClass>de.bielefeld.umweltamt.aui.AUIKataster</mainClass>
+	        </configuration>
+	      </plugin>
+	      <plugin>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	        <version>3.10.1</version>
+	        <configuration>
+	          <source>11</source>
+	          <target>11</target>
+	        </configuration>
+	      </plugin>
+	      <plugin>
+	        <artifactId>maven-shade-plugin</artifactId>
+	        <version>3.4.1</version>
+	        <executions>
+	          <execution>
+	            <phase>package</phase>
+	            <goals>
+	              <goal>shade</goal>
+	            </goals>
+	            <configuration>
+	              <transformers>
+	                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+	                  <resource>jasperreports_extension.properties</resource>
+	                </transformer>
+	                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+	                  <mainClass>de.bielefeld.umweltamt.aui.AUIKataster</mainClass>
+	                </transformer>
+	              </transformers>
+	              <createDependencyReducedPom>false</createDependencyReducedPom>
+	              <filters>
+	                <filter>
+	                  <artifact>*:*</artifact>
+	                  <excludes>
+	                    <exclude>META-INF/*.SF</exclude>
+	                    <exclude>META-INF/*.DSA</exclude>
+	                    <exclude>META-INF/*.RSA</exclude>
+	                  </excludes>
+	                </filter>
+	              </filters>
+	            </configuration>
+	          </execution>
+	        </executions>
+	      </plugin>
+	      <!-- Jasper compiler-->
+	      <plugin>
+	        <groupId>org.codehaus.mojo</groupId>
+	        <artifactId>jasperreports-maven-plugin</artifactId>
+	        <version>1.0-beta-2</version>
+	        <configuration>
+	          <sourceDirectory>src/de/bielefeld/umweltamt/aui/resources</sourceDirectory>
+	          <outputDirectory>${project.build.directory}/classes/de/bielefeld/umweltamt/aui/resources/</outputDirectory>
+	        </configuration>
+	        <executions>
+	          <execution>
+	            <phase>compile</phase>
+	            <goals>
+	              <goal>compile-reports</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+	        <dependencies>
+	          <dependency>
+	            <groupId>net.sf.jasperreports</groupId>
+	            <artifactId>jasperreports</artifactId>
+	            <version>${jasper.version}</version>
+	          </dependency>
+	          <dependency>
+	            <groupId>org.codehaus.groovy</groupId>
+	            <artifactId>groovy-all</artifactId>
+	            <version>2.4.21</version>
+	            <scope>compile</scope>
+	            <optional>true</optional>
+	          </dependency>
+	        </dependencies>
+	      </plugin>
+	
+	      <!--install local jars via install plugin,
+	        use "mvn validate" before compiling -->
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-install-plugin</artifactId>
+	        <version>3.0.1</version>
+	        <executions>
+	          <!-- Install local repacked jasperreports jar file-->
+	          <!--           <execution>
+	            <id>install-fonts</id>
+	            <goals>
+	              <goal>install-file</goal>
+	            </goals>
+	            <phase>validate</phase>
+	            <configuration>
+	              <groupId>de.bielefeld.umweltamt.aui</groupId>
+	              <artifactId>jasperreports-auik-font-repack</artifactId>
+	              <version>1.0.0</version>
+	              <packaging>jar</packaging>
+	              <file>${project.basedir}/lib/jasperreports-auik-font-repack.jar</file>
+	              <generatePom>true</generatePom>
+	          </configuration>
+	          </execution> -->
+	        </executions>
+	      </plugin>
+	
+	      <!--Copy all dependencies to the maven_lib folder-->
+	      <plugin>
+	        <artifactId>maven-dependency-plugin</artifactId>
+	        <executions>
+	          <execution>
+	            <phase>compile</phase>
+	            <goals>
+	              <goal>copy-dependencies</goal>
+	            </goals>
+	            <configuration>
+	              <outputDirectory>maven_lib</outputDirectory>
+	            </configuration>
+	          </execution>
+	        </executions>
+	      </plugin>
+	      <plugin>
+	        <groupId>pl.project13.maven</groupId>
+	        <artifactId>git-commit-id-plugin</artifactId>
+	        <version>4.9.10</version>
+	        <executions>
+	          <execution>
+	            <id>get-the-git-infos</id>
+	            <goals>
+	              <goal>revision</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+	        <configuration>
+	          <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+	          <prefix>git</prefix>
+	          <verbose>false</verbose>
+	          <generateGitPropertiesFile>true</generateGitPropertiesFile>
+	          <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+	          <format>json</format>
+	          <gitDescribe>
+	            <skip>false</skip>
+	            <always>true</always>
+	            <dirty>-dirty</dirty>
+	          </gitDescribe>
+	        </configuration>
+	      </plugin>
+	
+	      <plugin>
+	        <artifactId>maven-antrun-plugin</artifactId>
+	        <version>3.1.0</version>
+	        <executions>
+	          <!--run hibernate tools via antrun plugin-->
+	          <!-- TODO: run with mvn antrun:run@db2mapping -->
+	          <!-- <execution>
+	        <id>db2mapping</id>
+	          <phase>test-compile</phase>
+	              <configuration>
+	                <property name="src" location="src" />
+	          <property name="resources" value="src/de/bielefeld/umweltamt/aui/resources" />
+	                <property name="config" value="src/de/bielefeld/umweltamt/aui/resources/config" />
+	          <property name="data" location="data" />
+	          <target>
+	            <property name="maven_compile_classpath" refid="maven.compile.classpath"/>
+	                  <property name="maven_test_classpath" refid="maven.test.classpath"/>
+	          <path id="hibernatetool.path">
+	            <pathelement path="${maven_compile_classpath}"/>
+	            <pathelement path="${maven_test_classpath}"/>
+	                  </path>
+	          <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="hibernatetool.path" />
+	
+	                  <hibernatetool destdir="src">
+	                    <jdbcconfiguration propertyfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.properties" revengfile="src/de/bielefeld/umweltamt/aui/resources/config/hibernate.reveng.xml">
+	                    </jdbcconfiguration>
+	                    <hbm2hbmxml />
+	                    <hbm2cfgxml destdir="src/de/bielefeld/umweltamt/aui/resources/config/generated" />
+	            <hbm2java />
+	                  </hibernatetool>
+	            </target>
+	              </configuration>
+	          <goals>
+	            <goal>run</goal>
+	          </goals>
+	        </execution>
+	        -->
+	          <execution>
+	            <id>copy-jars</id>
+	            <phase>install</phase>
+	            <configuration>
+	              <target>
+	                <copy todir="X:\Applikationen\Anlagenkataster\AUIK">
+	                  <fileset dir="target">
+	                    <include name="*.jar"/>
+	                  </fileset>
+	                </copy>
+	              </target>
+	            </configuration>
+	            <goals>
+	              <goal>run</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+	      </plugin>
+	    </plugins>
+    </pluginManagement>
   </build>
 </project>
