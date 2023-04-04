@@ -42,5 +42,17 @@
   <property generated="never" lazy="false" name="herkunft" type="java.lang.String">
    <column name="herkunft"/>
   </property>
+	<set name="afsStoffes" table="afs_stoffe" schema="oberflgw" inverse="true" lazy="false" fetch="select">
+	    <key>
+	        <column name="anfallstellen_nr" not-null="true" />
+	    </key>
+	    <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe" />
+	</set>
+	<set name="afsNiederschlagswassers" table="afs_niederschlagswasser" schema="oberflgw" inverse="true" lazy="false" fetch="select">
+	    <key>
+	        <column name="anfallstellen_nr" />
+	    </key>
+	    <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" />
+	</set>
  </class>
 </hibernate-mapping>
