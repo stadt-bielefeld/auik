@@ -8,7 +8,7 @@
     <jackson.version>2.14.2</jackson.version>
     <jersey.version>3.1.1</jersey.version>
     <jasper.version>6.20.0</jasper.version>
-    <log4j.version>2.19.0</log4j.version>
+    <log4j.version>2.20.0</log4j.version>
     <hibernate-search.version>5.11.9.Final</hibernate-search.version>
     <hk2.version>3.0.3</hk2.version>
     <lucene.version>5.5.5</lucene.version>
