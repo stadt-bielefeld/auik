@@ -71,8 +71,8 @@ public class Import extends AbstractModul {
     private File importFile;
 
     private enum ImportType {
-        SIELHAUT("Sielhaut"),
-        ABWASSER("Abwasser");
+        ABWASSER("Abwasser"),
+        SIELHAUT("Sielhaut");
         private final String text;
         ImportType(final String text) {
             this.text = text;
@@ -119,7 +119,7 @@ public class Import extends AbstractModul {
                     setImportStep(ImportStep.CHOOSE_FILE);
                     importer.reset();
                     parseFile(file);
-                    Import.this.table.clearSelection();
+                    Import.this.table.selectAll();
                 }
             }
         });
