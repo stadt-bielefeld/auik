@@ -854,11 +854,20 @@ public class BasisObjektBearbeiten extends AbstractModul {
      */
     public boolean saveAllTabs() {
         List<String> failed = new ArrayList<String>();
+        var mainPanelWrapper = new Object() {BasisPanel mainPanel = null;};
         activePanels.forEach(panel -> {
+            //Save main panel after the other object panels
+            if (panel instanceof BasisPanel) {
+                mainPanelWrapper.mainPanel = (BasisPanel) panel;
+                return;
+            }
             if (!panel.savePanelData()) {
                 failed.add(panel.getName());
             }
         });
+        if (!mainPanelWrapper.mainPanel.savePanelData()) {
+            failed.add(mainPanelWrapper.mainPanel.getName());
+        }
         if (failed.size() > 0) {
             GUIManager.getInstance().showErrorMessage(
                 String.format("Die folgenden Tabs konnten nicht gespeichert werden: %s"),
