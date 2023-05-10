@@ -21,6 +21,7 @@
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -53,7 +55,8 @@ public class EAnfallstelle implements java.io.Serializable {
     private Date erstellDat;
     private String herkunft;
 
-    private Anfallstelle anfallstelle;
+    private Set<AfsStoffe> afsStoffes = new HashSet<AfsStoffe>(0);
+    private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
 
     public EAnfallstelle() {
     }
@@ -66,7 +69,7 @@ public class EAnfallstelle implements java.io.Serializable {
             EStandort standort, EAdresse adresse,
             String anhangId, Integer abwaBeschaffOpt, String bezeichnung,
             String bemerkung, Boolean aufzBetriebTog, Date aktualDat,
-            Date erstellDat, String herkunft) {
+            Date erstellDat, Set<AfsStoffe> afsStoffes, Set<AfsNiederschlagswasser> afsNiederschlagswassers, String herkunft) {
         this.nr = nr;
         this.origNr = origNr;
         this.standort = standort;
@@ -79,6 +82,8 @@ public class EAnfallstelle implements java.io.Serializable {
         this.aktualDat = aktualDat;
         this.erstellDat = erstellDat;
         this.herkunft = herkunft;
+        this.afsStoffes = afsStoffes;
+        this.afsNiederschlagswassers = afsNiederschlagswassers;
     }
 
     public Integer getNr() {
@@ -179,6 +184,22 @@ public class EAnfallstelle implements java.io.Serializable {
         this.herkunft = herkunft;
     }
 
+    public Set<AfsStoffe> getAfsStoffes() {
+        return this.afsStoffes;
+    }
+
+    public void setAfsStoffes(Set<AfsStoffe> afsStoffes) {
+        this.afsStoffes = afsStoffes;
+    }
+
+    public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
+        return this.afsNiederschlagswassers;
+    }
+
+    public void setAfsNiederschlagswassers(Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+        this.afsNiederschlagswassers = afsNiederschlagswassers;
+    }
+
     /**
      * Update this EAbwasserbehandlungsanlage with its new values.<br>
      * This is meant to be used after merging!
@@ -196,6 +217,8 @@ public class EAnfallstelle implements java.io.Serializable {
         this.aufzBetriebTog = copy.getAufzBetriebTog();
         this.erstellDat = copy.getErstellDat();
         this.herkunft = copy.getHerkunft();
+        this.afsStoffes = copy.getAfsStoffes();                      
+        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();  
     }
 
     /**
@@ -225,39 +248,39 @@ public class EAnfallstelle implements java.io.Serializable {
      * Get the Anfallstelle instance on which this view instance is based on
      * @return The Anfallsstelle instance
      */
-    @JsonIgnore
-    public Anfallstelle getAnfallstelle() {
-        if (anfallstelle == null) {
-            Integer origId = getOrigNr() != null ? getOrigNr() : getNr();
-            List<Anfallstelle> result = HibernateSessionFactory.currentSession().createQuery(
-                    "from Anfallstelle where objektid=" + origId).list();
-            if (result.size() > 0) {
-                anfallstelle = (Anfallstelle) result.get(0);
-            } else {
-                anfallstelle = null;
-            }
-        }
-        return anfallstelle;
-
-    }
+//    @JsonIgnore
+//    public Anfallstelle getAnfallstelle() {
+//        if (anfallstelle == null) {
+//            Integer origId = getOrigNr() != null ? getOrigNr() : getNr();
+//            List<Anfallstelle> result = HibernateSessionFactory.currentSession().createQuery(
+//                    "from Anfallstelle where objektid=" + origId).list();
+//            if (result.size() > 0) {
+//                anfallstelle = (Anfallstelle) result.get(0);
+//            } else {
+//                anfallstelle = null;
+//            }
+//        }
+//        return anfallstelle;
+//
+//    }
 
     /**
      * Returns the AfsNiederschlagwasser instances connected to the Anfallstelle table entry
      * on which this instance is based on.
      * @return The instances as set
      */
-    public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
-        Anfallstelle afs = getAnfallstelle();
-        return afs != null ? afs.getAfsNiederschlagswassers() : null;
-    }
-
-    /**
-     * Returns the AfsStoffe instances connected to the Anfallstelle table entry
-     * on which this instance is based on.
-     * @return The instances as set
-     */
-    public Set<AfsStoffe> getAfsStoffes() {
-        Anfallstelle afs = getAnfallstelle();
-        return afs != null ? afs.getAfsStoffes() : null;
-    }
+//    public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
+//        Anfallstelle afs = getAnfallstelle();
+//        return afs != null ? afs.getAfsNiederschlagswassers() : null;
+//    }
+//
+//    /**
+//     * Returns the AfsStoffe instances connected to the Anfallstelle table entry
+//     * on which this instance is based on.
+//     * @return The instances as set
+//     */
+//    public Set<AfsStoffe> getAfsStoffes() {
+//        Anfallstelle afs = getAnfallstelle();
+//        return afs != null ? afs.getAfsStoffes() : null;
+//    }
 }

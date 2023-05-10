@@ -390,7 +390,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		query += "adresse.hausnr = " + hausnr + " AND ";
 		if (!zusatz.equals("")) {
 			query += "adresse.hausnrzus = '" + zusatz + "' AND ";
-		}		
+		} else {
+			query += "adresse.hausnrzus is null AND ";
+		}
 		query += "adresse.plz = '" + plz + "' AND ";
 		query += "adresse.deleted = false ";
 	

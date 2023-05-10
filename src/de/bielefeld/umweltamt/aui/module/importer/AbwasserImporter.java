@@ -137,19 +137,25 @@ public class AbwasserImporter extends AbstractImporter {
 
         switch (status) {
             case -1:
-                sb.append("<font color='red'>");
-                sb.append(txt);
-                sb.append("</font>");
+            sb.append("<font color='")
+            .append(COLOR_RED)
+            .append("'>")
+            .append(txt)
+            .append("</font>");
                 break;
             case 1:
-                sb.append("<font color='green'>");
-                sb.append(txt);
-                sb.append("</font>");
+            sb.append("<font color='")
+            .append(COLOR_GREEN)
+            .append("'>")
+            .append(txt)
+            .append("</font>");
                 break;
             case 2:
-                sb.append("<font color='FF8200'>");
-                sb.append(txt);
-                sb.append("</font>");
+                sb.append("<font color='")
+                .append(COLOR_ORANGE)
+                .append("'>")
+                .append(txt)
+                .append("</font>");
                 break;
             default:
                 sb.append(txt);
@@ -162,13 +168,13 @@ public class AbwasserImporter extends AbstractImporter {
     public String getDescriptionString() {
         return
             "<html><table width='100%'>"
-            + "<tr><td style='color: green;'>Grün:</td>"
+            + "<tr><td style='color: " + COLOR_GREEN + ";'>Grün:</td>"
             + "<td>Import m&ouml;glich: Kennnummer und Parameter "
             + "vorhanden.</td></tr>"
-            + "<tr><td style='color: FF8200;'>Orange:</td>"
+            + "<tr><td style='color: " + COLOR_ORANGE + ";'>Orange:</td>"
             + "<td>Import m&ouml;glich: Kennnummer vorhanden, "
             + "Parameter wird angelegt.</td></tr>"
-            + "<tr><td style='color: red;'>Rot:</td>"
+            + "<tr><td style='color: " + COLOR_RED + ";'>Rot:</td>"
             + "<td>Zeile nicht importierbar.</td></tr>" + "</table></html>";
     }
 
@@ -229,6 +235,14 @@ public class AbwasserImporter extends AbstractImporter {
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         return null;
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch(columnIndex) {
+            case 7: return Boolean.class;
+            default: return String.class;
+        }
     }
 
     public List<String[]> getSelectedRows() {

@@ -369,6 +369,12 @@ public class ChronoPanel extends ObjectPanel {
      * Erneuert die Anzeige der Tabelle.
      */
     public void updateForm() {
+        if (this.chronoTable.getCellEditor()!= null) {
+        //Cancel cell editing and discard changes
+        this.chronoTable.getCellEditor().cancelCellEditing();
+        }
+        //Reset dirty state
+        setDirty(false);
         this.chronoModel.fireTableDataChanged();
     }
 
@@ -415,6 +421,7 @@ public class ChronoPanel extends ObjectPanel {
                 "Sachbearbeiter fehlt");
             return false;
         } else if (sachbear && gespeichert) {
+            this.setDirty(false);
             this.hauptModul.getFrame().changeStatus("Speichern erfolgreich",
                 HauptFrame.SUCCESS_COLOR);
             return true;

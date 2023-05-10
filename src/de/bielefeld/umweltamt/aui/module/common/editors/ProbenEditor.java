@@ -223,13 +223,14 @@ public class ProbenEditor extends AbstractApplyEditor {
                         DatabaseConstants.ATL_PARAMETER_ID_KUPFER,
                         DatabaseConstants.ATL_PARAMETER_ID_NICKEL,
                         DatabaseConstants.ATL_PARAMETER_ID_QUECKSILBER,
-                        DatabaseConstants.ATL_PARAMETER_ID_ZINK
+                        DatabaseConstants.ATL_PARAMETER_ID_ZINK,
+                        DatabaseConstants.ATL_PARAMETER_ID_SCHWEFEL
                     };
                     Parameter[] params = new Parameter[paramIDs.length];
                     for (int i = 0; i < paramIDs.length; i++) {
                         params[i] = Parameter.findById(paramIDs[i]);
                     }
-                    String analyse_von = "AGROLAB";
+                    String analyse_von = "OWL-Umwelt";
                     setList(new ArrayList<Object>());
                     for (Parameter param : params) {
                         addParameter(param,
@@ -239,9 +240,9 @@ public class ProbenEditor extends AbstractApplyEditor {
                 } else if (probe.getKennummer().startsWith("7")) {
                     Parameter[] params = {
                         Parameter.findById(
-                            DatabaseConstants.ATL_PARAMETER_ID_TOC),
+                            DatabaseConstants.ATL_PARAMETER_ID_PH_WERT),
                         Parameter.findById(
-                            DatabaseConstants.ATL_PARAMETER_ID_ABWASSERMENGE)
+                            DatabaseConstants.ATL_PARAMETER_ID_TEMPERATUR)
                     };
                     String analyse_von = "Betriebslabor";
                     setList(new ArrayList<Object>());

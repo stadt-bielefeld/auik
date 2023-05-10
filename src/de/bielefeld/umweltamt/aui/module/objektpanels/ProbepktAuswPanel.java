@@ -847,7 +847,7 @@ public class ProbepktAuswPanel extends JPanel {
 
     private JDateChooser getBisDateChooser() {
         if (this.bisDateChooser == null) {
-            this.bisDateChooser = new JDateChooser(null, DateUtils.FORMAT_DEFAULT);
+            this.bisDateChooser = new JDateChooser(new Date(), DateUtils.FORMAT_DEFAULT);
         }
 
         return this.bisDateChooser;
