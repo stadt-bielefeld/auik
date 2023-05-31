@@ -220,7 +220,7 @@ public abstract class AbstractQueryModul extends AbstractModul {
     /**
      * @return Eine Tabelle für die Ergebnisse der Abfrage.
      */
-    protected JTable getResultTable() {
+    public JTable getResultTable() {
         if (resultTable == null) {
             resultTable = new JTable(getTableModel());
             resultTable.setAutoCreateRowSorter(true);

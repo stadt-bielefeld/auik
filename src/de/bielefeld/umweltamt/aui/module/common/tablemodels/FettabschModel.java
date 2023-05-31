@@ -22,6 +22,8 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -55,6 +57,8 @@ public class FettabschModel extends ListTableModel {
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
 		Anfallstelle fd = (Anfallstelle) objectAtRow;
 		Object tmp = null;
+		Inhaber inh = fd.getObjekt().getStandortid().getInhaber();
+		Adresse addr = inh != null ? inh.getAdresse() : null;
 		switch (columnIndex) {
     		case 0:
     			tmp = fd.getObjekt().getBetreiberid();
@@ -63,7 +67,7 @@ public class FettabschModel extends ListTableModel {
     			tmp = DatabaseQuery.getStandortString(fd.getObjekt().getStandortid());
     			break;
     		case 2:
-    			tmp= fd.getObjekt().getStandortid().getInhaber().getAdresse().getEntgebid();
+    			tmp= addr != null ? addr.getEntgebid() : "";
     			break;
     		case 3:
             	tmp= fd.getObjekt().getSachbearbeiter();

@@ -139,13 +139,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 						.add(Restrictions.eq("objekt.deleted", false))
 						.add(Restrictions.eq("objekt.inaktiv", false));
 
-		        if (!anh.equals("99")) {
+		        if (!anh.isEmpty() && !anh.equals("99")) {
 		            criteria.add(Restrictions.eq("anhangId", anh));
 		        } else if (!art.equals("-")) {
 		            criteria.add(Restrictions.eq("anlagenart", art));
-		        } else {
-		        	JOptionPane.showMessageDialog(null, "Sie müssen mindestens einen Anhang oder eine Anlagenart auswählen");
-		        	return null;
 		        }
 		        if (sachbe != null) {
 		            criteria.add(Restrictions.eq("objekt.sachbearbeiter", sachbe));

@@ -760,22 +760,25 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>List&lt;?&gt;</code>
 	 */
 	public static List<?> getObjektsWithPriority(String prioritaet, Sachbearbeiter sachbearbeiter) {
-		return new DatabaseAccess().executeCriteriaToList(
-				DetachedCriteria.forClass(Objekt.class)
-//						.createAlias("betreiberid", "inhaber")
-						.add(Restrictions.eq("inaktiv", false))
-						.add(Restrictions.eq("deleted", false))
-						.add(Restrictions.eq("prioritaet", prioritaet.toString()))
-						.add(Restrictions.eq("sachbearbeiter", sachbearbeiter))
-						.setProjection(Projections.distinct(Projections.projectionList()
-								.add(Projections.property("betreiberid"), "betreiberid")
-								.add(Projections.property("standortid"), "standortid")
-								.add(Projections.property("prioritaet"), "prioritaet")
-								.add(Projections.property("sachbearbeiter"), "sachbearbeiter")))
-						.addOrder(Order.asc("betreiberid"))
-						.addOrder(Order.asc("standortid"))
-						.setResultTransformer(Transformers.aliasToBean(Objekt.class)),
-						new Objekt());
+		DetachedCriteria crit =
+			DetachedCriteria.forClass(Objekt.class)
+					.add(Restrictions.eq("inaktiv", false))
+					.add(Restrictions.eq("deleted", false))
+					.setProjection(Projections.distinct(Projections.projectionList()
+							.add(Projections.property("betreiberid"), "betreiberid")
+							.add(Projections.property("standortid"), "standortid")
+							.add(Projections.property("prioritaet"), "prioritaet")
+							.add(Projections.property("sachbearbeiter"), "sachbearbeiter")))
+					.addOrder(Order.asc("betreiberid"))
+					.addOrder(Order.asc("standortid"))
+					.setResultTransformer(Transformers.aliasToBean(Objekt.class));
+		if (prioritaet == null || !prioritaet.equals("-")) {			
+			crit.add(Restrictions.eq("prioritaet", prioritaet.toString()));
+		}
+		if (sachbearbeiter != null) {
+			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
+		}
+		return new DatabaseAccess().executeCriteriaToList(crit, new Objekt());
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

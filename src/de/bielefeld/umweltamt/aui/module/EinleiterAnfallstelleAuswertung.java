@@ -163,11 +163,13 @@ public class EinleiterAnfallstelleAuswertung extends AbstractQueryModul {
         	sachbearbeiterBox = new JComboBox();
         	List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
             getSachbearbeiterBox().setModel(new DefaultComboBoxModel(sachbearbeiter.toArray()));
+            getSachbearbeiterBox().insertItemAt(null, 0);
             getSachbearbeiterBox().setSelectedItem(null);
             
             anhangBox = new JComboBox();
             List<Anhang> anhang = Anhang.getAll();
             getAnhangBox().setModel(new DefaultComboBoxModel(anhang.toArray()));
+            getAnhangBox().insertItemAt(null, 0);
             
             String[] arten = {"-", "Aufbereitung Medizinprodukte", "Blockheizkraftwerk", 
             		"Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor", 
@@ -182,8 +184,9 @@ public class EinleiterAnfallstelleAuswertung extends AbstractQueryModul {
                     AnfallstelleModel model = (AnfallstelleModel) getTableModel();
                     Sachbearbeiter sachbe = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
                     Anhang anh = (Anhang) anhangBox.getSelectedItem();
+                    String anhId = anh != null ? anh.getAnhangId() : "";
                     String art = (String) anlagenartBox.getSelectedItem();
-                    model.setList(DatabaseQuery.getAnfallstelle(anh.getAnhangId(), art, sachbe));
+                    model.setList(DatabaseQuery.getAnfallstelle(anhId, art, sachbe));
                     model.fireTableDataChanged();
                     frame.changeStatus("" + model.getRowCount()
                         + " Objekte gefunden");
@@ -211,6 +214,9 @@ public class EinleiterAnfallstelleAuswertung extends AbstractQueryModul {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                 	Anhang  anh = (Anhang) anhangBox.getSelectedItem();
+                    if (anh == null) {
+                        return;
+                    }
                 	if (! anh.getAnhangId().equals("99")) {
                 		anlagenartBox.setEnabled(false);
                 	}else {

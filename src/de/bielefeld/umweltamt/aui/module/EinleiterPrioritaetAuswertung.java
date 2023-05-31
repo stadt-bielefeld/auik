@@ -73,7 +73,6 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
-    private JTable resultTable;
 
     // Widgets für die Abfrage
     private JButton submitButton;
@@ -82,14 +81,6 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private PrioritaetModel tmodel;
-
-    @Override
-    protected JTable getResultTable() {
-        if (resultTable == null) {
-            resultTable = new JTable(getTableModel());
-        }
-    	return super.getResultTable();
-    }
 
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
@@ -111,12 +102,13 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
             sachbearbeiterBox.setModel(new DefaultComboBoxModel(
                     DatabaseQuery.getOrderedAll(new Sachbearbeiter(), "name")
                         .toArray(new Sachbearbeiter[0])));
+            sachbearbeiterBox.insertItemAt(null, 0);
             sachbearbeiterBox.setSelectedItem(DatabaseQuery.getCurrentSachbearbeiter());
             sachbearbeiterBox.setSelectedItem(-1);
             sachbearbeiterBox.setEditable(true);
 
             prioritaetBox = new JComboBox();
-            String[] items = {"1","2","3", "4"};
+            String[] items = {"-","1","2","3", "4"};
             prioritaetBox = new JComboBox(items);
             prioritaetBox.setSelectedItem(-1);
             prioritaetBox.setEditable(true);
@@ -132,8 +124,9 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
                 	SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
+                            String prio = (String) prioritaetBox.getSelectedItem();
                             ((PrioritaetModel)getTableModel()).setList(
-                                DatabaseQuery.getObjektsWithPriority((String) prioritaetBox.getSelectedItem(), (Sachbearbeiter) sachbearbeiterBox.getSelectedItem()));
+                                DatabaseQuery.getObjektsWithPriority(prio, (Sachbearbeiter) sachbearbeiterBox.getSelectedItem()));
                         }
 
                         @Override

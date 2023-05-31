@@ -130,7 +130,9 @@ public class BasisAuswertung extends AbstractQueryModul {
                         @Override
                         protected void doUIUpdateLogic(){
                             ((BasisModel)getTableModel()).fireTableDataChanged();
-                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
+                            frame.changeStatus("" +
+                                getTableModel()
+                                .getRowCount() + " Objekte gefunden");
                         }
                     };
                     worker.start();
