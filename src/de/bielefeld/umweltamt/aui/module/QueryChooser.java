@@ -71,6 +71,7 @@ public class QueryChooser extends AbstractModul {
 
     private String outputPath = "./auswertungen";
     private String fileName = "auik-export.csv";
+    private String defaultModule = "E-Satzung";
 
     public QueryChooser() {
         modules = getModules();
@@ -89,7 +90,10 @@ public class QueryChooser extends AbstractModul {
         });
 
         queryChooserLabel = new JLabel("Auswertung:");
-        String[] queries = modules.keySet().toArray(new String[modules.size()]);
+        String[] queries = modules.keySet().stream()
+            .sorted((s1, s2) -> s1.compareTo(s2))
+            .collect(Collectors.toList())
+            .toArray(new String[modules.size()]);
         queryChooserBox = new JComboBox<String>(queries);
         queryChooserBox.addActionListener(new ActionListener() {
             @Override
@@ -97,6 +101,7 @@ public class QueryChooser extends AbstractModul {
                 switchModule((String) queryChooserBox.getSelectedItem());
             }
         });
+        queryChooserBox.setSelectedItem(defaultModule);
 
         FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
         DefaultFormBuilder builder = new DefaultFormBuilder(layout);
@@ -130,7 +135,7 @@ public class QueryChooser extends AbstractModul {
 
     @SuppressWarnings("unchecked")
     private Map<String, AbstractQueryModul> getModules() {
-        Set<Class<? extends AbstractQueryModul>> classes;
+        List<Class<? extends AbstractQueryModul>> classes;
         Map<String, AbstractQueryModul> modules = new HashMap<String, AbstractQueryModul>();
 
         try (ScanResult scanResult = new ClassGraph().enableAllInfo().scan()) {
@@ -139,7 +144,7 @@ public class QueryChooser extends AbstractModul {
                 .loadClasses();
             classes = result.stream()
                 .map(clazz -> (Class<? extends AbstractQueryModul>) clazz)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
             classes.forEach(clazz -> {
                 try {
                     AbstractQueryModul instance = clazz.getDeclaredConstructor().newInstance();
