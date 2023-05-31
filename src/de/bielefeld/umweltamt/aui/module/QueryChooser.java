@@ -47,6 +47,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
+import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
@@ -69,8 +70,7 @@ public class QueryChooser extends AbstractModul {
 
     private Map<String, AbstractQueryModul> modules;
 
-    private String outputPath = "./auswertungen";
-    private String fileName = "auik-export.csv";
+    private String outputPath = "./auswertungen/auik-export.csv";
     private String defaultModule = "E-Satzung";
 
     public QueryChooser() {
@@ -158,11 +158,12 @@ public class QueryChooser extends AbstractModul {
         return modules;
     }
 
+    @SuppressWarnings("deprecation" )
     private JDialog createExportDialog() {
         JDialog dialog = new JDialog();
         dialog.setTitle("Auswertung exportieren");
         dialog.setModal(true);
-        dialog.setSize(600, 250);
+        dialog.setSize(600, 150);
 
 
         JLabel pathLabel = new JLabel("Dateipfad:");
@@ -182,8 +183,13 @@ public class QueryChooser extends AbstractModul {
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                export(new File(path.getText()));
-                dialog.setVisible(false);
+                if (!export(new File(path.getText()))) {
+                    GUIManager.getInstance().showErrorMessage(
+                        "Der Export war nicht erfolgreich",
+                        "Export-Fehler");
+                } else {
+                    dialog.setVisible(false);
+                }
             }
         });
         JButton cancelButton = new JButton("Abbrechen");
@@ -197,14 +203,14 @@ public class QueryChooser extends AbstractModul {
 
         FormLayout layout = new FormLayout(
             "5dlu, 100dlu, 75dlu:g, 25dlu, 5dlu, 25dlu, 3dlu, 25dlu, 5dlu",
-            "5dlu, 35dlu, 35dlu, 3dlu:g, 35dlu, 5dlu");
+            "5dlu, 35dlu, 3dlu:g, 35dlu, 5dlu");
         PanelBuilder builder = new PanelBuilder(layout);
         CellConstraints cc = new CellConstraints();
         builder.add(pathLabel, cc.xy(2, 2));
         builder.add(path, cc.xyw(3, 2, 2));
         builder.add(pathButton, cc.xyw(6, 2, 3));
-        builder.add(cancelButton, cc.xyw(4, 5, 3));
-        builder.add(okButton, cc.xy(8, 5));
+        builder.add(cancelButton, cc.xyw(4, 4, 3));
+        builder.add(okButton, cc.xy(8, 4));
 
         JPanel dialogContent = builder.build();
         dialog.add(dialogContent);
@@ -212,9 +218,9 @@ public class QueryChooser extends AbstractModul {
         return dialog;
     }
 
-    private void export(File f) {
+    private boolean export(File f) {
         AbstractQueryModul currentModule = modules.get(queryChooserBox.getSelectedItem());
-        AuikUtils.exportTableDataToCVS(currentModule.getResultTable(), f);
+        return AuikUtils.exportTableDataToCVS(currentModule.getResultTable(), f);
     }
 
     @Override
