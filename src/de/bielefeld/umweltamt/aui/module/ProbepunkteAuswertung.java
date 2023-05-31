@@ -51,8 +51,13 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -62,6 +67,8 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbepunkteModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -81,6 +88,10 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
     private JButton uwbButton;
     private JButton selbstueberwButton;
     private JButton inaktivButton;
+    private JComboBox<Sachbearbeiter> sachbearbeiterBox;
+    private JLabel sachbearbeiterLabel;
+    private JComboBox<Probeart> probepunktArtBox;
+    private JLabel probepunktArtLabel;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private ProbepunkteModel tmodel;
@@ -114,7 +125,18 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         	uwbButton = new JButton("UWB-Punkte");
         	selbstueberwButton = new JButton("Selbstüberwachungspunkte");
         	eSatzungButton = new JButton("E-Satzungspunkte");
-
+            sachbearbeiterLabel = new JLabel("Sachbearbeiter:");
+            List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getAll();
+            DefaultComboBoxModel<Sachbearbeiter> sachbearbeiterModel = new DefaultComboBoxModel<>(
+                    sachbearbeiter.toArray(new Sachbearbeiter[sachbearbeiter.size()]));
+            probepunktArtLabel = new JLabel("Probepunktart:");
+            List<Probeart> probearts = Probeart.getAll();
+            DefaultComboBoxModel<Probeart> probeartModel = new DefaultComboBoxModel<>(
+                    probearts.toArray(new Probeart[probearts.size()]));
+            sachbearbeiterBox = new JComboBox<Sachbearbeiter>(sachbearbeiterModel);
+            sachbearbeiterBox.insertItemAt(null, 0);
+            probepunktArtBox = new JComboBox<Probeart>(probeartModel);
+            probepunktArtBox.insertItemAt(null, 0);
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
         	probenehmerButton.addActionListener(new ActionListener() {
@@ -123,8 +145,10 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
+                            Sachbearbeiter sb = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
+                            Probeart pa = (Probeart) probepunktArtBox.getSelectedItem();
                             ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getProbenehmerPunkte());
+                                DatabaseQuery.getProbenehmerPunkte(sb, pa));
                         }
 
                         @Override
@@ -143,8 +167,10 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
+                            Sachbearbeiter sb = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
+                            Probeart pa = (Probeart) probepunktArtBox.getSelectedItem();
                             ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getESatzungsPunkte());
+                                DatabaseQuery.getESatzungsPunkte(sb, pa));
                         }
 
                         @Override
@@ -164,8 +190,10 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
+                            Sachbearbeiter sb = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
+                            Probeart pa = (Probeart) probepunktArtBox.getSelectedItem();
                             ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getUWBPunkte());
+                                DatabaseQuery.getUWBPunkte(sb, pa));
                         }
 
                         @Override
@@ -185,8 +213,10 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
+                            Sachbearbeiter sb = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
+                            Probeart pa = (Probeart) probepunktArtBox.getSelectedItem();
                             ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getSelbstueberwPunkte());
+                                DatabaseQuery.getSelbstueberwPunkte(sb, pa));
                         }
 
                         @Override
@@ -206,8 +236,10 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
+                            Sachbearbeiter sb = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
+                            Probeart pa = (Probeart) probepunktArtBox.getSelectedItem();
                             ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getInaktivProbepkt());
+                                DatabaseQuery.getInaktivProbepkt(sb, pa));
                         }
 
                         @Override
@@ -222,12 +254,14 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append(eSatzungButton, uwbButton);
             builder.append(selbstueberwButton, inaktivButton);
             builder.append(probenehmerButton);
+            builder.append(sachbearbeiterLabel, sachbearbeiterBox);
+            builder.append(probepunktArtLabel, probepunktArtBox);
 
             queryPanel = builder.getPanel();
         }

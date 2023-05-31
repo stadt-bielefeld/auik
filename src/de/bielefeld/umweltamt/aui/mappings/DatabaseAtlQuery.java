@@ -46,6 +46,7 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
@@ -844,15 +845,21 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<Messstelle> getInaktivProbepkt()
+	public static List<Messstelle> getInaktivProbepkt(Sachbearbeiter sachbearbeiter, Probeart probepunktart)
 	{
-		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria.forClass(Messstelle.class)
-																	.createAlias("objekt", "objekt")
-																	.createAlias("probenahmes", "probe")
-																	.add(Restrictions.eq("objekt.inaktiv", true))
-																	.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
-															new Messstelle());
+
+		DetachedCriteria crit = DetachedCriteria.forClass(Messstelle.class)
+			.createAlias("objekt", "objekt")
+			.createAlias("probenahmes", "probe")
+			.add(Restrictions.eq("objekt.inaktiv", true))
+			.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
+		if (sachbearbeiter != null) {
+			crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+		}
+		if (probepunktart != null) {
+			crit.add(Restrictions.eq("probeart", probepunktart));
+		}
+		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
 	}
 
 	/**
@@ -861,20 +868,25 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<Messstelle> getProbenehmerPunkte()
+	public static List<Messstelle> getProbenehmerPunkte(Sachbearbeiter sachbearbeiter, Probeart probepunktart)
 	{
-		return new DatabaseAccess()
-				.executeCriteriaToList(
-										DetachedCriteria.forClass(Messstelle.class)
-												.createAlias("objekt", "objekt")
-												.createAlias("probenahmes", "probe")
-												.add(Restrictions.eq("objekt.inaktiv", false))
-												.add(Restrictions.like(
-																		"probe.kennummer", "3", MatchMode.START))
-												// YAY! Finally found the right way to do distinct and get
-												// the complete objects! :D
-												.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
-										new Messstelle());
+		DetachedCriteria crit =
+				DetachedCriteria.forClass(Messstelle.class)
+						.createAlias("objekt", "objekt")
+						.createAlias("probenahmes", "probe")
+						.add(Restrictions.eq("objekt.inaktiv", false))
+						.add(Restrictions.like(
+												"probe.kennummer", "3", MatchMode.START))
+						// YAY! Finally found the right way to do distinct and get
+						// the complete objects! :D
+						.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
+		if (sachbearbeiter != null) {
+			crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+		}
+		if (probepunktart != null) {
+			crit.add(Restrictions.eq("probeart", probepunktart));
+		}
+		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
 	}
 
 	/**
@@ -883,18 +895,23 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<Messstelle> getESatzungsPunkte()
+	public static List<Messstelle> getESatzungsPunkte(Sachbearbeiter sachbearbeiter, Probeart probpunkteart)
 	{
-		return new DatabaseAccess()
-				.executeCriteriaToList(
-										DetachedCriteria.forClass(Messstelle.class)
-												.createAlias("objekt", "objekt")
-												.createAlias("probenahmes", "probe")
-												.add(Restrictions.eq("objekt.inaktiv", false))
-												.add(Restrictions.like(
-																		"probe.kennummer", "E", MatchMode.START))
-												.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
-										new Messstelle());
+		DetachedCriteria crit =
+		DetachedCriteria.forClass(Messstelle.class)
+				.createAlias("objekt", "objekt")
+				.createAlias("probenahmes", "probe")
+				.add(Restrictions.eq("objekt.inaktiv", false))
+				.add(Restrictions.like(
+										"probe.kennummer", "E", MatchMode.START))
+				.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
+		if (sachbearbeiter != null) {
+			crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+		}
+		if (probpunkteart != null) {
+			crit.add(Restrictions.eq("probeart", probpunkteart));
+		}
+		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
 	}
 
 	/**
@@ -903,18 +920,23 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<Messstelle> getUWBPunkte()
+	public static List<Messstelle> getUWBPunkte(Sachbearbeiter sachbearbeiter, Probeart probpunkteart)
 	{
-		return new DatabaseAccess()
-				.executeCriteriaToList(
-										DetachedCriteria.forClass(Messstelle.class)
-												.createAlias("objekt", "objekt")
-												.createAlias("probenahmes", "probe")
-												.add(Restrictions.eq("objekt.inaktiv", false))
-												.add(Restrictions.like(
-																		"probe.kennummer", "2", MatchMode.START))
-												.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
-										new Messstelle());
+		DetachedCriteria crit =
+		DetachedCriteria.forClass(Messstelle.class)
+				.createAlias("objekt", "objekt")
+				.createAlias("probenahmes", "probe")
+				.add(Restrictions.eq("objekt.inaktiv", false))
+				.add(Restrictions.like(
+										"probe.kennummer", "2", MatchMode.START))
+				.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
+		if (sachbearbeiter != null) {
+			crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+		}
+		if (probpunkteart != null) {
+			crit.add(Restrictions.eq("probeart", probpunkteart));
+		}
+		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
 	}
 
 	/**
@@ -923,18 +945,23 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<Messstelle> getSelbstueberwPunkte()
+	public static List<Messstelle> getSelbstueberwPunkte(Sachbearbeiter sachbearbeiter, Probeart probpunkteart)
 	{
-		return new DatabaseAccess()
-				.executeCriteriaToList(
-										DetachedCriteria.forClass(Messstelle.class)
-												.createAlias("objekt", "objekt")
-												.createAlias("probenahmes", "probe")
-												.add(Restrictions.eq("objekt.inaktiv", false))
-												.add(Restrictions.like(
-																		"probe.kennummer", "7", MatchMode.START))
-												.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY),
-										new Messstelle());
+		DetachedCriteria crit =
+		DetachedCriteria.forClass(Messstelle.class)
+				.createAlias("objekt", "objekt")
+				.createAlias("probenahmes", "probe")
+				.add(Restrictions.eq("objekt.inaktiv", false))
+				.add(Restrictions.like(
+										"probe.kennummer", "7", MatchMode.START))
+				.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
+		if (sachbearbeiter != null) {
+			crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+		}
+		if (probpunkteart != null) {
+			crit.add(Restrictions.eq("probeart", probpunkteart));
+		}
+		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
 	}
 
 	/**
