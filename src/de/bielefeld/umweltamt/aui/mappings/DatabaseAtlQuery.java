@@ -845,7 +845,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<Messstelle> getInaktivProbepkt(Sachbearbeiter sachbearbeiter, Probeart probepunktart)
+	public static List<Messstelle> getInaktivProbepkt(Sachbearbeiter sachbearbeiter)
 	{
 
 		DetachedCriteria crit = DetachedCriteria.forClass(Messstelle.class)
@@ -856,9 +856,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		if (sachbearbeiter != null) {
 			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
 		}
-		if (probepunktart != null) {
-			crit.add(Restrictions.eq("probeart", probepunktart));
-		}
 		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
 	}
 
@@ -868,7 +865,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<Messstelle> getProbenehmerPunkte(Sachbearbeiter sachbearbeiter, Probeart probepunktart)
+	public static List<Messstelle> getProbenehmerPunkte(Sachbearbeiter sachbearbeiter)
 	{
 		DetachedCriteria crit =
 				DetachedCriteria.forClass(Messstelle.class)
@@ -883,9 +880,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		if (sachbearbeiter != null) {
 			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
 		}
-		if (probepunktart != null) {
-			crit.add(Restrictions.eq("probeart", probepunktart));
-		}
 		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
 	}
 
@@ -895,7 +889,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<Messstelle> getESatzungsPunkte(Sachbearbeiter sachbearbeiter, Probeart probpunkteart)
+	public static List<Messstelle> getESatzungsPunkte(Sachbearbeiter sachbearbeiter)
 	{
 		DetachedCriteria crit =
 		DetachedCriteria.forClass(Messstelle.class)
@@ -908,9 +902,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		if (sachbearbeiter != null) {
 			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
 		}
-		if (probpunkteart != null) {
-			crit.add(Restrictions.eq("probeart", probpunkteart));
-		}
 		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
 	}
 
@@ -920,7 +911,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<Messstelle> getUWBPunkte(Sachbearbeiter sachbearbeiter, Probeart probpunkteart)
+	public static List<Messstelle> getUWBPunkte(Sachbearbeiter sachbearbeiter)
 	{
 		DetachedCriteria crit =
 		DetachedCriteria.forClass(Messstelle.class)
@@ -933,9 +924,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		if (sachbearbeiter != null) {
 			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
 		}
-		if (probpunkteart != null) {
-			crit.add(Restrictions.eq("probeart", probpunkteart));
-		}
 		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
 	}
 
@@ -945,7 +933,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 *
 	 * @return <code>List&lt;Messstelle&gt;</code>
 	 */
-	public static List<Messstelle> getSelbstueberwPunkte(Sachbearbeiter sachbearbeiter, Probeart probpunkteart)
+	public static List<Messstelle> getSelbstueberwPunkte(Sachbearbeiter sachbearbeiter)
 	{
 		DetachedCriteria crit =
 		DetachedCriteria.forClass(Messstelle.class)
@@ -957,9 +945,6 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 				.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
 		if (sachbearbeiter != null) {
 			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
-		}
-		if (probpunkteart != null) {
-			crit.add(Restrictions.eq("probeart", probpunkteart));
 		}
 		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
 	}
