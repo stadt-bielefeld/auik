@@ -176,17 +176,19 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
      * Get all Anfallstelle that are Fettabscheider
      * @return <code>List&lt;Anfallstelle;</code>
      */
-    public static List<Anfallstelle> getFettabscheider() {
-        return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anfallstelle.class)
-                .createAlias("objekt", "objekt")
-                .createAlias("objekt.objektarten", "art")
-                .createAlias("objekt.betreiberid", "adresse")
-                .add(Restrictions.eq("objekt.deleted", false))
-                .add(Restrictions.eq("anlagenart", "Fettabscheider"))
-                .addOrder(Order.asc("objekt.inaktiv"))
-                .addOrder(Order.asc("adresse.name")),
-            new Anfallstelle());
+    public static List<Anfallstelle> getFettabscheider(Sachbearbeiter sachbearbeiter) {
+        DetachedCriteria crit = DetachedCriteria.forClass(Anfallstelle.class)
+            .createAlias("objekt", "objekt")
+            .createAlias("objekt.objektarten", "art")
+            .createAlias("objekt.betreiberid", "adresse")
+            .add(Restrictions.eq("objekt.deleted", false))
+            .add(Restrictions.eq("anlagenart", "Fettabscheider"))
+            .add(Restrictions.eq("objekt.inaktiv", false))
+            .addOrder(Order.asc("adresse.name"));
+        if (sachbearbeiter != null) {
+            crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+        }
+        return new DatabaseAccess().executeCriteriaToList(crit, new Anfallstelle());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
