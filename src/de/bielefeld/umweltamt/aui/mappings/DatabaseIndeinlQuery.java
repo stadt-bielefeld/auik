@@ -242,7 +242,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
             DetachedCriteria.forClass(Anh49Fachdaten.class)
             	.createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "obj")
-                .createAlias("obj.objektarten", "art");
+                .createAlias("obj.objektarten", "art")
+                .add(Restrictions.ne("anf.anlagenart", "Fettabscheider"));
 
         if (inaktiv == true) {
             criteria.add(Restrictions.eq("obj.inaktiv", inaktiv));
