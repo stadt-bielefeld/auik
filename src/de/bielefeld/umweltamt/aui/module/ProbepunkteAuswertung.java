@@ -125,7 +125,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
         	uwbButton = new JButton("UWB-Punkte");
         	selbstueberwButton = new JButton("Selbstüberwachungspunkte");
         	eSatzungButton = new JButton("E-Satzungspunkte");
-            sachbearbeiterLabel = new JLabel("Sachbearbeiter:");
+            sachbearbeiterLabel = new JLabel("Sachbearbeiter (Heepen):");
             List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getAll();
             DefaultComboBoxModel<Sachbearbeiter> sachbearbeiterModel = new DefaultComboBoxModel<>(
                     sachbearbeiter.toArray(new Sachbearbeiter[sachbearbeiter.size()]));

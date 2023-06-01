@@ -854,7 +854,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 			.add(Restrictions.eq("objekt.inaktiv", true))
 			.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
 		if (sachbearbeiter != null) {
-			crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
 		}
 		if (probepunktart != null) {
 			crit.add(Restrictions.eq("probeart", probepunktart));
@@ -881,7 +881,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 						// the complete objects! :D
 						.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
 		if (sachbearbeiter != null) {
-			crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
 		}
 		if (probepunktart != null) {
 			crit.add(Restrictions.eq("probeart", probepunktart));
@@ -906,7 +906,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 										"probe.kennummer", "E", MatchMode.START))
 				.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
 		if (sachbearbeiter != null) {
-			crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
 		}
 		if (probpunkteart != null) {
 			crit.add(Restrictions.eq("probeart", probpunkteart));
@@ -931,7 +931,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 										"probe.kennummer", "2", MatchMode.START))
 				.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
 		if (sachbearbeiter != null) {
-			crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
 		}
 		if (probpunkteart != null) {
 			crit.add(Restrictions.eq("probeart", probpunkteart));
@@ -956,7 +956,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 										"probe.kennummer", "7", MatchMode.START))
 				.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
 		if (sachbearbeiter != null) {
-			crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
 		}
 		if (probpunkteart != null) {
 			crit.add(Restrictions.eq("probeart", probpunkteart));
