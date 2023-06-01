@@ -392,7 +392,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
             .add(Restrictions.eq("obj.deleted", false));
         detachedCriteria.addOrder(Order.asc("adresse.strasse"));
         detachedCriteria.addOrder(Order.asc("adresse.hausnr"));
-        /* year == -1 => alle Jahre */
+
         if (year == null || year != -1) {
             detachedCriteria.add(
                 DatabaseAccess.getRestrictionsEqualOrNull("erfassung", year));
@@ -404,19 +404,23 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
      * Get BwkFachdaten for Objektart BHKW.
      * @return <code>List&lt;BwkFachdaten&gt;</code>
      */
-    public static List<BwkFachdaten> getBHKW() {
+    public static List<BwkFachdaten> getBHKW(Integer year) {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				BwkFachdaten.class)
 	            .createAlias("anfallstelle", "anf")
 	            .createAlias("anf.objekt", "obj")
-				.createAlias("objekt.standortid", "standort")
-                .createAlias("objekt.objektarten", "art")
-                .createAlias("standort.adresse", "adresse")
+				.createAlias("obj.standortid", "standort")
+                .createAlias("obj.objektarten", "art")
+                .createAlias("standort.inhaber", "inhaber")
+                .createAlias("inhaber.adresse", "adresse")
 				.addOrder(Order.asc("adresse.strasse"))
 				.addOrder(Order.asc("adresse.hausnr"))
 				.add(Restrictions.eq("art.id", 36))
 	            .add(Restrictions.eq("obj.deleted", false));
-
+        if (year == null || year != -1) {
+            detachedCriteria.add(
+                DatabaseAccess.getRestrictionsEqualOrNull("erfassung", year));
+        }
         return new DatabaseAccess().executeCriteriaToList(
             detachedCriteria, new BwkFachdaten());
     }
@@ -424,18 +428,22 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
      * Get BwkFachdaten for ABA = true.
      * @return <code>List&lt;BwkFachdaten&gt;</code>
      */
-    public static List<BwkFachdaten> getABA() {
+    public static List<BwkFachdaten> getABA(Integer year) {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				BwkFachdaten.class)
 	            .createAlias("anfallstelle", "anf")
 	            .createAlias("anf.objekt", "obj")
-				.createAlias("objekt.standortid", "standort")
-                .createAlias("standort.adresse", "adresse")
+				.createAlias("obj.standortid", "standort")
+                .createAlias("standort.inhaber", "inhaber")
+                .createAlias("inhaber.adresse", "adresse")
 				.addOrder(Order.asc("adresse.strasse"))
 				.addOrder(Order.asc("adresse.hausnr"))
 				.add(Restrictions.eq("aba", true))
 	            .add(Restrictions.eq("obj.deleted", false));
-
+        if (year == null || year != -1) {
+            detachedCriteria.add(
+                DatabaseAccess.getRestrictionsEqualOrNull("erfassung", year));
+        }
         return new DatabaseAccess().executeCriteriaToList(
             detachedCriteria, new BwkFachdaten());
     }
