@@ -22,6 +22,8 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -37,6 +39,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.Transformers;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -1260,5 +1263,99 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 
+	}
+
+	/**
+	 * Execute query for BasisAbfrage module.
+	 * @param art Objektarten filter
+	 * @param anhang Anhang filter
+	 * @param anlagenart Anlagenart filter
+	 * @param sachbearbeiter Sachbearbeiter filter
+	 * @param entwGebiet entwGebiet filter
+	 * @param prioritaet Prioritaet filter
+	 * @param wiedervorlage Wiedervorlage filter.
+	 *        Possible values:
+	 *           - BasisAbfrage.VALUE_WIEDERVORLAGE_AKTIV
+	 *           - BAsisAbfrage.VALUE_WIEDERVORLAGE_ABGELAUFEN
+	 * @return Object array containing results
+	 */
+	public static List executeBaseQuery(
+			Objektarten art, Anhang anhang, String anlagenart,
+			Sachbearbeiter sachbearbeiter, String entwGebiet,
+			String prioritaet, String wiedervorlage) {
+		StringBuilder query = new StringBuilder(
+		"SELECT "
+			+ "betr.name AS betrname, s.bezeichnung, a.entgebid, sachb.name,"
+			+ "exists("
+				+ "SELECT 1 "
+				+ "FROM labor.messstelle m JOIN basis.objekt so on m.objektid = so.id "
+				+ "WHERE o.standortid = so.standortid "
+				+ "AND so.inaktiv = false "
+			+ "),"
+			+ "anh.anhang_id, anf.anlagenart, o.beschreibung,"
+			+ "anf.bemerkungen, o.wiedervorlage, o.prioritaet, o.id"
+		+ " FROM "
+			+ "basis.objekt o "
+			+ "LEFT JOIN basis.inhaber betr "
+			+ "ON o.betreiberid = betr.id "
+			+ "LEFT JOIN basis.standort s "
+			+ "ON o.standortid = s.id "
+			+ "LEFT JOIN basis.inhaber i "
+			+ "ON s.inhaberid = i.id "
+			+ "LEFT JOIN basis.adresse a "
+			+ "ON i.adresseid = a.id "
+			+ "LEFT JOIN basis.objektarten art "
+			+ "ON o.objektartid = art.id "
+			+ "LEFT JOIN basis.sachbearbeiter sachb "
+			+ "ON o.sachbearbeiter = sachb.id "
+			+ "LEFT JOIN elka.anfallstelle anf "
+			+ "ON o.id = anf.objektid "
+			+ "LEFT JOIN elka.anhang anh "
+			+ "ON anh.anhang_id = anf.anhang_id "
+		+ " WHERE "
+			+ "o._deleted = false");
+		//Append filters
+		if (art != null) {
+			query.append(" AND art.id = ")
+			.append(art.getId());
+		}
+		if (anhang != null) {
+			query.append(" AND anh.anhang_id = ")
+			.append("'" + anhang.getAnhangId() + "'");
+		}
+		if (anlagenart != null && !anlagenart.isEmpty()) {
+			query.append(" AND anf.anlagenart = ")
+			.append("'" + anlagenart + "'");
+		}
+		if (sachbearbeiter != null) {
+			query.append(" AND sachb.id = ")
+			.append(sachbearbeiter.getId());
+		}
+		if (entwGebiet != null && !entwGebiet.isEmpty()) {
+			query.append(" AND a.entgebid = ")
+			.append("'" + entwGebiet + "'");
+		}
+		if (prioritaet != null && !prioritaet.isEmpty()) {
+			query.append(" AND o.prioritaet = ")
+			.append("'" + prioritaet + "'");
+		}
+		if (wiedervorlage != null && !wiedervorlage.isEmpty()) {
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-uuuu");
+			String today = df.format(LocalDate.now());
+			query.append(" AND o.wiedervorlage ");
+			switch (wiedervorlage) {
+				case "Abgelaufen":
+				query.append(" < ");
+				break;
+				case "Aktiv":
+				query.append(" > ");
+				break;
+			}
+			query.append("'" + today + "'");
+		}
+		query.append(";");
+		NativeQuery<Object> q = HibernateSessionFactory.currentSession()
+			.createSQLQuery(query.toString());
+		return q.getResultList();
 	}
 }
