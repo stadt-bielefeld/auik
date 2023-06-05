@@ -1278,7 +1278,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	public static List executeBaseQuery(
 			Objektarten art, Anhang anhang, String anlagenart,
 			Sachbearbeiter sachbearbeiter, String entwGebiet,
-			String prioritaet, String wiedervorlage) {
+			String prioritaet, String wiedervorlage,
+			Sachbearbeiter group) {
 		StringBuilder query = new StringBuilder(
 		"SELECT "
 			+ "betr.name AS betrname, s.bezeichnung, a.entgebid, sachb.name,"
@@ -1326,6 +1327,10 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		if (sachbearbeiter != null) {
 			query.append(" AND sachb.id = ")
 			.append(sachbearbeiter.getId());
+		}
+		if (group != null) {
+			query.append(" AND sachb.gehoertzuarbeitsgr = ")
+			.append("'" + group.getGehoertzuarbeitsgr() + "'");
 		}
 		if (entwGebiet != null && !entwGebiet.isEmpty()) {
 			query.append(" AND a.entgebid = ")

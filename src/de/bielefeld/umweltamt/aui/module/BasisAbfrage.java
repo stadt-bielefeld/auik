@@ -74,6 +74,7 @@ public class BasisAbfrage extends AbstractQueryModul {
 
     public static final String VALUE_WIEDERVORLAGE_AKTIV = "Aktiv";
     public static final String VALUE_WIEDERVORLAGE_ABGELAUFEN = "Abgelaufen";
+    private final String GROUP_VALUE = "360.33";
 
     public BasisAbfrage () {
         //Init widgets
@@ -106,6 +107,12 @@ public class BasisAbfrage extends AbstractQueryModul {
         sachbearbeiterBox = new JComboBox<>();
         List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
         sachbearbeiterBox.setModel(new DefaultComboBoxModel(sachbearbeiter.toArray()));
+        //Insert dummy Sachbearbeiter used for group filtering
+        Sachbearbeiter group = new Sachbearbeiter();
+        group.setId(-1);
+        group.setGehoertzuarbeitsgr(GROUP_VALUE);
+        group.setName(GROUP_VALUE);
+        sachbearbeiterBox.insertItemAt(group, 0);
         sachbearbeiterBox.insertItemAt(null, 0);
         sachbearbeiterLabel = new JLabel("Sachbearbeiter:");
 
@@ -179,12 +186,19 @@ public class BasisAbfrage extends AbstractQueryModul {
                 Objektarten art = (Objektarten) typeBox.getSelectedItem();
                 Anhang anhang = (Anhang) anhangBox.getSelectedItem();
                 String anlagenart = (String) anlagenartBox.getSelectedItem();
-                Sachbearbeiter sb = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
                 String entwGebiet = (String) entwGebieteBox.getSelectedItem();
                 String prior = (String) prioritaetBox.getSelectedItem();
                 String wiedervorlage = (String) wiedervorlageBox.getSelectedItem();
+                Sachbearbeiter sb = null;
+                Sachbearbeiter group = null;
+                Sachbearbeiter selectedSb = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
+                if (selectedSb != null && selectedSb.getId() == -1) {
+                    group = selectedSb;
+                } else {
+                    sb = selectedSb;
+                }
                 List<Object> result = DatabaseQuery.executeBaseQuery(
-                    art, anhang, anlagenart, sb, entwGebiet, prior,wiedervorlage);
+                    art, anhang, anlagenart, sb, entwGebiet, prior,wiedervorlage, group);
                 ((BasisAbfrageModel)getTableModel()).setList(result);
             }
             @Override
