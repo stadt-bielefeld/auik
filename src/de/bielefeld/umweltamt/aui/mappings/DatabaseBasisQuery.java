@@ -22,15 +22,12 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.hibernate.Criteria;
 import org.hibernate.NullPrecedence;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
@@ -63,7 +60,6 @@ import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -1340,8 +1336,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			.append("'" + prioritaet + "'");
 		}
 		if (wiedervorlage != null && !wiedervorlage.isEmpty()) {
-			DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-uuuu");
-			String today = df.format(LocalDate.now());
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu-MM-dd kk:mm:ss.SSS");
+			String today = df.format(LocalDateTime.now());
 			query.append(" AND o.wiedervorlage ");
 			switch (wiedervorlage) {
 				case "Abgelaufen":
