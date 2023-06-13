@@ -109,11 +109,13 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
             // Die Widgets initialisieren
             submitButton = new JButton("Alle Objekte anzeigen");
             sachbearbeiterLabel = new JLabel("Sachbearbeiter:");
-            List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getAll();
+            List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
             DefaultComboBoxModel<Sachbearbeiter> sachbearbeiterModel = new DefaultComboBoxModel<>(
                     sachbearbeiter.toArray(new Sachbearbeiter[sachbearbeiter.size()]));
-                    sachbearbeiterBox = new JComboBox<Sachbearbeiter>(sachbearbeiterModel);
-                    sachbearbeiterBox.insertItemAt(null, 0);
+            sachbearbeiterBox = new JComboBox<Sachbearbeiter>(sachbearbeiterModel);
+            sachbearbeiterBox.insertItemAt(null, 0);
+            sachbearbeiterBox.setSelectedIndex(0);
+
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
             submitButton.addActionListener(new ActionListener() {
