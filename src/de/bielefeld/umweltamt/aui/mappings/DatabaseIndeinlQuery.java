@@ -243,11 +243,10 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
             	.createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "obj")
                 .createAlias("obj.objektarten", "art")
+                .add(Restrictions.eq("obj.deleted", false))
                 .add(Restrictions.ne("anf.anlagenart", "Fettabscheider"));
 
-        if (inaktiv == true) {
-            criteria.add(Restrictions.eq("obj.inaktiv", inaktiv));
-        }
+        criteria.add(Restrictions.eq("obj.inaktiv", inaktiv));
         if (abgemeldet == true) {
             criteria.add(Restrictions.eq("abgemeldet", abgemeldet));
         }
