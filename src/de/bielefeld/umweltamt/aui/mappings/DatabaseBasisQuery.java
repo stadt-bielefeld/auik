@@ -1281,7 +1281,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			String prioritaet, String wiedervorlage,
 			Sachbearbeiter group) {
 		StringBuilder query = new StringBuilder(
-		"SELECT "
+		"SELECT DISTINCT "
 			+ "betr.name AS betrname, s.bezeichnung, a.entgebid, sachb.name,"
 			+ "exists("
 				+ "SELECT 1 "
@@ -1310,7 +1310,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			+ "LEFT JOIN elka.anhang anh "
 			+ "ON anh.anhang_id = anf.anhang_id "
 		+ " WHERE "
-			+ "o._deleted = false");
+			+ "o._deleted = false "
+			+ "AND o.inaktiv = false");
 		//Append filters
 		if (art != null) {
 			query.append(" AND art.id = ")
