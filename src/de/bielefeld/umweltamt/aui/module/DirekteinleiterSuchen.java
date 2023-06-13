@@ -43,12 +43,8 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
-import de.bielefeld.umweltamt.aui.module.common.editors.AwsvEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.DirekteinleiterModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.HerstellNrSuchenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 

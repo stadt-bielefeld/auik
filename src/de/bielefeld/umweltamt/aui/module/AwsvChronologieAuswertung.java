@@ -61,10 +61,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Kontrollen;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.editors.AwsvEditor;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh50Model;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.AwsvAnlagenchronoModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -183,8 +181,8 @@ public class AwsvChronologieAuswertung extends AbstractQueryModul {
                 public void actionPerformed(ActionEvent e) {
                     ((AwsvAnlagenchronoModel)getTableModel()).setList(
                         DatabaseQuery.getAnlagenchrono(
-                        		wiedervorlageCheck.isSelected(), 
-                        		abgeschlossenCheck.isSelected()));
+                                wiedervorlageCheck.isSelected(), 
+                                abgeschlossenCheck.isSelected()));
                     ((AwsvAnlagenchronoModel)getTableModel()).fireTableDataChanged();
                     frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                 }
