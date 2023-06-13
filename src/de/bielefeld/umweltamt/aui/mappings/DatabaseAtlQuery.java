@@ -595,6 +595,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	{
 		return new DatabaseAccess().executeCriteriaToList(
 															DetachedCriteria.forClass(Probenahme.class)
+															.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 																	.add(Restrictions.eq("status", status))
 																	.addOrder(Order.desc("datumDerEntnahme"))
 																	.addOrder(Order.desc("kennummer")),

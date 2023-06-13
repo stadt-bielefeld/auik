@@ -100,6 +100,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 			boolean nurWiedervorlageAbgelaufen) {
 		DetachedCriteria detachedCriteria = DetachedCriteria
 				.forClass(Objekt.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 				.add(Restrictions.eq("sachbearbeiter",
 						DatabaseBasisQuery.getCurrentSachbearbeiter()))
 				.add(Restrictions.isNotNull("wiedervorlage"))
@@ -127,6 +128,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 
 		DetachedCriteria criteria = 
 				DetachedCriteria.forClass(Anfallstelle.class)
+                        .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 						.createAlias("objekt", "objekt")
 						.add(Restrictions.eq("objekt.deleted", false))
 						.add(Restrictions.eq("objekt.inaktiv", false));
@@ -170,6 +172,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
      */
     public static List<Anfallstelle> getFettabscheider(Sachbearbeiter sachbearbeiter) {
         DetachedCriteria crit = DetachedCriteria.forClass(Anfallstelle.class)
+            .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
             .createAlias("objekt", "objekt")
             .createAlias("objekt.objektarten", "art")
             .createAlias("objekt.betreiberid", "adresse")
@@ -232,6 +235,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 
         DetachedCriteria criteria =
             DetachedCriteria.forClass(Anh49Fachdaten.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
             	.createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "obj")
                 .createAlias("obj.objektarten", "art")
@@ -317,6 +321,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
         boolean nurWiedervorlageAbgelaufen) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Anh50Fachdaten.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "objekt")
                 .createAlias("objekt.betreiberid", "adresse")
@@ -344,6 +349,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
         Boolean abwasseranfall, Boolean genpflicht) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Anh56Fachdaten.class)
+            .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
             .createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "objekt")
                 .createAlias("objekt.standortid", "standort")
@@ -376,6 +382,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     public static List<BwkFachdaten> getBwkByYear(Integer year) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(BwkFachdaten.class)
+            .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
             .createAlias("anfallstelle", "anf")
             .createAlias("anf.objekt", "obj")
             .createAlias("obj.standortid", "standort")
@@ -400,6 +407,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     public static List<BwkFachdaten> getBHKW(Integer year) {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				BwkFachdaten.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 	            .createAlias("anfallstelle", "anf")
 	            .createAlias("anf.objekt", "obj")
 				.createAlias("obj.standortid", "standort")
@@ -425,6 +433,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     public static List<BwkFachdaten> getABA(Integer year) {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				BwkFachdaten.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 	            .createAlias("anfallstelle", "anf")
 	            .createAlias("anf.objekt", "obj")
 				.createAlias("obj.standortid", "standort")
@@ -536,6 +545,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     public static List<SuevFachdaten> getAnhangSuev() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(SuevFachdaten.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("objekt", "objekt")
                 .add(Restrictions.eq("objekt.inaktiv", false))
                 .addOrder(Order.asc("objekt.inaktiv"))
