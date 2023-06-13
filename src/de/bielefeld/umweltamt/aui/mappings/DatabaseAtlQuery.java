@@ -860,6 +860,25 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	}
 
 	/**
+	 * Get all Messstelle.
+	 *
+	 * @return <code>List&lt;Messstelle&gt;</code>
+	 */
+	public static List<Messstelle> getProbePunkte(Sachbearbeiter sachbearbeiter)
+	{
+		DetachedCriteria crit =
+				DetachedCriteria.forClass(Messstelle.class)
+						.createAlias("objekt", "objekt")
+						.createAlias("probenahmes", "probe")
+						.add(Restrictions.eq("objekt.inaktiv", false))
+						.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
+		if (sachbearbeiter != null) {
+			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
+		}
+		return new DatabaseAccess().executeCriteriaToList(crit, new Messstelle());
+	}
+
+	/**
 	 * Get all Messstelle which have Probenahme from Probenehmer
 	 * (kennummer starts with "3").
 	 *

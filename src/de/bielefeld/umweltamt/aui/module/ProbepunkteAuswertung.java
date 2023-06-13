@@ -52,10 +52,10 @@ package de.bielefeld.umweltamt.aui.module;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -65,10 +65,8 @@ import javax.swing.table.TableColumn;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
-import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbepunkteModel;
@@ -93,6 +91,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
     /** Das TableModel für die Ergebnis-Tabelle */
     private ProbepunkteModel tmodel;
 
+    private final String LABEL_NONE = "ohne Spezifikation";
     private final String LABEL_PROBENHEMEREINSAETZE = "Probenehmereinsätze";
     private final String LABEL_INAKTIVE_PROBEPUNKTE = "inaktive Probepunkte";
     private final String LABEL_UWB_PUNKTE = "UWB-Punkte";
@@ -125,14 +124,17 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
             // Die Widgets initialisieren
             searchButton = new JButton("Suchen");
             sachbearbeiterLabel = new JLabel("Sachbearbeiter (Heepen):");
-            List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getAll();
+            List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getAll()
+                .stream()
+                .sorted((s1, s2) -> s1.toString().compareTo(s2.toString()))
+                .collect(Collectors.toList());
             DefaultComboBoxModel<Sachbearbeiter> sachbearbeiterModel = new DefaultComboBoxModel<>(
                     sachbearbeiter.toArray(new Sachbearbeiter[sachbearbeiter.size()]));
             probepunktArtLabel = new JLabel("Probepunktart:");
             sachbearbeiterBox = new JComboBox<Sachbearbeiter>(sachbearbeiterModel);
             sachbearbeiterBox.insertItemAt(null, 0);
 
-            probepunktArtBox = new JComboBox<String>(new String[]{
+            probepunktArtBox = new JComboBox<String>(new String[]{LABEL_NONE,
                 LABEL_PROBENHEMEREINSAETZE, LABEL_INAKTIVE_PROBEPUNKTE,
                 LABEL_UWB_PUNKTE, LABEL_SELBSTUEBERWACHUNGSPUNTKE,
                 LABEL_E_SATZUNGSPUNKTE
@@ -147,6 +149,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                             List<Messstelle> result = null;
                             Sachbearbeiter sb = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
                             String pa = (String) probepunktArtBox.getSelectedItem();
+
                             switch (pa) {
                                 case LABEL_PROBENHEMEREINSAETZE:
                                     result = DatabaseQuery.getProbenehmerPunkte(sb);
@@ -163,7 +166,10 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                                 case LABEL_E_SATZUNGSPUNKTE:
                                     result = DatabaseQuery.getESatzungsPunkte(sb);
                                     break;
-                            }
+                                case LABEL_NONE:
+                                    result = DatabaseQuery.getProbePunkte(sb);
+                                    break;
+                                }
                             ((ProbepunkteModel)getTableModel()).setList(result);
                         }
 
