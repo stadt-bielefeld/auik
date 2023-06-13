@@ -114,6 +114,7 @@ public class BasisAbfrage extends AbstractQueryModul {
         group.setName(GROUP_VALUE);
         sachbearbeiterBox.insertItemAt(group, 0);
         sachbearbeiterBox.insertItemAt(null, 0);
+        sachbearbeiterBox.setSelectedIndex(0);
         sachbearbeiterLabel = new JLabel("Sachbearbeiter:");
 
         entwGebieteBox = new JComboBox<>(
