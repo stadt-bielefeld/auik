@@ -22,11 +22,8 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -37,25 +34,19 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
-import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.SuevFachdaten;
-import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 
 /**
  * This is a service class for all custom queries from the indeinl package.
@@ -112,6 +103,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 				.add(Restrictions.eq("sachbearbeiter",
 						DatabaseBasisQuery.getCurrentSachbearbeiter()))
 				.add(Restrictions.isNotNull("wiedervorlage"))
+                .add(Restrictions.eq("inaktiv", false))
                 .addOrder(Order.asc("objektarten"))
                 .addOrder(Order.asc("wiedervorlage"));
         if (nurWiedervorlageAbgelaufen) {
@@ -389,7 +381,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
             .createAlias("obj.standortid", "standort")
             .createAlias("standort.inhaber", "inhaber")
             .createAlias("inhaber.adresse", "adresse")
-            .add(Restrictions.eq("obj.deleted", false));
+            .add(Restrictions.eq("obj.deleted", false))
+            .add(Restrictions.eq("obj.inaktiv", false));
         detachedCriteria.addOrder(Order.asc("adresse.strasse"));
         detachedCriteria.addOrder(Order.asc("adresse.hausnr"));
 
@@ -416,7 +409,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 				.addOrder(Order.asc("adresse.strasse"))
 				.addOrder(Order.asc("adresse.hausnr"))
 				.add(Restrictions.eq("art.id", 36))
-	            .add(Restrictions.eq("obj.deleted", false));
+	            .add(Restrictions.eq("obj.deleted", false))
+                .add(Restrictions.eq("obj.inaktiv", false));
         if (year == null || year != -1) {
             detachedCriteria.add(
                 DatabaseAccess.getRestrictionsEqualOrNull("erfassung", year));
@@ -439,7 +433,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 				.addOrder(Order.asc("adresse.strasse"))
 				.addOrder(Order.asc("adresse.hausnr"))
 				.add(Restrictions.eq("aba", true))
-	            .add(Restrictions.eq("obj.deleted", false));
+	            .add(Restrictions.eq("obj.deleted", false))
+                .add(Restrictions.eq("obj.inaktiv", false));
         if (year == null || year != -1) {
             detachedCriteria.add(
                 DatabaseAccess.getRestrictionsEqualOrNull("erfassung", year));
@@ -542,6 +537,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(SuevFachdaten.class)
                 .createAlias("objekt", "objekt")
+                .add(Restrictions.eq("objekt.inaktiv", false))
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("id")),
             new SuevFachdaten());
