@@ -138,7 +138,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
                 DatabaseQuery.getOrderedAll(new Sachbearbeiter(), "name")
                     .toArray(new Sachbearbeiter[0])));
             sachbBox.insertItemAt(null, 0);
-            sachbBox.setSelectedItem(DatabaseQuery.getCurrentSachbearbeiter());
+            sachbBox.setSelectedItem(0);
 //            dekraTuevBox = new JComboBox();
 //            dekraTuevBox.setModel(new DefaultComboBoxModel(
 //                DatabaseQuery.getOldDekraTuevYears()));

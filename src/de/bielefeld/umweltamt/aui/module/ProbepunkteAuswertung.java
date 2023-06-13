@@ -124,10 +124,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
             // Die Widgets initialisieren
             searchButton = new JButton("Suchen");
             sachbearbeiterLabel = new JLabel("Sachbearbeiter (Heepen):");
-            List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getAll()
-                .stream()
-                .sorted((s1, s2) -> s1.toString().compareTo(s2.toString()))
-                .collect(Collectors.toList());
+            List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
             DefaultComboBoxModel<Sachbearbeiter> sachbearbeiterModel = new DefaultComboBoxModel<>(
                     sachbearbeiter.toArray(new Sachbearbeiter[sachbearbeiter.size()]));
             probepunktArtLabel = new JLabel("Probepunktart:");

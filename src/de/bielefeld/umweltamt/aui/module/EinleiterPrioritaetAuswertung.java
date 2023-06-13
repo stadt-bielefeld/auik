@@ -103,8 +103,7 @@ public class EinleiterPrioritaetAuswertung extends AbstractQueryModul {
                     DatabaseQuery.getOrderedAll(new Sachbearbeiter(), "name")
                         .toArray(new Sachbearbeiter[0])));
             sachbearbeiterBox.insertItemAt(null, 0);
-            sachbearbeiterBox.setSelectedItem(DatabaseQuery.getCurrentSachbearbeiter());
-            sachbearbeiterBox.setSelectedItem(-1);
+            sachbearbeiterBox.setSelectedItem(0);
             sachbearbeiterBox.setEditable(true);
 
             prioritaetBox = new JComboBox();
