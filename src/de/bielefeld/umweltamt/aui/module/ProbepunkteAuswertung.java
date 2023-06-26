@@ -133,6 +133,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
             probepunktArtLabel = new JLabel("Probepunktart:");
             sachbearbeiterBox = new JComboBox<Sachbearbeiter>(sachbearbeiterModel);
             sachbearbeiterBox.insertItemAt(null, 0);
+            sachbearbeiterBox.setSelectedIndex(0);
 
             probepunktArtBox = new JComboBox<String>(new String[]{LABEL_NONE,
                 LABEL_PROBENHEMEREINSAETZE, LABEL_INAKTIVE_PROBEPUNKTE,
