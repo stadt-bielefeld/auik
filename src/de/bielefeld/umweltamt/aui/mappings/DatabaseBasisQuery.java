@@ -1277,7 +1277,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 */
 	public static List executeBaseQuery(
 			Objektarten art, Anhang anhang, String anlagenart,
-			Sachbearbeiter sachbearbeiter, String entwGebiet,
+			Sachbearbeiter sachbearbeiter, String[] entwGebiet,
 			String prioritaet, String wiedervorlage,
 			Sachbearbeiter group) {
 		StringBuilder query = new StringBuilder(
@@ -1333,9 +1333,17 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			query.append(" AND sachb.gehoertzuarbeitsgr = ")
 			.append("'" + group.getGehoertzuarbeitsgr() + "'");
 		}
-		if (entwGebiet != null && !entwGebiet.isEmpty()) {
-			query.append(" AND a.entgebid = ")
-			.append("'" + entwGebiet + "'");
+		if (entwGebiet != null && entwGebiet.length > 0) {
+			query.append(" AND a.entgebid IN (");
+			for(int i = 0; i < entwGebiet.length; i++) {
+				if (i > 0) {
+					query.append(",");
+				}
+				query.append("'")
+				.append(entwGebiet[i])
+				.append("'");
+			}
+			query.append(")");
 		}
 		if (prioritaet != null && !prioritaet.isEmpty()) {
 			query.append(" AND o.prioritaet = ")

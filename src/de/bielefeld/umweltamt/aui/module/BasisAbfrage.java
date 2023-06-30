@@ -66,7 +66,7 @@ public class BasisAbfrage extends AbstractQueryModul {
     private JLabel sachbearbeiterLabel;
     private JComboBox<Sachbearbeiter> sachbearbeiterBox;
     private JLabel entwGebieteLabel;
-    private JComboBox<String> entwGebieteBox;
+    private JComboBox<EinzGebBoxModel> einzGebietBox;
     private JLabel prioritaetLabel;
     private JComboBox<String> prioritaetBox;
     private JLabel wiedervorlagenLabel;
@@ -117,9 +117,9 @@ public class BasisAbfrage extends AbstractQueryModul {
         sachbearbeiterBox.setSelectedIndex(0);
         sachbearbeiterLabel = new JLabel("Sachbearbeiter:");
 
-        entwGebieteBox = new JComboBox<>(
-            new DefaultComboBoxModel<>(DatabaseQuery.getEntwaesserungsgebiete()));
-        entwGebieteBox.insertItemAt(null, 0);
+        einzGebietBox = new JComboBox<EinzGebBoxModel>(
+            new DefaultComboBoxModel<>(createEinzGebBoxModels()));
+        einzGebietBox.insertItemAt(null, 0);
         entwGebieteLabel = new JLabel("Entwässerungsgebiet:");
 
         String[] prios = {null, "1", "2", "3", "4"};
@@ -170,7 +170,7 @@ public class BasisAbfrage extends AbstractQueryModul {
         builder.append(wiedervorlagenLabel, wiedervorlageBox);
 
         builder.append(anhangLabel, anhangBox);
-        builder.append(entwGebieteLabel, entwGebieteBox);
+        builder.append(entwGebieteLabel, einzGebietBox);
         builder.nextRow();
 
         builder.append(anlagenartenLabel, anlagenartBox);
@@ -187,7 +187,8 @@ public class BasisAbfrage extends AbstractQueryModul {
                 Objektarten art = (Objektarten) typeBox.getSelectedItem();
                 Anhang anhang = (Anhang) anhangBox.getSelectedItem();
                 String anlagenart = (String) anlagenartBox.getSelectedItem();
-                String entwGebiet = (String) entwGebieteBox.getSelectedItem();
+                EinzGebBoxModel einzGebModel = (EinzGebBoxModel) einzGebietBox.getSelectedItem();
+                String[] einzGeb = einzGebModel != null ? einzGebModel.getValues(): null;
                 String prior = (String) prioritaetBox.getSelectedItem();
                 String wiedervorlage = (String) wiedervorlageBox.getSelectedItem();
                 Sachbearbeiter sb = null;
@@ -199,7 +200,7 @@ public class BasisAbfrage extends AbstractQueryModul {
                     sb = selectedSb;
                 }
                 List<Object> result = DatabaseQuery.executeBaseQuery(
-                    art, anhang, anlagenart, sb, entwGebiet, prior,wiedervorlage, group);
+                    art, anhang, anlagenart, sb, einzGeb, prior,wiedervorlage, group);
                 ((BasisAbfrageModel)getTableModel()).setList(result);
             }
             @Override
@@ -242,6 +243,41 @@ public class BasisAbfrage extends AbstractQueryModul {
                 manager.switchModul("m_objekt_bearbeiten");
             }
 
+        }
+    }
+
+    private EinzGebBoxModel[] createEinzGebBoxModels() {
+        return new EinzGebBoxModel[]{
+            new EinzGebBoxModel("Heepen (1.01-1.05)",
+                new String[]{"1.01", "1.02", "1.03", "1.04", "1.05"}),
+            new EinzGebBoxModel("Brake Ost (4.20-4-24)",
+                new String[]{"4.20", "4.21", "4.22", "4.23", "4.24"}),
+            new EinzGebBoxModel("Brake West (4.00-4.19)",
+                new String[]{"4.00", "4.01", "4.02", "4.03", "4.04", "4.05",
+                "4.06","4.07", "4.08", "4.09", "4.10", "4.11", "4.12",
+                "4.13", "4.14", "4.15", "4.16", "4.17", "4.18", "4.19"}),
+            new EinzGebBoxModel("AOL (5.28-5.31 und 7.32, 7.33.& 7.34)",
+                new String[]{"5.28", "5.29", "5.30", "5.31",
+                    "7.32", "7.33", "7.44"}),
+            new EinzGebBoxModel("Sennestadt (8.35 & 8.36)",
+                new String[]{"8.35", "8.36"}),
+            new EinzGebBoxModel("Verl Sende (9.37)",
+                new String[]{"9.37"})
+        };
+    }
+
+    private class EinzGebBoxModel {
+        private String displayField;
+        private String[] values;
+        public EinzGebBoxModel(String displayField, String[] values) {
+            this.displayField = displayField;
+            this.values = values;
+        }
+        public String[] getValues() {
+            return values;
+        }
+        public String toString() {
+            return this.displayField;
         }
     }
 }
