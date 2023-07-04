@@ -120,6 +120,7 @@ public class BasisAbfrage extends AbstractQueryModul {
         einzGebietBox = new JComboBox<EinzGebBoxModel>(
             new DefaultComboBoxModel<>(createEinzGebBoxModels()));
         einzGebietBox.insertItemAt(null, 0);
+        einzGebietBox.setSelectedIndex(0);
         entwGebieteLabel = new JLabel("Entwässerungsgebiet:");
 
         String[] prios = {null, "1", "2", "3", "4"};
