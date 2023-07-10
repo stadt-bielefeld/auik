@@ -478,37 +478,55 @@ public class ELKASync extends AbstractModul {
                             }
                             else if (sel.equals("Anfallstellen")) {
                                 for (int i = 0; i < rows.length; i++) {
-                                    dbList.add(ELKASync.this.anfallstelleModel.getObjectAtRow(rows[i]));
+                                    EAnfallstelle object =
+                                        (EAnfallstelle) ELKASync.this.anfallstelleModel.getObjectAtRow(rows[i]);
+                                    idList.add(object.getNr());
+                                    dbList.add(object);
                                 }
                                 url += "/anfallstelle";
                             }
                             else if (sel.equals("Betriebe")) {
                                 for (int i = 0; i < rows.length; i++) {
-                                    dbList.add(ELKASync.this.betriebModel.getObjectAtRow(rows[i]));
+                                    EBetrieb object =
+                                        (EBetrieb) ELKASync.this.betriebModel.getObjectAtRow(rows[i]);
+                                    idList.add(object.getNr());
+                                    dbList.add(object);
                                 }
                                 url += "/betrieb";
                             }
                             else if (sel.equals("Einleitungsstellen")) {
                                 for (int i = 0; i < rows.length; i++) {
-                                    dbList.add(ELKASync.this.einleitungsstelleModel.getObjectAtRow(rows[i]));
+                                    EEinleitungsstelle object =
+                                        (EEinleitungsstelle) ELKASync.this.einleitungsstelleModel.getObjectAtRow(rows[i]);
+                                    idList.add(object.getNr());
+                                    dbList.add(object);
                                 }
                                 url += "/einleitungsstelle";
                             }
                             else if (sel.equals("Messstellen")) {
                                 for (int i = 0; i < rows.length; i++) {
-                                    dbList.add(ELKASync.this.messstelleModel.getObjectAtRow(rows[i]));
+                                    EMessstelle object =
+                                        (EMessstelle) ELKASync.this.messstelleModel.getObjectAtRow(rows[i]);
+                                    idList.add(object.getNr());
+                                    dbList.add(object);
                                 }
                                 url += "/messstelle";
                             }
                             else if (sel.equals("Entwässerungsgrundstücke")) {
                                 for (int i = 0; i< rows.length; i++) {
-                                    dbList.add(ELKASync.this.entwgrundModel.getObjectAtRow(rows[i]));
+                                    EEntwaesserungsgrundstueck object =
+                                        (EEntwaesserungsgrundstueck) ELKASync.this.entwgrundModel.getObjectAtRow(rows[i]);
+                                    idList.add(object.getNr());
+                                    dbList.add(object);
                                 }
                                 url += "/entwaesserungsgrundstueck";
                             }
                             else if (sel.equals("Sonderbauwerke")) {
                                 for (int i = 0; i< rows.length; i++) {
-                                    dbList.add(ELKASync.this.sbModel.getObjectAtRow(rows[i]));
+                                    ESonderbauwerk object =
+                                        (ESonderbauwerk) ELKASync.this.sbModel.getObjectAtRow(rows[i]);
+                                    idList.add(object.getNr());
+                                    dbList.add(object);
                                 }
                                 url += "/sonderbauwerk";
                             }
