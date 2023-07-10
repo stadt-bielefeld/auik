@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -269,8 +270,12 @@ public class ELKASync extends AbstractModul {
                             } else if (item.equals("Standorte")) {
                                 ELKASync.this.dbTable
                                         .setModel(ELKASync.this.standortModel);
+                                List<EStandort> items = EStandort.getAll().stream()
+                                    .filter(standort -> standort.getAdresse().getOrtZst()
+                                            .equals("Bielefeld"))
+                                    .collect(Collectors.toList());
                                 ELKASync.this.standortModel.setList(
-                                        prependIdentifierStandort(EStandort.getAll()));
+                                        prependIdentifierStandort(items));
                                 ELKASync.this.standortModel.fireTableDataChanged();
                             } else if (item.equals("Entwässerungsgrundstücke")) {
                                 ELKASync.this.dbTable
