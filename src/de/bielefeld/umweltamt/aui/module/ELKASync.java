@@ -161,6 +161,7 @@ public class ELKASync extends AbstractModul {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 // TODO Auto-generated method stub
+
                 ELKASync.this.adresseModel.setList(
                         prependIdentifierAdresse(EAdresse.getAll()));
                 ELKASync.this.rowCount.setText(String.valueOf(
@@ -187,6 +188,7 @@ public class ELKASync extends AbstractModul {
         this.sbModel = new ESonderbauwerkModel();
 
         this.dbTable = new JTable();
+        this.dbTable.setAutoCreateRowSorter(true);
         this.rowCount = new JLabel("0");
         this.progressCounter = new JLabel("-/-");
     }
