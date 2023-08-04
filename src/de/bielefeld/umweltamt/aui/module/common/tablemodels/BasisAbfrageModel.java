@@ -22,6 +22,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.Date;
 
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -30,6 +31,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class BasisAbfrageModel extends ListTableModel {
 
+    private final int ADRESS_COLUMN_INDEX = 1;
     public BasisAbfrageModel() {
         super(new String[]{
             "Betreibername",
@@ -62,6 +64,14 @@ public class BasisAbfrageModel extends ListTableModel {
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object[] obj = (Object[]) objectAtRow;
-        return obj[columnIndex];
+        Object val = obj[columnIndex];
+        //If column contains address: format
+        if (columnIndex == ADRESS_COLUMN_INDEX) {
+            Object[] parts = ((String) val).split(DatabaseQuery.ADDRESS_SEPARATOR);
+            if (parts.length == 5) {
+                val = String.format("%s %s%s, %s %s", parts);
+            }
+        }
+        return val;
     }
 }

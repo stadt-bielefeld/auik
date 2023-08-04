@@ -52,6 +52,9 @@ public abstract class DatabaseQuery extends DatabaseAtlQuery {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
+	//Separator char used to split address strings
+	public static final String ADDRESS_SEPARATOR = "%";
+
     /* ********************************************************************** */
     /* General Queries for all packages                                       */
     /* ********************************************************************** */

@@ -83,7 +83,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	private static String[] entwaesserungsgebiete = null;
 
 	private static MapElkaGewkennz[] mapElkaGewkennz = null;
-	
 
 	/* ********************************************************************** */
 	/* Queries for package BASIS */
@@ -1282,7 +1281,10 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			Sachbearbeiter group) {
 		StringBuilder query = new StringBuilder(
 		"SELECT DISTINCT "
-			+ "betr.name AS betrname, s.bezeichnung, a.entgebid, sachb.name,"
+			+ "betr.name AS betrname,"
+			+ "CONCAT_WS('" + DatabaseQuery.ADDRESS_SEPARATOR
+				+ "', a.strasse, a.hausnr, a.hausnrzus, a.plz, a.ort),"
+			+ " a.entgebid, sachb.name,"
 			+ "exists("
 				+ "SELECT 1 "
 				+ "FROM labor.messstelle m JOIN basis.objekt so on m.objektid = so.id "
