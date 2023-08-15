@@ -85,6 +85,8 @@ public class BasisAbfrage extends AbstractQueryModul {
         DefaultComboBoxModel<Objektarten> typeModel = new DefaultComboBoxModel<>(
             types.toArray(new Objektarten[types.size()]));
         typeBox = new JComboBox<>(typeModel);
+        typeBox.insertItemAt(null, 0);
+        typeBox.setSelectedIndex(0);
         typeLabel = new JLabel("Objektart:");
 
         List<Anhang> anhangs = Anhang.getAll();
