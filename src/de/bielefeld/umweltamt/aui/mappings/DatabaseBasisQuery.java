@@ -1282,8 +1282,11 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		StringBuilder query = new StringBuilder(
 		"SELECT DISTINCT "
 			+ "betr.name AS betrname,"
-			+ "CONCAT_WS('" + DatabaseQuery.ADDRESS_SEPARATOR
-				+ "', a.strasse, a.hausnr, a.hausnrzus, a.plz, a.ort),"
+			+ "CONCAT_WS('" + DatabaseQuery.ADDRESS_SEPARATOR + "', "
+				+ "COALESCE(a.strasse, ' '), COALESCE(a.hausnr, " +
+					DatabaseQuery.HOUSE_NUMBER_PLACEHOLDER + "), "
+				+ "COALESCE(a.hausnrzus, ' '), COALESCE(a.plz, ' '), "
+				+ "COALESCE(a.ort, ' ')),"
 			+ " a.entgebid, sachb.name,"
 			+ "exists("
 				+ "SELECT 1 "

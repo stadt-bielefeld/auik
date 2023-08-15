@@ -21,6 +21,8 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -67,9 +69,25 @@ public class BasisAbfrageModel extends ListTableModel {
         Object val = obj[columnIndex];
         //If column contains address: format
         if (columnIndex == ADRESS_COLUMN_INDEX) {
+            //Split result string by separator.
             Object[] parts = ((String) val).split(DatabaseQuery.ADDRESS_SEPARATOR);
-            if (parts.length == 5) {
+            AtomicBoolean empty = new AtomicBoolean(true);
+            parts = Stream.of(parts).map(part -> {
+                //Empty parts may contain whitespaces
+                String partString = part.toString().strip();
+                if (partString.equals(
+                        DatabaseQuery.HOUSE_NUMBER_PLACEHOLDER)) {
+                    partString = "";
+                }
+                if (!partString.isEmpty()) {
+                    empty.set(false);
+                }
+                return partString;
+            }).toArray();
+            if (!empty.get()) {
                 val = String.format("%s %s%s, %s %s", parts);
+            } else {
+                val = "";
             }
         }
         return val;
