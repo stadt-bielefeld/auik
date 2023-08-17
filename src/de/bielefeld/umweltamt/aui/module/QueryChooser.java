@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +29,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
@@ -40,6 +40,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -75,11 +76,10 @@ public class QueryChooser extends AbstractModul {
 
     public QueryChooser() {
         modules = getModules();
-
         modulePanel = new JPanel();
         modulePanel.setLayout(new BoxLayout(modulePanel, BoxLayout.Y_AXIS));
         contentPanel = new JScrollPane();
-        exportButton = new JButton("Exportieren");
+        exportButton = new JButton("Tabelle speichern");
         exportButton.addActionListener(new ActionListener() {
 
             @Override
@@ -108,10 +108,23 @@ public class QueryChooser extends AbstractModul {
         builder.append(queryChooserLabel);
         builder.append(queryChooserBox);
         builder.append(exportButton);
+
         topBar = builder.getPanel();
-        topBar.setMaximumSize(new Dimension(500, 150));
+        topBar.setBorder(new EmptyBorder(3, 0, 3, 0));
+        topBar.setMaximumSize(new Dimension(1500, 150));
+        topBar.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JPanel bottomBar = new JPanel();
+        bottomBar.setLayout(new BoxLayout(bottomBar, BoxLayout.Y_AXIS));
+        bottomBar.setBorder(new EmptyBorder(3, 0, 3, 0));
+        bottomBar.add(exportButton);
+        bottomBar.setAlignmentX(Component.LEFT_ALIGNMENT);
+        bottomBar.setMaximumSize(new Dimension(1500, 30));
+        exportButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         modulePanel.add(topBar);
         modulePanel.add(contentPanel);
+        modulePanel.add(bottomBar);
     }
 
     @Override
