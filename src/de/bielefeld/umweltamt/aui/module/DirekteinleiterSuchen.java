@@ -141,12 +141,13 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
 
             // Noch etwas Layout...
             FormLayout layout = new FormLayout(
-                    "pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 20dlu, pref"
+                    "pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref"
                     );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             // FÃ¼r Darstellung der Suchoptionen im oberen Panel
-            builder.append("Aktenzeichen:", azFeld, suchenButton);
+            builder.append("Aktenzeichen:", azFeld);
+            builder.append(suchenButton, createExportButton());
             builder.nextLine();
             builder.append("");
 

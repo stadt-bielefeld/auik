@@ -142,10 +142,11 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
 
 
             //Layout
-            FormLayout layout = new FormLayout("pref, 1dlu, pref, 3dlu, pref, 1dlu");
+            FormLayout layout = new FormLayout("pref, 1dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append(sachbearbeiterLabel, sachbearbeiterBox, submitButton);
+            builder.append(createExportButton());
 
             queryPanel = builder.getPanel();
         }

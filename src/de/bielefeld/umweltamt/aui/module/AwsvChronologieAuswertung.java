@@ -192,7 +192,8 @@ public class AwsvChronologieAuswertung extends AbstractQueryModul {
             FormLayout layout = new FormLayout("pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(wiedervorlageCheck, abgeschlossenCheck, submitButton);
+            builder.append(wiedervorlageCheck, abgeschlossenCheck);
+            builder.append(submitButton, createExportButton());
 
             queryPanel = builder.getPanel();
         }

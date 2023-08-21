@@ -46,6 +46,9 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Component;
+
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
@@ -91,7 +94,11 @@ public class AwsvVerwaltungsverfAuswertung extends AbstractQueryModul {
      */
     @Override
     public JPanel getQueryOptionsPanel() {
-        return new JPanel();
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel.add(createExportButton());
+        return panel;
     }
 
     /* (non-Javadoc)

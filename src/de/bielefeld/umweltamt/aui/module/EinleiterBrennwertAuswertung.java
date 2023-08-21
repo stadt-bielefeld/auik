@@ -166,11 +166,12 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append("Erfassungsjahr:", jahrBox);
-            builder.append("Typ:", typBox, submitButton);
+            builder.append("Typ:", typBox);
+            builder.append(submitButton, createExportButton());
 
             queryPanel = builder.getPanel();
         }

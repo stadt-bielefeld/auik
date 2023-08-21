@@ -165,12 +165,13 @@ public class BasisAbfrage extends AbstractQueryModul {
         });
 
         //Layout
-        FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu");
+        FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu");
         DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
         builder.append(typeLabel, typeBox);
         builder.append(sachbearbeiterLabel, sachbearbeiterBox);
         builder.append(wiedervorlagenLabel, wiedervorlageBox);
+        builder.nextRow();
 
         builder.append(anhangLabel, anhangBox);
         builder.append(entwGebieteLabel, einzGebietBox);
@@ -178,7 +179,7 @@ public class BasisAbfrage extends AbstractQueryModul {
 
         builder.append(anlagenartenLabel, anlagenartBox);
         builder.append(prioritaetLabel, prioritaetBox);
-        builder.append(new JPanel(), searchButton);
+        builder.append(new JPanel(), searchButton, createExportButton());
 
         queryOptionsPanel = builder.build();
     }

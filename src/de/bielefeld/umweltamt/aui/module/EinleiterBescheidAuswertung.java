@@ -206,6 +206,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
 
             builder.append(bescheidButton, eingetragenButton);
             builder.append(ergaenztButton, angelegtButton);
+            builder.append(createExportButton());
             queryPanel = builder.getPanel();
         }
 

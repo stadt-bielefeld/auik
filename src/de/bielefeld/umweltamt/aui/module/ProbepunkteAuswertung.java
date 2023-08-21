@@ -182,12 +182,12 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             builder.append(probepunktArtLabel, probepunktArtBox);
             builder.append(sachbearbeiterLabel, sachbearbeiterBox);
-            builder.append(searchButton);
+            builder.append(searchButton, createExportButton());
 
             queryPanel = builder.getPanel();
         }
