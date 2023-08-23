@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -37,16 +38,23 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListModel;
+import javax.swing.RowSorter;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
+import javax.swing.table.JTableHeader;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.MediaType;
 
@@ -96,7 +104,6 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ESonderbauwerkModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
-
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.Response;
 
@@ -342,58 +349,69 @@ public class ELKASync extends AbstractModul {
                             List<Entity<?>> entityList =
                                 new ArrayList<Entity<?>>();
                             List<Object> dbList = new ArrayList<Object>();
+                            List<Object> indexList = new ArrayList<Object>();
+                            RowSorter sorter = ELKASync.this.dbTable.getRowSorter();
                             int[] rows = ELKASync.this.dbTable.getSelectedRows();
                             referenceUrl = url + "/referenz";
                             if (sel.equals("Abwasserbehandlungsanlagen")) {
                                 for (int i = 0; i < rows.length; i++) {
                                     dbList.add(ELKASync.this.abwasserbehandlungModel.getObjectAtRow(rows[i]));
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/abwasserbehandlungsanlage";
                             }
                             else if (sel.equals("Anfallstellen")) {
                                 for (int i = 0; i < rows.length; i++) {
                                     dbList.add(ELKASync.this.anfallstelleModel.getObjectAtRow(rows[i]));
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/anfallstelle";
                             }
                             else if (sel.equals("Betriebe")) {
                                 for (int i = 0; i < rows.length; i++) {
                                     dbList.add(ELKASync.this.betriebModel.getObjectAtRow(rows[i]));
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/betrieb";
                             }
                             else if (sel.equals("Einleitungsstellen")) {
                                 for (int i = 0; i < rows.length; i++) {
                                     dbList.add(ELKASync.this.einleitungsstelleModel.getObjectAtRow(rows[i]));
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/einleitungsstelle";
                             }
                             else if (sel.equals("Messstellen")) {
                                 for (int i = 0; i < rows.length; i++) {
                                     dbList.add(ELKASync.this.messstelleModel.getObjectAtRow(rows[i]));
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/messstelle";
                             }
                             else if (sel.equals("Adressen")) {
                                 for (int i = 0; i < rows.length; i++) {
                                     dbList.add(ELKASync.this.adresseModel.getObjectAtRow(rows[i]));
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/adresse";
                             }
                             else if (sel.equals("Standorte")) {
                                 for (int i = 0; i < rows.length; i++) {
                                     dbList.add(ELKASync.this.standortModel.getObjectAtRow(rows[i]));
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/standort";
                             }
                             else if (sel.equals("Entwässerungsgrundstücke")) {
                                 for (int i = 0; i< rows.length; i++) {
                                     dbList.add(ELKASync.this.entwgrundModel.getObjectAtRow(rows[i]));
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/entwaesserungsgrundstueck";
                             } else if (sel.equals("Sonderbauwerke")) {
                                 for (int i = 0; i< rows.length; i++) {
                                     dbList.add(ELKASync.this.sbModel.getObjectAtRow(rows[i]));
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/sonderbauwerk";
                             }
@@ -412,7 +430,7 @@ public class ELKASync extends AbstractModul {
                             progress.setValue(0);
                             progress.setMaximum(dbList.size());
                             ELKASync.this.progressCounter.setText("0/" + dbList.size());
-                            ELKASync.this.sendData(entityList, target, progress, sel);
+                            ELKASync.this.sendData(entityList, indexList, target, progress, sel);
                         }
                         @Override
                         protected void doUIUpdateLogic() {
@@ -421,7 +439,6 @@ public class ELKASync extends AbstractModul {
                     worker.start();
                 }
             });
-
             final JButton deleteEntries = new JButton("gewählte Einträge löschen");
             deleteEntries.addActionListener(new ActionListener() {
                 CredentialsDialog dialog = new CredentialsDialog(
@@ -464,6 +481,8 @@ public class ELKASync extends AbstractModul {
                                 new ArrayList<Entity<?>>();
                             List<Object> dbList = new ArrayList<Object>();
                             List<Object> idList = new ArrayList<Object>();
+                            List<Object> indexList = new ArrayList<Object>();
+                            RowSorter sorter = ELKASync.this.dbTable.getRowSorter();
                             int[] rows = ELKASync.this.dbTable.getSelectedRows();
                             referenceUrl = url + "/referenz";
                             if (sel.equals("Abwasserbehandlungsanlagen")) {
@@ -473,6 +492,7 @@ public class ELKASync extends AbstractModul {
                                         getObjectAtRow(rows[i]);
                                     dbList.add(objectAtRow);
                                     idList.add(objectAtRow.getNr());
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/abwasserbehandlungsanlage";
                             }
@@ -482,6 +502,7 @@ public class ELKASync extends AbstractModul {
                                         (EAnfallstelle) ELKASync.this.anfallstelleModel.getObjectAtRow(rows[i]);
                                     idList.add(object.getNr());
                                     dbList.add(object);
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/anfallstelle";
                             }
@@ -491,6 +512,7 @@ public class ELKASync extends AbstractModul {
                                         (EBetrieb) ELKASync.this.betriebModel.getObjectAtRow(rows[i]);
                                     idList.add(object.getNr());
                                     dbList.add(object);
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/betrieb";
                             }
@@ -500,6 +522,7 @@ public class ELKASync extends AbstractModul {
                                         (EEinleitungsstelle) ELKASync.this.einleitungsstelleModel.getObjectAtRow(rows[i]);
                                     idList.add(object.getNr());
                                     dbList.add(object);
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/einleitungsstelle";
                             }
@@ -509,6 +532,7 @@ public class ELKASync extends AbstractModul {
                                         (EMessstelle) ELKASync.this.messstelleModel.getObjectAtRow(rows[i]);
                                     idList.add(object.getNr());
                                     dbList.add(object);
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/messstelle";
                             }
@@ -518,6 +542,7 @@ public class ELKASync extends AbstractModul {
                                         (EEntwaesserungsgrundstueck) ELKASync.this.entwgrundModel.getObjectAtRow(rows[i]);
                                     idList.add(object.getNr());
                                     dbList.add(object);
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/entwaesserungsgrundstueck";
                             }
@@ -527,6 +552,7 @@ public class ELKASync extends AbstractModul {
                                         (ESonderbauwerk) ELKASync.this.sbModel.getObjectAtRow(rows[i]);
                                     idList.add(object.getNr());
                                     dbList.add(object);
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/sonderbauwerk";
                             }
@@ -537,6 +563,7 @@ public class ELKASync extends AbstractModul {
                                     getObjectAtRow(rows[i]);
                                     idList.add(objectAtRow.getNr());
                                     dbList.add(objectAtRow);
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/adresse";
                             }
@@ -547,6 +574,7 @@ public class ELKASync extends AbstractModul {
                                     getObjectAtRow(rows[i]);
                                     idList.add(objectAtRow.getNr());
                                     dbList.add(objectAtRow);
+                                    indexList.add(sorter.convertRowIndexToModel(rows[i]));
                                 }
                                 url += "/standort";
                             }
@@ -562,7 +590,7 @@ public class ELKASync extends AbstractModul {
                             progress.setValue(0);
                             progress.setMaximum(dbList.size());
                             ELKASync.this.progressCounter.setText("0/" + dbList.size());
-                            ELKASync.this.deleteData(entityList, idList, url, user, password, progress, sel);
+                            ELKASync.this.deleteData(entityList, idList, indexList, url, user, password, progress, sel);
                         }
                         @Override
                         protected void doUIUpdateLogic() {
@@ -653,15 +681,19 @@ public class ELKASync extends AbstractModul {
                                     client.target(url)
                                     .queryParam("username", user)
                                     .queryParam("password", password);
+
+                            RowSorter sorter = ELKASync.this.dbTable.getRowSorter();
+                            List<Object> indexList = new ArrayList<Object>();
                             for (int i = 0; i < dbList.size(); i++) {
                                 entityList.add(Entity.entity(
                                         dbList.get(i),
                                         MediaType.APPLICATION_JSON + ";charset=UTF-8"));
+                                indexList.add(sorter.convertRowIndexToModel(i));
                             }
 
                             progress.setValue(0);
                             progress.setMaximum(dbList.size());
-                            ELKASync.this.sendData(entityList, target, progress, sel);
+                            ELKASync.this.sendData(entityList, indexList, target, progress, sel);
                         }
                         @Override
                         protected void doUIUpdateLogic() {
@@ -678,6 +710,27 @@ public class ELKASync extends AbstractModul {
             JScrollPane dbScroller = new JScrollPane(this.dbTable,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+            //Add row numbers
+            ListModel rowList = new AbstractListModel() {
+                @Override
+                public Object getElementAt(int index) {
+                    return index + 1;
+                }
+                @Override
+                public int getSize() {
+                    return dbTable.getRowCount();
+                }
+            };
+            JList rowHeader = new JList(rowList);
+            dbScroller.setRowHeaderView(rowHeader);
+            rowHeader.setFixedCellWidth(25);
+            rowHeader.setFixedCellHeight(this.dbTable.getRowHeight());
+            rowHeader.setVisible(true);
+            rowHeader.setBackground(dbScroller.getBackground());
+            rowHeader.setCellRenderer(new RowNumberCellRenderer(dbTable));
+
+            //Create panel
             builder.addLabel("Tabelle", cc.xy(1, 1));
             builder.add(selection, cc.xy(3, 1));
             builder.add(commitTable, cc.xy(5, 1));
@@ -698,6 +751,7 @@ public class ELKASync extends AbstractModul {
     private <T> void deleteData(
         List<Entity<?>> entities,
         List<Object> ids,
+        List<Object> indices,
         String url,
         String user,
         String password,
@@ -739,17 +793,18 @@ public class ELKASync extends AbstractModul {
                         progress.setValue(progress.getValue() + 1);
                         String responseEntity = response.readEntity(String.class);
                         this.progressCounter.setText((i + 1)+ "/" + entities.size());
+                        String objectName = indices.get(i).toString();
                         switch (response.getStatus()) {
                             case 204:
-                                printStream.append((i + 1) + ":" + " erfolgreich Gelöscht\n");
+                                printStream.append(objectName + ":" + " erfolgreich Gelöscht\n");
                                 break;
                             case 404:
-                                printStream.append("Fehler in Objekt: " + (i+1) + "\n");
+                                printStream.append("Fehler in Objekt: " + objectName + "\n");
                                 printStream.append("Fehlerbeschreibung: Entität nicht existent");
                                 printStream.append("\n");
                                 break;
                             default:
-                                printStream.append("Fehler in Objekt: " + (i+1) + "\n");
+                                printStream.append("Fehler in Objekt: " + objectName + "\n");
                                 printStream.append("Fehlerbeschreibung: " + responseEntity);
                                 printStream.append("\n");
                         }
@@ -776,6 +831,7 @@ public class ELKASync extends AbstractModul {
     }
     private <T> void sendData(
         List<Entity<?>> entities,
+        List<Object> indices,
         JerseyWebTarget target,
         JProgressBar progress,
         String type
@@ -808,15 +864,16 @@ public class ELKASync extends AbstractModul {
                         progress.setValue(progress.getValue() + 1);
                         String responseEntity = response.readEntity(String.class);
                         this.progressCounter.setText((i + 1)+ "/" + entities.size());
+                        String objectName = indices.get(i).toString();
                         if (response.getStatus() != 200 &&
                             response.getStatus() != 201
                         ) {
-                            printStream.append("Fehler in Objekt: " + (i+1) + "\n");
+                            printStream.append("Fehler in Objekt: " + objectName + "\n");
                             printStream.append("Fehlerbeschreibung: " + responseEntity);
                             printStream.append("\n");
                         }
                         else {
-                            printStream.append((i + 1) + ":" + " erfolgreich übertragen\n");
+                            printStream.append(objectName + ":" + " erfolgreich übertragen\n");
                             sendReferences(entities.get(i), printStream);
                         }
                         log.debug(responseEntity);
@@ -1171,5 +1228,25 @@ public class ELKASync extends AbstractModul {
             e.printStackTrace();
         }
         return object;
+    }
+
+    //Cell renderer used for row number cells
+    private class RowNumberCellRenderer extends JLabel implements ListCellRenderer<Object> {
+        private static final long serialVersionUID = 2991892569337891137L;
+        public RowNumberCellRenderer(JTable table) {
+            //Adopt header style from parent table
+            JTableHeader header = table.getTableHeader();
+            setOpaque(true);
+            setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+            setHorizontalAlignment(CENTER);
+            setForeground(header.getForeground());
+            setBackground(header.getBackground());
+            setFont(header.getFont());
+        }
+        public Component getListCellRendererComponent(JList list, Object value,
+            int index, boolean isSelected, boolean cellHasFocus) {
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
     }
 }
