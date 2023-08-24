@@ -27,10 +27,12 @@ public class EAbwasserbehandlungsanlageModel extends ListTableModel {
 
     public EAbwasserbehandlungsanlageModel() {
         super(new String[]{
-                "Standort",
+                "Betreiber",
                 "Bezeichnung",
                 "genehmigungspflichtig",
-                "Beschreibung"},
+                "Beschreibung",
+                "Objekt-ID",
+                "Adresse"},
                 false,
                 true);
     }
@@ -56,6 +58,12 @@ public class EAbwasserbehandlungsanlageModel extends ListTableModel {
                 break;
             case 3:
                 value = anlage.getBemerkung();
+                break;
+            case 4:
+                value = anlage.getNr();
+                break;
+            case 5:
+                value = anlage.getStandort().getAdresse().getNr();
                 break;
             default:
                 value = null;
