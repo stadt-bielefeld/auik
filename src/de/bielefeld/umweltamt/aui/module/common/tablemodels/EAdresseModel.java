@@ -27,6 +27,7 @@ public class EAdresseModel extends ListTableModel {
 
     public EAdresseModel() {
         super(new String[]{
+                "Nr",
                 "Anrede",
                 "Name",
                 "Strasse",
@@ -50,21 +51,24 @@ public class EAdresseModel extends ListTableModel {
         EAdresse adresse = (EAdresse) objectAtRow;
         switch(columnIndex) {
             case 0:
-                value = adresse.getAnrede();
+                value = adresse.getNr();
                 break;
             case 1:
+                value = adresse.getAnrede();
+                break;
+            case 2:
             	value = adresse.getName1();
             	break;
-            case 2:
+            case 3:
             	value = adresse.getStrasse();
             	break;
-            case 3:
+            case 4:
             	value = adresse.getHausnr();
             	break;
-            case 4:
+            case 5:
             	value = adresse.getPlzZst();
             	break;
-            case 5:
+            case 6:
             	value = adresse.getOrtZst();
             	break;
             default:
