@@ -42,6 +42,12 @@
   <property generated="never" lazy="false" name="herkunft" type="java.lang.String">
    <column name="herkunft"/>
   </property>
+  <property generated="never" lazy="false" name="objektId" type="java.lang.Integer">
+   <column name="objekt_id"/>
+  </property>
+  <property generated="never" lazy="false" name="adresse" type="java.lang.Integer">
+   <column name="adresse"/>
+  </property>
   <set name="probenahmes" table="e_probenahme" lazy="false" fetch="select">
   	<key>
   		<column name="msst_nr"></column>

@@ -34,7 +34,10 @@ public class EMessstelleModel extends ListTableModel {
         super(new String[]{
                 "Standort-Nr",
                 "Bezeichnung",
-                "Beschreibung"},
+                "Beschreibung",
+                "Betreiber",
+                "Objekt-ID",
+                "Adresse"},
                 false,
                 true);
     }
@@ -61,6 +64,15 @@ public class EMessstelleModel extends ListTableModel {
                 break;
             case 2:
                 value = stelle.getBemerkung();
+                break;
+            case 3:
+                value = stelle.getStandort().getAdresse().getName1();
+                break;
+            case 4:
+                value = stelle.getObjektId();
+                break;
+            case 5:
+                value = stelle.getAdresse();
                 break;
             default:
                 value = null;

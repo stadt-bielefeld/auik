@@ -30,7 +30,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
@@ -52,6 +51,8 @@ public class EMessstelle implements java.io.Serializable {
     private Date aktualDat;
     private Date erstellDat;
     private String herkunft;
+    private Integer objektId;
+    private Integer adresse;
     private Set<EProbenahme> probenahmes = new HashSet<EProbenahme>(0);
 
     private Set<MsstBerichtspflicht> zuordnBerichtspflichts;
@@ -176,6 +177,22 @@ public class EMessstelle implements java.io.Serializable {
 
     public void setHerkunft(String herkunft) {
         this.herkunft = herkunft;
+    }
+
+    public Integer getObjektId() {
+        return objektId;
+    }
+
+    public void setObjektId(Integer objektId) {
+        this.objektId = objektId;
+    }
+
+    public Integer getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(Integer adresse) {
+        this.adresse = adresse;
     }
 
     /**
