@@ -21,6 +21,8 @@
 package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -894,6 +896,7 @@ public class ELKASync extends AbstractModul {
                         }
                     }
                     fileStream.close();
+                    openFile(protocolFile);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -963,6 +966,7 @@ public class ELKASync extends AbstractModul {
                         log.debug(responseEntity);
                     }
                     fileStream.close();
+                    openFile(protocolFile);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -1393,6 +1397,29 @@ public class ELKASync extends AbstractModul {
             default: return null;
         }
         return id;
+    }
+
+    /**
+     * Open the given file with the default program.
+     * @param file File to open
+     * @return True if opened successfully, else false
+     */
+    private boolean openFile(File file) {
+        Desktop d = Desktop.getDesktop();
+        if (!Desktop.isDesktopSupported() || !d.isSupported(Action.OPEN)) {
+            log.warn("Opening file action is not supported");
+            return false;
+        }
+        try {
+            d.open(file);
+        } catch (IOException e) {
+            log.warn(
+                String.format("Opening log file %s failed: %s",
+                    file.getAbsolutePath(), e.getMessage()),
+                e);
+            return false;
+        }
+        return true;
     }
 
     //Cell renderer used for row number cells
