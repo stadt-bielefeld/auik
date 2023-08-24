@@ -53,6 +53,7 @@ public class EBetrieb implements java.io.Serializable {
     private Date aktualDat;
     private Date erstellDat;
     private String herkunft;
+    private Integer objektId;
 
     private Set<Massnahme> massnahmes;
 
@@ -168,6 +169,14 @@ public class EBetrieb implements java.io.Serializable {
 
     public void setHerkunft(String herkunft) {
         this.herkunft = herkunft;
+    }
+
+    public Integer getObjektId() {
+        return objektId;
+    }
+
+    public void setObjektId(Integer objektId) {
+        this.objektId = objektId;
     }
 
     /**

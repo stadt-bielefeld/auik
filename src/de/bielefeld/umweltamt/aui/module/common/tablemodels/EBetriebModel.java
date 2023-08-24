@@ -34,7 +34,8 @@ public class EBetriebModel extends ListTableModel {
                 "PLZ",
                 "Ort",
                 "Bezeichnung",
-                "selbstüberwachend"},
+                "selbstüberwachend",
+                "Objekt-ID"},
                 false,
                 true);
     }
@@ -75,6 +76,9 @@ public class EBetriebModel extends ListTableModel {
             case 7:
             	value = betrieb.getSuevkanTog() ? "ja" : "nein";
             	break;
+            case 8:
+                value = betrieb.getObjektId();
+                break;
             default:
                 value = null;
         }

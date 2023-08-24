@@ -36,5 +36,8 @@
   <property generated="never" lazy="false" name="herkunft" type="java.lang.String">
    <column name="herkunft"/>
   </property>
+  <property generated="never" lazy="false" name="objektId" type="java.lang.Integer">
+   <column name="objekt_id"/>
+  </property>
  </class>
 </hibernate-mapping>
