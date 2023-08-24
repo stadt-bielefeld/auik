@@ -30,6 +30,7 @@ public class EStandortModel extends ListTableModel {
         super(new String[]{
                 "Nr",
                 "Strasse",
+                "Hausnummer",
                 "PLZ",
                 "Ort",
                 "Flur",
@@ -57,15 +58,18 @@ public class EStandortModel extends ListTableModel {
             	value = standort.getAdresse().getStrasse();
             	break;
             case 2:
-            	value = standort.getAdresse().getPlzZst();
+            	value = standort.getAdresse().getHausnr();
             	break;
             case 3:
-            	value = standort.getAdresse().getOrtZst();
+            	value = standort.getAdresse().getPlzZst();
             	break;
             case 4:
-            	value = standort.getFlur();
+            	value = standort.getAdresse().getOrtZst();
             	break;
             case 5:
+            	value = standort.getFlur();
+            	break;
+            case 6:
             	value = standort.getFlurstuecke();
             	break;
             default:
