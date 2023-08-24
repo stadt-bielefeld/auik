@@ -27,9 +27,11 @@ public class EAnfallstelleModel extends ListTableModel {
 
     public EAnfallstelleModel() {
         super(new String[]{
-                "Standort",
+                "Betreiber",
                 "Bemerkung",
-                "Bezeichnung"},
+                "Bezeichnung",
+                "Objekt-ID",
+                "Adresse"},
                 false,
                 true);
     }
@@ -54,6 +56,12 @@ public class EAnfallstelleModel extends ListTableModel {
                 break;
             case 2:
                 value = anlage.getBemerkung();
+                break;
+            case 3:
+                value = anlage.getNr();
+                break;
+            case 4:
+                value = anlage.getAdresse().getNr();
                 break;
             default:
                 value = null;
