@@ -104,6 +104,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ESonderbauwerkModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
+import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.Response;
 
@@ -117,6 +118,18 @@ public class ELKASync extends AbstractModul {
         SettingsManager.getInstance().getSetting("auik.elka.proxyhost");
     private static String PROXY_PORT =
         SettingsManager.getInstance().getSetting("auik.elka.proxyport");
+
+    //Entity options
+    private static final String ENTITY_ADRESSE = "Adressen";
+    private static final String ENTITY_STANDORTE = "Standorte";
+    private static final String ENTITY_BETRIEBE = "Betriebe";
+    private static final String ENTITY_ABA = "Abwasserbehandlungsanlagen";
+    private static final String ENTITY_ANFALLSTELLE = "Anfallstellen";
+    private static final String ENTITY_EINL = "Einleitungsstellen";
+    private static final String ENTITY_ENTWG = "Entwässerungsgrundstücke";
+    private static final String ENTITY_MST = "Messstellen";
+    private static final String ENTITY_SONDERBAUWERKE = "Sonderbauwerke";
+
 
     private JPanel panel;
 
@@ -208,15 +221,10 @@ public class ELKASync extends AbstractModul {
             final JComboBox<String> selection = new JComboBox<String>();
             final JProgressBar progress = new JProgressBar();
             String[] entities =  new String[]{
-                    "Adressen",
-                    "Standorte",
-                    "Betriebe",
-                    "Abwasserbehandlungsanlagen",
-                    "Anfallstellen",
-                    "Einleitungsstellen",
-                    "Entwässerungsgrundstücke",
-                    "Messstellen",
-                    "Sonderbauwerke"};
+                ENTITY_ADRESSE, ENTITY_STANDORTE, ENTITY_BETRIEBE, ENTITY_ABA,
+                ENTITY_ANFALLSTELLE, ENTITY_EINL, ENTITY_ENTWG, ENTITY_MST,
+                ENTITY_SONDERBAUWERKE
+            };
             if (entities != null && entities.length > 0) {
                 for (String entity : entities) {
                     selection.addItem(entity);
@@ -702,8 +710,83 @@ public class ELKASync extends AbstractModul {
                     worker.start();
                 }
             });
+
+            final JButton deleteAllButton = new JButton("gewählte Tabelle löschen");
+            deleteAllButton.addActionListener(new ActionListener() {
+                CredentialsDialog dialog = new CredentialsDialog(
+                        ELKASync.this);
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    SwingWorkerVariant worker = new SwingWorkerVariant(deleteAllButton) {
+                        @Override
+                        protected void doNonUILogic() {
+                            dialog.setVisible(true);
+                            if (url == null || url.equals("")) {
+                                JOptionPane.showMessageDialog(
+                                    ELKASync.this.panel,
+                                    "Bitte geben Sie eine Url an!",
+                                    "Verbindungsdaten",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                                return;
+                            }
+                            if (user == null || user.equals("") ||
+                                password == null || password.equals("")) {
+                                JOptionPane.showMessageDialog(
+                                    ELKASync.this.panel,
+                                    "Bitte geben Sie Benutzername und Passwort an!",
+                                    "Verbindungsdaten",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                                return;
+                            }
+                            String sel = (String) selection.getSelectedItem();
+                            JerseyClient client = new JerseyClientBuilder().build();
+                            Logger l = Logger.getAnonymousLogger();
+                            try{
+                                l.addHandler(new FileHandler(sel + "-network.log"));
+                            }
+                            catch(IOException e){
+                                log.debug(e);
+                            }
+                            client.register(new LoggingFeature(l));
+
+                            List<Entity<?>> entityList =
+                                new ArrayList<Entity<?>>();
+                            List<?> dbList = null;
+                            referenceUrl = url + "/referenz";
+                            url += getUrlByEntity(sel);
+                            dbList = getModelByEntity(sel).getList();
+                            JerseyWebTarget target =
+                                    client.target(url)
+                                    .queryParam("username", user)
+                                    .queryParam("password", password);
+
+                            RowSorter sorter = ELKASync.this.dbTable.getRowSorter();
+                            List<Object> indexList = new ArrayList<Object>();
+                            List<Object> idList = new ArrayList<Object>();
+                            for (int i = 0; i < dbList.size(); i++) {
+                                Object obj = dbList.get(i);
+                                idList.add(getEntityId(sel, obj));
+                                entityList.add(Entity.entity(
+                                        obj,
+                                        MediaType.APPLICATION_JSON + ";charset=UTF-8"));
+                                indexList.add(sorter.convertRowIndexToModel(i) + 1);
+                            }
+                            progress.setValue(0);
+                            progress.setMaximum(dbList.size());
+                            ELKASync.this.progressCounter.setText("0/" + dbList.size());
+                            ELKASync.this.deleteData(entityList, idList, indexList, url, user, password, progress, sel);
+
+                        }
+                        @Override
+                        protected void doUIUpdateLogic() {
+                        }
+                    };
+                    worker.start();
+                }
+            });
+
             FormLayout layout = new FormLayout(
-                "pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu:grow(1.0)",
+                "pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu:grow(1.0)",
                 "pref, 3dlu, 150dlu:grow(2.0), 3dlu, pref");
             PanelBuilder builder = new PanelBuilder(layout);
             CellConstraints cc = new CellConstraints();
@@ -736,7 +819,8 @@ public class ELKASync extends AbstractModul {
             builder.add(commitTable, cc.xy(5, 1));
             builder.add(commitEntries, cc.xy(7, 1));
             builder.add(deleteEntries, cc.xy(9, 1));
-            builder.add(dbScroller, cc.xyw(1, 3, 10));
+            builder.add(deleteAllButton, cc.xy(11, 1));
+            builder.add(dbScroller, cc.xyw(1, 3, 12));
             builder.addLabel("Anzahl der Elemente: ", cc.xy(1, 5));
             builder.add(this.rowCount, cc.xy(3, 5));
             builder.add(new JLabel("Fortschritt: "), cc.xy(5, 5, CellConstraints.RIGHT, CellConstraints.CENTER));
@@ -1228,6 +1312,87 @@ public class ELKASync extends AbstractModul {
             e.printStackTrace();
         }
         return object;
+    }
+
+    /**
+     * Get the url path for the given entity name.
+     * @param entity Entity name
+     * @return Url path including leading slash or null if entity is unkown
+     */
+    private String getUrlByEntity(String entity) {
+        switch(entity) {
+            case ENTITY_ABA: return "/abwasserbehandlungsanlage";
+            case ENTITY_ANFALLSTELLE: return "/anfallstelle";
+            case ENTITY_BETRIEBE: return "/betrieb";
+            case ENTITY_EINL: return "/einleitungsstelle";
+            case ENTITY_MST: return "/messstelle";
+            case ENTITY_ADRESSE: return "/adresse";
+            case ENTITY_STANDORTE: return "/standort";
+            case ENTITY_ENTWG: return "/entwaesserungsgrundstueck";
+            case ENTITY_SONDERBAUWERKE: return "/sonderbauwerk";
+            default: return null;
+        }
+    }
+
+    /**
+     * Get the tablemodel for the given entity
+     * @param entity Entity name
+     * @return Tablemodel or null if entity is unkown
+     */
+    private ListTableModel getModelByEntity(String entity) {
+        switch(entity) {
+            case ENTITY_ABA: return this.abwasserbehandlungModel;
+            case ENTITY_ANFALLSTELLE: return this.anfallstelleModel;
+            case ENTITY_BETRIEBE: return this.betriebModel;
+            case ENTITY_EINL: return this.einleitungsstelleModel;
+            case ENTITY_MST: return this.messstelleModel;
+            case ENTITY_ADRESSE: return this.adresseModel;
+            case ENTITY_STANDORTE: return this.standortModel;
+            case ENTITY_ENTWG: return this.entwgrundModel;
+            case ENTITY_SONDERBAUWERKE: return this.sbModel;
+            default: return null;
+        }
+    }
+
+    /**
+     * Get the given objects id.
+     * @param type Object type
+     * @param entity Object
+     * @return Id as Integer or null
+     */
+    private Integer getEntityId(String type, Object entity) {
+        Integer id;
+        switch(type) {
+            case ENTITY_ABA:
+                id = ((EAbwasserbehandlungsanlage) entity).getNr();
+                break;
+            case ENTITY_ANFALLSTELLE:
+                id = ((EAnfallstelle) entity).getNr();
+                break;
+            case ENTITY_BETRIEBE:
+                id = ((EBetrieb) entity).getNr();
+                break;
+            case ENTITY_EINL:
+                id = ((EEinleitungsstelle) entity).getNr();
+                break;
+            case ENTITY_MST:
+                id = ((EMessstelle) entity).getNr();
+                break;
+            case ENTITY_ADRESSE:
+                id = ((EAdresse) entity).getNr();
+                break;
+            case ENTITY_STANDORTE:
+                id = ((EStandort) entity).getNr();
+                break;
+            case ENTITY_ENTWG:
+                id = ((EEntwaesserungsgrundstueck) entity).getNr();
+                break;
+            case ENTITY_SONDERBAUWERKE:
+                id = ((ESonderbauwerk) entity).getNr();
+                break;
+            default: return null;
+        }
+        return id;
     }
 
     //Cell renderer used for row number cells
