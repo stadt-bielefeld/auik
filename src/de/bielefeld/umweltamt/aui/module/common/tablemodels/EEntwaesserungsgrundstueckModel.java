@@ -47,6 +47,15 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
 
 	}
 
+    public Class<?> getColumnClass(int column) {
+        switch (column) {
+            case 0:
+                return Integer.class;
+            default:
+                return String.class;
+        }
+    }
+
 	@Override
 	public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;

@@ -74,8 +74,16 @@ public class EAdresseModel extends ListTableModel {
             default:
                 value = null;
         }
-
         return value;
-	}
+    }
+
+    public Class<?> getColumnClass(int column) {
+        switch (column) {
+            case 0:
+                return Integer.class;
+            default:
+                return String.class;
+        }
+    }
 
 }

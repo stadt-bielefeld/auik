@@ -48,6 +48,17 @@ public class EMessstelleModel extends ListTableModel {
 
 	}
 
+    public Class<?> getColumnClass(int column) {
+        switch (column) {
+            case 0:
+            case 4:
+            case 5:
+                return Integer.class;
+            default:
+                return String.class;
+        }
+    }
+
 	@Override
 	public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
