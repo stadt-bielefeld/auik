@@ -27,9 +27,11 @@ public class EEinleitungsstelleModel extends ListTableModel {
 
 	public EEinleitungsstelleModel() {
         super(new String[]{
-                "Standort-Nr",
+                "Betreiber",
                 "Bezeichnung",
-                "Typ"},
+                "Typ",
+                "Adresse",
+                "Objekt-ID"},
                 false,
                 true);
     }
@@ -39,6 +41,17 @@ public class EEinleitungsstelleModel extends ListTableModel {
 		// TODO Auto-generated method stub
 
 	}
+
+    public Class<?> getColumnClass(int column) {
+        switch (column) {
+            case 4:
+                return Integer.class;
+            case 5:
+                return Boolean.class;
+            default:
+                return String.class;
+        }
+    }
 
 	@Override
 	public Object getColumnValue(Object objectAtRow, int columnIndex) {
@@ -54,6 +67,12 @@ public class EEinleitungsstelleModel extends ListTableModel {
                 break;
             case 2:
                 value = stelle.getTypIndirekteinleitungTog() ? "Indirekteinleiter" : "";
+                break;
+            case 3:
+                value = stelle.getStandort().getAdresse().getNr();
+                break;
+            case 4:
+                value = stelle.getNr();
                 break;
             default:
                 value = null;
