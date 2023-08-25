@@ -27,7 +27,7 @@ public class EAdresseModel extends ListTableModel {
 
     public EAdresseModel() {
         super(new String[]{
-                "Nr",
+                "ID",
                 "Anrede",
                 "Name",
                 "Strasse",
