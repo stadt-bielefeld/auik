@@ -21,7 +21,6 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
-import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EMessstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
@@ -29,9 +28,11 @@ import de.bielefeld.umweltamt.aui.utils.StringUtils;
 
 public class EMessstelleModel extends ListTableModel {
 
+    private static final long serialVersionUID = -5803035278753568553L;
+
     AuikLogger log = AuikLogger.getLogger();
 
-	public EMessstelleModel() {
+    public EMessstelleModel() {
         super(new String[]{
                 "Standort-Nr",
                 "Adresse",
@@ -43,11 +44,9 @@ public class EMessstelleModel extends ListTableModel {
                 true);
     }
 
-	@Override
-	public void updateList() throws Exception {
-		// TODO Auto-generated method stub
-
-	}
+    @Override
+    public void updateList() throws Exception {
+    }
 
     public Class<?> getColumnClass(int column) {
         switch (column) {
@@ -59,16 +58,14 @@ public class EMessstelleModel extends ListTableModel {
         }
     }
 
-	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    @Override
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
 
         EMessstelle stelle = (EMessstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
-          		//value = stelle.getStandortNr().getAdresse().getName1();
-                //value = EAdresse.findById(stelle.getNr()).getName1();
-				value = stelle.getStandort().getAdresse().getNr();
+                value = stelle.getStandort().getAdresse().getNr();
                 break;
             case 1:
                 value = StringUtils.createAddressString(
@@ -89,8 +86,6 @@ public class EMessstelleModel extends ListTableModel {
             default:
                 value = null;
         }
-
         return value;
-	}
-
+    }
 }

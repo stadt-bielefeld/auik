@@ -26,6 +26,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class EAnfallstelleModel extends ListTableModel {
 
+    private static final long serialVersionUID = -4682165276528632515L;
+
     public EAnfallstelleModel() {
         super(new String[]{
                 "Betreiber",
@@ -37,11 +39,9 @@ public class EAnfallstelleModel extends ListTableModel {
                 true);
     }
 
-	@Override
-	public void updateList() throws Exception {
-		// TODO Auto-generated method stub
-
-	}
+    @Override
+    public void updateList() throws Exception {
+    }
 
     public Class<?> getColumnClass(int column) {
         switch (column) {
@@ -52,14 +52,14 @@ public class EAnfallstelleModel extends ListTableModel {
         }
     }
 
-	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    @Override
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
 
         EAnfallstelle anlage = (EAnfallstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
-          		value = anlage.getStandort().getAdresse().getName1();
+                  value = anlage.getStandort().getAdresse().getName1();
                 break;
             case 1:
                 value = StringUtils.createAddressString(anlage.getAdresse());
@@ -73,12 +73,10 @@ public class EAnfallstelleModel extends ListTableModel {
             case 4:
                 value = anlage.getNr();
                 break;
-
             default:
                 value = null;
         }
-
         return value;
-	}
+    }
 
 }

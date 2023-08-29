@@ -25,6 +25,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class ESonderbauwerkModel extends ListTableModel {
 
+    private static final long serialVersionUID = 5385695394656257095L;
+
     public ESonderbauwerkModel() {
         super(new String[]{
                 "Nr",
@@ -39,12 +41,12 @@ public class ESonderbauwerkModel extends ListTableModel {
                 true);
     }
 
-	@Override
-	public void updateList() throws Exception {
-	}
+    @Override
+    public void updateList() throws Exception {
+    }
 
-	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    @Override
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
         ESonderbauwerk sb = (ESonderbauwerk) objectAtRow;
         switch(columnIndex) {
             case 0: return sb.getNr();

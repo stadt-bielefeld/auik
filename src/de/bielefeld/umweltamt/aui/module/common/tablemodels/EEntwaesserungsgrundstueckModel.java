@@ -20,12 +20,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueck;
-import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class EEntwaesserungsgrundstueckModel extends ListTableModel {
+
+    private static final long serialVersionUID = -2443756198273247372L;
 
     public EEntwaesserungsgrundstueckModel() {
         super(new String[]{
@@ -41,11 +41,9 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
                 true);
     }
 
-	@Override
-	public void updateList() throws Exception {
-		// TODO Auto-generated method stub
-
-	}
+    @Override
+    public void updateList() throws Exception {
+    }
 
     public Class<?> getColumnClass(int column) {
         switch (column) {
@@ -56,13 +54,13 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
         }
     }
 
-	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    @Override
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
 
         EEntwaesserungsgrundstueck ewg= (EEntwaesserungsgrundstueck) objectAtRow;
         switch(columnIndex) {
-            case 0: 
+            case 0:
                 return ewg.getNr();
             case 1:
                 return ewg.getAdresse().getName1();
@@ -76,12 +74,9 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
                 return ewg.getNameEtwGebiet();
             case 6:
                 return ewg.getErstellDat();
-
             default:
                 value = null;
         }
-
         return value;
-	}
-
+    }
 }

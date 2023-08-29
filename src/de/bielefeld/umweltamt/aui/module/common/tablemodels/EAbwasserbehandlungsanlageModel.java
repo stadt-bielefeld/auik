@@ -26,6 +26,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class EAbwasserbehandlungsanlageModel extends ListTableModel {
 
+    private static final long serialVersionUID = -7341609286372181098L;
+
     public EAbwasserbehandlungsanlageModel() {
         super(new String[]{
                 "Betreiber",
@@ -38,9 +40,9 @@ public class EAbwasserbehandlungsanlageModel extends ListTableModel {
                 true);
     }
 
-	@Override
-	public void updateList() throws Exception {
-	}
+    @Override
+    public void updateList() throws Exception {
+    }
 
     public Class<?> getColumnClass(int column) {
         switch (column) {
@@ -51,14 +53,14 @@ public class EAbwasserbehandlungsanlageModel extends ListTableModel {
         }
     }
 
-	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    @Override
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
 
         EAbwasserbehandlungsanlage anlage = (EAbwasserbehandlungsanlage) objectAtRow;
         switch(columnIndex) {
             case 0:
-          		value = anlage.getStandort().getAdresse().getName1();
+                  value = anlage.getStandort().getAdresse().getName1();
                 break;
             case 1:
                 value = StringUtils.createAddressString(
@@ -76,12 +78,9 @@ public class EAbwasserbehandlungsanlageModel extends ListTableModel {
             case 5:
                 value = anlage.getNr();
                 break;
-
             default:
                 value = null;
         }
-
         return value;
-	}
-
+    }
 }

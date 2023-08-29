@@ -25,6 +25,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class EAdresseModel extends ListTableModel {
 
+    private static final long serialVersionUID = -1000819877183682247L;
+
     public EAdresseModel() {
         super(new String[]{
                 "ID",
@@ -38,14 +40,12 @@ public class EAdresseModel extends ListTableModel {
                 true);
     }
 
-	@Override
-	public void updateList() throws Exception {
-		// TODO Auto-generated method stub
+    @Override
+    public void updateList() throws Exception {
+    }
 
-	}
-
-	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    @Override
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object value;
 
         EAdresse adresse = (EAdresse) objectAtRow;
@@ -57,20 +57,20 @@ public class EAdresseModel extends ListTableModel {
                 value = adresse.getAnrede();
                 break;
             case 2:
-            	value = adresse.getName1();
-            	break;
+                value = adresse.getName1();
+                break;
             case 3:
-            	value = adresse.getStrasse();
-            	break;
+                value = adresse.getStrasse();
+                break;
             case 4:
-            	value = adresse.getHausnr();
-            	break;
+                value = adresse.getHausnr();
+                break;
             case 5:
-            	value = adresse.getPlzZst();
-            	break;
+                value = adresse.getPlzZst();
+                break;
             case 6:
-            	value = adresse.getOrtZst();
-            	break;
+                value = adresse.getOrtZst();
+                break;
             default:
                 value = null;
         }
@@ -85,5 +85,4 @@ public class EAdresseModel extends ListTableModel {
                 return String.class;
         }
     }
-
 }
