@@ -21,6 +21,8 @@
 
 package de.bielefeld.umweltamt.aui.utils;
 
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
+
 /**
  * A little utility class for String operations.
  *
@@ -28,6 +30,31 @@ package de.bielefeld.umweltamt.aui.utils;
  */
 public class StringUtils
 {
+	/**
+	 * Create an address String from the given EAdresse instance.
+	 * @param address EAdresse instance
+	 * @return Address String
+	 */
+	public static String createAddressString(EAdresse address) {
+		return createAdressString(
+			address.getStrasse(), address.getHausnr(),
+			address.getPlzZst(), address.getOrtZst());
+	}
+	/**
+	 * Create an address String from the given parts.
+	 * @param street
+	 * @param houseNumber
+	 * @param postalCode
+	 * @param city
+	 * @return Address String
+	 */
+	public static String createAdressString(
+			String street, String houseNumber,
+			String postalCode, String city) {
+		String ret = String.format("%s %s, %s %s",
+			street, houseNumber, postalCode, city);
+		return ret;
+	}
 
 	/**
 	 * Little helper method to set a strike through the text via HTML.<br>

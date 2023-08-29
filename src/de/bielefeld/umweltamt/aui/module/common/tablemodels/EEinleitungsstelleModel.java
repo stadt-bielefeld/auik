@@ -21,6 +21,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class EEinleitungsstelleModel extends ListTableModel {
@@ -44,8 +45,6 @@ public class EEinleitungsstelleModel extends ListTableModel {
 
     public Class<?> getColumnClass(int column) {
         switch (column) {
-            case 4:
-                return Integer.class;
             case 5:
                 return Boolean.class;
             default:
@@ -69,7 +68,8 @@ public class EEinleitungsstelleModel extends ListTableModel {
                 value = stelle.getTypIndirekteinleitungTog() ? "Indirekteinleiter" : "";
                 break;
             case 3:
-                value = stelle.getStandort().getAdresse().getNr();
+                value = StringUtils.createAddressString(
+                    stelle.getStandort().getAdresse());
                 break;
             case 4:
                 value = stelle.getNr();

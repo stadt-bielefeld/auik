@@ -21,6 +21,7 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 public class EAnfallstelleModel extends ListTableModel {
@@ -45,7 +46,6 @@ public class EAnfallstelleModel extends ListTableModel {
     public Class<?> getColumnClass(int column) {
         switch (column) {
             case 3:
-            case 4:
                 return Integer.class;
             default:
                 return String.class;
@@ -71,7 +71,7 @@ public class EAnfallstelleModel extends ListTableModel {
                 value = anlage.getNr();
                 break;
             case 4:
-                value = anlage.getAdresse().getNr();
+                value = StringUtils.createAddressString(anlage.getAdresse());
                 break;
             default:
                 value = null;
