@@ -41,7 +41,6 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -141,6 +140,7 @@ public class AnfallstellePanel extends ObjectPanel {
     private Action verknuepfungLoeschAction;
     private JPopupMenu verknuepfungPopup;
 
+    @SuppressWarnings("deprecation")
     public AnfallstellePanel(BasisObjektBearbeiten hauptModul) {
         this.name = "Anfallstelle";
         this.hauptModul = hauptModul;

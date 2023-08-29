@@ -56,7 +56,6 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -66,7 +65,6 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -104,6 +102,7 @@ public class Anh52Panel extends ObjectPanel {
     // Daten
     private Anh52Fachdaten fachdaten = null;
 
+    @SuppressWarnings("deprecation")
     public Anh52Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
         name = "Chemische Wäscherei";
         this.hauptModul = hauptModul;
@@ -207,10 +206,10 @@ public class Anh52Panel extends ObjectPanel {
         success = this.fachdaten.merge();
         if (success) {
             log.debug("Anh 52 Objekt " + fachdaten.getId()
-            		+ " gespeichert.");
+                    + " gespeichert.");
         } else {
             log.debug("Anh 52 Objekt " + fachdaten
-            		+ " konnte nicht gespeichert werden!");
+                    + " konnte nicht gespeichert werden!");
         }
         return success;
     }
@@ -275,9 +274,9 @@ public class Anh52Panel extends ObjectPanel {
 
 
     public void fetchFormData() throws RuntimeException {
-    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
-		this.fachdaten = Anh52Fachdaten.findByAnfallstelleId(
-				list.iterator().next().getId());
+        Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+        this.fachdaten = Anh52Fachdaten.findByAnfallstelleId(
+                list.iterator().next().getId());
         this.log.debug("Anhang 52 Objekt aus DB geholt: " + this.fachdaten);
     }
 

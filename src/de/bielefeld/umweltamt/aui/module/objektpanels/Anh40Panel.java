@@ -24,36 +24,24 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.Set;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -100,7 +88,7 @@ public class Anh40Panel extends ObjectPanel {
     // Daten
     private Anh40Fachdaten fachdaten = null;
 
-
+    @SuppressWarnings("deprecation")
     public Anh40Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
         this.name = "Anhang 40";
         this.hauptModul = hauptModul;
@@ -151,7 +139,7 @@ public class Anh40Panel extends ObjectPanel {
         builder.nextLine();
         
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-        		getSaveAnh40Button());
+                getSaveAnh40Button());
         builder.append(buttonBar,7);
         addChangeListeners(getAnh40BemerkungArea(),
             getAnsprechpartnerFeld(), getSachbearbeiterravFeld(),
@@ -164,14 +152,14 @@ public class Anh40Panel extends ObjectPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
-		this.fachdaten = Anh40Fachdaten.findByAnfallstelleId(
-				list.iterator().next().getId());
+        Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+        this.fachdaten = Anh40Fachdaten.findByAnfallstelleId(
+                list.iterator().next().getId());
         log.debug("Anhang 40 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
     public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
-    	this.fachdaten = anfallstelle.getAnh40Fachdatens().iterator().next();
+        this.fachdaten = anfallstelle.getAnh40Fachdatens().iterator().next();
         if (this.fachdaten != null) {
             if (this.fachdaten.getBemerkungen() != null) {
                 getAnh40BemerkungArea()
@@ -381,7 +369,7 @@ public class Anh40Panel extends ObjectPanel {
     }
 
     public void completeObjekt(Anfallstelle anfallstelle) {
-    	
+        
         if (anfallstelle.getAnh40Fachdatens().size() == 0) {
             // Neues Anhang 40 Objekt erzeugen
             this.fachdaten = new Anh40Fachdaten();
@@ -407,7 +395,7 @@ public class Anh40Panel extends ObjectPanel {
                                 + " erfolgreich gespeichert.",
                             HauptFrame.SUCCESS_COLOR);
                     } else {
-                    	Anh40Panel.this.hauptModul.getFrame().changeStatus(
+                        Anh40Panel.this.hauptModul.getFrame().changeStatus(
                             "Fehler beim Speichern des Anh 40 Objekt!",
                             HauptFrame.ERROR_COLOR);
                     }

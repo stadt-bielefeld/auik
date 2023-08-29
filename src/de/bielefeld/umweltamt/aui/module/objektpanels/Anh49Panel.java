@@ -239,10 +239,11 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
 
     public Anh49Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
-    	this(hauptModul);
-    	this.anfallstelle = anfallstelle;
+        this(hauptModul);
+        this.anfallstelle = anfallstelle;
     }
 
+    @SuppressWarnings("deprecation")
     public Anh49Panel(BasisObjektBearbeiten hauptModul) {
         super("Abscheider", hauptModul);
         
@@ -456,34 +457,34 @@ public class Anh49Panel extends AbstractAnhangPanel {
      */
     public void editAbscheider(Anh49Abscheiderdetails absch) {
         
-    	if (fachdaten.getId() == null) {
-			JOptionPane.showMessageDialog(hauptModul.getFrame(),
-				    "Bitte zuerst das Anhangobjekt speichern",
-				    "Warnung",
-				    JOptionPane.WARNING_MESSAGE);
-		} else {
-			
-	        AbscheiderEditor editDialog = new AbscheiderEditor(absch,
-	                hauptModul.getFrame());
+        if (fachdaten.getId() == null) {
+            JOptionPane.showMessageDialog(hauptModul.getFrame(),
+                    "Bitte zuerst das Anhangobjekt speichern",
+                    "Warnung",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            
+            AbscheiderEditor editDialog = new AbscheiderEditor(absch,
+                    hauptModul.getFrame());
 
-	            editDialog.setLocationRelativeTo(hauptModul.getFrame());
+                editDialog.setLocationRelativeTo(hauptModul.getFrame());
 
-	            editDialog.setVisible(true);
+                editDialog.setVisible(true);
 
-	            if (editDialog.wasSaved() && (editDialog.getDetails() != null)) {
-	                // Die Liste updaten, damit unsere Änderungen auch angezeigt werden
-	                abscheiderModel.updateList();
+                if (editDialog.wasSaved() && (editDialog.getDetails() != null)) {
+                    // Die Liste updaten, damit unsere Änderungen auch angezeigt werden
+                    abscheiderModel.updateList();
 
-	                // Den bearbeiteten Abscheider wieder in der Tabelle auswählen
-	                Anh49Abscheiderdetails details = editDialog.getDetails();
-	                int row = abscheiderModel.getList().indexOf(details);
-	                if (row != -1) {
-	                    getAbscheiderTabelle().setRowSelectionInterval(row, row);
-	                    getAbscheiderTabelle().scrollRectToVisible(
-	                        getAbscheiderTabelle().getCellRect(row, 0, true));
-	                }
-	            }
-			}
+                    // Den bearbeiteten Abscheider wieder in der Tabelle auswählen
+                    Anh49Abscheiderdetails details = editDialog.getDetails();
+                    int row = abscheiderModel.getList().indexOf(details);
+                    if (row != -1) {
+                        getAbscheiderTabelle().setRowSelectionInterval(row, row);
+                        getAbscheiderTabelle().scrollRectToVisible(
+                            getAbscheiderTabelle().getCellRect(row, 0, true));
+                    }
+                }
+            }
 
 
     }
@@ -596,9 +597,9 @@ public class Anh49Panel extends AbstractAnhangPanel {
     }
 
     public void fetchFormData() {
-    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
-		this.fachdaten = Anh49Fachdaten.findByAnfallstelleId(
-				list.iterator().next().getId());
+        Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+        this.fachdaten = Anh49Fachdaten.findByAnfallstelleId(
+                list.iterator().next().getId());
         log.debug("Anhang 40 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
@@ -640,7 +641,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
     }
 
     public void updateForm(Anfallstelle anfallstelle) {
-    	this.fachdaten = anfallstelle.getAnh49Fachdatens().iterator().next();
+        this.fachdaten = anfallstelle.getAnh49Fachdatens().iterator().next();
         if (this.fachdaten != null) {
             super.setComponentValue(this.ANSPRECHPARTNER,
                 this.fachdaten.getAnsprechpartnerIn());
@@ -677,10 +678,10 @@ public class Anh49Panel extends AbstractAnhangPanel {
         setDirty(false);
     }
 
-	public void clearForm() {
-		super.clearAllComponents();
-		abscheiderModel.setList(new ArrayList<Anh49Abscheiderdetails>());
-	}
+    public void clearForm() {
+        super.clearAllComponents();
+        abscheiderModel.setList(new ArrayList<Anh49Abscheiderdetails>());
+    }
 
     public void enableAll(boolean enabled) {
         // Wenn das Fachdaten-Objekt null ist,

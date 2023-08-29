@@ -39,41 +39,26 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.Set;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -110,7 +95,7 @@ public class Anh56Panel extends ObjectPanel {
     // Daten
     private Anh56Fachdaten fachdaten = null;
 
-
+    @SuppressWarnings("deprecation")
     public Anh56Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
         this.name = "Druckerei";
         this.hauptModul = hauptModul;
@@ -165,8 +150,8 @@ public class Anh56Panel extends ObjectPanel {
             this.fachdaten = new Anh56Fachdaten();
         }
         // Anfallstelle setzen
-        	this.anfallstelle = anfallstelle;
-        	this.fachdaten.setAnfallstelle(this.anfallstelle);
+            this.anfallstelle = anfallstelle;
+            this.fachdaten.setAnfallstelle(this.anfallstelle);
     }
 
     protected boolean doSavePanelData() {
@@ -236,7 +221,7 @@ public class Anh56Panel extends ObjectPanel {
     }
 
     public void enableAll(boolean enabled) {
-		// This is intentionally left blank
+        // This is intentionally left blank
     }
 
     public void clearForm() {
@@ -254,9 +239,9 @@ public class Anh56Panel extends ObjectPanel {
     }
 
     public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
-    	
-    	this.fachdaten = anfallstelle.getAnh56Fachdatens().iterator().next();
-    	
+        
+        this.fachdaten = anfallstelle.getAnh56Fachdatens().iterator().next();
+        
         if (this.fachdaten != null) {
             if (this.fachdaten.getBemerkungen() != null) {
                 getBemerkungenArea().setText(this.fachdaten.getBemerkungen());
@@ -305,9 +290,9 @@ public class Anh56Panel extends ObjectPanel {
     }
 
     public void fetchFormData() throws RuntimeException {
-    	Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
-		this.fachdaten = Anh56Fachdaten.findByAnfallstelleId(
-				list.iterator().next().getId());
+        Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+        this.fachdaten = Anh56Fachdaten.findByAnfallstelleId(
+                list.iterator().next().getId());
         log.debug("Anhang 56 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
