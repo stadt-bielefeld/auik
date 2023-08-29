@@ -224,7 +224,6 @@ public class Anh56Panel extends ObjectPanel {
             this.fachdaten.setAbwasseranfall(false);
         }
 
-        Anfallstelle.merge(this.anfallstelle);
         success = fachdaten.merge();
         if (success) {
             log.debug("Anh 56 Objekt " + this.fachdaten.getId()

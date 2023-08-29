@@ -432,7 +432,6 @@ public class Anh55Panel extends ObjectPanel {
             this.fachdaten.setLoesungsmittel(false);
         }
 
-        Anfallstelle.merge(this.anfallstelle);
         success = fachdaten.merge();
         if (success) {
             log.debug("Anh 55 Objekt " + this.fachdaten.getId()

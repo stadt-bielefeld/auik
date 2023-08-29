@@ -722,7 +722,6 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 .getComponentValue(this.SICHERHEITSABSCHEIDER));
         this.fachdaten.getAnfallstelle().setObjekt(this.hauptModul.getObjekt());
 
-        Anfallstelle.merge(this.anfallstelle);
         success = this.fachdaten.merge();
 
         if (!success) {

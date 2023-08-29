@@ -204,7 +204,6 @@ public class Anh52Panel extends ObjectPanel {
             fachdaten.setFirmenname(firmennameString);
         }
 
-        Anfallstelle.merge(this.anfallstelle);
         success = this.fachdaten.merge();
         if (success) {
             log.debug("Anh 52 Objekt " + fachdaten.getId()

@@ -252,7 +252,6 @@ public class Anh50Panel extends ObjectPanel {
 			getEntsorgerBox().setSelectedIndex(1);
 		this.fachdaten.setEntsorger((Entsorger) getEntsorgerBox().getSelectedItem());
 
-		Anfallstelle.merge(this.anfallstelle);
 		success = this.fachdaten.merge();
 		if (success) {
 			log.debug("Zahnarzt " + this.fachdaten.getAnfallstelle().getObjekt().getBetreiberid().getName()

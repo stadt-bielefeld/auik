@@ -369,7 +369,6 @@ public class Anh40Panel extends ObjectPanel {
         Date gen59 = this.gen59Datum.getDate();
         this.fachdaten.setGen59(gen59);
 
-        Anfallstelle.merge(this.anfallstelle);
         success = this.fachdaten.merge();
         if (success) {
             log.debug("Anh 40 Objekt " + this.fachdaten.getId()
