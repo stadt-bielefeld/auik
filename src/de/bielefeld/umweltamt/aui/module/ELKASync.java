@@ -132,6 +132,7 @@ public class ELKASync extends AbstractModul {
     private static final String ENTITY_MST = "Messstellen";
     private static final String ENTITY_SONDERBAUWERKE = "Sonderbauwerke";
 
+    private String[] entities;
 
     private JPanel panel;
 
@@ -216,13 +217,14 @@ public class ELKASync extends AbstractModul {
         this.progressCounter = new JLabel("-/-");
     }
 
+    @SuppressWarnings("deprecation")
     private JPanel createPanel() {
         init();
         if (this.panel == null) {
             this.panel = new JPanel();
             final JComboBox<String> selection = new JComboBox<String>();
             final JProgressBar progress = new JProgressBar();
-            String[] entities =  new String[]{
+            entities = new String[]{
                 ENTITY_ADRESSE, ENTITY_STANDORTE, ENTITY_BETRIEBE, ENTITY_ABA,
                 ENTITY_ANFALLSTELLE, ENTITY_EINL, ENTITY_ENTWG, ENTITY_MST,
                 ENTITY_SONDERBAUWERKE
@@ -245,68 +247,10 @@ public class ELKASync extends AbstractModul {
                         @Override
                         protected void doNonUILogic() throws RuntimeException {
                             String item = (String) selection.getSelectedItem();
-                            if (item.equals("Abwasserbehandlungsanlagen")) {
-                                ELKASync.this.dbTable
-                                        .setModel(ELKASync.this.abwasserbehandlungModel);
-                                ELKASync.this.abwasserbehandlungModel.setList(
-                                        prependIdentifierAbwasserbehandlungsanlage(
-                                            EAbwasserbehandlungsanlage.getAll()));
-                                ELKASync.this.abwasserbehandlungModel.fireTableDataChanged();
-                            } else if (item.equals("Anfallstellen")) {
-                                ELKASync.this.dbTable
-                                        .setModel(ELKASync.this.anfallstelleModel);
-                                ELKASync.this.anfallstelleModel.setList(
-                                        prependIdentifierAnfallstelle(EAnfallstelle.getAll()));
-                                ELKASync.this.anfallstelleModel.fireTableDataChanged();
-                            } else if (item.equals("Betriebe")) {
-                                ELKASync.this.dbTable
-                                        .setModel(ELKASync.this.betriebModel);
-                                ELKASync.this.betriebModel.setList(
-                                        prependIdentifierBetrieb(EBetrieb.getAll()));
-                                ELKASync.this.betriebModel.fireTableDataChanged();
-                            } else if (item.equals("Einleitungsstellen")) {
-                                ELKASync.this.dbTable
-                                        .setModel(ELKASync.this.einleitungsstelleModel);
-                                ELKASync.this.einleitungsstelleModel.setList(
-                                        prependIdentifierEinleitungsstelle(
-                                            EEinleitungsstelle.getAll()));
-                                currentTableMappings = EEinleitungsstelle.getAll();
-                                ELKASync.this.einleitungsstelleModel.fireTableDataChanged();
-                            } else if (item.equals("Messstellen")) {
-                                ELKASync.this.dbTable
-                                        .setModel(ELKASync.this.messstelleModel);
-                                ELKASync.this.messstelleModel.setList(
-                                        prependIdentifierMessstelle(EMessstelle.getAll()));
-                                ELKASync.this.messstelleModel.fireTableDataChanged();
-                            } else if (item.equals("Adressen")) {
-                                ELKASync.this.dbTable
-                                        .setModel(ELKASync.this.adresseModel);
-                                ELKASync.this.adresseModel.setList(
-                                        prependIdentifierAdresse(EAdresse.getAll()));
-                                ELKASync.this.adresseModel.fireTableDataChanged();
-                            } else if (item.equals("Standorte")) {
-                                ELKASync.this.dbTable
-                                        .setModel(ELKASync.this.standortModel);
-                                List<EStandort> items = EStandort.getAll().stream()
-                                    .filter(standort -> standort.getAdresse().getOrtZst()
-                                            .equals("Bielefeld"))
-                                    .collect(Collectors.toList());
-                                ELKASync.this.standortModel.setList(
-                                        prependIdentifierStandort(items));
-                                ELKASync.this.standortModel.fireTableDataChanged();
-                            } else if (item.equals("Entwässerungsgrundstücke")) {
-                                ELKASync.this.dbTable
-                                    .setModel(ELKASync.this.entwgrundModel);
-                                ELKASync.this.entwgrundModel.setList(
-                                        prependIdentifierEEntwaesserungsgrundstueck(EEntwaesserungsgrundstueck.getAll()));
-                                ELKASync.this.entwgrundModel.fireTableDataChanged();
-                            } else if (item.equals("Sonderbauwerke")) {
-                                ELKASync.this.dbTable
-                                    .setModel(ELKASync.this.sbModel);
-                                ELKASync.this.sbModel.setList(
-                                        prependIdentifierSonderbauwerk(ESonderbauwerk.getAll()));
-                                ELKASync.this.sbModel.fireTableDataChanged();
-                            }
+                            ListTableModel model = getModelByEntity(item);
+                            ELKASync.this.dbTable.setModel(model);
+                            model.setList(getListByEntity(item));
+                            model.fireTableDataChanged();;
                             ELKASync.this.rowCount.setText(String
                                     .valueOf(ELKASync.this.dbTable
                                             .getRowCount()));
@@ -556,7 +500,7 @@ public class ELKASync extends AbstractModul {
                 }
             });
 
-            final JButton deleteAllButton = new JButton("gewählte Tabelle löschen");
+            final JButton deleteAllButton = new JButton("Alle Tabellen löschen");
             deleteAllButton.addActionListener(new ActionListener() {
                 CredentialsDialog dialog = new CredentialsDialog(
                         ELKASync.this);
@@ -583,52 +527,71 @@ public class ELKASync extends AbstractModul {
                                     JOptionPane.INFORMATION_MESSAGE);
                                 return;
                             }
-                            String sel = (String) selection.getSelectedItem();
-                            JerseyClient client = new JerseyClientBuilder().build();
-                            Logger l = Logger.getAnonymousLogger();
-                            try{
-                                l.addHandler(new FileHandler(sel + "-network.log"));
+                            int selSize = selection.getModel().getSize();
+                            //Load data and prepare progress counter
+                            int elementsToRemove = 0;
+                            for(String entitity: entities) {
+                                ListTableModel model = getModelByEntity(entitity);
+                                List<?> data = getListByEntity(entitity);
+                                model.setList(data);
+                                model.fireTableDataChanged();
+                                elementsToRemove += model.getRowCount();
                             }
-                            catch(IOException e){
-                                log.debug(e);
-                            }
-                            client.register(new LoggingFeature(l));
-
-                            List<Entity<?>> entityList =
-                                new ArrayList<Entity<?>>();
-                            List<?> dbList = null;
-                            referenceUrl = url + "/referenz";
-                            url += getUrlByEntity(sel);
-                            dbList = getModelByEntity(sel).getList();
-                            JerseyWebTarget target =
-                                    client.target(url)
-                                    .queryParam("username", user)
-                                    .queryParam("password", password);
-
-                            RowSorter sorter = ELKASync.this.dbTable.getRowSorter();
-                            List<Integer> indexList = new ArrayList<Integer>();
-                            List<Object> idList = new ArrayList<Object>();
-                            for (int i = 0; i < dbList.size(); i++) {
-                                Object obj = dbList.get(i);
-                                idList.add(getEntityId(sel, obj));
-                                entityList.add(Entity.entity(
-                                        obj,
-                                        MediaType.APPLICATION_JSON + ";charset=UTF-8"));
-                                indexList.add(sorter.convertRowIndexToModel(i) + 1);
-                            }
-                            List<EntityListEntry> entities = indexList.stream()
-                                .sorted()
-                                .map((indexEntry) -> {
-                                    int listIndex = indexList.indexOf(indexEntry);
-                                    return new EntityListEntry(
-                                        indexEntry, idList.get(listIndex),
-                                        entityList.get(listIndex));
-                                })
-                                .collect(Collectors.toList());
                             progress.setValue(0);
-                            progress.setMaximum(dbList.size());
-                            ELKASync.this.progressCounter.setText("0/" + dbList.size());
-                            ELKASync.this.deleteData(entities, url, user, password, progress, sel);
+                            progress.setMaximum(elementsToRemove);
+                            ELKASync.this.progressCounter.setText("0/" + elementsToRemove);
+                            JFileChooser chooser = new JFileChooser();
+                            File protocolFile;
+                            if (chooser.showSaveDialog(ELKASync.this.panel) == JFileChooser.APPROVE_OPTION) {
+                                protocolFile = chooser.getSelectedFile();
+                                if (protocolFile.exists()) {
+                                    protocolFile.delete();
+                                }
+                            } else {
+                                return;
+                            }
+                            for (int j = 0; j < selSize; j++) {
+                                String currentUrl = url;
+                                String sel = selection.getModel().getElementAt(j);
+                                JerseyClient client = new JerseyClientBuilder().build();
+                                Logger l = Logger.getAnonymousLogger();
+                                try{
+                                    l.addHandler(new FileHandler(sel + "-network.log"));
+                                }
+                                catch(IOException e){
+                                    log.debug(e);
+                                }
+                                client.register(new LoggingFeature(l));
+
+                                List<Entity<?>> entityList =
+                                    new ArrayList<Entity<?>>();
+                                List<?> dbList = null;
+                                currentUrl += getUrlByEntity(sel);
+                                dbList = getListByEntity(sel);
+
+                                List<Integer> indexList = new ArrayList<Integer>();
+                                List<Object> idList = new ArrayList<Object>();
+                                for (int i = 0; i < dbList.size(); i++) {
+                                    Object obj = dbList.get(i);
+                                    idList.add(getEntityId(sel, obj));
+                                    entityList.add(Entity.entity(
+                                            obj,
+                                            MediaType.APPLICATION_JSON + ";charset=UTF-8"));
+                                    indexList.add(i + 1);
+                                }
+                                List<EntityListEntry> entities = indexList.stream()
+                                    .sorted()
+                                    .map((indexEntry) -> {
+                                        int listIndex = indexList.indexOf(indexEntry);
+                                        return new EntityListEntry(
+                                            indexEntry, idList.get(listIndex),
+                                            entityList.get(listIndex));
+                                    })
+                                    .collect(Collectors.toList());
+                                ELKASync.this.deleteData(
+                                    entities, currentUrl, user, password,
+                                    progress, sel, protocolFile, true);
+                            }
                         }
                         @Override
                         protected void doUIUpdateLogic() {
@@ -705,68 +668,104 @@ public class ELKASync extends AbstractModul {
             JFileChooser chooser = new JFileChooser();
             if (chooser.showSaveDialog(this.panel) == JFileChooser.APPROVE_OPTION) {
                 File protocolFile = chooser.getSelectedFile();
-                try {
-                    JerseyClient client = new JerseyClientBuilder().build();
-                    FileOutputStream fileStream = new FileOutputStream(protocolFile);
-                    PrintStream printStream = new PrintStream(fileStream);
-                    this.progressCounter.setText("0/" + entities.size());
-                    printStream.append("Lösche " + type + "\n");
-                    printStream.append("--------------------------------------\n");
-                    for (int i = 0; i < entities.size(); i++) {
-                        EntityListEntry entry = entities.get(i);
-                        Object id = entry.getId();
-                        Integer index = entry.getTableIndex();
-                        String deleteUrl = url + "/" + id;
-                        log.debug("Deleting " + deleteUrl);
-                        JerseyWebTarget target =
-                            client.target(deleteUrl)
-                            .queryParam("username", user)
-                            .queryParam("password", password);
-                        JerseyInvocation inv =
-                            target.request(
-                                    MediaType.APPLICATION_JSON +
-                                    ";charset=UTF-8")
-                                    .buildDelete();
-                        Response response = inv.invoke();
-                        progress.setValue(progress.getValue() + 1);
-                        String responseEntity = response.readEntity(String.class);
-                        this.progressCounter.setText((i + 1)+ "/" + entities.size());
-                        String objectName = index.toString();
-                        switch (response.getStatus()) {
-                            case 204:
-                                printStream.append(objectName + ":" + " erfolgreich Gelöscht\n");
-                                break;
-                            case 404:
-                                printStream.append("Fehler in Objekt: " + objectName + "\n");
-                                printStream.append("Fehlerbeschreibung: Entität nicht existent");
-                                printStream.append("\n");
-                                break;
-                            default:
-                                printStream.append("Fehler in Objekt: " + objectName + "\n");
-                                printStream.append("Fehlerbeschreibung: " + responseEntity);
-                                printStream.append("\n");
-                        }
-                    }
-                    fileStream.close();
-                    openFile(protocolFile);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                catch (ProcessingException pe) {
-                    pe.printStackTrace();
-                    JOptionPane.showMessageDialog(
-                        this.panel,
-                        "Der Server unter der angegeben Url ist nicht erreichbar.",
-                        "Verbindungsfehler",
-                        JOptionPane.WARNING_MESSAGE);
-                }
+                deleteData(entities, url, user, password, progress, type, protocolFile, false);
             }
-            System.setProperty("http.proxyHost", "");
-            System.setProperty("http.proxyPort", "");
         }
+    }
 
+    /**
+     * Delete data and write protocol to the given file
+     * @param <T> Entitiy type
+     * @param entities Entities
+     * @param url Url
+     * @param user username
+     * @param password password
+     * @param progress Progress bar
+     * @param type Entitiy type String
+     * @param protcolFile protocol file
+     * @param append True if protocol should be appended to file
+     */
+    private <T> void deleteData(
+        List<EntityListEntry> entities,
+        String url,
+        String user,
+        String password,
+        JProgressBar progress,
+        String type,
+        File protocolFile,
+        boolean append
+    ) {
+        if (entities.size() > 0) {
+            if(PROXY_HOST != null){
+                System.setProperty("https.proxyHost", PROXY_HOST);
+                System.setProperty("http.proxyHost", PROXY_HOST);
+            }
+            if(PROXY_PORT != null){
+                System.setProperty("https.proxyPort", PROXY_PORT);
+                System.setProperty("http.proxyPort", PROXY_PORT);
+            }
+            try {
+                JerseyClient client = new JerseyClientBuilder().build();
+                FileOutputStream fileStream = new FileOutputStream(protocolFile, append);
+                PrintStream printStream = new PrintStream(fileStream);
+                this.progressCounter.setText(
+                    String.format("%s/%s", progress.getValue(), progress.getMaximum()));
+                printStream.append("Lösche " + type + "\n");
+                printStream.append("--------------------------------------\n");
+                for (int i = 0; i < entities.size(); i++) {
+                    EntityListEntry entry = entities.get(i);
+                    Object id = entry.getId();
+                    Integer index = entry.getTableIndex();
+                    String deleteUrl = url + "/" + id;
+                    log.debug("Deleting " + deleteUrl);
+                    JerseyWebTarget target =
+                        client.target(deleteUrl)
+                        .queryParam("username", user)
+                        .queryParam("password", password);
+                    JerseyInvocation inv =
+                        target.request(
+                                MediaType.APPLICATION_JSON +
+                                ";charset=UTF-8")
+                                .buildDelete();
+                    Response response = inv.invoke();
+                    progress.setValue(progress.getValue() + 1);
+                    String responseEntity = response.readEntity(String.class);
+                    this.progressCounter.setText(
+                        String.format("%s/%s", progress.getValue(), progress.getMaximum()));
+                    String objectName = index.toString();
+                    switch (response.getStatus()) {
+                        case 204:
+                            printStream.append(objectName + ":" + " erfolgreich Gelöscht\n");
+                            break;
+                        case 404:
+                            printStream.append("Fehler in Objekt: " + objectName + "\n");
+                            printStream.append("Fehlerbeschreibung: Entität nicht existent");
+                            printStream.append("\n");
+                            break;
+                        default:
+                            printStream.append("Fehler in Objekt: " + objectName + "\n");
+                            printStream.append("Fehlerbeschreibung: " + responseEntity);
+                            printStream.append("\n");
+                    }
+                }
+                fileStream.close();
+                openFile(protocolFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            catch (ProcessingException pe) {
+                pe.printStackTrace();
+                JOptionPane.showMessageDialog(
+                    this.panel,
+                    "Der Server unter der angegeben Url ist nicht erreichbar.",
+                    "Verbindungsfehler",
+                    JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        System.setProperty("http.proxyHost", "");
+        System.setProperty("http.proxyPort", "");
     }
     private <T> void sendData(
         List<EntityListEntry> entities,
@@ -1208,6 +1207,43 @@ public class ELKASync extends AbstractModul {
             case ENTITY_STANDORTE: return this.standortModel;
             case ENTITY_ENTWG: return this.entwgrundModel;
             case ENTITY_SONDERBAUWERKE: return this.sbModel;
+            default: return null;
+        }
+    }
+
+    /**
+     * Get entity list of the given entity type
+     * @param entity Type as String
+     * @return Entity list
+     */
+    private List<?> getListByEntity(String entity) {
+        switch(entity) {
+            case ENTITY_ABA:
+                return prependIdentifierAbwasserbehandlungsanlage(
+                    EAbwasserbehandlungsanlage.getAll());
+            case ENTITY_ANFALLSTELLE:
+                return prependIdentifierAnfallstelle(EAnfallstelle.getAll());
+            case ENTITY_BETRIEBE:
+                return prependIdentifierBetrieb(EBetrieb.getAll());
+            case ENTITY_EINL:
+                return prependIdentifierEinleitungsstelle(
+                    EEinleitungsstelle.getAll());
+            case ENTITY_MST:
+                return prependIdentifierMessstelle(EMessstelle.getAll());
+            case ENTITY_ADRESSE:
+                return prependIdentifierAdresse(EAdresse.getAll());
+            case ENTITY_STANDORTE:
+                List<EStandort> items = EStandort.getAll().stream()
+                    .filter(standort -> standort.getAdresse().getOrtZst()
+                            .equals("Bielefeld"))
+                    .collect(Collectors.toList());
+                return prependIdentifierStandort(items);
+            case ENTITY_ENTWG:
+                return prependIdentifierEEntwaesserungsgrundstueck(
+                    EEntwaesserungsgrundstueck.getAll());
+            case ENTITY_SONDERBAUWERKE:
+                return prependIdentifierSonderbauwerk(
+                    ESonderbauwerk.getAll());
             default: return null;
         }
     }
