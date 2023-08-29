@@ -29,9 +29,9 @@ public class EEinleitungsstelleModel extends ListTableModel {
 	public EEinleitungsstelleModel() {
         super(new String[]{
                 "Betreiber",
+                "Adresse",
                 "Bezeichnung",
                 "Typ",
-                "Adresse",
                 "Objekt-ID"},
                 false,
                 true);
@@ -62,14 +62,14 @@ public class EEinleitungsstelleModel extends ListTableModel {
           		value = stelle.getStandort().getAdresse().getName1();
                 break;
             case 1:
-                value = stelle.getBezeichnung();
-                break;
-            case 2:
-                value = stelle.getTypIndirekteinleitungTog() ? "Indirekteinleiter" : "";
-                break;
-            case 3:
                 value = StringUtils.createAddressString(
                     stelle.getStandort().getAdresse());
+                break;
+            case 2:
+                value = stelle.getBezeichnung();
+                break;
+            case 3:
+                value = stelle.getTypIndirekteinleitungTog() ? "Indirekteinleiter" : "";
                 break;
             case 4:
                 value = stelle.getNr();

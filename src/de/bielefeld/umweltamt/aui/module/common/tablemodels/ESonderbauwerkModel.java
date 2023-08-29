@@ -28,12 +28,12 @@ public class ESonderbauwerkModel extends ListTableModel {
     public ESonderbauwerkModel() {
         super(new String[]{
                 "Nr",
+                "Betreiber",
                 "Bezeichnung",
                 "Kurzbeschreibung",
                 "Inbetriebnahme",
                 "Stillgelegt am",
-                "Standort",
-                "Betreiber"
+                "Standort"
                 },
                 false,
                 true);
@@ -45,22 +45,16 @@ public class ESonderbauwerkModel extends ListTableModel {
 
 	@Override
 	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Object value;
-
         ESonderbauwerk sb = (ESonderbauwerk) objectAtRow;
         switch(columnIndex) {
             case 0: return sb.getNr();
-            case 1: return sb.getBezeichnung();
-            case 2: return sb.getInbetriebnahme();
-            case 3: return sb.getStillgelegtAm();
-            case 4: return sb.getWiederinbetrDat();
-            case 5: return sb.getStandort().getNr();
-            case 6: return sb.getAdresseByBetreibAdrNr() != null ? sb.getAdresseByBetreibAdrNr().getName1() : null;
-                        default:
-                value = null;
+            case 1: return sb.getAdresseByBetreibAdrNr() != null ? sb.getAdresseByBetreibAdrNr().getName1() : null;
+            case 2: return sb.getBezeichnung();
+            case 3: return sb.getInbetriebnahme();
+            case 4: return sb.getStillgelegtAm();
+            case 5: return sb.getWiederinbetrDat();
+            case 6: return sb.getStandort().getNr();
+            default: return null;
         }
-
-        return value;
-	}
-
+    }
 }

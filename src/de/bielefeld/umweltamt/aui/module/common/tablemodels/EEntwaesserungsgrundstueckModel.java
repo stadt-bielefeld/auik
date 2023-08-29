@@ -30,8 +30,8 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
     public EEntwaesserungsgrundstueckModel() {
         super(new String[]{
                 "Nr",
-                "Standort",
                 "Betreiber",
+                "Standort",
                 "Wasserrecht",
                 "Beschreibung",
                 "Entwässerungsgebiet",
@@ -65,9 +65,9 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
             case 0: 
                 return ewg.getNr();
             case 1:
-                return ewg.getStandort().getNr();
-            case 2:
                 return ewg.getAdresse().getName1();
+            case 2:
+                return ewg.getStandort().getNr();
             case 3:
                 return ewg.getWasserrecht() != null ? ewg.getWasserrecht().getNr(): null;
             case 4:

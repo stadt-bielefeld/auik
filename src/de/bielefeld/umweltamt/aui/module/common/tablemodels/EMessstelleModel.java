@@ -34,11 +34,11 @@ public class EMessstelleModel extends ListTableModel {
 	public EMessstelleModel() {
         super(new String[]{
                 "Standort-Nr",
+                "Adresse",
                 "Bezeichnung",
                 "Beschreibung",
                 "Betreiber",
-                "Objekt-ID",
-                "Adresse"},
+                "Objekt-ID"},
                 false,
                 true);
     }
@@ -52,7 +52,7 @@ public class EMessstelleModel extends ListTableModel {
     public Class<?> getColumnClass(int column) {
         switch (column) {
             case 0:
-            case 4:
+            case 5:
                 return Integer.class;
             default:
                 return String.class;
@@ -71,20 +71,20 @@ public class EMessstelleModel extends ListTableModel {
 				value = stelle.getStandort().getAdresse().getNr();
                 break;
             case 1:
-                value = stelle.getBezeichnung();
-                break;
-            case 2:
-                value = stelle.getBemerkung();
-                break;
-            case 3:
-                value = stelle.getStandort().getAdresse().getName1();
-                break;
-            case 4:
-                value = stelle.getObjektId();
-                break;
-            case 5:
                 value = StringUtils.createAddressString(
                     stelle.getStandort().getAdresse());
+                break;
+            case 2:
+                value = stelle.getBezeichnung();
+                break;
+            case 3:
+                value = stelle.getBemerkung();
+                break;
+            case 4:
+                value = stelle.getStandort().getAdresse().getName1();
+                break;
+            case 5:
+                value = stelle.getObjektId();
                 break;
             default:
                 value = null;
