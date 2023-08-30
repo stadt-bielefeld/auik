@@ -33,6 +33,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -521,7 +522,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static Entwaesserungsgrundstueck findById(long id) {
+    public static Entwaesserungsgrundstueck findById(BigInteger id) {
         log.debug("Getting Entwaesserungsgrundstueck instance with id: " + id);
         return (Entwaesserungsgrundstueck)
             new DatabaseAccess().get(Entwaesserungsgrundstueck.class, id);

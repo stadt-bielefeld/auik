@@ -1120,23 +1120,19 @@ public class ELKASync extends AbstractModul {
         try {
             Method mGetter = object.getClass().getMethod("getOrigNr");
             Method mSetter = object.getClass().getMethod("setNr", BigInteger.class);
-            Integer nr = (Integer)mGetter.invoke(object);
+            BigInteger nr = (BigInteger) mGetter.invoke(object);
             if(nr == null) {
                 mGetter = object.getClass().getMethod("getNr");
-                nr = (Integer)mGetter.invoke(object);
-                object.getClass().getMethod("setOrigNr", Integer.class).invoke(object, nr);
+                nr = (BigInteger) mGetter.invoke(object);
+                object.getClass().getMethod("setOrigNr", BigInteger.class).invoke(object, nr);
             }
             String newNr = IDENTIFIER + nr.toString();
             BigInteger newBI = new BigInteger(newNr);
             mSetter.invoke(object, newBI);
-        } catch (NoSuchMethodException e){
-        } catch (SecurityException e) {
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (NoSuchMethodException | IllegalAccessException
+            | IllegalArgumentException | InvocationTargetException
+            | SecurityException e) {
+            log.error("Error prepending identifier", e);
         }
         return object;
     }
@@ -1254,39 +1250,28 @@ public class ELKASync extends AbstractModul {
      * @param entity Object
      * @return Id as Integer or null
      */
-    private Integer getEntityId(String type, Object entity) {
-        Integer id;
+    private BigInteger getEntityId(String type, Object entity) {
         switch(type) {
             case ENTITY_ABA:
-                id = ((EAbwasserbehandlungsanlage) entity).getNr();
-                break;
+                return ((EAbwasserbehandlungsanlage) entity).getNr();
             case ENTITY_ANFALLSTELLE:
-                id = ((EAnfallstelle) entity).getNr();
-                break;
+                return ((EAnfallstelle) entity).getNr();
             case ENTITY_BETRIEBE:
-                id = ((EBetrieb) entity).getNr();
-                break;
+                return ((EBetrieb) entity).getNr();
             case ENTITY_EINL:
-                id = ((EEinleitungsstelle) entity).getNr();
-                break;
+                return ((EEinleitungsstelle) entity).getNr();
             case ENTITY_MST:
-                id = ((EMessstelle) entity).getNr();
-                break;
+                return ((EMessstelle) entity).getNr();
             case ENTITY_ADRESSE:
-                id = ((EAdresse) entity).getNr();
-                break;
+                return ((EAdresse) entity).getNr();
             case ENTITY_STANDORTE:
-                id = ((EStandort) entity).getNr();
-                break;
+                return ((EStandort) entity).getNr();
             case ENTITY_ENTWG:
-                id = ((EEntwaesserungsgrundstueck) entity).getNr();
-                break;
+                return ((EEntwaesserungsgrundstueck) entity).getNr();
             case ENTITY_SONDERBAUWERKE:
-                id = ((ESonderbauwerk) entity).getNr();
-                break;
+                return ((ESonderbauwerk) entity).getNr();
             default: return null;
         }
-        return id;
     }
 
     /**

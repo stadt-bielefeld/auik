@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -35,8 +36,8 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
  */
 public class EAdresse implements java.io.Serializable {
 
-	private Integer nr;
-	private Integer origNr;
+	private BigInteger nr;
+	private BigInteger origNr;
 	private String anrede;
 	private String name1;
 	private String name2;
@@ -56,11 +57,11 @@ public class EAdresse implements java.io.Serializable {
 	public EAdresse() {
 	}
 
-	public EAdresse(Integer nr) {
+	public EAdresse(BigInteger nr) {
 		this.nr = nr;
 	}
 
-	public EAdresse(Integer nr, Integer origNr, String anrede, String name1,
+	public EAdresse(BigInteger nr, BigInteger origNr, String anrede, String name1,
 			String name2, String strasse, String hausnr, String plzZst,
 			String ortZst, String staatskennungZst, String telefon, String fax,
 			String email, Boolean personTog, Date aktualDat, Date erstellDat,
@@ -84,21 +85,21 @@ public class EAdresse implements java.io.Serializable {
 		this.herkunft = herkunft;
 	}
 
-	public Integer getNr() {
+	public BigInteger getNr() {
 		return this.nr;
 	}
 
-	public void setNr(Integer nr) {
+	public void setNr(BigInteger nr) {
 		this.nr = nr;
 	}
 	
 	@JsonIgnore
-	public Integer getOrigNr() {
+	public BigInteger getOrigNr() {
 		return this.origNr;
 	}
 	
 	@JsonIgnore
-	public void setOrigNr(Integer origNr) {
+	public void setOrigNr(BigInteger origNr) {
 		this.origNr = origNr;
 	}
 

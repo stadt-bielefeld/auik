@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -42,8 +43,8 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
  */
 public class EAnfallstelle implements java.io.Serializable {
 
-    private Integer nr;
-    private Integer origNr;
+    private BigInteger nr;
+    private BigInteger origNr;
     private EStandort standort;
     private EAdresse adresse;
     private String anhangId;
@@ -61,11 +62,11 @@ public class EAnfallstelle implements java.io.Serializable {
     public EAnfallstelle() {
     }
 
-    public EAnfallstelle(Integer nr) {
+    public EAnfallstelle(BigInteger nr) {
         this.nr = nr;
     }
 
-    public EAnfallstelle(Integer nr, Integer origNr,
+    public EAnfallstelle(BigInteger nr, BigInteger origNr,
             EStandort standort, EAdresse adresse,
             String anhangId, Integer abwaBeschaffOpt, String bezeichnung,
             String bemerkung, Boolean aufzBetriebTog, Date aktualDat,
@@ -86,21 +87,21 @@ public class EAnfallstelle implements java.io.Serializable {
         this.afsNiederschlagswassers = afsNiederschlagswassers;
     }
 
-    public Integer getNr() {
+    public BigInteger getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(BigInteger nr) {
         this.nr = nr;
     }
 
     @JsonIgnore
-    public Integer getOrigNr() {
+    public BigInteger getOrigNr() {
         return this.origNr;
     }
 
     @JsonIgnore
-    public void setOrigNr(Integer origNr) {
+    public void setOrigNr(BigInteger origNr) {
         this.origNr = origNr;
     }
 

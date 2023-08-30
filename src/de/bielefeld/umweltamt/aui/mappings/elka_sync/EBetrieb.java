@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -43,8 +44,8 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 public class EBetrieb implements java.io.Serializable {
 
     private EStandort standort;
-    private Integer nr;
-    private Integer origNr;
+    private BigInteger nr;
+    private BigInteger origNr;
     private EAdresse adresseByWrAdrNr;
     private String bezeichnung;
     private Boolean suevkanTog;
@@ -53,6 +54,7 @@ public class EBetrieb implements java.io.Serializable {
     private Date aktualDat;
     private Date erstellDat;
     private String herkunft;
+    @JsonIgnore
     private Integer objektId;
 
     private Set<Massnahme> massnahmes;
@@ -60,11 +62,11 @@ public class EBetrieb implements java.io.Serializable {
     public EBetrieb() {
     }
 
-    public EBetrieb(Integer nr) {
+    public EBetrieb(BigInteger nr) {
         this.nr = nr;
     }
 
-    public EBetrieb(Integer nr, EStandort standort, Integer origNr,
+    public EBetrieb(BigInteger nr, EStandort standort, BigInteger origNr,
             EAdresse adresseByWrAdrNr, String bezeichnung, Boolean suevkanTog,
             Float e32, Float n32, Date aktualDat, Date erstellDat,
             String herkunft) {
@@ -81,21 +83,21 @@ public class EBetrieb implements java.io.Serializable {
         this.herkunft = herkunft;
     }
 
-    public Integer getNr() {
+    public BigInteger getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(BigInteger nr) {
         this.nr = nr;
     }
 
     @JsonIgnore
-    public Integer getOrigNr() {
+    public BigInteger getOrigNr() {
         return this.origNr;
     }
 
     @JsonIgnore
-    public void setOrigNr(Integer origNr) {
+    public void setOrigNr(BigInteger origNr) {
         this.origNr = origNr;
     }
 
@@ -226,7 +228,7 @@ public class EBetrieb implements java.io.Serializable {
      * @return The instances as set
      */
     public Set<Massnahme> getMassnahmes() {
-        Integer origId = getOrigNr() != null ? getOrigNr() : getNr();
+        BigInteger origId = getOrigNr() != null ? getOrigNr() : getNr();
 
         if (massnahmes != null) {
             return massnahmes;

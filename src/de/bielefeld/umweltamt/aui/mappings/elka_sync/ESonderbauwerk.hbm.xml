@@ -6,7 +6,7 @@
 	<class
 		name="de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk"
 		table="e_sonderbauwerk" schema="elka" optimistic-lock="version">
-		<id name="nr" type="java.lang.Integer">
+		<id name="nr" type="java.math.BigInteger">
 			<column name="nr" />
 			<generator class="assigned" />
 		</id>

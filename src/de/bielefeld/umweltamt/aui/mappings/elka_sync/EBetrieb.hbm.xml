@@ -5,7 +5,7 @@
 <hibernate-mapping>
  <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EBetrieb"
   schema="elka" table="e_betrieb">
-  <id name="nr" type="java.lang.Integer">
+  <id name="nr" type="java.math.BigInteger">
    <column name="nr"/>
    <generator class="identity"/>
   </id>

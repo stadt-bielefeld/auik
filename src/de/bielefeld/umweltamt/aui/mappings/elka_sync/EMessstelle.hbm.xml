@@ -5,11 +5,11 @@
 <hibernate-mapping>
  <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EMessstelle"
   schema="elka" table="e_messstelle">
-  <id name="nr" type="java.lang.Integer">
+  <id name="nr" type="java.math.BigInteger">
    <column name="nr"/>
    <generator class="assigned"/>
   </id>
-  <property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
+  <property generated="never" lazy="false" name="origNr" type="java.math.BigInteger" insert="false" update="false">
   	<column name="nr" />
   </property>
   <many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">

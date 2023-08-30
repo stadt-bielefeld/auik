@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -40,8 +41,8 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
 public class EMessstelle implements java.io.Serializable {
 
     private EStandort standort;
-    private Integer nr;
-    private Integer origNr;
+    private BigInteger nr;
+    private BigInteger origNr;
 	private Float e32;
 	private Float n32;
     private String bezeichnung;
@@ -51,6 +52,7 @@ public class EMessstelle implements java.io.Serializable {
     private Date aktualDat;
     private Date erstellDat;
     private String herkunft;
+    @JsonIgnore
     private Integer objektId;
     private Integer adresse;
     private Set<EProbenahme> probenahmes = new HashSet<EProbenahme>(0);
@@ -64,7 +66,7 @@ public class EMessstelle implements java.io.Serializable {
         this.nr = nr;
     }
 
-    public EMessstelle(Integer nr, EStandort standort, Integer origNr, Float e32, Float n32,
+    public EMessstelle(BigInteger nr, EStandort standort, BigInteger origNr, Float e32, Float n32,
             String bezeichnung, Integer typOpt, Integer artMessungOpt,
             String bemerkung, Date aktualDat, Date erstellDat, String herkunft) {
         this.standort = standort;
@@ -89,21 +91,21 @@ public class EMessstelle implements java.io.Serializable {
         this.standort = standort;
     }
 
-    public Integer getNr() {
+    public BigInteger getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(BigInteger nr) {
         this.nr = nr;
     }
     
     @JsonIgnore
-    public Integer getOrigNr() {
+    public BigInteger getOrigNr() {
         return this.origNr;
     }
     
     @JsonIgnore
-    public void setOrigNr(Integer origNr) {
+    public void setOrigNr(BigInteger origNr) {
         this.origNr = origNr;
     }
 
@@ -254,7 +256,7 @@ public class EMessstelle implements java.io.Serializable {
      */
     public Set<MsstBerichtspflicht> getZuordnungMsstBerichtspflichts() {
         if (zuordnBerichtspflichts == null) {
-            Integer origId = this.getOrigNr() != null ? this.getOrigNr() : this.getNr();
+            BigInteger origId = this.getOrigNr() != null ? this.getOrigNr() : this.getNr();
             zuordnBerichtspflichts = new HashSet<MsstBerichtspflicht>(
                 HibernateSessionFactory.currentSession().createQuery(
                     "from MsstBerichtspflicht where msst_nr=" + origId

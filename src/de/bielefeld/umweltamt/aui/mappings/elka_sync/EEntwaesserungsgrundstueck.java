@@ -40,6 +40,7 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -57,10 +58,10 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         DatabaseSerialVersionUID.forEEntwaesserungsgrundstueck;
 
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer nr;
+    private BigInteger nr;
     private EStandort standort;
     private EAdresse adresse;
-    private Integer origNr;
+    private BigInteger origNr;
     private Boolean erlFreiElTog;
     private BigDecimal regenspende;
     private BigDecimal regenhaeufigkeit;
@@ -93,7 +94,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public EEntwaesserungsgrundstueck(
-        Integer nr, EStandort standort, EAdresse adresse, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String bemerkung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
+        BigInteger nr, EStandort standort, EAdresse adresse, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String bemerkung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
         this.nr = nr;
         this.standort = standort;
         this.adresse = adresse;
@@ -117,21 +118,21 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     }
 
     @JsonIgnore
-	public Integer getOrigNr() {
+	public BigInteger getOrigNr() {
 		return this.origNr;
 	}
 	
 	@JsonIgnore
-	public void setOrigNr(Integer origNr) {
+	public void setOrigNr(BigInteger origNr) {
 		this.origNr = origNr;
 	}
 
     /* Setter and getter methods */
-    public Integer getNr() {
+    public BigInteger getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(BigInteger nr) {
         this.nr = nr;
     }
 
@@ -446,7 +447,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     @JsonIgnore
     public Set<ZEntwaessgrAbwasbehverf> getZEntwassergrAbwasbehverfs() {
         if (zEntwaessgrAbwasbehverfs == null) {
-            Integer origId = getOrigNr() != null ? getOrigNr() : getNr();
+            BigInteger origId = getOrigNr() != null ? getOrigNr() : getNr();
             zEntwaessgrAbwasbehverfs = new HashSet<ZEntwaessgrAbwasbehverf>(
                     HibernateSessionFactory.currentSession().createQuery(
                     "from ZEntwaessgrAbwasbehverf where entw_grund_nr=" + origId).list());
@@ -461,7 +462,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
      * @return The instances as set
      */
     public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers () {
-        Integer identifier = origNr != null ? origNr : nr;
+        BigInteger identifier = origNr != null ? origNr : nr;
         if (afsNiederschlagswassers != null ) {
             return afsNiederschlagswassers;
         } else {

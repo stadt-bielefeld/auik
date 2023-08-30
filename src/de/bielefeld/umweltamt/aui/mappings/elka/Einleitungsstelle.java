@@ -31,6 +31,8 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Versickerungsanlage;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -981,7 +983,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static Einleitungsstelle findById(java.lang.Integer id) {
+    public static Einleitungsstelle findById(BigInteger id) {
         log.debug("Getting Einleitungsstelle instance with id: " + id);
         return (Einleitungsstelle)
             new DatabaseAccess().get(Einleitungsstelle.class, id);
@@ -998,7 +1000,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
-    public static Einleitungsstelle findByObjektId(java.lang.Integer id) {
+    public static Einleitungsstelle findByObjektId(Integer id) {
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Einleitungsstelle> list = objekt.getEinleitungsstelles();
         return list.iterator().next();

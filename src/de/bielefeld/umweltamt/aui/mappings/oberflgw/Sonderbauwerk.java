@@ -36,6 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -1582,7 +1583,7 @@ public class Sonderbauwerk  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static Sonderbauwerk findById(long id) {
+    public static Sonderbauwerk findById(BigInteger id) {
         log.debug("Getting Sonderbauwerk instance with id: " + id);
         return (Sonderbauwerk)
             new DatabaseAccess().get(Sonderbauwerk.class, id);

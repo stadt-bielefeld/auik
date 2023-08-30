@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -38,8 +39,8 @@ import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
  */
 public class EAbwasserbehandlungsanlage implements java.io.Serializable {
 
-    private Integer nr;
-    private Integer origNr;
+    private BigInteger nr;
+    private BigInteger origNr;
     private EStandort standort;
     private EAdresse adresseByStoAdrNr;
     private EAdresse adresseByBetreibAdrNr;
@@ -59,11 +60,11 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
     public EAbwasserbehandlungsanlage() {
     }
 
-    public EAbwasserbehandlungsanlage(Integer nr) {
+    public EAbwasserbehandlungsanlage(BigInteger nr) {
         this.nr = nr;
     }
 
-    public EAbwasserbehandlungsanlage(Integer nr, Integer origNr,
+    public EAbwasserbehandlungsanlage(BigInteger nr, BigInteger origNr,
             EStandort standort, EAdresse adresseByStoAdrNr,
             EAdresse adresseByBetreibAdrNr, String bezeichnung, Float e32,
             Float n32, Boolean wartungsvertragTog,
@@ -90,21 +91,21 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
         this.setAbwasserbehandlungsverfahrens(Abwasserbehandlungsverfahrens);
     }
 
-    public Integer getNr() {
+    public BigInteger getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(BigInteger nr) {
         this.nr = nr;
     }
 
     @JsonIgnore
-    public Integer getOrigNr() {
+    public BigInteger getOrigNr() {
         return this.origNr;
     }
 
     @JsonIgnore
-    public void setOrigNr(Integer origNr) {
+    public void setOrigNr(BigInteger origNr) {
         this.origNr = origNr;
     }
 
