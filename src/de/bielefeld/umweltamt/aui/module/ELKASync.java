@@ -56,6 +56,7 @@ import javax.swing.ListModel;
 import javax.swing.RowSorter;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.MediaType;
@@ -213,6 +214,9 @@ public class ELKASync extends AbstractModul {
 
         this.dbTable = new JTable();
         this.dbTable.setAutoCreateRowSorter(true);
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.LEFT);
+        this.dbTable.setDefaultRenderer(Integer.class, renderer);
         this.rowCount = new JLabel("0");
         this.progressCounter = new JLabel("-/-");
     }
