@@ -65,4 +65,8 @@ public abstract class BasicTableModel extends AbstractTableModel {
     public int getColumnCount() {
         return columns.length;
     }
+
+    public String[] getColumnNames() {
+        return columns;
+    }
 }

@@ -51,8 +51,13 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -60,8 +65,9 @@ import javax.swing.table.TableColumn;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbepunkteModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -76,14 +82,21 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
     private JPanel queryPanel;
 
     // Widgets für die Abfrage
-    private JButton probenehmerButton;
-    private JButton eSatzungButton;
-    private JButton uwbButton;
-    private JButton selbstueberwButton;
-    private JButton inaktivButton;
+    private JComboBox<Sachbearbeiter> sachbearbeiterBox;
+    private JLabel sachbearbeiterLabel;
+    private JComboBox<String> probepunktArtBox;
+    private JLabel probepunktArtLabel;
+    private JButton searchButton;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private ProbepunkteModel tmodel;
+
+    private final String LABEL_NONE = "ohne Spezifikation";
+    private final String LABEL_PROBENHEMEREINSAETZE = "Probenehmereinsätze";
+    private final String LABEL_INAKTIVE_PROBEPUNKTE = "inaktive Probepunkte";
+    private final String LABEL_UWB_PUNKTE = "UWB-Punkte";
+    private final String LABEL_SELBSTUEBERWACHUNGSPUNTKE = "Selbstüberwachungspunkte";
+    private final String LABEL_E_SATZUNGSPUNKTE = "E-Satzungspunkte";
 
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
@@ -109,111 +122,58 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
             // Die Widgets initialisieren
-        	probenehmerButton = new JButton("Probenehmereinsätze");
-        	inaktivButton = new JButton("inaktive Probepunkte");
-        	uwbButton = new JButton("UWB-Punkte");
-        	selbstueberwButton = new JButton("Selbstüberwachungspunkte");
-        	eSatzungButton = new JButton("E-Satzungspunkte");
+            searchButton = new JButton("Suchen");
+            sachbearbeiterLabel = new JLabel("Sachbearbeiter (Heepen):");
+            List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
+            DefaultComboBoxModel<Sachbearbeiter> sachbearbeiterModel = new DefaultComboBoxModel<>(
+                    sachbearbeiter.toArray(new Sachbearbeiter[sachbearbeiter.size()]));
+            probepunktArtLabel = new JLabel("Probepunktart:");
+            sachbearbeiterBox = new JComboBox<Sachbearbeiter>(sachbearbeiterModel);
+            sachbearbeiterBox.insertItemAt(null, 0);
+            sachbearbeiterBox.setSelectedIndex(0);
 
-            // Ein ActionListener für den Button,
-            // der die eigentliche Suche auslöst:
-        	probenehmerButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
-                        @Override
-                        protected void doNonUILogic() {
-                            ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getProbenehmerPunkte());
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic(){
-                            ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
-                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
+            probepunktArtBox = new JComboBox<String>(new String[]{LABEL_NONE,
+                LABEL_PROBENHEMEREINSAETZE, LABEL_INAKTIVE_PROBEPUNKTE,
+                LABEL_UWB_PUNKTE, LABEL_SELBSTUEBERWACHUNGSPUNTKE,
+                LABEL_E_SATZUNGSPUNKTE
             });
 
-        	eSatzungButton.addActionListener(new ActionListener() {
+            searchButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
                         @Override
                         protected void doNonUILogic() {
-                            ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getESatzungsPunkte());
+                            List<Messstelle> result = null;
+                            Sachbearbeiter sb = (Sachbearbeiter) sachbearbeiterBox.getSelectedItem();
+                            String pa = (String) probepunktArtBox.getSelectedItem();
+
+                            switch (pa) {
+                                case LABEL_PROBENHEMEREINSAETZE:
+                                    result = DatabaseQuery.getProbenehmerPunkte(sb);
+                                    break;
+                                case LABEL_INAKTIVE_PROBEPUNKTE:
+                                    result = DatabaseQuery.getInaktivProbepkt(sb);
+                                    break;
+                                case LABEL_UWB_PUNKTE:
+                                    result = DatabaseQuery.getUWBPunkte(sb);
+                                    break;
+                                case LABEL_SELBSTUEBERWACHUNGSPUNTKE:
+                                    result = DatabaseQuery.getSelbstueberwPunkte(sb);
+                                    break;
+                                case LABEL_E_SATZUNGSPUNKTE:
+                                    result = DatabaseQuery.getESatzungsPunkte(sb);
+                                    break;
+                                case LABEL_NONE:
+                                    result = DatabaseQuery.getProbePunkte(sb);
+                                    break;
+                                }
+                            ((ProbepunkteModel)getTableModel()).setList(result);
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
                             ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
-
-                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-        	uwbButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
-                        @Override
-                        protected void doNonUILogic() {
-                            ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getUWBPunkte());
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic(){
-                            ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
-
-                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-        	selbstueberwButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
-                        @Override
-                        protected void doNonUILogic() {
-                            ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getSelbstueberwPunkte());
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic(){
-                            ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
-
-                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-        	inaktivButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable(200, 10, 200, 70, 100, 100, 100, 100)) {
-                        @Override
-                        protected void doNonUILogic() {
-                            ((ProbepunkteModel)getTableModel()).setList(
-                                DatabaseQuery.getInaktivProbepkt());
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic(){
-                            ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
-
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -222,12 +182,12 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(eSatzungButton, uwbButton);
-            builder.append(selbstueberwButton, inaktivButton);
-            builder.append(probenehmerButton);
+            builder.append(probepunktArtLabel, probepunktArtBox);
+            builder.append(sachbearbeiterLabel, sachbearbeiterBox);
+            builder.append(searchButton, createExportButton());
 
             queryPanel = builder.getPanel();
         }

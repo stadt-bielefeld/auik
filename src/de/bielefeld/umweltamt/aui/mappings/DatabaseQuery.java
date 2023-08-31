@@ -52,6 +52,11 @@ public abstract class DatabaseQuery extends DatabaseAtlQuery {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
+	//Separator char used to split address strings
+	public static final String ADDRESS_SEPARATOR = "%";
+    //String used as placeholder for empty house numbers
+    public static final String HOUSE_NUMBER_PLACEHOLDER = "-1";
+
     /* ********************************************************************** */
     /* General Queries for all packages                                       */
     /* ********************************************************************** */

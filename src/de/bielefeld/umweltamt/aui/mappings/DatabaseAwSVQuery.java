@@ -629,6 +629,7 @@ abstract class DatabaseAwSVQuery {
 			boolean nurWiedervorlageAbgelaufen, boolean nurNichtAbgeschlossen) {
         DetachedCriteria detachedCriteria =
 				DetachedCriteria.forClass(Anlagenchrono.class)
+				.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 						.addOrder(Order.desc("wv"))
 						.addOrder(Order.asc("fachdaten"));
         if (nurWiedervorlageAbgelaufen && !nurNichtAbgeschlossen) {

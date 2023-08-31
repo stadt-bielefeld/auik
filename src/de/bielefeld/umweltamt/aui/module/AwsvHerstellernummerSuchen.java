@@ -138,7 +138,8 @@ public class AwsvHerstellernummerSuchen extends AbstractQueryModul {
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             // FÃ¼r Darstellung der Suchoptionen im oberen Panel
-            builder.append("Herstellnr.:", herstellFeld, suchenButton);
+            builder.append("Herstellnr.:", herstellFeld);
+            builder.append(suchenButton, createExportButton());
             builder.nextLine();
             builder.append("");
 

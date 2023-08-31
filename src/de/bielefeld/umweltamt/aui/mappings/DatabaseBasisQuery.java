@@ -22,13 +22,12 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import java.sql.Timestamp;
-import java.util.Collections;
-import java.util.Comparator;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.hibernate.Criteria;
 import org.hibernate.NullPrecedence;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
@@ -37,6 +36,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.Transformers;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -60,7 +60,6 @@ import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -84,7 +83,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	private static String[] entwaesserungsgebiete = null;
 
 	private static MapElkaGewkennz[] mapElkaGewkennz = null;
-	
 
 	/* ********************************************************************** */
 	/* Queries for package BASIS */
@@ -760,22 +758,25 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>List&lt;?&gt;</code>
 	 */
 	public static List<?> getObjektsWithPriority(String prioritaet, Sachbearbeiter sachbearbeiter) {
-		return new DatabaseAccess().executeCriteriaToList(
-				DetachedCriteria.forClass(Objekt.class)
-//						.createAlias("betreiberid", "inhaber")
-						.add(Restrictions.eq("inaktiv", false))
-						.add(Restrictions.eq("deleted", false))
-						.add(Restrictions.eq("prioritaet", prioritaet.toString()))
-						.add(Restrictions.eq("sachbearbeiter", sachbearbeiter))
-						.setProjection(Projections.distinct(Projections.projectionList()
-								.add(Projections.property("betreiberid"), "betreiberid")
-								.add(Projections.property("standortid"), "standortid")
-								.add(Projections.property("prioritaet"), "prioritaet")
-								.add(Projections.property("sachbearbeiter"), "sachbearbeiter")))
-						.addOrder(Order.asc("betreiberid"))
-						.addOrder(Order.asc("standortid"))
-						.setResultTransformer(Transformers.aliasToBean(Objekt.class)),
-						new Objekt());
+		DetachedCriteria crit =
+			DetachedCriteria.forClass(Objekt.class)
+					.add(Restrictions.eq("inaktiv", false))
+					.add(Restrictions.eq("deleted", false))
+					.setProjection(Projections.distinct(Projections.projectionList()
+							.add(Projections.property("betreiberid"), "betreiberid")
+							.add(Projections.property("standortid"), "standortid")
+							.add(Projections.property("prioritaet"), "prioritaet")
+							.add(Projections.property("sachbearbeiter"), "sachbearbeiter")))
+					.addOrder(Order.asc("betreiberid"))
+					.addOrder(Order.asc("standortid"))
+					.setResultTransformer(Transformers.aliasToBean(Objekt.class));
+		if (prioritaet == null || !prioritaet.equals("-")) {			
+			crit.add(Restrictions.eq("prioritaet", prioritaet.toString()));
+		}
+		if (sachbearbeiter != null) {
+			crit.add(Restrictions.eq("sachbearbeiter", sachbearbeiter));
+		}
+		return new DatabaseAccess().executeCriteriaToList(crit, new Objekt());
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1257,5 +1258,119 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 
+	}
+
+	/**
+	 * Execute query for BasisAbfrage module.
+	 * @param art Objektarten filter
+	 * @param anhang Anhang filter
+	 * @param anlagenart Anlagenart filter
+	 * @param sachbearbeiter Sachbearbeiter filter
+	 * @param entwGebiet entwGebiet filter
+	 * @param prioritaet Prioritaet filter
+	 * @param wiedervorlage Wiedervorlage filter.
+	 *        Possible values:
+	 *           - BasisAbfrage.VALUE_WIEDERVORLAGE_AKTIV
+	 *           - BAsisAbfrage.VALUE_WIEDERVORLAGE_ABGELAUFEN
+	 * @return Object array containing results
+	 */
+	public static List executeBaseQuery(
+			Objektarten art, Anhang anhang, String anlagenart,
+			Sachbearbeiter sachbearbeiter, String[] entwGebiet,
+			String prioritaet, String wiedervorlage,
+			Sachbearbeiter group) {
+		StringBuilder query = new StringBuilder(
+		"SELECT DISTINCT "
+			+ "betr.name AS betrname,"
+			+ "CONCAT_WS('" + DatabaseQuery.ADDRESS_SEPARATOR + "', "
+				+ "COALESCE(a.strasse, ' '), COALESCE(a.hausnr, " +
+					DatabaseQuery.HOUSE_NUMBER_PLACEHOLDER + "), "
+				+ "COALESCE(a.hausnrzus, ' '), COALESCE(a.plz, ' '), "
+				+ "COALESCE(a.ort, ' ')),"
+			+ " a.entgebid, sachb.name,"
+			+ "exists("
+				+ "SELECT 1 "
+				+ "FROM labor.messstelle m JOIN basis.objekt so on m.objektid = so.id "
+				+ "WHERE o.standortid = so.standortid "
+				+ "AND so.inaktiv = false "
+			+ "),"
+			+ "anh.anhang_id, anf.anlagenart, o.beschreibung,"
+			+ "anf.bemerkungen, o.wiedervorlage, o.prioritaet, o.id"
+		+ " FROM "
+			+ "basis.objekt o "
+			+ "LEFT JOIN basis.inhaber betr "
+			+ "ON o.betreiberid = betr.id "
+			+ "LEFT JOIN basis.standort s "
+			+ "ON o.standortid = s.id "
+			+ "LEFT JOIN basis.inhaber i "
+			+ "ON s.inhaberid = i.id "
+			+ "LEFT JOIN basis.adresse a "
+			+ "ON i.adresseid = a.id "
+			+ "LEFT JOIN basis.objektarten art "
+			+ "ON o.objektartid = art.id "
+			+ "LEFT JOIN basis.sachbearbeiter sachb "
+			+ "ON o.sachbearbeiter = sachb.id "
+			+ "LEFT JOIN elka.anfallstelle anf "
+			+ "ON o.id = anf.objektid "
+			+ "LEFT JOIN elka.anhang anh "
+			+ "ON anh.anhang_id = anf.anhang_id "
+		+ " WHERE "
+			+ "o._deleted = false "
+			+ "AND o.inaktiv = false");
+		//Append filters
+		if (art != null) {
+			query.append(" AND art.id = ")
+			.append(art.getId());
+		}
+		if (anhang != null) {
+			query.append(" AND anh.anhang_id = ")
+			.append("'" + anhang.getAnhangId() + "'");
+		}
+		if (anlagenart != null && !anlagenart.isEmpty()) {
+			query.append(" AND anf.anlagenart = ")
+			.append("'" + anlagenart + "'");
+		}
+		if (sachbearbeiter != null) {
+			query.append(" AND sachb.id = ")
+			.append(sachbearbeiter.getId());
+		}
+		if (group != null) {
+			query.append(" AND sachb.gehoertzuarbeitsgr = ")
+			.append("'" + group.getGehoertzuarbeitsgr() + "'");
+		}
+		if (entwGebiet != null && entwGebiet.length > 0) {
+			query.append(" AND a.entgebid IN (");
+			for(int i = 0; i < entwGebiet.length; i++) {
+				if (i > 0) {
+					query.append(",");
+				}
+				query.append("'")
+				.append(entwGebiet[i])
+				.append("'");
+			}
+			query.append(")");
+		}
+		if (prioritaet != null && !prioritaet.isEmpty()) {
+			query.append(" AND o.prioritaet = ")
+			.append("'" + prioritaet + "'");
+		}
+		if (wiedervorlage != null && !wiedervorlage.isEmpty()) {
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu-MM-dd kk:mm:ss.SSS");
+			String today = df.format(LocalDateTime.now());
+			query.append(" AND o.wiedervorlage ");
+			switch (wiedervorlage) {
+				case "Abgelaufen":
+				query.append(" < ");
+				break;
+				case "Aktiv":
+				query.append(" > ");
+				break;
+			}
+			query.append("'" + today + "'");
+		}
+		query.append(";");
+		NativeQuery<Object> q = HibernateSessionFactory.currentSession()
+			.createSQLQuery(query.toString());
+		return q.getResultList();
 	}
 }

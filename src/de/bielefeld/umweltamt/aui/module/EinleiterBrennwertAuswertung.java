@@ -49,17 +49,17 @@ package de.bielefeld.umweltamt.aui.module;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.AnhBwkModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -72,24 +72,15 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
-    private JTable resultTable;
-
     // Widgets für die Abfrage
     private JComboBox jahrBox;
+    private JComboBox<String> typBox;
     private JButton submitButton;
     private JButton bhkwButton;
     private JButton abaButton;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private AnhBwkModel tmodel;
-
-    @Override
-    protected JTable getResultTable() {
-        if (resultTable == null) {
-            resultTable = new JTable(getTableModel());
-        }
-    	return super.getResultTable();
-    }
 
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
@@ -122,6 +113,7 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
 //            jahrBox.setEditable(true);
 
             submitButton = new JButton("Suchen");
+            typBox = new JComboBox<>(new String[]{"BWK", "BHKW", "ABA"});
             bhkwButton = new JButton("BHKW");
             abaButton = new JButton("ABA");
 
@@ -145,58 +137,22 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
                     }
 
                     final Integer fJahr = jahr;
+                    final String typ = (String) typBox.getSelectedItem();
 
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((AnhBwkModel)getTableModel()).setList(
-                                DatabaseQuery.getBwkByYear(fJahr));
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic(){
-                            ((AnhBwkModel)getTableModel()).fireTableDataChanged();
-                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-            // Ein ActionListener für den Button,
-            // der die Suche nach BHKW auslöst:
-            bhkwButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
-                        @Override
-                        protected void doNonUILogic() {
-                            ((AnhBwkModel)getTableModel()).setList(
-                                DatabaseQuery.getBHKW());
-                        }
-
-                        @Override
-                        protected void doUIUpdateLogic(){
-                            ((AnhBwkModel)getTableModel()).fireTableDataChanged();
-                            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
-                        }
-                    };
-                    worker.start();
-                }
-            });
-
-            // Ein ActionListener für den Button,
-            // der die Suche nach ABA auslöst:
-            abaButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                    SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
-                        @Override
-                        protected void doNonUILogic() {
-                            ((AnhBwkModel)getTableModel()).setList(
-                                DatabaseQuery.getABA());
+                            List<BwkFachdaten> result = null;
+                            switch (typ) {
+                                case "BWK":
+                                    result = DatabaseQuery.getBwkByYear(fJahr);
+                                    break;
+                                case "BHKW":
+                                    result = DatabaseQuery.getBHKW(fJahr);
+                                case "ABA":
+                                    result = DatabaseQuery.getABA(fJahr);
+                            }
+                            ((AnhBwkModel)getTableModel()).setList(result);
                         }
 
                         @Override
@@ -210,10 +166,12 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
+            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append("Erfassungsjahr:", jahrBox, submitButton, bhkwButton, abaButton);
+            builder.append("Erfassungsjahr:", jahrBox);
+            builder.append("Typ:", typBox);
+            builder.append(submitButton, createExportButton());
 
             queryPanel = builder.getPanel();
         }

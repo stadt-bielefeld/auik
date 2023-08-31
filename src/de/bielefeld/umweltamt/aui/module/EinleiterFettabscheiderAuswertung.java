@@ -54,14 +54,19 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.FettabschModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -77,6 +82,8 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
 
     // Widgets für die Abfrage
     private JButton submitButton;
+    private JLabel sachbearbeiterLabel;
+    private JComboBox<Sachbearbeiter> sachbearbeiterBox;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private FettabschModel tmodel;
@@ -101,6 +108,14 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
         if (queryPanel == null) {
             // Die Widgets initialisieren
             submitButton = new JButton("Alle Objekte anzeigen");
+            sachbearbeiterLabel = new JLabel("Sachbearbeiter:");
+            List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
+            DefaultComboBoxModel<Sachbearbeiter> sachbearbeiterModel = new DefaultComboBoxModel<>(
+                    sachbearbeiter.toArray(new Sachbearbeiter[sachbearbeiter.size()]));
+            sachbearbeiterBox = new JComboBox<Sachbearbeiter>(sachbearbeiterModel);
+            sachbearbeiterBox.insertItemAt(null, 0);
+            sachbearbeiterBox.setSelectedIndex(0);
+
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
             submitButton.addActionListener(new ActionListener() {
@@ -110,7 +125,8 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
                         @Override
                         protected void doNonUILogic() {
                             ((FettabschModel)getTableModel()).setList(
-                                DatabaseQuery.getFettabscheider());
+                                DatabaseQuery.getFettabscheider(
+                                    (Sachbearbeiter) sachbearbeiterBox.getSelectedItem()));
                         }
 
                         @Override
@@ -126,11 +142,11 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
 
 
             //Layout
-            FormLayout layout = new FormLayout("pref");
+            FormLayout layout = new FormLayout("pref, 1dlu, pref, 3dlu, pref, 3dlu, pref");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            builder.append(submitButton);
-
+            builder.append(sachbearbeiterLabel, sachbearbeiterBox, submitButton);
+            builder.append(createExportButton());
 
             queryPanel = builder.getPanel();
         }

@@ -43,12 +43,8 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
-import de.bielefeld.umweltamt.aui.module.common.editors.AwsvEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.DirekteinleiterModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.HerstellNrSuchenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -145,12 +141,13 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
 
             // Noch etwas Layout...
             FormLayout layout = new FormLayout(
-                    "pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 20dlu, pref"
+                    "pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref"
                     );
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             // FÃ¼r Darstellung der Suchoptionen im oberen Panel
-            builder.append("Aktenzeichen:", azFeld, suchenButton);
+            builder.append("Aktenzeichen:", azFeld);
+            builder.append(suchenButton, createExportButton());
             builder.nextLine();
             builder.append("");
 

@@ -22,11 +22,8 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -37,25 +34,19 @@ import org.hibernate.criterion.Restrictions;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
-import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.SuevFachdaten;
-import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 
 /**
  * This is a service class for all custom queries from the indeinl package.
@@ -109,9 +100,11 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 			boolean nurWiedervorlageAbgelaufen) {
 		DetachedCriteria detachedCriteria = DetachedCriteria
 				.forClass(Objekt.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 				.add(Restrictions.eq("sachbearbeiter",
 						DatabaseBasisQuery.getCurrentSachbearbeiter()))
 				.add(Restrictions.isNotNull("wiedervorlage"))
+                .add(Restrictions.eq("inaktiv", false))
                 .addOrder(Order.asc("objektarten"))
                 .addOrder(Order.asc("wiedervorlage"));
         if (nurWiedervorlageAbgelaufen) {
@@ -135,17 +128,15 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 
 		DetachedCriteria criteria = 
 				DetachedCriteria.forClass(Anfallstelle.class)
+                        .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 						.createAlias("objekt", "objekt")
 						.add(Restrictions.eq("objekt.deleted", false))
 						.add(Restrictions.eq("objekt.inaktiv", false));
 
-		        if (!anh.equals("99")) {
+		        if (!anh.isEmpty() && !anh.equals("99")) {
 		            criteria.add(Restrictions.eq("anhangId", anh));
 		        } else if (!art.equals("-")) {
 		            criteria.add(Restrictions.eq("anlagenart", art));
-		        } else {
-		        	JOptionPane.showMessageDialog(null, "Sie müssen mindestens einen Anhang oder eine Anlagenart auswählen");
-		        	return null;
 		        }
 		        if (sachbe != null) {
 		            criteria.add(Restrictions.eq("objekt.sachbearbeiter", sachbe));
@@ -179,17 +170,20 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
      * Get all Anfallstelle that are Fettabscheider
      * @return <code>List&lt;Anfallstelle;</code>
      */
-    public static List<Anfallstelle> getFettabscheider() {
-        return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Anfallstelle.class)
-                .createAlias("objekt", "objekt")
-                .createAlias("objekt.objektarten", "art")
-                .createAlias("objekt.betreiberid", "adresse")
-                .add(Restrictions.eq("objekt.deleted", false))
-                .add(Restrictions.eq("anlagenart", "Fettabscheider"))
-                .addOrder(Order.asc("objekt.inaktiv"))
-                .addOrder(Order.asc("adresse.name")),
-            new Anfallstelle());
+    public static List<Anfallstelle> getFettabscheider(Sachbearbeiter sachbearbeiter) {
+        DetachedCriteria crit = DetachedCriteria.forClass(Anfallstelle.class)
+            .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
+            .createAlias("objekt", "objekt")
+            .createAlias("objekt.objektarten", "art")
+            .createAlias("objekt.betreiberid", "adresse")
+            .add(Restrictions.eq("objekt.deleted", false))
+            .add(Restrictions.eq("anlagenart", "Fettabscheider"))
+            .add(Restrictions.eq("objekt.inaktiv", false))
+            .addOrder(Order.asc("adresse.name"));
+        if (sachbearbeiter != null) {
+            crit.add(Restrictions.eq("objekt.sachbearbeiter", sachbearbeiter));
+        }
+        return new DatabaseAccess().executeCriteriaToList(crit, new Anfallstelle());
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
@@ -241,13 +235,14 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 
         DetachedCriteria criteria =
             DetachedCriteria.forClass(Anh49Fachdaten.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
             	.createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "obj")
-                .createAlias("obj.objektarten", "art");
+                .createAlias("obj.objektarten", "art")
+                .add(Restrictions.eq("obj.deleted", false))
+                .add(Restrictions.ne("anf.anlagenart", "Fettabscheider"));
 
-        if (inaktiv == true) {
-            criteria.add(Restrictions.eq("obj.inaktiv", inaktiv));
-        }
+        criteria.add(Restrictions.eq("obj.inaktiv", inaktiv));
         if (abgemeldet == true) {
             criteria.add(Restrictions.eq("abgemeldet", abgemeldet));
         }
@@ -326,6 +321,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
         boolean nurWiedervorlageAbgelaufen) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Anh50Fachdaten.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "objekt")
                 .createAlias("objekt.betreiberid", "adresse")
@@ -353,6 +349,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
         Boolean abwasseranfall, Boolean genpflicht) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Anh56Fachdaten.class)
+            .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
             .createAlias("anfallstelle", "anf")
                 .createAlias("anf.objekt", "objekt")
                 .createAlias("objekt.standortid", "standort")
@@ -385,15 +382,17 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     public static List<BwkFachdaten> getBwkByYear(Integer year) {
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(BwkFachdaten.class)
+            .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
             .createAlias("anfallstelle", "anf")
             .createAlias("anf.objekt", "obj")
             .createAlias("obj.standortid", "standort")
             .createAlias("standort.inhaber", "inhaber")
             .createAlias("inhaber.adresse", "adresse")
-            .add(Restrictions.eq("obj.deleted", false));
+            .add(Restrictions.eq("obj.deleted", false))
+            .add(Restrictions.eq("obj.inaktiv", false));
         detachedCriteria.addOrder(Order.asc("adresse.strasse"));
         detachedCriteria.addOrder(Order.asc("adresse.hausnr"));
-        /* year == -1 => alle Jahre */
+
         if (year == null || year != -1) {
             detachedCriteria.add(
                 DatabaseAccess.getRestrictionsEqualOrNull("erfassung", year));
@@ -405,19 +404,25 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
      * Get BwkFachdaten for Objektart BHKW.
      * @return <code>List&lt;BwkFachdaten&gt;</code>
      */
-    public static List<BwkFachdaten> getBHKW() {
+    public static List<BwkFachdaten> getBHKW(Integer year) {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				BwkFachdaten.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 	            .createAlias("anfallstelle", "anf")
 	            .createAlias("anf.objekt", "obj")
-				.createAlias("objekt.standortid", "standort")
-                .createAlias("objekt.objektarten", "art")
-                .createAlias("standort.adresse", "adresse")
+				.createAlias("obj.standortid", "standort")
+                .createAlias("obj.objektarten", "art")
+                .createAlias("standort.inhaber", "inhaber")
+                .createAlias("inhaber.adresse", "adresse")
 				.addOrder(Order.asc("adresse.strasse"))
 				.addOrder(Order.asc("adresse.hausnr"))
 				.add(Restrictions.eq("art.id", 36))
-	            .add(Restrictions.eq("obj.deleted", false));
-
+	            .add(Restrictions.eq("obj.deleted", false))
+                .add(Restrictions.eq("obj.inaktiv", false));
+        if (year == null || year != -1) {
+            detachedCriteria.add(
+                DatabaseAccess.getRestrictionsEqualOrNull("erfassung", year));
+        }
         return new DatabaseAccess().executeCriteriaToList(
             detachedCriteria, new BwkFachdaten());
     }
@@ -425,18 +430,24 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
      * Get BwkFachdaten for ABA = true.
      * @return <code>List&lt;BwkFachdaten&gt;</code>
      */
-    public static List<BwkFachdaten> getABA() {
+    public static List<BwkFachdaten> getABA(Integer year) {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				BwkFachdaten.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 	            .createAlias("anfallstelle", "anf")
 	            .createAlias("anf.objekt", "obj")
-				.createAlias("objekt.standortid", "standort")
-                .createAlias("standort.adresse", "adresse")
+				.createAlias("obj.standortid", "standort")
+                .createAlias("standort.inhaber", "inhaber")
+                .createAlias("inhaber.adresse", "adresse")
 				.addOrder(Order.asc("adresse.strasse"))
 				.addOrder(Order.asc("adresse.hausnr"))
 				.add(Restrictions.eq("aba", true))
-	            .add(Restrictions.eq("obj.deleted", false));
-
+	            .add(Restrictions.eq("obj.deleted", false))
+                .add(Restrictions.eq("obj.inaktiv", false));
+        if (year == null || year != -1) {
+            detachedCriteria.add(
+                DatabaseAccess.getRestrictionsEqualOrNull("erfassung", year));
+        }
         return new DatabaseAccess().executeCriteriaToList(
             detachedCriteria, new BwkFachdaten());
     }
@@ -534,7 +545,9 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
     public static List<SuevFachdaten> getAnhangSuev() {
         return new DatabaseAccess().executeCriteriaToList(
             DetachedCriteria.forClass(SuevFachdaten.class)
+                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("objekt", "objekt")
+                .add(Restrictions.eq("objekt.inaktiv", false))
                 .addOrder(Order.asc("objekt.inaktiv"))
                 .addOrder(Order.asc("id")),
             new SuevFachdaten());

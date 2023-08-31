@@ -185,7 +185,7 @@ public class SettingsManager {
 						+ " EditorParameter, EditorSachbearbeiter, EditorTabStreets, EditorWSG,"
 						+ " EinleiterAnfallstelleAuswertung, EinleiterAnh49Auswertung, EinleiterAnh50Auswertung,"
 						+ " EinleiterAnh56Auswertung, EinleiterBescheidAuswertung, EinleiterBrennwertAuswertung,"
-						+ " EinleiterFettabscheiderAuswertung, EinleiterGenehmigungAuswertung, EinleiterPrioritaetAuswertung,"
+						+ " EinleiterFettabscheiderAuswertung, EinleiterGenehmigungAuswertung"
 						+ " KlaerschlammAuswertung, KlaerschlammFaulschlammproben, KlaerschlammRohschlammproben,"
 						+ " LaborProbeSuchen, AnalyseImport, ProbepunkteAuswertung, SielhautBearbeiten, SielhautImport"
 						+ " ELKASync");
