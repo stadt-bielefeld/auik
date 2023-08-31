@@ -43,7 +43,7 @@ public class BasisAbfrageModel extends ListTableModel {
             "E-Satzungsüberwachung vorhanden",
             "Anhang",
             "Anlagenart",
-            "Bemekerung (Objekt)",
+            "Bemerkung (Objekt)",
             "Bemerkung (Anhang)",
             "Wiedervorlage",
             "Priorität"
