@@ -28,7 +28,7 @@ public class EStandortModel extends ListTableModel {
 
     public EStandortModel() {
         super(new String[]{
-                "Nr",
+                "ID",
                 "Strasse",
                 "Hausnummer",
                 "PLZ",

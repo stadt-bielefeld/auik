@@ -30,11 +30,11 @@ public class EAnfallstelleModel extends ListTableModel {
 
     public EAnfallstelleModel() {
         super(new String[]{
+                "ID",
                 "Betreiber",
                 "Adresse",
                 "Bemerkung",
-                "Bezeichnung",
-                "Objekt-ID"},
+                "Bezeichnung"},
                 false,
                 true);
     }
@@ -45,7 +45,7 @@ public class EAnfallstelleModel extends ListTableModel {
 
     public Class<?> getColumnClass(int column) {
         switch (column) {
-            case 4:
+            case 0:
                 return Integer.class;
             default:
                 return String.class;
@@ -59,19 +59,19 @@ public class EAnfallstelleModel extends ListTableModel {
         EAnfallstelle anlage = (EAnfallstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
-                  value = anlage.getStandort().getAdresse().getName1();
+                value = anlage.getNr();
                 break;
             case 1:
-                value = StringUtils.createAddressString(anlage.getAdresse());
+                  value = anlage.getStandort().getAdresse().getName1();
                 break;
             case 2:
-                value = anlage.getBezeichnung();
+                value = StringUtils.createAddressString(anlage.getAdresse());
                 break;
             case 3:
-                value = anlage.getBemerkung();
+                value = anlage.getBezeichnung();
                 break;
             case 4:
-                value = anlage.getNr();
+                value = anlage.getBemerkung();
                 break;
             default:
                 value = null;

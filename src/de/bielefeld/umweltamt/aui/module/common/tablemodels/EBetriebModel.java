@@ -29,6 +29,7 @@ public class EBetriebModel extends ListTableModel {
 
     public EBetriebModel() {
         super(new String[]{
+                "ID",
                 "Anrede",
                 "Name",
                 "Strasse",
@@ -36,8 +37,8 @@ public class EBetriebModel extends ListTableModel {
                 "PLZ",
                 "Ort",
                 "Bezeichnung",
-                "selbstüberwachend",
-                "Objekt-ID"},
+                "selbstüberwachend"
+            },
                 false,
                 true);
     }
@@ -48,7 +49,7 @@ public class EBetriebModel extends ListTableModel {
 
     public Class<?> getColumnClass(int column) {
         switch (column) {
-            case 8:
+            case 0:
                 return Integer.class;
             default:
                 return String.class;
@@ -62,31 +63,31 @@ public class EBetriebModel extends ListTableModel {
         EBetrieb betrieb = (EBetrieb) objectAtRow;
         switch(columnIndex) {
             case 0:
-                value = betrieb.getStandort().getAdresse().getAnrede();
+                value = betrieb.getObjektId();
                 break;
             case 1:
-                value = betrieb.getStandort().getAdresse().getName1();
+                value = betrieb.getStandort().getAdresse().getAnrede();
                 break;
             case 2:
-                value = betrieb.getStandort().getAdresse().getStrasse();
+                value = betrieb.getStandort().getAdresse().getName1();
                 break;
             case 3:
-                value = betrieb.getStandort().getAdresse().getHausnr();
+                value = betrieb.getStandort().getAdresse().getStrasse();
                 break;
             case 4:
-                value = betrieb.getStandort().getAdresse().getPlzZst();
+                value = betrieb.getStandort().getAdresse().getHausnr();
                 break;
             case 5:
-                value = betrieb.getStandort().getAdresse().getOrtZst();
+                value = betrieb.getStandort().getAdresse().getPlzZst();
                 break;
             case 6:
-                value = betrieb.getBezeichnung();
+                value = betrieb.getStandort().getAdresse().getOrtZst();
                 break;
             case 7:
-                value = betrieb.getSuevkanTog() ? "ja" : "nein";
+                value = betrieb.getBezeichnung();
                 break;
             case 8:
-                value = betrieb.getObjektId();
+                value = betrieb.getSuevkanTog() ? "ja" : "nein";
                 break;
             default:
                 value = null;

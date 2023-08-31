@@ -30,12 +30,12 @@ public class EAbwasserbehandlungsanlageModel extends ListTableModel {
 
     public EAbwasserbehandlungsanlageModel() {
         super(new String[]{
+                "ID",
                 "Betreiber",
                 "Adresse",
                 "Bezeichnung",
                 "genehmigungspflichtig",
-                "Beschreibung",
-                "Objekt-ID"},
+                "Beschreibung"},
                 false,
                 true);
     }
@@ -46,7 +46,7 @@ public class EAbwasserbehandlungsanlageModel extends ListTableModel {
 
     public Class<?> getColumnClass(int column) {
         switch (column) {
-            case 5:
+            case 0:
                 return Integer.class;
             default:
                 return String.class;
@@ -60,23 +60,23 @@ public class EAbwasserbehandlungsanlageModel extends ListTableModel {
         EAbwasserbehandlungsanlage anlage = (EAbwasserbehandlungsanlage) objectAtRow;
         switch(columnIndex) {
             case 0:
-                  value = anlage.getStandort().getAdresse().getName1();
+                value = anlage.getNr();
                 break;
             case 1:
+                  value = anlage.getStandort().getAdresse().getName1();
+                break;
+            case 2:
                 value = StringUtils.createAddressString(
                     anlage.getStandort().getAdresse());
                 break;
-            case 2:
+            case 3:
                 value = anlage.getBezeichnung();
                 break;
-            case 3:
+            case 4:
                 value = anlage.getGenehmpflichtigTog() ? "ja" : "nein";
                 break;
-            case 4:
-                value = anlage.getBemerkung();
-                break;
             case 5:
-                value = anlage.getNr();
+                value = anlage.getBemerkung();
                 break;
             default:
                 value = null;

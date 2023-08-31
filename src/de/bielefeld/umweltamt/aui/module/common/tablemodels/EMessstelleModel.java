@@ -34,12 +34,13 @@ public class EMessstelleModel extends ListTableModel {
 
     public EMessstelleModel() {
         super(new String[]{
-                "Standort-Nr",
-                "Adresse",
-                "Bezeichnung",
-                "Beschreibung",
+                "ID",
                 "Betreiber",
-                "Objekt-ID"},
+                "Adresse",
+                "Standort-ID",
+                "Bezeichnung",
+                "Beschreibung"
+            },
                 false,
                 true);
     }
@@ -51,7 +52,7 @@ public class EMessstelleModel extends ListTableModel {
     public Class<?> getColumnClass(int column) {
         switch (column) {
             case 0:
-            case 5:
+            case 3:
                 return Integer.class;
             default:
                 return String.class;
@@ -65,23 +66,23 @@ public class EMessstelleModel extends ListTableModel {
         EMessstelle stelle = (EMessstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
-                value = stelle.getStandort().getAdresse().getNr();
+                value = stelle.getObjektId();
                 break;
             case 1:
+                value = stelle.getStandort().getAdresse().getName1();
+                break;
+            case 2:
                 value = StringUtils.createAddressString(
                     stelle.getStandort().getAdresse());
                 break;
-            case 2:
-                value = stelle.getBezeichnung();
-                break;
             case 3:
-                value = stelle.getBemerkung();
+                value = stelle.getStandort().getAdresse().getNr();
                 break;
             case 4:
-                value = stelle.getStandort().getAdresse().getName1();
+                value = stelle.getBezeichnung();
                 break;
             case 5:
-                value = stelle.getObjektId();
+                value = stelle.getBemerkung();
                 break;
             default:
                 value = null;
