@@ -34,8 +34,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -531,7 +533,6 @@ public class ELKASync extends AbstractModul {
                                     JOptionPane.INFORMATION_MESSAGE);
                                 return;
                             }
-                            int selSize = selection.getModel().getSize();
                             //Load data and prepare progress counter
                             int elementsToRemove = 0;
                             for(String entitity: entities) {
@@ -554,9 +555,24 @@ public class ELKASync extends AbstractModul {
                             } else {
                                 return;
                             }
-                            for (int j = 0; j < selSize; j++) {
+                            //Prepare orderer list of entity types
+                            Stack<String> types = new Stack<String>();
+                            types.push(ENTITY_ADRESSE);
+                            types.push(ENTITY_STANDORTE);
+                            types.push(ENTITY_BETRIEBE);
+                            Arrays.stream(ELKASync.this.entities)
+                                .filter(item ->
+                                    !item.equals(ENTITY_ADRESSE)
+                                    && !item.equals(ENTITY_STANDORTE)
+                                    && !item.equals(ENTITY_BETRIEBE))
+                                .sorted()
+                                .forEach(item -> types.push(item));
+                            int typeCount = types.size();
+                            log.debug(String.format("Deleting %s tables", typeCount));
+                            for (int j = 0; j < typeCount; j++) {
                                 String currentUrl = url;
-                                String sel = selection.getModel().getElementAt(j);
+                                String sel = types.pop();
+                                log.debug(String.format("Deleting table %s (%s/%s)", sel, j, typeCount));
                                 JerseyClient client = new JerseyClientBuilder().build();
                                 Logger l = Logger.getAnonymousLogger();
                                 try{
@@ -751,6 +767,7 @@ public class ELKASync extends AbstractModul {
                             printStream.append("Fehlerbeschreibung: " + responseEntity);
                             printStream.append("\n");
                     }
+                    log.debug("Deleted " + deleteUrl);
                 }
                 fileStream.close();
                 openFile(protocolFile);
@@ -935,7 +952,8 @@ public class ELKASync extends AbstractModul {
                 prependIdentifierToNr(recht);
                 prependIdentifierToNr(recht.getAdresse());
             }
-            prependIdentifierToNr(anlage.getAbwasserbehandlungsverfahrens());
+            anlage.getAbwasserbehandlungsverfahrens()
+                .forEach(abaverf -> prependIdentifierToNr(abaverf));
         }
         return objects;
     }
