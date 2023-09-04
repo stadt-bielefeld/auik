@@ -33,6 +33,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -51,7 +52,7 @@ public class Abaverfahren  implements java.io.Serializable {
     
     /* Primary key, foreign keys (relations) and table columns */
     private Integer nr;
-    private Integer origNr;
+    private BigInteger origNr;
     private Date aktualDat;
     private Date erstellDat;
     private String bezeichnung;
@@ -289,12 +290,12 @@ public class Abaverfahren  implements java.io.Serializable {
         return getBezeichnung();
     }
 
-    public void setOrigNr(Integer origNr) {
+    public void setOrigNr(BigInteger origNr) {
         this.origNr = origNr;
     }
 
     @JsonIgnore
-    public Integer getOrigNr() {
+    public BigInteger getOrigNr() {
         return this.origNr;
     }
 }
