@@ -63,7 +63,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-import org.ehcache.core.statistics.LowerCachingTierOperationsOutcome.GetAndRemoveOutcome;
 import org.hibernate.criterion.MatchMode;
 
 import com.jgoodies.forms.builder.PanelBuilder;
