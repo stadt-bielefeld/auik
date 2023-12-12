@@ -112,22 +112,22 @@ public class GenehmigungPanel extends ObjectPanel{
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-            "r:80dlu, 5dlu, 90dlu, 5dlu, r:20dlu, 5dlu, 100dlu", // Spalten
+            "r:80dlu, 5dlu, 90dlu, 5dlu, r:20dlu, 5dlu, 120dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
 
         builder.appendSeparator("Fachdaten");
         builder.append("Aktenzeichen:", getAktenzeichenFeld());
-        builder.nextLine();
-        builder.append("Antragsdatum:", getAntragsDatum());
         builder.append("", getGen58CheckBox());
         builder.nextLine();
-        builder.append("Genehmigungsdatum:", getGenehmigungsDatum());
+        builder.append("Antragsdatum:", getAntragsDatum());
         builder.append("", getGen59CheckBox());
         builder.nextLine();
-        builder.append("Änderungsdatum:", getAenderungsDatum());
+        builder.append("Genehmigungsdatum:", getGenehmigungsDatum());
         builder.append("", getGen8CheckBox());
+        builder.nextLine();
+        builder.append("Änderungsdatum:", getAenderungsDatum());
         builder.nextLine();
         builder.append("Anhang:", getAnhangFeld());
         builder.append("", getSelbCheckBox());
@@ -501,21 +501,21 @@ public class GenehmigungPanel extends ObjectPanel{
 
     private JCheckBox getGen58CheckBox() {
         if (this.gen58Check == null) {
-            this.gen58Check = new JCheckBox("58er Genehmigung");
+            this.gen58Check = new JCheckBox("Abwasserbehandlungsanlage");
         }
         return this.gen58Check;
     }
 
     private JCheckBox getGen59CheckBox() {
         if (this.gen59Check == null) {
-            this.gen59Check = new JCheckBox("59er Genehmigung");
+            this.gen59Check = new JCheckBox("Indirekteinleitung");
         }
         return this.gen59Check;
     }
 
     private JCheckBox getGen8CheckBox() {
         if (this.gen8Check == null) {
-            this.gen8Check = new JCheckBox("8er Erlaubnis");
+            this.gen8Check = new JCheckBox("Direkteinleitung");
         }
         return this.gen8Check;
     }

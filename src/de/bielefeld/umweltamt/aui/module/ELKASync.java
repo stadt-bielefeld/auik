@@ -1121,7 +1121,7 @@ public class ELKASync extends AbstractModul {
     private <T> T prependIdentifierToNr(T object) {
         try {
             Method mGetter = object.getClass().getMethod("getOrigNr");
-            Method mSetter = object.getClass().getMethod("setNr", BigInteger.class);
+            Method mSetter = object.getClass().getMethod("setNr", Integer.class);
             Integer nr = (Integer)mGetter.invoke(object);
             if(nr == null) {
                 mGetter = object.getClass().getMethod("getNr");
@@ -1129,7 +1129,7 @@ public class ELKASync extends AbstractModul {
                 object.getClass().getMethod("setOrigNr", Integer.class).invoke(object, nr);
             }
             String newNr = IDENTIFIER + nr.toString();
-            BigInteger newBI = new BigInteger(newNr);
+            Integer newBI = new Integer(newNr);
             mSetter.invoke(object, newBI);
         } catch (NoSuchMethodException e){
         } catch (SecurityException e) {

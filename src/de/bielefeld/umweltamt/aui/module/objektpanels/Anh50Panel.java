@@ -80,7 +80,6 @@ public class Anh50Panel extends ObjectPanel {
     private JTextArea anh50BemerkungArea = null;
     private TextFieldDateChooser antragDatum = null;
     private TextFieldDateChooser genehmigungDatum = null;
-    private TextFieldDateChooser wiedervorlageDatum = null;
     private JToolBar entsorBearbToolBar = null;
     private JButton entsorgBearbButton = null;
     private JButton saveAnh50Button = null;
@@ -109,8 +108,6 @@ public class Anh50Panel extends ObjectPanel {
         builder.nextLine();
         builder.append("Genehmigung:", getGenehmigungDatum());
         builder.nextLine();
-        builder.append("Wiedervorlagen:", getWiedervorlageDatum());
-        builder.nextLine();
         builder.append("Gefährdungsklasse:", getGefaehrdungsklasseFeld());
         builder.nextLine();
         builder.append("", getErloschenCheck());
@@ -131,8 +128,7 @@ public class Anh50Panel extends ObjectPanel {
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(getSaveAnh50Button());
         builder.append(buttonBar, 6);
         addChangeListeners(getGefaehrdungsklasseFeld(), getAnh50BemerkungArea(),
-        getAntragDatum(), getGenehmigungDatum(), getWiedervorlageDatum(),
-        getErloschenCheck());
+        getAntragDatum(), getGenehmigungDatum(), getErloschenCheck());
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -161,9 +157,6 @@ public class Anh50Panel extends ObjectPanel {
             if (this.fachdaten.getGenehmigung() != null) {
                 getGenehmigungDatum().setDate(this.fachdaten.getGenehmigung());
             }
-            if (this.fachdaten.getWiedervorlage() != null) {
-                getWiedervorlageDatum().setDate(this.fachdaten.getWiedervorlage());
-            }
             if (this.fachdaten.getGefaehrdungsklasse() != null) {
                 getGefaehrdungsklasseFeld().setText(this.fachdaten.getGefaehrdungsklasse().toString());
             }
@@ -186,7 +179,6 @@ public class Anh50Panel extends ObjectPanel {
         getAnh50BemerkungArea().setText(null);
         getAntragDatum().setDate(null);
         getGenehmigungDatum().setDate(null);
-        getWiedervorlageDatum().setDate(null);
         getErloschenCheck().setSelected(false);
     }
 
@@ -227,9 +219,6 @@ public class Anh50Panel extends ObjectPanel {
 
         Date genehmigung = this.genehmigungDatum.getDate();
         this.fachdaten.setGenehmigung(genehmigung);
-
-        Date wiedervorlage = this.wiedervorlageDatum.getDate();
-        this.fachdaten.setWiedervorlage(wiedervorlage);
 
         if (getEntsorgerBox().getSelectedItem() != null) {
             this.fachdaten.setEntsorger((Entsorger) getEntsorgerBox().getSelectedItem());
@@ -302,13 +291,6 @@ public class Anh50Panel extends ObjectPanel {
             this.genehmigungDatum = new TextFieldDateChooser();
         }
         return this.genehmigungDatum;
-    }
-
-    private TextFieldDateChooser getWiedervorlageDatum() {
-        if (this.wiedervorlageDatum == null) {
-            this.wiedervorlageDatum = new TextFieldDateChooser();
-        }
-        return this.wiedervorlageDatum;
     }
 
     private JComboBox getEntsorgerBox() {
