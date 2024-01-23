@@ -46,7 +46,7 @@
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[UCL Umwelt Control Labor GmbH 
+				<text><![CDATA[Eurofins 
 CF: RÖBKE/AUTH/KLIPKER/KERN/EWES - Abwasser
 Stadt Bielefeld - Umweltamt 360.33]]></text>
 			</staticText>
@@ -882,7 +882,7 @@ Stadt Bielefeld - Umweltamt 360.33]]></text>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[UCL]]></text>
+				<text><![CDATA[Eurofins]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="6" y="618" width="507" height="15" uuid="e82d6414-2018-426e-b85f-ae137047b452"/>
