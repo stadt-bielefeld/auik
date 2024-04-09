@@ -55,9 +55,9 @@ public class PDFExporter {
 	 */
 	private static PDFExporter INSTANCE;
 
-	private static final String DEFAULTPATHTOJASPER = "resources/reports/";
+	private static final String DEFAULTPATHTOJASPER = "X:\\Applikationen\\Anlagenkataster\\AUIK\\reports\\";
 	private static String CONFIGPATHTOJASPER = "";
-	private boolean externalTemplates = false;
+	private boolean externalTemplates = true;
 	private Connection connection = null;
 	/** Die Geb&uuml;hrenbescheid. */
 	public static final String BESCHEID = "gebuehrenbescheid.jasper";
