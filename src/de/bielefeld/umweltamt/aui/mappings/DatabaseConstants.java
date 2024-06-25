@@ -128,6 +128,7 @@ public class DatabaseConstants {
     public static final int BASIS_OBJEKTART_ID_ANFALLSTELLE = 65;
     public static final int BASIS_OBJEKTART_ID_ENTWAESSERUNGSGRUNDSTUECK = 69;
     public static final int BASIS_OBJEKTART_ID_SONDERBAUWERK = 68;
+    public static final int BASIS_OBJEKTART_ID_AFS_NIEDERSCHLASWASSER = 70;
     public static final String BASIS_OBJEKTART_ABTEILUNG_INDIREKT = "Indirekt-Einl.";
     public static final String BASIS_OBJEKTART_ABTEILUNG_DIREKT = "Direkt-Einl.";
     public static final String BASIS_OBJEKTART_ABTEILUNG_AWSV = "AwSV";

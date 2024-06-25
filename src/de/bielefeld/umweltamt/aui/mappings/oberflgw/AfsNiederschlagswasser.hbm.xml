@@ -9,7 +9,7 @@
             <generator class="assigned" />
         </id>
         <many-to-one name="anfallstelle" class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" fetch="select">
-            <column name="anfallstellen_nr" />
+            <column name="anfallstelleid" />
         </many-to-one>
         <many-to-one name="entwaesserungsgrundstueck" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck" fetch="select">
             <column name="entw_grund_nr" />

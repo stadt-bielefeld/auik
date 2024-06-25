@@ -53,7 +53,6 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     /* Primary key, foreign keys (relations) and table columns */
     private Long nr;
     private Objekt objekt;
-    private Wasserrecht wasserrecht;
     private boolean erlFreiElTog;
     private BigDecimal regenspende;
     private String bemerkung;
@@ -79,6 +78,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private Boolean strTog;
     private Boolean parkplatzTog;
     private Set<Abaverfahren> Abaverfahrens = new HashSet<Abaverfahren>(0);
+    private Set<Wasserrecht> Wasserrechts = new HashSet<Wasserrecht>(0);
     
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -102,10 +102,10 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public Entwaesserungsgrundstueck(
-        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, Integer adrNr, String externalNr, Boolean woTog, Boolean miTog, Boolean geTog, Boolean giTog, Boolean gemTog, Boolean strTog, Boolean parkplatzTog, Set<Abaverfahren> Abaverfahrens, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+        long nr, Objekt objekt, Wasserrecht wasserrecht, boolean erlFreiElTog, BigDecimal regenspende, String bemerkung, BigDecimal regenhaeufigkeit, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, Integer adrNr, String externalNr, Boolean woTog, Boolean miTog, Boolean geTog, Boolean giTog, Boolean gemTog, Boolean strTog, Boolean parkplatzTog, Set<Abaverfahren> Abaverfahrens, Set<Wasserrecht> Wasserrechts, Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
         this.nr = nr;
         this.objekt = objekt;
-        this.wasserrecht = wasserrecht;
+        this.Wasserrechts = Wasserrechts;
         this.erlFreiElTog = erlFreiElTog;
         this.regenspende = regenspende;
         this.bemerkung = bemerkung;
@@ -150,12 +150,12 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.objekt = objekt;
     }
 
-    public Wasserrecht getWasserrecht() {
-        return this.wasserrecht;
+    public Set<Wasserrecht> getWasserrechts() {
+        return this.Wasserrechts;
     }
 
-    public void setWasserrecht(Wasserrecht wasserrecht) {
-        this.wasserrecht = wasserrecht;
+    public void setWasserrechts(Set<Wasserrecht> Wasserrechts) {
+        this.Wasserrechts = Wasserrechts;
     }
 
     public Boolean isErlFreiElTog() {
@@ -372,7 +372,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("nr").append("='").append(getNr()).append("' ");
         buffer.append("objekt").append("='").append(getObjekt()).append("' ");
-        buffer.append("wasserrecht").append("='").append(getWasserrecht()).append("' ");
+        buffer.append("wasserrecht").append("='").append(getWasserrechts()).append("' ");
         buffer.append("erlFreiElTog").append("='").append(isErlFreiElTog()).append("' ");
         buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");
         buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");
@@ -465,7 +465,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private void copy(Entwaesserungsgrundstueck copy) {
         this.nr = copy.getNr();
         this.objekt = copy.getObjekt();
-        this.wasserrecht = copy.getWasserrecht();
+        this.Wasserrechts = copy.getWasserrechts();
         this.erlFreiElTog = copy.isErlFreiElTog();
         this.regenspende = copy.getRegenspende();
         this.bemerkung = copy.getBemerkung();
@@ -540,11 +540,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     public static Entwaesserungsgrundstueck findByObjektId(java.lang.Integer id) {
         Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
         Set<Entwaesserungsgrundstueck> list = objekt.getEntwaesserungsgrundstuecks();
-        if (list.size() > 0) {
-            return list.iterator().next();
-        } else {
-            return null;
-        }
+        return list.iterator().next();
     }
 
 	public List<Object> getSortedVerfahren() {

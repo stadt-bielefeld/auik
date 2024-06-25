@@ -50,7 +50,7 @@
 	</set>
 	<set name="afsNiederschlagswassers" table="afs_niederschlagswasser" schema="oberflgw" inverse="true" lazy="false" fetch="select">
 	    <key>
-	        <column name="anfallstellen_nr" />
+	        <column name="anfallstelleid" />
 	    </key>
 	    <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" />
 	</set>

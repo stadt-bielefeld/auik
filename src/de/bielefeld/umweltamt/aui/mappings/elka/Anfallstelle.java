@@ -73,9 +73,6 @@ public class Anfallstelle  implements java.io.Serializable {
     private Float maxVolTag;
     private Float maxVolStunde;
     private Integer volJahr;
-    private Float abflussmenge;
-    private Integer befFlaeche;
-    private Integer nwHerBereichOpt;
     private String externalNr;
     private String anlagenart;
     private String bemerkungen;
@@ -125,9 +122,6 @@ public class Anfallstelle  implements java.io.Serializable {
         this.maxVolTag = maxVolTag;
         this.maxVolStunde = maxVolStunde;
         this.volJahr = volJahr;
-        this.abflussmenge = abflussmenge;
-        this.befFlaeche = befFlaeche;
-        this.nwHerBereichOpt = nwHerBereichOpt;
         this.externalNr = externalNr;
         this.anlagenart = anlagenart;
         this.bemerkungen = bemerkungen;
@@ -271,31 +265,6 @@ public class Anfallstelle  implements java.io.Serializable {
 
     public void setVolJahr(Integer volJahr) {
         this.volJahr = volJahr;
-    }
-
-    public Float getAbflussmenge() {
-        return this.abflussmenge;
-    }
-
-    public void setAbflussmenge(Float abflussmenge) {
-        this.abflussmenge = abflussmenge;
-    }
-
-    public Integer getBefFlaeche() {
-        return this.befFlaeche;
-    }
-
-    public void setBefFlaeche(Integer befFlaeche) {
-        this.befFlaeche = befFlaeche;
-    }
-
-    public Integer getNwHerBereichOpt() {
-        return this.nwHerBereichOpt;
-    }
-
-    public void setNwHerBereichOpt(Integer nwHerBereichOpt) {
-        this.nwHerBereichOpt = nwHerBereichOpt;
-
     }
 
     public String getExternalNr() {
@@ -445,10 +414,7 @@ public class Anfallstelle  implements java.io.Serializable {
         buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
         buffer.append("maxVolTag").append("='").append(getMaxVolTag()).append("' ");			
         buffer.append("maxVolStunde").append("='").append(getMaxVolStunde()).append("' ");			
-        buffer.append("volJahr").append("='").append(getVolJahr()).append("' ");		
-        buffer.append("abflussmenge").append("='").append(getAbflussmenge()).append("' ");	
-        buffer.append("befFlaeche").append("='").append(getBefFlaeche()).append("' ");	
-        buffer.append("nwHerBereichOpt").append("='").append(getNwHerBereichOpt()).append("' ");	
+        buffer.append("volJahr").append("='").append(getVolJahr()).append("' ");			
         buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
         buffer.append("afsStoffes").append("='").append(getAfsStoffes()).append("' ");			
         buffer.append("referenzsForZAfsNr").append("='").append(getReferenzsForZAfsNr()).append("' ");			
@@ -541,10 +507,7 @@ public class Anfallstelle  implements java.io.Serializable {
         this.deleted = copy.getDeleted();            
         this.maxVolTag = copy.getMaxVolTag();            
         this.maxVolStunde = copy.getMaxVolStunde();            
-        this.volJahr = copy.getVolJahr();             
-        this.abflussmenge = copy.getAbflussmenge();   
-        this.befFlaeche = copy.getBefFlaeche();   
-        this.nwHerBereichOpt = copy.getNwHerBereichOpt();     
+        this.volJahr = copy.getVolJahr();                 
         this.externalNr = copy.getExternalNr();            
         this.afsStoffes = copy.getAfsStoffes();            
         this.referenzsForZAfsNr = copy.getReferenzsForZAfsNr();            

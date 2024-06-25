@@ -1,70 +1,74 @@
 <?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-									"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 13.07.2018 10:10:45 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
-   <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueck" 
-    table="e_entwaesserungsgrundstueck" schema="elka" optimistic-lock="version">
-	  <id name="nr" type="java.lang.Integer">
-	    <column name="nr"/>
-	    <generator class="assigned"/>
-	    </id>
-        <many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">
-            <column name="standortid"/>
-        </many-to-one>
-        <many-to-one lazy="false" name="adresse" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
-            <column name="betreiberid"/>
-        </many-to-one>
-         <property name="erlFreiElTog" type="java.lang.Boolean">
-             <column name="erl_frei_el_tog" />
-         </property>
-         <property name="regenspende" type="big_decimal">
-             <column name="regenspende" precision="10" scale="1" />
-         </property>
-         <property name="regenhaeufigkeit" type="big_decimal">
-             <column name="regenhaeufigkeit" precision="10" scale="1" />
-         </property>
-         <property name="bemerkung" type="java.lang.String">
-             <column name="bemerkung" />
-         </property>
-         <property name="regendauer" type="java.lang.Integer">
-             <column name="regendauer" />
-         </property>
-         <property name="grEntwGebiet" type="java.lang.Integer">
-             <column name="gr_entw_gebiet" />
-         </property>
-         <property name="dtvWert" type="big_decimal">
-             <column name="dtv_wert" precision="10" scale="1" />
-         </property>
-         <property name="wasserableitungsstreckeOpt" type="java.lang.Integer">
-             <column name="wasserableitungsstrecke_opt" />
-         </property>
-         <property name="nameEtwGebiet" type="java.lang.String">
-             <column name="name_etw_gebiet" length="80" />
-         </property>
-         <property name="erstellDat" type="java.util.Date">
-             <column name="erstell_dat" length="29" />
-         </property>
-         <property name="einlBereichOpt" type="java.lang.Integer">
-             <column name="einl_bereich_opt" />
-         </property>
-         <property name="abwbeskonnr" type="java.lang.String">
-             <column name="abwbeskon_nr" length="30" />
-         </property>
-         <property name="einbauartOpt" type="java.lang.Integer">
-             <column name="einbauart_opt" />
-         </property>
-         <property name="aktualDat" type="java.util.Date">
-             <column name="aktual_dat" length="29" />
-         </property>
-        <many-to-one lazy="false" name="wasserrecht" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" fetch="select">
-            <column name="wasserecht_nr"/>
-        </many-to-one>
-         <property name="herkunft" type="java.lang.String">
-             <column name="herkunft" />
-         </property>
-         <property name="externalNr" type="java.lang.String">
-             <column name="external_nr" length="50" />
-         </property>
-    </class>
+	<class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EEntwaesserungsgrundstueck" table="e_entwaesserungsgrundstueck" schema="elka" optimistic-lock="version">
+		<id name="nr" type="java.lang.Integer">
+			<column name="nr" />
+			<generator class="assigned" />
+		</id>
+		<many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">
+			<column name="standortid" />
+		</many-to-one>
+		<many-to-one lazy="false" name="adresse" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
+			<column name="betreiberid" />
+		</many-to-one>
+		<property name="erlFreiElTog" type="java.lang.Boolean">
+			<column name="erl_frei_el_tog" />
+		</property>
+		<property name="regenspende" type="big_decimal">
+			<column name="regenspende" precision="10" scale="1" />
+		</property>
+		<property name="regenhaeufigkeit" type="big_decimal">
+			<column name="regenhaeufigkeit" precision="10" scale="1" />
+		</property>
+		<property name="bemerkung" type="java.lang.String">
+			<column name="bemerkung" />
+		</property>
+		<property name="regendauer" type="java.lang.Integer">
+			<column name="regendauer" />
+		</property>
+		<property name="grEntwGebiet" type="java.lang.Integer">
+			<column name="gr_entw_gebiet" />
+		</property>
+		<property name="dtvWert" type="big_decimal">
+			<column name="dtv_wert" precision="10" scale="1" />
+		</property>
+		<property name="wasserableitungsstreckeOpt" type="java.lang.Integer">
+			<column name="wasserableitungsstrecke_opt" />
+		</property>
+		<property name="nameEtwGebiet" type="java.lang.String">
+			<column name="name_etw_gebiet" length="80" />
+		</property>
+		<property name="erstellDat" type="java.util.Date">
+			<column name="erstell_dat" length="29" />
+		</property>
+		<property name="einlBereichOpt" type="java.lang.Integer">
+			<column name="einl_bereich_opt" />
+		</property>
+		<property name="abwbeskonnr" type="java.lang.String">
+			<column name="abwbeskon_nr" length="30" />
+		</property>
+		<property name="einbauartOpt" type="java.lang.Integer">
+			<column name="einbauart_opt" />
+		</property>
+		<property name="aktualDat" type="java.util.Date">
+			<column name="aktual_dat" length="29" />
+		</property>
+		<many-to-one lazy="false" name="wasserrecht" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" fetch="select">
+			<column name="wasserecht_nr" />
+		</many-to-one>
+		<property name="herkunft" type="java.lang.String">
+			<column name="herkunft" />
+		</property>
+		<property name="externalNr" type="java.lang.String">
+			<column name="external_nr" length="50" />
+		</property>
+		<set name="afsNiederschlagswassers" table="afs_niederschlagswasser" schema="oberflgw" inverse="true" lazy="false" fetch="select">
+			<key>
+				<column name="anfallstelleid" />
+			</key>
+			<one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" />
+		</set>
+	</class>
 </hibernate-mapping>

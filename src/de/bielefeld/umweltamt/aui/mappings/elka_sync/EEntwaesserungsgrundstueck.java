@@ -79,9 +79,11 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     private String herkunft;
     private String externalNr;
 
-    private Set<AfsNiederschlagswasser> afsNiederschlagswassers;
     private Set<Abaverfahren> abwasserbehandlungsverfahrens;
     private Set<ZEntwaessgrAbwasbehverf> zEntwaessgrAbwasbehverfs;
+    
+
+    private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
 
     /** Default constructor */
     public EEntwaesserungsgrundstueck() {
@@ -93,10 +95,11 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public EEntwaesserungsgrundstueck(
-        Integer nr, EStandort standort, EAdresse adresse, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String bemerkung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
+        Integer nr, EStandort standort, EAdresse adresse, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String bemerkung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
         this.nr = nr;
         this.standort = standort;
         this.adresse = adresse;
+        this.afsNiederschlagswassers = afsNiederschlagswassers;
         this.erlFreiElTog = erlFreiElTog;
         this.regenspende = regenspende;
         this.regenhaeufigkeit = regenhaeufigkeit;
@@ -149,6 +152,14 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     public void setAdresse(EAdresse adresse) {
         this.adresse = adresse;
+    }
+
+    public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
+        return this.afsNiederschlagswassers;
+    }
+
+    public void setAfsNiederschlagswassers(Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+        this.afsNiederschlagswassers = afsNiederschlagswassers;
     }
 
     public Boolean getErlFreiElTog() {
@@ -453,22 +464,6 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         }
         return  zEntwaessgrAbwasbehverfs;
 
-    }
-
-    /**
-     * Get the AfsNiederschlagwasser instances connected to the Entwaesserungsgrundstueck table entry
-     * on which this instance is based on.
-     * @return The instances as set
-     */
-    public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers () {
-        Integer identifier = origNr != null ? origNr : nr;
-        if (afsNiederschlagswassers != null ) {
-            return afsNiederschlagswassers;
-        } else {
-            Entwaesserungsgrundstueck entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findById(identifier);
-            afsNiederschlagswassers = entwaesserungsgrundstueck.getAfsNiederschlagswassers();
-            return afsNiederschlagswassers;
-        }
     }
 
     public Set<Abaverfahren> getAbwasserbehandlungsverfahrens() {

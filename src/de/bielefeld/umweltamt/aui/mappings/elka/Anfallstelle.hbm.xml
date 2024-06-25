@@ -62,15 +62,6 @@
         <property name="bemerkungen" type="java.lang.String">
             <column name="bemerkungen" />
         </property>
-        <property name="abflussmenge" type="java.lang.Float">
-            <column name="abflussmenge" precision="11" />
-        </property>
-        <property name="befFlaeche" type="java.lang.Integer">
-            <column name="bef_flaeche" />
-        </property>
-        <property name="nwHerBereichOpt" type="java.lang.Integer">
-            <column name="nw_her_bereich_opt" />
-        </property>
         <set name="anh40Fachdatens" table="anh_40_fachdaten" schema="indeinl" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="anfallstelleid" not-null="true" />
@@ -127,7 +118,7 @@
         </set>
         <set name="afsNiederschlagswassers" table="afs_niederschlagswasser" schema="oberflgw" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="anfallstellen_nr" />
+                <column name="anfallstelleid" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" />
         </set>

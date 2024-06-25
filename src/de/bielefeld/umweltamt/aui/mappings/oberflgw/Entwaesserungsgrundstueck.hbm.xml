@@ -15,11 +15,6 @@
 			fetch="select">
 			<column name="objekt_id" not-null="true" />
 		</many-to-one>
-		<many-to-one name="wasserrecht"
-			class="de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht"
-			fetch="select">
-			<column name="wasserecht_nr" />
-		</many-to-one>
 		<property name="erlFreiElTog" type="boolean">
 			<column name="erl_frei_el_tog" not-null="true" />
 		</property>
@@ -90,8 +85,13 @@
 		<property name="parkplatzTog" type="java.lang.Boolean">
 			<column name="parkplatz_tog" />			
 		</property>
-		<set name="afsNiederschlagswassers" table="afs_niederschlagswasser" inverse="true" lazy="false"
-			fetch="join">
+        <set name="Wasserrechts" table="elka.e_z_els_wasserrecht" lazy="false" fetch="select">
+  	 		<key>
+  				<column name="els_nr" not-null="true" />
+  	 		</key>
+   		  <many-to-many column="wasserrecht_nr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" />
+        </set>
+		<set name="afsNiederschlagswassers" table="afs_niederschlagswasser" lazy="false" fetch="select">
 			<key>
 				<column name="entw_grund_nr" />
 			</key>

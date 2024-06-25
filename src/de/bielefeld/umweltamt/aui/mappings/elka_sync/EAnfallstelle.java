@@ -234,9 +234,9 @@ public class EAnfallstelle implements java.io.Serializable {
     }
 
     /**
-     * Get a list of all <code>AtlKlaeranlagen</code>
-     * @return <code>List&lt;AtlKlaeranlagen&gt;</code>
-     *         all <code>AtlKlaeranlagen</code>
+     * Get a list of all <code>EAnfallstelle</code>
+     * @return <code>List&lt;EAnfallstelle&gt;</code>
+     *         all <code>EAnfallstelle</code>
      */
     public static List<EAnfallstelle> getAll() {
         return DatabaseQuery.getAll(new EAnfallstelle());
@@ -273,12 +273,12 @@ public class EAnfallstelle implements java.io.Serializable {
 //        Anfallstelle afs = getAnfallstelle();
 //        return afs != null ? afs.getAfsNiederschlagswassers() : null;
 //    }
-//
-//    /**
-//     * Returns the AfsStoffe instances connected to the Anfallstelle table entry
-//     * on which this instance is based on.
-//     * @return The instances as set
-//     */
+
+    /**
+     * Returns the AfsStoffe instances connected to the Anfallstelle table entry
+     * on which this instance is based on.
+     * @return The instances as set
+     */
 //    public Set<AfsStoffe> getAfsStoffes() {
 //        Anfallstelle afs = getAnfallstelle();
 //        return afs != null ? afs.getAfsStoffes() : null;
