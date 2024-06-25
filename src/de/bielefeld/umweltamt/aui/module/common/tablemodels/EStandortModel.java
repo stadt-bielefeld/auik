@@ -53,14 +53,23 @@ public class EStandortModel extends ListTableModel {
             case 0:
                 value = standort.getNr();
                 break;
-            case 1:
-            	value = standort.getAdresse().getStrasse();
-            	break;
+			case 1:
+				if (standort.getAdresse() != null) {
+					value = standort.getAdresse().getStrasse();
+				} else
+					value = null;
+				break;
             case 2:
-            	value = standort.getAdresse().getPlzZst();
+            	if (standort.getAdresse() != null) {
+            		value = standort.getAdresse().getPlzZst();
+				} else
+					value = null;
             	break;
             case 3:
-            	value = standort.getAdresse().getOrtZst();
+            	if (standort.getAdresse() != null) {
+            		value = standort.getAdresse().getOrtZst();
+				} else
+					value = null;
             	break;
             case 4:
             	value = standort.getFlur();

@@ -270,12 +270,8 @@ public class ELKASync extends AbstractModul {
                             } else if (item.equals("Standorte")) {
                                 ELKASync.this.dbTable
                                         .setModel(ELKASync.this.standortModel);
-                                List<EStandort> items = EStandort.getAll().stream()
-                                    .filter(standort -> standort.getAdresse().getOrtZst()
-                                            .equals("Bielefeld"))
-                                    .collect(Collectors.toList());
                                 ELKASync.this.standortModel.setList(
-                                        prependIdentifierStandort(items));
+                                        prependIdentifierStandort(EStandort.getAll()));
                                 ELKASync.this.standortModel.fireTableDataChanged();
                             } else if (item.equals("Entwässerungsgrundstücke")) {
                                 ELKASync.this.dbTable
@@ -990,9 +986,9 @@ public class ELKASync extends AbstractModul {
                 prependIdentifierToNr(recht);
                 prependIdentifierToNr(recht.getAdresse());
             }
-            for (Abaverfahren verfahren: ewg.getAbwasserbehandlungsverfahrens()) {
-                prependIdentifierToNr(verfahren);
-            }
+//            for (Abaverfahren verfahren: ewg.getAbwasserbehandlungsverfahrens()) {
+//                prependIdentifierToNr(verfahren);
+//            }
             for (AfsNiederschlagswasser afsn: ewg.getAfsNiederschlagswassers()) {
                 prependIdentifierToNr(afsn);
             }
@@ -1007,7 +1003,9 @@ public class ELKASync extends AbstractModul {
             prependIdentifierToNr(stelle);
             prependIdentifierToNr(stelle.getAdresse());
             prependIdentifierToNr(stelle.getStandort());
-            prependIdentifierToNr(stelle.getStandort().getAdresse());
+			if (stelle.getStandort().getAdresse() != null) {
+				prependIdentifierToNr(stelle.getStandort().getAdresse());
+			}
             for (AfsStoffe afsStoff: stelle.getAfsStoffes()) {
                 prependIdentifierToProperty(afsStoff, "anfallstellenNr");
             }
@@ -1079,15 +1077,15 @@ public class ELKASync extends AbstractModul {
            return objects;
     }
 
-    private List<EStandort> prependIdentifierStandort(
-              List<EStandort> objects
-    ) {
-        for (EStandort standort : objects) {
-               prependIdentifierToNr(standort);
-               prependIdentifierToNr(standort.getAdresse());
-           }
-           return objects;
-    }
+	private List<EStandort> prependIdentifierStandort(List<EStandort> objects) {
+		for (EStandort standort : objects) {
+			prependIdentifierToNr(standort);
+			if (standort.getAdresse() != null) {
+				prependIdentifierToNr(standort.getAdresse());
+			}
+		}
+		return objects;
+	}
 
     private List<Referenz> prependIdentifierReferenz(List<Referenz> objects) {
         for (Referenz ref: objects) {

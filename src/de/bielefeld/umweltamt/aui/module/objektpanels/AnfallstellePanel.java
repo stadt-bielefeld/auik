@@ -289,24 +289,12 @@ public class AnfallstellePanel extends ObjectPanel {
                     "Kategorie III: Stark belastetes NW"};
             getHerkunftBox().setModel(new DefaultComboBoxModel(herkunft));
 
-            if(this.anfallstelle.getNwHerBereichOpt() != null) {
-                getHerkunftBox().setSelectedIndex(this.anfallstelle.getNwHerBereichOpt());
-            }
-
             if(this.anfallstelle.getAnwendungsbereich() != null) {
                 getAnwendungsbereichFeld().setText(this.anfallstelle.getAnwendungsbereich());
             }
 
             if(this.anfallstelle.getBezeichnung() != null) {
                 getBezeichnungFeld().setText(this.anfallstelle.getBezeichnung());
-            }
-
-            if(this.anfallstelle.getBefFlaeche() != null) {
-                getBefestFlaecheFeld().setText(this.anfallstelle.getBefFlaeche().toString());
-            }
-
-            if(this.anfallstelle.getAbflussmenge() != null) {
-                getLProSFeld().setText(this.anfallstelle.getAbflussmenge().toString());
             }
 
             if(this.anfallstelle.getVolJahr() != null) {
@@ -474,12 +462,6 @@ public class AnfallstellePanel extends ObjectPanel {
             this.anfallstelle.setAnlagenart((String) getAnlagenartBox().getSelectedItem());
         }
 
-        if (getHerkunftBox().getSelectedIndex() == 0) {
-            this.anfallstelle.setNwHerBereichOpt(0);
-        } else {
-            this.anfallstelle.setNwHerBereichOpt(getHerkunftBox().getSelectedIndex());
-        }
-
         String anwendungsbereich = this.anwendungsbereichFeld.getText();
         if("".equals(anwendungsbereich)) {
             this.anfallstelle.setAnwendungsbereich(null);
@@ -497,13 +479,7 @@ public class AnfallstellePanel extends ObjectPanel {
         Integer qmproa = ((IntegerField) this.qmProAFeld)
             .getIntValue();
         this.anfallstelle.setVolJahr(qmproa);
-
-        Integer beffl = ((IntegerField) this.befestFlaecheFeld)
-            .getIntValue();
-        this.anfallstelle.setBefFlaeche(beffl);
-
-        Float abfluss = ((DoubleField) getLProSFeld()).getFloatValue();
-        this.anfallstelle.setAbflussmenge(abfluss);
+        
         Float maxVolH = ((DoubleField) getQmProHFeld()).getFloatValue();
         this.anfallstelle.setMaxVolStunde(maxVolH);
         Float maxVolD = ((DoubleField) getQmProDFeld()).getFloatValue();

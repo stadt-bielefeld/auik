@@ -47,7 +47,11 @@ public class EAnfallstelleModel extends ListTableModel {
         EAnfallstelle anlage = (EAnfallstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
-          		value = anlage.getStandort().getAdresse().getName1();
+            	if(anlage.getStandort().getAdresse() != null) {
+            		value = anlage.getStandort().getAdresse().getName1();
+            	}
+            	else
+            		value = null;
                 break;
             case 1:
                 value = anlage.getBezeichnung();

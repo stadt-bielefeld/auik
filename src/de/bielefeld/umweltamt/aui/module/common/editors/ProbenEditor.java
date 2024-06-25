@@ -1316,7 +1316,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         analyseColumn.setPreferredWidth(100);
 
         String[] analyse_von_auswahl = {"700.44", "360.33", "OWL-Umwelt", "Stadtwerke GT", "AGROLAB", "HBICON",
-                "Schwarze vdH", "Dr. Kludas", "Fresenius"};
+                "Dr. Kludas", "Fresenius", "E-Satzung"};
 
         analysevonBox = new JComboBox(analyse_von_auswahl);
         analysevonBox.setEditable(true);
