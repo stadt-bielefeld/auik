@@ -28,6 +28,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +38,7 @@ import java.util.Set;
  * A class that represents a row in the Parameter database table.<br>
  * This class is meant to serve as a model and should be copied into the
  * appropriate package and may be customized below the given mark.
+ * @param <MapWirdgemessenineinheit>
  */
 public class Parameter  implements java.io.Serializable {
 
@@ -48,9 +50,9 @@ public class Parameter  implements java.io.Serializable {
     private String ordnungsbegriff;
     private Parametergruppen parametergruppen;
     private MapElkaAnalysemethode mapElkaAnalysemethode;
+    private Einheiten einheiten;
     private String analyseverfahren;
     private String bezeichnung;
-    private Integer wirdgemessenineinheit;
     private Double grenzwert;
     private String grenzwertname;
     private Double sielhautGw;
@@ -84,13 +86,13 @@ public class Parameter  implements java.io.Serializable {
 
     /** Full constructor */
     public Parameter(
-        String ordnungsbegriff, Parametergruppen parametergruppen, MapElkaAnalysemethode mapElkaAnalysemethode, String analyseverfahren, String bezeichnung, Integer wirdgemessenineinheit, Double grenzwert, String grenzwertname, Double sielhautGw, Double klaerschlammGw, Double preisfueranalyse, Boolean einzelnbeauftragbar, String kennzeichnung, String konservierung, Integer reihenfolge, boolean enabled, boolean deleted, Integer deaStoffeStoffNr, Set<MetaParameter> metaParameters, Set<Analyseposition> analysepositions) {
+        String ordnungsbegriff, Parametergruppen parametergruppen, MapElkaAnalysemethode mapElkaAnalysemethode, Einheiten einheiten, String analyseverfahren, String bezeichnung, Integer wirdgemessenineinheit, Double grenzwert, String grenzwertname, Double sielhautGw, Double klaerschlammGw, Double preisfueranalyse, Boolean einzelnbeauftragbar, String kennzeichnung, String konservierung, Integer reihenfolge, boolean enabled, boolean deleted, Integer deaStoffeStoffNr, Set<MetaParameter> metaParameters, Set<Analyseposition> analysepositions) {
         this.ordnungsbegriff = ordnungsbegriff;
         this.parametergruppen = parametergruppen;
         this.mapElkaAnalysemethode = mapElkaAnalysemethode;
+        this.einheiten = einheiten;
         this.analyseverfahren = analyseverfahren;
         this.bezeichnung = bezeichnung;
-        this.wirdgemessenineinheit = wirdgemessenineinheit;
         this.grenzwert = grenzwert;
         this.grenzwertname = grenzwertname;
         this.sielhautGw = sielhautGw;
@@ -132,6 +134,14 @@ public class Parameter  implements java.io.Serializable {
         this.mapElkaAnalysemethode = mapElkaAnalysemethode;
     }
 
+    public Einheiten getEinheiten() {
+        return this.einheiten;
+    }
+
+    public void setEinheiten(Einheiten einheiten) {
+        this.einheiten = einheiten;
+    }
+
     public String getAnalyseverfahren() {
         return this.analyseverfahren;
     }
@@ -146,14 +156,6 @@ public class Parameter  implements java.io.Serializable {
 
     public void setBezeichnung(String bezeichnung) {
         this.bezeichnung = bezeichnung;
-    }
-
-    public Integer getWirdgemessenineinheit() {
-        return this.wirdgemessenineinheit;
-    }
-
-    public void setWirdgemessenineinheit(Integer wirdgemessenineinheit) {
-        this.wirdgemessenineinheit = wirdgemessenineinheit;
     }
 
     public Double getGrenzwert() {
@@ -293,7 +295,7 @@ public class Parameter  implements java.io.Serializable {
         buffer.append("mapElkaAnalysemethode").append("='").append(getMapElkaAnalysemethode()).append("' ");			
         buffer.append("analyseverfahren").append("='").append(getAnalyseverfahren()).append("' ");			
         buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("wirdgemessenineinheit").append("='").append(getWirdgemessenineinheit()).append("' ");			
+        buffer.append("einheiten").append("='").append(getEinheiten()).append("' ");			
         buffer.append("grenzwert").append("='").append(getGrenzwert()).append("' ");			
         buffer.append("grenzwertname").append("='").append(getGrenzwertname()).append("' ");			
         buffer.append("sielhautGw").append("='").append(getSielhautGw()).append("' ");			
@@ -375,10 +377,10 @@ public class Parameter  implements java.io.Serializable {
     private void copy(Parameter copy) {
         this.ordnungsbegriff = copy.getOrdnungsbegriff();            
         this.parametergruppen = copy.getParametergruppen();    
-        this.mapElkaAnalysemethode = copy.getMapElkaAnalysemethode();           
+        this.mapElkaAnalysemethode = copy.getMapElkaAnalysemethode();     
+        this.einheiten = copy.getEinheiten();         
         this.analyseverfahren = copy.getAnalyseverfahren();            
-        this.bezeichnung = copy.getBezeichnung();            
-        this.wirdgemessenineinheit = copy.getWirdgemessenineinheit();            
+        this.bezeichnung = copy.getBezeichnung();                     
         this.grenzwert = copy.getGrenzwert();            
         this.grenzwertname = copy.getGrenzwertname();            
         this.sielhautGw = copy.getSielhautGw();            

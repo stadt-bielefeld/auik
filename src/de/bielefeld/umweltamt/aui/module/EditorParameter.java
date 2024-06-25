@@ -100,6 +100,7 @@ public class EditorParameter extends AbstractModul {
     private Action resultLoeschAction;
     private JPopupMenu resultPopup;
     private JComboBox methodeBox;
+    private JComboBox einheitBox;
 
 	
 	
@@ -220,7 +221,7 @@ public class EditorParameter extends AbstractModul {
 				else if (i == 1)
 				{
 					// column.setMaxWidth(70);
-					column.setPreferredWidth(200);
+					column.setPreferredWidth(350);
 				}
 			}
 			
@@ -241,6 +242,24 @@ public class EditorParameter extends AbstractModul {
 
 	        methodeColumn.setCellEditor(new DefaultCellEditor(methodeBox));
 	        methodeColumn.setCellRenderer(new ComboBoxRenderer());
+			
+	        // Einheit
+	        TableColumn einheitColumn = this.resultTable.getColumnModel()
+	            .getColumn(3);
+	        einheitColumn.setPreferredWidth(10);
+	        
+	        einheitBox = new JComboBox(DatabaseQuery.getEinheiten());
+	        einheitBox.setEditable(false);
+	        einheitBox.addFocusListener(new FocusAdapter() {
+	            @Override
+	            public void focusGained(FocusEvent e) {
+	                EditorParameter.this.einheitBox.showPopup();
+	            }
+	        });
+	        einheitBox.setBorder(BorderFactory.createEmptyBorder());
+
+	        einheitColumn.setCellEditor(new DefaultCellEditor(einheitBox));
+	        einheitColumn.setCellRenderer(new ComboBoxRenderer());
 
 			
             resultTable.getInputMap().put(

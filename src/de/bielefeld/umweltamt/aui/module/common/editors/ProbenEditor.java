@@ -248,8 +248,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     setList(new ArrayList<Object>());
                     for (Parameter param : params) {
                         addParameter(param,
-                            Einheiten.findById(
-                                param.getWirdgemessenineinheit()),
+                            param.getEinheiten(),
                             analyse_von);
                     }
                 } else if (!isSielhaut) {
@@ -265,8 +264,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                     setList(new ArrayList<Object>());
                     for (Parameter param : params) {
                         addParameter(param,
-                            Einheiten.findById(
-                                param.getWirdgemessenineinheit()),
+                            param.getEinheiten(),
                             analyse_von);
                     }
                 }
@@ -458,7 +456,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                 .getSelectedItem());
             tmp.setWert(new Float(0));
 			if (tmp.getParameter() != null) {
-				tmp.setEinheiten(Einheiten.findById(tmp.getParameter().getWirdgemessenineinheit()));
+				tmp.setEinheiten(tmp.getParameter().getEinheiten());
 			}
             // tmp.setAnalyseVon("");
             return tmp;
@@ -481,8 +479,8 @@ public class ProbenEditor extends AbstractApplyEditor {
             pos.setProbenahme(this.probe);
             pos.setParameter(parameter);
             pos.setWert(new Float(0));
-            pos.setEinheiten(Einheiten.findById(parameter
-                .getWirdgemessenineinheit()));
+            pos.setEinheiten(parameter
+                .getEinheiten());
             pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
 
 //            getList().add(pos);

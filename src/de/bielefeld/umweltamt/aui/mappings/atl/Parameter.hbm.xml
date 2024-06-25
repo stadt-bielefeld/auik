@@ -14,14 +14,14 @@
         <many-to-one name="MapElkaAnalysemethode" class="de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode" fetch="select" lazy="false">
             <column name="analysemethode_id" />
         </many-to-one>
+        <many-to-one name="Einheiten" class="de.bielefeld.umweltamt.aui.mappings.atl.Einheiten" fetch="select" lazy="false">
+            <column name="wirdgemessenineinheit" />
+        </many-to-one>
         <property name="analyseverfahren" type="java.lang.String">
             <column name="analyseverfahren" />
         </property>
         <property name="bezeichnung" type="java.lang.String">
             <column name="bezeichnung" />
-        </property>
-        <property name="wirdgemessenineinheit" type="java.lang.Integer">
-            <column name="wirdgemessenineinheit" />
         </property>
         <property name="grenzwert" type="java.lang.Double">
             <column name="grenzwert" precision="17" scale="17" />
