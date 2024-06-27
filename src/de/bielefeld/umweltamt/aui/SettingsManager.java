@@ -76,24 +76,15 @@
  */
 package de.bielefeld.umweltamt.aui;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
-import java.util.TreeMap;
+import java.util.ResourceBundle;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -116,6 +107,10 @@ public class SettingsManager {
 	private SortedProperties appSettings;
 
 	private static SettingsManager _instance;
+
+	private final Locale locale = new Locale("de", "DE");
+	private static final String DEFAULT_BUNDLE_FILENAME = "auik";
+	private static final String AUIK_PROPERTIES = "auik.properties";
 
 	/**
 	 * Erzeugt einen neuen SettingsManager und initialisiert die Werte der
@@ -212,7 +207,7 @@ public class SettingsManager {
 		// appSettings = new SortedProperties();
 
 		try {
-			appSettings.load(new FileInputStream("auik.properties"));
+			appSettings.load(new FileInputStream(AUIK_PROPERTIES));
 		} catch (FileNotFoundException e) {
 			// Wir tun hier nichts. Wenn die Datei nicht gefunden
 			// wird, wird sie halt nicht benutzt
@@ -233,7 +228,7 @@ public class SettingsManager {
 	public void saveSettings() {
 		try {
 
-			appSettings.store(new FileOutputStream("auik.properties"),
+			appSettings.store(new FileOutputStream(AUIK_PROPERTIES),
 					"Allgemeine Einstellungen für " + GUIManager.SHORT_NAME
 							+ " v" + guiManager.getVersion());
 		} catch (IOException e) {
@@ -406,6 +401,20 @@ public class SettingsManager {
 
 		return getSetting("auik.templatepath");
 
+	}
+
+	/**
+	 * Get the i18n resource bundle specified in the settings.
+	 *
+	 * If not set, fall back to the default "auik_*.properties"
+	 * @return Resource bundle
+	 */
+	public ResourceBundle getI18nBundle() {
+		String bundlePath = "de.bielefeld.umweltamt.aui.resources.";
+		String bundleFileName = getSetting("auik.i18n_file") != null
+		? getSetting("auik.i18n_file") : DEFAULT_BUNDLE_FILENAME;
+		String bundleName = bundlePath + bundleFileName;
+		return ResourceBundle.getBundle(bundleName, locale);
 	}
 
 	/**
