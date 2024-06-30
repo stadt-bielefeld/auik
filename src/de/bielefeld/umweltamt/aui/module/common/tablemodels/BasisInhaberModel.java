@@ -21,9 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.SettingsManager;
@@ -40,10 +38,6 @@ public class BasisInhaberModel extends ListTableModel {
     private static final long serialVersionUID = -1943023265274962194L;
     private String lastSuchWort = null;
     private String lastProperty = null;
-    private String lastStrasse = null;
-    private Integer lastHausnr = null;
-    private String LastZus = null;
-    private String LastOrt = null;
     private AuikLogger log = AuikLogger.getLogger();
     private static final ResourceBundle I18N
         = SettingsManager.getInstance().getI18nBundle();
@@ -136,16 +130,12 @@ public class BasisInhaberModel extends ListTableModel {
      * @param rowIndex Die Zeile
      * @return Das Objekt bei rowIndex
      */
-    
-
     public Inhaber getRow(int rowIndex) {
         return (Inhaber) super.getObjectAtRow(rowIndex);
     }
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-
-		
     	Object obj = objectAtRow;
     	Inhaber removedBetreiber = (Inhaber) obj;
         return Inhaber.delete(removedBetreiber);
@@ -184,18 +174,12 @@ public class BasisInhaberModel extends ListTableModel {
     public void filterStandort(String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findInhaber(strasse, hausnr, ort));
-        lastStrasse = strasse;
-        lastHausnr = hausnr;
-        LastOrt = ort;
         log.debug("End filterList");
     }
     
     public void filterStandort(String name, String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(name, strasse, hausnr, ort));
-        lastStrasse = strasse;
-        lastHausnr = hausnr;
-        LastOrt = ort;
         log.debug("End filterList");
     }
     
@@ -203,9 +187,6 @@ public class BasisInhaberModel extends ListTableModel {
 
     	log.debug("Start filterList");
         setList(DatabaseQuery.findBetreiber(name, strasse, hausnr, ort));
-        lastStrasse = strasse;
-        lastHausnr = hausnr;
-        LastOrt = ort;
         log.debug("End filterList");
     }
 }
