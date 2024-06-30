@@ -316,9 +316,9 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		// Rechts oben
 		
 		builder.addSeparator(i18n.getString("editor.betreiber.separator.contact"), cc.xyw(10, 1, 4)); // Ansprechpartner--
-		builder.addLabel(i18n.getString("editor.betreiber.first_name"), cc.xy(10, 3)); // Vorname
+		builder.addLabel(i18n.getString("editor.betreiber.contact_first_name"), cc.xy(10, 3)); // Vorname
 		builder.add(betrBeaufVornameFeld, cc.xyw(12, 3, 2));
-		builder.addLabel(i18n.getString("editor.betreiber.last_name"), cc.xy(10, 5)); // Nachname
+		builder.addLabel(i18n.getString("editor.betreiber.contact_last_name"), cc.xy(10, 5)); // Nachname
 		builder.add(betrBeaufNachnameFeld, cc.xyw(12, 5, 2));
 		builder.addLabel(i18n.getString("editor.betreiber.telephone"), cc.xy(10, 7)); // Telefon
 		builder.add(telefonFeld, cc.xyw(12, 7, 2));
@@ -383,7 +383,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		builder.add(handzeichenAltFeld, cc.xyw(3, 59, 4));
 		builder.addSeparator(i18n.getString("editor.betreiber.separator.new_rev"), cc.xyw(10, 55, 4));		//Neue Revison--
 		handzeichenLabel = builder.addLabel(i18n.getString("editor.betreiber.sign"), cc.xy(10, 57));
-				builder.add(handzeichenNeuFeld, cc.xyw(12, 57, 2));					
+		builder.add(handzeichenNeuFeld, cc.xyw(12, 57, 2));
 		
 		button3.setText(i18n.getString("editor.betreiber.button.change_address"));
 
