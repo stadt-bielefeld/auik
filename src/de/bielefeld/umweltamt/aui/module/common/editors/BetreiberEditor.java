@@ -146,7 +146,6 @@ public class BetreiberEditor extends AbstractApplyEditor {
 	private Wassereinzugsgebiet[] wEinzugsgebiete = null;
 	private Wirtschaftszweig[] wirtschaftszweige = null;
 	private String[] tabstreets = null;
-	private String street = null;
 	
     private Action standortLoeschAction;
     private Action standortNeuAction;
@@ -221,7 +220,6 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		flurStkFeld = new LimitedTextField(50);
 		gemarkungBox = new JComboBox();
 		entwGebBox = new JComboBox();
-//		entwGebBox.setEditable(true);
 		standortGgBox = new JComboBox();
 		wEinzugsGebBox = new JComboBox();
 
@@ -845,49 +843,17 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		getBetreiber().setRevidatum(Calendar.getInstance().getTime());
 		
 		List<?> adrStdListe = this.standorteModel.getList();
-		boolean gespeichert = true;
 		for (int i = 0; i < adrStdListe.size(); i++) {
 
 			Standort std = (Standort) adrStdListe.get(i);
-
-			gespeichert = std.merge();
+			std.merge();
 
 		}
-		
-		Standort standort = (Standort) standorteModel.getObjectAtRow(0);
 		getBetreiber().merge();
 
 		return true;
 	}
 
-	/**
-	 * Methode liefert die eingegebene oder ausgewählte Straße
-	 * 
-	 * @return
-	 */
-	private String getStrasse() {
-		String str = "";
-
-		if (strassenBox.getSelectedItem() != null) {
-			if (strassenBox.getSelectedItem().getClass() == TabStreets.class) {
-				TabStreets selstrasse = (TabStreets) strassenBox.getSelectedItem();
-				if (selstrasse != null) {
-					str = selstrasse.getStrasse();
-				}
-			} else if (strassenBox.getSelectedItem().getClass() == String.class) {
-				str = (String) strassenBox.getSelectedItem();
-			}
-		}
-		str = str.trim();
-
-		// Weil ich bis jetzt noch keine LimitedComboBox oder so habe...
-		if (str.length() > 50) {
-			// ... kürze ich hier den String auf 50 Zeichen
-			str = str.substring(0, 50);
-		}
-
-		return str;
-	}
 
 	public Inhaber getBetreiber() {
 		return (Inhaber) getEditedObject();
@@ -1120,12 +1086,6 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		if (adr != null) {
 			inhaber.setAdresse(adr);
 			inhaber.merge();
-//			TabStreets ts = DatabaseQuery.getSingleTabStreet(adr.getStrasse(), adr.getHausnr(), adr.getHausnrzus());
-//			Standort std = DatabaseQuery.findStandort(inhaber);
-//			std.setE32(ts.getX());
-//			std.setN32(ts.getY());
-//			std.merge();
-//			standorteModel.updateList();
 			fillForm();
 		}
 
