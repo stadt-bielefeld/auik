@@ -22,9 +22,11 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
@@ -43,6 +45,8 @@ public class BasisInhaberModel extends ListTableModel {
     private String LastZus = null;
     private String LastOrt = null;
     private AuikLogger log = AuikLogger.getLogger();
+    private static final ResourceBundle I18N
+        = SettingsManager.getInstance().getI18nBundle();
 
     public BasisInhaberModel() {
         this(true);
@@ -50,12 +54,12 @@ public class BasisInhaberModel extends ListTableModel {
 
     public BasisInhaberModel(boolean zeigeAdresse) {
         super(new String[]{
-        		"ID",
-                "Name",
-                "Vorname",
-                "Ort",
-                "Straße",
-                "Nr."}, false, true);
+                I18N.getString("fields.id"),
+                I18N.getString("editor.betreiber.company_name"),
+                I18N.getString("editor.betreiber.first_name"),
+                I18N.getString("fields.city"),
+                I18N.getString("fields.street"),
+                I18N.getString("fields.nr")}, false, true);
 
     }
 
