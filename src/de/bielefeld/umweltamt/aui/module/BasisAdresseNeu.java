@@ -127,7 +127,6 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	private JLabel handzeichenLabel;
 	private JLabel namenLabel;
-	private JLabel kassenzeichenLabel;
 
 	private JTextField anredeFeld;
 	private JTextField vornamenFeld;
@@ -154,7 +153,6 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JCheckBox ueberschgebCheck;
 	private JTextField flurFeld;
 	private JTextField flurStkFeld;
-	private JButton ausAblageButton;
 	private JComboBox gemarkungBox;
 	private JComboBox entwGebBox;
 	private JComboBox standortGgBox;
@@ -358,7 +356,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			builder.add(nameZusFeld, cc.xyw(3, 9, 6));
 			builder.addLabel(i18n.getString("editor.betreiber.industry"), cc.xy(1, 11)); // Wirtscahftszweig
 			builder.add(wirtschaftszweigBox, cc.xyw(3, 11, 6));
-			kassenzeichenLabel = builder.addLabel(i18n.getString("editor.betreiber.ref_number"), cc.xy(1, 13)); // Kassenzeichen
+			builder.addLabel(i18n.getString("editor.betreiber.ref_number"), cc.xy(1, 13)); // Kassenzeichen
 			builder.add(kassenzeichenFeld, cc.xyw(3, 13, 6));
 			
 			// Rechts oben
@@ -952,7 +950,6 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	private void clearForm() {
 		setAllEnabled(false);
-		// frame.changeStatus("Beschäftigt...");
 
 		SwingWorkerVariant worker = new SwingWorkerVariant(panel) {
 
@@ -1099,32 +1096,6 @@ public class BasisAdresseNeu extends AbstractModul {
 		handzeichenNeuFeld.setEditable(enabled);
 	}
 
-	/**
-	 * Ein Listener für die Events des "Neuer Betreiber"-Moduls.
-	 * 
-	 * @author David Klotz
-	 */
-	private final class BetreiberNeuListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == speichernButton) {
-				log.debug("(" + BasisAdresseNeu.this.getIdentifier() + ") " + "Speichern gedrückt!");
-				doSave();
-			}
-
-//			else if (e.getSource() == orteBox)
-//			{
-//				reloadStrassen();
-//			}
-			else if (e.getSource() == strassenBox) {
-//				standorteModel.setStrasse(strassenBox.getSelectedItem().toString());
-				standorteModel.updateList();
-
-			}
-		}
-
-	}
 
 	/**
 	 * Ein Listener für die Events des "Betreiber Editor"-Moduls.
