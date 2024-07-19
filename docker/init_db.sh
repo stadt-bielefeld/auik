@@ -10,7 +10,6 @@ psql --command "CREATE DATABASE $DB_NAME;" >> /dev/null
 psql -d $DB_NAME --command "CREATE EXTENSION postgis;" >> /dev/null
 #Create user and assign roles
 psql -d $DB_NAME --command "CREATE USER ${USERNAME} with password '${USER_PW}';" >> /dev/null
-psql -d $DB_NAME --command "ALTER USER ${USERNAME} with superuser;" >> /dev/null
 
 echo "Database: $DB_NAME"
 echo "Example user(password): ${USERNAME}(${USER_PW})"
