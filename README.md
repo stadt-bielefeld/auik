@@ -38,7 +38,6 @@ cd data/db
 psql --command "CREATE DATABASE fisumwelt;"
 psql -d fisumwelt --command "CREATE EXTENSION postgis;"
 psql -d fisumwelt --command "CREATE USER auikadmin with password 'secret';"
-psql -d fisumwelt --command "ALTER USER auikadmin with superuser;"
 psql -d fisumwelt -f version1_0_schema.sql
 psql -d fisumwelt -f updateTo_1_1_0.sql
 psql -d fisumwelt -f import_csv.sql
