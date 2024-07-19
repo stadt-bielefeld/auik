@@ -1,4 +1,4 @@
-ARG POSTGRES_VERSION=13
+ARG POSTGRES_VERSION=14
 FROM postgres:${POSTGRES_VERSION}-bookworm
 
 LABEL maintainer="awoestmann@intevation.de"
