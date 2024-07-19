@@ -11,9 +11,6 @@ psql -q -d $DB_NAME --command "CREATE EXTENSION postgis;"
 #Create user and assign roles
 psql -q -d $DB_NAME --command "CREATE USER ${USERNAME} with password '${USER_PW}';"
 
-echo "Database: $DB_NAME"
-echo "Example user(password): ${USERNAME}(${USER_PW})"
-
 echo "Applying schema"
 psql -q -d $DB_NAME -f $schema_file
 psql -q -d $DB_NAME -f $update_file_1_1_0
