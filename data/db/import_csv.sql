@@ -6,7 +6,7 @@
 
 BEGIN;
 -- Create temporary import table
-CREATE TABLE IF NOT EXISTS temp_import (
+CREATE TEMP TABLE temp_import (
     id SERIAL PRIMARY KEY,
     klassifizierung character varying(255),
     wirtschaftszweig character varying(255),
@@ -109,6 +109,4 @@ BEGIN
 END
 $$;
 
--- Clear temporary table
-DROP TABLE temp_import;
 COMMIT;
