@@ -19,6 +19,8 @@ Entwässerungsgebieten, Wasserschutzgebieten etc. generiert werden.
 
 ## Entwicklungsumgebung
 
+### Aufsetzen der Datenbank
+
 Für das Aufsetzen einer Entwicklungsumgebung wird zuerst eine PostgreSQL-Datenbank benötigt.
 Diese kann über das vorhandene Dockerfile erstellt werden:
 
@@ -42,6 +44,8 @@ psql -d fisumwelt -f updateTo_1_1_0.sql
 psql -d fisumwelt -f import_csv.sql
 ```
 
+### Konfigurieren der Anwendung
+
 Vor dem Starten der Anwendung muss in der `auik.properties` der Eintrag `auik.system.dburl` gesetzt werden um die Verbindung mit der Datenbank zu ermöglichen.
 
 Beispielweise mit einer Datenbank erreichbar unter `localhost:15432` mit dem Datenbank-Namen `fisumwelt`:
@@ -49,6 +53,8 @@ Beispielweise mit einer Datenbank erreichbar unter `localhost:15432` mit dem Dat
 ```
 auik.system.dburl=jdbc\:postgresql\://localhost\:15432/fisumwelt
 ```
+
+### Starten der Anwendung
 
 Für die Anwendung selbst müssen `maven` und ein passendes JDK ab Version 11 (bspw. OpenJDK 11) installiert sein.
 
@@ -64,3 +70,11 @@ Erstellen eines Jar-Archivs:
 mvn clean package
 ```
 Das Archiv ist im Ordner `target` zu finden.
+
+Für die Anmeldung kann der Datenbankbenutzer verwendet werden:
+
+`auikadmin`, Passwort: `secret`
+
+## AUI-K Handbuch
+
+Das AUI-K Handbuch ist als pdf-Datei unter [doc/AUI-K_Handbuch.pdf](doc/AUI-K_Handbuch.pdf) zu finden.
