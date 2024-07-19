@@ -66,7 +66,7 @@ public class Adresse  implements java.io.Serializable {
     private String strasseeigent;
     private String sachbe33rav;
     private String sachbe33hee;
-    private boolean ueberschgeb;
+    private Boolean ueberschgeb;
     private String bemerkungen;
     private Date revidatum;
     private String revihandz;
@@ -94,13 +94,13 @@ public class Adresse  implements java.io.Serializable {
 
     /** Full constructor */
     public Adresse(
-            Integer id, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Gemarkung gemarkung, 
-            String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort, 
-            String flur, String flurstueck, String entgebid, String strasseeigent, 
-            String sachbe33rav, String sachbe33hee, boolean ueberschgeb, 
+            Integer id, Standortgghwsg standortgghwsg, Wassereinzugsgebiet wassereinzugsgebiet, Gemarkung gemarkung,
+            String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort,
+            String flur, String flurstueck, String entgebid, String strasseeigent,
+            String sachbe33rav, String sachbe33hee, Boolean ueberschgeb,
             String bemerkungen, Date revidatum,
             String revihandz, boolean enabled,
-            boolean deleted, Date erstellDat, Integer iglId, 
+            boolean deleted, Date erstellDat, Integer iglId,
             Set<Inhaber> inhabers) {
         this.id = id;
         this.strasse = strasse;
@@ -262,7 +262,7 @@ public class Adresse  implements java.io.Serializable {
 	    return this.ueberschgeb;
 	}
 
-	public void setUeberschgeb(boolean ueberschgeb) {
+	public void setUeberschgeb(Boolean ueberschgeb) {
 	    this.ueberschgeb = ueberschgeb;
 	}
 
