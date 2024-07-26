@@ -66,8 +66,8 @@ BEGIN
 
     -- Insert inhaber
     INSERT INTO basis.inhaber (adresseid, name, namebetrbeauf, vornamebetrbeauf, telefon, telefax, email,
-        bemerkungen, wirtschaftszweigid)
-    VALUES (address_id, firmenname, name, vorname, telefon, mobil, email, bemerkung, wirtschaftszweig_id);
+        bemerkungen, wirtschaftszweigid, namezus)
+    VALUES (address_id, firmenname, name, vorname, telefon, mobil, email, bemerkung, wirtschaftszweig_id, klassifizierung);
 END;
 $$
 LANGUAGE plpgsql;
