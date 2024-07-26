@@ -77,3 +77,24 @@ Für die Anmeldung kann der Datenbankbenutzer verwendet werden:
 ## AUI-K Handbuch
 
 Das AUI-K Handbuch ist als pdf-Datei unter [doc/AUI-K_Handbuch.pdf](doc/AUI-K_Handbuch.pdf) zu finden.
+
+## Datenimport
+
+Mithilfe des mitgelieferten [SQL-Skripts](data/db/import_csv.sql_) können Adressdaten als CSV in die Datenbank importiert werden.
+Das entsprechende CSV muss dabei die folgenden Spalten enthalten:
+
+```csv
+Klassifizierung,Wirtschaftszweig,Firmenname,Name,Vorname,E-Mail,Telefon,Fax,Plz,Ort,Straße,Hausnr.,Zusatz,Bemerkung
+```
+
+Die [CSV Beispieldatei](data/db/import.csv) kann hier als Vorlage dienen.
+
+Der Import selbst lässt sich bspw. über eine Kommandozeile auslösen:
+
+```bash
+cd data/db
+psql -d fisumwelt -f import_csv.sql
+```
+
+`fisumwelt` ist hier der Datenbankname, je nach Datenbank-Setup müssen ggf. weitere Parameter ergänzt werden.
+Die Daten müssen für den Import als `import.csv` im selben Verzeichnis wie das SQL-Skript abgelegt werden.
