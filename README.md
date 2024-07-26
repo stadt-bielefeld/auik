@@ -98,3 +98,14 @@ psql -d fisumwelt -f import_csv.sql
 
 `fisumwelt` ist hier der Datenbankname, je nach Datenbank-Setup müssen ggf. weitere Parameter ergänzt werden.
 Die Daten müssen für den Import als `import.csv` im selben Verzeichnis wie das SQL-Skript abgelegt werden.
+
+## Anpassen von Feldbeschriftungen
+
+Mithilfe von `.properties` Dateien können die Beschriftungen von Feldern angepasst werden. Die verfügbaren Einträge finden sich in der [auik_de_DE.properties](src/de/bielefeld/umweltamt/aui/resources/auik_de_DE.properties).
+Eine Anpassung kann entweder in der genannten Datei erfolgen oder über eine separate Datei. Letztere kann dann in der `auik.properties` ohne Sprachkürzel und Dateiendung angegeben werden.
+
+Bspw. wäre der Eintrag in der `auik.properties` für eine Datei `exampleFile_de_DE.properties`:
+
+```properties
+auik.i18n_file=exampleFile
+```
