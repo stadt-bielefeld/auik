@@ -98,6 +98,7 @@ psql -d fisumwelt -f import_csv.sql
 
 `fisumwelt` ist hier der Datenbankname, je nach Datenbank-Setup müssen ggf. weitere Parameter ergänzt werden.
 Die Daten müssen für den Import als `import.csv` im selben Verzeichnis wie das SQL-Skript abgelegt werden.
+<<<<<<< HEAD
 
 ## Anpassen von Feldbeschriftungen
 
@@ -109,3 +110,5 @@ Bspw. wäre der Eintrag in der `auik.properties` für eine Datei `exampleFile_de
 ```properties
 auik.i18n_file=exampleFile
 ```
+=======
+>>>>>>> master
