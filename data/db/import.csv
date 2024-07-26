@@ -1,3 +1,3 @@
-Klassifizierung,Wirtschaftszweig,Firmenname,Name,Vorname,E-Mail,Telefon,Fax,Plz,Ort,Straße,Hausnr.,Zusatz,Bermerkung
-Beispielklassifizerung,12.11. Beispielwirtschaftszweig,Muster GmbH,Mustermann,Max,max.mustermann@example.test,01234-123123,01234-321321,33602,Bielefeld,August-Bebel-Straße,75,,Bemerkung1
-Beispielklassifizerung,12.12. Beispielwirtschaftszweig2,Muster eG,Mustermann,Erika,erika.mustermann@example.test,01234-543543,01234-345345,33602,Bielefeld,August-Bebel-Straße,75,a,Bemerkung2
+Klassifizierung,Wirtschaftszweig,Firmenname,Name,Vorname,E-Mail,Telefon,Fax,Plz,Ort,Straße,Hausnr.,Zusatz,Bemerkung
+Beispielklassifizerung,12.11. Beispielwirtschaftszweig,,Mustermann,Max,max.mustermann@example.test,01234-123123,01234-321321,33602,Bielefeld,August-Bebel-Straße,75,,Bemerkung1
+Beispielklassifizerung,12.12. Beispielwirtschaftszweig2,,Mustermann,Erika,erika.mustermann@example.test,01234-543543,01234-345345,33602,Bielefeld,August-Bebel-Straße,75,a,Bemerkung2
