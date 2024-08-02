@@ -1,7 +1,7 @@
 --Script to import data from a csv input into the auik database
 --Expected filename is: import.csv
 --Expected format is:
---Klassifizierung,Wirtschaftszweig,Firmenname,Name,Vorname,E-Mail,Telefon,Mobiltelefon,Plz,Ort,Straße,Hausnr.,Zusatz,Bermerkung
+--Klassifizierung,Wirtschaftszweig,Firmenname,Name,Vorname,E-Mail,Telefon,Fax,Plz,Ort,Straße,Hausnr.,Zusatz,Bermerkung
 --(Header is suported, Expected delimiter: ,)
 
 BEGIN;
@@ -15,7 +15,7 @@ CREATE TEMP TABLE temp_import (
     vorname character varying(255),
     email character varying(255),
     telefon character varying(255),
-    mobil character varying(255),
+    fax character varying(255),
     plz character varying(255),
     ort character varying(255),
     strasse character varying(255),
@@ -32,7 +32,7 @@ CREATE OR REPLACE FUNCTION insert_row(
     vorname character varying(255),
     email character varying(255),
     telefon character varying(255),
-    mobil character varying(255),
+    fax character varying(255),
     plz character varying(255),
     ort character varying(255),
     strasse character varying(255),
@@ -67,7 +67,7 @@ BEGIN
     -- Insert inhaber
     INSERT INTO basis.inhaber (adresseid, name, namebetrbeauf, vornamebetrbeauf, telefon, telefax, email,
         bemerkungen, wirtschaftszweigid, namezus)
-    VALUES (address_id, firmenname, name, vorname, telefon, mobil, email, bemerkung, wirtschaftszweig_id, klassifizierung);
+    VALUES (address_id, firmenname, name, vorname, telefon, fax, email, bemerkung, wirtschaftszweig_id, klassifizierung);
 END;
 $$
 LANGUAGE plpgsql;
@@ -75,7 +75,7 @@ LANGUAGE plpgsql;
 -- Copy import data to temporary table
 COPY temp_import(
     klassifizierung, wirtschaftszweig, firmenname,
-    name, vorname, email, telefon, mobil, plz, ort, strasse,
+    name, vorname, email, telefon, fax, plz, ort, strasse,
     hausnr, zusatz, bemerkung)
 FROM '/opt/auik_db/import.csv'
 DELIMITER ','
@@ -97,7 +97,7 @@ BEGIN
             resultRow.vorname,
             resultRow.email,
             resultRow.telefon,
-            resultRow.mobil,
+            resultRow.fax,
             resultRow.plz,
             resultRow.ort,
             resultRow.strasse,
