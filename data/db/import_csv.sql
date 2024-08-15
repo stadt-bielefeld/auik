@@ -23,54 +23,6 @@ CREATE TEMP TABLE temp_import (
     bemerkung character varying(255)
 );
 
-CREATE OR REPLACE FUNCTION insert_row(
-    klassifizierung character varying(255),
-    wirtschaftszweig_name character varying(255),
-    firmenname character varying(255),
-    name character varying(255),
-    vorname character varying(255),
-    email character varying(255),
-    telefon character varying(255),
-    fax character varying(255),
-    plz character varying(255),
-    ort character varying(255),
-    strasse character varying(255),
-    hausnr integer,
-    zusatz character varying(255),
-    bemerkung character varying(255)
-)
-RETURNS void
-AS $$
-DECLARE
-    address_id integer;
-    wirtschaftszweig_id integer;
-BEGIN
-    -- Insert basis.adresse part and return id
-    INSERT INTO basis.adresse (strasse, hausnr, hausnrzus, plz, ort)
-    VALUES (strasse, hausnr, zusatz, plz, ort)
-    RETURNING id INTO address_id;
-    -- Get or insert wirtschaftszweig
-    IF EXISTS (SELECT 1 FROM basis.wirtschaftszweig WHERE wirtschaftszweig = wirtschaftszweig_name) THEN
-        SELECT id INTO wirtschaftszweig_id
-        FROM basis.wirtschaftszweig
-        WHERE wirtschaftszweig = wirtschaftszweig_name;
-    ELSE
-        INSERT INTO basis.wirtschaftszweig (id, wirtschaftszweig)
-        VALUES (
-            (SELECT COALESCE(MAX(id) + 1, 0) FROM basis.wirtschaftszweig),
-            wirtschaftszweig_name
-        );
-        SELECT MAX(id) FROM basis.wirtschaftszweig INTO wirtschaftszweig_id;
-    END IF;
-
-    -- Insert inhaber
-    INSERT INTO basis.inhaber (adresseid, name, namebetrbeauf, vornamebetrbeauf, telefon, telefax, email,
-        bemerkungen, wirtschaftszweigid, namezus)
-    VALUES (address_id, firmenname, name, vorname, telefon, fax, email, bemerkung, wirtschaftszweig_id, klassifizierung);
-END;
-$$
-LANGUAGE plpgsql;
-
 -- Copy import data to temporary table
 \copy temp_import FROM pstdin (FORMAT csv, HEADER true)
 
@@ -78,26 +30,43 @@ LANGUAGE plpgsql;
 DO
 $$
 DECLARE resultRow RECORD;
+    address_id integer;
+    wirtschaftszweig_id integer;
 BEGIN
     FOR resultRow IN
         SELECT * FROM temp_import
     LOOP
-        PERFORM insert_row(
-            resultRow.klassifizierung ,
-            resultRow.wirtschaftszweig,
-            resultRow.firmenname,
-            resultRow.name,
-            resultRow.vorname,
-            resultRow.email,
-            resultRow.telefon,
-            resultRow.fax,
-            resultRow.plz,
-            resultRow.ort,
-            resultRow.strasse,
-            resultRow.hausnr,
-            resultRow.zusatz,
-            resultRow.bemerkung
-        );
+        -- Insert basis.adresse part and return id
+        INSERT INTO basis.adresse (strasse, hausnr, hausnrzus, plz, ort)
+            VALUES (resultRow.strasse, resultRow.hausnr,
+                resultRow.zusatz, resultRow.plz, resultRow.ort)
+            RETURNING id INTO address_id;
+
+        -- Get or insert wirtschaftszweig
+        IF EXISTS (SELECT 1 FROM basis.wirtschaftszweig
+                WHERE wirtschaftszweig = resultRow.wirtschaftszweig) THEN
+            SELECT id INTO wirtschaftszweig_id
+                FROM basis.wirtschaftszweig
+                WHERE wirtschaftszweig = resultRow.wirtschaftszweig;
+        ELSE
+            INSERT INTO basis.wirtschaftszweig (id, wirtschaftszweig)
+                VALUES (
+                    (SELECT COALESCE(MAX(id) + 1, 0) FROM basis.wirtschaftszweig),
+                    resultRow.wirtschaftszweig
+                );
+            SELECT MAX(id) FROM basis.wirtschaftszweig INTO wirtschaftszweig_id;
+        END IF;
+
+        -- Insert inhaber
+        INSERT INTO basis.inhaber (
+                adresseid, name, namebetrbeauf, vornamebetrbeauf,
+                telefon, telefax, email,
+                bemerkungen, wirtschaftszweigid, namezus)
+            VALUES (address_id, resultRow.firmenname,
+                resultRow.name, resultRow.vorname,
+                resultRow.telefon, resultRow.fax, resultRow.email,
+                resultRow.bemerkung, wirtschaftszweig_id,
+                resultRow.klassifizierung);
     END LOOP;
 END
 $$;
