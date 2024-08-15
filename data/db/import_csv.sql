@@ -7,7 +7,6 @@
 BEGIN;
 -- Create temporary import table
 CREATE TEMP TABLE temp_import (
-    id SERIAL PRIMARY KEY,
     klassifizierung character varying(255),
     wirtschaftszweig character varying(255),
     firmenname character varying(255),
@@ -73,13 +72,7 @@ $$
 LANGUAGE plpgsql;
 
 -- Copy import data to temporary table
-COPY temp_import(
-    klassifizierung, wirtschaftszweig, firmenname,
-    name, vorname, email, telefon, fax, plz, ort, strasse,
-    hausnr, zusatz, bemerkung)
-FROM '/opt/auik_db/import.csv'
-DELIMITER ','
-CSV HEADER;
+\copy temp_import FROM pstdin (FORMAT csv, HEADER true)
 
 -- Copy data to their respective tables
 DO
