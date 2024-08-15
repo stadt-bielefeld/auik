@@ -80,7 +80,7 @@ Das AUI-K Handbuch ist als pdf-Datei unter [doc/AUI-K_Handbuch.pdf](doc/AUI-K_Ha
 
 ## Datenimport
 
-Mithilfe des mitgelieferten [SQL-Skripts](data/db/import_csv.sql_) können Adressdaten als CSV in die Datenbank importiert werden.
+Mithilfe des mitgelieferten [SQL-Skripts](data/db/import_csv.sql) können Adressdaten als CSV in die Datenbank importiert werden.
 Das entsprechende CSV muss dabei die folgenden Spalten enthalten:
 
 ```csv
