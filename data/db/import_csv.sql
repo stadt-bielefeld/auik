@@ -1,26 +1,24 @@
---Script to import data from a csv input into the auik database
---Expected filename is: import.csv
---Expected format is:
---Klassifizierung,Wirtschaftszweig,Firmenname,Name,Vorname,E-Mail,Telefon,Fax,Plz,Ort,Straße,Hausnr.,Zusatz,Bermerkung
---(Header is suported, Expected delimiter: ,)
+-- Script to import data from a CSV input into the AUI-K database.
+-- Expected format is a CSV file with header matching the temporary
+-- table created in this script.
 
 BEGIN;
 -- Create temporary import table
 CREATE TEMP TABLE temp_import (
-    klassifizierung character varying(255),
+    namezus character varying(255),
     wirtschaftszweig character varying(255),
-    firmenname character varying(255),
     name character varying(255),
-    vorname character varying(255),
+    namebetrbeauf character varying(255),
+    vornamebetrbeauf character varying(255),
     email character varying(255),
     telefon character varying(255),
-    fax character varying(255),
+    telefax character varying(255),
     plz character varying(255),
     ort character varying(255),
     strasse character varying(255),
     hausnr integer,
-    zusatz character varying(255),
-    bemerkung character varying(255)
+    hausnrzus character varying(255),
+    bemerkungen character varying(255)
 );
 
 -- Copy import data to temporary table
@@ -39,7 +37,7 @@ BEGIN
         -- Insert basis.adresse part and return id
         INSERT INTO basis.adresse (strasse, hausnr, hausnrzus, plz, ort)
             VALUES (resultRow.strasse, resultRow.hausnr,
-                resultRow.zusatz, resultRow.plz, resultRow.ort)
+                resultRow.hausnrzus, resultRow.plz, resultRow.ort)
             RETURNING id INTO address_id;
 
         -- Get or insert wirtschaftszweig
@@ -62,11 +60,11 @@ BEGIN
                 adresseid, name, namebetrbeauf, vornamebetrbeauf,
                 telefon, telefax, email,
                 bemerkungen, wirtschaftszweigid, namezus)
-            VALUES (address_id, resultRow.firmenname,
-                resultRow.name, resultRow.vorname,
-                resultRow.telefon, resultRow.fax, resultRow.email,
-                resultRow.bemerkung, wirtschaftszweig_id,
-                resultRow.klassifizierung);
+            VALUES (address_id, resultRow.name,
+                resultRow.namebetrbeauf, resultRow.vornamebetrbeauf,
+                resultRow.telefon, resultRow.telefax, resultRow.email,
+                resultRow.bemerkungen, wirtschaftszweig_id,
+                resultRow.namezus);
     END LOOP;
 END
 $$;

@@ -83,11 +83,15 @@ Das AUI-K Handbuch ist als pdf-Datei unter [doc/AUI-K_Handbuch.pdf](doc/AUI-K_Ha
 ## Datenimport
 
 Mithilfe des mitgelieferten [SQL-Skripts](data/db/import_csv.sql) können Adressdaten als CSV in die Datenbank importiert werden.
-Das entsprechende CSV muss dabei die folgenden Spalten enthalten:
+Die entsprechende CSV-Datei muss eine Titel-Zeile und folgende Spalten enthalten:
 
 ```csv
-Klassifizierung,Wirtschaftszweig,Firmenname,Name,Vorname,E-Mail,Telefon,Fax,Plz,Ort,Straße,Hausnr.,Zusatz,Bemerkung
+namezus,wirtschaftszweig,name,namebetrbeauf,vornamebetrbeauf,email,telefon,telefax,plz,ort,strasse,hausnr,hausnrzus,bemerkungen
 ```
+
+Tatsächlich wird die erste Zeile der CSV-Datei ignoriert,
+aber der Inhalt der Spalten muss den genannten Spalten im Datenbank-Schema
+entsprechen.
 
 Die [CSV Beispieldatei](data/db/import.csv) kann hier als Vorlage dienen.
 
