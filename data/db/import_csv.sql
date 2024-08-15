@@ -50,9 +50,8 @@ BEGIN
             INSERT INTO basis.wirtschaftszweig (id, wirtschaftszweig)
                 VALUES (
                     (SELECT COALESCE(MAX(id) + 1, 0) FROM basis.wirtschaftszweig),
-                    resultRow.wirtschaftszweig
-                );
-            SELECT MAX(id) FROM basis.wirtschaftszweig INTO wirtschaftszweig_id;
+                    resultRow.wirtschaftszweig)
+                RETURNING id INTO wirtschaftszweig_id;
         END IF;
 
         -- Insert inhaber
