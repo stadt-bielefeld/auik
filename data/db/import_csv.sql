@@ -41,7 +41,9 @@ BEGIN
             RETURNING id INTO address_id;
 
         -- Get or insert wirtschaftszweig
-        IF EXISTS (SELECT 1 FROM basis.wirtschaftszweig
+        IF resultRow.wirtschaftszweig IS NULL THEN
+            wirtschaftszweig_id = null;
+        ELSEIF EXISTS (SELECT 1 FROM basis.wirtschaftszweig
                 WHERE wirtschaftszweig = resultRow.wirtschaftszweig) THEN
             SELECT id INTO wirtschaftszweig_id
                 FROM basis.wirtschaftszweig
