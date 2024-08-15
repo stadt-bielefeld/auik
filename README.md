@@ -40,8 +40,10 @@ psql -d fisumwelt --command "CREATE EXTENSION postgis;"
 psql -d fisumwelt --command "CREATE USER auikadmin with password 'secret';"
 psql -d fisumwelt -f version1_0_schema.sql
 psql -d fisumwelt -f updateTo_1_1_0.sql
-psql -d fisumwelt -f import_csv.sql
 ```
+
+Optional können Beispiel-Daten [importiert](#datenimport) werden.
+Im Docker-Setup erfolgt das automatisch.
 
 ### Konfigurieren der Anwendung
 
@@ -80,12 +82,16 @@ Das AUI-K Handbuch ist als pdf-Datei unter [doc/AUI-K_Handbuch.pdf](doc/AUI-K_Ha
 
 ## Datenimport
 
-Mithilfe des mitgelieferten [SQL-Skripts](data/db/import_csv.sql_) können Adressdaten als CSV in die Datenbank importiert werden.
-Das entsprechende CSV muss dabei die folgenden Spalten enthalten:
+Mithilfe des mitgelieferten [SQL-Skripts](data/db/import_csv.sql) können Adressdaten als CSV in die Datenbank importiert werden.
+Die entsprechende CSV-Datei muss eine Titel-Zeile und folgende Spalten enthalten:
 
 ```csv
-Klassifizierung,Wirtschaftszweig,Firmenname,Name,Vorname,E-Mail,Telefon,Fax,Plz,Ort,Straße,Hausnr.,Zusatz,Bemerkung
+namezus,wirtschaftszweig,name,namebetrbeauf,vornamebetrbeauf,email,telefon,telefax,plz,ort,strasse,hausnr,hausnrzus,bemerkungen
 ```
+
+Tatsächlich wird die erste Zeile der CSV-Datei ignoriert,
+aber der Inhalt der Spalten muss den genannten Spalten im Datenbank-Schema
+entsprechen.
 
 Die [CSV Beispieldatei](data/db/import.csv) kann hier als Vorlage dienen.
 
@@ -93,11 +99,10 @@ Der Import selbst lässt sich bspw. über eine Kommandozeile auslösen:
 
 ```bash
 cd data/db
-psql -d fisumwelt -f import_csv.sql
+psql -d fisumwelt -f import_csv.sql <import.csv
 ```
 
 `fisumwelt` ist hier der Datenbankname, je nach Datenbank-Setup müssen ggf. weitere Parameter ergänzt werden.
-Die Daten müssen für den Import als `import.csv` im selben Verzeichnis wie das SQL-Skript abgelegt werden.
 
 ## Anpassen von Feldbeschriftungen
 
