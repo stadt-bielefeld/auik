@@ -46,22 +46,17 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -84,7 +79,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.table.DefaultTableModel;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Paddings;
@@ -94,6 +88,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
@@ -104,15 +99,12 @@ import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
-import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStdModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisTabStreetsModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
-import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -135,7 +127,6 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	private JLabel handzeichenLabel;
 	private JLabel namenLabel;
-	private JLabel kassenzeichenLabel;
 
 	private JTextField anredeFeld;
 	private JTextField vornamenFeld;
@@ -162,7 +153,6 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JCheckBox ueberschgebCheck;
 	private JTextField flurFeld;
 	private JTextField flurStkFeld;
-	private JButton ausAblageButton;
 	private JComboBox gemarkungBox;
 	private JComboBox entwGebBox;
 	private JComboBox standortGgBox;
@@ -236,9 +226,12 @@ public class BasisAdresseNeu extends AbstractModul {
 	 * 
 	 * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public JPanel getPanel() {
 		if (panel == null) {
+			ResourceBundle i18n = SettingsManager.getInstance().getI18nBundle();
+
 
 			anredeFeld = new LimitedTextField(100);
 			vornamenFeld = new LimitedTextField(100);
@@ -352,90 +345,90 @@ public class BasisAdresseNeu extends AbstractModul {
 			// Inhaber
 			// Links oben
 
-			builder.addSeparator("Inhaber", cc.xyw(1, 1, 8)); // Inhaber----
-			namenLabel = builder.addLabel("Firma/Name:", cc.xy(1, 3)); // Name
+			builder.addSeparator(i18n.getString("editor.betreiber.separator.owner"), cc.xyw(1, 1, 8)); // Adresse----
+			namenLabel = builder.addLabel(i18n.getString("editor.betreiber.company_name"), cc.xy(1, 3)); // Name
 			builder.add(namenFeld, cc.xyw(3, 3, 6));
-			builder.addLabel("Anrede:", cc.xy(1, 5)); // Anrede
+			builder.addLabel(i18n.getString("editor.betreiber.salutation"), cc.xy(1, 5)); // Anrede
 			builder.add(anredeFeld, cc.xyw(3, 5, 6));
-			builder.addLabel("Vorname:", cc.xy(1, 7)); // Vorname
+			builder.addLabel(i18n.getString("editor.betreiber.first_name"), cc.xy(1, 7)); // Vorname
 			builder.add(vornamenFeld, cc.xyw(3, 7, 6));
-			builder.addLabel("Zusatz", cc.xy(1, 9)); // Zusatz
+			builder.addLabel(i18n.getString("editor.betreiber.addition"), cc.xy(1, 9)); // Zusatz
 			builder.add(nameZusFeld, cc.xyw(3, 9, 6));
-			builder.addLabel("Wirtschaftszweig", cc.xy(1, 11)); // Wirtscahftszweig
+			builder.addLabel(i18n.getString("editor.betreiber.industry"), cc.xy(1, 11)); // Wirtscahftszweig
 			builder.add(wirtschaftszweigBox, cc.xyw(3, 11, 6));
-			kassenzeichenLabel = builder.addLabel("Kassenzeichen", cc.xy(1, 13)); // Kassenzeichen
+			builder.addLabel(i18n.getString("editor.betreiber.ref_number"), cc.xy(1, 13)); // Kassenzeichen
 			builder.add(kassenzeichenFeld, cc.xyw(3, 13, 6));
 			
 			// Rechts oben
 			
-			builder.addSeparator("Ansprechpartner", cc.xyw(10, 1, 4)); // Ansprechpartner--
-			builder.addLabel("Vorname", cc.xy(10, 3)); // Vorname
+			builder.addSeparator(i18n.getString("editor.betreiber.separator.contact"), cc.xyw(10, 1, 4)); // Ansprechpartner--
+			builder.addLabel(i18n.getString("editor.betreiber.contact_first_name"), cc.xy(10, 3)); // Vorname
 			builder.add(betrBeaufVornameFeld, cc.xyw(12, 3, 2));
-			builder.addLabel("Nachname", cc.xy(10, 5)); // Nachname
+			builder.addLabel(i18n.getString("editor.betreiber.contact_last_name"), cc.xy(10, 5)); // Nachname
 			builder.add(betrBeaufNachnameFeld, cc.xyw(12, 5, 2));
-			builder.addLabel("Telefon", cc.xy(10, 7)); // Telefon
+			builder.addLabel(i18n.getString("editor.betreiber.telephone"), cc.xy(10, 7)); // Telefon
 			builder.add(telefonFeld, cc.xyw(12, 7, 2));
-			builder.addLabel("Telefax", cc.xy(10, 9)); // Telefax
+			builder.addLabel(i18n.getString("editor.betreiber.fax"), cc.xy(10, 9)); // Telefax
 			builder.add(telefaxFeld, cc.xyw(12, 9, 2));
-			builder.addLabel("Email", cc.xy(10, 11)); // Email
+			builder.addLabel(i18n.getString("editor.betreiber.mail"), cc.xy(10, 11)); // Email
 			builder.add(emailFeld, cc.xyw(12, 11, 2));
-			builder.addLabel("Wassermenge", cc.xy(10, 13)); // Wassermenge
+			builder.addLabel(i18n.getString("editor.betreiber.water_amount"), cc.xy(10, 13)); // Wassermenge
 			builder.add(wassermengeFeld, cc.xyw(12, 13, 2));
 			
 			
 			// Adresse
 			// Links
-			builder.addSeparator("Adresse", cc.xyw(1, 15, 8));
-			builder.addLabel("Straße", cc.xy(1, 17)); // Straße
+			builder.addSeparator(i18n.getString("editor.betreiber.separator.address"), cc.xyw(1, 15, 8));
+			builder.addLabel(i18n.getString("editor.betreiber.street"), cc.xy(1, 17)); // Straße
 			builder.add(strasseFeld, cc.xyw(3, 17, 2));
 			builder.add(hausnrFeld, cc.xy(6, 17)); // Hausnr
 			builder.add(hausnrZusFeld, cc.xy(8, 17)); // HausnrZusatz
-			builder.addLabel("Stadt", cc.xy(1, 19));
+			builder.addLabel(i18n.getString("editor.betreiber.city"), cc.xy(1, 19));
 			builder.add(plzZsFeld, cc.xy(3, 19)); // PLZ-Zusatz
 			builder.add(plzFeld, cc.xy(4, 19)); // PLZ
 			builder.add(ortFeld, cc.xyw(6, 19, 3)); // Stadt
-			builder.addLabel("Standortgegebenheit", cc.xy(1, 21));
+			builder.addLabel(i18n.getString("editor.betreiber.location_cond"), cc.xy(1, 21));
 			builder.add(standortGgBox, cc.xyw(3, 21, 6));
-			builder.addLabel("W.-Einzugsgebiet", cc.xy(1, 23));
+			builder.addLabel(i18n.getString("editor.betreiber.area"), cc.xy(1, 23));
 			builder.add(wEinzugsGebBox, cc.xyw(3, 23, 6));
-			builder.addLabel("Entwässerungsgebiet", cc.xy(1, 25));
+			builder.addLabel(i18n.getString("editor.betreiber.drain_area"), cc.xy(1, 25));
 			builder.add(entwGebBox, cc.xyw(3, 25, 2));
 			builder.add(ueberschgebCheck, cc.xyw(6, 25, 3)); // Ueberschgeb Check
-			builder.addLabel("Gemarkung", cc.xy(1, 27));
+			builder.addLabel(i18n.getString("editor.betreiber.marking"), cc.xy(1, 27));
 			builder.add(gemarkungBox, cc.xyw(3, 27, 6));
-			builder.addLabel("Flur/Flurstücke", cc.xy(1, 29));
+			builder.addLabel(i18n.getString("editor.betreiber.parcel"), cc.xy(1, 29));
 			builder.add(flurFeld, cc.xy(3, 29));
 			builder.add(flurStkFeld, cc.xyw(4, 29, 5));
 
 
 			// Rechts
 
-			builder.addSeparator("auswählen", cc.xyw(10, 15, 4)); // Adresse auswählen--
+			builder.addSeparator(i18n.getString("label.select"), cc.xyw(10, 15, 4)); // Adresse auswählen--
 			builder.add(getStrassenBox(), cc.xyw(10, 17, 4)); // Drop Straßen
 			builder.add(getAdressenScroller(), cc.xywh(10, 19, 4, 11)); // Straßen Scroller
 
 			// Standort/Lage
 
-			builder.addSeparator("Standort / Lage", cc.xyw(1, 31, 13)); // Standorte----
+			builder.addSeparator(i18n.getString("editor.betreiber.separator.location"), cc.xyw(1, 31, 13)); // Standorte----
 			builder.add(getStandorteScroller(), cc.xywh(1, 33, 13, 7)); // Standortetabelle
 
 			// DSGVO
 
-			builder.addSeparator("Datenschutzhinweis", cc.xyw(1, 41, 13)); // DSGVO
+			builder.addSeparator(i18n.getString("editor.betreiber.separator.data_prot_notice"), cc.xyw(1, 41, 13)); // DSGVO
 			builder.add(daten_awsvCheck, cc.xyw(1, 43, 2)); // AWSV Check
 			builder.add(daten_esatzungCheck, cc.xyw(5, 43, 2)); // ESatzung Check
 			builder.add(daten_whgCheck, cc.xyw(9, 43, 2)); // WHG Check
 			
-			builder.addSeparator("Bemerkungen", cc.xyw(1, 45, 8)); // Bemerkungen ---
+			builder.addSeparator(i18n.getString("editor.betreiber.remark"), cc.xyw(1, 45, 8)); // Bemerkungen ---
 			builder.add(bemerkungsScroller, cc.xywh(1, 47, 8, 3)); // Bemerkungen Scroller
-			
-			
-			
 			// Revision
-			builder.addSeparator("Revision", cc.xyw(10, 45, 4));
-			builder.addLabel("Datum:", cc.xy(10, 47)); // Datum
+			builder.addSeparator(i18n.getString("editor.betreiber.separator.rev"),
+				cc.xyw(10, 45, 4));
+			builder.addLabel(i18n.getString("editor.betreiber.date"),
+				cc.xy(10, 47)); // Datum
 			builder.add(revdatumsFeld, cc.xyw(12, 47, 2));
-			handzeichenLabel = builder.addLabel("Handzeichen:", cc.xy(10, 49));
+			handzeichenLabel = builder.addLabel(i18n.getString("editor.betreiber.sign"),
+				cc.xy(10, 49));
 			builder.add(handzeichenNeuFeld, cc.xyw(12, 49, 2));
 
 			// Buttons
@@ -957,7 +950,6 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	private void clearForm() {
 		setAllEnabled(false);
-		// frame.changeStatus("Beschäftigt...");
 
 		SwingWorkerVariant worker = new SwingWorkerVariant(panel) {
 
@@ -1104,32 +1096,6 @@ public class BasisAdresseNeu extends AbstractModul {
 		handzeichenNeuFeld.setEditable(enabled);
 	}
 
-	/**
-	 * Ein Listener für die Events des "Neuer Betreiber"-Moduls.
-	 * 
-	 * @author David Klotz
-	 */
-	private final class BetreiberNeuListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == speichernButton) {
-				log.debug("(" + BasisAdresseNeu.this.getIdentifier() + ") " + "Speichern gedrückt!");
-				doSave();
-			}
-
-//			else if (e.getSource() == orteBox)
-//			{
-//				reloadStrassen();
-//			}
-			else if (e.getSource() == strassenBox) {
-//				standorteModel.setStrasse(strassenBox.getSelectedItem().toString());
-				standorteModel.updateList();
-
-			}
-		}
-
-	}
 
 	/**
 	 * Ein Listener für die Events des "Betreiber Editor"-Moduls.
