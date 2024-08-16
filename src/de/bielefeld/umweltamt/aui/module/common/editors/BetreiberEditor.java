@@ -25,17 +25,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,7 +40,6 @@ import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -63,9 +56,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-import org.ehcache.core.statistics.LowerCachingTierOperationsOutcome.GetAndRemoveOutcome;
-import org.hibernate.criterion.MatchMode;
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -77,32 +67,20 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
-import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
-import de.bielefeld.umweltamt.aui.module.BasisAdresseNeu;
-import de.bielefeld.umweltamt.aui.module.BasisAdresseSuchen;
-import de.bielefeld.umweltamt.aui.module.BasisStandortSuchen;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisStdModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisTabStreetsModel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.BasisPanel;
 import de.bielefeld.umweltamt.aui.module.common.AdresseChooser;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAdresseModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
-import de.bielefeld.umweltamt.aui.utils.DateUtils;
-import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.LongNameComboBoxRenderer;
-import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 /**
@@ -166,7 +144,6 @@ public class BetreiberEditor extends AbstractApplyEditor {
 	private Wassereinzugsgebiet[] wEinzugsgebiete = null;
 	private Wirtschaftszweig[] wirtschaftszweige = null;
 	private String[] tabstreets = null;
-	private String street = null;
 	
     private Action standortLoeschAction;
     private Action standortNeuAction;
@@ -865,16 +842,13 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		getBetreiber().setRevidatum(Calendar.getInstance().getTime());
 		
 		List<?> adrStdListe = this.standorteModel.getList();
-		boolean gespeichert = true;
 		for (int i = 0; i < adrStdListe.size(); i++) {
 
 			Standort std = (Standort) adrStdListe.get(i);
 
-			gespeichert = std.merge();
+			 std.merge();
 
 		}
-		
-		Standort standort = (Standort) standorteModel.getObjectAtRow(0);
 		getBetreiber().merge();
 
 		return true;
@@ -1049,7 +1023,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 				inhaber.setStandorts(standorts);
 				standort.setE32(bts.getX());
 				standort.setN32(bts.getY());
-				List std = new ArrayList<Standort>();
+				List<Standort> std = new ArrayList<Standort>();
 				for (Standort x : standorts)
 					std.add(x);
 				standorteModel.setList(std);
