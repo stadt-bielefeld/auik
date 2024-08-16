@@ -1,110 +1,71 @@
---Script to import data from a csv input into the auik database
---Expected filename is: import.csv
---Expected format is:
---Klassifizierung,Wirtschaftszweig,Firmenname,Name,Vorname,E-Mail,Telefon,Fax,Plz,Ort,Straße,Hausnr.,Zusatz,Bermerkung
---(Header is suported, Expected delimiter: ,)
+-- Script to import data from a CSV input into the AUI-K database.
+-- Expected format is a CSV file with header matching the temporary
+-- table created in this script.
 
 BEGIN;
 -- Create temporary import table
 CREATE TEMP TABLE temp_import (
-    id SERIAL PRIMARY KEY,
-    klassifizierung character varying(255),
+    namezus character varying(255),
     wirtschaftszweig character varying(255),
-    firmenname character varying(255),
     name character varying(255),
-    vorname character varying(255),
+    namebetrbeauf character varying(255),
+    vornamebetrbeauf character varying(255),
     email character varying(255),
     telefon character varying(255),
-    fax character varying(255),
+    telefax character varying(255),
     plz character varying(255),
     ort character varying(255),
     strasse character varying(255),
     hausnr integer,
-    zusatz character varying(255),
-    bemerkung character varying(255)
+    hausnrzus character varying(255),
+    bemerkungen character varying(255)
 );
 
-CREATE OR REPLACE FUNCTION insert_row(
-    klassifizierung character varying(255),
-    wirtschaftszweig_name character varying(255),
-    firmenname character varying(255),
-    name character varying(255),
-    vorname character varying(255),
-    email character varying(255),
-    telefon character varying(255),
-    fax character varying(255),
-    plz character varying(255),
-    ort character varying(255),
-    strasse character varying(255),
-    hausnr integer,
-    zusatz character varying(255),
-    bemerkung character varying(255)
-)
-RETURNS void
-AS $$
-DECLARE
-    address_id integer;
-    wirtschaftszweig_id integer;
-BEGIN
-    -- Insert basis.adresse part and return id
-    INSERT INTO basis.adresse (strasse, hausnr, hausnrzus, plz, ort)
-    VALUES (strasse, hausnr, zusatz, plz, ort)
-    RETURNING id INTO address_id;
-    -- Get or insert wirtschaftszweig
-    IF EXISTS (SELECT 1 FROM basis.wirtschaftszweig WHERE wirtschaftszweig = wirtschaftszweig_name) THEN
-        SELECT id INTO wirtschaftszweig_id
-        FROM basis.wirtschaftszweig
-        WHERE wirtschaftszweig = wirtschaftszweig_name;
-    ELSE
-        INSERT INTO basis.wirtschaftszweig (id, wirtschaftszweig)
-        VALUES (
-            (SELECT COALESCE(MAX(id) + 1, 0) FROM basis.wirtschaftszweig),
-            wirtschaftszweig_name
-        );
-        SELECT MAX(id) FROM basis.wirtschaftszweig INTO wirtschaftszweig_id;
-    END IF;
-
-    -- Insert inhaber
-    INSERT INTO basis.inhaber (adresseid, name, namebetrbeauf, vornamebetrbeauf, telefon, telefax, email,
-        bemerkungen, wirtschaftszweigid, namezus)
-    VALUES (address_id, firmenname, name, vorname, telefon, fax, email, bemerkung, wirtschaftszweig_id, klassifizierung);
-END;
-$$
-LANGUAGE plpgsql;
-
 -- Copy import data to temporary table
-COPY temp_import(
-    klassifizierung, wirtschaftszweig, firmenname,
-    name, vorname, email, telefon, fax, plz, ort, strasse,
-    hausnr, zusatz, bemerkung)
-FROM '/opt/auik_db/import.csv'
-DELIMITER ','
-CSV HEADER;
+\copy temp_import FROM pstdin (FORMAT csv, HEADER true)
 
 -- Copy data to their respective tables
 DO
 $$
 DECLARE resultRow RECORD;
+    address_id integer;
+    wirtschaftszweig_id integer;
 BEGIN
     FOR resultRow IN
         SELECT * FROM temp_import
     LOOP
-        PERFORM insert_row(
-            resultRow.klassifizierung ,
-            resultRow.wirtschaftszweig,
-            resultRow.firmenname,
-            resultRow.name,
-            resultRow.vorname,
-            resultRow.email,
-            resultRow.telefon,
-            resultRow.fax,
-            resultRow.plz,
-            resultRow.ort,
-            resultRow.strasse,
-            resultRow.hausnr,
-            resultRow.zusatz,
-            resultRow.bemerkung
-        );
+        -- Insert basis.adresse part and return id
+        INSERT INTO basis.adresse (strasse, hausnr, hausnrzus, plz, ort)
+            VALUES (resultRow.strasse, resultRow.hausnr,
+                resultRow.hausnrzus, resultRow.plz, resultRow.ort)
+            RETURNING id INTO address_id;
+
+        -- Get or insert wirtschaftszweig
+        IF resultRow.wirtschaftszweig IS NULL THEN
+            wirtschaftszweig_id = null;
+        ELSEIF EXISTS (SELECT 1 FROM basis.wirtschaftszweig
+                WHERE wirtschaftszweig = resultRow.wirtschaftszweig) THEN
+            SELECT id INTO wirtschaftszweig_id
+                FROM basis.wirtschaftszweig
+                WHERE wirtschaftszweig = resultRow.wirtschaftszweig;
+        ELSE
+            INSERT INTO basis.wirtschaftszweig (id, wirtschaftszweig)
+                VALUES (
+                    (SELECT COALESCE(MAX(id) + 1, 0) FROM basis.wirtschaftszweig),
+                    resultRow.wirtschaftszweig)
+                RETURNING id INTO wirtschaftszweig_id;
+        END IF;
+
+        -- Insert inhaber
+        INSERT INTO basis.inhaber (
+                adresseid, name, namebetrbeauf, vornamebetrbeauf,
+                telefon, telefax, email,
+                bemerkungen, wirtschaftszweigid, namezus)
+            VALUES (address_id, resultRow.name,
+                resultRow.namebetrbeauf, resultRow.vornamebetrbeauf,
+                resultRow.telefon, resultRow.telefax, resultRow.email,
+                resultRow.bemerkungen, wirtschaftszweig_id,
+                resultRow.namezus);
     END LOOP;
 END
 $$;

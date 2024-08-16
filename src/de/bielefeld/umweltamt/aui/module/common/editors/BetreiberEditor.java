@@ -132,12 +132,12 @@ public class BetreiberEditor extends AbstractApplyEditor {
 	private JCheckBox daten_esatzungCheck;
 	private JCheckBox daten_whgCheck;
 	private JCheckBox ueberschgebCheck;
-	private JComboBox strassenBox;
-	private JComboBox wirtschaftszweigBox;
-	private JComboBox gemarkungBox;
-	private JComboBox entwGebBox;
-	private JComboBox standortGgBox;
-	private JComboBox wEinzugsGebBox;
+	private JComboBox<String> strassenBox;
+	private JComboBox<Wirtschaftszweig> wirtschaftszweigBox;
+	private JComboBox<Gemarkung> gemarkungBox;
+	private JComboBox<String> entwGebBox;
+	private JComboBox<Standortgghwsg> standortGgBox;
+	private JComboBox<Wassereinzugsgebiet> wEinzugsGebBox;
 
 	
 	private Gemarkung[] gemarkungen = null;
@@ -218,10 +218,10 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		
 		flurFeld = new LimitedTextField(50);
 		flurStkFeld = new LimitedTextField(50);
-		gemarkungBox = new JComboBox();
-		entwGebBox = new JComboBox();
-		standortGgBox = new JComboBox();
-		wEinzugsGebBox = new JComboBox();
+		gemarkungBox = new JComboBox<Gemarkung>();
+		entwGebBox = new JComboBox<String>();
+		standortGgBox = new JComboBox<Standortgghwsg>();
+		wEinzugsGebBox = new JComboBox<Wassereinzugsgebiet>();
 
 		bemerkungsArea = new LimitedTextArea(2000);
 		bemerkungsArea.setLineWrap(true);
@@ -229,7 +229,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		JScrollPane bemerkungsScroller = new JScrollPane(bemerkungsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-		wirtschaftszweigBox = new JComboBox();
+		wirtschaftszweigBox = new JComboBox<Wirtschaftszweig>();
 		wirtschaftszweigBox.setRenderer(new LongNameComboBoxRenderer());
 
 		// Der folgende KeyListener wird benutzt um bei Enter
@@ -485,7 +485,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 			protected void doUIUpdateLogic() throws RuntimeException {
 
 				if (tabstreets != null) {
-					strassenBox.setModel(new DefaultComboBoxModel(tabstreets));
+					strassenBox.setModel(new DefaultComboBoxModel<String>(tabstreets));
 				}
 				if (adressenTabelle != null) {
 
@@ -508,29 +508,31 @@ public class BetreiberEditor extends AbstractApplyEditor {
 				}
 
 				if (wirtschaftszweige != null) {
-					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
+					wirtschaftszweigBox.setModel(new DefaultComboBoxModel<Wirtschaftszweig>(wirtschaftszweige));
 					wirtschaftszweigBox.setSelectedItem(getBetreiber().getWirtschaftszweig());
 				}
 				if (gemarkungen != null)
 				{
-					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
+					gemarkungBox.setModel(new DefaultComboBoxModel<Gemarkung>(gemarkungen));
 					gemarkungBox.setSelectedItem(adresse.getGemarkung());
 				}
 				if (standortggs != null)
 				{
-					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
+					standortGgBox.setModel(
+						new DefaultComboBoxModel<Standortgghwsg>(standortggs));
 					standortGgBox.setSelectedItem(adresse.getStandortgghwsg());
 				}
 
 				if (entwgebiete != null)
 				{
-					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+					entwGebBox.setModel(
+						new DefaultComboBoxModel<String>(entwgebiete));
 					entwGebBox.setSelectedItem(adresse.getEntgebid());
 				}
 
 				if (wEinzugsgebiete != null)
 				{
-					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
+					wEinzugsGebBox.setModel(new DefaultComboBoxModel<Wassereinzugsgebiet>(wEinzugsgebiete));
 					wEinzugsGebBox.setSelectedItem(adresse.getWassereinzugsgebiet());
 				}
 
@@ -995,7 +997,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 				inhaber.setStandorts(standorts);
 				standort.setE32(bts.getX());
 				standort.setN32(bts.getY());
-				List std = new ArrayList<Standort>();
+				List<Standort> std = new ArrayList<Standort>();
 				for (Standort x : standorts)
 					std.add(x);
 				standorteModel.setList(std);
@@ -1009,7 +1011,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 
 	private Component getStrassenBox() {
 
-		strassenBox = new JComboBox();
+		strassenBox = new JComboBox<String>();
 		strassenBox.setRenderer(new LongNameComboBoxRenderer());
 		strassenBox.setEnabled(false);
 
@@ -1027,7 +1029,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == strassenBox) {
-				adressenModel.setStrasse(strassenBox.getSelectedItem().toString());
+				adressenModel.setStrasse((String) strassenBox.getSelectedItem());
 				adressenModel.updateList();
 
 			}
