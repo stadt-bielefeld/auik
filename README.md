@@ -103,3 +103,7 @@ psql -d fisumwelt -f import_csv.sql <import.csv
 ```
 
 `fisumwelt` ist hier der Datenbankname, je nach Datenbank-Setup müssen ggf. weitere Parameter ergänzt werden.
+
+Manche der importierten Daten werden nur beim Start der Anwendung geladen,
+so dass ein Neustart der Anwendung nach dem Import erforderlich ist,
+damit alle Daten korrekt dargestellt werden.
