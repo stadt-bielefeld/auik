@@ -65,16 +65,37 @@ Kompilieren und Starten der Anwendung:
 mvn clean compile exec:java
 ```
 
-Erstellen eines Jar-Archivs:
+Für die Anmeldung kann der Datenbankbenutzer verwendet werden:
+
+`auikadmin`, Passwort: `secret`
+
+## Aufsetzen der Anwendung
+
+Wie für die [Entwicklungsumgebung](#entwicklungsumgebung) wird eine Datenbank
+benötigt. Grundsätzlich funktioniert das Aufsetzen wie unter
+[Aufsetzen der Datenbank](#aufsetzen-der-datenbank) angegeben,
+es sollten aber die jeweiligen Anforderungen für den produktiven Betrieb
+berücksichtigt werden.
+
+Erstellen eines JAR:
 
 ```bash
 mvn clean package
 ```
-Das Archiv ist im Ordner `target` zu finden.
+Das JAR ist im Ordner `target` zu finden und kann von dort
+an sein Ziel bewegt werden.
 
-Für die Anmeldung kann der Datenbankbenutzer verwendet werden:
+Die Konfiguration erfolgt wie unter
+[Konfigurieren der Anwendung](#konfigurieren-der-anwendung) angegeben.
+Die Konfigurationsdatei muss sich zum starten der Anwendung
+im selben Verzeichnis befinden wie das JAR.
 
-`auikadmin`, Passwort: `secret`
+Starten der Anwendung:
+```bash
+java -jar auik_prod-*.jar
+```
+
+Für die Anmeldung kann der Datenbankbenutzer verwendet werden.
 
 ## AUI-K Handbuch
 
