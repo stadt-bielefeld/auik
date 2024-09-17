@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,11 +56,14 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -173,7 +177,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			if (bOrt) {
 				query += " AND LOWER(a.ort) like '" + ort.toLowerCase() + "%' ";
 			}
-			query += " AND a.deleted = false";
+			query += " AND a.deleted = false AND i.deleted = false";
 		}
 		query += " ORDER BY i.name ASC";
 		List list = HibernateSessionFactory.currentSession().createQuery(query).list();
@@ -1230,6 +1234,28 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 					new Wasserrecht());
 		}
 	}
+
+	/**
+	 * Durchsucht Fachdaten nach einem bestimmten Aktenzeichen und gibt
+	 * das Ergebnis als List zurück
+	 * 
+	 * @param search
+	 *            String
+	 * @return <code>List&lt;Fachdaten&gt;</code>
+	 */
+	public static List<Wasserrecht> findWasserrechtGenDatum(Date search) {
+
+		if (search == null) {
+			return new DatabaseAccess().executeCriteriaToList(
+					DetachedCriteria.forClass(Wasserrecht.class),
+					new Wasserrecht());
+		} else {
+			return new DatabaseAccess().executeCriteriaToList(
+					DetachedCriteria.forClass(Wasserrecht.class).add(
+							Restrictions.eq("erstellungsDatum", search)),
+					new Wasserrecht());
+		}
+	}
 	
 	/**
 	 * Get an array with all <code>MapElkaGewkennz</code>en
@@ -1258,6 +1284,25 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 
+	}
+
+	/**
+	 * Get all AfsNiederschlagswasser
+	 * 
+	 * @return <code>Eine Liste aller AfsNiederschlagswasser</code>
+	 */
+	public static List<AfsNiederschlagswasser> getAfsNwList(Entwaesserungsgrundstueck grundstueck) {
+		return new DatabaseAccess().executeCriteriaToList(
+				DetachedCriteria.forClass(AfsNiederschlagswasser.class)
+						.add(Restrictions.eq("entwaesserungsgrundstueck", grundstueck)),
+				new AfsNiederschlagswasser());
+	}
+	
+	public static List<AfsNiederschlagswasser> getAfsNwList(Anfallstelle anfallstelle) {
+		return new DatabaseAccess().executeCriteriaToList(
+				DetachedCriteria.forClass(AfsNiederschlagswasser.class)
+						.add(Restrictions.eq("anfallstelle", anfallstelle)),
+				new AfsNiederschlagswasser());
 	}
 
 	/**
@@ -1294,7 +1339,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				+ "WHERE o.standortid = so.standortid "
 				+ "AND so.inaktiv = false "
 			+ "),"
-			+ "anh.anhang_id, anf.anlagenart, o.beschreibung,"
+			+ "gen.anhang, anf.anlagenart, o.beschreibung,"
 			+ "anf.bemerkungen, o.wiedervorlage, o.prioritaet, o.id"
 		+ " FROM "
 			+ "basis.objekt o "
@@ -1314,6 +1359,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			+ "ON o.id = anf.objektid "
 			+ "LEFT JOIN elka.anhang anh "
 			+ "ON anh.anhang_id = anf.anhang_id "
+			+ "LEFT JOIN elka.wasserrecht gen "
+			+ "ON o.id = gen.objektid "
 		+ " WHERE "
 			+ "o._deleted = false "
 			+ "AND o.inaktiv = false");

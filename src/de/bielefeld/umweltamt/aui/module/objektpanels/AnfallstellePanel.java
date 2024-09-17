@@ -119,6 +119,7 @@ public class AnfallstellePanel extends ObjectPanel {
     private Anh55Panel anhang55Tab;
     private Anh56Panel anhang56Tab;
     private BWKPanel bwkTab;
+    private AfsNwPanel afsNwTab;
 
     //Label
     private JLabel anhangLb = new JLabel("Anhang AbwV:");
@@ -270,7 +271,7 @@ public class AnfallstellePanel extends ObjectPanel {
 
             String[] arten = {"-", "Aufbereitung Medizinprodukte", "Brennwertkessel", "Blockheizkraftwerk",
                     "Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor",
-                    "RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
+                    "Niederschlagswasser", "RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
             getAnlagenartBox().setModel(new DefaultComboBoxModel(arten));
 
             if (this.anfallstelle.getAnlagenart() != null) {
@@ -288,13 +289,23 @@ public class AnfallstellePanel extends ObjectPanel {
                     "Kategorie IIb: Schwach belastetes NW (behandlungsbedürftig)",
                     "Kategorie III: Stark belastetes NW"};
             getHerkunftBox().setModel(new DefaultComboBoxModel(herkunft));
-
+            if (!anfallstelle.getAfsNiederschlagswassers().isEmpty()) {
+            	getHerkunftBox().setSelectedIndex(anfallstelle.getAfsNiederschlagswassers().iterator().next().getNwHerBereichOpt());
+            }
+            
             if(this.anfallstelle.getAnwendungsbereich() != null) {
                 getAnwendungsbereichFeld().setText(this.anfallstelle.getAnwendungsbereich());
             }
 
             if(this.anfallstelle.getBezeichnung() != null) {
                 getBezeichnungFeld().setText(this.anfallstelle.getBezeichnung());
+            }
+
+            if(!anfallstelle.getAfsNiederschlagswassers().isEmpty()) {
+            	if(this.anfallstelle.getAfsNiederschlagswassers().iterator().next().getBefFlaeche() != null) {
+            		 getBefestFlaecheFeld().setText(this.anfallstelle.getAfsNiederschlagswassers().iterator().next().getBefFlaeche().toString());
+            	}
+               
             }
 
             if(this.anfallstelle.getVolJahr() != null) {
@@ -354,7 +365,7 @@ public class AnfallstellePanel extends ObjectPanel {
         getStillgelegtAmDatum().setDate(null);
         getAbwaBeschaffOptFeld().setText(null);
         getBetriebsweiseOptFeld().setText(null);
-//		getHerkunftBox().setSelectedIndex(1);
+		getHerkunftBox().setSelectedIndex(-1);
         getBefestFlaecheFeld().setText(null);
         getLProSFeld().setText(null);
         getQmProHFeld().setText(null);
@@ -396,12 +407,34 @@ public class AnfallstellePanel extends ObjectPanel {
                         getAnh49Tab().clearForm();
                         getAnh49AbfuhrTab().clearForm();
                         break;
+                    case "Niederschlagswasser":
+                        getAfsTab().clearForm();
+                        break;
                     }
                 }
             default:
                 log.debug("Unknown Anfallstelle: " + anfallstelle);
             }
         }
+        
+//        if (anfallstelle != null && anfallstelle.getAbwaBeschaffOpt() != null) {
+//            switch (anfallstelle.getAnhangId()) {
+//            case "99":
+//                if (abwaBeschaffOptFeld != null) {
+//                    switch (anfallstelle.getAbwaBeschaffOpt()) {
+//                    case 3:
+//                        getAfsTab().clearForm();
+//                        break;
+//                    case 4:
+//                    	getAfsTab().clearForm();
+//                        break;
+//                    }
+//                }
+//            default:
+//                log.debug("Unknown Anfallstelle: " + anfallstelle);
+//            }
+//        }
+        
         setDirty(false);
     }
 
@@ -419,7 +452,6 @@ public class AnfallstellePanel extends ObjectPanel {
         getStillgelegtAmDatum().setEnabled(enabled);
         getAbwaBeschaffOptFeld().setEnabled(enabled);
         getBetriebsweiseOptFeld().setEnabled(enabled);
-        getHerkunftBox().setEnabled(enabled);
         getBefestFlaecheFeld().setEnabled(enabled);
         getLProSFeld().setEnabled(enabled);
         getQmProHFeld().setEnabled(enabled);
@@ -1053,8 +1085,22 @@ public class AnfallstellePanel extends ObjectPanel {
                 } else {
                     anfallstelle.setAnhangId("99");
                     anfallstelle.setAnlagenart("Abscheider");
-                    getBWKTab().clearForm();
+                    getAnh49Tab().clearForm();
                     getAnh49Tab().completeObjekt(anfallstelle);
+                    hauptModul.setSelectedIndex(3);
+                }
+                break;
+            case "Niederschlagswasser":
+                hauptModul.addTab("Niederschlagswasser", getAfsTab());
+                if (anfallstelle.getAfsNiederschlagswassers().size() > 0) {
+                	getAfsTab().fetchFormData();
+                    getAfsTab().enableAll(true);
+                    getAfsTab().updateForm();
+                } else {
+                    anfallstelle.setAnhangId("99");
+                    anfallstelle.setAnlagenart("Niederschlagswasser");
+                    getAfsTab().clearForm();
+                    getAfsTab().completeObjekt();
                     hauptModul.setSelectedIndex(3);
                 }
                 break;
@@ -1194,6 +1240,14 @@ public class AnfallstellePanel extends ObjectPanel {
             bwkTab.setBorder(Paddings.DIALOG);
         }
         return bwkTab;
+    }
+
+    public AfsNwPanel getAfsTab() {
+        if (afsNwTab == null) {
+        	afsNwTab = new AfsNwPanel(hauptModul);
+        	afsNwTab.setBorder(Paddings.DIALOG);
+        }
+        return afsNwTab;
     }
 
 

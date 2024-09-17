@@ -45,7 +45,20 @@ public class EEinleitungsstelle implements java.io.Serializable {
     private Integer nr;
     private Integer origNr;
     private Boolean typIndirekteinleitungTog;
-    private String bezeichnung;
+    private boolean typIndusGewerbDirekteinleitungTog;
+    private boolean typKommNwMischTog;
+    private boolean typKommNwTrennTog;
+    private boolean typNwPrivatTrennTog;
+    private boolean typIndusGewerbNwMischTog;
+    private boolean typIndusGewerbNwTrennTog;
+    private boolean typGrubenwasserTog;
+    private boolean typKleinklaeranlageTog;
+    private boolean typKommKaTog;
+    private boolean typAusseroertlicheStrasseneinleitungTog;
+    private boolean typSonstigeTog;
+    private boolean abgaberelevanteEltOpt;
+
+	private String bezeichnung;
     private Integer e32;
     private Integer n32;
     private Integer kanalArtOpt;
@@ -63,13 +76,24 @@ public class EEinleitungsstelle implements java.io.Serializable {
     }
 
     public EEinleitungsstelle(Integer nr, EStandort standort, Integer origNr,
-            Boolean typIndirekteinleitungTog, String bezeichnung, Integer e32,
+            Boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, String bezeichnung, Integer e32,
             Integer n32, Boolean kaNichtInNrwTog, Date aktualDat,
             Date erstellDat, String herkunft, Set<EWasserrecht> wasserrechts, Integer kanalArtOpt) {
         this.standort = standort;
         this.nr = nr;
         this.origNr = origNr;
         this.typIndirekteinleitungTog = typIndirekteinleitungTog;
+        this.typIndusGewerbDirekteinleitungTog = typIndusGewerbDirekteinleitungTog;
+        this.typKommNwMischTog = typKommNwMischTog;
+        this.typKommNwTrennTog = typKommNwTrennTog;
+        this.typNwPrivatTrennTog = typNwPrivatTrennTog;
+        this.typIndusGewerbNwMischTog = typIndusGewerbNwMischTog;
+        this.typIndusGewerbNwTrennTog = typIndusGewerbNwTrennTog;
+        this.typGrubenwasserTog = typGrubenwasserTog;
+        this.typKleinklaeranlageTog = typKleinklaeranlageTog;
+        this.typKommKaTog = typKommKaTog;
+        this.typAusseroertlicheStrasseneinleitungTog = typAusseroertlicheStrasseneinleitungTog;
+        this.typSonstigeTog = typSonstigeTog;
         this.bezeichnung = bezeichnung;
         this.e32 = e32;
         this.n32 = n32;
@@ -114,6 +138,102 @@ public class EEinleitungsstelle implements java.io.Serializable {
     public void setTypIndirekteinleitungTog(Boolean typIndirekteinleitungTog) {
         this.typIndirekteinleitungTog = typIndirekteinleitungTog;
     }
+
+    public boolean getTypIndusGewerbDirekteinleitungTog() {
+        return this.typIndusGewerbDirekteinleitungTog;
+    }
+
+    public void setTypIndusGewerbDirekteinleitungTog(boolean typIndusGewerbDirekteinleitungTog) {
+        this.typIndusGewerbDirekteinleitungTog = typIndusGewerbDirekteinleitungTog;
+    }
+
+    public boolean getTypKommNwMischTog() {
+        return this.typKommNwMischTog;
+    }
+
+    public void setTypKommNwMischTog(boolean typKommNwMischTog) {
+        this.typKommNwMischTog = typKommNwMischTog;
+    }
+
+    public boolean getTypKommNwTrennTog() {
+        return this.typKommNwTrennTog;
+    }
+
+    public void setTypKommNwTrennTog(boolean typKommNwTrennTog) {
+        this.typKommNwTrennTog = typKommNwTrennTog;
+    }
+
+    public boolean getTypNwPrivatTrennTog() {
+        return this.typNwPrivatTrennTog;
+    }
+
+    public void setTypNwPrivatTrennTog(boolean typNwPrivatTrennTog) {
+        this.typNwPrivatTrennTog = typNwPrivatTrennTog;
+    }
+
+    public boolean getTypIndusGewerbNwMischTog() {
+        return this.typIndusGewerbNwMischTog;
+    }
+
+    public void setTypIndusGewerbNwMischTog(boolean typIndusGewerbNwMischTog) {
+        this.typIndusGewerbNwMischTog = typIndusGewerbNwMischTog;
+    }
+
+    public boolean getTypIndusGewerbNwTrennTog() {
+        return this.typIndusGewerbNwTrennTog;
+    }
+
+    public void setTypIndusGewerbNwTrennTog(boolean typIndusGewerbNwTrennTog) {
+        this.typIndusGewerbNwTrennTog = typIndusGewerbNwTrennTog;
+    }
+
+    public boolean getTypGrubenwasserTog() {
+        return this.typGrubenwasserTog;
+    }
+
+    public void setTypGrubenwasserTog(boolean typGrubenwasserTog) {
+        this.typGrubenwasserTog = typGrubenwasserTog;
+    }
+
+    public boolean getTypKleinklaeranlageTog() {
+        return this.typKleinklaeranlageTog;
+    }
+
+    public void setTypKleinklaeranlageTog(boolean typKleinklaeranlageTog) {
+        this.typKleinklaeranlageTog = typKleinklaeranlageTog;
+    }
+
+    public boolean getTypKommKaTog() {
+        return this.typKommKaTog;
+    }
+
+    public void setTypKommKaTog(boolean typKommKaTog) {
+        this.typKommKaTog = typKommKaTog;
+    }
+
+    public boolean getTypAusseroertlicheStrasseneinleitungTog() {
+        return this.typAusseroertlicheStrasseneinleitungTog;
+    }
+
+    public void setTypAusseroertlicheStrasseneinleitungTog(boolean typAusseroertlicheStrasseneinleitungTog) {
+        this.typAusseroertlicheStrasseneinleitungTog = typAusseroertlicheStrasseneinleitungTog;
+    }
+
+    public boolean getTypSonstigeTog() {
+        return this.typSonstigeTog;
+    }
+
+    public void setTypSonstigeTog(boolean typSonstigeTog) {
+        this.typSonstigeTog = typSonstigeTog;
+    }
+    
+    public boolean getAbgaberelevanteEltOpt() {
+		return abgaberelevanteEltOpt;
+	}
+
+	public void setAbgaberelevanteEltOpt(boolean abgaberelevanteEltOpt) {
+		this.abgaberelevanteEltOpt = abgaberelevanteEltOpt;
+	}
 
     public String getBezeichnung() {
         return this.bezeichnung;

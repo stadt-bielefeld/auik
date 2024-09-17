@@ -59,6 +59,8 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
     private Integer befFlaeche;
     private Integer nwHerBereichOpt;
     private BigDecimal abflussmenge;
+    private boolean enabled;
+    private boolean deleted;
     private Set<Referenz> referenzsForQNwAfsNr = new HashSet<Referenz>(0);
     private Set<Referenz> referenzsForZNwAfsNr = new HashSet<Referenz>(0);
 
@@ -156,6 +158,22 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
 
     public void setAbflussmenge(BigDecimal abflussmenge) {
         this.abflussmenge = abflussmenge;
+    }
+
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isDeleted() {
+        return this.deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @JsonIgnore
@@ -310,7 +328,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static AfsNiederschlagswasser findById(long id) {
+    public static AfsNiederschlagswasser findById(Integer id) {
         log.debug("Getting AfsNiederschlagswasser instance with id: " + id);
         return (AfsNiederschlagswasser)
             new DatabaseAccess().get(AfsNiederschlagswasser.class, id);
