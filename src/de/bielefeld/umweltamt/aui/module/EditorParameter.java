@@ -199,8 +199,9 @@ public class EditorParameter extends AbstractModul {
             resultTable = new JTable(getTableModel());
             resultTable.setAutoCreateRowSorter(true);
             resultTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            resultTable.setRowHeight(25);
 
-			this.resultTable
+			resultTable
 					.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 			TableColumn column = null;
 			// DefaultTableCellRenderer centerRenderer = new

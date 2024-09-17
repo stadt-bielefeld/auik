@@ -124,6 +124,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaVerfahrenPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.AfsNwPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AnfallstellePanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
@@ -182,6 +183,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     private AwsvPanel vawsTab;
     private EinleitungsstellePanel einleitungsstelleTab;
     private AnfallstellePanel anfallstelleTab;
+    private AfsNwPanel afsNwTab;
     private SonderbauwerkPanel sonderbauwerkTab;
     private SonderbauwerkTypTab sonderbauwerkTypTab;
     private EntwaesserungsgrundstueckPanel entwaesserungsgrundstueckTab;
@@ -421,6 +423,14 @@ public class BasisObjektBearbeiten extends AbstractModul {
         return anfallstelleTab;
     }
 
+    public AfsNwPanel getAfsNwTab() {
+        if (afsNwTab == null) {
+        	afsNwTab = new AfsNwPanel(this);
+        	afsNwTab.setBorder(Paddings.DIALOG);
+        }
+        return afsNwTab;
+    }
+
     public SonderbauwerkPanel getSonderbauwerkTab() {
         if (sonderbauwerkTab == null) {
             sonderbauwerkTab = new SonderbauwerkPanel(this, this.getSonderbauwerkTypTab());
@@ -539,6 +549,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                             getChronoTab().fetchFormData();
                             getAnfallstelleTab().fetchFormData();
+                            getAfsNwTab().fetchFormData();
+//                            if(objekt.getAnfallstelles().iterator().next().getAfsNiederschlagswassers() != null)
+//                            	getAfsNwTab().fetchFormData();
                             break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
                             getChronoTab().fetchFormData();
@@ -551,6 +564,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ENTWAESSERUNGSGRUNDSTUECK:
                             getChronoTab().fetchFormData();
                             getEntwaesserungsgrundstueckTab().fetchFormData();
+                            getAfsNwTab().fetchFormData();
                             break;
                         default:
                             log.debug("Unknown Objektart: "
@@ -650,8 +664,10 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                                 addTab(getChronoTab().getName(), getChronoTab());
                                 addTab(getAnfallstelleTab().getName(), getAnfallstelleTab());
+                                addTab(getAfsNwTab().getName(), getAfsNwTab());
                                 getChronoTab().updateForm();
                                 getAnfallstelleTab().updateForm();
+                                getAfsNwTab().updateForm();
                                 getTabbedPane().setSelectedComponent(getAnfallstelleTab());
                                 break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_SONDERBAUWERK:
@@ -665,8 +681,10 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ENTWAESSERUNGSGRUNDSTUECK:
                                 addTab(getChronoTab().getName(), getChronoTab());
                                 addTab(getEntwaesserungsgrundstueckTab().getName(), getEntwaesserungsgrundstueckTab());
+                                addTab(getAfsNwTab().getName(), getAfsNwTab());
                                 getChronoTab().updateForm();
                                 getEntwaesserungsgrundstueckTab().updateForm();
+                                getAfsNwTab().updateForm();
                                 getTabbedPane().setSelectedComponent(getEntwaesserungsgrundstueckTab());
                                 break;
                             default:
@@ -739,9 +757,11 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
                     getEinleitungsstelleTab().clearForm();
+                    getAfsNwTab().clearForm();
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                     getAnfallstelleTab().clearForm();
+                    getAfsNwTab().clearForm();
                     break;
                 default:
                     log.debug("Unknown Objektart: "
@@ -774,9 +794,11 @@ public class BasisObjektBearbeiten extends AbstractModul {
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_EINLEITUNGSTELLE:
                     getEinleitungsstelleTab().enableAll(enabled);
+                    getAfsNwTab().enableAll(enabled);
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                     getAnfallstelleTab().enableAll(enabled);
+                    getAfsNwTab().enableAll(enabled);
                     break;
                 case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
                     getGenehmigungTab().enableAll(enabled);

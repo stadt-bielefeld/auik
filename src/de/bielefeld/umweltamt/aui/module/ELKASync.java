@@ -980,7 +980,7 @@ public class ELKASync extends AbstractModul {
             prependIdentifierToNr(ewg);
             prependIdentifierToNr(ewg.getAdresse());
             prependIdentifierToNr(ewg.getStandort());
-            prependIdentifierToNr(ewg.getStandort().getAdresse());
+//            prependIdentifierToNr(ewg.getStandort().getAdresse());
             EWasserrecht recht = ewg.getWasserrecht();
             if (recht != null) {
                 prependIdentifierToNr(recht);
@@ -1035,7 +1035,6 @@ public class ELKASync extends AbstractModul {
         for (EEinleitungsstelle stelle : objects) {
             prependIdentifierToNr(stelle);
             prependIdentifierToNr(stelle.getStandort());
-            prependIdentifierToNr(stelle.getStandort().getAdresse());
             for (EWasserrecht recht : stelle.getWasserrechts()) {
                 prependIdentifierToNr(recht);
                 prependIdentifierToNr(recht.getAdresse());
