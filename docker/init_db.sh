@@ -12,7 +12,7 @@ psql -q -d $DB_NAME --command "CREATE EXTENSION postgis;"
 psql -q -d $DB_NAME --command "CREATE USER ${USERNAME} with password '${USER_PW}';"
 
 echo "Applying schema"
-psql -q -d $DB_NAME -f $schema_file
-psql -q -d $DB_NAME -f $update_file_1_1_0
+psql -q -d $DB_NAME -v ON_ERROR_STOP=on -f $schema_file
+psql -q -d $DB_NAME -v ON_ERROR_STOP=on -f $update_file_1_1_0
 
-psql -q -d $DB_NAME -f $import_script <$schema_dir/import.csv
+psql -q -d $DB_NAME -v ON_ERROR_STOP=on -f $import_script <$schema_dir/import.csv
