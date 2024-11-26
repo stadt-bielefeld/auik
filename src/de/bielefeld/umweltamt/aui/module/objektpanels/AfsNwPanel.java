@@ -51,13 +51,18 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
@@ -100,6 +105,9 @@ public class AfsNwPanel extends ObjectPanel {
 
     // Daten
     private AfsNwModel afsModel = new AfsNwModel();
+    private JComboBox herkunftBox;
+    private String[] herkunft = {"nicht definiert","Kategorie I: Unbelastetes NW",
+    		"Kategorie II: Schwach belastetes NW","Kategorie III: Stark belastetes NW"};
 
     @SuppressWarnings("deprecation")
     public AfsNwPanel(BasisObjektBearbeiten hauptModul) {
@@ -190,17 +198,31 @@ public class AfsNwPanel extends ObjectPanel {
             	break;
             	
             case 1:
-            	Integer tmpBef = (Integer) newValue;
+            	Integer tmpBef = Integer.valueOf((String) newValue);
             	tmp.setBefFlaeche(tmpBef);
             	break;
             	
-            case 2:        	
+            case 2:   
+            	if (newValue == "nicht definiert") {
+            		newValue = 0;
+            	}
+            	if (newValue == "Kategorie I: Unbelastetes NW") {
+            		newValue = 1;
+            	} 
+            	if (newValue == "Kategorie II: Schwach belastetes NW") {
+            		newValue = 2;
+            	} 
+            	if (newValue == "Kategorie III: Stark belastetes NW") {
+            		newValue = 3;
+            	}
             	Integer tmpHer = (Integer) newValue;
             	tmp.setNwHerBereichOpt(tmpHer);
             	break;
             	
             case 3:
-            	BigDecimal tmpAbf = (BigDecimal) newValue;
+            	String newStringValue = newValue.toString();
+            	newStringValue.replaceAll(",",".");
+            	BigDecimal tmpAbf = BigDecimal.valueOf(Double.valueOf((String) newStringValue));
             	tmp.setAbflussmenge(tmpAbf);
             	break;
 
@@ -245,11 +267,23 @@ public class AfsNwPanel extends ObjectPanel {
                     tmp = afs.getBezeichnung();
                     break;
                 case 1:
-                    tmp =afs.getBefFlaeche();
+                    tmp = afs.getBefFlaeche();
                     break;
                 case 2:
-                    tmp = afs.getNwHerBereichOpt();
-                    break;
+                	tmp = "nicht definiert";
+                	if (afs.getNwHerBereichOpt() == null) {
+                		tmp = "nicht definiert";
+                	}
+                	else if (afs.getNwHerBereichOpt() == 1) {
+                		tmp = "Kategorie I: Unbelastetes NW";
+                	}
+                	else if (afs.getNwHerBereichOpt() == 2) {
+                		tmp = "Kategorie II: Schwach belastetes NW";
+                	}
+                	else if (afs.getNwHerBereichOpt() == 3) {
+                		tmp = "Kategorie III: Stark belastetes NW";
+                	}
+                	break;
                 case 3:
                     tmp = afs.getAbflussmenge();
                     break;
@@ -290,10 +324,15 @@ public class AfsNwPanel extends ObjectPanel {
         for (int i = 0; i < afsListe.size(); i++) {
 
             AfsNiederschlagswasser afs = (AfsNiederschlagswasser) afsListe.get(i);
-            if (afs.getNr() == null) {
+            if (afs.getNr() != null) {
                 gespeichert = afs.merge();
                 this.afsModel.fireTableDataChanged();
             }
+//            else {
+//            	afs.setAnfallstelle(anfallstelle);
+//                gespeichert = afs.merge();
+//                this.afsModel.fireTableDataChanged();
+//            }
 
         }
         this.setDirty(false);
@@ -370,19 +409,27 @@ public class AfsNwPanel extends ObjectPanel {
     private JTable getAfsNwTabelle() {
         if (this.afsNwTabelle == null) {
             this.afsNwTabelle = new JTable(this.afsModel);
-            // probenahmeTabelle.setBackground(Color.BLUE);
-            this.afsNwTabelle.getColumnModel().getColumn(0)
-                .setMaxWidth(200);
-            this.afsNwTabelle.getColumnModel().getColumn(1)
-                .setMaxWidth(120);
-            this.afsNwTabelle.getColumnModel().getColumn(2)
-                .setMaxWidth(120);
-            this.afsNwTabelle.getColumnModel().getColumn(3)
-                .setMaxWidth(120);
-            this.afsNwTabelle
-                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.afsNwTabelle.getColumnModel().getColumn(0).setMaxWidth(200);
+            this.afsNwTabelle.getColumnModel().getColumn(1).setMaxWidth(120);
+            this.afsNwTabelle.getColumnModel().getColumn(2).setMaxWidth(250);
+            this.afsNwTabelle.getColumnModel().getColumn(3).setMaxWidth(120);
+            this.afsNwTabelle .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             this.afsNwTabelle.setColumnSelectionAllowed(false);
             this.afsNwTabelle.setRowSelectionAllowed(true);
+            
+            // Für die ComboBox bei "Herkunftsbereich"
+            
+            herkunftBox = new JComboBox(herkunft);
+            herkunftBox.setEditable(false);
+            herkunftBox.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                	herkunftBox.showPopup();
+                }
+            });
+            herkunftBox.setBorder(BorderFactory.createEmptyBorder());
+            afsNwTabelle.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(herkunftBox));
+            
             this.afsNwTabelle
                 .addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override

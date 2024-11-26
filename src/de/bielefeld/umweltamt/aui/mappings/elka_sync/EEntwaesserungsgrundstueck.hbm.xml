@@ -64,11 +64,11 @@
 		<property name="externalNr" type="java.lang.String">
 			<column name="external_nr" length="50" />
 		</property>
-		<set name="afsNiederschlagswassers" table="afs_niederschlagswasser" schema="oberflgw" inverse="true" lazy="false" fetch="select">
+		<set name="afsNiederschlagswassers" table="e_afs_niederschlagswasser" schema="elka_sync" inverse="true" lazy="false" fetch="select">
 			<key>
 				<column name="entw_grund_nr" />
 			</key>
-			<one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" />
+			<one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAfsNiederschlagswasser" />
 		</set>
 	</class>
 </hibernate-mapping>

@@ -56,7 +56,7 @@ public class EEinleitungsstelle implements java.io.Serializable {
     private boolean typKommKaTog;
     private boolean typAusseroertlicheStrasseneinleitungTog;
     private boolean typSonstigeTog;
-    private boolean abgaberelevanteEltOpt;
+    private Integer abgaberelevanteEltOpt;
 
 	private String bezeichnung;
     private Integer e32;
@@ -227,11 +227,11 @@ public class EEinleitungsstelle implements java.io.Serializable {
         this.typSonstigeTog = typSonstigeTog;
     }
     
-    public boolean getAbgaberelevanteEltOpt() {
+    public Integer getAbgaberelevanteEltOpt() {
 		return abgaberelevanteEltOpt;
 	}
 
-	public void setAbgaberelevanteEltOpt(boolean abgaberelevanteEltOpt) {
+	public void setAbgaberelevanteEltOpt(Integer abgaberelevanteEltOpt) {
 		this.abgaberelevanteEltOpt = abgaberelevanteEltOpt;
 	}
 

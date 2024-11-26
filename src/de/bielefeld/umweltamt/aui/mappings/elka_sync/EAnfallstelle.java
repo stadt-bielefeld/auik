@@ -56,7 +56,7 @@ public class EAnfallstelle implements java.io.Serializable {
     private String herkunft;
 
     private Set<AfsStoffe> afsStoffes = new HashSet<AfsStoffe>(0);
-    private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
+    private Set<EAfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<EAfsNiederschlagswasser>(0);
 
     public EAnfallstelle() {
     }
@@ -69,7 +69,7 @@ public class EAnfallstelle implements java.io.Serializable {
             EStandort standort, EAdresse adresse,
             String anhangId, Integer abwaBeschaffOpt, String bezeichnung,
             String bemerkung, Boolean aufzBetriebTog, Date aktualDat,
-            Date erstellDat, Set<AfsStoffe> afsStoffes, Set<AfsNiederschlagswasser> afsNiederschlagswassers, String herkunft) {
+            Date erstellDat, Set<AfsStoffe> afsStoffes, Set<EAfsNiederschlagswasser> eAfsNiederschlagswassers, String herkunft) {
         this.nr = nr;
         this.origNr = origNr;
         this.standort = standort;
@@ -192,11 +192,11 @@ public class EAnfallstelle implements java.io.Serializable {
         this.afsStoffes = afsStoffes;
     }
 
-    public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
+    public Set<EAfsNiederschlagswasser> getAfsNiederschlagswassers() {
         return this.afsNiederschlagswassers;
     }
 
-    public void setAfsNiederschlagswassers(Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+    public void setAfsNiederschlagswassers(Set<EAfsNiederschlagswasser> afsNiederschlagswassers) {
         this.afsNiederschlagswassers = afsNiederschlagswassers;
     }
 
@@ -216,9 +216,7 @@ public class EAnfallstelle implements java.io.Serializable {
         this.aktualDat = copy.getAktualDat();
         this.aufzBetriebTog = copy.getAufzBetriebTog();
         this.erstellDat = copy.getErstellDat();
-        this.herkunft = copy.getHerkunft();
-        this.afsStoffes = copy.getAfsStoffes();                      
-        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();  
+        this.herkunft = copy.getHerkunft(); 
     }
 
     /**
