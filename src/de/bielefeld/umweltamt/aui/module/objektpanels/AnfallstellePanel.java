@@ -94,8 +94,6 @@ public class AnfallstellePanel extends ObjectPanel {
     private JTextField anhangIdFeld = null;
     private JTextField anwendungsbereichFeld = null;
 
-    private JComboBox herkunftBox = null;
-    private IntegerField befestFlaecheFeld = null;
     private DoubleField lProSFeld = null;
     private DoubleField qmProHFeld = null;
     private DoubleField qmProDFeld = null;
@@ -164,14 +162,8 @@ public class AnfallstellePanel extends ObjectPanel {
         builder.append(anhangLb);
         builder.append(getAnhangBox(), 11);
         builder.nextLine();
-        builder.append(herkunftsbereichLb);
-        builder.append(getHerkunftBox(), 11);
-        builder.nextLine();
         builder.append(anlagenartLb);
         builder.append(getAnlagenartBox(), 11);
-        builder.nextLine();
-        builder.append(befestFlaecheLb);
-        builder.append(getBefestFlaecheFeld(), 11);
         builder.nextLine();
         builder.append(anwendungsbereichLb);
         builder.append(getAnwendungsbereichFeld(), 11);
@@ -284,14 +276,6 @@ public class AnfallstellePanel extends ObjectPanel {
             if(this.anfallstelle.getAnhangId() != null) {
                 getAnhangBox().setSelectedItem(Anhang.findByAnhangId(this.anfallstelle.getAnhangId()));
             }
-
-            String[] herkunft = {"-", "Kategorie I: Unbelastetes NW", "Kategorie IIa: Schwach belastetes NW (nicht behandlungsbedürftig)",
-                    "Kategorie IIb: Schwach belastetes NW (behandlungsbedürftig)",
-                    "Kategorie III: Stark belastetes NW"};
-            getHerkunftBox().setModel(new DefaultComboBoxModel(herkunft));
-            if (!anfallstelle.getAfsNiederschlagswassers().isEmpty()) {
-            	getHerkunftBox().setSelectedIndex(anfallstelle.getAfsNiederschlagswassers().iterator().next().getNwHerBereichOpt());
-            }
             
             if(this.anfallstelle.getAnwendungsbereich() != null) {
                 getAnwendungsbereichFeld().setText(this.anfallstelle.getAnwendungsbereich());
@@ -299,13 +283,6 @@ public class AnfallstellePanel extends ObjectPanel {
 
             if(this.anfallstelle.getBezeichnung() != null) {
                 getBezeichnungFeld().setText(this.anfallstelle.getBezeichnung());
-            }
-
-            if(!anfallstelle.getAfsNiederschlagswassers().isEmpty()) {
-            	if(this.anfallstelle.getAfsNiederschlagswassers().iterator().next().getBefFlaeche() != null) {
-            		 getBefestFlaecheFeld().setText(this.anfallstelle.getAfsNiederschlagswassers().iterator().next().getBefFlaeche().toString());
-            	}
-               
             }
 
             if(this.anfallstelle.getVolJahr() != null) {
@@ -346,7 +323,6 @@ public class AnfallstellePanel extends ObjectPanel {
                 getErstellDatDatum(), getAnhangIdFeld(),
                 getAnwendungsbereichFeld(), getBezeichnungFeld(),
                 getStillgelegtAmDatum(), getAbwaBeschaffOptFeld(),
-                getBetriebsweiseBox(), getBefestFlaecheFeld(),
                 getLProSFeld(), getQmProHFeld(),
                 getQmProDFeld(), getQmProAFeld(),
                 getBemerkungenArea());
@@ -365,8 +341,6 @@ public class AnfallstellePanel extends ObjectPanel {
         getStillgelegtAmDatum().setDate(null);
         getAbwaBeschaffOptFeld().setText(null);
         getBetriebsweiseOptFeld().setText(null);
-		getHerkunftBox().setSelectedIndex(-1);
-        getBefestFlaecheFeld().setText(null);
         getLProSFeld().setText(null);
         getQmProHFeld().setText(null);
         getQmProDFeld().setText(null);
@@ -446,13 +420,11 @@ public class AnfallstellePanel extends ObjectPanel {
     public void enableAll(boolean enabled) {
         getErstellDatDatum().setEnabled(enabled);
         getAnhangIdFeld().setEnabled(enabled);
-        getHerkunftBox().setEnabled(enabled);
         getAnwendungsbereichFeld().setEnabled(enabled);
         getBezeichnungFeld().setEnabled(enabled);
         getStillgelegtAmDatum().setEnabled(enabled);
         getAbwaBeschaffOptFeld().setEnabled(enabled);
         getBetriebsweiseOptFeld().setEnabled(enabled);
-        getBefestFlaecheFeld().setEnabled(enabled);
         getLProSFeld().setEnabled(enabled);
         getQmProHFeld().setEnabled(enabled);
         getQmProDFeld().setEnabled(enabled);
@@ -617,29 +589,11 @@ public class AnfallstellePanel extends ObjectPanel {
         return this.anhangIdFeld;
     }
 
-    /**
-     * @return the herkunftBox
-     */
-    private JComboBox getHerkunftBox() {
-        if (this.herkunftBox == null) {
-            this.herkunftBox = new JComboBox();
-            this.herkunftBox.setEditable(false);
-        }
-        return herkunftBox;
-    }
-
     private JTextField getAnwendungsbereichFeld() {
         if (this.anwendungsbereichFeld == null) {
             this.anwendungsbereichFeld = new LimitedTextField(50);
         }
         return this.anwendungsbereichFeld;
-    }
-
-    private IntegerField getBefestFlaecheFeld() {
-        if (this.befestFlaecheFeld == null) {
-            this.befestFlaecheFeld = new IntegerField();
-        }
-        return this.befestFlaecheFeld;
     }
 
     private JFormattedTextField getLProSFeld() {
@@ -1128,9 +1082,7 @@ public class AnfallstellePanel extends ObjectPanel {
             getAnwendungsbereichFeld().setVisible(false);
 
             herkunftsbereichLb.setVisible(true);
-            getHerkunftBox().setVisible(true);
             befestFlaecheLb.setVisible(true);
-            getBefestFlaecheFeld().setVisible(true);
             maxAbflussmengeLb.setVisible(true);
             getLProSFeld().setVisible(true);
             lProSLb.setVisible(true);
@@ -1151,9 +1103,7 @@ public class AnfallstellePanel extends ObjectPanel {
             getAnwendungsbereichFeld().setVisible(true);
 
             herkunftsbereichLb.setVisible(false);
-            getHerkunftBox().setVisible(false);
             befestFlaecheLb.setVisible(false);
-            getBefestFlaecheFeld().setVisible(false);
             maxAbflussmengeLb.setVisible(false);
             getLProSFeld().setVisible(false);
             lProSLb.setVisible(false);

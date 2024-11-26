@@ -52,7 +52,7 @@
   <property generated="never" lazy="false" name="typSonstigeTog" type="java.lang.Boolean">
    <column name="typ_sonstige_tog"/>
   </property>
-  <property generated="never" lazy="false" name="abgaberelevanteEltOpt" type="java.lang.Boolean">
+  <property generated="never" lazy="false" name="abgaberelevanteEltOpt" type="java.lang.Integer">
    <column name="abgaberelevante_elt_opt"/>
   </property>
   <property generated="never" lazy="false" name="bezeichnung" type="java.lang.String">

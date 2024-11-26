@@ -549,9 +549,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                         case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                             getChronoTab().fetchFormData();
                             getAnfallstelleTab().fetchFormData();
-                            getAfsNwTab().fetchFormData();
-//                            if(objekt.getAnfallstelles().iterator().next().getAfsNiederschlagswassers() != null)
-//                            	getAfsNwTab().fetchFormData();
                             break;
                         case DatabaseConstants.BASIS_OBJEKTART_ID_GENEHMIGUNG:
                             getChronoTab().fetchFormData();
@@ -664,10 +661,8 @@ public class BasisObjektBearbeiten extends AbstractModul {
                             case DatabaseConstants.BASIS_OBJEKTART_ID_ANFALLSTELLE:
                                 addTab(getChronoTab().getName(), getChronoTab());
                                 addTab(getAnfallstelleTab().getName(), getAnfallstelleTab());
-                                addTab(getAfsNwTab().getName(), getAfsNwTab());
                                 getChronoTab().updateForm();
                                 getAnfallstelleTab().updateForm();
-                                getAfsNwTab().updateForm();
                                 getTabbedPane().setSelectedComponent(getAnfallstelleTab());
                                 break;
                             case DatabaseConstants.BASIS_OBJEKTART_ID_SONDERBAUWERK:
