@@ -320,19 +320,20 @@ public class AfsNwPanel extends ObjectPanel {
             this.afsNwTabelle.getCellEditor().stopCellEditing();
         }
         List<?> afsListe = this.afsModel.getList();
-        boolean gespeichert = true;
+        boolean gespeichert = false;
         for (int i = 0; i < afsListe.size(); i++) {
 
             AfsNiederschlagswasser afs = (AfsNiederschlagswasser) afsListe.get(i);
-            if (afs.getNr() != null) {
-                gespeichert = afs.merge();
-                this.afsModel.fireTableDataChanged();
+            if (anfallstelle != null) {
+            	afs.setAnfallstelle(anfallstelle);
             }
-//            else {
-//            	afs.setAnfallstelle(anfallstelle);
-//                gespeichert = afs.merge();
-//                this.afsModel.fireTableDataChanged();
-//            }
+            if (grundstueck != null) {
+            	afs.setEntwaesserungsgrundstueck(grundstueck);
+            }
+            this.hauptModul.getObjekt().merge();
+            afs.merge();
+            gespeichert = afs.merge();
+            this.afsModel.fireTableDataChanged();
 
         }
         this.setDirty(false);
