@@ -4,9 +4,8 @@
 <!-- Generated 28.08.2018 12:18:46 by Hibernate Tools 5.0.0.Final -->
 <hibernate-mapping>
     <class name="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" table="afs_niederschlagswasser" schema="oberflgw" optimistic-lock="version">
-        <id name="nr" type="java.lang.Integer">
-            <column name="nr" />
-            <generator class="assigned" />
+		<id name="nr" type="long" column="nr" unsaved-value="0">
+            <generator class="identity" />
         </id>
         <many-to-one name="anfallstelle" class="de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle" fetch="select">
             <column name="anfallstellen_nr" />

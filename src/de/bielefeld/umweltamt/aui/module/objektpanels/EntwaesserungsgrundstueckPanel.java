@@ -259,8 +259,15 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	 * @throws RuntimeException
 	 */
 	public void fetchFormData() throws RuntimeException {
-		this.entwaesserungsgrundstueck = this.hauptModul.getObjekt().getEntwaesserungsgrundstuecks().iterator().next();
-		log.debug("Entwaesserungsgrundstueck aus DB geholt: " + this.entwaesserungsgrundstueck.toString());
+		if (this.hauptModul.getObjekt().getEntwaesserungsgrundstuecks().isEmpty()) {
+			Entwaesserungsgrundstueck entw = new Entwaesserungsgrundstueck();
+			entw.setObjekt(this.hauptModul.getObjekt());
+			this.entwaesserungsgrundstueck = entw;
+		} else {
+			this.entwaesserungsgrundstueck = this.hauptModul.getObjekt().getEntwaesserungsgrundstuecks().iterator().next();
+			log.debug("Entwaesserungsgrundstueck aus DB geholt: " + this.entwaesserungsgrundstueck.toString());
+		}
+
 		this.abaverfahrens.setData(Abaverfahren.getNwBehandel());
 		List<Abaverfahren> selected = new ArrayList<Abaverfahren>();
 		if (this.entwaesserungsgrundstueck != null) {
