@@ -605,21 +605,6 @@
 	    </executions>
 	  </plugin>
 
-	  <!--Copy all dependencies to the maven_lib folder-->
-	  <plugin>
-	    <artifactId>maven-dependency-plugin</artifactId>
-	    <executions>
-	      <execution>
-	        <phase>compile</phase>
-	        <goals>
-	          <goal>copy-dependencies</goal>
-	        </goals>
-	        <configuration>
-	          <outputDirectory>maven_lib</outputDirectory>
-	        </configuration>
-	      </execution>
-	    </executions>
-	  </plugin>
 	  <plugin>
 	    <groupId>pl.project13.maven</groupId>
 	    <artifactId>git-commit-id-plugin</artifactId>
