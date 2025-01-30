@@ -56,7 +56,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
-import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -81,8 +80,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	private static Sachbearbeiter[] sachbearbeiter = null;
 
 	private static String[] entwaesserungsgebiete = null;
-
-	private static MapElkaGewkennz[] mapElkaGewkennz = null;
 
 	/* ********************************************************************** */
 	/* Queries for package BASIS */
@@ -682,8 +679,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		Integer id = adr.getId();
 		String strasse = adr.getStrasse();
 		strasse = strasse.replace("'", "''");
-		Integer hausnr = adr.getHausnr();
-		String hausnrzus = adr.getHausnrzus();
 		log.debug("Fetching objects at " + adr);
 		// Find objects with standortid of adresse with matching fields
 		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.inhaber i, basis.adresse a, basis.objektarten art "
