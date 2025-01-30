@@ -26,7 +26,8 @@ Diese kann über das vorhandene Dockerfile erstellt werden:
 
 ```bash
 docker build -t auik/db -f docker/Dockerfile .
-docker run --name auik_db -p15432:5432 -v $PWD/data/db:/opt/auik_db -d auik/db
+docker run --name auik_db -p15432:5432 -v $PWD/data/db:/opt/auik_db \
+    -e POSTGRES_PASSWORD=secret -d auik/db
 ```
 
 Die Datenbank ist dann unter Port `15432` mit dem Datenbanknamen `fisumwelt` erreichbar. Ein Login ist möglich als Nutzer `auikadmin` mit dem Passwort `secret`.
