@@ -36,7 +36,7 @@ public class ZElsWasserrechtId  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZElsWasserrechtId;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private long wasserrechtNr;
     private long elsNr;
@@ -90,10 +90,10 @@ public class ZElsWasserrechtId  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("wasserrechtNr").append("='").append(getWasserrechtNr()).append("' ");			
-        buffer.append("elsNr").append("='").append(getElsNr()).append("' ");			
+        buffer.append("wasserrechtNr").append("='").append(getWasserrechtNr()).append("' ");
+        buffer.append("elsNr").append("='").append(getElsNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

@@ -45,7 +45,7 @@ public class Fachdaten  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forFachdaten;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer behaelterid;
     private Objekt objekt;
@@ -658,7 +658,7 @@ public class Fachdaten  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -667,65 +667,65 @@ public class Fachdaten  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("herstellnr").append("='").append(getHerstellnr()).append("' ");			
-        buffer.append("hersteller").append("='").append(getHersteller()).append("' ");			
-        buffer.append("datuminbetriebnahme").append("='").append(getDatuminbetriebnahme()).append("' ");			
-        buffer.append("datumerfassung").append("='").append(getDatumerfassung()).append("' ");			
-        buffer.append("datumaenderung").append("='").append(getDatumaenderung()).append("' ");			
-        buffer.append("datumgenehmigung").append("='").append(getDatumgenehmigung()).append("' ");			
-        buffer.append("anlagenart").append("='").append(getAnlagenart()).append("' ");			
-        buffer.append("behaelterart").append("='").append(getBehaelterart()).append("' ");			
-        buffer.append("material").append("='").append(getMaterial()).append("' ");			
-        buffer.append("fluessigkeit").append("='").append(getFluessigkeit()).append("' ");			
-        buffer.append("vbfeinstufung").append("='").append(getVbfeinstufung()).append("' ");			
-        buffer.append("menge").append("='").append(getMenge()).append("' ");			
-        buffer.append("wgk").append("='").append(getWgk()).append("' ");			
-        buffer.append("gefaehrdungsstufe").append("='").append(getGefaehrdungsstufe()).append("' ");			
-        buffer.append("baujahr").append("='").append(getBaujahr()).append("' ");			
-        buffer.append("doppelwandig").append("='").append(getDoppelwandig()).append("' ");			
-        buffer.append("leckanzeige").append("='").append(getLeckanzeige()).append("' ");			
-        buffer.append("auffangraum").append("='").append(getAuffangraum()).append("' ");			
-        buffer.append("grenzwertgeber").append("='").append(getGrenzwertgeber()).append("' ");			
-        buffer.append("leckschutzauskleidung").append("='").append(getLeckschutzauskleidung()).append("' ");			
-        buffer.append("kellerlagerung").append("='").append(getKellerlagerung()).append("' ");			
-        buffer.append("innenbeschichtung").append("='").append(getInnenbeschichtung()).append("' ");			
-        buffer.append("beschreibungA").append("='").append(getBeschreibungA()).append("' ");			
-        buffer.append("beschreibungS").append("='").append(getBeschreibungS()).append("' ");			
-        buffer.append("oberirdisch").append("='").append(getOberirdisch()).append("' ");			
-        buffer.append("unterirdisch").append("='").append(getUnterirdisch()).append("' ");			
-        buffer.append("saugleitung").append("='").append(getSaugleitung()).append("' ");			
-        buffer.append("rohrKathodenschutz").append("='").append(getRohrKathodenschutz()).append("' ");			
-        buffer.append("ausKupfer").append("='").append(getAusKupfer()).append("' ");			
-        buffer.append("ausStahl").append("='").append(getAusStahl()).append("' ");			
-        buffer.append("mitSchutzrohr").append("='").append(getMitSchutzrohr()).append("' ");			
-        buffer.append("beschreibungR").append("='").append(getBeschreibungR()).append("' ");			
-        buffer.append("pruefturnus").append("='").append(getPruefturnus()).append("' ");			
-        buffer.append("angemahntkz").append("='").append(getAngemahntkz()).append("' ");			
-        buffer.append("mahnfrist").append("='").append(getMahnfrist()).append("' ");			
-        buffer.append("wiedervorlage").append("='").append(getWiedervorlage()).append("' ");			
-        buffer.append("stillegungsdatum").append("='").append(getStilllegungsdatum()).append("' ");			
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
-        buffer.append("ausfuehrung").append("='").append(getAusfuehrung()).append("' ");			
-        buffer.append("pruefumfang").append("='").append(getPruefumfang()).append("' ");			
-        buffer.append("verwendung").append("='").append(getVerwendung()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("ausHdpe").append("='").append(getAusHdpe()).append("' ");			
-        buffer.append("druckleitung").append("='").append(getDruckleitung()).append("' ");			
-        buffer.append("schutzSensor").append("='").append(getSchutzSensor()).append("' ");			
-        buffer.append("schutzFolie").append("='").append(getSchutzFolie()).append("' ");			
-        buffer.append("schutzAntiheber").append("='").append(getSchutzAntiheber()).append("' ");			
-        buffer.append("aktenzeichen").append("='").append(getAktenzeichen()).append("' ");			
-        buffer.append("anlagenchronos").append("='").append(getAnlagenchronos()).append("' ");			
-        buffer.append("verwaltungsgebuehrens").append("='").append(getVerwaltungsgebuehrens()).append("' ");			
-        buffer.append("jgses").append("='").append(getJgses()).append("' ");			
-        buffer.append("kontrollens").append("='").append(getKontrollens()).append("' ");			
-        buffer.append("abscheiders").append("='").append(getAbscheiders()).append("' ");			
-        buffer.append("abfuellflaeche").append("='").append(getAbfuellflaeches()).append("' ");			
-        buffer.append("verwaltungsverfs").append("='").append(getVerwaltungsverfs()).append("' ");			
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");
+        buffer.append("herstellnr").append("='").append(getHerstellnr()).append("' ");
+        buffer.append("hersteller").append("='").append(getHersteller()).append("' ");
+        buffer.append("datuminbetriebnahme").append("='").append(getDatuminbetriebnahme()).append("' ");
+        buffer.append("datumerfassung").append("='").append(getDatumerfassung()).append("' ");
+        buffer.append("datumaenderung").append("='").append(getDatumaenderung()).append("' ");
+        buffer.append("datumgenehmigung").append("='").append(getDatumgenehmigung()).append("' ");
+        buffer.append("anlagenart").append("='").append(getAnlagenart()).append("' ");
+        buffer.append("behaelterart").append("='").append(getBehaelterart()).append("' ");
+        buffer.append("material").append("='").append(getMaterial()).append("' ");
+        buffer.append("fluessigkeit").append("='").append(getFluessigkeit()).append("' ");
+        buffer.append("vbfeinstufung").append("='").append(getVbfeinstufung()).append("' ");
+        buffer.append("menge").append("='").append(getMenge()).append("' ");
+        buffer.append("wgk").append("='").append(getWgk()).append("' ");
+        buffer.append("gefaehrdungsstufe").append("='").append(getGefaehrdungsstufe()).append("' ");
+        buffer.append("baujahr").append("='").append(getBaujahr()).append("' ");
+        buffer.append("doppelwandig").append("='").append(getDoppelwandig()).append("' ");
+        buffer.append("leckanzeige").append("='").append(getLeckanzeige()).append("' ");
+        buffer.append("auffangraum").append("='").append(getAuffangraum()).append("' ");
+        buffer.append("grenzwertgeber").append("='").append(getGrenzwertgeber()).append("' ");
+        buffer.append("leckschutzauskleidung").append("='").append(getLeckschutzauskleidung()).append("' ");
+        buffer.append("kellerlagerung").append("='").append(getKellerlagerung()).append("' ");
+        buffer.append("innenbeschichtung").append("='").append(getInnenbeschichtung()).append("' ");
+        buffer.append("beschreibungA").append("='").append(getBeschreibungA()).append("' ");
+        buffer.append("beschreibungS").append("='").append(getBeschreibungS()).append("' ");
+        buffer.append("oberirdisch").append("='").append(getOberirdisch()).append("' ");
+        buffer.append("unterirdisch").append("='").append(getUnterirdisch()).append("' ");
+        buffer.append("saugleitung").append("='").append(getSaugleitung()).append("' ");
+        buffer.append("rohrKathodenschutz").append("='").append(getRohrKathodenschutz()).append("' ");
+        buffer.append("ausKupfer").append("='").append(getAusKupfer()).append("' ");
+        buffer.append("ausStahl").append("='").append(getAusStahl()).append("' ");
+        buffer.append("mitSchutzrohr").append("='").append(getMitSchutzrohr()).append("' ");
+        buffer.append("beschreibungR").append("='").append(getBeschreibungR()).append("' ");
+        buffer.append("pruefturnus").append("='").append(getPruefturnus()).append("' ");
+        buffer.append("angemahntkz").append("='").append(getAngemahntkz()).append("' ");
+        buffer.append("mahnfrist").append("='").append(getMahnfrist()).append("' ");
+        buffer.append("wiedervorlage").append("='").append(getWiedervorlage()).append("' ");
+        buffer.append("stillegungsdatum").append("='").append(getStilllegungsdatum()).append("' ");
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
+        buffer.append("ausfuehrung").append("='").append(getAusfuehrung()).append("' ");
+        buffer.append("pruefumfang").append("='").append(getPruefumfang()).append("' ");
+        buffer.append("verwendung").append("='").append(getVerwendung()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("ausHdpe").append("='").append(getAusHdpe()).append("' ");
+        buffer.append("druckleitung").append("='").append(getDruckleitung()).append("' ");
+        buffer.append("schutzSensor").append("='").append(getSchutzSensor()).append("' ");
+        buffer.append("schutzFolie").append("='").append(getSchutzFolie()).append("' ");
+        buffer.append("schutzAntiheber").append("='").append(getSchutzAntiheber()).append("' ");
+        buffer.append("aktenzeichen").append("='").append(getAktenzeichen()).append("' ");
+        buffer.append("anlagenchronos").append("='").append(getAnlagenchronos()).append("' ");
+        buffer.append("verwaltungsgebuehrens").append("='").append(getVerwaltungsgebuehrens()).append("' ");
+        buffer.append("jgses").append("='").append(getJgses()).append("' ");
+        buffer.append("kontrollens").append("='").append(getKontrollens()).append("' ");
+        buffer.append("abscheiders").append("='").append(getAbscheiders()).append("' ");
+        buffer.append("abfuellflaeche").append("='").append(getAbfuellflaeches()).append("' ");
+        buffer.append("verwaltungsverfs").append("='").append(getVerwaltungsverfs()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -757,7 +757,7 @@ public class Fachdaten  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -791,64 +791,64 @@ public class Fachdaten  implements java.io.Serializable {
      * @param copy Fachdaten
      */
     private void copy(Fachdaten copy) {
-        this.objekt = copy.getObjekt();            
-        this.herstellnr = copy.getHerstellnr();            
-        this.hersteller = copy.getHersteller();            
-        this.datuminbetriebnahme = copy.getDatuminbetriebnahme();            
-        this.datumerfassung = copy.getDatumerfassung();            
-        this.datumaenderung = copy.getDatumaenderung();            
-        this.datumgenehmigung = copy.getDatumgenehmigung();            
-        this.anlagenart = copy.getAnlagenart();            
-        this.behaelterart = copy.getBehaelterart();            
-        this.material = copy.getMaterial();            
-        this.fluessigkeit = copy.getFluessigkeit();            
-        this.vbfeinstufung = copy.getVbfeinstufung();            
-        this.menge = copy.getMenge();            
-        this.wgk = copy.getWgk();            
-        this.gefaehrdungsstufe = copy.getGefaehrdungsstufe();            
-        this.baujahr = copy.getBaujahr();            
-        this.doppelwandig = copy.getDoppelwandig();            
-        this.leckanzeige = copy.getLeckanzeige();            
-        this.auffangraum = copy.getAuffangraum();            
-        this.grenzwertgeber = copy.getGrenzwertgeber();            
-        this.leckschutzauskleidung = copy.getLeckschutzauskleidung();            
-        this.kellerlagerung = copy.getKellerlagerung();            
-        this.innenbeschichtung = copy.getInnenbeschichtung();            
-        this.beschreibungA = copy.getBeschreibungA();            
-        this.beschreibungS = copy.getBeschreibungS();            
-        this.oberirdisch = copy.getOberirdisch();            
-        this.unterirdisch = copy.getUnterirdisch();            
-        this.saugleitung = copy.getSaugleitung();            
-        this.rohrKathodenschutz = copy.getRohrKathodenschutz();            
-        this.ausKupfer = copy.getAusKupfer();            
-        this.ausStahl = copy.getAusStahl();            
-        this.mitSchutzrohr = copy.getMitSchutzrohr();            
-        this.beschreibungR = copy.getBeschreibungR();            
-        this.pruefturnus = copy.getPruefturnus();            
-        this.angemahntkz = copy.getAngemahntkz();            
-        this.mahnfrist = copy.getMahnfrist();            
-        this.wiedervorlage = copy.getWiedervorlage();            
-        this.stillegungsdatum = copy.getStilllegungsdatum();            
-        this.bemerkungen = copy.getBemerkungen();            
-        this.ausfuehrung = copy.getAusfuehrung();            
-        this.pruefumfang = copy.getPruefumfang();            
-        this.verwendung = copy.getVerwendung();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.ausHdpe = copy.getAusHdpe();            
-        this.druckleitung = copy.getDruckleitung();            
-        this.schutzSensor = copy.getSchutzSensor();            
-        this.schutzFolie = copy.getSchutzFolie();            
-        this.schutzAntiheber = copy.getSchutzAntiheber();            
-        this.aktenzeichen = copy.getAktenzeichen();            
-        this.anlagenchronos = copy.getAnlagenchronos();            
-        this.verwaltungsgebuehrens = copy.getVerwaltungsgebuehrens();            
-        this.jgses = copy.getJgses();            
-        this.kontrollens = copy.getKontrollens();            
-        this.abscheiders = copy.getAbscheiders();            
-        this.abfuellflaeches = copy.getAbfuellflaeches();            
-        this.verwaltungsverfs = copy.getVerwaltungsverfs();            
-    }    
+        this.objekt = copy.getObjekt();
+        this.herstellnr = copy.getHerstellnr();
+        this.hersteller = copy.getHersteller();
+        this.datuminbetriebnahme = copy.getDatuminbetriebnahme();
+        this.datumerfassung = copy.getDatumerfassung();
+        this.datumaenderung = copy.getDatumaenderung();
+        this.datumgenehmigung = copy.getDatumgenehmigung();
+        this.anlagenart = copy.getAnlagenart();
+        this.behaelterart = copy.getBehaelterart();
+        this.material = copy.getMaterial();
+        this.fluessigkeit = copy.getFluessigkeit();
+        this.vbfeinstufung = copy.getVbfeinstufung();
+        this.menge = copy.getMenge();
+        this.wgk = copy.getWgk();
+        this.gefaehrdungsstufe = copy.getGefaehrdungsstufe();
+        this.baujahr = copy.getBaujahr();
+        this.doppelwandig = copy.getDoppelwandig();
+        this.leckanzeige = copy.getLeckanzeige();
+        this.auffangraum = copy.getAuffangraum();
+        this.grenzwertgeber = copy.getGrenzwertgeber();
+        this.leckschutzauskleidung = copy.getLeckschutzauskleidung();
+        this.kellerlagerung = copy.getKellerlagerung();
+        this.innenbeschichtung = copy.getInnenbeschichtung();
+        this.beschreibungA = copy.getBeschreibungA();
+        this.beschreibungS = copy.getBeschreibungS();
+        this.oberirdisch = copy.getOberirdisch();
+        this.unterirdisch = copy.getUnterirdisch();
+        this.saugleitung = copy.getSaugleitung();
+        this.rohrKathodenschutz = copy.getRohrKathodenschutz();
+        this.ausKupfer = copy.getAusKupfer();
+        this.ausStahl = copy.getAusStahl();
+        this.mitSchutzrohr = copy.getMitSchutzrohr();
+        this.beschreibungR = copy.getBeschreibungR();
+        this.pruefturnus = copy.getPruefturnus();
+        this.angemahntkz = copy.getAngemahntkz();
+        this.mahnfrist = copy.getMahnfrist();
+        this.wiedervorlage = copy.getWiedervorlage();
+        this.stillegungsdatum = copy.getStilllegungsdatum();
+        this.bemerkungen = copy.getBemerkungen();
+        this.ausfuehrung = copy.getAusfuehrung();
+        this.pruefumfang = copy.getPruefumfang();
+        this.verwendung = copy.getVerwendung();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.ausHdpe = copy.getAusHdpe();
+        this.druckleitung = copy.getDruckleitung();
+        this.schutzSensor = copy.getSchutzSensor();
+        this.schutzFolie = copy.getSchutzFolie();
+        this.schutzAntiheber = copy.getSchutzAntiheber();
+        this.aktenzeichen = copy.getAktenzeichen();
+        this.anlagenchronos = copy.getAnlagenchronos();
+        this.verwaltungsgebuehrens = copy.getVerwaltungsgebuehrens();
+        this.jgses = copy.getJgses();
+        this.kontrollens = copy.getKontrollens();
+        this.abscheiders = copy.getAbscheiders();
+        this.abfuellflaeches = copy.getAbfuellflaeches();
+        this.verwaltungsverfs = copy.getVerwaltungsverfs();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

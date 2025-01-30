@@ -299,7 +299,7 @@ public class ESonderbauwerk  implements java.io.Serializable {
 	public Integer getOrigNr() {
 		return this.origNr;
 	}
-	
+
 	@JsonIgnore
 	public void setOrigNr(Integer origNr) {
 		this.origNr = origNr;

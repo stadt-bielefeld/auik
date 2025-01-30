@@ -44,7 +44,7 @@ public class Sachbearbeiter  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forSachbearbeiter;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String kennummer;
@@ -210,7 +210,7 @@ public class Sachbearbeiter  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -219,21 +219,21 @@ public class Sachbearbeiter  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("kennummer").append("='").append(getKennummer()).append("' ");			
-        buffer.append("name").append("='").append(getName()).append("' ");			
-        buffer.append("zeichen").append("='").append(getZeichen()).append("' ");			
-        buffer.append("zimmer").append("='").append(getZimmer()).append("' ");			
-        buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
-        buffer.append("email").append("='").append(getEmail()).append("' ");			
-        buffer.append("gehoertzuarbeitsgr").append("='").append(getGehoertzuarbeitsgr()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("objekts").append("='").append(getObjekts()).append("' ");			
-        buffer.append("probenahmes").append("='").append(getProbenahmes()).append("' ");			
-        buffer.append("messstelles").append("='").append(getMessstelles()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("kennummer").append("='").append(getKennummer()).append("' ");
+        buffer.append("name").append("='").append(getName()).append("' ");
+        buffer.append("zeichen").append("='").append(getZeichen()).append("' ");
+        buffer.append("zimmer").append("='").append(getZimmer()).append("' ");
+        buffer.append("telefon").append("='").append(getTelefon()).append("' ");
+        buffer.append("email").append("='").append(getEmail()).append("' ");
+        buffer.append("gehoertzuarbeitsgr").append("='").append(getGehoertzuarbeitsgr()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("objekts").append("='").append(getObjekts()).append("' ");
+        buffer.append("probenahmes").append("='").append(getProbenahmes()).append("' ");
+        buffer.append("messstelles").append("='").append(getMessstelles()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -265,7 +265,7 @@ public class Sachbearbeiter  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -299,20 +299,20 @@ public class Sachbearbeiter  implements java.io.Serializable {
      * @param copy Sachbearbeiter
      */
     private void copy(Sachbearbeiter copy) {
-        this.id = copy.getId();            
-        this.kennummer = copy.getKennummer();            
-        this.name = copy.getName();            
-        this.zeichen = copy.getZeichen();            
-        this.zimmer = copy.getZimmer();            
-        this.telefon = copy.getTelefon();            
-        this.email = copy.getEmail();            
-        this.gehoertzuarbeitsgr = copy.getGehoertzuarbeitsgr();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.objekts = copy.getObjekts();            
-        this.probenahmes = copy.getProbenahmes();            
-        this.messstelles = copy.getMessstelles();            
-    }    
+        this.id = copy.getId();
+        this.kennummer = copy.getKennummer();
+        this.name = copy.getName();
+        this.zeichen = copy.getZeichen();
+        this.zimmer = copy.getZimmer();
+        this.telefon = copy.getTelefon();
+        this.email = copy.getEmail();
+        this.gehoertzuarbeitsgr = copy.getGehoertzuarbeitsgr();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.objekts = copy.getObjekts();
+        this.probenahmes = copy.getProbenahmes();
+        this.messstelles = copy.getMessstelles();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -366,7 +366,7 @@ public class Sachbearbeiter  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-    
+
 	public static Sachbearbeiter findByKennummer(String nr){
 		List<Sachbearbeiter> list = Sachbearbeiter.getAll();
 		for(int i=0; i<list.size(); i++){

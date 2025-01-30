@@ -137,7 +137,7 @@ public class GenehmigungPanel extends ObjectPanel{
         builder.nextLine();
         builder.append("Genehmigung befristet:", getBefCheckBox());
         builder.append("bis:", getBefristetDatum());
-        
+
         builder.nextLine();
         builder.appendSeparator("Nebenbestimmungen");
         builder.appendRow("3dlu");
@@ -147,8 +147,8 @@ public class GenehmigungPanel extends ObjectPanel{
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:30dlu");
         builder.append(nebenbestScroller, 7);
-        
-        builder.nextLine();      
+
+        builder.nextLine();
         builder.appendSeparator("Bemerkungen");
         builder.appendRow("3dlu");
         builder.nextLine(2);
@@ -157,7 +157,7 @@ public class GenehmigungPanel extends ObjectPanel{
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         builder.appendRow("fill:30dlu");
         builder.append(bemerkungsScroller, 7);
-        
+
         builder.nextLine();
         builder.appendSeparator("Verknüpfte Objekte");
         builder.appendRow("3dlu");
@@ -195,11 +195,11 @@ public class GenehmigungPanel extends ObjectPanel{
             if (this.fachdaten.getBemerkungen() != null) {
                 getGenBemerkungArea().setText(this.fachdaten.getBemerkungen());
             }
-            
+
             if (this.fachdaten.getNebenbest() != null) {
             	getNebenbestArea().setText(this.fachdaten.getNebenbest());
             }
-            
+
             if (this.fachdaten.getAnhang() != null) {
                 getAnhangFeld().setText(this.fachdaten.getAnhang().toString());
             }
@@ -320,14 +320,14 @@ public class GenehmigungPanel extends ObjectPanel{
         } else {
             this.fachdaten.setBemerkungen(bemerkungen);
         }
-        
+
         String nebenbest = this.nebenbestArea.getText();
         if ("".equals(nebenbest)) {
             this.fachdaten.setNebenbest(null);
         } else {
             this.fachdaten.setNebenbest(nebenbest);
         }
-        
+
         Date antrag = this.antragsDatum.getDate();
         this.fachdaten.setAntragDatum(antrag);
 
@@ -542,7 +542,7 @@ public class GenehmigungPanel extends ObjectPanel{
         }
         return this.genBemerkungArea;
     }
-    
+
     private JTextArea getNebenbestArea() {
         if (this.nebenbestArea == null) {
             this.nebenbestArea = new LimitedTextArea(150);
@@ -551,7 +551,7 @@ public class GenehmigungPanel extends ObjectPanel{
         }
         return this.nebenbestArea;
     }
-    
+
 
     private JTable getObjektverknuepungTabelle() {
 

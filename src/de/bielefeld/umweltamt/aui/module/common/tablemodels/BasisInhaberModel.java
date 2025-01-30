@@ -76,12 +76,12 @@ public class BasisInhaberModel extends ListTableModel {
     @Override
 	public Object getColumnValue(Object objectAtRow, int columnIndex) {
     	Object tmp = null;
-		
+
 
     	Inhaber	betr = (Inhaber) objectAtRow;
 
-    	
-		
+
+
 		HibernateSessionFactory.currentSession().refresh(betr);
 
 				switch (columnIndex) {
@@ -120,9 +120,9 @@ public class BasisInhaberModel extends ListTableModel {
 				default:
 					tmp = null;
 				}
-				
+
 			return tmp;
-		
+
 	}
 
     /**
@@ -154,7 +154,7 @@ public class BasisInhaberModel extends ListTableModel {
         lastProperty = property;
         log.debug("End filterList");
     }
-    
+
     public void filterAllList(String suche, String property) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(suche, property));
@@ -162,7 +162,7 @@ public class BasisInhaberModel extends ListTableModel {
         lastProperty = property;
         log.debug("End filterList");
     }
-    
+
     public void filterAllList(String suche, String strasse, Integer hausnr, String ort, String property) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(suche, strasse, hausnr, ort, property));
@@ -170,19 +170,19 @@ public class BasisInhaberModel extends ListTableModel {
         lastProperty = property;
         log.debug("End filterList");
     }
-    
+
     public void filterStandort(String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findInhaber(strasse, hausnr, ort));
         log.debug("End filterList");
     }
-    
+
     public void filterStandort(String name, String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(name, strasse, hausnr, ort));
         log.debug("End filterList");
     }
-    
+
     public void filterBetreiber(String name, String strasse, Integer hausnr, String ort) {
 
     	log.debug("Start filterList");

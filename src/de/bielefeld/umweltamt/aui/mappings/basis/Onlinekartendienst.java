@@ -40,7 +40,7 @@ public class Onlinekartendienst  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forOnlinekartendienst;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private OnlinekartendienstId id;
 
@@ -77,7 +77,7 @@ public class Onlinekartendienst  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -86,9 +86,9 @@ public class Onlinekartendienst  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -120,7 +120,7 @@ public class Onlinekartendienst  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -154,8 +154,8 @@ public class Onlinekartendienst  implements java.io.Serializable {
      * @param copy Onlinekartendienst
      */
     private void copy(Onlinekartendienst copy) {
-        this.id = copy.getId();            
-    }    
+        this.id = copy.getId();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

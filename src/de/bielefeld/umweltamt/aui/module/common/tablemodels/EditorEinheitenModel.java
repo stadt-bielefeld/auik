@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 public class EditorEinheitenModel extends EditableListTableModel {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -1744282792751909508L;
 
@@ -88,22 +88,22 @@ public class EditorEinheitenModel extends EditableListTableModel {
 
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		
+
 		Einheiten tmp = (Einheiten) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
         	tmp.setId(tmpID);
         	break;
-        	
+
         case 1:
         	String tmpArt = (String) newValue;
         	tmp.setBezeichnung(tmpArt);
         	break;
 
         default:
-            break;        	
-        	
+            break;
+
 		}
 		Einheiten.merge(tmp);
 	}

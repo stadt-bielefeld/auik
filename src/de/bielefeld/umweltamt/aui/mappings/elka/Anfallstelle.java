@@ -55,7 +55,7 @@ public class Anfallstelle  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAnfallstelle;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Objekt objekt;
@@ -388,7 +388,7 @@ public class Anfallstelle  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -397,28 +397,28 @@ public class Anfallstelle  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("seqId").append("='").append(getSeqId()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("anhangId").append("='").append(getAnhangId()).append("' ");			
-        buffer.append("anwendungsbereich").append("='").append(getAnwendungsbereich()).append("' ");			
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");			
-        buffer.append("abwaBeschaffOpt").append("='").append(getAbwaBeschaffOpt()).append("' ");			
-        buffer.append("betriebsweiseOpt").append("='").append(getBetriebsweiseOpt()).append("' ");			
-        buffer.append("enabled").append("='").append(getEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
-        buffer.append("maxVolTag").append("='").append(getMaxVolTag()).append("' ");			
-        buffer.append("maxVolStunde").append("='").append(getMaxVolStunde()).append("' ");			
-        buffer.append("volJahr").append("='").append(getVolJahr()).append("' ");			
-        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
-        buffer.append("afsStoffes").append("='").append(getAfsStoffes()).append("' ");			
-        buffer.append("referenzsForZAfsNr").append("='").append(getReferenzsForZAfsNr()).append("' ");			
-        buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");
+        buffer.append("seqId").append("='").append(getSeqId()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("anhangId").append("='").append(getAnhangId()).append("' ");
+        buffer.append("anwendungsbereich").append("='").append(getAnwendungsbereich()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");
+        buffer.append("abwaBeschaffOpt").append("='").append(getAbwaBeschaffOpt()).append("' ");
+        buffer.append("betriebsweiseOpt").append("='").append(getBetriebsweiseOpt()).append("' ");
+        buffer.append("enabled").append("='").append(getEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(getDeleted()).append("' ");
+        buffer.append("maxVolTag").append("='").append(getMaxVolTag()).append("' ");
+        buffer.append("maxVolStunde").append("='").append(getMaxVolStunde()).append("' ");
+        buffer.append("volJahr").append("='").append(getVolJahr()).append("' ");
+        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");
+        buffer.append("afsStoffes").append("='").append(getAfsStoffes()).append("' ");
+        buffer.append("referenzsForZAfsNr").append("='").append(getReferenzsForZAfsNr()).append("' ");
+        buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");
         buffer.append("referenzsForQAfsNr").append("='").append(getReferenzsForQAfsNr()).append("' ");
         buffer.append("bwkFachdatens").append("='").append(getBwkFachdatens()).append("' ");
         buffer.append("anh40Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
@@ -426,7 +426,7 @@ public class Anfallstelle  implements java.io.Serializable {
         buffer.append("anh50Fachdatens").append("='").append(getAnh40Fachdatens()).append("' ");
         buffer.append("anh52Fachdatens").append("='").append(getAnh52Fachdatens()).append("' ");
         buffer.append("anh55Fachdatens").append("='").append(getAnh55Fachdatens()).append("' ");
-        buffer.append("anh56Fachdatens").append("='").append(getAnh56Fachdatens()).append("' ");			
+        buffer.append("anh56Fachdatens").append("='").append(getAnh56Fachdatens()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -458,7 +458,7 @@ public class Anfallstelle  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -492,35 +492,35 @@ public class Anfallstelle  implements java.io.Serializable {
      * @param copy Anfallstelle
      */
     private void copy(Anfallstelle copy) {
-        this.id = copy.getId();            
-        this.objekt = copy.getObjekt();              
-        this.seqId = copy.getSeqId();            
-        this.aktualDat = copy.getAktualDat();            
-        this.erstellDat = copy.getErstellDat();            
-        this.anhangId = copy.getAnhangId();              
-        this.anwendungsbereich = copy.getAnwendungsbereich();            
-        this.bezeichnung = copy.getBezeichnung();            
-        this.stillgelegtAm = copy.getStillgelegtAm();            
-        this.abwaBeschaffOpt = copy.getAbwaBeschaffOpt();            
-        this.betriebsweiseOpt = copy.getBetriebsweiseOpt();            
-        this.enabled = copy.getEnabled();            
-        this.deleted = copy.getDeleted();            
-        this.maxVolTag = copy.getMaxVolTag();            
-        this.maxVolStunde = copy.getMaxVolStunde();            
-        this.volJahr = copy.getVolJahr();                 
-        this.externalNr = copy.getExternalNr();            
-        this.afsStoffes = copy.getAfsStoffes();            
-        this.referenzsForZAfsNr = copy.getReferenzsForZAfsNr();            
-        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();            
-        this.referenzsForQAfsNr = copy.getReferenzsForQAfsNr();     
+        this.id = copy.getId();
+        this.objekt = copy.getObjekt();
+        this.seqId = copy.getSeqId();
+        this.aktualDat = copy.getAktualDat();
+        this.erstellDat = copy.getErstellDat();
+        this.anhangId = copy.getAnhangId();
+        this.anwendungsbereich = copy.getAnwendungsbereich();
+        this.bezeichnung = copy.getBezeichnung();
+        this.stillgelegtAm = copy.getStillgelegtAm();
+        this.abwaBeschaffOpt = copy.getAbwaBeschaffOpt();
+        this.betriebsweiseOpt = copy.getBetriebsweiseOpt();
+        this.enabled = copy.getEnabled();
+        this.deleted = copy.getDeleted();
+        this.maxVolTag = copy.getMaxVolTag();
+        this.maxVolStunde = copy.getMaxVolStunde();
+        this.volJahr = copy.getVolJahr();
+        this.externalNr = copy.getExternalNr();
+        this.afsStoffes = copy.getAfsStoffes();
+        this.referenzsForZAfsNr = copy.getReferenzsForZAfsNr();
+        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();
+        this.referenzsForQAfsNr = copy.getReferenzsForQAfsNr();
         this.bwkFachdatens = copy.getBwkFachdatens();
         this.anh40Fachdatens = copy.getAnh40Fachdatens();
         this.anh49Fachdatens = copy.getAnh49Fachdatens();
         this.anh50Fachdatens = copy.getAnh50Fachdatens();
         this.anh55Fachdatens = copy.getAnh55Fachdatens();
         this.anh52Fachdatens = copy.getAnh52Fachdatens();
-        this.anh56Fachdatens = copy.getAnh56Fachdatens();       
-    }    
+        this.anh56Fachdatens = copy.getAnh56Fachdatens();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

@@ -133,7 +133,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	private class Anh49AbfuhrModel extends EditableListTableModel {
 	    private static final long serialVersionUID = -1286333922211056915L;
 	    private Anh49Fachdaten fachdaten;
-	
+
 	    /**
 	     * Erzeugt ein neues Abfuhr-TableModel. Dieses hat die Spalten
 	     * "Abfuhrdatum", "Ensorger", "Menge" und "Nächste Abfuhr".
@@ -143,7 +143,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	            new String[] {"Abfuhrdatum", "Entsorger", "Menge", "Nächste Abfuhr"},
 	            false, true);
 	    }
-	
+
 	    /**
 	     * Setzt das Fachdatenobjekt, nach dessen Abfuhren gesucht
 	     * werden soll.
@@ -153,14 +153,14 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	        this.fachdaten = fachdaten;
 	        updateList();
 	    }
-	
+
 	    @Override
 	    public Object getColumnValue(Object objectAtRow, int columnIndex) {
 	        Anh49Abfuhr abf = (Anh49Abfuhr) objectAtRow;
 	        Double menge = abf.getMenge();
-	
+
 	        Object tmp;
-	
+
 			switch (columnIndex) {
 				case 0:
 					tmp = AuikUtils.getStringFromDate(abf.getAbfuhrdatum());
@@ -177,24 +177,24 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	            default:
 	                tmp = null;
 	        }
-	
+
 	        return tmp;
 	    }
-	
+
 	    @Override
 	    public boolean objectRemoved(Object objectAtRow) {
 	        Anh49Abfuhr removedOt = (Anh49Abfuhr) objectAtRow;
 	        boolean removed;
-	
+
 	        if (removedOt.getId() != null) {
 	            removed = Anh49Abfuhr.delete(removedOt);
 	        } else {
 	            removed = true;
 	        }
-	
+
 	        return removed;
 	    }
-	
+
 	    @Override
 	    public void updateList() {
 	        if (fachdaten != null) {
@@ -202,14 +202,14 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	        }
 	        fireTableDataChanged();
 	    }
-	
+
 	    @Override
 	    public void editObject(Object objectAtRow, int columnIndex,
 	        Object newValue) {
 	    	Anh49Abfuhr abf = (Anh49Abfuhr) objectAtRow;
-	
+
 	        String tmp = (String) newValue;
-	
+
 	        switch (columnIndex) {
 	            case 0:
 	                DateFormat format = DateFormat
@@ -251,12 +251,12 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	                            HauptFrame.ERROR_COLOR);
 	                }
 	                break;
-	
+
 	            default:
 	                break;
 	        }
 	    }
-	
+
 	    @Override
 	    public Object newObject() {
 	    	Anh49Abfuhr abf = new Anh49Abfuhr();
@@ -264,7 +264,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	        abf.setAbfuhrdatum(new Date());
 	        return abf;
 	    }
-	
+
 	    public Anh49Abfuhr getRow(int rowIndex) {
 	        return (Anh49Abfuhr) getObjectAtRow(rowIndex);
 	    }
@@ -277,7 +277,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	private class Anh49KontrollenModel extends EditableListTableModel {
 	    private static final long serialVersionUID = -1286333922211056915L;
 	    private Anh49Fachdaten fachdaten;
-	
+
 	    /**
 	     * Erzeugt ein neues Ortstermin-TableModel. Dieses hat die Spalten
 	     * "Datum", "SachbearbeiterIn" und "Bemerkung".
@@ -287,7 +287,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	            new String[] {"Prüfdatum", "Prüfergebnis", "Nächste Prüfung"},
 	            false, true);
 	    }
-	
+
 	    /**
 	     * Setzt das Fachdatenobjekt, nach dessen Abscheider-Details gesucht
 	     * werden soll.
@@ -297,13 +297,13 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	        this.fachdaten = fachdaten;
 	        updateList();
 	    }
-	
+
 	    @Override
 	    public Object getColumnValue(Object objectAtRow, int columnIndex) {
 	        Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
-	
+
 	        Object tmp;
-	
+
 	        switch (columnIndex) {
 	            case 0:
 	                tmp = AuikUtils.getStringFromDate(kt.getPruefdatum());
@@ -317,24 +317,24 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	            default:
 	                tmp = null;
 	        }
-	
+
 	        return tmp;
 	    }
-	
+
 	    @Override
 	    public boolean objectRemoved(Object objectAtRow) {
 	        Anh49Kontrollen removedOt = (Anh49Kontrollen) objectAtRow;
 	        boolean removed;
-	
+
 	        if (removedOt.getId() != null) {
 	            removed = Anh49Kontrollen.delete(removedOt);
 	        } else {
 	            removed = true;
 	        }
-	
+
 	        return removed;
 	    }
-	
+
 	    @Override
 	    public void updateList() {
 	        if (fachdaten != null) {
@@ -342,14 +342,14 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	        }
 	        fireTableDataChanged();
 	    }
-	
+
 	    @Override
 	    public void editObject(Object objectAtRow, int columnIndex,
 	        Object newValue) {
 	        Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
-	
+
 	        String tmp = (String) newValue;
-	
+
 	        switch (columnIndex) {
 	            case 0:
 	                DateFormat format = DateFormat
@@ -387,12 +387,12 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	                            HauptFrame.ERROR_COLOR);
 	                }
 	                break;
-	
+
 	            default:
 	                break;
 	        }
 	    }
-	
+
 	    @Override
 	    public Object newObject() {
 	        Anh49Kontrollen kt = new Anh49Kontrollen();
@@ -400,7 +400,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	        kt.setPruefdatum(new Date());
 	        return kt;
 	    }
-	
+
 	    public Anh49Kontrollen getRow(int rowIndex) {
 	        return (Anh49Kontrollen) getObjectAtRow(rowIndex);
 	    }
@@ -505,7 +505,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
                 } else if (i == 3) {
                     column.setMaxWidth(100);
                     column.setPreferredWidth(100);
-                } 
+                }
 
             }
         }

@@ -68,13 +68,13 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 
 /**
  * Ein Dialog zum Bearbeiten eines Standorts.
- * 
+ *
  * @author David Klotz
  */
 public class StandortEditor extends AbstractBaseEditor
 {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 3106924002637463142L;
 
@@ -106,7 +106,7 @@ public class StandortEditor extends AbstractBaseEditor
 		n32Feld = new DoubleField(1);
 
 
-		
+
 		String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
 		String rechteSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g";
 		int rS = 10;
@@ -131,7 +131,7 @@ public class StandortEditor extends AbstractBaseEditor
 
 		builder.addLabel("Bezeichnung:", cc.xy(1, 3));
 		builder.add(bezeichnungFeld, cc.xyw(3, 3, 3));
-		
+
 		// Koordinaten
 		builder.addLabel("E32:", cc.xy(1, 5));
 		builder.add(e32Feld, cc.xy(3, 5));
@@ -146,7 +146,7 @@ public class StandortEditor extends AbstractBaseEditor
 		return panel;
 	}
 
-	
+
 	@Override
 	protected void fillForm()
 	{
@@ -157,7 +157,7 @@ public class StandortEditor extends AbstractBaseEditor
 
 			@Override
 			protected void doNonUILogic() throws RuntimeException {
-				
+
 			}
 
 
@@ -205,7 +205,7 @@ public class StandortEditor extends AbstractBaseEditor
 				getStandort().setBezeichnung(bezeichnung);
 			}
 		}
-		
+
 		// E32
 		Float e32Wert = ((DoubleField) e32Feld).getFloatValue();
 		getStandort().setE32(e32Wert);

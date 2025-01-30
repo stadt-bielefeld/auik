@@ -100,7 +100,7 @@ public class BasisStdModel extends ListTableModel {
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
     }
-    
+
     public void setInhaber(Inhaber inhaber) {
         this.inhaber = inhaber;
     }

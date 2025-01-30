@@ -47,7 +47,7 @@ public class Gemarkung  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forGemarkung;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String gemarkung;
@@ -132,7 +132,7 @@ public class Gemarkung  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -141,13 +141,13 @@ public class Gemarkung  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("gemarkung").append("='").append(getGemarkung()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("standorts").append("='").append(getStandorts()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("gemarkung").append("='").append(getGemarkung()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("standorts").append("='").append(getStandorts()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -179,7 +179,7 @@ public class Gemarkung  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -213,12 +213,12 @@ public class Gemarkung  implements java.io.Serializable {
      * @param copy Gemarkung
      */
     private void copy(Gemarkung copy) {
-        this.id = copy.getId();            
-        this.gemarkung = copy.getGemarkung();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.standorts = copy.getStandorts();            
-    }    
+        this.id = copy.getId();
+        this.gemarkung = copy.getGemarkung();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.standorts = copy.getStandorts();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

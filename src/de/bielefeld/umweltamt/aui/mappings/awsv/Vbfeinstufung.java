@@ -40,7 +40,7 @@ public class Vbfeinstufung  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forVbfeinstufung;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String vbfeinstufung;
@@ -114,7 +114,7 @@ public class Vbfeinstufung  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -123,12 +123,12 @@ public class Vbfeinstufung  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("vbfeinstufung").append("='").append(getVbfeinstufung()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("vbfeinstufung").append("='").append(getVbfeinstufung()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -160,7 +160,7 @@ public class Vbfeinstufung  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -194,11 +194,11 @@ public class Vbfeinstufung  implements java.io.Serializable {
      * @param copy Vbfeinstufung
      */
     private void copy(Vbfeinstufung copy) {
-        this.id = copy.getId();            
-        this.vbfeinstufung = copy.getVbfeinstufung();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.id = copy.getId();
+        this.vbfeinstufung = copy.getVbfeinstufung();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

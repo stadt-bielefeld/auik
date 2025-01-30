@@ -87,7 +87,7 @@ public class RUTPanel extends AbstractSonderbauwerkTypPanel {
         minDrosselabflussField = new JTextField();
         minDrosselabflussLabel = new JLabel("Mindestdrosselabfluss");
         createMappings();
-        
+
     }
 
     private void createMappings() {
@@ -105,7 +105,7 @@ public class RUTPanel extends AbstractSonderbauwerkTypPanel {
     	setTextFieldContent(minDrosselabflussField, this.record.getMinDrAbfluss());
     	setTextFieldContent(behandlungsFlaecheField, this.record.getBehFlaeche2u3());
     	setTextFieldContent(nichtBehandlungsFlaecheField, this.record.getBehFlaeche1u2());
-    	
+
 
     }
 

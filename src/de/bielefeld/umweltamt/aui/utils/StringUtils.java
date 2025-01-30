@@ -31,7 +31,7 @@ public class StringUtils
 
 	/**
 	 * Little helper method to set a strike through the text via HTML.<br>
-	 * 
+	 *
 	 * @param text
 	 * @return String The text with HTML formatting for a strike
 	 */
@@ -44,14 +44,14 @@ public class StringUtils
 
 	/**
 	 * Methode vergleicht die beiden übergebenenen Strings
-	 * 
+	 *
 	 * @return
 	 */
 	public static int compare(String op1, String op2, boolean ignorecase)
 	{
 		if (op1 == null)
 		{
-			op1 = ""; 
+			op1 = "";
 		}
 
 		if (op2 == null)
@@ -73,7 +73,7 @@ public class StringUtils
 
 	/**
 	 * Methode vergleicht die beiden übergebenenen Strings
-	 * 
+	 *
 	 * @return
 	 */
 	public static boolean equals(String op1, String op2, boolean ignorecase)
@@ -113,7 +113,7 @@ public class StringUtils
 
 	/**
 	 * Methode liefert true, wenn der String leer oder null ist
-	 * 
+	 *
 	 * @param txt
 	 * @return
 	 */

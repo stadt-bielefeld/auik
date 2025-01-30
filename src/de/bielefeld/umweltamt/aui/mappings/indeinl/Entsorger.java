@@ -42,7 +42,7 @@ public class Entsorger  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forEntsorger;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String entsorger;
@@ -186,7 +186,7 @@ public class Entsorger  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -195,19 +195,19 @@ public class Entsorger  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("entsorger").append("='").append(getEntsorger()).append("' ");			
-        buffer.append("strasse").append("='").append(getStrasse()).append("' ");			
-        buffer.append("hausnr").append("='").append(getHausnr()).append("' ");			
-        buffer.append("plz").append("='").append(getPlz()).append("' ");			
-        buffer.append("ort").append("='").append(getOrt()).append("' ");			
-        buffer.append("ansprechpartner").append("='").append(getAnsprechpartner()).append("' ");			
-        buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("anh50Fachdatens").append("='").append(getAnh50Fachdatens()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("entsorger").append("='").append(getEntsorger()).append("' ");
+        buffer.append("strasse").append("='").append(getStrasse()).append("' ");
+        buffer.append("hausnr").append("='").append(getHausnr()).append("' ");
+        buffer.append("plz").append("='").append(getPlz()).append("' ");
+        buffer.append("ort").append("='").append(getOrt()).append("' ");
+        buffer.append("ansprechpartner").append("='").append(getAnsprechpartner()).append("' ");
+        buffer.append("telefon").append("='").append(getTelefon()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("anh50Fachdatens").append("='").append(getAnh50Fachdatens()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -239,7 +239,7 @@ public class Entsorger  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -273,18 +273,18 @@ public class Entsorger  implements java.io.Serializable {
      * @param copy Entsorger
      */
     private void copy(Entsorger copy) {
-        this.id = copy.getId();            
-        this.entsorger = copy.getEntsorger();            
-        this.strasse = copy.getStrasse();            
-        this.hausnr = copy.getHausnr();            
-        this.plz = copy.getPlz();            
-        this.ort = copy.getOrt();            
-        this.ansprechpartner = copy.getAnsprechpartner();            
-        this.telefon = copy.getTelefon();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.anh50Fachdatens = copy.getAnh50Fachdatens();            
-    }    
+        this.id = copy.getId();
+        this.entsorger = copy.getEntsorger();
+        this.strasse = copy.getStrasse();
+        this.hausnr = copy.getHausnr();
+        this.plz = copy.getPlz();
+        this.ort = copy.getOrt();
+        this.ansprechpartner = copy.getAnsprechpartner();
+        this.telefon = copy.getTelefon();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.anh50Fachdatens = copy.getAnh50Fachdatens();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

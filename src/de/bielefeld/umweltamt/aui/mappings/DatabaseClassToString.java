@@ -147,16 +147,16 @@ public class DatabaseClassToString {
      */
     public static String toStringForClass(Adresse clazz) {
         String hausnrzus = "";
-        
+
         if (clazz.getHausnrzus() != null) {
         	hausnrzus = clazz.getHausnrzus();
-        }       
+        }
         return clazz.getStrasse() + " " + clazz.getHausnr() + hausnrzus + ", " + clazz.getOrt();
     }
-    
+
     /**
      * Custom Standort.toString()
-     * Liefert einen String der Form "Straße, Hausnummer, Zusatz" falls 
+     * Liefert einen String der Form "Straße, Hausnummer, Zusatz" falls
      * der Standort eine Adresse besitzt.
      */
 	public static String toStringForClass(Standort clazz) {
@@ -166,10 +166,10 @@ public class DatabaseClassToString {
 			if (clazz.getInhaber().getAdresse().getHausnrzus() != null) {
 				hausnrzus = clazz.getInhaber().getAdresse().getHausnrzus();
 			}
-			return clazz.getInhaber().getName() + ", " 
+			return clazz.getInhaber().getName() + ", "
 					+ clazz.getInhaber().getAdresse().getStrasse() + " "
 					+ clazz.getInhaber().getAdresse().getHausnr() + hausnrzus
-					+ ", " + clazz.getInhaber().getAdresse().getWassereinzugsgebiet() 
+					+ ", " + clazz.getInhaber().getAdresse().getWassereinzugsgebiet()
 					+ ", " + clazz.getInhaber().getAdresse().getEntgebid()
 					+ ", " + clazz.getBezeichnung();
 		} else {
@@ -231,7 +231,7 @@ public class DatabaseClassToString {
             + (clazz.getAbteilung() != null ?
                 " (" + clazz.getAbteilung() + ")" : "");
     }
-	
+
 	/** Custom Bezeichnung.toString() */
 	public static String toStringForClass(Bezeichnung clazz) {
 		return "[ID:" + clazz.getId()

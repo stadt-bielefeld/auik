@@ -77,7 +77,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Das Modul um die Straßentabelle zu bearbeiten.
- * 
+ *
  * @author Gerd Genuit
  */
 public class EditorTabStreets extends AbstractModul
@@ -105,7 +105,7 @@ public class EditorTabStreets extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	@Override
@@ -116,7 +116,7 @@ public class EditorTabStreets extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
 	 */
 	@Override
@@ -127,7 +127,7 @@ public class EditorTabStreets extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
 	 */
 	@Override
@@ -138,7 +138,7 @@ public class EditorTabStreets extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
 	 */
 	@Override
@@ -195,7 +195,7 @@ public class EditorTabStreets extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel
 	 * ()
@@ -244,7 +244,7 @@ public class EditorTabStreets extends AbstractModul
 					column.setPreferredWidth(200);
 				}
 			}
-			
+
 			resultTable.getInputMap().put(
 											(KeyStroke) getResultLoeschAction().getValue(
 																							Action.ACCELERATOR_KEY),

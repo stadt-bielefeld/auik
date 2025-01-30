@@ -96,14 +96,14 @@ public class EditorParameter extends AbstractModul {
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private EditorParameterModel tmodel;
-    
+
     private Action resultLoeschAction;
     private JPopupMenu resultPopup;
     private JComboBox methodeBox;
     private JComboBox einheitBox;
 
-	
-	
+
+
     @Override
     public Icon getIcon() {
         return super.getIcon("edit32.png");
@@ -178,7 +178,7 @@ public class EditorParameter extends AbstractModul {
         }
 
         return panel;
-        
+
     }
 
     /* (non-Javadoc)
@@ -224,12 +224,12 @@ public class EditorParameter extends AbstractModul {
 					column.setPreferredWidth(350);
 				}
 			}
-			
+
 	        // Methode
 	        TableColumn methodeColumn = this.resultTable.getColumnModel()
 	            .getColumn(2);
 	        methodeColumn.setPreferredWidth(200);
-	        
+	
 	        methodeBox = new JComboBox(DatabaseQuery.getMapElkaAnalysemethode());
 	        methodeBox.setEditable(false);
 	        methodeBox.addFocusListener(new FocusAdapter() {
@@ -242,12 +242,12 @@ public class EditorParameter extends AbstractModul {
 
 	        methodeColumn.setCellEditor(new DefaultCellEditor(methodeBox));
 	        methodeColumn.setCellRenderer(new ComboBoxRenderer());
-			
+
 	        // Einheit
 	        TableColumn einheitColumn = this.resultTable.getColumnModel()
 	            .getColumn(3);
 	        einheitColumn.setPreferredWidth(10);
-	        
+	
 	        einheitBox = new JComboBox(DatabaseQuery.getEinheiten());
 	        einheitBox.setEditable(false);
 	        einheitBox.addFocusListener(new FocusAdapter() {
@@ -261,7 +261,7 @@ public class EditorParameter extends AbstractModul {
 	        einheitColumn.setCellEditor(new DefaultCellEditor(einheitBox));
 	        einheitColumn.setCellRenderer(new ComboBoxRenderer());
 
-			
+
             resultTable.getInputMap().put(
                 (KeyStroke) getResultLoeschAction().getValue(
                     Action.ACCELERATOR_KEY),
@@ -304,11 +304,11 @@ public class EditorParameter extends AbstractModul {
 	        JMenuItem loeschItem = new JMenuItem(getResultLoeschAction());
 	        this.resultPopup.add(loeschItem);
 	    }
-	
+
 	    if (e.isPopupTrigger()) {
 	        Point origin = e.getPoint();
 	        int row = this.resultTable.rowAtPoint(origin);
-	
+
 	        if (row != -1) {
 	            this.resultTable.setRowSelectionInterval(row, row);
 	            this.resultPopup.show(e.getComponent(), e.getX(), e.getY());

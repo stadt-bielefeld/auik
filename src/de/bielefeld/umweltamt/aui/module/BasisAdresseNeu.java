@@ -113,7 +113,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 /**
  * Ein Modul zum neuen Anlegen eines Betreibers.
- * 
+ *
  * @author David Klotz
  */
 public class BasisAdresseNeu extends AbstractModul {
@@ -157,7 +157,7 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JComboBox entwGebBox;
 	private JComboBox standortGgBox;
 	private JComboBox wEinzugsGebBox;
-	
+
 	private Gemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;
 	private Standortgghwsg[] standortggs = null;
@@ -185,7 +185,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	@Override
@@ -195,7 +195,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
 	 */
 	@Override
@@ -205,7 +205,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
 	 */
 	@Override
@@ -223,7 +223,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getPanel()
 	 */
 	@SuppressWarnings("deprecation")
@@ -262,7 +262,7 @@ public class BasisAdresseNeu extends AbstractModul {
 //			entwGebBox.setEditable(true);
 			standortGgBox = new JComboBox();
 			wEinzugsGebBox = new JComboBox();
-			
+
 			revdatumsFeld = new JTextField();
 			revdatumsFeld.setEditable(false);
 			revdatumsFeld.setFocusable(false);
@@ -358,9 +358,9 @@ public class BasisAdresseNeu extends AbstractModul {
 			builder.add(wirtschaftszweigBox, cc.xyw(3, 11, 6));
 			builder.addLabel(i18n.getString("editor.betreiber.ref_number"), cc.xy(1, 13)); // Kassenzeichen
 			builder.add(kassenzeichenFeld, cc.xyw(3, 13, 6));
-			
+
 			// Rechts oben
-			
+
 			builder.addSeparator(i18n.getString("editor.betreiber.separator.contact"), cc.xyw(10, 1, 4)); // Ansprechpartner--
 			builder.addLabel(i18n.getString("editor.betreiber.contact_first_name"), cc.xy(10, 3)); // Vorname
 			builder.add(betrBeaufVornameFeld, cc.xyw(12, 3, 2));
@@ -374,8 +374,8 @@ public class BasisAdresseNeu extends AbstractModul {
 			builder.add(emailFeld, cc.xyw(12, 11, 2));
 			builder.addLabel(i18n.getString("editor.betreiber.water_amount"), cc.xy(10, 13)); // Wassermenge
 			builder.add(wassermengeFeld, cc.xyw(12, 13, 2));
-			
-			
+
+
 			// Adresse
 			// Links
 			builder.addSeparator(i18n.getString("editor.betreiber.separator.address"), cc.xyw(1, 15, 8));
@@ -418,7 +418,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			builder.add(daten_awsvCheck, cc.xyw(1, 43, 2)); // AWSV Check
 			builder.add(daten_esatzungCheck, cc.xyw(5, 43, 2)); // ESatzung Check
 			builder.add(daten_whgCheck, cc.xyw(9, 43, 2)); // WHG Check
-			
+
 			builder.addSeparator(i18n.getString("editor.betreiber.remark"), cc.xyw(1, 45, 8)); // Bemerkungen ---
 			builder.add(bemerkungsScroller, cc.xywh(1, 47, 8, 3)); // Bemerkungen Scroller
 			// Revision
@@ -455,12 +455,12 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	/**
 	 * Methode liefert die eingegebene oder ausgewählte Straße
-	 * 
+	 *
 	 * @return
 	 */
 	private String getStrasse() {
 		String str = "";
-	
+
 		if (strassenBox.getSelectedItem() != null) {
 			if (strassenBox.getSelectedItem().getClass() == TabStreets.class) {
 				TabStreets selstrasse = (TabStreets) strassenBox.getSelectedItem();
@@ -472,19 +472,19 @@ public class BasisAdresseNeu extends AbstractModul {
 			}
 		}
 		str = str.trim();
-	
+
 		// Weil ich bis jetzt noch keine LimitedComboBox oder so habe...
 		if (str.length() > 50) {
 			// ... kürze ich hier den String auf 50 Zeichen
 			str = str.substring(0, 50);
 		}
-	
+
 		return str;
 	}
 
 	/**
 	 * öffnet einen Dialog um einen Betreiber-Datensatz zu bearbeiten.
-	 * 
+	 *
 	 * @param betr Der Betreiber
 	 */
 	public void editStandort(Standort std) {
@@ -725,7 +725,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			} else {
 				inh.setKassenzeichen(kassenzeichen);
 			}
-		
+
 			// Telefon
 			String telefon = telefonFeld.getText().trim();
 			if (telefon.equals("")) {
@@ -779,16 +779,16 @@ public class BasisAdresseNeu extends AbstractModul {
 			inh.setDatenschutzAwsv(daten_awsvCheck.isSelected());
 			inh.setDatenschutzEsatzung(daten_esatzungCheck.isSelected());
 			inh.setDatenschutzWhg(daten_whgCheck.isSelected());
-			
+
 			// Zuerst pruefen, ob es schon eine Adesse mit der gleichen
 			// strasse, hausnr, hausnrzus und plz gibt
-			
-			if (DatabaseQuery.findAdressen(strasseFeld.getText(), hausnrFeld.getIntValue(), 
+
+			if (DatabaseQuery.findAdressen(strasseFeld.getText(), hausnrFeld.getIntValue(),
 					hausnrZusFeld.getText(), plzFeld.getText()).iterator().hasNext()) {
-				adrn = DatabaseQuery.findAdressen(strasseFeld.getText(), hausnrFeld.getIntValue(), 
+				adrn = DatabaseQuery.findAdressen(strasseFeld.getText(), hausnrFeld.getIntValue(),
 						hausnrZusFeld.getText(), plzFeld.getText()).iterator().next();
 			} else {
-				
+
 				// Strasse:
 				String strasse = strasseFeld.getText();
 				if ("".equals(strasse)) {
@@ -838,11 +838,11 @@ public class BasisAdresseNeu extends AbstractModul {
 					adrn.setOrt(ort);
 				}
 				adrn.setUeberschgeb(ueberschgebCheck.isSelected());
-				
+
 				// Gemarkung
 				Gemarkung bgem = (Gemarkung) gemarkungBox.getSelectedItem();
 				adrn.setGemarkung(bgem);
-				
+
 				// Flur
 				String flur = flurFeld.getText().trim();
 				if (flur.equals("")) {
@@ -884,7 +884,7 @@ public class BasisAdresseNeu extends AbstractModul {
 				Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
 				adrn.setWassereinzugsgebiet(wezg);
 
-				
+
 			}
 
 			inh.setRevidatum(Calendar.getInstance().getTime());
@@ -978,16 +978,16 @@ public class BasisAdresseNeu extends AbstractModul {
 				{
 					wEinzugsgebiete = DatabaseQuery.getWassereinzugsgebiet();
 				}
-				
+
 			}
 
 			@Override
 			protected void doUIUpdateLogic() throws RuntimeException {
-				
+
 				adrn = new Adresse();
 				inh = new Inhaber();
 				standort = new Standort();
-				
+
 				if (wirtschaftszweige != null) {
 					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
 				}
@@ -1062,7 +1062,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	/**
 	 * Aktiviert oder deaktiviert alle Felder im Formular.
-	 * 
+	 *
 	 * @param enabled <code>true</true>, wenn die Felder aktiviert werden sollen, sonst <code>false</code>
 	 */
 	private void setAllEnabled(boolean enabled) {
@@ -1099,7 +1099,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	/**
 	 * Ein Listener für die Events des "Betreiber Editor"-Moduls.
-	 * 
+	 *
 	 * @author Gerhard Genuit
 	 */
 	private final class BetreiberListener implements ActionListener {
@@ -1115,7 +1115,7 @@ public class BasisAdresseNeu extends AbstractModul {
 		}
 
 	}
-	
+
 
 	private void showStandortPopup(MouseEvent e) {
 	    if (standortPopup == null) {
@@ -1125,11 +1125,11 @@ public class BasisAdresseNeu extends AbstractModul {
 	        JMenuItem neuItem = new JMenuItem(getStandortNeuAction());
 	        standortPopup.add(neuItem);
 	    }
-	
+
 	    if (e != null) {
 	        Point origin = e.getPoint();
 	        int row = standorteTabelle.rowAtPoint(origin);
-	
+
 	        // Löschen ist natürlich nur möglich,
 	        // wenn wirklich eine Zeile ausgewählt ist:
 	        if (row != -1) {
@@ -1138,7 +1138,7 @@ public class BasisAdresseNeu extends AbstractModul {
 	        } else {
 	        	getStandortLoeschAction().setEnabled(false);
 	        }
-	
+
 	        // Das Menü zeigen wir aber immer an, zum neu Anlegen eines
 	        // Abscheiders
 	        standortPopup.show(e.getComponent(), e.getX(), e.getY());
@@ -1203,6 +1203,6 @@ public class BasisAdresseNeu extends AbstractModul {
 
         return standortNeuAction;
     }
-	
-	
+
+
 }

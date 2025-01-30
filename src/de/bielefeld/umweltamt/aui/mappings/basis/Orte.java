@@ -80,7 +80,7 @@ public class Orte implements java.io.Serializable
 	 * Basically we either call on <code>toDebugString</code> for a debug
 	 * string, call on <code>toGuiString</code> for a gui representation or do
 	 * something completely different.
-	 * 
+	 *
 	 * @return String
 	 */
 	@Override
@@ -91,7 +91,7 @@ public class Orte implements java.io.Serializable
 
 	/**
 	 * Get a string representation for the gui
-	 * 
+	 *
 	 * @return String
 	 */
 	public String toGuiString()
@@ -102,7 +102,7 @@ public class Orte implements java.io.Serializable
 
 	/**
 	 * Get a string representation for debugging
-	 * 
+	 *
 	 * @return String
 	 */
 	public String toDebugString()

@@ -104,11 +104,11 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     private JCheckBox kompaktCheck; //KOmpaktanlage
     private JCheckBox emulsionCheck;
     private JCheckBox schwimmerCheck;
-    private JCheckBox kreisCheck; 
+    private JCheckBox kreisCheck;
     private JCheckBox vorschlammCheck;
     private JCheckBox probeCheck;
     private JCheckBox warnanlageCheck;
-    
+
 
     private JTextArea bemerkungsArea;
 
@@ -160,10 +160,10 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 
     // Stamdaten -------------------------- ----------
         builder.addSeparator("Stammdaten",     		cc.xyw(1, 1, 7));
-        
+
         builder.addLabel("Nr.:",                	cc.xy(1, 3));
         	builder.add(getNrFeld(),            	cc.xy(3, 3));
-        	
+
         builder.addLabel("Von:",                	cc.xy(5, 3, "right, center"));
         	builder.add(getVonFeld(),           	cc.xy(7, 3));
         builder.addLabel("Lage:",              		cc.xy(1, 5));
@@ -172,9 +172,9 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         	builder.add(getHerstellerFeld(),    	cc.xy(3, 7));
         builder.addLabel("Typ:", 			    	cc.xy(5, 7, "right, center"));
        	builder.add(getTypFeld(), 					cc.xy(7, 7));
-    // Komponenten   	
+    // Komponenten
        	builder.addSeparator("Komponenten",     	cc.xyw(1, 9, 7));
-     
+
         builder.add(getKompaktCheck(),       		cc.xyw(1, 11, 3));
         builder.add(getVorschlammCheck(),   		cc.xyw(1, 13, 3));
         builder.addLabel("Volumen:",				cc.xy(5, 13, "right, center"));
@@ -187,7 +187,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         builder.addLabel("Abscheider:", 			cc.xy( 1, 17, "left, center"));
         builder.add(getBenzinabscheiderCheck(),    	cc.xy(1, 19, "left, center"));
         builder.add(getKoaabscheiderCheck(), 		cc.xy( 3 , 19));
-        builder.addLabel("NG:",            			cc.xy( 5, 19, "right, center")); 
+        builder.addLabel("NG:",            			cc.xy( 5, 19, "right, center"));
         builder.add(getNenngroesseFeld(),           cc.xy( 7, 19));
         builder.add(getProbeCheck(), 				cc.xyw( 1, 21, 7));
         builder.add(getWarnanlageCheck(),			cc.xyw( 1, 23, 3));
@@ -195,15 +195,15 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         builder.add(getEmulsionCheck(),             cc.xyw( 1, 27, 3));
         builder.add(getSchwimmerCheck(),    		cc.xyw( 1, 29, 3));
         builder.add(getRueckhaltCheck(),			cc.xyw( 1, 31, 5));
-       
+
     // Bemerkungen:
         builder.addSeparator("Bemerkungen",    cc.xyw(1, 33, 7));
         JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         builder.add(bemerkungsScroller,        cc.xyw(1, 35, 7, "fill, fill"));
-        
+
 
         return builder.getPanel();
-    	
+
     }
 
     /* (non-Javadoc)
@@ -211,7 +211,7 @@ public class AbscheiderEditor extends AbstractBaseEditor{
      */
     @Override
     protected void fillForm() {
-        
+
         Anh49Abscheiderdetails details = this.getDetails();
     	// Nur für vorhandene Abscheider Werte laden.
 
@@ -236,7 +236,7 @@ if (details.getId() != null) {
             getProbeCheck().setSelected(details.getProbe());
             getWarnanlageCheck().setSelected(details.getWarnanlage());
             getVorschlammCheck().setSelected(details.getVorschlamm());
-            
+
     	}
     }
 
@@ -257,7 +257,7 @@ if (details.getId() != null) {
 
     	// Lage:
         details.setLage(lageFeld.getText());
-        
+
         //Typ:
         details.setTyp(typFeld.getText());
 
@@ -276,7 +276,7 @@ if (details.getId() != null) {
         //Volumen vorgeschaltetet Schlammfang:
         Integer vsf1 = ((IntegerField)vsf1Feld).getIntValue();
         details.setVsf1(vsf1);
-        
+
         // Volumen Schlammfang:
         Integer vsf2 = ((IntegerField)vsf2Feld).getIntValue();
         details.setVsf2(vsf2);
@@ -284,22 +284,22 @@ if (details.getId() != null) {
         // Nenngroesse Abscheider:
         Integer nenngroesse = ((IntegerField)nenngroesseFeld).getIntValue();
         details.setNenngroesse(nenngroesse);
-        
+
         //Tankstelle ja/nein
         details.setRueckhalt(getRueckhaltCheck().isSelected());
 
         //vorgeschalteter Schlammfang ja/nein
         details.setVorschlamm(getVorschlammCheck().isSelected());
-        
+
         //Schlammfang ja/nein
         details.setSchlammfang(getSchlammfangCheck().isSelected());
-        
+
         //Probenahmemöglichkeit ja/nein
         details.setProbe(getProbeCheck().isSelected());
-        
+
       //Warnanlage ja/nein
         details.setWarnanlage(getWarnanlageCheck().isSelected());
-        
+
         //Benzinabscheider ja/nein
         details.setBenzinabscheider(getBenzinabscheiderCheck().isSelected());
 
@@ -314,10 +314,10 @@ if (details.getId() != null) {
 
         //Schwimmer ja/nein
         details.setSchwimmer(getSchwimmerCheck().isSelected());
-        
+
         //Kreislaufanlage ja/nein
         details.setKreis(getKreisCheck().isSelected());
-        
+
         // Bemerkungen:
         details.setBemerkung(bemerkungsArea.getText());
 
@@ -368,8 +368,8 @@ if (details.getId() != null) {
             lageFeld = new LimitedTextField(50);
         }
         return lageFeld;
-     
-    }  
+
+    }
       private JTextField getTypFeld() {
             if (typFeld == null) {
                 typFeld = new LimitedTextField(50);
@@ -381,7 +381,7 @@ if (details.getId() != null) {
             nenngroesseFeld = new IntegerField();
         }
         return nenngroesseFeld;
-        
+
     }
     private JFormattedTextField getVsf2Feld() {
         if (vsf2Feld == null) {
@@ -389,7 +389,7 @@ if (details.getId() != null) {
         }
         return vsf2Feld;
     }
-    
+
     private JFormattedTextField getVsf1Feld() {
         if (vsf1Feld == null) {
             vsf1Feld = new IntegerField();
@@ -432,28 +432,28 @@ if (details.getId() != null) {
             vonFeld = new IntegerField();
         }
         return vonFeld;
-    } 
+    }
     private JCheckBox getProbeCheck() {
     	if (probeCheck == null) {
     		probeCheck = new JCheckBox("Probenahmestelle/-möglichkeit");
        }
     return probeCheck;
-    
-    } 
+
+    }
     private JCheckBox getWarnanlageCheck() {
     	if (warnanlageCheck == null) {
     		warnanlageCheck = new JCheckBox("Warnanlage");
     }
     return warnanlageCheck;
-   
-  
+
+
     }
     private JCheckBox getKreisCheck() {
         if (kreisCheck == null) {
         	kreisCheck = new JCheckBox("Kreislaufanlage");
         }
         return kreisCheck;
- 
+
     }
     private JTextArea getBemerkungsArea() {
         if (bemerkungsArea == null) {
@@ -464,9 +464,9 @@ if (details.getId() != null) {
         return bemerkungsArea;
 	}
 
-    
-    
- 
+
+
+
     }
 
 

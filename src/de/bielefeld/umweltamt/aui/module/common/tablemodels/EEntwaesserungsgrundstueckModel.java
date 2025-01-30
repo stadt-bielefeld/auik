@@ -53,7 +53,7 @@ public class EEntwaesserungsgrundstueckModel extends ListTableModel {
 
         EEntwaesserungsgrundstueck ewg= (EEntwaesserungsgrundstueck) objectAtRow;
         switch(columnIndex) {
-            case 0: 
+            case 0:
                 return ewg.getNr();
             case 1:
                 return ewg.getStandort().getNr();

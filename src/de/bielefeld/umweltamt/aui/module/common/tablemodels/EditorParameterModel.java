@@ -33,7 +33,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 public class EditorParameterModel extends EditableListTableModel {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -5048471149489876415L;
 
@@ -89,48 +89,48 @@ public class EditorParameterModel extends EditableListTableModel {
 
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		
+
 		Parameter tmp = (Parameter) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	String tmpID = (String) newValue;
         	tmp.setOrdnungsbegriff(tmpID);
         	break;
-        	
+
         case 1:
         	String tmpArt = (String) newValue;
         	tmp.setBezeichnung(tmpArt);
         	break;
-        	
-        case 2:        	
+
+        case 2:
         	MapElkaAnalysemethode tmpMethode = (MapElkaAnalysemethode) newValue;
             tmp.setMapElkaAnalysemethode(tmpMethode);
             break;
-        	
-        case 3:        	
+
+        case 3:
         	Einheiten tmpEinheiten = (Einheiten) newValue;
             tmp.setEinheiten(tmpEinheiten);
             break;
-            
+
         case 4:
         	Double tmpGW = (Double) newValue;
         	tmp.setGrenzwert(tmpGW);
         	break;
-        	
+
         case 5:
         	Double tmpSielGW = (Double) newValue;
         	tmp.setSielhautGw(tmpSielGW);
         	break;
 
         default:
-            break;        	
-        	
+            break;
+
 		}
-		
+
 		if (tmp.getOrdnungsbegriff() != null) {
 			Parameter.merge(tmp);
 		}
-		
+
 	}
 
 	@Override
@@ -161,23 +161,23 @@ public class EditorParameterModel extends EditableListTableModel {
 	        case 0:
 	            tmp = String.class;
 	            break;
-	
+
 	        case 1:
 	            tmp = String.class;
 	            break;
-	
+
 	        case 2:
 	        	tmp = MapElkaAnalysemethode.class;
 	            break;
-	
+
 	        case 3:
 	            tmp = Double.class;
 	            break;
-	
+
 	        case 4:
 	            tmp = Double.class;
 	            break;
-	
+
 	        default:
 	            tmp = super.getColumnClass(columnIndex);
 	            break;

@@ -82,7 +82,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
  * Ein Dialog zum Bearbeiten der Einstellungen.
- * 
+ *
  * @author Gerhard Genuit
  */
 public class EinstellungenEditor extends AbstractApplyEditor {
@@ -150,11 +150,11 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 				row[1] = tmpWert;
 				_instance.setSetting((String)row[0], tmpWert, true);
 				break;
-				
+
 			default:
 				break;
 			}
-			
+
 		}
 
 		@Override
@@ -196,7 +196,7 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		TabAction ta = new TabAction();
 		ta.addComp(this.einstellungenTabelle);
-		
+
 
         Action einstRemoveAction = new AbstractAction("Einstellung löschen") {
             private static final long serialVersionUID = -5755536713201543469L;
@@ -261,7 +261,7 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 			saved = true;
 		}
 		return saved;
-		
+
 	}
 
 	@Override
