@@ -49,7 +49,6 @@
 package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.awt.Label;
@@ -95,7 +94,6 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
@@ -131,7 +129,6 @@ public class BasisAdresseSuchen extends AbstractModul {
 	private JButton probepktButton;
 	private JButton anfallButton;
 	private JButton genButton;
-    private JButton submitButtonStandort;
     private JButton submitButtonBetreiber;
     private JSplitPane tabellenSplit;
     private JTable betreiberTabelle;
@@ -153,12 +150,6 @@ public class BasisAdresseSuchen extends AbstractModul {
     public Inhaber inhaber;
 
 	private Timer suchTimer;
-
-    /**
-     * Wird benutzt, um nach dem Bearbeiten etc. wieder den selben Betreiber in
-     * der Liste auszuwählen.
-     */
-    private Inhaber lastAdresse;
 
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
@@ -285,9 +276,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             this.tabellenSplit.setDividerLocation(divloc);
         }
 
-        this.lastAdresse = null;
         filterBetreiberListe(suchFeld);
-
     }
 
     /* (non-Javadoc)
@@ -322,7 +311,6 @@ public class BasisAdresseSuchen extends AbstractModul {
 		final int fhausnr = hausnr;
 		final String ort = getOrtFeld().getText();
 		final String property = (String) ((NamedObject) getSuchBox().getSelectedItem()).getValue();
-		;
 
 
             SwingWorkerVariant worker = new SwingWorkerVariant(
@@ -435,8 +423,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         editDialog.setLocationRelativeTo(this.frame);
 
         editDialog.setVisible(true);
-
-        this.lastAdresse = betr;
 
         // Nach dem Bearbeiten die Liste updaten, damit unsere Änderungen auch
         // angezeigt werden.
@@ -860,7 +846,6 @@ public class BasisAdresseSuchen extends AbstractModul {
 
             this.betreiberTabelle
                 .addMouseListener(new java.awt.event.MouseAdapter() {
-                    private Object submitButton;
 
 					@Override
                     public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -922,9 +907,6 @@ public class BasisAdresseSuchen extends AbstractModul {
 				public Component prepareRenderer(TableCellRenderer renderer,
 						int row, int column) {
 					Component c = super.prepareRenderer(renderer, row, column);
-					Objekt obj = BasisAdresseSuchen.this.objektModel
-							.getRow(row);
-
 					return c;
 				}
 			};
@@ -1060,9 +1042,6 @@ public class BasisAdresseSuchen extends AbstractModul {
 	        this.suchFeld.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                String suche = getSuchFeld().getText();
-	                String spalte = (String) ((NamedObject) getSuchBox()
-	                    .getSelectedItem()).getValue();
 	                filterBetreiberListe(getBetreiberTabelle());
 	            }
 	        });
