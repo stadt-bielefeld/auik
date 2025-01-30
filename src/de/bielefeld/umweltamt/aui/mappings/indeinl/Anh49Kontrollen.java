@@ -41,7 +41,7 @@ public class Anh49Kontrollen  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAnh49Kontrollen;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Anh49Fachdaten anh49Fachdaten;
@@ -142,7 +142,7 @@ public class Anh49Kontrollen  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -151,13 +151,13 @@ public class Anh49Kontrollen  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("pruefdatum").append("='").append(getPruefdatum()).append("' ");			
-        buffer.append("naechstepruefung").append("='").append(getNaechstepruefung()).append("' ");			
-        buffer.append("pruefergebnis").append("='").append(getPruefergebnis()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("pruefdatum").append("='").append(getPruefdatum()).append("' ");
+        buffer.append("naechstepruefung").append("='").append(getNaechstepruefung()).append("' ");
+        buffer.append("pruefergebnis").append("='").append(getPruefergebnis()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -189,7 +189,7 @@ public class Anh49Kontrollen  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -223,12 +223,12 @@ public class Anh49Kontrollen  implements java.io.Serializable {
      * @param copy Anh49Kontrollen
      */
     private void copy(Anh49Kontrollen copy) {
-        this.pruefdatum = copy.getPruefdatum();            
-        this.naechstepruefung = copy.getNaechstepruefung();            
-        this.pruefergebnis = copy.getPruefergebnis();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.pruefdatum = copy.getPruefdatum();
+        this.naechstepruefung = copy.getNaechstepruefung();
+        this.pruefergebnis = copy.getPruefergebnis();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

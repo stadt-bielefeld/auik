@@ -46,7 +46,7 @@ public class Inhaber  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAdresse;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Adresse adresse;
@@ -97,7 +97,7 @@ public class Inhaber  implements java.io.Serializable {
     		Adresse adresse, Integer id, Objekt objekt, Wirtschaftszweig wirtschaftszweig, String anrede,
             String name, String vorname, String namezus, String namebetrbeauf, String vornamebetrbeauf,
             String strasse, Integer hausnr, String hausnrzus, String plzzs, String plz, String ort,
-            String telefon, String telefax, String email, Integer wassermenge, String bemerkungen, 
+            String telefon, String telefax, String email, Integer wassermenge, String bemerkungen,
             Date revidatum, String revihandz, String kassenzeichen, boolean enabled,
             boolean deleted, String auikWzCode, Date erstellDat, Integer iglId, Set<Standort> standorts, Set<Objekt> objekts) {
         this.id = id;
@@ -226,7 +226,7 @@ public class Inhaber  implements java.io.Serializable {
 	public Integer getWassermenge(){
 	    return this.wassermenge;
 	}
-	
+
 	public void setWassermenge(Integer wassermenge){
 		this.wassermenge = wassermenge;
 	}
@@ -356,7 +356,7 @@ public class Inhaber  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -365,30 +365,30 @@ public class Inhaber  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");				
-        buffer.append("wirtschaftszweig").append("='").append(getWirtschaftszweig()).append("' ");			
-        buffer.append("anrede").append("='").append(getAnrede()).append("' ");			
-        buffer.append("name").append("='").append(getName()).append("' ");			
-        buffer.append("vorname").append("='").append(getVorname()).append("' ");		
-        buffer.append("namezus").append("='").append(getNamezus()).append("' ");			
-        buffer.append("namebetrbeauf").append("='").append(getNamebetrbeauf()).append("' ");			
-        buffer.append("vornamebetrbeauf").append("='").append(getVornamebetrbeauf()).append("' ");						
-        buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
-        buffer.append("telefax").append("='").append(getTelefax()).append("' ");			
-        buffer.append("email").append("='").append(getEmail()).append("' ");			
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
-        buffer.append("revidatum").append("='").append(getRevidatum()).append("' ");			
-        buffer.append("revihandz").append("='").append(getRevihandz()).append("' ");			
-        buffer.append("kassenzeichen").append("='").append(getKassenzeichen()).append("' ");				
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("auikWzCode").append("='").append(getAuikWzCode()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("Standorts").append("='").append(getStandorts()).append("' ");			
-        buffer.append("objektsForBetreiberid").append("='").append(getObjekts()).append("' ");			
-        buffer.append("iglId").append("='").append(getIglId()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("wirtschaftszweig").append("='").append(getWirtschaftszweig()).append("' ");
+        buffer.append("anrede").append("='").append(getAnrede()).append("' ");
+        buffer.append("name").append("='").append(getName()).append("' ");
+        buffer.append("vorname").append("='").append(getVorname()).append("' ");
+        buffer.append("namezus").append("='").append(getNamezus()).append("' ");
+        buffer.append("namebetrbeauf").append("='").append(getNamebetrbeauf()).append("' ");
+        buffer.append("vornamebetrbeauf").append("='").append(getVornamebetrbeauf()).append("' ");
+        buffer.append("telefon").append("='").append(getTelefon()).append("' ");
+        buffer.append("telefax").append("='").append(getTelefax()).append("' ");
+        buffer.append("email").append("='").append(getEmail()).append("' ");
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
+        buffer.append("revidatum").append("='").append(getRevidatum()).append("' ");
+        buffer.append("revihandz").append("='").append(getRevihandz()).append("' ");
+        buffer.append("kassenzeichen").append("='").append(getKassenzeichen()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("auikWzCode").append("='").append(getAuikWzCode()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("Standorts").append("='").append(getStandorts()).append("' ");
+        buffer.append("objektsForBetreiberid").append("='").append(getObjekts()).append("' ");
+        buffer.append("iglId").append("='").append(getIglId()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -420,7 +420,7 @@ public class Inhaber  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -454,31 +454,31 @@ public class Inhaber  implements java.io.Serializable {
      * @param copy Adresse
      */
     private void copy(Inhaber copy) {
-        this.id = copy.getId();   
-        this.adresse = copy.getAdresse();                 
-        this.wirtschaftszweig = copy.getWirtschaftszweig();            
-        this.anrede = copy.getAnrede();            
-        this.name = copy.getName();           
-        this.vorname = copy.getVorname();      
-        this.namezus = copy.getNamezus();            
-        this.namebetrbeauf = copy.getNamebetrbeauf();            
-        this.vornamebetrbeauf = copy.getVornamebetrbeauf();                    
-        this.telefon = copy.getTelefon();            
-        this.telefax = copy.getTelefax();            
-        this.email = copy.getEmail();    
-        this.wassermenge = copy.getWassermenge();        
-        this.bemerkungen = copy.getBemerkungen();            
-        this.revidatum = copy.getRevidatum();            
-        this.revihandz = copy.getRevihandz();            
-        this.kassenzeichen = copy.getKassenzeichen();                   
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.auikWzCode = copy.getAuikWzCode();            
-        this.erstellDat = copy.getErstellDat();            
-        this.standorts = copy.getStandorts();            
-        this.iglId = copy.getIglId();            
-        this.objekts = copy.getObjekts();            
-    }    
+        this.id = copy.getId();
+        this.adresse = copy.getAdresse();
+        this.wirtschaftszweig = copy.getWirtschaftszweig();
+        this.anrede = copy.getAnrede();
+        this.name = copy.getName();
+        this.vorname = copy.getVorname();
+        this.namezus = copy.getNamezus();
+        this.namebetrbeauf = copy.getNamebetrbeauf();
+        this.vornamebetrbeauf = copy.getVornamebetrbeauf();
+        this.telefon = copy.getTelefon();
+        this.telefax = copy.getTelefax();
+        this.email = copy.getEmail();
+        this.wassermenge = copy.getWassermenge();
+        this.bemerkungen = copy.getBemerkungen();
+        this.revidatum = copy.getRevidatum();
+        this.revihandz = copy.getRevihandz();
+        this.kassenzeichen = copy.getKassenzeichen();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.auikWzCode = copy.getAuikWzCode();
+        this.erstellDat = copy.getErstellDat();
+        this.standorts = copy.getStandorts();
+        this.iglId = copy.getIglId();
+        this.objekts = copy.getObjekts();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

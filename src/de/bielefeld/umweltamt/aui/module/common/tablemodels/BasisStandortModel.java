@@ -102,51 +102,51 @@ public class BasisStandortModel extends ListTableModel {
         		tmp = std.getInhaber().getName();
         	} else {
         		tmp = "";
-        	}            
+        	}
             break;
-        case 3: 
+        case 3:
         	if (std.getInhaber() != null) {
         		tmp = std.getInhaber().getVorname();
         	} else {
         		tmp = "";
-        	}  
+        	}
             break;
         case 4:
         	if (std.getInhaber() != null) {
         		tmp = std.getInhaber().getAdresse().getStrasse();
         	} else {
         		tmp = "";
-        	}  
+        	}
             break;
         case 5:
         	if (std.getInhaber() != null) {
         		tmp = std.getInhaber().getAdresse().getHausnr();
         	} else {
         		tmp = "";
-        	}  
+        	}
             break;
         case 6:
         	if (std.getInhaber() != null) {
         		tmp = std.getInhaber().getAdresse().getHausnrzus();
         	} else {
         		tmp = "";
-        	}  
+        	}
             break;
         case 7:
         	if (std.getInhaber() != null) {
         		tmp = std.getInhaber().getAdresse().getWassereinzugsgebiet();
         	} else {
         		tmp = "";
-        	}  
+        	}
             break;
         case 8:
         	if (std.getInhaber() != null) {
         		tmp = std.getInhaber().getAdresse().getEntgebid();
         	} else {
         		tmp = "";
-        	}  
+        	}
             break;
-       
+
 
         default:
             tmp = "ERROR";
@@ -159,7 +159,7 @@ public class BasisStandortModel extends ListTableModel {
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
     }
-    
+
     public void setInhaber(Inhaber inhaber) {
         this.inhaber = inhaber;
     }
@@ -191,14 +191,14 @@ public class BasisStandortModel extends ListTableModel {
      * @param suche Der Such-String
      * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
      */
-    
+
     public void filterAllList(String suche) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findStandorteNachBezeichnung(suche));
         lastSuchWort = suche;
         log.debug("End filterList");
     }
-    
+
     public void filterStandortList(String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
         setList(DatabaseQuery.chooseStandort(strasse, hausnr, ort));
@@ -206,8 +206,8 @@ public class BasisStandortModel extends ListTableModel {
         lastHausnr = hausnr;
         LastOrt = ort;
         log.debug("End filterList");
-    }    
-    
+    }
+
     public void filterStandortList(String suche, String property) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findStandorte(suche, property));

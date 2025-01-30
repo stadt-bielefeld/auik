@@ -41,7 +41,7 @@ public class Sielhaut  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forSielhaut;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Messstelle messstelle;
@@ -275,7 +275,7 @@ public class Sielhaut  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -284,28 +284,28 @@ public class Sielhaut  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("messstelle").append("='").append(getMessstelle()).append("' ");			
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("haltungsnr").append("='").append(getHaltungsnr()).append("' ");			
-        buffer.append("alarmplannr").append("='").append(getAlarmplannr()).append("' ");			
-        buffer.append("entgeb").append("='").append(getEntgeb()).append("' ");				
-        buffer.append("lage").append("='").append(getLage()).append("' ");	
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
-        buffer.append("twabfluss").append("='").append(getTwabfluss()).append("' ");			
-        buffer.append("bsb").append("='").append(getBsb()).append("' ");			
-        buffer.append("ew").append("='").append(getEw()).append("' ");			
-        buffer.append("gebiet").append("='").append(getGebiet()).append("' ");			
-        buffer.append("PSielhaut").append("='").append(getPSielhaut()).append("' ");			
-        buffer.append("PAlarmplan").append("='").append(getPAlarmplan()).append("' ");			
-        buffer.append("PNachprobe").append("='").append(getPNachprobe()).append("' ");			
-        buffer.append("schlammprobe").append("='").append(getSchlammprobe()).append("' ");			
-        buffer.append("PFirmenprobe").append("='").append(getPFirmenprobe()).append("' ");			
-        buffer.append("theGeom").append("='").append(getTheGeom()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("messstelle").append("='").append(getMessstelle()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("haltungsnr").append("='").append(getHaltungsnr()).append("' ");
+        buffer.append("alarmplannr").append("='").append(getAlarmplannr()).append("' ");
+        buffer.append("entgeb").append("='").append(getEntgeb()).append("' ");
+        buffer.append("lage").append("='").append(getLage()).append("' ");
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
+        buffer.append("twabfluss").append("='").append(getTwabfluss()).append("' ");
+        buffer.append("bsb").append("='").append(getBsb()).append("' ");
+        buffer.append("ew").append("='").append(getEw()).append("' ");
+        buffer.append("gebiet").append("='").append(getGebiet()).append("' ");
+        buffer.append("PSielhaut").append("='").append(getPSielhaut()).append("' ");
+        buffer.append("PAlarmplan").append("='").append(getPAlarmplan()).append("' ");
+        buffer.append("PNachprobe").append("='").append(getPNachprobe()).append("' ");
+        buffer.append("schlammprobe").append("='").append(getSchlammprobe()).append("' ");
+        buffer.append("PFirmenprobe").append("='").append(getPFirmenprobe()).append("' ");
+        buffer.append("theGeom").append("='").append(getTheGeom()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -337,7 +337,7 @@ public class Sielhaut  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -371,27 +371,27 @@ public class Sielhaut  implements java.io.Serializable {
      * @param copy Sielhaut
      */
     private void copy(Sielhaut copy) {
-        this.id = copy.getId();            
-        this.messstelle = copy.getMessstelle();            
-        this.bezeichnung = copy.getBezeichnung();            
-        this.haltungsnr = copy.getHaltungsnr();            
-        this.alarmplannr = copy.getAlarmplannr();            
-        this.entgeb = copy.getEntgeb();            
-        this.lage = copy.getLage();                  
-        this.bemerkungen = copy.getBemerkungen();            
-        this.twabfluss = copy.getTwabfluss();            
-        this.bsb = copy.getBsb();            
-        this.ew = copy.getEw();            
-        this.gebiet = copy.getGebiet();            
-        this.PSielhaut = copy.getPSielhaut();            
-        this.PAlarmplan = copy.getPAlarmplan();            
-        this.PNachprobe = copy.getPNachprobe();            
-        this.schlammprobe = copy.getSchlammprobe();            
-        this.PFirmenprobe = copy.getPFirmenprobe();            
-        this.theGeom = copy.getTheGeom();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.id = copy.getId();
+        this.messstelle = copy.getMessstelle();
+        this.bezeichnung = copy.getBezeichnung();
+        this.haltungsnr = copy.getHaltungsnr();
+        this.alarmplannr = copy.getAlarmplannr();
+        this.entgeb = copy.getEntgeb();
+        this.lage = copy.getLage();
+        this.bemerkungen = copy.getBemerkungen();
+        this.twabfluss = copy.getTwabfluss();
+        this.bsb = copy.getBsb();
+        this.ew = copy.getEw();
+        this.gebiet = copy.getGebiet();
+        this.PSielhaut = copy.getPSielhaut();
+        this.PAlarmplan = copy.getPAlarmplan();
+        this.PNachprobe = copy.getPNachprobe();
+        this.schlammprobe = copy.getSchlammprobe();
+        this.PFirmenprobe = copy.getPFirmenprobe();
+        this.theGeom = copy.getTheGeom();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

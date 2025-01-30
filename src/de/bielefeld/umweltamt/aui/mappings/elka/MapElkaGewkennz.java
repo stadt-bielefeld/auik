@@ -41,7 +41,7 @@ public class MapElkaGewkennz implements java.io.Serializable {
 	/** Generated serialVersionUID for Serializable interface */
 	private static final long serialVersionUID = DatabaseSerialVersionUID.forMapElkaGewkennz;
 
-	
+
 
 	/* Primary key, foreign keys (relations) and table columns */
 	private Integer gewkz;
@@ -89,7 +89,7 @@ public class MapElkaGewkennz implements java.io.Serializable {
 	 * Basically we either call on <code>toDebugString</code> for a debug string,
 	 * call on <code>toGuiString</code> for a gui representation or do something
 	 * completely different.
-	 * 
+	 *
 	 * @return String
 	 */
 	@Override
@@ -125,7 +125,7 @@ public class MapElkaGewkennz implements java.io.Serializable {
 
 	/**
 	 * Calculate a unique hashCode
-	 * 
+	 *
 	 * @return <code>int</code>
 	 */
 	@Override
@@ -138,7 +138,7 @@ public class MapElkaGewkennz implements java.io.Serializable {
 
 	/**
 	 * Merge (save or update) a detached instance
-	 * 
+	 *
 	 * @param detachedInstance the instance to merge
 	 * @return <code>MapElkaAnhang</code> the merged instance, if everything went
 	 *         okay, <code>null</code> otherwise
@@ -150,7 +150,7 @@ public class MapElkaGewkennz implements java.io.Serializable {
 
 	/**
 	 * Merge (save or update) this instance
-	 * 
+	 *
 	 * @return <code>true</code>, if everything went okay, <code>false</code>
 	 *         otherwise
 	 */
@@ -167,7 +167,7 @@ public class MapElkaGewkennz implements java.io.Serializable {
 	/**
 	 * Update this MapElkaEinheit with its new values.<br>
 	 * This is meant to be used after merging!
-	 * 
+	 *
 	 * @param copy MapElkaEinheit
 	 */
 	private void copy(MapElkaGewkennz copy) {
@@ -175,8 +175,8 @@ public class MapElkaGewkennz implements java.io.Serializable {
 		this.gewname = copy.getGewname();
 
 	}
-	
-	
+
+
 	/**
      * Delete (mark as deleted) a detached instance
      * @param detachedInstance the instance to delete
@@ -187,7 +187,7 @@ public class MapElkaGewkennz implements java.io.Serializable {
         log.debug("Deleting MapElkaGewkennz instance " + detachedInstance);
         return new DatabaseAccess().delete(detachedInstance);
     }
-	
+
     /**
      * Find an <code>MapElkaGewkennz</code> instance by its primary key
      * @param id the primary key value
@@ -209,9 +209,9 @@ public class MapElkaGewkennz implements java.io.Serializable {
     public static List<MapElkaGewkennz> getAll() {
         return DatabaseQuery.getAll(new MapElkaGewkennz());
     }
-	
-   
+
+
     /* Custom code goes below here! */
-	
+
 
 }

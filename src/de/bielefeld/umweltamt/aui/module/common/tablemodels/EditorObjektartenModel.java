@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 public class EditorObjektartenModel extends EditableListTableModel {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 6481979000280099636L;
 
@@ -93,27 +93,27 @@ public class EditorObjektartenModel extends EditableListTableModel {
 
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		
+
 		Objektarten tmp = (Objektarten) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
         	tmp.setId(tmpID);
         	break;
-        	
+
         case 1:
         	String tmpArt = (String) newValue;
         	tmp.setObjektart(tmpArt);
         	break;
-        	
+
         case 2:
         	String tmpAbt = (String) newValue;
         	tmp.setAbteilung(tmpAbt);
         	break;
 
         default:
-            break;        	
-        	
+            break;
+
 		}
 		Objektarten.merge(tmp);
 	}

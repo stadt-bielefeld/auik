@@ -42,7 +42,7 @@ public class Gebuehrenarten  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forGebuehrenarten;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String gebuehrenart;
@@ -126,7 +126,7 @@ public class Gebuehrenarten  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -135,13 +135,13 @@ public class Gebuehrenarten  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("gebuehrenart").append("='").append(getGebuehrenart()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("verwaltungsgebuehrens").append("='").append(getVerwaltungsgebuehrens()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("gebuehrenart").append("='").append(getGebuehrenart()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("verwaltungsgebuehrens").append("='").append(getVerwaltungsgebuehrens()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -173,7 +173,7 @@ public class Gebuehrenarten  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -207,12 +207,12 @@ public class Gebuehrenarten  implements java.io.Serializable {
      * @param copy Gebuehrenarten
      */
     private void copy(Gebuehrenarten copy) {
-        this.id = copy.getId();            
-        this.gebuehrenart = copy.getGebuehrenart();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.verwaltungsgebuehrens = copy.getVerwaltungsgebuehrens();            
-    }    
+        this.id = copy.getId();
+        this.gebuehrenart = copy.getGebuehrenart();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.verwaltungsgebuehrens = copy.getVerwaltungsgebuehrens();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

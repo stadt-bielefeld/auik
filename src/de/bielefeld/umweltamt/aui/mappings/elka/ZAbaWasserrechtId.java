@@ -36,7 +36,7 @@ public class ZAbaWasserrechtId  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZAbaWasserrechtId;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private long wasserrechtNr;
     private long anlageNr;
@@ -90,10 +90,10 @@ public class ZAbaWasserrechtId  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("wasserrechtNr").append("='").append(getWasserrechtNr()).append("' ");			
-        buffer.append("anlageNr").append("='").append(getAnlageNr()).append("' ");			
+        buffer.append("wasserrechtNr").append("='").append(getWasserrechtNr()).append("' ");
+        buffer.append("anlageNr").append("='").append(getAnlageNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

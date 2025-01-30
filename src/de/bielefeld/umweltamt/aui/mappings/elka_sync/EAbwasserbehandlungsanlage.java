@@ -69,7 +69,7 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
             Float n32, Boolean wartungsvertragTog,
             Boolean genehmpflichtigTog, Boolean einzelabnahmeTog,
             String bemerkung, Date aktualDat, Date erstellDat,
-            String herkunft, Set<EWasserrecht> Wasserrechts, 
+            String herkunft, Set<EWasserrecht> Wasserrechts,
             Set<Abaverfahren> Abwasserbehandlungsverfahrens) {
         this.nr = nr;
         this.origNr = origNr;
@@ -265,7 +265,7 @@ public class EAbwasserbehandlungsanlage implements java.io.Serializable {
     public Set<Abaverfahren> getAbwasserbehandlungsverfahrens() {
         return Abwasserbehandlungsverfahrens;
     }
-    
+
     public void setAbwasserbehandlungsverfahrens(Set<Abaverfahren> Abwasserbehandlungsverfahrens) {
 	    this.Abwasserbehandlungsverfahrens = Abwasserbehandlungsverfahrens;
 	}

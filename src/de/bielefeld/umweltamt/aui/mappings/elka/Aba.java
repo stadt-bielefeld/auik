@@ -47,7 +47,7 @@ public class Aba  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAba;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Objekt objekt;
@@ -298,7 +298,7 @@ public class Aba  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -307,30 +307,30 @@ public class Aba  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");	
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("ansprAdrId").append("='").append(getAnsprAdrId()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");			
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("inbetriebDat").append("='").append(getInbetriebDat()).append("' ");			
-        buffer.append("stillgelegtDat").append("='").append(getStillgelegtDat()).append("' ");			
-        buffer.append("genehmpflichtigToc").append("='").append(getGenehmpflichtigToc()).append("' ");			
-        buffer.append("e32").append("='").append(getE32()).append("' ");			
-        buffer.append("n32").append("='").append(getN32()).append("' ");			
-        buffer.append("sonstZulOpt").append("='").append(getSonstZulOpt()).append("' ");			
-        buffer.append("verfahrenNr").append("='").append(getVerfahrenNr()).append("' ");			
-        buffer.append("wartungsvertragToc").append("='").append(getWartungsvertragToc()).append("' ");			
-        buffer.append("einzelabnahmeToc").append("='").append(getEinzelabnahmeToc()).append("' ");			
-        buffer.append("enabled").append("='").append(getEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
-        buffer.append("Wasserrechts").append("='").append(getWasserrechts()).append("' ");			
-        buffer.append("referenzsForZAbaNr").append("='").append(getReferenzsForZAbaNr()).append("' ");			
-        buffer.append("Abaverfahrens").append("='").append(getAbaverfahrens()).append("' ");			
-        buffer.append("referenzsForQAbaNr").append("='").append(getReferenzsForQAbaNr()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");
+        buffer.append("ansprAdrId").append("='").append(getAnsprAdrId()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("inbetriebDat").append("='").append(getInbetriebDat()).append("' ");
+        buffer.append("stillgelegtDat").append("='").append(getStillgelegtDat()).append("' ");
+        buffer.append("genehmpflichtigToc").append("='").append(getGenehmpflichtigToc()).append("' ");
+        buffer.append("e32").append("='").append(getE32()).append("' ");
+        buffer.append("n32").append("='").append(getN32()).append("' ");
+        buffer.append("sonstZulOpt").append("='").append(getSonstZulOpt()).append("' ");
+        buffer.append("verfahrenNr").append("='").append(getVerfahrenNr()).append("' ");
+        buffer.append("wartungsvertragToc").append("='").append(getWartungsvertragToc()).append("' ");
+        buffer.append("einzelabnahmeToc").append("='").append(getEinzelabnahmeToc()).append("' ");
+        buffer.append("enabled").append("='").append(getEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(getDeleted()).append("' ");
+        buffer.append("Wasserrechts").append("='").append(getWasserrechts()).append("' ");
+        buffer.append("referenzsForZAbaNr").append("='").append(getReferenzsForZAbaNr()).append("' ");
+        buffer.append("Abaverfahrens").append("='").append(getAbaverfahrens()).append("' ");
+        buffer.append("referenzsForQAbaNr").append("='").append(getReferenzsForQAbaNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -362,7 +362,7 @@ public class Aba  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -396,29 +396,29 @@ public class Aba  implements java.io.Serializable {
      * @param copy Aba
      */
     private void copy(Aba copy) {
-        this.id = copy.getId();                 
-        this.objekt = copy.getObjekt();             
-        this.ansprAdrId = copy.getAnsprAdrId();            
-        this.aktualDat = copy.getAktualDat();            
-        this.erstellDat = copy.getErstellDat();            
-        this.herkunft = copy.getHerkunft();            
-        this.bezeichnung = copy.getBezeichnung();            
-        this.inbetriebDat = copy.getInbetriebDat();            
-        this.stillgelegtDat = copy.getStillgelegtDat();            
-        this.genehmpflichtigToc = copy.getGenehmpflichtigToc();            
-        this.e32 = copy.getE32();            
-        this.n32 = copy.getN32();            
-        this.sonstZulOpt = copy.getSonstZulOpt();            
-        this.verfahrenNr = copy.getVerfahrenNr();            
-        this.wartungsvertragToc = copy.getWartungsvertragToc();            
-        this.einzelabnahmeToc = copy.getEinzelabnahmeToc();            
-        this.enabled = copy.getEnabled();            
-        this.deleted = copy.getDeleted();            
-        this.Wasserrechts = copy.getWasserrechts();            
-        this.referenzsForZAbaNr = copy.getReferenzsForZAbaNr();            
-        this.Abaverfahrens = copy.getAbaverfahrens();            
-        this.referenzsForQAbaNr = copy.getReferenzsForQAbaNr();            
-    }    
+        this.id = copy.getId();
+        this.objekt = copy.getObjekt();
+        this.ansprAdrId = copy.getAnsprAdrId();
+        this.aktualDat = copy.getAktualDat();
+        this.erstellDat = copy.getErstellDat();
+        this.herkunft = copy.getHerkunft();
+        this.bezeichnung = copy.getBezeichnung();
+        this.inbetriebDat = copy.getInbetriebDat();
+        this.stillgelegtDat = copy.getStillgelegtDat();
+        this.genehmpflichtigToc = copy.getGenehmpflichtigToc();
+        this.e32 = copy.getE32();
+        this.n32 = copy.getN32();
+        this.sonstZulOpt = copy.getSonstZulOpt();
+        this.verfahrenNr = copy.getVerfahrenNr();
+        this.wartungsvertragToc = copy.getWartungsvertragToc();
+        this.einzelabnahmeToc = copy.getEinzelabnahmeToc();
+        this.enabled = copy.getEnabled();
+        this.deleted = copy.getDeleted();
+        this.Wasserrechts = copy.getWasserrechts();
+        this.referenzsForZAbaNr = copy.getReferenzsForZAbaNr();
+        this.Abaverfahrens = copy.getAbaverfahrens();
+        this.referenzsForQAbaNr = copy.getReferenzsForQAbaNr();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

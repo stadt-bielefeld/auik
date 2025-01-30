@@ -35,7 +35,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.resource.transaction.spi.TransactionStatus; 
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 
 
@@ -76,7 +76,7 @@ public class DatabaseAccess
 	 * Check if the proxy or persistent collection is initialized.<br>
 	 * TODO: This is just used in the toString method of the AtlProbenahme.
 	 * Check if we really need it!
-	 * 
+	 *
 	 * @param proxy
 	 *            a persistable object, proxy, persistent collection or
 	 *            <code>null</code>
@@ -90,7 +90,7 @@ public class DatabaseAccess
 
 	/**
 	 * Get the entity of clazz with the id
-	 * 
+	 *
 	 * @param clazz
 	 *            The requested Class
 	 * @param id
@@ -124,7 +124,7 @@ public class DatabaseAccess
 
 	/**
 	 * Check if the object is marked as deleted
-	 * 
+	 *
 	 * @param object
 	 * @return
 	 */
@@ -160,7 +160,7 @@ public class DatabaseAccess
 	 * <code>
 	 * MyObject myMergedObject = new DatabaseAccess().merge(myToModifyObject);
 	 * </code>
-	 * 
+	 *
 	 * @param object
 	 *            The Object to merge
 	 * @return Object the new Object, if everything went as planned,
@@ -201,7 +201,7 @@ public class DatabaseAccess
 	 * <code>
 	 * boolean success = new DatabaseAccess().delete(myToDeleteObject);
 	 * </code>
-	 * 
+	 *
 	 * @param object
 	 *            The Object to delete
 	 * @return boolean True, if everything went as planned, false otherwise
@@ -234,7 +234,7 @@ public class DatabaseAccess
 
 	/**
 	 * Mark an object as deleted
-	 * 
+	 *
 	 * @param object
 	 * @return
 	 */
@@ -280,7 +280,7 @@ public class DatabaseAccess
 	 * List<Anh49Verwaltungsverfahren> result = new DatabaseAccess()
 	 *     .executeCriteriaToList(criteria, Anh49Verwaltungsverfahren.class);
 	 * </pre></code>
-	 * 
+	 *
 	 * @param <T>
 	 *            type of the result
 	 * @param detachedCriteria
@@ -317,7 +317,7 @@ public class DatabaseAccess
 	 * Anh49Verwaltungsverfahren[] result = new DatabaseAccess()
 	 *     .executeCriteriaToArray(criteria, new Anh49Verwaltungsverfahren[0]);
 	 * </pre></code>
-	 * 
+	 *
 	 * @param <T>
 	 *            type of the result
 	 * @param detachedCriteria
@@ -355,7 +355,7 @@ public class DatabaseAccess
 	 *     .executeCriteriaToUniqueResult(
 	 *         criteria, new Anh49Verwaltungsverfahren());
 	 * </pre></code>
-	 * 
+	 *
 	 * @param <T>
 	 *            type of the result
 	 * @param detachedCriteria
@@ -388,7 +388,7 @@ public class DatabaseAccess
 	/**
 	 * Get an executable criteria for a given detached criteria.
 	 * Add global <code>Restrictions</code>
-	 * 
+	 *
 	 * @param detachedCriteria
 	 */
 	private void getExecutableCriteria(
@@ -420,7 +420,7 @@ public class DatabaseAccess
 
 	/**
 	 * Execute the criteria and get the result as a <code>List&lt;?&gt;</code>
-	 * 
+	 *
 	 * @return List<?> The result of the Criteria
 	 */
 	private List<?> listCriteria()
@@ -443,7 +443,7 @@ public class DatabaseAccess
 
 	/**
 	 * Execute the criteria and get the result as an array
-	 * 
+	 *
 	 * @param <T>
 	 * @param arrayType
 	 * @return T[]
@@ -455,7 +455,7 @@ public class DatabaseAccess
 
 	/**
 	 * Cast the result list to the right type
-	 * 
+	 *
 	 * @param <T>
 	 * @param type
 	 * @return List<T>
@@ -478,7 +478,7 @@ public class DatabaseAccess
 	/**
 	 * This is a workaround for hibernate issue HHH-2951<br>
 	 * See: https://hibernate.onjira.com/browse/HHH-2951
-	 * 
+	 *
 	 * @param propertyName
 	 * @param value
 	 * @return
@@ -499,7 +499,7 @@ public class DatabaseAccess
 	/**
 	 * Get an ascending order for the identifier property of the class<br>
 	 * Note: This opens and closes the session!
-	 * 
+	 *
 	 * @return <code>Order</code>
 	 */
 	public Order getIdOrder(Class<?> entityClass)
@@ -571,7 +571,7 @@ public class DatabaseAccess
 
 	/**
 	 * Commit the transaction and set it to null.
-	 * 
+	 *
 	 * @return boolean True, if everything went as planed, false otherwise
 	 */
 	private boolean commitTransaction()
@@ -609,7 +609,7 @@ public class DatabaseAccess
 
 	/**
 	 * Make sure we always pass on the type of the failed database access
-	 * 
+	 *
 	 * @param exception
 	 *            The occurred Exception
 	 * @param fatal

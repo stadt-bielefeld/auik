@@ -95,32 +95,32 @@ public class EditorTabStreetsModel extends EditableListTableModel {
 
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		
+
 		TabStreets tmp = (TabStreets) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	String tmpStrasse = (String) newValue;
         	tmp.setName(tmpStrasse);
         	break;
-        	
+
         case 1:
         	String tmpNr = (String) newValue;
         	tmp.setNr(tmpNr);
         	break;
-        	
+
         case 2:
         	Float x = (Float) newValue;
         	tmp.setX(x);
         	break;
-        	
+
         case 3:
         	Float y = (Float) newValue;
         	tmp.setY(y);
         	break;
 
         default:
-            break;        	
-        	
+            break;
+
 		}
 		TabStreets.merge(tmp);
 	}

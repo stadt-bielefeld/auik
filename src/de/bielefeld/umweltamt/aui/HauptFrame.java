@@ -903,7 +903,7 @@ public class HauptFrame extends JFrame {
         }
         return leftScroller;
     }
-    
+
 
     /**
      * @return Returns the leftCardPanel.
@@ -1198,12 +1198,12 @@ public class HauptFrame extends JFrame {
             return success;
         }
     }
-    
+
 
     /* setzt das Modulfenster zurück nach oben
      * panel neu aufbauen und scrollbar nur wenn nötig anzeigen wäre evtl. sinnvoller
     */
-    
+
     public void resetLeftScroller(){
     	JScrollBar vertSB = leftScroller.getVerticalScrollBar();
     	vertSB.setValue(vertSB.getMinimum());

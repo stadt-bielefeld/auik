@@ -121,7 +121,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private JComboBox suchBox;
     private JTextField suchFeld;
-    
+
 	private JTextField strassenFeld;
 	private JTextField hausnrFeld;
 	private JTextField ortFeld;
@@ -284,10 +284,10 @@ public class BasisAdresseSuchen extends AbstractModul {
                 .getSetting("auik.prefs.divloc_betreiber"));
             this.tabellenSplit.setDividerLocation(divloc);
         }
-        
+
         this.lastAdresse = null;
         filterBetreiberListe(suchFeld);
-        
+
     }
 
     /* (non-Javadoc)
@@ -328,7 +328,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             SwingWorkerVariant worker = new SwingWorkerVariant(
                 getBetreiberTabelle()) {
                 @Override
-                
+
 			protected void doNonUILogic() throws RuntimeException {
 //				if (name != "" || strasse != ""
 //						|| fhausnr != -1 || ort != "") {
@@ -352,15 +352,15 @@ public class BasisAdresseSuchen extends AbstractModul {
 		};
 		worker.start();
 
-			
-    } 
-    
+
+    }
+
 
 
 
 	/**
 	 * Filtert die Adressen-Liste nach Betreibern.
-	 * 
+	 *
 	 * @param focusComp Welche Komponente soll nach der Suche den Fokus bekommen.
 	 */
 	public void filterBetreiberListe(Component focusComp) {
@@ -380,7 +380,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
 			@Override
 			protected void doNonUILogic() {
-				
+
 				if(!name.isEmpty() || !str.isEmpty() || !ort.isEmpty()) {
 					BasisAdresseSuchen.this.inhaberModel.filterBetreiber(getSuchFeld().getText(),
 							getStrassenFeld().getText(), fhausnr, ort);
@@ -422,7 +422,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             this.inhaber = betr;
             searchObjekteByBetreiber(betr);
         }
-        
+
         log.debug("End updateObjekte()");
     }
 
@@ -445,7 +445,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private void updateBetreiberListe() {
 		filterBetreiberListe(betreiberTabelle);
-		
+
 	}
 
 	/**
@@ -465,10 +465,10 @@ public class BasisAdresseSuchen extends AbstractModul {
 
             @Override
             protected void doUIUpdateLogic() throws RuntimeException {
-            	
+
                 BasisAdresseSuchen.this.objektModel.fireTableDataChanged();
             }
-            
+
         };
         worker.start();
     }
@@ -916,7 +916,7 @@ public class BasisAdresseSuchen extends AbstractModul {
     private JTable getObjektTabelle() {
 
         if (this.objektTabelle == null) {
-        	
+
             this.objektTabelle = new JTable(this.objektModel){
 
 				public Component prepareRenderer(TableCellRenderer renderer,
@@ -928,7 +928,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 					return c;
 				}
 			};
-              
+
 			this.objektTabelle
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             this.objektTabelle.getColumnModel().getColumn(0).setMaxWidth(60);
@@ -938,7 +938,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 .setPreferredWidth(
                     this.objektTabelle.getColumnModel().getColumn(0)
                         .getMaxWidth() - 10);
-            
+
             this.objektTabelle
                 .addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
@@ -966,7 +966,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                                         obj.getId().intValue(), false);
                                 BasisAdresseSuchen.this.manager
                                     .switchModul("m_sielhaut1");
-                            }                            	
+                            }
                         }
                     }
 
@@ -1056,7 +1056,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			this.suchFeld.setFocusTraversalKeys(
 					KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
 					Collections.EMPTY_SET);
-	
+
 	        this.suchFeld.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -1079,7 +1079,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			this.strassenFeld.setFocusTraversalKeys(
 													KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
 													Collections.EMPTY_SET);
-	
+
 			this.strassenFeld.addActionListener(new ActionListener()
 			{
 				@Override
@@ -1089,7 +1089,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 					filterBetreiberListe(getBetreiberTabelle());
 				}
 			});
-	
+
 			this.strassenFeld.addKeyListener(new KeyAdapter()
 			{
 				@Override
@@ -1101,7 +1101,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 						filterBetreiberListe(getBetreiberTabelle());
 					}
 				}
-	
+
 				@Override
 				public void keyTyped(KeyEvent e)
 				{
@@ -1130,7 +1130,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			this.ortFeld.setFocusTraversalKeys(
 												KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
 												Collections.EMPTY_SET);
-	
+
 			this.ortFeld.addActionListener(new ActionListener()
 			{
 				@Override
@@ -1140,7 +1140,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 					filterBetreiberListe(getBetreiberTabelle());
 				}
 			});
-	
+
 			this.ortFeld.addKeyListener(new KeyAdapter()
 			{
 				@Override
@@ -1152,7 +1152,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 						doSearch();
 					}
 				}
-	
+
 				@Override
 				public void keyTyped(KeyEvent e)
 				{
@@ -1178,7 +1178,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 		if (this.hausnrFeld == null)
 		{
 			this.hausnrFeld = new BasicEntryField();
-	
+
 			this.hausnrFeld.addActionListener(new ActionListener()
 			{
 				@Override
@@ -1349,7 +1349,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-	
+
 					// Was diese ganze "SwingWorkerVariant"-Geschichte
 					// soll, steht unter
 					// http://www.javaworld.com/javaworld/jw-06-2003/jw-0606-swingworker.html
@@ -1359,7 +1359,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 					{
 						protected String oldText = "";
 						private String newText = "";
-	
+
 						@Override
 						protected void doNonUILogic()
 						{
@@ -1374,7 +1374,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 										.sanitizeQueryInput(this.oldText);
 								String str = DatabaseQuery
 										.getTabStreet(suchText);
-	
+
 								if (str != null)
 								{
 									this.newText = str;
@@ -1385,7 +1385,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 								}
 							}
 						}
-	
+
 						@Override
 						protected void doUIUpdateLogic()
 						{
@@ -1401,7 +1401,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			});
 			this.suchTimer.setRepeats(false);
 		}
-	
+
 		return this.suchTimer;
 	}
 

@@ -44,7 +44,7 @@ public class Anh55Fachdaten  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAnh55Fachdaten;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Anfallstelle anfallstelle;
@@ -379,7 +379,7 @@ public class Anh55Fachdaten  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -388,38 +388,38 @@ public class Anh55Fachdaten  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
-        buffer.append("abgemeldet").append("='").append(getAbgemeldet()).append("' ");			
-        buffer.append("putztuecher").append("='").append(getPutztuecher()).append("' ");			
-        buffer.append("teppich").append("='").append(getTeppich()).append("' ");			
-        buffer.append("matten").append("='").append(getMatten()).append("' ");			
-        buffer.append("haushaltstex").append("='").append(getHaushaltstex()).append("' ");			
-        buffer.append("berufskl").append("='").append(getBerufskl()).append("' ");			
-        buffer.append("gaststhotel").append("='").append(getGaststhotel()).append("' ");			
-        buffer.append("krankenhaus").append("='").append(getKrankenhaus()).append("' ");			
-        buffer.append("heimwaesche").append("='").append(getHeimwaesche()).append("' ");			
-        buffer.append("anteilwaschgut").append("='").append(getAnteilwaschgut()).append("' ");			
-        buffer.append("vlies").append("='").append(getVlies()).append("' ");			
-        buffer.append("fischfleisch").append("='").append(getFischfleisch()).append("' ");			
-        buffer.append("anteilgesamtgut").append("='").append(getAnteilgesamtgut()).append("' ");			
-        buffer.append("betrwasseraufber").append("='").append(getBetrwasseraufber()).append("' ");			
-        buffer.append("chlor").append("='").append(getChlor()).append("' ");			
-        buffer.append("aktivchlor").append("='").append(getAktivchlor()).append("' ");			
-        buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");			
-        buffer.append("entgebId").append("='").append(getEntgebId()).append("' ");			
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
-        buffer.append("mengewaesche").append("='").append(getMengewaesche()).append("' ");			
-        buffer.append("sonsttex").append("='").append(getSonsttex()).append("' ");			
-        buffer.append("monatwasserverb").append("='").append(getMonatwasserverb()).append("' ");			
-        buffer.append("waschsituation").append("='").append(getWaschsituation()).append("' ");			
-        buffer.append("ansprechpartner").append("='").append(getAnsprechpartner()).append("' ");			
-        buffer.append("branche").append("='").append(getBranche()).append("' ");			
-        buffer.append("loesungsmittel").append("='").append(getLoesungsmittel()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");
+        buffer.append("abgemeldet").append("='").append(getAbgemeldet()).append("' ");
+        buffer.append("putztuecher").append("='").append(getPutztuecher()).append("' ");
+        buffer.append("teppich").append("='").append(getTeppich()).append("' ");
+        buffer.append("matten").append("='").append(getMatten()).append("' ");
+        buffer.append("haushaltstex").append("='").append(getHaushaltstex()).append("' ");
+        buffer.append("berufskl").append("='").append(getBerufskl()).append("' ");
+        buffer.append("gaststhotel").append("='").append(getGaststhotel()).append("' ");
+        buffer.append("krankenhaus").append("='").append(getKrankenhaus()).append("' ");
+        buffer.append("heimwaesche").append("='").append(getHeimwaesche()).append("' ");
+        buffer.append("anteilwaschgut").append("='").append(getAnteilwaschgut()).append("' ");
+        buffer.append("vlies").append("='").append(getVlies()).append("' ");
+        buffer.append("fischfleisch").append("='").append(getFischfleisch()).append("' ");
+        buffer.append("anteilgesamtgut").append("='").append(getAnteilgesamtgut()).append("' ");
+        buffer.append("betrwasseraufber").append("='").append(getBetrwasseraufber()).append("' ");
+        buffer.append("chlor").append("='").append(getChlor()).append("' ");
+        buffer.append("aktivchlor").append("='").append(getAktivchlor()).append("' ");
+        buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");
+        buffer.append("entgebId").append("='").append(getEntgebId()).append("' ");
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
+        buffer.append("mengewaesche").append("='").append(getMengewaesche()).append("' ");
+        buffer.append("sonsttex").append("='").append(getSonsttex()).append("' ");
+        buffer.append("monatwasserverb").append("='").append(getMonatwasserverb()).append("' ");
+        buffer.append("waschsituation").append("='").append(getWaschsituation()).append("' ");
+        buffer.append("ansprechpartner").append("='").append(getAnsprechpartner()).append("' ");
+        buffer.append("branche").append("='").append(getBranche()).append("' ");
+        buffer.append("loesungsmittel").append("='").append(getLoesungsmittel()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -451,7 +451,7 @@ public class Anh55Fachdaten  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -485,37 +485,37 @@ public class Anh55Fachdaten  implements java.io.Serializable {
      * @param copy Anh55Fachdaten
      */
     private void copy(Anh55Fachdaten copy) {
-        this.id = copy.getId();            
-        this.anfallstelle = copy.getAnfallstelle();            
-        this.abgemeldet = copy.getAbgemeldet();            
-        this.putztuecher = copy.getPutztuecher();            
-        this.teppich = copy.getTeppich();            
-        this.matten = copy.getMatten();            
-        this.haushaltstex = copy.getHaushaltstex();            
-        this.berufskl = copy.getBerufskl();            
-        this.gaststhotel = copy.getGaststhotel();            
-        this.krankenhaus = copy.getKrankenhaus();            
-        this.heimwaesche = copy.getHeimwaesche();            
-        this.anteilwaschgut = copy.getAnteilwaschgut();            
-        this.vlies = copy.getVlies();            
-        this.fischfleisch = copy.getFischfleisch();            
-        this.anteilgesamtgut = copy.getAnteilgesamtgut();            
-        this.betrwasseraufber = copy.getBetrwasseraufber();            
-        this.chlor = copy.getChlor();            
-        this.aktivchlor = copy.getAktivchlor();            
-        this.sachbearbeiter = copy.getSachbearbeiter();            
-        this.entgebId = copy.getEntgebId();            
-        this.bemerkungen = copy.getBemerkungen();            
-        this.mengewaesche = copy.getMengewaesche();            
-        this.sonsttex = copy.getSonsttex();            
-        this.monatwasserverb = copy.getMonatwasserverb();            
-        this.waschsituation = copy.getWaschsituation();            
-        this.ansprechpartner = copy.getAnsprechpartner();            
-        this.branche = copy.getBranche();            
-        this.loesungsmittel = copy.getLoesungsmittel();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.id = copy.getId();
+        this.anfallstelle = copy.getAnfallstelle();
+        this.abgemeldet = copy.getAbgemeldet();
+        this.putztuecher = copy.getPutztuecher();
+        this.teppich = copy.getTeppich();
+        this.matten = copy.getMatten();
+        this.haushaltstex = copy.getHaushaltstex();
+        this.berufskl = copy.getBerufskl();
+        this.gaststhotel = copy.getGaststhotel();
+        this.krankenhaus = copy.getKrankenhaus();
+        this.heimwaesche = copy.getHeimwaesche();
+        this.anteilwaschgut = copy.getAnteilwaschgut();
+        this.vlies = copy.getVlies();
+        this.fischfleisch = copy.getFischfleisch();
+        this.anteilgesamtgut = copy.getAnteilgesamtgut();
+        this.betrwasseraufber = copy.getBetrwasseraufber();
+        this.chlor = copy.getChlor();
+        this.aktivchlor = copy.getAktivchlor();
+        this.sachbearbeiter = copy.getSachbearbeiter();
+        this.entgebId = copy.getEntgebId();
+        this.bemerkungen = copy.getBemerkungen();
+        this.mengewaesche = copy.getMengewaesche();
+        this.sonsttex = copy.getSonsttex();
+        this.monatwasserverb = copy.getMonatwasserverb();
+        this.waschsituation = copy.getWaschsituation();
+        this.ansprechpartner = copy.getAnsprechpartner();
+        this.branche = copy.getBranche();
+        this.loesungsmittel = copy.getLoesungsmittel();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

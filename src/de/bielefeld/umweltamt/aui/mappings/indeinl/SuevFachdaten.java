@@ -42,7 +42,7 @@ public class SuevFachdaten  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forSuevFachdaten;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Objekt objekt;
@@ -247,7 +247,7 @@ public class SuevFachdaten  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -256,25 +256,25 @@ public class SuevFachdaten  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("groesser3ha").append("='").append(getGroesser3ha()).append("' ");			
-        buffer.append("versFlaeche").append("='").append(getVersFlaeche()).append("' ");			
-        buffer.append("suevkanPflicht").append("='").append(getSuevkanPflicht()).append("' ");			
-        buffer.append("indirektsw").append("='").append(getIndirektsw()).append("' ");			
-        buffer.append("indirektrw").append("='").append(getIndirektrw()).append("' ");			
-        buffer.append("direktsw").append("='").append(getDirektsw()).append("' ");			
-        buffer.append("direktrw").append("='").append(getDirektrw()).append("' ");			
-        buffer.append("anzeige58").append("='").append(getAnzeige58()).append("' ");			
-        buffer.append("sanierungErfolgt").append("='").append(getSanierungErfolgt()).append("' ");			
-        buffer.append("sanierungskonzept").append("='").append(getSanierungskonzept()).append("' ");			
-        buffer.append("keineAngaben").append("='").append(getKeineAngaben()).append("' ");			
-        buffer.append("datAnzeige58").append("='").append(getDatAnzeige58()).append("' ");			
-        buffer.append("datAnschreiben").append("='").append(getDatAnschreiben()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");
+        buffer.append("groesser3ha").append("='").append(getGroesser3ha()).append("' ");
+        buffer.append("versFlaeche").append("='").append(getVersFlaeche()).append("' ");
+        buffer.append("suevkanPflicht").append("='").append(getSuevkanPflicht()).append("' ");
+        buffer.append("indirektsw").append("='").append(getIndirektsw()).append("' ");
+        buffer.append("indirektrw").append("='").append(getIndirektrw()).append("' ");
+        buffer.append("direktsw").append("='").append(getDirektsw()).append("' ");
+        buffer.append("direktrw").append("='").append(getDirektrw()).append("' ");
+        buffer.append("anzeige58").append("='").append(getAnzeige58()).append("' ");
+        buffer.append("sanierungErfolgt").append("='").append(getSanierungErfolgt()).append("' ");
+        buffer.append("sanierungskonzept").append("='").append(getSanierungskonzept()).append("' ");
+        buffer.append("keineAngaben").append("='").append(getKeineAngaben()).append("' ");
+        buffer.append("datAnzeige58").append("='").append(getDatAnzeige58()).append("' ");
+        buffer.append("datAnschreiben").append("='").append(getDatAnschreiben()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -306,7 +306,7 @@ public class SuevFachdaten  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -340,24 +340,24 @@ public class SuevFachdaten  implements java.io.Serializable {
      * @param copy SuevFachdaten
      */
     private void copy(SuevFachdaten copy) {
-        this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
-        this.groesser3ha = copy.getGroesser3ha();            
-        this.versFlaeche = copy.getVersFlaeche();            
-        this.suevkanPflicht = copy.getSuevkanPflicht();            
-        this.indirektsw = copy.getIndirektsw();            
-        this.indirektrw = copy.getIndirektrw();            
-        this.direktsw = copy.getDirektsw();            
-        this.direktrw = copy.getDirektrw();            
-        this.anzeige58 = copy.getAnzeige58();            
-        this.sanierungErfolgt = copy.getSanierungErfolgt();            
-        this.sanierungskonzept = copy.getSanierungskonzept();            
-        this.keineAngaben = copy.getKeineAngaben();            
-        this.datAnzeige58 = copy.getDatAnzeige58();            
-        this.datAnschreiben = copy.getDatAnschreiben();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.id = copy.getId();
+        this.objekt = copy.getObjekt();
+        this.groesser3ha = copy.getGroesser3ha();
+        this.versFlaeche = copy.getVersFlaeche();
+        this.suevkanPflicht = copy.getSuevkanPflicht();
+        this.indirektsw = copy.getIndirektsw();
+        this.indirektrw = copy.getIndirektrw();
+        this.direktsw = copy.getDirektsw();
+        this.direktrw = copy.getDirektrw();
+        this.anzeige58 = copy.getAnzeige58();
+        this.sanierungErfolgt = copy.getSanierungErfolgt();
+        this.sanierungskonzept = copy.getSanierungskonzept();
+        this.keineAngaben = copy.getKeineAngaben();
+        this.datAnzeige58 = copy.getDatAnzeige58();
+        this.datAnschreiben = copy.getDatAnschreiben();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

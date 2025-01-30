@@ -87,7 +87,7 @@ import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 /**
  * Ein Dialog zum Bearbeiten eines Betreibers.
- * 
+ *
  * @author David Klotz
  */
 public class BetreiberEditor extends AbstractApplyEditor {
@@ -139,18 +139,18 @@ public class BetreiberEditor extends AbstractApplyEditor {
 	private JComboBox<Standortgghwsg> standortGgBox;
 	private JComboBox<Wassereinzugsgebiet> wEinzugsGebBox;
 
-	
+
 	private Gemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;
 	private Standortgghwsg[] standortggs = null;
 	private Wassereinzugsgebiet[] wEinzugsgebiete = null;
 	private Wirtschaftszweig[] wirtschaftszweige = null;
 	private String[] tabstreets = null;
-	
+
     private Action standortLoeschAction;
     private Action standortNeuAction;
     private JPopupMenu standortPopup;
-	
+
 	private JTable adressenTabelle;
 	private BasisTabStreetsModel adressenModel;
 	private JTable standorteTabelle;
@@ -199,7 +199,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		wassermengeFeld = new IntegerField();
 		betrBeaufVornameFeld = new LimitedTextField(50);
 		betrBeaufNachnameFeld = new LimitedTextField(50);
-		
+
 		daten_awsvCheck = new JCheckBox(i18n.getString("editor.betreiber.awsv"));
 		daten_esatzungCheck = new JCheckBox(i18n.getString("editor.betreiber.eSatzung"));
 		daten_whgCheck = new JCheckBox(i18n.getString("editor.betreiber.whg"));
@@ -215,7 +215,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 
 		handzeichenNeuFeld = new LimitedTextField(10, "");
 		handzeichenNeuFeld.setToolTipText(i18n.getString("tooltip.sig_mandatory"));
-		
+
 		flurFeld = new LimitedTextField(50);
 		flurStkFeld = new LimitedTextField(50);
 		gemarkungBox = new JComboBox<Gemarkung>();
@@ -312,9 +312,9 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		builder.add(wirtschaftszweigBox, cc.xyw(3, 11, 6));
 		kassenzeichenLabel = builder.addLabel(i18n.getString("editor.betreiber.ref_number"), cc.xy(1, 13)); // Kassenzeichen
 		builder.add(kassenzeichenFeld, cc.xyw(3, 13, 6));
-		
+
 		// Rechts oben
-		
+
 		builder.addSeparator(i18n.getString("editor.betreiber.separator.contact"), cc.xyw(10, 1, 4)); // Ansprechpartner--
 		builder.addLabel(i18n.getString("editor.betreiber.contact_first_name"), cc.xy(10, 3)); // Vorname
 		builder.add(betrBeaufVornameFeld, cc.xyw(12, 3, 2));
@@ -328,8 +328,8 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		builder.add(emailFeld, cc.xyw(12, 11, 2));
 		builder.addLabel(i18n.getString("editor.betreiber.water_amount"), cc.xy(10, 13)); // Wassermenge
 		builder.add(wassermengeFeld, cc.xyw(12, 13, 2));
-		
-		
+
+
 		// Adresse
 		// Links
 		builder.addSeparator(i18n.getString("editor.betreiber.separator.address"), cc.xyw(1, 15, 8));
@@ -372,7 +372,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		builder.add(daten_awsvCheck, cc.xyw(1, 43, 2)); // AWSV Check
 		builder.add(daten_esatzungCheck, cc.xyw(5, 43, 2)); // ESatzung Check
 		builder.add(daten_whgCheck, cc.xyw(9, 43, 2)); // WHG Check
-		
+
 		builder.addSeparator(i18n.getString("editor.betreiber.remark"), cc.xyw(1, 45, 13)); // Bemerkungen ---
 		builder.add(bemerkungsScroller, cc.xywh(1, 47, 13, 7)); // Bemerkungen Scroller
 
@@ -384,7 +384,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		builder.addSeparator(i18n.getString("editor.betreiber.separator.new_rev"), cc.xyw(10, 55, 4));		//Neue Revison--
 		handzeichenLabel = builder.addLabel(i18n.getString("editor.betreiber.sign"), cc.xy(10, 57));
 		builder.add(handzeichenNeuFeld, cc.xyw(12, 57, 2));
-		
+
 		button3.setText(i18n.getString("editor.betreiber.button.change_address"));
 
 		BetreiberListener dialogListener = new BetreiberListener();
@@ -493,7 +493,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 					adressenModel.updateList();
 					adressenTabelle.setModel(adressenModel);
 					adressenTabelle.setEnabled(false);
-					
+
 					getAdressenTabelle();
 
 				}
@@ -504,7 +504,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 					standorteTabelle.setModel(standorteModel);
 
 					getStandorteTabelle();
-					
+
 				}
 
 				if (wirtschaftszweige != null) {
@@ -744,13 +744,13 @@ public class BetreiberEditor extends AbstractApplyEditor {
 				getBetreiber().setEmail(email);
 			}
 		}
-		
+
 		adresse.setUeberschgeb(ueberschgebCheck.isSelected());
 
 		// Wassermenge:
 		Integer wassermenge = ((IntegerField) wassermengeFeld).getIntValue();
 		getBetreiber().setWassermenge(wassermenge);
-		
+
 		// Betriebsbeauftragter-Vorname
 		String betrBeaufVorname = betrBeaufVornameFeld.getText();
 		if (betrBeaufVorname != null) {
@@ -826,7 +826,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 			adresse.setFlurstueck(flurstk);
 		}
 
-	
+
 
 		// Bemerkungen
 		String bemerkungen = bemerkungsArea.getText();
@@ -843,7 +843,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		getBetreiber().setRevihandz(handzeichen);
 
 		getBetreiber().setRevidatum(Calendar.getInstance().getTime());
-		
+
 		List<?> adrStdListe = this.standorteModel.getList();
 		for (int i = 0; i < adrStdListe.size(); i++) {
 
@@ -868,7 +868,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 
 			if (this.adressenTabelle == null) {
 				this.adressenTabelle = new JTable(this.adressenModel);
-				
+
 				this.adressenTabelle.getColumnModel().getColumn(0).setPreferredWidth(10);
 				this.adressenTabelle.getColumnModel().getColumn(1).setPreferredWidth(100);
 				this.adressenTabelle.getColumnModel().getColumn(2).setPreferredWidth(10);
@@ -937,7 +937,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 						}else if ((e.getButton() == 3)){
 							showStandortPopup(e);
 						}
-						
+
 					}
 
 					@Override
@@ -1020,7 +1020,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 
 	/**
 	 * Ein Listener für die Events des "Betreiber Editor"-Moduls.
-	 * 
+	 *
 	 * @author Gerhard Genuit
 	 */
 	private final class BetreiberListener implements ActionListener {
@@ -1045,7 +1045,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
         editDialog.setLocationRelativeTo(this.frame);
 
         editDialog.setVisible(true);
-        
+
         if (editDialog.wasSaved()) {
         	standorteModel.updateList();
         }

@@ -41,7 +41,7 @@ public class Objektchrono  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forObjektchrono;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Objekt objekt;
@@ -163,7 +163,7 @@ public class Objektchrono  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -172,16 +172,16 @@ public class Objektchrono  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("datum").append("='").append(getDatum()).append("' ");			
-        buffer.append("sachverhalt").append("='").append(getSachverhalt()).append("' ");			
-        buffer.append("wv").append("='").append(getWv()).append("' ");			
-        buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("pfad").append("='").append(getPfad()).append("' ");			
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");
+        buffer.append("datum").append("='").append(getDatum()).append("' ");
+        buffer.append("sachverhalt").append("='").append(getSachverhalt()).append("' ");
+        buffer.append("wv").append("='").append(getWv()).append("' ");
+        buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("pfad").append("='").append(getPfad()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -213,7 +213,7 @@ public class Objektchrono  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -247,15 +247,15 @@ public class Objektchrono  implements java.io.Serializable {
      * @param copy Objektchrono
      */
     private void copy(Objektchrono copy) {
-        this.objekt = copy.getObjekt();            
-        this.datum = copy.getDatum();            
-        this.sachverhalt = copy.getSachverhalt();            
-        this.wv = copy.getWv();            
-        this.sachbearbeiter = copy.getSachbearbeiter();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.pfad = copy.getPfad();            
-    }    
+        this.objekt = copy.getObjekt();
+        this.datum = copy.getDatum();
+        this.sachverhalt = copy.getSachverhalt();
+        this.wv = copy.getWv();
+        this.sachbearbeiter = copy.getSachbearbeiter();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.pfad = copy.getPfad();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

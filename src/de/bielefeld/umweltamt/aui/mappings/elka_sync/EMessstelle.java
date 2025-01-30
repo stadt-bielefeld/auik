@@ -95,12 +95,12 @@ public class EMessstelle implements java.io.Serializable {
     public void setNr(Integer nr) {
         this.nr = nr;
     }
-    
+
     @JsonIgnore
     public Integer getOrigNr() {
         return this.origNr;
     }
-    
+
     @JsonIgnore
     public void setOrigNr(Integer origNr) {
         this.origNr = origNr;
@@ -225,7 +225,7 @@ public class EMessstelle implements java.io.Serializable {
 
     public void setProbenahmes(Set<EProbenahme> probenahme) {
         this.probenahmes = probenahme;
-        
+
     }
 
     /* Custom code goes below here! */

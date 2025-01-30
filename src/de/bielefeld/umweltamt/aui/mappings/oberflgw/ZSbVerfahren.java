@@ -42,7 +42,7 @@ public class ZSbVerfahren  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZSbVerfahren;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private ZSbVerfahrenId id;
     private Sonderbauwerk sonderbauwerk;
@@ -100,10 +100,10 @@ public class ZSbVerfahren  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("sonderbauwerk").append("='").append(getSonderbauwerk()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("sonderbauwerk").append("='").append(getSonderbauwerk()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -135,7 +135,7 @@ public class ZSbVerfahren  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -169,9 +169,9 @@ public class ZSbVerfahren  implements java.io.Serializable {
      * @param copy ZSbVerfahren
      */
     private void copy(ZSbVerfahren copy) {
-        this.id = copy.getId();            
-        this.sonderbauwerk = copy.getSonderbauwerk();            
-    }    
+        this.id = copy.getId();
+        this.sonderbauwerk = copy.getSonderbauwerk();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

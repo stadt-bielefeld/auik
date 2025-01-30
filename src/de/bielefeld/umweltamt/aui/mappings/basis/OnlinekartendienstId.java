@@ -38,7 +38,7 @@ public class OnlinekartendienstId  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forOnlinekartendienstId;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer behaelterid;
     private String vawsBezirk;
@@ -262,7 +262,7 @@ public class OnlinekartendienstId  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -271,28 +271,28 @@ public class OnlinekartendienstId  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("behaelterid").append("='").append(getBehaelterid()).append("' ");			
-        buffer.append("vawsBezirk").append("='").append(getVawsBezirk()).append("' ");			
-        buffer.append("plz").append("='").append(getPlz()).append("' ");			
-        buffer.append("strasse").append("='").append(getStrasse()).append("' ");			
-        buffer.append("hausnr").append("='").append(getHausnr()).append("' ");			
-        buffer.append("hausnrzus").append("='").append(getHausnrzus()).append("' ");			
-        buffer.append("betranrede").append("='").append(getBetranrede()).append("' ");			
-        buffer.append("betrname").append("='").append(getBetrname()).append("' ");			
-        buffer.append("betrnamezus").append("='").append(getBetrnamezus()).append("' ");			
-        buffer.append("objektart").append("='").append(getObjektart()).append("' ");			
-        buffer.append("anlagenart").append("='").append(getAnlagenart()).append("' ");			
-        buffer.append("behaelterart").append("='").append(getBehaelterart()).append("' ");			
-        buffer.append("fluessigkeit").append("='").append(getFluessigkeit()).append("' ");			
-        buffer.append("herstellnr").append("='").append(getHerstellnr()).append("' ");			
-        buffer.append("menge").append("='").append(getMenge()).append("' ");			
-        buffer.append("wgk").append("='").append(getWgk()).append("' ");			
-        buffer.append("stillegungsdatum").append("='").append(getStillegungsdatum()).append("' ");			
-        buffer.append("rechtswert").append("='").append(getRechtswert()).append("' ");			
-        buffer.append("hochwert").append("='").append(getHochwert()).append("' ");			
-        buffer.append("theGeom").append("='").append(getTheGeom()).append("' ");			
+        buffer.append("behaelterid").append("='").append(getBehaelterid()).append("' ");
+        buffer.append("vawsBezirk").append("='").append(getVawsBezirk()).append("' ");
+        buffer.append("plz").append("='").append(getPlz()).append("' ");
+        buffer.append("strasse").append("='").append(getStrasse()).append("' ");
+        buffer.append("hausnr").append("='").append(getHausnr()).append("' ");
+        buffer.append("hausnrzus").append("='").append(getHausnrzus()).append("' ");
+        buffer.append("betranrede").append("='").append(getBetranrede()).append("' ");
+        buffer.append("betrname").append("='").append(getBetrname()).append("' ");
+        buffer.append("betrnamezus").append("='").append(getBetrnamezus()).append("' ");
+        buffer.append("objektart").append("='").append(getObjektart()).append("' ");
+        buffer.append("anlagenart").append("='").append(getAnlagenart()).append("' ");
+        buffer.append("behaelterart").append("='").append(getBehaelterart()).append("' ");
+        buffer.append("fluessigkeit").append("='").append(getFluessigkeit()).append("' ");
+        buffer.append("herstellnr").append("='").append(getHerstellnr()).append("' ");
+        buffer.append("menge").append("='").append(getMenge()).append("' ");
+        buffer.append("wgk").append("='").append(getWgk()).append("' ");
+        buffer.append("stillegungsdatum").append("='").append(getStillegungsdatum()).append("' ");
+        buffer.append("rechtswert").append("='").append(getRechtswert()).append("' ");
+        buffer.append("hochwert").append("='").append(getHochwert()).append("' ");
+        buffer.append("theGeom").append("='").append(getTheGeom()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

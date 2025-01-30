@@ -61,7 +61,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
  * Das "Zahnarzt"-Tab des BasisObjektBearbeiten-Moduls
- * 
+ *
  * @author Gerd Genuit
  */
 public class Anh50Panel extends ObjectPanel {

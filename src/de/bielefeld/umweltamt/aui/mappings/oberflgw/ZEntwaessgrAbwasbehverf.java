@@ -43,7 +43,7 @@ public class ZEntwaessgrAbwasbehverf  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZEntwaessgrAbwasbehverf;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private ZEntwaessgrAbwasbehverfId id;
     private Abaverfahren abaverfahren;
@@ -110,11 +110,11 @@ public class ZEntwaessgrAbwasbehverf  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("abaverfahren").append("='").append(getAbaverfahren()).append("' ");			
-        buffer.append("entwaesserungsgrundstueck").append("='").append(getEntwaesserungsgrundstueck()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("abaverfahren").append("='").append(getAbaverfahren()).append("' ");
+        buffer.append("entwaesserungsgrundstueck").append("='").append(getEntwaesserungsgrundstueck()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -146,7 +146,7 @@ public class ZEntwaessgrAbwasbehverf  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -180,10 +180,10 @@ public class ZEntwaessgrAbwasbehverf  implements java.io.Serializable {
      * @param copy ZEntwaessgrAbwasbehverf
      */
     private void copy(ZEntwaessgrAbwasbehverf copy) {
-        this.id = copy.getId();            
-        this.abaverfahren = copy.getAbaverfahren();            
-        this.entwaesserungsgrundstueck = copy.getEntwaesserungsgrundstueck();            
-    }    
+        this.id = copy.getId();
+        this.abaverfahren = copy.getAbaverfahren();
+        this.entwaesserungsgrundstueck = copy.getEntwaesserungsgrundstueck();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

@@ -42,7 +42,7 @@ public class Einheiten  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forEinheiten;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String bezeichnung;
@@ -146,7 +146,7 @@ public class Einheiten  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -155,15 +155,15 @@ public class Einheiten  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("deaEinheitenMasseinheitenNr").append("='").append(getDeaEinheitenMasseinheitenNr()).append("' ");			
-        buffer.append("analysepositions").append("='").append(getAnalysepositions()).append("' ");			
-        buffer.append("metaParameters").append("='").append(getMetaParameters()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("deaEinheitenMasseinheitenNr").append("='").append(getDeaEinheitenMasseinheitenNr()).append("' ");
+        buffer.append("analysepositions").append("='").append(getAnalysepositions()).append("' ");
+        buffer.append("metaParameters").append("='").append(getMetaParameters()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -195,7 +195,7 @@ public class Einheiten  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -229,14 +229,14 @@ public class Einheiten  implements java.io.Serializable {
      * @param copy Einheiten
      */
     private void copy(Einheiten copy) {
-        this.id = copy.getId();            
-        this.bezeichnung = copy.getBezeichnung();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.deaEinheitenMasseinheitenNr = copy.getDeaEinheitenMasseinheitenNr();            
-        this.analysepositions = copy.getAnalysepositions();            
-        this.metaParameters = copy.getMetaParameters();            
-    }    
+        this.id = copy.getId();
+        this.bezeichnung = copy.getBezeichnung();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.deaEinheitenMasseinheitenNr = copy.getDeaEinheitenMasseinheitenNr();
+        this.analysepositions = copy.getAnalysepositions();
+        this.metaParameters = copy.getMetaParameters();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 public class EditorGemarkungModel extends EditableListTableModel {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -7170618777899362092L;
 
@@ -88,22 +88,22 @@ public class EditorGemarkungModel extends EditableListTableModel {
 
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		
+
 		Gemarkung tmp = (Gemarkung) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
         	tmp.setId(tmpID);
         	break;
-        	
+
         case 1:
         	String tmpArt = (String) newValue;
         	tmp.setGemarkung(tmpArt);
         	break;
 
         default:
-            break;        	
-        	
+            break;
+
 		}
 		Gemarkung.merge(tmp);
 	}

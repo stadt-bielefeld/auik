@@ -217,8 +217,8 @@ public class EAnfallstelle implements java.io.Serializable {
         this.aufzBetriebTog = copy.getAufzBetriebTog();
         this.erstellDat = copy.getErstellDat();
         this.herkunft = copy.getHerkunft();
-        this.afsStoffes = copy.getAfsStoffes();                      
-        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();  
+        this.afsStoffes = copy.getAfsStoffes();
+        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();
     }
 
     /**
