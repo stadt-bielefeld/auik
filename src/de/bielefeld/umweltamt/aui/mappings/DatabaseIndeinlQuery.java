@@ -141,8 +141,6 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 		        if (sachbe != null) {
 		            criteria.add(Restrictions.eq("objekt.sachbearbeiter", sachbe));
 		        }
-		
-		
         return new DatabaseAccess().executeCriteriaToList(
                 criteria, new Anfallstelle());
 	}
