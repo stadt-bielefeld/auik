@@ -315,7 +315,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         SwingWorkerVariant worker = new SwingWorkerVariant(
             getBetreiberTabelle()) {
             @Override
-
 			protected void doNonUILogic() throws RuntimeException {
 //				if (name != "" || strasse != ""
 //						|| fhausnr != -1 || ort != "") {

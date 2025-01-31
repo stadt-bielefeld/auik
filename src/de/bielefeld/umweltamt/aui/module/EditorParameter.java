@@ -229,7 +229,7 @@ public class EditorParameter extends AbstractModul {
 	        TableColumn methodeColumn = this.resultTable.getColumnModel()
 	            .getColumn(2);
 	        methodeColumn.setPreferredWidth(200);
-	
+
 	        methodeBox = new JComboBox(DatabaseQuery.getMapElkaAnalysemethode());
 	        methodeBox.setEditable(false);
 	        methodeBox.addFocusListener(new FocusAdapter() {
@@ -247,7 +247,7 @@ public class EditorParameter extends AbstractModul {
 	        TableColumn einheitColumn = this.resultTable.getColumnModel()
 	            .getColumn(3);
 	        einheitColumn.setPreferredWidth(10);
-	
+
 	        einheitBox = new JComboBox(DatabaseQuery.getEinheiten());
 	        einheitBox.setEditable(false);
 	        einheitBox.addFocusListener(new FocusAdapter() {
