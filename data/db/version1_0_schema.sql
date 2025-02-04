@@ -129,7 +129,6 @@ SET search_path = awsv, pg_catalog;
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
 
 --
 -- TOC entry 194 (class 1259 OID 5901596)
@@ -379,8 +378,6 @@ CREATE TABLE gefaehrdungsstufen (
 
 ALTER TABLE gefaehrdungsstufen OWNER TO auikadmin;
 
-SET default_with_oids = true;
-
 --
 -- TOC entry 204 (class 1259 OID 5901654)
 -- Name: jgs; Type: TABLE; Schema: awsv; Owner: auikadmin; Tablespace: 
@@ -414,7 +411,6 @@ CREATE TABLE jgs (
 
 ALTER TABLE jgs OWNER TO auikadmin;
 
-SET default_with_oids = false;
 
 --
 -- TOC entry 205 (class 1259 OID 5901660)
@@ -999,8 +995,6 @@ ALTER TABLE basis_sachbearbeiter_id_seq OWNER TO auikadmin;
 ALTER SEQUENCE basis_sachbearbeiter_id_seq OWNED BY sachbearbeiter.id;
 
 
-SET default_with_oids = true;
-
 --
 -- TOC entry 234 (class 1259 OID 5901796)
 -- Name: standort; Type: TABLE; Schema: basis; Owner: auikadmin; Tablespace: 
@@ -1050,7 +1044,6 @@ ALTER TABLE basis_standort_id_seq OWNER TO auikadmin;
 ALTER SEQUENCE basis_standort_id_seq OWNED BY standort.id;
 
 
-SET default_with_oids = false;
 
 --
 -- TOC entry 236 (class 1259 OID 5901803)
@@ -1264,8 +1257,6 @@ CREATE TABLE aba (
 
 ALTER TABLE aba OWNER TO auikadmin;
 
-SET default_with_oids = true;
-
 --
 -- TOC entry 245 (class 1259 OID 5901856)
 -- Name: abaverfahren; Type: TABLE; Schema: elka; Owner: auikadmin; Tablespace: 
@@ -1281,7 +1272,6 @@ CREATE TABLE abaverfahren (
 
 ALTER TABLE abaverfahren OWNER TO auikadmin;
 
-SET default_with_oids = false;
 
 --
 -- TOC entry 246 (class 1259 OID 5901862)
@@ -1679,8 +1669,6 @@ ALTER TABLE e_einleitungsstelle OWNER TO auikadmin;
 
 SET search_path = oberflgw, pg_catalog;
 
-SET default_with_oids = true;
-
 --
 -- TOC entry 250 (class 1259 OID 5901927)
 -- Name: entwaesserungsgrundstueck; Type: TABLE; Schema: oberflgw; Owner: auikadmin; Tablespace: 
@@ -1750,7 +1738,6 @@ ALTER TABLE e_entwaesserungsgrundstueck OWNER TO auikadmin;
 
 SET search_path = labor, pg_catalog;
 
-SET default_with_oids = false;
 
 --
 -- TOC entry 251 (class 1259 OID 5901939)
@@ -1972,8 +1959,6 @@ CREATE VIEW e_probenahme_ueberwachungsergeb AS
 ALTER TABLE e_probenahme_ueberwachungsergeb OWNER TO auikadmin;
 
 SET search_path = oberflgw, pg_catalog;
-
-SET default_with_oids = true;
 
 --
 -- TOC entry 256 (class 1259 OID 5901992)
@@ -2515,7 +2500,6 @@ ALTER SEQUENCE z_aba_verfahren_id_seq OWNED BY z_aba_verfahren.id;
 
 SET search_path = indeinl, pg_catalog;
 
-SET default_with_oids = false;
 
 --
 -- TOC entry 267 (class 1259 OID 5902304)
@@ -3749,8 +3733,6 @@ UNION
 ALTER TABLE view_atl_analyseposition_alt OWNER TO auikadmin;
 
 SET search_path = oberflgw, pg_catalog;
-
-SET default_with_oids = true;
 
 --
 -- TOC entry 315 (class 1259 OID 5902625)
@@ -7903,17 +7885,3 @@ ALTER TABLE labor.parameter ADD COLUMN analysemethode_id integer;
    
 UPDATE labor.analyseposition SET methode_id = parameter.analysemethode_id FROM labor.parameter WHERE analyseposition.parameter_id = parameter.ordnungsbegriff;
 UPDATE labor.analyseposition SET methode_id = 1 WHERE analyseposition.methode_id is null;
- 
-  
-CREATE TABLE labor.gebuehren
-(
-   id serial, 
-   bezeichnung character varying, 
-   wert integer, 
-  _enabled boolean NOT NULL DEFAULT true,
-  _deleted boolean NOT NULL DEFAULT false, 
-   CONSTRAINT gebuehren_pkey PRIMARY KEY (id)
-) 
-WITH (
-  OIDS = FALSE
-);
