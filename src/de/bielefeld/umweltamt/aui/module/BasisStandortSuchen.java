@@ -148,7 +148,7 @@ import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 
 /**
  * Ein Modul zum Suchen und Bearbeiten eines Standorts.
- * 
+ *
  * @author David Klotz, Thomas Friebe
  */
 public class BasisStandortSuchen extends AbstractModul
@@ -208,7 +208,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 	/*
 	 * @see de.bielefeld.umweltamt.aui.Modul#getIdentifier()
-	 * 
+	 *
 	 * @return "m_standort_suchen"
 	 */
 	@Override
@@ -219,7 +219,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#getCategory()
 	 */
 	@Override
@@ -315,7 +315,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#show()
 	 */
 
@@ -341,7 +341,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.Modul#hide()
 	 */
 	@Override
@@ -447,7 +447,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 	/**
 	 * öffnet einen Dialog um einen Standort-Datensatz zu bearbeiten.
-	 * 
+	 *
 	 * @param standort
 	 *            Der Standort
 	 */
@@ -485,7 +485,7 @@ public class BasisStandortSuchen extends AbstractModul
 	/**
 	 * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines
 	 * Standorts.
-	 * 
+	 *
 	 * @param standortid
 	 *            Die Standort-Id
 	 * @param abteilung
@@ -517,7 +517,7 @@ public class BasisStandortSuchen extends AbstractModul
 	/**
 	 * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte einer
 	 * Adresse.
-	 * 
+	 *
 	 * @param standortid
 	 *            Die Standort-Id
 	 */
@@ -545,7 +545,7 @@ public class BasisStandortSuchen extends AbstractModul
 	/**
 	 * Setzt den Tabelleninhalt der Objekt-Tabelle auf alle Objekte eines
 	 * Standorts.
-	 * 
+	 *
 	 * @param standortid
 	 *            Die Standort-Id
 	 */
@@ -574,7 +574,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 	/**
 	 * Filtert die Standort-Liste nach Straße und Hausnummer.
-	 * 
+	 *
 	 * @param focusComp
 	 *            Welche Komponente soll nach der Suche den Fokus bekommen.
 	 */
@@ -1163,7 +1163,7 @@ public class BasisStandortSuchen extends AbstractModul
 		if (this.standortPopup == null)
 		{
 			this.standortPopup = new JPopupMenu("Standort");
-			
+
 			JMenuItem gisItem = new JMenuItem(getGisAction());
 			JMenuItem editItem = new JMenuItem(getStandortEditAction());
 			this.standortPopup.add(gisItem);
@@ -1234,13 +1234,13 @@ public class BasisStandortSuchen extends AbstractModul
 	private Action getObjektBetreiberEditAction() {
 	    if (this.objektBetreiberEditAction == null) {
 	        this.objektBetreiberEditAction = new AbstractAction("Betreiber") {
-	
+
 				private static final long serialVersionUID = 9162213813094661474L;
-	
+
 				@Override
 	            public void actionPerformed(ActionEvent e) {
 	                int row = getObjektTabelle().getSelectedRow();
-	
+
 	                if (row != -1) {
 	                    Objekt obj = BasisStandortSuchen.this.objektModel
 	                        .getRow(row);
@@ -1253,20 +1253,20 @@ public class BasisStandortSuchen extends AbstractModul
 	        this.objektBetreiberEditAction.putValue(Action.ACCELERATOR_KEY,
 	            KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0, false));
 	    }
-	
+
 	    return this.objektBetreiberEditAction;
 	}
 
 	private Action getObjektStandortEditAction() {
 	    if (this.objektStandortEditAction == null) {
 	        this.objektStandortEditAction = new AbstractAction("Standort") {
-	
+
 				private static final long serialVersionUID = 8864140472500015190L;
-	
+
 				@Override
 	            public void actionPerformed(ActionEvent e) {
 	                int row = getObjektTabelle().getSelectedRow();
-	
+
 	                // Natürlich nur editieren, wenn wirklich eine Zeile
 	                // ausgewählt ist
 	                if (row != -1) {
@@ -1281,7 +1281,7 @@ public class BasisStandortSuchen extends AbstractModul
 	        this.objektStandortEditAction.putValue(Action.ACCELERATOR_KEY,
 	            KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0, false));
 	    }
-	
+
 	    return this.objektStandortEditAction;
 	}
 

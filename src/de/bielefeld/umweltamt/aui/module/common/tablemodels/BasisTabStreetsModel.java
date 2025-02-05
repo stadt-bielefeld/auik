@@ -53,7 +53,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class BasisTabStreetsModel extends ListTableModel {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 4586459781908256454L;
 	private String strasse = null;

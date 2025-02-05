@@ -45,7 +45,7 @@ public class Anh50Fachdaten  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAnh50Fachdaten;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Anfallstelle anfallstelle;
@@ -200,7 +200,7 @@ public class Anh50Fachdaten  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -209,20 +209,20 @@ public class Anh50Fachdaten  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
-        buffer.append("entsorger").append("='").append(getEntsorger()).append("' ");			
-        buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
-        buffer.append("erloschen").append("='").append(getErloschen()).append("' ");			
-        buffer.append("datumantrag").append("='").append(getDatumantrag()).append("' ");			
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
-        buffer.append("genehmigung").append("='").append(getGenehmigung()).append("' ");			
-        buffer.append("wiedervorlage").append("='").append(getWiedervorlage()).append("' ");			
-        buffer.append("gefaehrdungsklasse").append("='").append(getGefaehrdungsklasse()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");
+        buffer.append("entsorger").append("='").append(getEntsorger()).append("' ");
+        buffer.append("telefon").append("='").append(getTelefon()).append("' ");
+        buffer.append("erloschen").append("='").append(getErloschen()).append("' ");
+        buffer.append("datumantrag").append("='").append(getDatumantrag()).append("' ");
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
+        buffer.append("genehmigung").append("='").append(getGenehmigung()).append("' ");
+        buffer.append("wiedervorlage").append("='").append(getWiedervorlage()).append("' ");
+        buffer.append("gefaehrdungsklasse").append("='").append(getGefaehrdungsklasse()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -254,7 +254,7 @@ public class Anh50Fachdaten  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -288,19 +288,19 @@ public class Anh50Fachdaten  implements java.io.Serializable {
      * @param copy Anh50Fachdaten
      */
     private void copy(Anh50Fachdaten copy) {
-        this.id = copy.getId();            
-        this.anfallstelle = copy.getAnfallstelle();            
-        this.entsorger = copy.getEntsorger();            
-        this.telefon = copy.getTelefon();            
-        this.erloschen = copy.getErloschen();            
-        this.datumantrag = copy.getDatumantrag();            
-        this.bemerkungen = copy.getBemerkungen();            
-        this.genehmigung = copy.getGenehmigung();            
-        this.wiedervorlage = copy.getWiedervorlage();            
-        this.gefaehrdungsklasse = copy.getGefaehrdungsklasse();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.id = copy.getId();
+        this.anfallstelle = copy.getAnfallstelle();
+        this.entsorger = copy.getEntsorger();
+        this.telefon = copy.getTelefon();
+        this.erloschen = copy.getErloschen();
+        this.datumantrag = copy.getDatumantrag();
+        this.bemerkungen = copy.getBemerkungen();
+        this.genehmigung = copy.getGenehmigung();
+        this.wiedervorlage = copy.getWiedervorlage();
+        this.gefaehrdungsklasse = copy.getGefaehrdungsklasse();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

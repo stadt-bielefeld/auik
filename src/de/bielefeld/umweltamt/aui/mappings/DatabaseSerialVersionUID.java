@@ -132,7 +132,7 @@ public class DatabaseSerialVersionUID {
     public static final long forInkaUeberwachungswertId = 4518302662515738672L;
 
 	//TODO: generate
-	public static final long forBasisBezeichnung		= 12L;    
+	public static final long forBasisBezeichnung		= 12L;
 	public static final long forAnh49Abfuhr = 1L;
 
 	public static final long forEProbenahmeUeberwachungsergeb = 2L;
@@ -231,4 +231,4 @@ public class DatabaseSerialVersionUID {
     public static final long forZAbaVerfahren = 97L;
 	public static final long forAnhang = 98L;
 	public static final long forMapElkaGewkennz = 99L;
-}	
+}

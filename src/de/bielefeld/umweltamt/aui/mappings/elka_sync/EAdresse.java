@@ -91,12 +91,12 @@ public class EAdresse implements java.io.Serializable {
 	public void setNr(Integer nr) {
 		this.nr = nr;
 	}
-	
+
 	@JsonIgnore
 	public Integer getOrigNr() {
 		return this.origNr;
 	}
-	
+
 	@JsonIgnore
 	public void setOrigNr(Integer origNr) {
 		this.origNr = origNr;

@@ -93,7 +93,7 @@ public class Anh40Panel extends ObjectPanel {
         this.name = "Anhang 40";
         this.hauptModul = hauptModul;
         this.anfallstelle = anfallstelle;
-        
+
 
         FormLayout layout = new FormLayout(
             "r:120dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 100dlu", // Spalten
@@ -137,7 +137,7 @@ public class Anh40Panel extends ObjectPanel {
         builder.appendRow("fill:30dlu");
         builder.append(bemerkungsScroller, 7);
         builder.nextLine();
-        
+
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
                 getSaveAnh40Button());
         builder.append(buttonBar,7);
@@ -369,7 +369,7 @@ public class Anh40Panel extends ObjectPanel {
     }
 
     public void completeObjekt(Anfallstelle anfallstelle) {
-        
+
         if (anfallstelle.getAnh40Fachdatens().size() == 0) {
             // Neues Anhang 40 Objekt erzeugen
             this.fachdaten = new Anh40Fachdaten();
@@ -520,4 +520,4 @@ public class Anh40Panel extends ObjectPanel {
         return this.klaeranlageFeld;
     }
 }
-   
+

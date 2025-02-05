@@ -43,16 +43,6 @@ public class AuikLogger extends Logger {
 				new AuikLoggerFactory());
 	}
 
-	/**
-	 * Imitate the old logging with message and source.
-	 * TODO: Do we really still need this?
-	 * @param message The log message
-	 * @param src The source of the log message
-	 */
-	public void debug(Object message, String src) {
-		super.debug("(" + src + ")" + message);
-	}
-
     /**
      * Get the class name of the class which called the method / logger<br>
      * And... well yes, this is kind of a bit of rather dirty code...

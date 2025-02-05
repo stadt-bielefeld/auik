@@ -479,7 +479,7 @@ public class AnfallstellePanel extends ObjectPanel {
         Integer qmproa = ((IntegerField) this.qmProAFeld)
             .getIntValue();
         this.anfallstelle.setVolJahr(qmproa);
-        
+
         Float maxVolH = ((DoubleField) getQmProHFeld()).getFloatValue();
         this.anfallstelle.setMaxVolStunde(maxVolH);
         Float maxVolD = ((DoubleField) getQmProDFeld()).getFloatValue();

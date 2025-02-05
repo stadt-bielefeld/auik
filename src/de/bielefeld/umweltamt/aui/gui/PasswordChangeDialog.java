@@ -258,7 +258,7 @@ public class PasswordChangeDialog extends JDialog {
                 escapePasswordString(String.valueOf(newPw)));
         boolean success = false;
         SQLQuery query = session.createSQLQuery(queryString);
-        try {		
+        try {
 			Transaction tx = null;
 		    tx = session.beginTransaction();
 		    query.executeUpdate();

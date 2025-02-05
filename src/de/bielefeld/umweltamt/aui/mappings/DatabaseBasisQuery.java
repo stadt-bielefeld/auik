@@ -56,7 +56,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
-import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
@@ -72,22 +71,20 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/** Logging */
-	private static final AuikLogger log = AuikLogger.getLogger();	
-	
+	private static final AuikLogger log = AuikLogger.getLogger();
+
 	private static Gemarkung[] gemarkungen = null;
-	
+
 	private static Objektarten[] objektarten = null;
 
 	private static Sachbearbeiter[] sachbearbeiter = null;
 
 	private static String[] entwaesserungsgebiete = null;
 
-	private static MapElkaGewkennz[] mapElkaGewkennz = null;
-
 	/* ********************************************************************** */
 	/* Queries for package BASIS */
 	/* ********************************************************************** */
-	
+
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -98,7 +95,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * Get all Adresse with a given search string in the selected property that
 	 * contain a Betreiber. <br>
 	 * If property is <code>null</code>, we search in all three properties.
-	 * 
+	 *
 	 * @param property
 	 *            Name of the property
 	 * @param search
@@ -133,7 +130,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	/**
 	 * Returns a List of Adresse objects for the given parameters Output format is
 	 * List<[Adresse]>
-	 * 
+	 *
 	 * @param Name
 	 *            String
 	 * @param strasse
@@ -144,7 +141,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            String
 	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */
-	
+
 	public static List<Inhaber> findBetreiber(String name, String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bName = (name != null && name.length() > 0);
@@ -153,7 +150,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		boolean bOrt = (ort != null && ort.length() > 0);
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
-		
+
 		String query = "SELECT DISTINCT i "
 				+ "FROM Adresse a, Inhaber i, Objekt o "
 				+ "WHERE a.id = i.adresse AND i.id = o.betreiberid";
@@ -183,7 +180,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	/**
 	 * Returns a List of Adresse objects for the given parameters Output format is
 	 * List<[Adresse]>
-	 * 
+	 *
 	 * @param Name
 	 *            String
 	 * @param strasse
@@ -194,7 +191,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            String
 	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */
-	
+
 	public static List<Adresse> findAdressen(String name, String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bName = (name != null && name.length() > 0);
@@ -203,7 +200,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		boolean bOrt = (ort != null && ort.length() > 0);
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
-	
+
 		String query = "SELECT DISTINCT adresse " + "FROM Objekt as obj JOIN obj.adresseByStandortid adresse";
 		if (bName || bStrasse || bHausnr || bOrt) {
 			query += " WHERE ";
@@ -219,19 +216,19 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			if (bOrt) {
 				query += "LOWER(adresse.ort) like '" + ort.toLowerCase() + "%' AND ";
 			}
-	
+
 			query += "adresse.deleted = false ";
-	
+
 			query += "ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
 		}
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
 
 	/**
-	 * Returns a List of all Adresse and Standort objects that are 
+	 * Returns a List of all Adresse and Standort objects that are
 	 * connected Output format is
 	 * List<[Adresse][Standort]>
-	 * 
+	 *
 	 * @param strasse
 	 *            String
 	 * @param hausnr
@@ -247,7 +244,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		boolean bOrt = (ort != null && ort.length() > 0);
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
-	
+
 		String query = "SELECT i.* "
 				+ "FROM basis.inhaber i, basis.adresse a "
 				+ "WHERE i.adresseid = a.id";
@@ -278,7 +275,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get a nicely formatted street and house number for a Adresse
-	 * 
+	 *
 	 * @param betreiber
 	 *            Adresse
 	 * @return String
@@ -293,47 +290,47 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Returns a List of all Adresse objects matching the given parameters
-	 * 
+	 *
 	 * Output format is List<[Adresse]>
-	 * 
+	 *
 	 * @param search
 	 *            String Betreibername
 	 * @param property
 	 *            String
 	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */
-	
+
 	public static List<Adresse> findAdressen(String search, String property) {
-	
+
 		String query = "SELECT inh " + "FROM Adresse adresse, Inhaber inh";
-	
+
 		query += " WHERE inh.adresse = adresse AND ";
-	
+
 		query += "LOWER(inh.name) like '" + search.toLowerCase() + "%' AND adresse.deleted = false";
-	
+
 		query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, inh.name ASC";
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
 
 	/**
 	 * Returns a List of all Adresse objects matching the given parameters
-	 * 
+	 *
 	 * Output format is List<[Adresse]>
-	 * 
+	 *
 	 * @param search
 	 *            String Betreibername
 	 * @param property
 	 *            String
 	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */
-	
+
 	public static List<Inhaber> findAdressen(String name, String strasse, Integer hausnr, String ort, String property) {
-	
+
 		boolean bName = (name != null && name.length() > 0);
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
 		boolean bHausnr = (hausnr != null && hausnr != -1);
 		boolean bOrt = (ort != null && ort.length() > 0);
-	
+
 		String query = "SELECT i FROM Adresse a, Inhaber i WHERE i.adresse = a";
 		if (bName || bStrasse || bHausnr || bOrt) {
 			query += " AND ";
@@ -348,7 +345,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			} else if (bName && property.equals("name")) {
 				query += "LOWER(i.name) like '" + name.toLowerCase() + "%' AND ";
 			}
-	
+
 			else if (bName && property.equals("zusatz")) {
 				query += "LOWER(i.namezus) like '" + name.toLowerCase() + "%' AND ";
 			}
@@ -361,9 +358,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			if (bOrt) {
 				query += "LOWER(a.ort) like '" + ort.toLowerCase() + "%' AND ";
 			}
-	
+
 			query += "i.deleted = false ";
-	
+
 			query += "ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC, i.name ASC";
 		}
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
@@ -371,18 +368,18 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Returns a List of all Adresse objects matching the given parameters
-	 * 
+	 *
 	 * Output format is List<[Adresse]>
-	 * 
+	 *
 	 * @param search
 	 *            String Strasse, Hausnummer, Hausnummerzusatz
 	 * @param property
 	 *            String
 	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */
-	
+
 	public static List<Adresse> findAdressen(String strasse, Integer hausnr, String zusatz, String plz) {
-	
+
 		String query = "SELECT adresse FROM Adresse adresse WHERE ";
 		query += "LOWER(adresse.strasse) like '" + strasse.toLowerCase() + "%' AND ";
 		query += "adresse.hausnr = " + hausnr + " AND ";
@@ -393,16 +390,16 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		}
 		query += "adresse.plz = '" + plz + "' AND ";
 		query += "adresse.deleted = false ";
-	
+
 		List<Adresse> list = HibernateSessionFactory.currentSession().createQuery(query).list();
 		return list;
 	}
 
 	public static List<Adresse> findAdressen(String strasse, Integer hausnr) {
-	
+
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
 		boolean bHausnr = (hausnr != null && hausnr != -1);
-	
+
 		String query = "SELECT adresse " + "FROM Adresse adresse";
 		if (bStrasse || bHausnr) {
 			query += " WHERE ";
@@ -412,9 +409,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			if (bHausnr) {
 				query += "adresse.hausnr = " + hausnr + " AND ";
 			}
-			
+
 			query += "adresse.deleted = false ";
-					
+
 			query += "ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC ";
 		}
 		List<Adresse> list = HibernateSessionFactory.currentSession().createQuery(query).list();
@@ -428,7 +425,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get a formatted string for a StandortAdresse
-	 * 
+	 *
 	 * @param standort
 	 *            Standort
 	 * @return String
@@ -447,7 +444,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				Float e32 = standort.getE32();
 				Float n32 = standort.getN32();
 				std = "Standort: " + (e32 != null ? e32 + " " : "") + (n32 != null ? n32.toString() : "");
-				
+
 			}else {
 				std = "keine Standortdaten vorhanden";
 			}
@@ -463,7 +460,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		boolean bOrt = (ort != null && ort.length() > 0);
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
-	
+
 		String query = "SELECT DISTINCT a "
 				+ "FROM Adresse a, Inhaber i, Standort s, Objekt o "
 				+ "WHERE a.id = i.adresse AND i.id = s.inhaber AND s.id = o.standortid ";
@@ -497,7 +494,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		boolean bOrt = (ort != null && ort.length() > 0);
 		String str = strasse.toLowerCase();
 		str = str.replace("'", "''");
-	
+
 		String query = "SELECT s "
 				+ "FROM Adresse a, Inhaber i, Standort s "
 				+ "WHERE a.id = i.adresse AND i.id = s.inhaber";
@@ -526,30 +523,30 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Returns a List of Standort objects matching the given parameters
-	 * 
+	 *
 	 * Output format is List<[Standort]>
-	 * 
+	 *
 	 * @param search
 	 *            String Betreibername
 	 * @param property
 	 *            String
 	 * @return <code>List&lt;Standort[]&gt;</code>
 	 */
-	
+
 	public static List<Standort> findStandorte(String search, String property) {
-	
+
 		String query = "SELECT s "
 				+ "FROM Adresse a, Inhaber i, Standort s "
 				+ "WHERE i.adresse = a.id AND s.inhaber = i.id";
-	
+
 		query += " AND ";
-	
+
 		query += "LOWER(i.name) like '" + search.toLowerCase() + "%' ";
-	
+
 		query += " AND ";
-	
+
 		query += "a.deleted = false";
-	
+
 		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC, i.name ASC";
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
@@ -564,13 +561,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	/**
 	 * Durchsucht Fachdaten nach einem bestimmten Aktenzeichen und gibt
 	 * das Ergebnis als List zurück
-	 * 
+	 *
 	 * @param search
 	 *            String
 	 * @return <code>List&lt;Fachdaten&gt;</code>
 	 */
 	public static List<Standort> findStandorteNachBezeichnung(String search) {
-	
+
 		if (search == null || search == "") {
 			return new DatabaseAccess().executeCriteriaToList(
 					DetachedCriteria.forClass(Standort.class),
@@ -589,7 +586,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get an array with all <code>Gemarkung</code>en
-	 * 
+	 *
 	 * @return <code>Gemarkung[]</code>
 	 */
 	public static Gemarkung[] getGemarkungen() {
@@ -601,7 +598,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all Gemarkungen and sort them by their name
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Gemarkungen</code>
 	 */
 	public static List<Gemarkung> getGemarkungenlist() {
@@ -612,7 +609,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get next id for new Gemarkung
-	 * 
+	 *
 	 * @return <code>Gemarkung</code>
 	 */
 	public static Integer newGemarkungID() {
@@ -625,12 +622,12 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	/* Queries for package BASIS : class Objekt */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	
+
 
 	/**
 	 * Liefert eine Liste von Objekten, die einem bestimmten Standort zugeordnet
 	 * sind.
-	 * 
+	 *
 	 * @param betreiber
 	 *            Die Standortadresse.
 	 * @param abteilung
@@ -646,7 +643,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			Boolean matchArtId) {
 		log.debug("Fetching objects at " + inh);
 		// Find objects witch matching standortid
-		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.inhaber i, basis.objektarten art  " 
+		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.inhaber i, basis.objektarten art  "
 				+ " WHERE o.standortid = s.id AND o.objektartid = art.id "
 				+ " AND (s.inhaberid = i.id AND i.id = " + inh.getId()
 				+ " OR o.betreiberid = i.id AND i.id = " + inh.getId() + " ) "
@@ -675,15 +672,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	/* Queries for package BASIS : class Standort */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-	
+
 
 	public static List<Objekt> getObjekteByStandort(Adresse adr, String abteilung, Integer artid,
 			Boolean matchArtId) {
 		Integer id = adr.getId();
 		String strasse = adr.getStrasse();
 		strasse = strasse.replace("'", "''");
-		Integer hausnr = adr.getHausnr();
-		String hausnrzus = adr.getHausnrzus();
 		log.debug("Fetching objects at " + adr);
 		// Find objects with standortid of adresse with matching fields
 		String query = "SELECT o.* from basis.objekt o, basis.standort s, basis.inhaber i, basis.adresse a, basis.objektarten art "
@@ -728,7 +723,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Cascade a priority to all objects from the same Adresse and Lage
-	 * 
+	 *
 	 * @param prioritaet
 	 *            String
 	 * @param basisObjekt
@@ -754,7 +749,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * Get a list of all priorities. The list contains an array with
 	 * <code>Standort</code>, <code>Adresse</code>, <code>String</code> (priority) and
 	 * <code>Sachbearbeiter</code>
-	 * 
+	 *
 	 * @return <code>List&lt;?&gt;</code>
 	 */
 	public static List<?> getObjektsWithPriority(String prioritaet, Sachbearbeiter sachbearbeiter) {
@@ -770,7 +765,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 					.addOrder(Order.asc("betreiberid"))
 					.addOrder(Order.asc("standortid"))
 					.setResultTransformer(Transformers.aliasToBean(Objekt.class));
-		if (prioritaet == null || !prioritaet.equals("-")) {			
+		if (prioritaet == null || !prioritaet.equals("-")) {
 			crit.add(Restrictions.eq("prioritaet", prioritaet.toString()));
 		}
 		if (sachbearbeiter != null) {
@@ -785,7 +780,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all Objektarten and sort them by their name
-	 * 
+	 *
 	 * @return <code>Objektarten[]</code>
 	 */
 	public static Objektarten[] getObjektarten() {
@@ -798,7 +793,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all Objektarten and sort them by their name and kind
-	 * 
+	 *
 	 * @return <code>Objektarten[]</code>
 	 */
 	public static List<Objektarten> getObjektartenlist() {
@@ -810,7 +805,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get next id for new Objektarten
-	 * 
+	 *
 	 * @return <code>ObjektartenID</code>
 	 */
 	public static Integer newObjektartenID() {
@@ -826,7 +821,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Go throw the Objektchrono Set and grep the earliest chrono.
-	 * 
+	 *
 	 * @param objekt
 	 *            Objekt
 	 * @return Objektchrono
@@ -844,7 +839,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Go throw the Anh49Abfuhr Set and grep the earliest abfuhrdatum.
-	 * 
+	 *
 	 * @param objekt
 	 *            Anh49Fachdaten
 	 * @return Anh49Abfuhr
@@ -859,7 +854,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Go throw the Anh49Abfuhr Set and grep the earliest naechsteabfuhr.
-	 * 
+	 *
 	 * @param objekt
 	 *            Anh49Fachdaten
 	 * @return Anh49Abfuhr
@@ -901,7 +896,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Liefert alle verknuepften Objekte zu einem bestimmten Objekt.
-	 * 
+	 *
 	 * @param objekt
 	 *            Das Objekt.
 	 * @return Eine Liste mit Objekten.
@@ -919,7 +914,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get a sorted array of all enabled Sachbearbeiter
-	 * 
+	 *
 	 * @return <code>Sachbearbeiter[]</code>
 	 */
 	public static Sachbearbeiter[] getEnabledSachbearbeiter() {
@@ -933,7 +928,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get the current Sachbearbeiter.
-	 * 
+	 *
 	 * @return <code>Sachbearbeiter</code>
 	 */
 	public static Sachbearbeiter getCurrentSachbearbeiter() {
@@ -942,7 +937,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get next id for new Sachbearbeiter
-	 * 
+	 *
 	 * @return <code>SachbearbeiterID</code>
 	 */
 	public static Integer newSachbearbeiterID() {
@@ -954,7 +949,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all Sachbearbeiter and sort them by their name
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Parameter</code>
 	 */
 	public static List<Sachbearbeiter> getSachbearbeiterlist() {
@@ -965,7 +960,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get a list of all Entwässerungsgebiet Ids.
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getEntwaesserungsgebiete() {
@@ -1000,7 +995,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get BasisTabStreets
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Strassennamen</code>
 	 */
 	public static String[] getTabStreets() {
@@ -1014,7 +1009,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all BasisTabStreets and sort them by their name
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Stassen</code>
 	 */
 	public static List<String> getAllTabStreetslist() {
@@ -1027,7 +1022,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all BasisTabStreets and sort them by their name
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Stassen</code>
 	 */
 	public static String getTabStreet(String search) {
@@ -1035,7 +1030,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String query = "SELECT DISTINCT name "
 				+ "FROM TabStreets "
 				+ "WHERE LOWER(name) like '" + search.toLowerCase() + "%'";
-		
+
 		List strasse = HibernateSessionFactory.currentSession().createQuery(query).list();
 
 		return (strasse.isEmpty() ? null : strasse.get(0).toString());
@@ -1044,7 +1039,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all BasisTabStreets and sort them by their name
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Stassen</code>
 	 */
 	public static TabStreets getSingleTabStreet(String name, Integer hausnr, String hausnrzus) {
@@ -1064,7 +1059,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				query += " AND hausnr_zusatz IS NULL";
 			}
 		}
-		
+
 		List tabStreet = HibernateSessionFactory.currentSession().createQuery(query).list();
 
 		return (TabStreets) tabStreet.iterator().next();
@@ -1081,7 +1076,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all Einheiten and sort them by their name
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Einheiten</code>
 	 */
 	public static List<Einheiten> getEinheitenlist() {
@@ -1093,7 +1088,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get next id for new Einheiten
-	 * 
+	 *
 	 * @return <code>EinheitenID</code>
 	 */
 	public static Integer newEinheitenID() {
@@ -1108,7 +1103,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all Parameter and sort them by their name
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Parameter</code>
 	 */
 	public static List<Parameter> getParameterlist() {
@@ -1123,7 +1118,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all Klaeranlage and sort them by their name
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Parameter</code>
 	 */
 	public static List<Klaeranlage> getKlaeranlagelist() {
@@ -1134,7 +1129,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get next id for new Klaeranlage
-	 * 
+	 *
 	 * @return <code>KlaeranlageID</code>
 	 */
 	public static Integer newKlaeranlageID() {
@@ -1154,7 +1149,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get all VawsWasserschutzgebiete and sort them by their name
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Wasserschutzgebiete</code>
 	 */
 	public static List<Wassereinzugsgebiet> getWasserschutzgebietelist() {
@@ -1167,7 +1162,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 	/**
 	 * Get next id for new Wassereinzugsgebiet
-	 * 
+	 *
 	 * @return <code>WassereinzugsgebietID</code>
 	 */
 	public static Integer newWSGID() {
@@ -1176,30 +1171,30 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				new Integer(0));
 		return id + 1;
 	}
-	
+
 	/**
 	 * Get all Anhangs and sort them by their anhang_id as integer
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Anhangs</code>
 	 */
 
 	public static List<Anhang> allActiveAnhangs() {
 
-		String query = "FROM Anhang WHERE anh_gueltig_bis IS NULL " + 
+		String query = "FROM Anhang WHERE anh_gueltig_bis IS NULL " +
 				"ORDER BY CAST (NULLIF(regexp_replace(anhang_id, '\\D', '', 'g'), '') as int) asc";
 
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
 	}
-	
+
 	/**
 	 * Get all Anhangs and sort them by their anhang_id as integer
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Anhangs</code>
 	 */
 
 	public static List<Abaverfahren> getNwAbaVerfahrens() {
 
-		String query = "FROM Abaverfahren WHERE bezeichnung LIKE '34.%' " + 
+		String query = "FROM Abaverfahren WHERE bezeichnung LIKE '34.%' " +
 				"ORDER BY bezeichnung asc";
 
 		return HibernateSessionFactory.currentSession().createQuery(query).list();
@@ -1212,7 +1207,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	/**
 	 * Durchsucht Fachdaten nach einem bestimmten Aktenzeichen und gibt
 	 * das Ergebnis als List zurück
-	 * 
+	 *
 	 * @param search
 	 *            String
 	 * @return <code>List&lt;Fachdaten&gt;</code>
@@ -1230,26 +1225,26 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 					new Wasserrecht());
 		}
 	}
-	
+
 	/**
 	 * Get an array with all <code>MapElkaGewkennz</code>en
-	 * 
+	 *
 	 * @return <code>Integer[]</code>
 	 */
 
 
 	public static Integer[] getMapElkaGewkennzArray() {
-		
+
 		List<Integer> mapElkaGewkennzList = getMapElkaGewkennzList();
 
 		Integer[] mapElkaGew = new Integer[mapElkaGewkennzList.size()];
 		return mapElkaGew = mapElkaGewkennzList.toArray(mapElkaGew);
-		
+
 	}
 
 	/**
 	 * Get all MapElkaGewkennz and sort them by their gewkz
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Gewaesser</code>
 	 */
 	public static List<Integer> getMapElkaGewkennzList() {

@@ -74,13 +74,13 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 
 /**
  * Ein Dialog zum Bearbeiten eines Standorts.
- * 
+ *
  * @author David Klotz
  */
 public class AdressEditor extends AbstractBaseEditor
 {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 3366212357256622461L;
 
@@ -100,12 +100,12 @@ public class AdressEditor extends AbstractBaseEditor
 	private JTextField flurFeld;
 	private JTextField flurStkFeld;
 	private JTextField strasseeigentFeld;
-	
+
 	private Gemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;
 	private Standortgghwsg[] standortggs = null;
 	private Wassereinzugsgebiet[] wEinzugsgebiete = null;
-	
+
 	private JComboBox gemarkungBox;
 	private JComboBox entwGebBox;
 	private JComboBox standortGgBox;
@@ -139,12 +139,12 @@ public class AdressEditor extends AbstractBaseEditor
 		flurStkFeld = new LimitedTextField(50);
 		ueberschgebCheck = new JCheckBox("Überschwemm.-gebiet");
 		strasseeigentFeld = new JTextField();
-		
+
 		gemarkungBox = new JComboBox();
 		entwGebBox = new JComboBox();
 		standortGgBox = new JComboBox();
 		wEinzugsGebBox = new JComboBox();
-		
+
 		revidatumFeld = new JTextField();
 		revidatumFeld.setEditable(false);
 		revidatumFeld.setFocusable(false);
@@ -160,7 +160,7 @@ public class AdressEditor extends AbstractBaseEditor
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 
-		
+
 		String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
 		String rechteSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g";
 		int rS = 10;
@@ -218,7 +218,7 @@ public class AdressEditor extends AbstractBaseEditor
 		return panel;
 	}
 
-	
+
 	@Override
 	protected void fillForm()
 	{
@@ -387,7 +387,7 @@ public class AdressEditor extends AbstractBaseEditor
 		adresse.setEntgebid(ezgb);
 
 		adresse.setUeberschgeb(ueberschgebCheck.isSelected());
-		
+
 		// VAWS-Einzugsgebiet
 		Wassereinzugsgebiet wezg = (Wassereinzugsgebiet) wEinzugsGebBox.getSelectedItem();
 		adresse.setWassereinzugsgebiet(wezg);

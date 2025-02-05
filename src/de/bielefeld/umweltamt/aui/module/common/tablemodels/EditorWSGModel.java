@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 public class EditorWSGModel extends EditableListTableModel {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 4047430919374378079L;
 
@@ -88,22 +88,22 @@ public class EditorWSGModel extends EditableListTableModel {
 
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		
+
 		Wassereinzugsgebiet tmp = (Wassereinzugsgebiet) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
         	tmp.setId(tmpID);
         	break;
-        	
+
         case 1:
         	String tmpArt = (String) newValue;
         	tmp.setEzgbname(tmpArt);
         	break;
 
         default:
-            break;        	
-        	
+            break;
+
 		}
 		Wassereinzugsgebiet.merge(tmp);
 	}

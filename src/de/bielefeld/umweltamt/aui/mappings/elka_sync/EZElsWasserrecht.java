@@ -42,7 +42,7 @@ public class EZElsWasserrecht  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZElsWasserrecht;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private EZElsWasserrechtId id;
     private Einleitungsstelle einleitungsstelle;
@@ -99,7 +99,7 @@ public class EZElsWasserrecht  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -108,11 +108,11 @@ public class EZElsWasserrecht  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("einleitungsstelle").append("='").append(getEinleitungsstelle()).append("' ");			
-        buffer.append("wasserrecht").append("='").append(getWasserrecht()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("einleitungsstelle").append("='").append(getEinleitungsstelle()).append("' ");
+        buffer.append("wasserrecht").append("='").append(getWasserrecht()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -144,7 +144,7 @@ public class EZElsWasserrecht  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -178,10 +178,10 @@ public class EZElsWasserrecht  implements java.io.Serializable {
      * @param copy ZElsWasserrecht
      */
     private void copy(EZElsWasserrecht copy) {
-        this.id = copy.getId();            
-        this.einleitungsstelle = copy.getEinleitungsstelle();            
-        this.wasserrecht = copy.getWasserrecht();            
-    }    
+        this.id = copy.getId();
+        this.einleitungsstelle = copy.getEinleitungsstelle();
+        this.wasserrecht = copy.getWasserrecht();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

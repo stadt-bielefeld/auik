@@ -36,7 +36,7 @@ public class EZAbaVerfahrenId  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZAbaWasserrechtId;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private long abwasbehverfNr;
     private long anlageNr;
@@ -90,10 +90,10 @@ public class EZAbaVerfahrenId  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("abwasbehverfNr").append("='").append(getAbwasbehverfNr()).append("' ");			
-        buffer.append("anlageNr").append("='").append(getAnlageNr()).append("' ");			
+        buffer.append("abwasbehverfNr").append("='").append(getAbwasbehverfNr()).append("' ");
+        buffer.append("anlageNr").append("='").append(getAnlageNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

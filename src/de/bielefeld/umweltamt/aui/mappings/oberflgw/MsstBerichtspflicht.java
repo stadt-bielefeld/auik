@@ -44,7 +44,7 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forMsstBerichtspflicht;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer msstNr;
     private Integer origMsstNr;
@@ -121,9 +121,9 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("messstelle").append("='").append(getMessstelle()).append("' ");			
+        buffer.append("messstelle").append("='").append(getMessstelle()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -155,7 +155,7 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -189,9 +189,9 @@ public class MsstBerichtspflicht  implements java.io.Serializable {
      * @param copy MsstBerichtspflicht
      */
     private void copy(MsstBerichtspflicht copy) {
-        this.msstNr = copy.getMsstNr();            
-        this.messstelle = copy.getMessstelle();            
-    }    
+        this.msstNr = copy.getMsstNr();
+        this.messstelle = copy.getMessstelle();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

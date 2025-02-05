@@ -48,7 +48,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAfsNiederschlagswasser;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer nr;
     private Integer origNr;
@@ -185,7 +185,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -194,18 +194,18 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("nr").append("='").append(getNr()).append("' ");			
-        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
-        buffer.append("entwaesserungsgrundstueck").append("='").append(getEntwaesserungsgrundstueck()).append("' ");			
-        buffer.append("lfdNr").append("='").append(getLfdNr()).append("' ");			
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("befFlaeche").append("='").append(getBefFlaeche()).append("' ");			
-        buffer.append("nwHerBereichOpt").append("='").append(getNwHerBereichOpt()).append("' ");			
-        buffer.append("abflussmenge").append("='").append(getAbflussmenge()).append("' ");			
-        buffer.append("referenzsForQNwAfsNr").append("='").append(getReferenzsForQNwAfsNr()).append("' ");			
-        buffer.append("referenzsForZNwAfsNr").append("='").append(getReferenzsForZNwAfsNr()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");
+        buffer.append("entwaesserungsgrundstueck").append("='").append(getEntwaesserungsgrundstueck()).append("' ");
+        buffer.append("lfdNr").append("='").append(getLfdNr()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("befFlaeche").append("='").append(getBefFlaeche()).append("' ");
+        buffer.append("nwHerBereichOpt").append("='").append(getNwHerBereichOpt()).append("' ");
+        buffer.append("abflussmenge").append("='").append(getAbflussmenge()).append("' ");
+        buffer.append("referenzsForQNwAfsNr").append("='").append(getReferenzsForQNwAfsNr()).append("' ");
+        buffer.append("referenzsForZNwAfsNr").append("='").append(getReferenzsForZNwAfsNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -237,7 +237,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -271,17 +271,17 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
      * @param copy AfsNiederschlagswasser
      */
     private void copy(AfsNiederschlagswasser copy) {
-        this.nr = copy.getNr();            
-        this.anfallstelle = copy.getAnfallstelle();            
-        this.entwaesserungsgrundstueck = copy.getEntwaesserungsgrundstueck();            
-        this.lfdNr = copy.getLfdNr();            
-        this.bezeichnung = copy.getBezeichnung();            
-        this.befFlaeche = copy.getBefFlaeche();            
-        this.nwHerBereichOpt = copy.getNwHerBereichOpt();            
-        this.abflussmenge = copy.getAbflussmenge();            
-        this.referenzsForQNwAfsNr = copy.getReferenzsForQNwAfsNr();            
-        this.referenzsForZNwAfsNr = copy.getReferenzsForZNwAfsNr();            
-    }    
+        this.nr = copy.getNr();
+        this.anfallstelle = copy.getAnfallstelle();
+        this.entwaesserungsgrundstueck = copy.getEntwaesserungsgrundstueck();
+        this.lfdNr = copy.getLfdNr();
+        this.bezeichnung = copy.getBezeichnung();
+        this.befFlaeche = copy.getBefFlaeche();
+        this.nwHerBereichOpt = copy.getNwHerBereichOpt();
+        this.abflussmenge = copy.getAbflussmenge();
+        this.referenzsForQNwAfsNr = copy.getReferenzsForQNwAfsNr();
+        this.referenzsForZNwAfsNr = copy.getReferenzsForZNwAfsNr();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

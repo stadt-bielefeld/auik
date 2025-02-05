@@ -36,7 +36,7 @@ public class PrioritaetId  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forPrioritaetId;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer standortId;
     private Integer betreiberId;
@@ -80,7 +80,7 @@ public class PrioritaetId  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -89,10 +89,10 @@ public class PrioritaetId  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("standortId").append("='").append(getStandortId()).append("' ");			
-        buffer.append("betreiberId").append("='").append(getBetreiberId()).append("' ");			
+        buffer.append("standortId").append("='").append(getStandortId()).append("' ");
+        buffer.append("betreiberId").append("='").append(getBetreiberId()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

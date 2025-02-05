@@ -216,7 +216,7 @@ public class TitledPanel extends JPanel {
 
         public void paintBorder(Component c, Graphics g,
             int x, int y, int w, int h) {
-                
+
             g.translate(x, y);
             g.setColor(UIManager.getColor("controlLtHighlight"));
             g.fillRect(0, 0,   w, 1);
@@ -238,21 +238,21 @@ public class TitledPanel extends JPanel {
 
         public void paintBorder(Component c, Graphics g,
             int x, int y, int w, int h) {
-                
+
             Color shadow        = UIManager.getColor("controlShadow");
             if (shadow == null) {
                 shadow = Color.GRAY;
             }
-            Color lightShadow   = new Color(shadow.getRed(), 
-                                            shadow.getGreen(), 
-                                            shadow.getBlue(), 
+            Color lightShadow   = new Color(shadow.getRed(),
+                                            shadow.getGreen(),
+                                            shadow.getBlue(),
                                             170);
             Color lighterShadow = new Color(shadow.getRed(),
                                             shadow.getGreen(),
                                             shadow.getBlue(),
                                             70);
             g.translate(x, y);
-            
+
             g.setColor(shadow);
             g.fillRect(0, 0, w - 3, 1);
             g.fillRect(0, 0, 1, h - 3);

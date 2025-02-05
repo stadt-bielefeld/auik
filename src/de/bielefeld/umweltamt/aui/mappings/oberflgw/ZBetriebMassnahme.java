@@ -43,7 +43,7 @@ public class ZBetriebMassnahme  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZBetriebMassnahme;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private ZBetriebMassnahmeId id;
     private Adresse adresse;
@@ -112,11 +112,11 @@ public class ZBetriebMassnahme  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("adresse").append("='").append(getAdresse()).append("' ");			
-        buffer.append("massnahme").append("='").append(getMassnahme()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("adresse").append("='").append(getAdresse()).append("' ");
+        buffer.append("massnahme").append("='").append(getMassnahme()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -148,7 +148,7 @@ public class ZBetriebMassnahme  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -182,10 +182,10 @@ public class ZBetriebMassnahme  implements java.io.Serializable {
      * @param copy ZBetriebMassnahme
      */
     private void copy(ZBetriebMassnahme copy) {
-        this.id = copy.getId();            
-        this.adresse = copy.getAdresse();            
-        this.massnahme = copy.getMassnahme();            
-    }    
+        this.id = copy.getId();
+        this.adresse = copy.getAdresse();
+        this.massnahme = copy.getMassnahme();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

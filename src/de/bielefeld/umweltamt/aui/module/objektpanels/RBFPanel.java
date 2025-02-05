@@ -156,9 +156,9 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
         this.addMapping("beschickungsHoheField", "rmFilterbelastung", "java.math.BigDecimal");
         this.addMapping("hydWirkungsgradField", "rhydWirkungsgrad", "java.lang.Integer");
         this.addMapping("filterStaerkeField", "rfiltersubstratH", "java.math.BigDecimal");
-        this.addMapping("ueberlaufHaeufField", "rjahrUeh", "java.math.BigDecimal");   
+        this.addMapping("ueberlaufHaeufField", "rjahrUeh", "java.math.BigDecimal");
         this.addMapping("filterVolumenField", "rspezFiltervol", "java.math.BigDecimal");
-    
+
     }
 
     public void fetchFormData() {
@@ -178,7 +178,7 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
         }
         this.schutzgueterChooser.setData(schutzgueter);
         this.schutzgueterChooser.applyEntries(selected);
-        
+
         setTextFieldContent(stauvolumenField, this.record.getRstauvolumen());
         setTextFieldContent(volumenField, this.record.getRvolSlamelle());
         setTextFieldContent(filterField, this.record.getRfilterflaeche());
@@ -189,7 +189,7 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
         setTextFieldContent(filterStaerkeField, this.record.getRfiltersubstratH());
         setTextFieldContent(ueberlaufHaeufField, this.record.getRjahrUeh());
         setTextFieldContent(filterVolumenField, this.record.getRspezFiltervol());
-        
+
     }
 
     /**
@@ -200,47 +200,47 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
     public Object getFieldValue(String fieldName) {
         return getFieldValue(fieldName, this);
     }
-    
+
     public JTextField getStauvolumenField() {
         return this.stauvolumenField;
     }
-    
+
     public JTextField getVolumenField() {
         return this.volumenField;
     }
-    
+
     public JTextField getFilterField() {
         return this.filterField;
     }
-    
+
     public JTextField getDrossField() {
         return this.drossField;
     }
-    
+
     public JTextField getFilterGeschField() {
         return this.filterGeschField;
     }
-    
+
     public JTextField getBeschickungsHoheField() {
         return this.beschickungsHoheField;
     }
-    
+
     public JTextField getHydWirkungsgradField() {
         return this.hydWirkungsgradField;
     }
-    
+
     public JTextField getFilterStaerkeField() {
         return this.filterStaerkeField;
     }
-    
+
     public JTextField getUeberlaufHaeufField() {
         return this.ueberlaufHaeufField;
     }
-    
+
     public JTextField getFilterVolumenField() {
         return this.filterVolumenField;
     }
-       
+
 
     public void save() {
         schutzgueterChooser.getSelected().forEach(item -> {

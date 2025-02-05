@@ -114,7 +114,7 @@ public class AdresseChooser extends JDialog {
 		}
 
 		setContentPane(initializeContentPane());
-	
+
         pack();
 		setResizable(true);
 		setLocationRelativeTo(this.frame);
@@ -137,7 +137,7 @@ public class AdresseChooser extends JDialog {
 		}
 	}
 
-	
+
     public Standort getChosenStandort() {
         if (this.standort.getId() != null) {
             return this.standort;
@@ -172,14 +172,14 @@ public class AdresseChooser extends JDialog {
 			builder.add(getNameFeld(), cc.xyw(3, 1, 5));
 			builder.add(getSubmitButton(), cc.xy(9, 1));
 		}
-		
+
 		//nach Strasse und Hausnummer kann in jedem Fall gesucht werden
 		builder.addLabel("Straße:", cc.xy(1, 3));
 		builder.add(getStrassenFeld(), cc.xy(3, 3));
 		builder.addLabel("Hausnr.:", cc.xy(5, 3));
 		builder.add(getHausnrFeld(), cc.xy(7, 3));
-		builder.add(getSubmitButtonAdresse(), cc.xy(9, 3));	
-		
+		builder.add(getSubmitButtonAdresse(), cc.xy(9, 3));
+
 		//eine Standortbezeichnung kann natürlich nur ein Standort haben
 		if (caller.equals("standort")) {
 			builder.addLabel("Standort:", cc.xy(1, 5));
@@ -191,7 +191,7 @@ public class AdresseChooser extends JDialog {
 
 		JPanel panel = builder.getPanel();
 		panel.setBorder(Paddings.DIALOG);
-		
+
 		return (panel);
 	}
 
@@ -270,9 +270,9 @@ public class AdresseChooser extends JDialog {
 			nr = Integer.parseInt(getHausnrFeld().getText());
 		} else {
 			nr = -1;
-		}		
+		}
 		final Integer hausnr = nr;
-		
+
 		if (caller == "adresse") {
 			SwingWorkerVariant worker = new SwingWorkerVariant(getErgebnisTabelle()) {
 				@Override
@@ -512,8 +512,8 @@ public class AdresseChooser extends JDialog {
 			this.submitButtonInhaber.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					doSearchName();		
-				}				
+					doSearchName();
+				}
 			});
 		}
 
@@ -527,7 +527,7 @@ public class AdresseChooser extends JDialog {
 			this.submitButtonAdresse.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					doSearchStrasse();					
+					doSearchStrasse();
 				}
 			});
 		}
@@ -542,7 +542,7 @@ public class AdresseChooser extends JDialog {
 			this.submitButtonStandort.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					doSearchStandort();										
+					doSearchStandort();
 				}
 			});
 		}

@@ -133,7 +133,7 @@ public class Anh56Panel extends ObjectPanel {
 
         builder.appendRow("3dlu");
         builder.nextLine(2);
-        
+
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSaveAnh56Button());
 
@@ -239,9 +239,9 @@ public class Anh56Panel extends ObjectPanel {
     }
 
     public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
-        
+
         this.fachdaten = anfallstelle.getAnh56Fachdatens().iterator().next();
-        
+
         if (this.fachdaten != null) {
             if (this.fachdaten.getBemerkungen() != null) {
                 getBemerkungenArea().setText(this.fachdaten.getBemerkungen());

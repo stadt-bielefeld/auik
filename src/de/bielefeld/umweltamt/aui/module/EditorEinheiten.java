@@ -89,12 +89,12 @@ public class EditorEinheiten extends AbstractModul {
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private EditorEinheitenModel tmodel;
-    
+
     private Action resultLoeschAction;
     private JPopupMenu resultPopup;
 
-	
-	
+
+
     @Override
     public Icon getIcon() {
         return super.getIcon("edit32.png");
@@ -169,7 +169,7 @@ public class EditorEinheiten extends AbstractModul {
         }
 
         return panel;
-        
+
     }
 
     /* (non-Javadoc)
@@ -259,11 +259,11 @@ public class EditorEinheiten extends AbstractModul {
 	        JMenuItem loeschItem = new JMenuItem(getResultLoeschAction());
 	        this.resultPopup.add(loeschItem);
 	    }
-	
+
 	    if (e.isPopupTrigger()) {
 	        Point origin = e.getPoint();
 	        int row = this.resultTable.rowAtPoint(origin);
-	
+
 	        if (row != -1) {
 	            this.resultTable.setRowSelectionInterval(row, row);
 	            this.resultPopup.show(e.getComponent(), e.getX(), e.getY());

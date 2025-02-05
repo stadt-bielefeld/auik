@@ -43,7 +43,7 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forMapElkaStoff;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String gruppeDevId;
@@ -125,7 +125,7 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -134,13 +134,13 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("gruppeDevId").append("='").append(getGruppeDevId()).append("' ");			
-        buffer.append("regelwerkId").append("='").append(getRegelwerkId()).append("' ");			
-        buffer.append("variantenId").append("='").append(getVariantenId()).append("' ");			
-        buffer.append("methode").append("='").append(getMethode()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("gruppeDevId").append("='").append(getGruppeDevId()).append("' ");
+        buffer.append("regelwerkId").append("='").append(getRegelwerkId()).append("' ");
+        buffer.append("variantenId").append("='").append(getVariantenId()).append("' ");
+        buffer.append("methode").append("='").append(getMethode()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -172,7 +172,7 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -206,12 +206,12 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
      * @param copy MapElkaStoff
      */
     private void copy(MapElkaAnalysemethode copy) {
-        this.id = copy.getId();            
-        this.gruppeDevId = copy.getGruppeDevId();            
-        this.regelwerkId = copy.getRegelwerkId();            
-        this.variantenId = copy.getVariantenId();             
-        this.methode = copy.getMethode();          
-    }    
+        this.id = copy.getId();
+        this.gruppeDevId = copy.getGruppeDevId();
+        this.regelwerkId = copy.getRegelwerkId();
+        this.variantenId = copy.getVariantenId();
+        this.methode = copy.getMethode();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -272,7 +272,7 @@ public class MapElkaAnalysemethode  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-    
+
 
 	public String toGuiString() {
 		return getMethode();

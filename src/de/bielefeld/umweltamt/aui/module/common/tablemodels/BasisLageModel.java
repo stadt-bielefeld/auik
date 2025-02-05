@@ -35,7 +35,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 
 /**
  * Ein TableModel für die Basis-Standortdaten.
- * 
+ *
  * @author David Klotz
  */
 public class BasisLageModel extends ListTableModel
@@ -60,8 +60,8 @@ public class BasisLageModel extends ListTableModel
 				"AwSV-Gebiet" }, true, true);
         log.debug("Creating new BasisLagemodel");
 	}
-    
-    
+
+
 	/**
 	 * Aktualisiert die aktuell angezeigte Liste.
 	 * Falls noch keine Suche durchgeführt wurde, werden die
@@ -78,7 +78,7 @@ public class BasisLageModel extends ListTableModel
 
 	/**
 	 * Liefert das Objekt aus einer bestimmten Zeile.
-	 * 
+	 *
 	 * @param rowIndex
 	 *            Die Zeile
 	 * @return Das Objekt bei rowIndex
@@ -87,10 +87,10 @@ public class BasisLageModel extends ListTableModel
 	{
 		return (Adresse) getObjectAtRow(rowIndex);
 	}
-    
+
 	/**
 	 * Filtert den Tabelleninhalt nach der Straße und der Hausnr.
-	 * 
+	 *
 	 * @param strasse
 	 *            Der Straßenname
 	 * @param hausnr
@@ -103,19 +103,19 @@ public class BasisLageModel extends ListTableModel
         //Fetch all BasisAdresse Objects
         List<Adresse> list = DatabaseQuery.findStandorte(strasse, hausnr, ort);
         log.debug("Fetched " + list.size() + " Objects");
-        
-        
+
+
         setList(list);
         log.debug("Created list");
 		lastOrt = ort;
 		lastStrasse = strasse;
 		lastHausNr = hausnr;
-        
+
 	}
-	
+
 	/**
 	 * Filtert den Tabelleninhalt nach einem Standort.
-	 * 
+	 *
 	 * @param std
 	 *            Lage
 	 */
@@ -128,7 +128,7 @@ public class BasisLageModel extends ListTableModel
 
 	/**
 	 * Liefert den Inhalt der Spalte mit den gegebenen Koordinaten.
-	 * 
+	 *
 	 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(Object,
 	 *      int)
 	 * @param objectAtRow Das Object in dieser Zeile

@@ -42,7 +42,7 @@ public class Objektarten  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forObjektarten;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String objektart;
@@ -146,7 +146,7 @@ public class Objektarten  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -155,15 +155,15 @@ public class Objektarten  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objektart").append("='").append(getObjektart()).append("' ");			
-        buffer.append("abteilung").append("='").append(getAbteilung()).append("' ");			
-        buffer.append("kategorie").append("='").append(getKategorie()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("objekts").append("='").append(getObjekts()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("objektart").append("='").append(getObjektart()).append("' ");
+        buffer.append("abteilung").append("='").append(getAbteilung()).append("' ");
+        buffer.append("kategorie").append("='").append(getKategorie()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("objekts").append("='").append(getObjekts()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -195,7 +195,7 @@ public class Objektarten  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -229,14 +229,14 @@ public class Objektarten  implements java.io.Serializable {
      * @param copy Objektarten
      */
     private void copy(Objektarten copy) {
-        this.id = copy.getId();            
-        this.objektart = copy.getObjektart();            
-        this.abteilung = copy.getAbteilung();            
-        this.kategorie = copy.getKategorie();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.objekts = copy.getObjekts();            
-    }    
+        this.id = copy.getId();
+        this.objektart = copy.getObjektart();
+        this.abteilung = copy.getAbteilung();
+        this.kategorie = copy.getKategorie();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.objekts = copy.getObjekts();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

@@ -45,7 +45,7 @@ public class BwkFachdaten  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forBwkFachdaten;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Anfallstelle anfallstelle;
@@ -290,7 +290,7 @@ public class BwkFachdaten  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -299,29 +299,29 @@ public class BwkFachdaten  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
-        buffer.append("branche").append("='").append(getBranche()).append("' ");			
-        buffer.append("KHersteller").append("='").append(getKHersteller()).append("' ");			
-        buffer.append("KTyp").append("='").append(getKTyp()).append("' ");			
-        buffer.append("KBrennmittel").append("='").append(getKBrennmittel()).append("' ");			
-        buffer.append("KLeistung").append("='").append(getKLeistung()).append("' ");			
-        buffer.append("datumG").append("='").append(getDatumG()).append("' ");			
-        buffer.append("aba").append("='").append(getAba()).append("' ");			
-        buffer.append("WBrenner").append("='").append(getWBrenner()).append("' ");			
-        buffer.append("WWaermetauscher").append("='").append(getWWaermetauscher()).append("' ");			
-        buffer.append("WAbgasleitung").append("='").append(getWAbgasleitung()).append("' ");			
-        buffer.append("WKondensableitung").append("='").append(getWKondensableitung()).append("' ");			
-        buffer.append("abnahme").append("='").append(getAbnahme()).append("' ");			
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
-        buffer.append("anschreiben").append("='").append(getAnschreiben()).append("' ");			
-        buffer.append("erfassung").append("='").append(getErfassung()).append("' ");			
-        buffer.append("genehmigung").append("='").append(getGenehmigung()).append("' ");			
-        buffer.append("genehmigungspflicht").append("='").append(getGenehmigungspflicht()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");
+        buffer.append("branche").append("='").append(getBranche()).append("' ");
+        buffer.append("KHersteller").append("='").append(getKHersteller()).append("' ");
+        buffer.append("KTyp").append("='").append(getKTyp()).append("' ");
+        buffer.append("KBrennmittel").append("='").append(getKBrennmittel()).append("' ");
+        buffer.append("KLeistung").append("='").append(getKLeistung()).append("' ");
+        buffer.append("datumG").append("='").append(getDatumG()).append("' ");
+        buffer.append("aba").append("='").append(getAba()).append("' ");
+        buffer.append("WBrenner").append("='").append(getWBrenner()).append("' ");
+        buffer.append("WWaermetauscher").append("='").append(getWWaermetauscher()).append("' ");
+        buffer.append("WAbgasleitung").append("='").append(getWAbgasleitung()).append("' ");
+        buffer.append("WKondensableitung").append("='").append(getWKondensableitung()).append("' ");
+        buffer.append("abnahme").append("='").append(getAbnahme()).append("' ");
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
+        buffer.append("anschreiben").append("='").append(getAnschreiben()).append("' ");
+        buffer.append("erfassung").append("='").append(getErfassung()).append("' ");
+        buffer.append("genehmigung").append("='").append(getGenehmigung()).append("' ");
+        buffer.append("genehmigungspflicht").append("='").append(getGenehmigungspflicht()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -353,7 +353,7 @@ public class BwkFachdaten  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -387,28 +387,28 @@ public class BwkFachdaten  implements java.io.Serializable {
      * @param copy BwkFachdaten
      */
     private void copy(BwkFachdaten copy) {
-        this.id = copy.getId();            
-        this.anfallstelle = copy.getAnfallstelle();            
-        this.branche = copy.getBranche();            
-        this.KHersteller = copy.getKHersteller();            
-        this.KTyp = copy.getKTyp();            
-        this.KBrennmittel = copy.getKBrennmittel();            
-        this.KLeistung = copy.getKLeistung();            
-        this.datumG = copy.getDatumG();            
-        this.aba = copy.getAba();            
-        this.WBrenner = copy.getWBrenner();            
-        this.WWaermetauscher = copy.getWWaermetauscher();            
-        this.WAbgasleitung = copy.getWAbgasleitung();            
-        this.WKondensableitung = copy.getWKondensableitung();            
-        this.abnahme = copy.getAbnahme();            
-        this.bemerkungen = copy.getBemerkungen();            
-        this.anschreiben = copy.getAnschreiben();            
-        this.erfassung = copy.getErfassung();            
-        this.genehmigung = copy.getGenehmigung();            
-        this.genehmigungspflicht = copy.getGenehmigungspflicht();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.id = copy.getId();
+        this.anfallstelle = copy.getAnfallstelle();
+        this.branche = copy.getBranche();
+        this.KHersteller = copy.getKHersteller();
+        this.KTyp = copy.getKTyp();
+        this.KBrennmittel = copy.getKBrennmittel();
+        this.KLeistung = copy.getKLeistung();
+        this.datumG = copy.getDatumG();
+        this.aba = copy.getAba();
+        this.WBrenner = copy.getWBrenner();
+        this.WWaermetauscher = copy.getWWaermetauscher();
+        this.WAbgasleitung = copy.getWAbgasleitung();
+        this.WKondensableitung = copy.getWKondensableitung();
+        this.abnahme = copy.getAbnahme();
+        this.bemerkungen = copy.getBemerkungen();
+        this.anschreiben = copy.getAnschreiben();
+        this.erfassung = copy.getErfassung();
+        this.genehmigung = copy.getGenehmigung();
+        this.genehmigungspflicht = copy.getGenehmigungspflicht();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -468,7 +468,7 @@ public class BwkFachdaten  implements java.io.Serializable {
 //        Set<BwkFachdaten> list = objekt.getBwkFachdatens();
         return null;
     }
-    
+
     public static BwkFachdaten findByAnfallstelleId(java.lang.Integer id) {
         log.debug("Getting AnhBwkFachdaten instance with connected Objekt with id: " + id);
 

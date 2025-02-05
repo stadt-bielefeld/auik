@@ -137,35 +137,35 @@ public class BFPanel extends AbstractSonderbauwerkTypPanel {
     public Object getFieldValue(String fieldName) {
         return getFieldValue(fieldName, this);
     }
-    
+
     public JTextField getStauvolumenField() {
         return this.stauvolumenField;
     }
-    
+
     public JTextField getFilterflaecheField() {
         return this.filterflaecheField;
     }
-    
+
     public JTextField getDrosseldurchflussField() {
         return this.drosseldurchflussField;
     }
-    
+
     public JTextField getFilterGeschField() {
         return this.filterGeschField;
     }
-    
+
     public JTextField getBeschickungshoeheField() {
         return this.beschickungshoeheField;
     }
-    
+
     public JTextField getHydraulWirkungsgradField() {
         return this.hydraulWirkungsgradField;
     }
-    
+
     public JTextField getStaerkeFiltersubstratField() {
         return this.staerkeFiltersubstratField;
     }
-    
+
     public JTextField getUeberlaufhaufigkeitField() {
         return this.ueberlaufhaufigkeitField;
     }

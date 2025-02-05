@@ -47,7 +47,7 @@ public class Wasserrecht  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forWasserrecht;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Objekt objekt;
@@ -157,7 +157,7 @@ public class Wasserrecht  implements java.io.Serializable {
     public void setBemerkungen(String bemerkungen) {
         this.bemerkungen = bemerkungen;
     }
-    
+
     public String getNebenbest() {
         return this.nebenbest;
     }
@@ -391,7 +391,7 @@ public class Wasserrecht  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -400,38 +400,38 @@ public class Wasserrecht  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");
         buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
-        buffer.append("nebenbest").append("='").append(getNebenbest()).append("' ");	
-        buffer.append("erstellungsDatum").append("='").append(getErstellungsDatum()).append("' ");			
-        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");			
-        buffer.append("antragDatum").append("='").append(getAntragDatum()).append("' ");			
-        buffer.append("befristet").append("='").append(getBefristet()).append("' ");			
-        buffer.append("befristetBis").append("='").append(getBefristetBis()).append("' ");			
-        buffer.append("anhang").append("='").append(getAnhang()).append("' ");			
-        buffer.append("genMenge").append("='").append(getGenMenge()).append("' ");			
-        buffer.append("gen58").append("='").append(getGen58()).append("' ");			
-        buffer.append("gen59").append("='").append(getGen59()).append("' ");			
-        buffer.append("selbstueberw").append("='").append(getSelbstueberw()).append("' ");			
-        buffer.append("ESatzung").append("='").append(getESatzung()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("uebergabestelleE32").append("='").append(getUebergabestelleE32()).append("' ");			
-        buffer.append("uebergabestelleN32").append("='").append(getUebergabestelleN32()).append("' ");			
-        buffer.append("rechtBehoerdenId").append("='").append(getRechtBehoerdenId()).append("' ");			
-        buffer.append("wrBeschreibung").append("='").append(getWrBeschreibung()).append("' ");			
-        buffer.append("rechtArtOpt").append("='").append(getRechtArtOpt()).append("' ");			
-        buffer.append("aktenzeichen").append("='").append(getAktenzeichen()).append("' ");			
-        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");			
-        buffer.append("wasserbuchId").append("='").append(getWasserbuchId()).append("' ");			
-        buffer.append("beerWrNr").append("='").append(getBeerWrNr()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("entwaesserungsgrundstuecks").append("='").append(getEntwaesserungsgrundstuecks()).append("' ");			
-        buffer.append("sonderbauwerks").append("='").append(getSonderbauwerks()).append("' ");			
+        buffer.append("nebenbest").append("='").append(getNebenbest()).append("' ");
+        buffer.append("erstellungsDatum").append("='").append(getErstellungsDatum()).append("' ");
+        buffer.append("aenderungsDatum").append("='").append(getAenderungsDatum()).append("' ");
+        buffer.append("antragDatum").append("='").append(getAntragDatum()).append("' ");
+        buffer.append("befristet").append("='").append(getBefristet()).append("' ");
+        buffer.append("befristetBis").append("='").append(getBefristetBis()).append("' ");
+        buffer.append("anhang").append("='").append(getAnhang()).append("' ");
+        buffer.append("genMenge").append("='").append(getGenMenge()).append("' ");
+        buffer.append("gen58").append("='").append(getGen58()).append("' ");
+        buffer.append("gen59").append("='").append(getGen59()).append("' ");
+        buffer.append("selbstueberw").append("='").append(getSelbstueberw()).append("' ");
+        buffer.append("ESatzung").append("='").append(getESatzung()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("uebergabestelleE32").append("='").append(getUebergabestelleE32()).append("' ");
+        buffer.append("uebergabestelleN32").append("='").append(getUebergabestelleN32()).append("' ");
+        buffer.append("rechtBehoerdenId").append("='").append(getRechtBehoerdenId()).append("' ");
+        buffer.append("wrBeschreibung").append("='").append(getWrBeschreibung()).append("' ");
+        buffer.append("rechtArtOpt").append("='").append(getRechtArtOpt()).append("' ");
+        buffer.append("aktenzeichen").append("='").append(getAktenzeichen()).append("' ");
+        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");
+        buffer.append("wasserbuchId").append("='").append(getWasserbuchId()).append("' ");
+        buffer.append("beerWrNr").append("='").append(getBeerWrNr()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("entwaesserungsgrundstuecks").append("='").append(getEntwaesserungsgrundstuecks()).append("' ");
+        buffer.append("sonderbauwerks").append("='").append(getSonderbauwerks()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -463,7 +463,7 @@ public class Wasserrecht  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -497,37 +497,37 @@ public class Wasserrecht  implements java.io.Serializable {
      * @param copy Wasserrecht
      */
     private void copy(Wasserrecht copy) {
-        this.id = copy.getId();            
-        this.objekt = copy.getObjekt();            
-        this.bemerkungen = copy.getBemerkungen();  
-        this.nebenbest = copy.getNebenbest();   
-        this.erstellungsDatum = copy.getErstellungsDatum();            
-        this.aenderungsDatum = copy.getAenderungsDatum();            
-        this.antragDatum = copy.getAntragDatum();            
-        this.befristet = copy.getBefristet();            
-        this.befristetBis = copy.getBefristetBis();            
-        this.anhang = copy.getAnhang();            
-        this.genMenge = copy.getGenMenge();            
-        this.gen58 = copy.getGen58();            
-        this.gen59 = copy.getGen59();            
-        this.selbstueberw = copy.getSelbstueberw();            
-        this.ESatzung = copy.getESatzung();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.uebergabestelleE32 = copy.getUebergabestelleE32();            
-        this.uebergabestelleN32 = copy.getUebergabestelleN32();            
-        this.rechtBehoerdenId = copy.getRechtBehoerdenId();            
-        this.wrBeschreibung = copy.getWrBeschreibung();            
-        this.rechtArtOpt = copy.getRechtArtOpt();            
-        this.aktenzeichen = copy.getAktenzeichen();            
-        this.bemerkung = copy.getBemerkung();            
-        this.wasserbuchId = copy.getWasserbuchId();            
-        this.beerWrNr = copy.getBeerWrNr();            
-        this.erstellDat = copy.getErstellDat();            
-        this.aktualDat = copy.getAktualDat();            
-        this.entwaesserungsgrundstuecks = copy.getEntwaesserungsgrundstuecks();            
-        this.sonderbauwerks = copy.getSonderbauwerks();            
-    }    
+        this.id = copy.getId();
+        this.objekt = copy.getObjekt();
+        this.bemerkungen = copy.getBemerkungen();
+        this.nebenbest = copy.getNebenbest();
+        this.erstellungsDatum = copy.getErstellungsDatum();
+        this.aenderungsDatum = copy.getAenderungsDatum();
+        this.antragDatum = copy.getAntragDatum();
+        this.befristet = copy.getBefristet();
+        this.befristetBis = copy.getBefristetBis();
+        this.anhang = copy.getAnhang();
+        this.genMenge = copy.getGenMenge();
+        this.gen58 = copy.getGen58();
+        this.gen59 = copy.getGen59();
+        this.selbstueberw = copy.getSelbstueberw();
+        this.ESatzung = copy.getESatzung();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.uebergabestelleE32 = copy.getUebergabestelleE32();
+        this.uebergabestelleN32 = copy.getUebergabestelleN32();
+        this.rechtBehoerdenId = copy.getRechtBehoerdenId();
+        this.wrBeschreibung = copy.getWrBeschreibung();
+        this.rechtArtOpt = copy.getRechtArtOpt();
+        this.aktenzeichen = copy.getAktenzeichen();
+        this.bemerkung = copy.getBemerkung();
+        this.wasserbuchId = copy.getWasserbuchId();
+        this.beerWrNr = copy.getBeerWrNr();
+        this.erstellDat = copy.getErstellDat();
+        this.aktualDat = copy.getAktualDat();
+        this.entwaesserungsgrundstuecks = copy.getEntwaesserungsgrundstuecks();
+        this.sonderbauwerks = copy.getSonderbauwerks();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

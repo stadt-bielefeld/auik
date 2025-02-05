@@ -36,7 +36,7 @@ public class ZBetriebMassnahmeId  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZBetriebMassnahmeId;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private long betriebNr;
     private long massnahmeNr;
@@ -90,10 +90,10 @@ public class ZBetriebMassnahmeId  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("betriebNr").append("='").append(getBetriebNr()).append("' ");			
-        buffer.append("massnahmeNr").append("='").append(getMassnahmeNr()).append("' ");			
+        buffer.append("betriebNr").append("='").append(getBetriebNr()).append("' ");
+        buffer.append("massnahmeNr").append("='").append(getMassnahmeNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

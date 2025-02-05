@@ -39,12 +39,12 @@ import java.util.List;
 public class TabStreets  implements java.io.Serializable {
 
     /**
-	 * 
+	 *
 	 */
 	/** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forTabStreets;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private String name;
     private String nr;
@@ -175,7 +175,7 @@ public class TabStreets  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -192,12 +192,12 @@ public class TabStreets  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("name").append("='").append(getName()).append("' ");			
-        buffer.append("nr").append("='").append(getNr()).append("' ");			
-        buffer.append("x").append("='").append(getX()).append("' ");				
-        buffer.append("y").append("='").append(getY()).append("' ");			
+        buffer.append("name").append("='").append(getName()).append("' ");
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("x").append("='").append(getX()).append("' ");
+        buffer.append("y").append("='").append(getY()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -229,7 +229,7 @@ public class TabStreets  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -263,11 +263,11 @@ public class TabStreets  implements java.io.Serializable {
      * @param copy BasisStrassen
      */
     private void copy(TabStreets copy) {
-        this.name = copy.getName();            
-        this.nr = copy.getNr();            
-        this.x = copy.getX();            
-        this.y = copy.getY();                
-    }    
+        this.name = copy.getName();
+        this.nr = copy.getNr();
+        this.x = copy.getX();
+        this.y = copy.getY();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

@@ -41,7 +41,7 @@ public class Anlagenchrono  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAnlagenchrono;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Fachdaten fachdaten;
@@ -154,7 +154,7 @@ public class Anlagenchrono  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -163,15 +163,15 @@ public class Anlagenchrono  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");			
-        buffer.append("datum").append("='").append(getDatum()).append("' ");			
-        buffer.append("sachverhalt").append("='").append(getSachverhalt()).append("' ");			
-        buffer.append("wv").append("='").append(getWv()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("abgeschlossen").append("='").append(getAbgeschlossen()).append("' ");			
+        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");
+        buffer.append("datum").append("='").append(getDatum()).append("' ");
+        buffer.append("sachverhalt").append("='").append(getSachverhalt()).append("' ");
+        buffer.append("wv").append("='").append(getWv()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("abgeschlossen").append("='").append(getAbgeschlossen()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -203,7 +203,7 @@ public class Anlagenchrono  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -237,14 +237,14 @@ public class Anlagenchrono  implements java.io.Serializable {
      * @param copy Anlagenchrono
      */
     private void copy(Anlagenchrono copy) {
-        this.fachdaten = copy.getFachdaten();            
-        this.datum = copy.getDatum();            
-        this.sachverhalt = copy.getSachverhalt();            
-        this.wv = copy.getWv();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.abgeschlossen = copy.getAbgeschlossen();            
-    }    
+        this.fachdaten = copy.getFachdaten();
+        this.datum = copy.getDatum();
+        this.sachverhalt = copy.getSachverhalt();
+        this.wv = copy.getWv();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.abgeschlossen = copy.getAbgeschlossen();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

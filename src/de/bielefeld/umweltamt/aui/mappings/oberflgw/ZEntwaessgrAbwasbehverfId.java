@@ -36,7 +36,7 @@ public class ZEntwaessgrAbwasbehverfId  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZEntwaessgrAbwasbehverfId;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private long entwGrundNr;
     private long abwasbehverfNr;
@@ -90,10 +90,10 @@ public class ZEntwaessgrAbwasbehverfId  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("entwGrundNr").append("='").append(getEntwGrundNr()).append("' ");			
-        buffer.append("abwasbehverfNr").append("='").append(getAbwasbehverfNr()).append("' ");			
+        buffer.append("entwGrundNr").append("='").append(getEntwGrundNr()).append("' ");
+        buffer.append("abwasbehverfNr").append("='").append(getAbwasbehverfNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

@@ -23,7 +23,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.ResourceBundle;
 
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
@@ -39,8 +38,8 @@ public class BasisInhaberModel extends ListTableModel {
     private String lastSuchWort = null;
     private String lastProperty = null;
     private AuikLogger log = AuikLogger.getLogger();
-    private static final ResourceBundle I18N
-        = SettingsManager.getInstance().getI18nBundle();
+    private static final ResourceBundle I18N =
+        SettingsManager.getInstance().getI18nBundle();
 
     public BasisInhaberModel() {
         this(true);
@@ -54,7 +53,6 @@ public class BasisInhaberModel extends ListTableModel {
                 I18N.getString("fields.city"),
                 I18N.getString("fields.street"),
                 I18N.getString("fields.nr")}, false, true);
-
     }
 
     /**
@@ -74,56 +72,48 @@ public class BasisInhaberModel extends ListTableModel {
      * @return Den Wert der Zelle oder null (falls die Zelle nicht existiert)
      */
     @Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Object tmp = null;
-		
+    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+        Object tmp = null;
+        Inhaber betr = (Inhaber) objectAtRow;
 
-    	Inhaber	betr = (Inhaber) objectAtRow;
+        switch (columnIndex) {
+        case 0:
+            tmp = betr.getId();
+            break;
+        case 1:
+            if (betr.getKassenzeichen() != null) {
+                String value = betr.getName() + " ("
+                    + betr.getKassenzeichen()
+                    + ")";
+                tmp = value;
+            } else {
+                tmp = betr.getName();
+            }
+            break;
+        case 2:
+            tmp = betr.getVorname();
+            break;
+        case 3:
+            tmp = betr.getAdresse().getOrt();
+            break;
+        case 4:
+            tmp = betr.getAdresse().getStrasse();
+            break;
+        case 5:
+            if (betr.getAdresse().getHausnrzus() != null) {
+                String value = betr.getAdresse().getHausnr()
+                    + betr.getAdresse().getHausnrzus();
+                tmp = value;
+            } else {
+                tmp = betr.getAdresse().getHausnr();
+            }
+            break;
+        default:
+            tmp = null;
+        }
 
-    	
-		
-		HibernateSessionFactory.currentSession().refresh(betr);
-
-				switch (columnIndex) {
-				case 0:
-					tmp = betr.getId();
-					break;
-				case 1:
-					if (betr.getKassenzeichen() != null) {
-						String value = betr.getName() + " ("
-								+ betr.getKassenzeichen()
-								+ ")";
-						tmp = value;
-					} else {
-						tmp = betr.getName();
-					}
-					break;
-				case 2:
-					tmp = betr.getVorname();
-					break;
-				case 3:
-					tmp = betr.getAdresse().getOrt();
-					break;
-				case 4:
-					tmp = betr.getAdresse().getStrasse();
-					break;
-				case 5:
-					if (betr.getAdresse().getHausnrzus() != null) {
-						String value = betr.getAdresse().getHausnr()
-								+ betr.getAdresse().getHausnrzus();
-						tmp = value;
-					} else {
-						tmp = betr.getAdresse().getHausnr();
-					}
-					break;
-
-				default:
-					tmp = null;
-				}
-				
-			return tmp;
-		
-	}
+        return tmp;
+    }
 
     /**
      * Liefert das Objekt aus einer bestimmten Zeile.
@@ -136,8 +126,8 @@ public class BasisInhaberModel extends ListTableModel {
 
     @Override
     public boolean objectRemoved(Object objectAtRow) {
-    	Object obj = objectAtRow;
-    	Inhaber removedBetreiber = (Inhaber) obj;
+        Object obj = objectAtRow;
+        Inhaber removedBetreiber = (Inhaber) obj;
         return Inhaber.delete(removedBetreiber);
     }
 
@@ -154,7 +144,7 @@ public class BasisInhaberModel extends ListTableModel {
         lastProperty = property;
         log.debug("End filterList");
     }
-    
+
     public void filterAllList(String suche, String property) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(suche, property));
@@ -162,7 +152,7 @@ public class BasisInhaberModel extends ListTableModel {
         lastProperty = property;
         log.debug("End filterList");
     }
-    
+
     public void filterAllList(String suche, String strasse, Integer hausnr, String ort, String property) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(suche, strasse, hausnr, ort, property));
@@ -170,22 +160,21 @@ public class BasisInhaberModel extends ListTableModel {
         lastProperty = property;
         log.debug("End filterList");
     }
-    
+
     public void filterStandort(String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findInhaber(strasse, hausnr, ort));
         log.debug("End filterList");
     }
-    
+
     public void filterStandort(String name, String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(name, strasse, hausnr, ort));
         log.debug("End filterList");
     }
-    
-    public void filterBetreiber(String name, String strasse, Integer hausnr, String ort) {
 
-    	log.debug("Start filterList");
+    public void filterBetreiber(String name, String strasse, Integer hausnr, String ort) {
+        log.debug("Start filterList");
         setList(DatabaseQuery.findBetreiber(name, strasse, hausnr, ort));
         log.debug("End filterList");
     }

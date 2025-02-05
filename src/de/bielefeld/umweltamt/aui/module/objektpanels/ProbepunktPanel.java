@@ -121,7 +121,7 @@ public class ProbepunktPanel extends ObjectPanel {
     private Probeart[] probearten = null;
     private Klaeranlage[] klaeranlagen = null;
     private Sachbearbeiter[] sachbearbeiter = null;
-  
+
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
     private JTable objektverknuepfungTabelle = null;
