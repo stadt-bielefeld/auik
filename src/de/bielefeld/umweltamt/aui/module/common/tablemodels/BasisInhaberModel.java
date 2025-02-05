@@ -23,7 +23,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import java.util.ResourceBundle;
 
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
@@ -76,8 +75,6 @@ public class BasisInhaberModel extends ListTableModel {
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
         Object tmp = null;
         Inhaber betr = (Inhaber) objectAtRow;
-
-        HibernateSessionFactory.currentSession().refresh(betr);
 
         switch (columnIndex) {
         case 0:
