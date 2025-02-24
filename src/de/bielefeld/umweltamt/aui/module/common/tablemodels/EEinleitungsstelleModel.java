@@ -27,7 +27,7 @@ public class EEinleitungsstelleModel extends ListTableModel {
 
 	public EEinleitungsstelleModel() {
         super(new String[]{
-                "Standort-Nr",
+                "Standort",
                 "Bezeichnung",
                 "Typ"},
                 false,
@@ -47,7 +47,7 @@ public class EEinleitungsstelleModel extends ListTableModel {
         EEinleitungsstelle stelle = (EEinleitungsstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
-          		value = stelle.getStandort().toString();
+          		value = stelle.getStandort().getAdresse().getName1();
                 break;
             case 1:
                 value = stelle.getBezeichnung();

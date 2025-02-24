@@ -790,7 +790,8 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			abwAgEinlFeld.setVisible(false);
 
 		} else if (type == "Indus./gew. Direkteinleitung" || type == "Außerörtliche Straßeneinleitung"
-				 || type == "Sonstige Direkteinleitung") {
+				 || type == "Sonstige Direkteinleitung" || type == "Kommunales NW (Mischverfahren)"
+				 || type == "Kommunales NW (Trennverfahren)") {
 
 			klaeranlageLb.setVisible(false);
 			klaeranlageBox.setVisible(false);
@@ -801,6 +802,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			abwAgLb.setVisible(true);
 			abwAgEinlFeld.setVisible(true);
 			hauptModul.addTab("Gewässerdaten", getGewaesserTab());
+			getGewaesserTab().updateForm(einleitungsstelle);
 		}
 		else {
 
