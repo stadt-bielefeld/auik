@@ -57,6 +57,29 @@ public class EEinleitungsstelle implements java.io.Serializable {
     private boolean typAusseroertlicheStrasseneinleitungTog;
     private boolean typSonstigeTog;
     private Integer abgaberelevanteEltOpt;
+    
+
+    private Date stillgelegtAm;
+    private String gewaessernameAlias3;
+    private Double stationierungNs3;
+    private Double einzugsgebiet;
+    private Double stationierungSt3;
+    private Integer stationierung3Opt;
+    private Integer schutzzoneOpt;
+    private String seeNs3Id;
+    private String seenameAlias3;
+    private String seeAuflage3Id;
+    private String see3Id;
+    private String einleitungsstellenId;
+    private String gewaesserAuflage3Id;
+    private String flussGebiet3Id;
+    private String bemerkung;
+    private String flussAuflage3Id;
+    private String gewaessernameNs3;
+    private String gewaesser3Id;
+    private String gwkId;
+    private String kaNameAusserhalbNrw;
+    private String externalNr;
 
 	private String bezeichnung;
     private Integer e32;
@@ -77,8 +100,10 @@ public class EEinleitungsstelle implements java.io.Serializable {
 
     public EEinleitungsstelle(Integer nr, EStandort standort, Integer origNr,
             Boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, String bezeichnung, Integer e32,
-            Integer n32, Boolean kaNichtInNrwTog, Date aktualDat,
-            Date erstellDat, String herkunft, Set<EWasserrecht> wasserrechts, Integer kanalArtOpt) {
+            Integer n32, Boolean kaNichtInNrwTog, Date aktualDat, Date stillgelegtAm, 
+            Date erstellDat, String herkunft, Set<EWasserrecht> wasserrechts, Integer kanalArtOpt,
+            String gewaessernameAlias3, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled,
+            String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String bemerkungGewDaten, String flussAuflage3Id, String gewaessernameNs3, String gwkId, String kaNameAusserhalbNrw, String externalNr) {
         this.standort = standort;
         this.nr = nr;
         this.origNr = origNr;
@@ -99,10 +124,31 @@ public class EEinleitungsstelle implements java.io.Serializable {
         this.n32 = n32;
         this.kaNichtInNrwTog = kaNichtInNrwTog;
         this.aktualDat = aktualDat;
+        this.stillgelegtAm = stillgelegtAm;
         this.erstellDat = erstellDat;
         this.herkunft = herkunft;
-        this.setWasserrechts(wasserrechts);
         this.kanalArtOpt = kanalArtOpt;
+        this.gewaessernameAlias3 = gewaessernameAlias3;
+        this.stationierungNs3 = stationierungNs3;
+        this.einzugsgebiet = einzugsgebiet;
+        this.stationierungSt3 = stationierungSt3;
+        this.stationierung3Opt = stationierung3Opt;
+        this.schutzzoneOpt = schutzzoneOpt;
+        this.seeNs3Id = seeNs3Id;
+        this.seenameAlias3 = seenameAlias3;
+        this.seeAuflage3Id = seeAuflage3Id;
+        this.see3Id = see3Id;
+        this.einleitungsstellenId = einleitungsstellenId;
+        this.gewaesserAuflage3Id = gewaesserAuflage3Id;
+        this.flussGebiet3Id = flussGebiet3Id;
+        this.bemerkung = bemerkung;
+        this.flussAuflage3Id = flussAuflage3Id;
+        this.gewaessernameNs3 = gewaessernameNs3;
+        this.gewaesser3Id = gewaesser3Id;
+        this.gwkId = gwkId;
+        this.kaNameAusserhalbNrw = kaNameAusserhalbNrw;
+        this.externalNr = externalNr;
+        this.setWasserrechts(wasserrechts);
     }
 
     public EStandort getStandort() {
@@ -282,6 +328,13 @@ public class EEinleitungsstelle implements java.io.Serializable {
     public void setAktualDat(Date aktualDat) {
         this.aktualDat = aktualDat;
     }
+    public Date getStillgelegtAm() {
+        return this.stillgelegtAm;
+    }
+
+    public void setStillgelegtAm(Date stillgelegtAm) {
+        this.stillgelegtAm = stillgelegtAm;
+    }
 
     public Date getErstellDat() {
         return this.erstellDat;
@@ -297,6 +350,166 @@ public class EEinleitungsstelle implements java.io.Serializable {
 
     public void setHerkunft(String herkunft) {
         this.herkunft = herkunft;
+    }
+    
+    public String getGewaessernameAlias3() {
+        return this.gewaessernameAlias3;
+    }
+
+    public void setGewaessernameAlias3(String gewaessernameAlias3) {
+        this.gewaessernameAlias3 = gewaessernameAlias3;
+    }
+
+    public Double getStationierungNs3() {
+        return this.stationierungNs3;
+    }
+
+    public void setStationierungNs3(Double stationierungNs3) {
+        this.stationierungNs3 = stationierungNs3;
+    }
+
+    public Double getEinzugsgebiet() {
+        return this.einzugsgebiet;
+    }
+
+    public void setEinzugsgebiet(Double einzugsgebiet) {
+        this.einzugsgebiet = einzugsgebiet;
+    }
+
+    public Double getStationierungSt3() {
+        return this.stationierungSt3;
+    }
+
+    public void setStationierungSt3(Double stationierungSt3) {
+        this.stationierungSt3 = stationierungSt3;
+    }
+
+    public Integer getStationierung3Opt() {
+        return this.stationierung3Opt;
+    }
+
+    public void setStationierung3Opt(Integer stationierung3Opt) {
+        this.stationierung3Opt = stationierung3Opt;
+    }
+
+    public Integer getSchutzzoneOpt() {
+        return this.schutzzoneOpt;
+    }
+
+    public void setSchutzzoneOpt(Integer schutzzoneOpt) {
+        this.schutzzoneOpt = schutzzoneOpt;
+    }
+
+    public String getSeeNs3Id() {
+        return this.seeNs3Id;
+    }
+
+    public void setSeeNs3Id(String seeNs3Id) {
+        this.seeNs3Id = seeNs3Id;
+    }
+
+    public String getSeenameAlias3() {
+        return this.seenameAlias3;
+    }
+
+    public void setSeenameAlias3(String seenameAlias3) {
+        this.seenameAlias3 = seenameAlias3;
+    }
+
+    public String getSeeAuflage3Id() {
+        return this.seeAuflage3Id;
+    }
+
+    public void setSeeAuflage3Id(String seeAuflage3Id) {
+        this.seeAuflage3Id = seeAuflage3Id;
+    }
+
+    public String getSee3Id() {
+        return this.see3Id;
+    }
+
+    public void setSee3Id(String see3Id) {
+        this.see3Id = see3Id;
+    }
+
+    public String getEinleitungsstellenId() {
+        return this.einleitungsstellenId;
+    }
+
+    public void setEinleitungsstellenId(String einleitungsstellenId) {
+        this.einleitungsstellenId = einleitungsstellenId;
+    }
+
+    public String getGewaesserAuflage3Id() {
+        return this.gewaesserAuflage3Id;
+    }
+
+    public void setGewaesserAuflage3Id(String gewaesserAuflage3Id) {
+        this.gewaesserAuflage3Id = gewaesserAuflage3Id;
+    }
+
+    public String getFlussGebiet3Id() {
+        return this.flussGebiet3Id;
+    }
+
+    public void setFlussGebiet3Id(String flussGebiet3Id) {
+        this.flussGebiet3Id = flussGebiet3Id;
+    }
+
+    public String getBemerkung() {
+        return this.bemerkung;
+    }
+
+    public void setBemerkung(String bemerkung) {
+        this.bemerkung = bemerkung;
+    }
+    
+    public String getFlussAuflage3Id() {
+        return this.flussAuflage3Id;
+    }
+
+    public void setFlussAuflage3Id(String flussAuflage3Id) {
+        this.flussAuflage3Id = flussAuflage3Id;
+    }
+
+    public String getGewaessernameNs3() {
+        return this.gewaessernameNs3;
+    }
+
+    public void setGewaessernameNs3(String gewaessernameNs3) {
+        this.gewaessernameNs3 = gewaessernameNs3;
+    }
+
+    public String getGewaesser3Id() {
+        return this.gewaesser3Id;
+    }
+
+    public void setGewaesser3Id(String gewaesser3Id) {
+        this.gewaesser3Id = gewaesser3Id;
+    }
+
+    public String getGwkId() {
+        return this.gwkId;
+    }
+
+    public void setGwkId(String gwkId) {
+        this.gwkId = gwkId;
+    }
+
+    public String getKaNameAusserhalbNrw() {
+        return this.kaNameAusserhalbNrw;
+    }
+
+    public void setKaNameAusserhalbNrw(String kaNameAusserhalbNrw) {
+        this.kaNameAusserhalbNrw = kaNameAusserhalbNrw;
+    }
+
+    public String getExternalNr() {
+        return this.externalNr;
+    }    
+
+    public void setExternalNr(String externalNr) {
+        this.externalNr = externalNr;
     }
 
     /**
