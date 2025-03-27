@@ -159,8 +159,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		str = str.replace("'", "''");
 		
 		String query = "SELECT DISTINCT i "
-				+ "FROM Adresse a, Inhaber i, Objekt o "
-				+ "WHERE a.id = i.adresse AND i.id = o.betreiberid";
+				+ "FROM Adresse a, Inhaber i "
+				+ "WHERE a.id = i.adresse ";
 		if (bName || bStrasse || bHausnr || bOrt) {
 			if (bName) {
 				query += " AND LOWER(i.name) like '" + name.toLowerCase() + "%'";
