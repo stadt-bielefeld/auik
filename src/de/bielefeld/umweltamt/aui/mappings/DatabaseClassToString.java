@@ -180,30 +180,37 @@ public class DatabaseClassToString {
 	public static String toStringForClass(Inhaber clazz) {
 		String hausnrzus = "";
 		String vorname = "";
+		String inhaber;
 		if (clazz.getAdresse() != null) {
-			if (clazz.getAdresse().getHausnrzus() != null && clazz.getVorname() != null) {
+			if (clazz.getAdresse().getHausnrzus() != null && clazz.getVorname() != null && clazz.getKassenzeichen() != null) {
 				hausnrzus = clazz.getAdresse().getHausnrzus();
 				vorname = clazz.getVorname();
-				return vorname + " " + clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
+				inhaber = vorname + " " + clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
 						+ clazz.getAdresse().getHausnr() + hausnrzus + ", " + clazz.getAdresse().getPlz() + " "
 						+ clazz.getAdresse().getOrt();
 			} else if (clazz.getAdresse().getHausnrzus() == null && clazz.getVorname() != null) {
 				vorname = clazz.getVorname();
-				return vorname + " " + clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
+				inhaber = vorname + " " + clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " "
 						+ clazz.getAdresse().getHausnr() + ", " + clazz.getAdresse().getPlz() + " "
 						+ clazz.getAdresse().getOrt();
 			} else if (clazz.getAdresse().getHausnrzus() != null && clazz.getVorname() == null) {
 				hausnrzus = clazz.getAdresse().getHausnrzus();
-				return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
+				inhaber = clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
 						+ hausnrzus + ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
 			} else {
-				return clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
+				inhaber = clazz.getName() + ", " + clazz.getAdresse().getStrasse() + " " + clazz.getAdresse().getHausnr()
 						+ ", " + clazz.getAdresse().getPlz() + " " + clazz.getAdresse().getOrt();
 			}
 
 		} else {
-			return clazz.getName();
+			inhaber = clazz.getName();
 		}
+		
+		if (clazz.getKassenzeichen() != null) 
+			inhaber = inhaber + ", (" + clazz.getKassenzeichen() + ")";
+		
+		return inhaber;
+
 	}
 
 	/** @return Gemarkung.toGuiString() */
