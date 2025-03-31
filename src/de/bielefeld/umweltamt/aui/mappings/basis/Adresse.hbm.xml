@@ -77,12 +77,6 @@
         <property name="iglId" type="java.lang.Integer">
             <column name="igl_id" />
         </property>
-        <set name="inhabers" table="inhaber" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="adresseid" />
-            </key>
-            <one-to-many class="de.bielefeld.umweltamt.aui.mappings.basis.Inhaber" />
-        </set>
 
     </class>
 </hibernate-mapping>
