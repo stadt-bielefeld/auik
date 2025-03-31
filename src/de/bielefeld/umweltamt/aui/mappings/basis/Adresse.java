@@ -73,7 +73,6 @@ public class Adresse  implements java.io.Serializable {
     private boolean enabled;
     private boolean deleted;
     private Date erstellDat;
-    private Set<Inhaber> inhabers = new HashSet<Inhaber>(0);
     private Integer iglId;
 
     /** Logging */
@@ -125,7 +124,6 @@ public class Adresse  implements java.io.Serializable {
         this.enabled = enabled;
         this.deleted = deleted;
         this.erstellDat = erstellDat;
-        this.inhabers = inhabers;
         this.iglId = iglId;
     }
 
@@ -323,15 +321,6 @@ public class Adresse  implements java.io.Serializable {
         this.iglId = iglId;
     }
 
-    @JsonBackReference
-    public Set<Inhaber> getInhabers() {
-		return inhabers;
-	}
-
-	public void setInhabers(Set<Inhaber> inhabers) {
-		this.inhabers = inhabers;
-	}
-
 
 
     /**
@@ -366,7 +355,6 @@ public class Adresse  implements java.io.Serializable {
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");					
         buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");				
-        buffer.append("Inhabers").append("='").append(getInhabers()).append("' ");				
         buffer.append("iglId").append("='").append(getIglId()).append("' ");			
         buffer.append("]");
 
@@ -457,8 +445,7 @@ public class Adresse  implements java.io.Serializable {
         this.revihandz = copy.getRevihandz();                   
         this.enabled = copy.isEnabled();            
         this.deleted = copy.isDeleted();                     
-        this.erstellDat = copy.getErstellDat();                  
-        this.inhabers = copy.getInhabers();          
+        this.erstellDat = copy.getErstellDat();           
         this.iglId = copy.getIglId();                     
     }    
 
