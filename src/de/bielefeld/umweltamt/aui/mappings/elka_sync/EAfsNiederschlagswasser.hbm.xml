@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.10.2015 09:42:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAfsNiederschlagswasser"
+  schema="elka" table="e_afs_niederschlagswasser">
+  <id name="nr" type="java.lang.Integer">
+   <column name="nr"/>
+   <generator class="assigned"/>
+  </id>
+  <property generated="never" lazy="true" name="origNr" type="java.lang.Integer" insert="false" update="false">
+  	<column name="nr" />
+  </property>
+  <property generated="never" lazy="true" name="bezeichnung" type="java.lang.String">
+   <column name="bezeichnung"/>
+  </property>
+  <property generated="never" lazy="true" name="befFlaeche" type="java.lang.Integer">
+   <column name="bef_flaeche"/>
+  </property>
+  <property generated="never" lazy="true" name="nwHerBereichOpt" type="java.lang.Integer">
+   <column name="nw_her_bereich_opt"/>
+  </property>
+  <property generated="never" lazy="true" name="abflussmenge" type="java.lang.Float">
+   <column name="abflussmenge" precision="8" scale="8"/>
+  </property>
+ </class>
+</hibernate-mapping>

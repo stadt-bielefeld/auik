@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Date;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -46,6 +47,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.DirekteinleiterModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -61,6 +63,7 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
     private String iconPath = "filefind32.png";  //Das Icon für Suchen
     // Widgets für die Suche
     private JTextField azFeld;
+    private TextFieldDateChooser genDatum;
     private JButton suchenButton;
 
     /** Das TableModel fÃ¼r die Ergebnis-Tabelle */
@@ -94,15 +97,29 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
         return super.getIcon(iconPath);
     }
     //Aufruf der eigentlichen Suchfunktion in VawsFachdaten
-    public void SuchStart() {
+	public void SuchStart() {
+
         String aktenzeichen = azFeld.getText();
-        log.debug(" Suche nach Aktenzeichen " + aktenzeichen);
-        ((DirekteinleiterModel)getTableModel()).setList(
-            DatabaseQuery.findWasserrechtAktenzeichen(aktenzeichen));// Aufruf der Suchfunktion. Startet eine Query in der Datenbank
-        ((DirekteinleiterModel)getTableModel()).fireTableDataChanged();
-        frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der gefundenen Objekte
-        log.debug(getTableModel().getRowCount()
-        		+ " Objekt(e) mit Aktenzeichen " + aktenzeichen + " gefunden");
+        Date genDate = genDatum.getDate();
+        
+    	if (aktenzeichen != null && !aktenzeichen.isEmpty()) {
+	        log.debug(" Suche nach Aktenzeichen " + aktenzeichen);
+	        ((DirekteinleiterModel)getTableModel()).setList(
+	            DatabaseQuery.findWasserrechtAktenzeichen(aktenzeichen));// Aufruf der Suchfunktion. Startet eine Query in der Datenbank
+	        ((DirekteinleiterModel)getTableModel()).fireTableDataChanged();
+	        frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der gefundenen Objekte
+	        log.debug(getTableModel().getRowCount()
+	        		+ " Objekt(e) mit Aktenzeichen " + aktenzeichen + " gefunden");
+        }
+    	else if (genDate != null) {
+            log.debug(" Suche nach Genehmigungsdatum " + genDate);
+            ((DirekteinleiterModel)getTableModel()).setList(
+                DatabaseQuery.findWasserrechtGenDatum(genDate));// Aufruf der Suchfunktion. Startet eine Query in der Datenbank
+            ((DirekteinleiterModel)getTableModel()).fireTableDataChanged();
+            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der gefundenen Objekte
+            log.debug(getTableModel().getRowCount()
+            		+ " Objekt(e) mit Genehmigungsdatum " + genDate + " gefunden");
+    	}
     }
 
     /* (non-Javadoc)
@@ -113,6 +130,7 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
         if (queryPanel == null) {
             // Die Widgets initialisieren:
             azFeld = new JTextField("", 12);
+            genDatum = new TextFieldDateChooser();
 
             suchenButton = new JButton("Suchen");
             suchenButton.setToolTipText("Aktenzeichen suchen");
@@ -147,6 +165,7 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
 
             // FÃ¼r Darstellung der Suchoptionen im oberen Panel
             builder.append("Aktenzeichen:", azFeld);
+            builder.append("Genehmigungsdatum:", genDatum);
             builder.append(suchenButton, createExportButton());
             builder.nextLine();
             builder.append("");

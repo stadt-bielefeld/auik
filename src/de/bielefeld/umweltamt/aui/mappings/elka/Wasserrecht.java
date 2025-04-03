@@ -37,6 +37,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 /**
  * A class that represents a row in the Wasserrecht database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -573,10 +576,11 @@ public class Wasserrecht  implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
-    public static Wasserrecht findByObjektId(java.lang.Integer id) {
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
-        Set<Wasserrecht> list = objekt.getWasserrechts();
-        return list.iterator().next();
+    public static Wasserrecht findByObjektId(Objekt obj) {
+
+		return new DatabaseAccess().executeCriteriaToUniqueResult(
+				DetachedCriteria.forClass(Wasserrecht.class).add(Restrictions.eq("objekt", obj)), new Wasserrecht());
+		}
     }
 
-}
+

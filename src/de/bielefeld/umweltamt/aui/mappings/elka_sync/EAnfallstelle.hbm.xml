@@ -48,11 +48,11 @@
 	    </key>
 	    <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe" />
 	</set>
-	<set name="afsNiederschlagswassers" table="afs_niederschlagswasser" schema="oberflgw" inverse="true" lazy="false" fetch="select">
+	<set name="afsNiederschlagswassers" table="e_afs_niederschlagswasser" schema="elka_sync" inverse="true" lazy="false" fetch="select">
 	    <key>
-	        <column name="anfallstelleid" />
+	        <column name="anfallstellen_nr" />
 	    </key>
-	    <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" />
+	    <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAfsNiederschlagswasser" />
 	</set>
  </class>
 </hibernate-mapping>

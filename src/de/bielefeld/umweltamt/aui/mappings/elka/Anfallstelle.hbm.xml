@@ -116,9 +116,9 @@
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.elka.Referenz" />
         </set>
-        <set name="afsNiederschlagswassers" table="afs_niederschlagswasser" schema="oberflgw" inverse="true" lazy="true" fetch="select">
+        <set name="afsNiederschlagswassers" table="afs_niederschlagswasser" schema="oberflgw" inverse="true" lazy="false" fetch="select">
             <key>
-                <column name="anfallstelleid" />
+                <column name="anfallstellen_nr" />
             </key>
             <one-to-many class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" />
         </set>

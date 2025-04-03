@@ -81,11 +81,9 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     private Set<Abaverfahren> abwasserbehandlungsverfahrens;
     private Set<ZEntwaessgrAbwasbehverf> zEntwaessgrAbwasbehverfs;
-    
+    private Set<EAfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<EAfsNiederschlagswasser>(0);
 
-    private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
-
-    /** Default constructor */
+	/** Default constructor */
     public EEntwaesserungsgrundstueck() {
         // This place is intentionally left blank.
     }
@@ -95,7 +93,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public EEntwaesserungsgrundstueck(
-        Integer nr, EStandort standort, EAdresse adresse, Set<AfsNiederschlagswasser> afsNiederschlagswassers, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String bemerkung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
+        Integer nr, EStandort standort, EAdresse adresse, Set<EAfsNiederschlagswasser> afsNiederschlagswassers, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String bemerkung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
         this.nr = nr;
         this.standort = standort;
         this.adresse = adresse;
@@ -154,11 +152,11 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         this.adresse = adresse;
     }
 
-    public Set<AfsNiederschlagswasser> getAfsNiederschlagswassers() {
+    public Set<EAfsNiederschlagswasser> getAfsNiederschlagswassers() {
         return this.afsNiederschlagswassers;
     }
 
-    public void setAfsNiederschlagswassers(Set<AfsNiederschlagswasser> afsNiederschlagswassers) {
+    public void setAfsNiederschlagswassers(Set<EAfsNiederschlagswasser> afsNiederschlagswassers) {
         this.afsNiederschlagswassers = afsNiederschlagswassers;
     }
 

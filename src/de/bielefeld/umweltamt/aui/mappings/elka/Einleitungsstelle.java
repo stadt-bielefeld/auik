@@ -39,6 +39,9 @@ import java.util.Set;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
@@ -999,9 +1002,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
     /* Custom code goes below here! */
 
     public static Einleitungsstelle findByObjektId(java.lang.Integer id) {
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
-        Set<Einleitungsstelle> list = objekt.getEinleitungsstelles();
-        return list.iterator().next();
+    	Objekt obj = Objekt.findById(id);
+		return new DatabaseAccess().executeCriteriaToUniqueResult(
+				DetachedCriteria.forClass(Einleitungsstelle.class).add(Restrictions.eq("objekt", obj)), new Einleitungsstelle());
     }
 
     public static Integer getAbgaberelIdFromDescription(String description) {

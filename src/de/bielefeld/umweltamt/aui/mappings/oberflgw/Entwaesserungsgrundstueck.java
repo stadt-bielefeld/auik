@@ -39,6 +39,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 /**
  * A class that represents a row in the Entwaesserungsgrundstueck database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -537,10 +540,9 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-    public static Entwaesserungsgrundstueck findByObjektId(java.lang.Integer id) {
-        Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id).list().get(0);
-        Set<Entwaesserungsgrundstueck> list = objekt.getEntwaesserungsgrundstuecks();
-        return list.iterator().next();
+    public static Entwaesserungsgrundstueck findByObjektId(Objekt obj) {
+		return new DatabaseAccess().executeCriteriaToUniqueResult(
+				DetachedCriteria.forClass(Entwaesserungsgrundstueck.class).add(Restrictions.eq("objekt", obj)), new Entwaesserungsgrundstueck());
     }
 
 	public List<Object> getSortedVerfahren() {

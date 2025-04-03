@@ -99,10 +99,14 @@ public class BasisObjektModel extends ListTableModel {
 				} else if (bo.getAnfallstelles().size() > 0) {
 					Set<Anfallstelle> list = bo.getAnfallstelles();
 					Anfallstelle anfallstelle = list.iterator().next();
-					if (!anfallstelle.getAnhangId().equals("99")) {
+					if (!(anfallstelle.getAnhangId() == null) && !anfallstelle.getAnhangId().equals("99")) {
 						tmp = "Anfallstelle (Anh " + anfallstelle.getAnhangId() + ")";
-					} else {
+					} else if (anfallstelle.getAbwaBeschaffOpt() != null && anfallstelle.getAbwaBeschaffOpt() == 3){
+						tmp = "Anfallstelle (" + "Niederschlagswasser" + ")";
+					} else if (anfallstelle.getAnhangId().equals("99")){
 						tmp = "Anfallstelle (" + anfallstelle.getAnlagenart() + ")";
+					} else {
+						tmp = "Anfallstelle";
 					}
 				} else if (bo.getSonderbauwerks().size() > 0) {
 					Set<Sonderbauwerk> list = bo.getSonderbauwerks();

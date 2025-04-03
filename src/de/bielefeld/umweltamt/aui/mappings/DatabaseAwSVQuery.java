@@ -58,7 +58,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
-abstract class DatabaseAwSVQuery {
+abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();

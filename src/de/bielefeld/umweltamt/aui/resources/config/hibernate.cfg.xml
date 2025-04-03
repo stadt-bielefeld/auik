@@ -80,6 +80,7 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka/ZElsWasserrecht.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EAbwasserbehandlungsanlage.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EAdresse.hbm.xml" />
+        <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EAfsNiederschlagswasser.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EAnfallstelle.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EBetrieb.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/elka_sync/EEinleitungsstelle.hbm.xml" />
