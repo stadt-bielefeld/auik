@@ -55,14 +55,14 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.SuevFachdaten;
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
 abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
-	
+
     private static Entsorger[] entsorger = null;
 
     private static Abaverfahren[] verfahren = null;
-    
+
     private static Integer[] anhaenge = null;
-    
-    
+
+
     /* ********************************************************************** */
     /* Queries for package INDEINL                                            */
     /* ********************************************************************** */
@@ -85,8 +85,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
             	.add(Restrictions.eq("objektarten", art))
                 .add(Restrictions.eq("inaktiv", false)),
             new Objekt());
-                
-        
+
+
     }
     /**
      * Sucht alle Objekte des angemeldeten Sachbearbeiters, die ein
@@ -115,7 +115,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 				new Objekt());
 
 	}
-    
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
     /* Queries for package INDEINL: class Anfallstelle                      */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
@@ -126,7 +126,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
      */
 	public static List<Anfallstelle> getAnfallstelle(String anh, String art, Sachbearbeiter sachbe) {
 
-		DetachedCriteria criteria = 
+		DetachedCriteria criteria =
 				DetachedCriteria.forClass(Anfallstelle.class)
                         .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
 						.createAlias("objekt", "objekt")
@@ -141,8 +141,6 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 		        if (sachbe != null) {
 		            criteria.add(Restrictions.eq("objekt.sachbearbeiter", sachbe));
 		        }
-		        
-		        
         return new DatabaseAccess().executeCriteriaToList(
                 criteria, new Anfallstelle());
 	}
@@ -456,7 +454,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
      * Get a list of all recording years
      * @return Integer[]
      */
-    
+
     public static Integer[] getBwkErfassungsjahre() {
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(
 				(BwkFachdaten.class))
@@ -484,11 +482,11 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
         }
         return DatabaseIndeinlQuery.entsorger;
     }
-	
+
 
 	/**
 	 * Get all AtlEinheiten and sort them by their name
-	 * 
+	 *
 	 * @return <code>Eine Liste aller Einheiten</code>
 	 */
 	public static List<Entsorger> getEntsorgerlist()
@@ -505,7 +503,7 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 
 	/**
 	 * Get next id for new Entsorger
-	 * 
+	 *
 	 * @return <code>Entsorger</code>
 	 */
 	public static Integer newEntsorgerID()
@@ -519,8 +517,8 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 		return id + 1;
 	}
 
-    
-    
+
+
     /**
      * Get all AbaVerfahren
      * @return <code>AbaVerfahren[]</code>

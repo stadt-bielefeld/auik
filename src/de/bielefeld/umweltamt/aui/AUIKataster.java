@@ -54,7 +54,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * Das Anlagen- und Indirekteinleiter-Kataster. Diese Klasse stellt den
  * eigentlichen Einstiegspunkt der Anwendung dar. Die Methode {@link main}
  * sollte dazu verwendet werden, das Programm zu starten.
- * 
+ *
  * @author David Klotz
  */
 public class AUIKataster
@@ -65,7 +65,7 @@ public class AUIKataster
 
 	/**
 	 * Die Hauptmethode des AUI-Katasters.
-	 * 
+	 *
 	 * @param args
 	 *            Kommandozeilenargumente
 	 */

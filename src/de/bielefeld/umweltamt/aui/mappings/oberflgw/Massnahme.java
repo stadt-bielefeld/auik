@@ -45,7 +45,7 @@ public class Massnahme  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forMassnahme;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer nr;
     private Integer origNr;
@@ -192,7 +192,7 @@ public class Massnahme  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -201,19 +201,19 @@ public class Massnahme  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("nr").append("='").append(getNr()).append("' ");			
-        buffer.append("stoffNr").append("='").append(getStoffNr()).append("' ");			
-        buffer.append("gruppeNr").append("='").append(getGruppeNr()).append("' ");			
-        buffer.append("massnahmeStoff").append("='").append(getMassnahmeStoff()).append("' ");			
-        buffer.append("stoffEintragsDat").append("='").append(getStoffEintragsDat()).append("' ");			
-        buffer.append("ergebnisMassnahme").append("='").append(getErgebnisMassnahme()).append("' ");			
-        buffer.append("ergebnisAm").append("='").append(getErgebnisAm()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
-        buffer.append("ZBetriebMassnahmes").append("='").append(getZBetriebMassnahmes()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("stoffNr").append("='").append(getStoffNr()).append("' ");
+        buffer.append("gruppeNr").append("='").append(getGruppeNr()).append("' ");
+        buffer.append("massnahmeStoff").append("='").append(getMassnahmeStoff()).append("' ");
+        buffer.append("stoffEintragsDat").append("='").append(getStoffEintragsDat()).append("' ");
+        buffer.append("ergebnisMassnahme").append("='").append(getErgebnisMassnahme()).append("' ");
+        buffer.append("ergebnisAm").append("='").append(getErgebnisAm()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");
+        buffer.append("ZBetriebMassnahmes").append("='").append(getZBetriebMassnahmes()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -245,7 +245,7 @@ public class Massnahme  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -279,18 +279,18 @@ public class Massnahme  implements java.io.Serializable {
      * @param copy Massnahme
      */
     private void copy(Massnahme copy) {
-        this.nr = copy.getNr();            
-        this.stoffNr = copy.getStoffNr();            
-        this.gruppeNr = copy.getGruppeNr();            
-        this.massnahmeStoff = copy.getMassnahmeStoff();            
-        this.stoffEintragsDat = copy.getStoffEintragsDat();            
-        this.ergebnisMassnahme = copy.getErgebnisMassnahme();            
-        this.ergebnisAm = copy.getErgebnisAm();            
-        this.erstellDat = copy.getErstellDat();            
-        this.aktualDat = copy.getAktualDat();            
-        this.externalNr = copy.getExternalNr();            
-        this.ZBetriebMassnahmes = copy.getZBetriebMassnahmes();            
-    }    
+        this.nr = copy.getNr();
+        this.stoffNr = copy.getStoffNr();
+        this.gruppeNr = copy.getGruppeNr();
+        this.massnahmeStoff = copy.getMassnahmeStoff();
+        this.stoffEintragsDat = copy.getStoffEintragsDat();
+        this.ergebnisMassnahme = copy.getErgebnisMassnahme();
+        this.ergebnisAm = copy.getErgebnisAm();
+        this.erstellDat = copy.getErstellDat();
+        this.aktualDat = copy.getAktualDat();
+        this.externalNr = copy.getExternalNr();
+        this.ZBetriebMassnahmes = copy.getZBetriebMassnahmes();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

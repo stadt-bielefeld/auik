@@ -43,7 +43,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forVersickerungsanlage;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Long nr;
     private Einleitungsstelle einleitungsstelle;
@@ -81,7 +81,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.notueberlaufTog = notueberlaufTog;
         this.erstellDat = erstellDat;
         this.aktualDat = aktualDat;
-        
+
     }
 
     /** Full constructor */
@@ -104,7 +104,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         this.sonstigesVers = sonstigesVers;
         this.bauartzulId = bauartzulId;
         this.aktualDat = aktualDat;
-  
+
         this.externalNr = externalNr;
     }
 
@@ -262,7 +262,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -271,26 +271,26 @@ public class Versickerungsanlage  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("nr").append("='").append(getNr()).append("' ");			
-        buffer.append("einleitungsstelle").append("='").append(getEinleitungsstelle()).append("' ");			
-        buffer.append("flurabstand").append("='").append(getFlurabstand()).append("' ");			
-        buffer.append("gelaendeVerAnlage").append("='").append(getGelaendeVerAnlage()).append("' ");			
-        buffer.append("abstGrGrenze").append("='").append(getAbstGrGrenze()).append("' ");			
-        buffer.append("abstUnterkGebaeude").append("='").append(getAbstUnterkGebaeude()).append("' ");			
-        buffer.append("abstVerAnlage").append("='").append(getAbstVerAnlage()).append("' ");			
-        buffer.append("landesfoerderungTog").append("='").append(isLandesfoerderungTog()).append("' ");			
-        buffer.append("notueberlaufTog").append("='").append(isNotueberlaufTog()).append("' ");			
-        buffer.append("notueberlaufZiel").append("='").append(getNotueberlaufZiel()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("durchlaessigkeit").append("='").append(getDurchlaessigkeit()).append("' ");			
-        buffer.append("untergrundart").append("='").append(getUntergrundart()).append("' ");			
-        buffer.append("verAnlageOpt").append("='").append(getVerAnlageOpt()).append("' ");			
-        buffer.append("sonstigesVers").append("='").append(getSonstigesVers()).append("' ");			
-        buffer.append("bauartzulId").append("='").append(getBauartzulId()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");	
-        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("einleitungsstelle").append("='").append(getEinleitungsstelle()).append("' ");
+        buffer.append("flurabstand").append("='").append(getFlurabstand()).append("' ");
+        buffer.append("gelaendeVerAnlage").append("='").append(getGelaendeVerAnlage()).append("' ");
+        buffer.append("abstGrGrenze").append("='").append(getAbstGrGrenze()).append("' ");
+        buffer.append("abstUnterkGebaeude").append("='").append(getAbstUnterkGebaeude()).append("' ");
+        buffer.append("abstVerAnlage").append("='").append(getAbstVerAnlage()).append("' ");
+        buffer.append("landesfoerderungTog").append("='").append(isLandesfoerderungTog()).append("' ");
+        buffer.append("notueberlaufTog").append("='").append(isNotueberlaufTog()).append("' ");
+        buffer.append("notueberlaufZiel").append("='").append(getNotueberlaufZiel()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("durchlaessigkeit").append("='").append(getDurchlaessigkeit()).append("' ");
+        buffer.append("untergrundart").append("='").append(getUntergrundart()).append("' ");
+        buffer.append("verAnlageOpt").append("='").append(getVerAnlageOpt()).append("' ");
+        buffer.append("sonstigesVers").append("='").append(getSonstigesVers()).append("' ");
+        buffer.append("bauartzulId").append("='").append(getBauartzulId()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -322,7 +322,7 @@ public class Versickerungsanlage  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -356,25 +356,25 @@ public class Versickerungsanlage  implements java.io.Serializable {
      * @param copy Versickerungsanlage
      */
     private void copy(Versickerungsanlage copy) {
-        this.nr = copy.getNr();            
-        this.einleitungsstelle = copy.getEinleitungsstelle();            
-        this.flurabstand = copy.getFlurabstand();            
-        this.gelaendeVerAnlage = copy.getGelaendeVerAnlage();            
-        this.abstGrGrenze = copy.getAbstGrGrenze();            
-        this.abstUnterkGebaeude = copy.getAbstUnterkGebaeude();            
-        this.abstVerAnlage = copy.getAbstVerAnlage();            
-        this.landesfoerderungTog = copy.isLandesfoerderungTog();            
-        this.notueberlaufTog = copy.isNotueberlaufTog();            
-        this.notueberlaufZiel = copy.getNotueberlaufZiel();            
-        this.erstellDat = copy.getErstellDat();            
-        this.durchlaessigkeit = copy.getDurchlaessigkeit();            
-        this.untergrundart = copy.getUntergrundart();            
-        this.verAnlageOpt = copy.getVerAnlageOpt();            
-        this.sonstigesVers = copy.getSonstigesVers();            
-        this.bauartzulId = copy.getBauartzulId();            
-        this.aktualDat = copy.getAktualDat(); 
-        this.externalNr = copy.getExternalNr();            
-    }    
+        this.nr = copy.getNr();
+        this.einleitungsstelle = copy.getEinleitungsstelle();
+        this.flurabstand = copy.getFlurabstand();
+        this.gelaendeVerAnlage = copy.getGelaendeVerAnlage();
+        this.abstGrGrenze = copy.getAbstGrGrenze();
+        this.abstUnterkGebaeude = copy.getAbstUnterkGebaeude();
+        this.abstVerAnlage = copy.getAbstVerAnlage();
+        this.landesfoerderungTog = copy.isLandesfoerderungTog();
+        this.notueberlaufTog = copy.isNotueberlaufTog();
+        this.notueberlaufZiel = copy.getNotueberlaufZiel();
+        this.erstellDat = copy.getErstellDat();
+        this.durchlaessigkeit = copy.getDurchlaessigkeit();
+        this.untergrundart = copy.getUntergrundart();
+        this.verAnlageOpt = copy.getVerAnlageOpt();
+        this.sonstigesVers = copy.getSonstigesVers();
+        this.bauartzulId = copy.getBauartzulId();
+        this.aktualDat = copy.getAktualDat();
+        this.externalNr = copy.getExternalNr();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

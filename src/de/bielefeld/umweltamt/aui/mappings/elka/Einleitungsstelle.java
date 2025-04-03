@@ -51,23 +51,23 @@ public class Einleitungsstelle  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forEinleitungsstelle;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Integer objektid;
     private Objekt objekt;
-    
+
     private String bezeichnung;
-    private Integer einleitungsart; 
+    private Integer einleitungsart;
     private Date erstellDat;
     private Date stillgelegtAm;
     private Integer kanalArtOpt;
     private Integer abgaberelEinl;
     private String abwAgEinl;
-        
-    private Date aktualDat;  
+
+    private Date aktualDat;
     private String herkunft;
-   
+
     private String gewaessernameAlias3;
     private Double stationierungNs3;
     private Double einzugsgebiet;
@@ -112,21 +112,21 @@ public class Einleitungsstelle  implements java.io.Serializable {
     private Set<Versickerungsanlage> versickerungsanlages = new HashSet<Versickerungsanlage>(0);
     private Set<Referenz> referenzsForQElsNr = new HashSet<Referenz>(0);
     private Set<Referenz> referenzsForZElsNr = new HashSet<Referenz>(0);
-   
-  
-    
+
+
+
     private String gewnameStat;
     private String gewkennzStat;
     private String gewNameStadt;
     private String gewKennzStadt;
     private String hwrMassnahme;
-    
+
     private Double entfEinlStatGew;
     private Double mwq;
     private Double hq1;
 
-    
-    
+
+
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -155,7 +155,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.kaNichtInNrwTog = kaNichtInNrwTog;
     }
 
-    /** Full constructor 
+    /** Full constructor
       */
     public Einleitungsstelle(
         Integer id, Integer objektid, Date aktualDat, Date erstellDat, String herkunft, String bezeichnung, String gewaessernameAlias3, Date stillgelegtAm, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer kanalArtOpt, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled, boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, Integer abgaberelevanteEltOpt, String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String bemerkungGewDaten, String flussAuflage3Id, String gewaessernameNs3, String gewaesserNs3Id, String gwkId, boolean kaNichtInNrwTog, String kaNameAusserhalbNrw, String externalNr, Set<Versickerungsanlage> versickerungsanlages, Set<Referenz> referenzsForQElsNr, Set<Referenz> referenzsForZElsNr, String abwAgEinl, Integer einleitungsart, String gewnameStat, String gewkennzStat, String gewNameStadt, String gewKennzStadt, String hwrMassnahme, Double entfEinlStatGew, Double mwq, Double hq1) {
@@ -164,7 +164,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.objektid = objektid;
         this.aktualDat = aktualDat;
         this.herkunft = herkunft;
-        
+
         this.erstellDat = erstellDat;
         this.bezeichnung = bezeichnung;
         this.stillgelegtAm = stillgelegtAm;
@@ -222,9 +222,9 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.hwrMassnahme = hwrMassnahme;
         this.entfEinlStatGew = entfEinlStatGew;
         this.mwq = mwq;
-        this.hq1 = hq1; 
-  
-        
+        this.hq1 = hq1;
+
+
     }
 
     /* Setter and getter methods */
@@ -259,29 +259,29 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setAktualDat(Date aktualDat) {
         this.aktualDat = aktualDat;
     }
-    
+
 // Relevant
-    
+
     public String getGewnameStat() {
     	return this.gewnameStat;
     }
-   
+
     public void setGewnameStat(String gewnameStat) {
     	this.gewnameStat = gewnameStat;
     }
-    
 
-    
+
+
     public String getGewkennzStat() {
     	return this.gewkennzStat;
     }
-   
+
     public void setGewkennzStat(String gewkennzStat) {
     	this.gewkennzStat = gewkennzStat;
     }
-    
-    
-    
+
+
+
     public Date getErstellDat() {
         return this.erstellDat;
     }
@@ -310,7 +310,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setStillgelegtAm(Date stillgelegtAm) {
         this.stillgelegtAm = stillgelegtAm;
     }
-    
+
     public Integer getAbgaberelEinl() {
         return this.abgaberelEinl;
     }
@@ -318,7 +318,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setAbgaberelEinl(Integer abgaberelEinl) {
         this.abgaberelEinl = abgaberelEinl;
     }
-    
+
 
     public Integer getKanalArtOpt() {
         return this.kanalArtOpt;
@@ -327,7 +327,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setKanalArtOpt(Integer kanalArtOpt) {
         this.kanalArtOpt = kanalArtOpt;
     }
-    
+
     public Integer getEinleitungsart() {
         return this.einleitungsart;
     }
@@ -336,7 +336,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.einleitungsart = einleitungsart;
     }
     //
-    
+
     public String getHerkunft() {
         return this.herkunft;
     }
@@ -345,7 +345,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.herkunft = herkunft;
     }
 
-    
+
 
     public String getGewaessernameAlias3() {
         return this.gewaessernameAlias3;
@@ -507,7 +507,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
         this.typSonstigeTog = typSonstigeTog;
     }
 
-   
+
     public String getGewaesser3Id() {
         return this.gewaesser3Id;
     }
@@ -603,7 +603,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setBemerkung(String bemerkung) {
         this.bemerkung = bemerkung;
     }
-    
+
     public String getBemerkungGewDaten() {
         return this.bemerkungGewDaten;
     }
@@ -611,8 +611,8 @@ public class Einleitungsstelle  implements java.io.Serializable {
     public void setBemerkungGewDaten(String bemerkungGewDaten) {
         this.bemerkungGewDaten = bemerkungGewDaten;
     }
-    
-    
+
+
     public String getFlussAuflage3Id() {
         return this.flussAuflage3Id;
     }
@@ -692,8 +692,8 @@ public class Einleitungsstelle  implements java.io.Serializable {
 	public void setHwrMassnahme(String hwrMassnahme) {
 		this.hwrMassnahme = hwrMassnahme;
 	}
-	
-	
+
+
 	public Double getEntfEinlStatGew() {
 		return entfEinlStatGew;
 	}
@@ -701,7 +701,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
 	public void setEntfEinlStatGew(Double entfEinlStatGew) {
 		this.entfEinlStatGew = entfEinlStatGew;
 	}
-	
+
 	public Double getMwq() {
 		return mwq;
 	}
@@ -709,7 +709,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
 	public void setMwq(Double mwq) {
 		this.mwq = mwq;
 	}
-	
+
 	public Double getHq1() {
 		return hq1;
 	}
@@ -717,8 +717,8 @@ public class Einleitungsstelle  implements java.io.Serializable {
 	public void setHq1(Double hq1) {
 		this.hq1 = hq1;
 	}
-	
-	
+
+
 
 	public Set<Versickerungsanlage> getVersickerungsanlages() {
         return this.versickerungsanlages;
@@ -754,7 +754,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -763,60 +763,60 @@ public class Einleitungsstelle  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("objektid").append("='").append(getObjektid()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");			
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("gewaessernameAlias3").append("='").append(getGewaessernameAlias3()).append("' ");						
-        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");					
-        buffer.append("stationierungNs3").append("='").append(getStationierungNs3()).append("' ");			
-        buffer.append("einzugsgebiet").append("='").append(getEinzugsgebiet()).append("' ");			
-        buffer.append("stationierungSt3").append("='").append(getStationierungSt3()).append("' ");			
-        buffer.append("abgaberelEinl").append("='").append(getAbgaberelEinl()).append("' ");						
-        buffer.append("kanalArtOpt").append("='").append(getKanalArtOpt()).append("' ");			
-        buffer.append("stationierung3Opt").append("='").append(getStationierung3Opt()).append("' ");			
-        buffer.append("schutzzoneOpt").append("='").append(getSchutzzoneOpt()).append("' ");			
-        buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
-        buffer.append("enabled").append("='").append(getEnabled()).append("' ");			
-        buffer.append("typIndirekteinleitungTog").append("='").append(getTypIndirekteinleitungTog()).append("' ");			
-        buffer.append("typIndusGewerbDirekteinleitungTog").append("='").append(getTypIndusGewerbDirekteinleitungTog()).append("' ");			
-        buffer.append("typKommNwMischTog").append("='").append(getTypKommNwMischTog()).append("' ");			
-        buffer.append("typKommNwTrennTog").append("='").append(getTypKommNwTrennTog()).append("' ");			
-        buffer.append("typNwPrivatTrennTog").append("='").append(getTypNwPrivatTrennTog()).append("' ");			
-        buffer.append("typIndusGewerbNwMischTog").append("='").append(getTypIndusGewerbNwMischTog()).append("' ");			
-        buffer.append("typIndusGewerbNwTrennTog").append("='").append(getTypIndusGewerbNwTrennTog()).append("' ");			
-        buffer.append("typGrubenwasserTog").append("='").append(getTypGrubenwasserTog()).append("' ");			
-        buffer.append("typKleinklaeranlageTog").append("='").append(getTypKleinklaeranlageTog()).append("' ");			
-        buffer.append("typKommKaTog").append("='").append(getTypKommKaTog()).append("' ");			
-        buffer.append("typAusseroertlicheStrasseneinleitungTog").append("='").append(getTypAusseroertlicheStrasseneinleitungTog()).append("' ");			
-        buffer.append("typSonstigeTog").append("='").append(getTypSonstigeTog()).append("' ");			
-        		
-        buffer.append("gewaesser3Id").append("='").append(getGewaesser3Id()).append("' ");			
-        buffer.append("ofwkNrwId").append("='").append(getOfwkNrwId()).append("' ");			
-        buffer.append("ofwkNrwAuflageId").append("='").append(getOfwkNrwAuflageId()).append("' ");			
-        buffer.append("ofwkNrwOpt").append("='").append(getOfwkNrwOpt()).append("' ");			
-        buffer.append("seeNs3Id").append("='").append(getSeeNs3Id()).append("' ");			
-        buffer.append("seenameAlias3").append("='").append(getSeenameAlias3()).append("' ");			
-        buffer.append("seeAuflage3Id").append("='").append(getSeeAuflage3Id()).append("' ");			
-        buffer.append("see3Id").append("='").append(getSee3Id()).append("' ");			
-        buffer.append("einleitungsstellenId").append("='").append(getEinleitungsstellenId()).append("' ");			
-        buffer.append("gewaesserAuflage3Id").append("='").append(getGewaesserAuflage3Id()).append("' ");			
-        buffer.append("flussGebiet3Id").append("='").append(getFlussGebiet3Id()).append("' ");			
-        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");	
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("objektid").append("='").append(getObjektid()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("gewaessernameAlias3").append("='").append(getGewaessernameAlias3()).append("' ");
+        buffer.append("stillgelegtAm").append("='").append(getStillgelegtAm()).append("' ");
+        buffer.append("stationierungNs3").append("='").append(getStationierungNs3()).append("' ");
+        buffer.append("einzugsgebiet").append("='").append(getEinzugsgebiet()).append("' ");
+        buffer.append("stationierungSt3").append("='").append(getStationierungSt3()).append("' ");
+        buffer.append("abgaberelEinl").append("='").append(getAbgaberelEinl()).append("' ");
+        buffer.append("kanalArtOpt").append("='").append(getKanalArtOpt()).append("' ");
+        buffer.append("stationierung3Opt").append("='").append(getStationierung3Opt()).append("' ");
+        buffer.append("schutzzoneOpt").append("='").append(getSchutzzoneOpt()).append("' ");
+        buffer.append("deleted").append("='").append(getDeleted()).append("' ");
+        buffer.append("enabled").append("='").append(getEnabled()).append("' ");
+        buffer.append("typIndirekteinleitungTog").append("='").append(getTypIndirekteinleitungTog()).append("' ");
+        buffer.append("typIndusGewerbDirekteinleitungTog").append("='").append(getTypIndusGewerbDirekteinleitungTog()).append("' ");
+        buffer.append("typKommNwMischTog").append("='").append(getTypKommNwMischTog()).append("' ");
+        buffer.append("typKommNwTrennTog").append("='").append(getTypKommNwTrennTog()).append("' ");
+        buffer.append("typNwPrivatTrennTog").append("='").append(getTypNwPrivatTrennTog()).append("' ");
+        buffer.append("typIndusGewerbNwMischTog").append("='").append(getTypIndusGewerbNwMischTog()).append("' ");
+        buffer.append("typIndusGewerbNwTrennTog").append("='").append(getTypIndusGewerbNwTrennTog()).append("' ");
+        buffer.append("typGrubenwasserTog").append("='").append(getTypGrubenwasserTog()).append("' ");
+        buffer.append("typKleinklaeranlageTog").append("='").append(getTypKleinklaeranlageTog()).append("' ");
+        buffer.append("typKommKaTog").append("='").append(getTypKommKaTog()).append("' ");
+        buffer.append("typAusseroertlicheStrasseneinleitungTog").append("='").append(getTypAusseroertlicheStrasseneinleitungTog()).append("' ");
+        buffer.append("typSonstigeTog").append("='").append(getTypSonstigeTog()).append("' ");
+
+        buffer.append("gewaesser3Id").append("='").append(getGewaesser3Id()).append("' ");
+        buffer.append("ofwkNrwId").append("='").append(getOfwkNrwId()).append("' ");
+        buffer.append("ofwkNrwAuflageId").append("='").append(getOfwkNrwAuflageId()).append("' ");
+        buffer.append("ofwkNrwOpt").append("='").append(getOfwkNrwOpt()).append("' ");
+        buffer.append("seeNs3Id").append("='").append(getSeeNs3Id()).append("' ");
+        buffer.append("seenameAlias3").append("='").append(getSeenameAlias3()).append("' ");
+        buffer.append("seeAuflage3Id").append("='").append(getSeeAuflage3Id()).append("' ");
+        buffer.append("see3Id").append("='").append(getSee3Id()).append("' ");
+        buffer.append("einleitungsstellenId").append("='").append(getEinleitungsstellenId()).append("' ");
+        buffer.append("gewaesserAuflage3Id").append("='").append(getGewaesserAuflage3Id()).append("' ");
+        buffer.append("flussGebiet3Id").append("='").append(getFlussGebiet3Id()).append("' ");
+        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");
         buffer.append("bemerkungGewDaten").append("='").append(getBemerkung()).append("' ");
-        buffer.append("flussAuflage3Id").append("='").append(getFlussAuflage3Id()).append("' ");			
-        buffer.append("gewaessernameNs3").append("='").append(getGewaessernameNs3()).append("' ");			
-        buffer.append("gewaesserNs3Id").append("='").append(getGewaesserNs3Id()).append("' ");			
-        buffer.append("gwkId").append("='").append(getGwkId()).append("' ");			
-        buffer.append("kaNichtInNrwTog").append("='").append(isKaNichtInNrwTog()).append("' ");			
-        buffer.append("kaNameAusserhalbNrw").append("='").append(getKaNameAusserhalbNrw()).append("' ");			
-        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
-        buffer.append("versickerungsanlages").append("='").append(getVersickerungsanlages()).append("' ");			
-        buffer.append("referenzsForQElsNr").append("='").append(getReferenzsForQElsNr()).append("' ");			
+        buffer.append("flussAuflage3Id").append("='").append(getFlussAuflage3Id()).append("' ");
+        buffer.append("gewaessernameNs3").append("='").append(getGewaessernameNs3()).append("' ");
+        buffer.append("gewaesserNs3Id").append("='").append(getGewaesserNs3Id()).append("' ");
+        buffer.append("gwkId").append("='").append(getGwkId()).append("' ");
+        buffer.append("kaNichtInNrwTog").append("='").append(isKaNichtInNrwTog()).append("' ");
+        buffer.append("kaNameAusserhalbNrw").append("='").append(getKaNameAusserhalbNrw()).append("' ");
+        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");
+        buffer.append("versickerungsanlages").append("='").append(getVersickerungsanlages()).append("' ");
+        buffer.append("referenzsForQElsNr").append("='").append(getReferenzsForQElsNr()).append("' ");
         buffer.append("referenzsForZElsNr").append("='").append(getReferenzsForZElsNr()).append("' ");
         buffer.append("gewnameStat1").append("=").append(getGewnameStat()).append("'");
         buffer.append("gewkennzStat1").append("=").append(getGewkennzStat()).append("'");
@@ -857,7 +857,7 @@ public class Einleitungsstelle  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -891,68 +891,68 @@ public class Einleitungsstelle  implements java.io.Serializable {
      * @param copy Einleitungsstelle
      */
     private void copy(Einleitungsstelle copy) {
-        this.id = copy.getId();            
-        this.objektid = copy.getObjektid();            
-        this.aktualDat = copy.getAktualDat();            
-        this.erstellDat = copy.getErstellDat();            
-        this.herkunft = copy.getHerkunft();            
-        this.bezeichnung = copy.getBezeichnung();            
-        this.gewaessernameAlias3 = copy.getGewaessernameAlias3();                      
-        this.stillgelegtAm = copy.getStillgelegtAm();                       
-        this.stationierungNs3 = copy.getStationierungNs3();            
-        this.einzugsgebiet = copy.getEinzugsgebiet();            
-        this.stationierungSt3 = copy.getStationierungSt3();            
-        this.abgaberelEinl = copy.getAbgaberelEinl();                      
-        this.kanalArtOpt = copy.getKanalArtOpt();            
-        this.stationierung3Opt = copy.getStationierung3Opt();            
-        this.schutzzoneOpt = copy.getSchutzzoneOpt();            
-        this.deleted = copy.getDeleted();            
-        this.enabled = copy.getEnabled();            
-        this.typIndirekteinleitungTog = copy.getTypIndirekteinleitungTog();            
-        this.typIndusGewerbDirekteinleitungTog = copy.getTypIndusGewerbDirekteinleitungTog();            
-        this.typKommNwMischTog = copy.getTypKommNwMischTog();            
-        this.typKommNwTrennTog = copy.getTypKommNwTrennTog();            
-        this.typNwPrivatTrennTog = copy.getTypNwPrivatTrennTog();            
-        this.typIndusGewerbNwMischTog = copy.getTypIndusGewerbNwMischTog();            
-        this.typIndusGewerbNwTrennTog = copy.getTypIndusGewerbNwTrennTog();            
-        this.typGrubenwasserTog = copy.getTypGrubenwasserTog();            
-        this.typKleinklaeranlageTog = copy.getTypKleinklaeranlageTog();            
-        this.typKommKaTog = copy.getTypKommKaTog();            
-        this.typAusseroertlicheStrasseneinleitungTog = copy.getTypAusseroertlicheStrasseneinleitungTog();            
-        this.typSonstigeTog = copy.getTypSonstigeTog();            
-        this.gewaesser3Id = copy.getGewaesser3Id();            
-        this.ofwkNrwId = copy.getOfwkNrwId();            
-        this.ofwkNrwAuflageId = copy.getOfwkNrwAuflageId();            
-        this.ofwkNrwOpt = copy.getOfwkNrwOpt();            
-        this.seeNs3Id = copy.getSeeNs3Id();            
-        this.seenameAlias3 = copy.getSeenameAlias3();            
-        this.seeAuflage3Id = copy.getSeeAuflage3Id();            
-        this.see3Id = copy.getSee3Id();            
-        this.einleitungsstellenId = copy.getEinleitungsstellenId();            
-        this.gewaesserAuflage3Id = copy.getGewaesserAuflage3Id();            
-        this.flussGebiet3Id = copy.getFlussGebiet3Id();            
-        this.bemerkung = copy.getBemerkung();     
-        this.bemerkungGewDaten = copy.getBemerkungGewDaten(); 
-        this.flussAuflage3Id = copy.getFlussAuflage3Id();            
-        this.gewaessernameNs3 = copy.getGewaessernameNs3();            
-        this.gewaesserNs3Id = copy.getGewaesserNs3Id();            
-        this.gwkId = copy.getGwkId();            
-        this.kaNichtInNrwTog = copy.isKaNichtInNrwTog();            
-        this.kaNameAusserhalbNrw = copy.getKaNameAusserhalbNrw();            
-        this.externalNr = copy.getExternalNr();            
-        this.versickerungsanlages = copy.getVersickerungsanlages();            
-        this.referenzsForQElsNr = copy.getReferenzsForQElsNr();            
-        this.referenzsForZElsNr = copy.getReferenzsForZElsNr();  
+        this.id = copy.getId();
+        this.objektid = copy.getObjektid();
+        this.aktualDat = copy.getAktualDat();
+        this.erstellDat = copy.getErstellDat();
+        this.herkunft = copy.getHerkunft();
+        this.bezeichnung = copy.getBezeichnung();
+        this.gewaessernameAlias3 = copy.getGewaessernameAlias3();
+        this.stillgelegtAm = copy.getStillgelegtAm();
+        this.stationierungNs3 = copy.getStationierungNs3();
+        this.einzugsgebiet = copy.getEinzugsgebiet();
+        this.stationierungSt3 = copy.getStationierungSt3();
+        this.abgaberelEinl = copy.getAbgaberelEinl();
+        this.kanalArtOpt = copy.getKanalArtOpt();
+        this.stationierung3Opt = copy.getStationierung3Opt();
+        this.schutzzoneOpt = copy.getSchutzzoneOpt();
+        this.deleted = copy.getDeleted();
+        this.enabled = copy.getEnabled();
+        this.typIndirekteinleitungTog = copy.getTypIndirekteinleitungTog();
+        this.typIndusGewerbDirekteinleitungTog = copy.getTypIndusGewerbDirekteinleitungTog();
+        this.typKommNwMischTog = copy.getTypKommNwMischTog();
+        this.typKommNwTrennTog = copy.getTypKommNwTrennTog();
+        this.typNwPrivatTrennTog = copy.getTypNwPrivatTrennTog();
+        this.typIndusGewerbNwMischTog = copy.getTypIndusGewerbNwMischTog();
+        this.typIndusGewerbNwTrennTog = copy.getTypIndusGewerbNwTrennTog();
+        this.typGrubenwasserTog = copy.getTypGrubenwasserTog();
+        this.typKleinklaeranlageTog = copy.getTypKleinklaeranlageTog();
+        this.typKommKaTog = copy.getTypKommKaTog();
+        this.typAusseroertlicheStrasseneinleitungTog = copy.getTypAusseroertlicheStrasseneinleitungTog();
+        this.typSonstigeTog = copy.getTypSonstigeTog();
+        this.gewaesser3Id = copy.getGewaesser3Id();
+        this.ofwkNrwId = copy.getOfwkNrwId();
+        this.ofwkNrwAuflageId = copy.getOfwkNrwAuflageId();
+        this.ofwkNrwOpt = copy.getOfwkNrwOpt();
+        this.seeNs3Id = copy.getSeeNs3Id();
+        this.seenameAlias3 = copy.getSeenameAlias3();
+        this.seeAuflage3Id = copy.getSeeAuflage3Id();
+        this.see3Id = copy.getSee3Id();
+        this.einleitungsstellenId = copy.getEinleitungsstellenId();
+        this.gewaesserAuflage3Id = copy.getGewaesserAuflage3Id();
+        this.flussGebiet3Id = copy.getFlussGebiet3Id();
+        this.bemerkung = copy.getBemerkung();
+        this.bemerkungGewDaten = copy.getBemerkungGewDaten();
+        this.flussAuflage3Id = copy.getFlussAuflage3Id();
+        this.gewaessernameNs3 = copy.getGewaessernameNs3();
+        this.gewaesserNs3Id = copy.getGewaesserNs3Id();
+        this.gwkId = copy.getGwkId();
+        this.kaNichtInNrwTog = copy.isKaNichtInNrwTog();
+        this.kaNameAusserhalbNrw = copy.getKaNameAusserhalbNrw();
+        this.externalNr = copy.getExternalNr();
+        this.versickerungsanlages = copy.getVersickerungsanlages();
+        this.referenzsForQElsNr = copy.getReferenzsForQElsNr();
+        this.referenzsForZElsNr = copy.getReferenzsForZElsNr();
         this.gewnameStat = copy.getGewnameStat();
         this.gewkennzStat = copy.getGewkennzStat();
-        this.gewNameStadt = copy.getGewNameStadt();  
+        this.gewNameStadt = copy.getGewNameStadt();
         this.gewKennzStadt = copy.getGewKennzStadt();
         this.hwrMassnahme = copy.getHwrMassnahme();
         this.entfEinlStatGew = copy.getEntfEinlStatGew();
         this.mwq = copy.getMwq();
         this.hq1 = copy.getHq1();
-   
-    }    
+
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

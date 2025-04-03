@@ -44,7 +44,7 @@ public class Probenahme  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forProbenahme;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Sachbearbeiter sachbearbeiter;
@@ -398,7 +398,7 @@ public class Probenahme  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -407,40 +407,40 @@ public class Probenahme  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");			
-        buffer.append("messstelle").append("='").append(getMessstelle()).append("' ");			
-        buffer.append("status").append("='").append(getStatus()).append("' ");			
-        buffer.append("kennummer").append("='").append(getKennummer()).append("' ");			
-        buffer.append("art").append("='").append(getArt()).append("' ");			
-        buffer.append("datumDerEntnahme").append("='").append(getDatumDerEntnahme()).append("' ");			
-        buffer.append("zeitAnfang").append("='").append(getZeitAnfang()).append("' ");			
-        buffer.append("bisDatum").append("='").append(getBisDatum()).append("' ");			
-        buffer.append("zeitDerEntnahmen").append("='").append(getZeitDerEntnahmen()).append("' ");			
-        buffer.append("einwaage").append("='").append(getEinwaage()).append("' ");			
-        buffer.append("VM3").append("='").append(getVM3()).append("' ");			
-        buffer.append("fahrer").append("='").append(getFahrer()).append("' ");			
-        buffer.append("objektNr").append("='").append(getObjektNr()).append("' ");			
-        buffer.append("datumIcp").append("='").append(getDatumIcp()).append("' ");			
-        buffer.append("sonderparameter").append("='").append(getSonderparameter()).append("' ");			
-        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");			
-        buffer.append("an360x11").append("='").append(getAn360x11()).append("' ");			
-        buffer.append("ueberschreitung").append("='").append(getUeberschreitung()).append("' ");			
-        buffer.append("anzahlbeteiligte").append("='").append(getAnzahlbeteiligte()).append("' ");			
-        buffer.append("uhrzeitbeginn").append("='").append(getUhrzeitbeginn()).append("' ");			
-        buffer.append("uhrzeitende").append("='").append(getUhrzeitende()).append("' ");			
-        buffer.append("fahrtzeit").append("='").append(getFahrtzeit()).append("' ");			
-        buffer.append("bescheid").append("='").append(getBescheid()).append("' ");			
-        buffer.append("kosten").append("='").append(getKosten()).append("' ");			
-        buffer.append("massnahmen").append("='").append(getMassnahmen()).append("' ");			
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("uschivorg").append("='").append(getUschivorg()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("qbAusschliessen").append("='").append(getQbAusschliessen()).append("' ");			
-        buffer.append("analysepositions").append("='").append(getAnalysepositions()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("sachbearbeiter").append("='").append(getSachbearbeiter()).append("' ");
+        buffer.append("messstelle").append("='").append(getMessstelle()).append("' ");
+        buffer.append("status").append("='").append(getStatus()).append("' ");
+        buffer.append("kennummer").append("='").append(getKennummer()).append("' ");
+        buffer.append("art").append("='").append(getArt()).append("' ");
+        buffer.append("datumDerEntnahme").append("='").append(getDatumDerEntnahme()).append("' ");
+        buffer.append("zeitAnfang").append("='").append(getZeitAnfang()).append("' ");
+        buffer.append("bisDatum").append("='").append(getBisDatum()).append("' ");
+        buffer.append("zeitDerEntnahmen").append("='").append(getZeitDerEntnahmen()).append("' ");
+        buffer.append("einwaage").append("='").append(getEinwaage()).append("' ");
+        buffer.append("VM3").append("='").append(getVM3()).append("' ");
+        buffer.append("fahrer").append("='").append(getFahrer()).append("' ");
+        buffer.append("objektNr").append("='").append(getObjektNr()).append("' ");
+        buffer.append("datumIcp").append("='").append(getDatumIcp()).append("' ");
+        buffer.append("sonderparameter").append("='").append(getSonderparameter()).append("' ");
+        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");
+        buffer.append("an360x11").append("='").append(getAn360x11()).append("' ");
+        buffer.append("ueberschreitung").append("='").append(getUeberschreitung()).append("' ");
+        buffer.append("anzahlbeteiligte").append("='").append(getAnzahlbeteiligte()).append("' ");
+        buffer.append("uhrzeitbeginn").append("='").append(getUhrzeitbeginn()).append("' ");
+        buffer.append("uhrzeitende").append("='").append(getUhrzeitende()).append("' ");
+        buffer.append("fahrtzeit").append("='").append(getFahrtzeit()).append("' ");
+        buffer.append("bescheid").append("='").append(getBescheid()).append("' ");
+        buffer.append("kosten").append("='").append(getKosten()).append("' ");
+        buffer.append("massnahmen").append("='").append(getMassnahmen()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("uschivorg").append("='").append(getUschivorg()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("qbAusschliessen").append("='").append(getQbAusschliessen()).append("' ");
+        buffer.append("analysepositions").append("='").append(getAnalysepositions()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -472,7 +472,7 @@ public class Probenahme  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -506,39 +506,39 @@ public class Probenahme  implements java.io.Serializable {
      * @param copy Probenahme
      */
     private void copy(Probenahme copy) {
-        this.id = copy.getId();            
-        this.sachbearbeiter = copy.getSachbearbeiter();            
-        this.messstelle = copy.getMessstelle();            
-        this.status = copy.getStatus();            
-        this.kennummer = copy.getKennummer();            
-        this.art = copy.getArt();            
-        this.datumDerEntnahme = copy.getDatumDerEntnahme();            
-        this.zeitAnfang = copy.getZeitAnfang();            
-        this.bisDatum = copy.getBisDatum();            
-        this.zeitDerEntnahmen = copy.getZeitDerEntnahmen();            
-        this.einwaage = copy.getEinwaage();            
-        this.VM3 = copy.getVM3();            
-        this.fahrer = copy.getFahrer();            
-        this.objektNr = copy.getObjektNr();            
-        this.datumIcp = copy.getDatumIcp();            
-        this.sonderparameter = copy.getSonderparameter();            
-        this.bemerkung = copy.getBemerkung();            
-        this.an360x11 = copy.getAn360x11();            
-        this.ueberschreitung = copy.getUeberschreitung();            
-        this.anzahlbeteiligte = copy.getAnzahlbeteiligte();            
-        this.uhrzeitbeginn = copy.getUhrzeitbeginn();            
-        this.uhrzeitende = copy.getUhrzeitende();            
-        this.fahrtzeit = copy.getFahrtzeit();            
-        this.bescheid = copy.getBescheid();            
-        this.kosten = copy.getKosten();            
-        this.massnahmen = copy.getMassnahmen();            
-        this.bezeichnung = copy.getBezeichnung();            
-        this.uschivorg = copy.getUschivorg();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.qbAusschliessen = copy.getQbAusschliessen();            
-        this.analysepositions = copy.getAnalysepositions();            
-    }    
+        this.id = copy.getId();
+        this.sachbearbeiter = copy.getSachbearbeiter();
+        this.messstelle = copy.getMessstelle();
+        this.status = copy.getStatus();
+        this.kennummer = copy.getKennummer();
+        this.art = copy.getArt();
+        this.datumDerEntnahme = copy.getDatumDerEntnahme();
+        this.zeitAnfang = copy.getZeitAnfang();
+        this.bisDatum = copy.getBisDatum();
+        this.zeitDerEntnahmen = copy.getZeitDerEntnahmen();
+        this.einwaage = copy.getEinwaage();
+        this.VM3 = copy.getVM3();
+        this.fahrer = copy.getFahrer();
+        this.objektNr = copy.getObjektNr();
+        this.datumIcp = copy.getDatumIcp();
+        this.sonderparameter = copy.getSonderparameter();
+        this.bemerkung = copy.getBemerkung();
+        this.an360x11 = copy.getAn360x11();
+        this.ueberschreitung = copy.getUeberschreitung();
+        this.anzahlbeteiligte = copy.getAnzahlbeteiligte();
+        this.uhrzeitbeginn = copy.getUhrzeitbeginn();
+        this.uhrzeitende = copy.getUhrzeitende();
+        this.fahrtzeit = copy.getFahrtzeit();
+        this.bescheid = copy.getBescheid();
+        this.kosten = copy.getKosten();
+        this.massnahmen = copy.getMassnahmen();
+        this.bezeichnung = copy.getBezeichnung();
+        this.uschivorg = copy.getUschivorg();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.qbAusschliessen = copy.getQbAusschliessen();
+        this.analysepositions = copy.getAnalysepositions();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

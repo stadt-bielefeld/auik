@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 public class EditorEntsorgerModel extends EditableListTableModel {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -1744282792751909508L;
 
@@ -118,14 +118,14 @@ public class EditorEntsorgerModel extends EditableListTableModel {
 
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		
+
 		Entsorger tmp = (Entsorger) objectAtRow;
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
         	tmp.setId(tmpID);
         	break;
-        	
+
         case 1:
         	String tmpName = (String) newValue;
         	tmp.setEntsorger(tmpName);
@@ -134,7 +134,7 @@ public class EditorEntsorgerModel extends EditableListTableModel {
         	String tmpstrasse = (String) newValue;
         	tmp.setStrasse(tmpstrasse);
         	break;
-        	
+
         case 3:
         	Integer tmpNr = (Integer) newValue;
         	tmp.setHausnr(tmpNr);
@@ -143,7 +143,7 @@ public class EditorEntsorgerModel extends EditableListTableModel {
         	String tmpPLZ = (String) newValue;
         	tmp.setPlz(tmpPLZ);
         	break;
-        	
+
         case 5:
         	String tmpOrt = (String) newValue;
         	tmp.setOrt(tmpOrt);
@@ -152,15 +152,15 @@ public class EditorEntsorgerModel extends EditableListTableModel {
         	String tmpAnsprech = (String) newValue;
         	tmp.setAnsprechpartner(tmpAnsprech);
         	break;
-        	
+
         case 7:
         	String tmpTel = (String) newValue;
         	tmp.setTelefon(tmpTel);
         	break;
 
         default:
-            break;        	
-        	
+            break;
+
 		}
 		Entsorger.merge(tmp);
 	}

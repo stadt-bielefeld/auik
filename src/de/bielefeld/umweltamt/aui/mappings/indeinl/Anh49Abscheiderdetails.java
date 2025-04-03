@@ -41,7 +41,7 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAnh49Abscheiderdetails;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Anh49Fachdaten anh49Fachdaten;
@@ -190,7 +190,7 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
 
     public void setVorschlamm(Boolean vorschlamm) {
         this.vorschlamm = vorschlamm;
-        
+
     }
 
     public Boolean getProbe() {
@@ -233,19 +233,19 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
     }
 
     public Integer getVsf2() {
-        return this.vsf2;    
+        return this.vsf2;
     }
 
     public void setVsf2(Integer vsf2) {
        this.vsf2 = vsf2;
-        
+
     }
     public Integer getVsf1() {
         return this.vsf1;
     }
 
     public void setVsf1(Integer vsf1) {
-        this.vsf1 = vsf1;   
+        this.vsf1 = vsf1;
     }
 
     public Boolean getSchwimmer() {
@@ -272,7 +272,7 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
     public void setHersteller(String hersteller) {
         this.hersteller = hersteller;
     }
-    
+
     public String getTyp() {
         return this.typ;
     }
@@ -313,7 +313,7 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -322,31 +322,31 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("anh49Fachdaten").append("='").append(getAnh49Fachdaten()).append("' ");			
-        buffer.append("abscheidernr").append("='").append(getAbscheidernr()).append("' ");			
-        buffer.append("von").append("='").append(getVon()).append("' ");			
-        buffer.append("lage").append("='").append(getLage()).append("' ");			
-        buffer.append("nenngroesse").append("='").append(getNenngroesse()).append("' ");			
-        buffer.append("rueckhalt").append("='").append(getRueckhalt()).append("' ");		
-        buffer.append("kreis").append("='").append(getKreis()).append("' ");						
-        buffer.append("schlammfang").append("='").append(getSchlammfang()).append("' ");	
-        buffer.append("vorschlamm").append("='").append(getVorschlamm()).append("' ");	
-        buffer.append("probe").append("='").append(getProbe()).append("' ");	
-        buffer.append("benzinabscheider").append("='").append(getBenzinabscheider()).append("' ");			
-        buffer.append("koaabscheider").append("='").append(getKoaabscheider()).append("' ");			
-        buffer.append("kompakt").append("='").append(getKompakt()).append("' ");			
-        buffer.append("emulsionsspaltanlage").append("='").append(getEmulsionsspaltanlage()).append("' ");			
-        buffer.append("vsf2").append("='").append(getVsf2()).append("' ");	
-        buffer.append("vsf1").append("='").append(getVsf1()).append("' ");	
-        buffer.append("schwimmer").append("='").append(getSchwimmer()).append("' ");			
-        buffer.append("warnanlage").append("='").append(getWarnanlage()).append("' ");			
-        buffer.append("hersteller").append("='").append(getHersteller()).append("' ");	
-        buffer.append("typ").append("='").append(getTyp()).append("' ");		
-        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("anh49Fachdaten").append("='").append(getAnh49Fachdaten()).append("' ");
+        buffer.append("abscheidernr").append("='").append(getAbscheidernr()).append("' ");
+        buffer.append("von").append("='").append(getVon()).append("' ");
+        buffer.append("lage").append("='").append(getLage()).append("' ");
+        buffer.append("nenngroesse").append("='").append(getNenngroesse()).append("' ");
+        buffer.append("rueckhalt").append("='").append(getRueckhalt()).append("' ");
+        buffer.append("kreis").append("='").append(getKreis()).append("' ");
+        buffer.append("schlammfang").append("='").append(getSchlammfang()).append("' ");
+        buffer.append("vorschlamm").append("='").append(getVorschlamm()).append("' ");
+        buffer.append("probe").append("='").append(getProbe()).append("' ");
+        buffer.append("benzinabscheider").append("='").append(getBenzinabscheider()).append("' ");
+        buffer.append("koaabscheider").append("='").append(getKoaabscheider()).append("' ");
+        buffer.append("kompakt").append("='").append(getKompakt()).append("' ");
+        buffer.append("emulsionsspaltanlage").append("='").append(getEmulsionsspaltanlage()).append("' ");
+        buffer.append("vsf2").append("='").append(getVsf2()).append("' ");
+        buffer.append("vsf1").append("='").append(getVsf1()).append("' ");
+        buffer.append("schwimmer").append("='").append(getSchwimmer()).append("' ");
+        buffer.append("warnanlage").append("='").append(getWarnanlage()).append("' ");
+        buffer.append("hersteller").append("='").append(getHersteller()).append("' ");
+        buffer.append("typ").append("='").append(getTyp()).append("' ");
+        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -378,7 +378,7 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -412,31 +412,31 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
      * @param copy Anh49Abscheiderdetails
      */
     private void copy(Anh49Abscheiderdetails copy) {
-        this.id = copy.getId();  
-        this.anh49Fachdaten = copy.getAnh49Fachdaten();            
-        this.abscheidernr = copy.getAbscheidernr();            
-        this.von = copy.getVon();            
-        this.lage = copy.getLage();            
-        this.nenngroesse = copy.getNenngroesse();            
-        this.rueckhalt = copy.getRueckhalt();   
-        this.kreis= copy.getKreis();                    
-        this.schlammfang = copy.getSchlammfang();   
+        this.id = copy.getId();
+        this.anh49Fachdaten = copy.getAnh49Fachdaten();
+        this.abscheidernr = copy.getAbscheidernr();
+        this.von = copy.getVon();
+        this.lage = copy.getLage();
+        this.nenngroesse = copy.getNenngroesse();
+        this.rueckhalt = copy.getRueckhalt();
+        this.kreis= copy.getKreis();
+        this.schlammfang = copy.getSchlammfang();
         this.vorschlamm = copy.getVorschlamm();
         this.probe = copy.getProbe();
-        this.benzinabscheider = copy.getBenzinabscheider();            
-        this.koaabscheider = copy.getKoaabscheider();            
-        this.kompakt = copy.getKompakt();            
-        this.emulsionsspaltanlage = copy.getEmulsionsspaltanlage();         
-        this.vsf2 = copy.getVsf2();  
-        this.vsf1 = copy.getVsf1();   
-        this.schwimmer = copy.getSchwimmer();            
-        this.warnanlage = copy.getWarnanlage();            
-        this.hersteller = copy.getHersteller();     
-        this.typ = copy.getTyp();   
-        this.bemerkung = copy.getBemerkung();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.benzinabscheider = copy.getBenzinabscheider();
+        this.koaabscheider = copy.getKoaabscheider();
+        this.kompakt = copy.getKompakt();
+        this.emulsionsspaltanlage = copy.getEmulsionsspaltanlage();
+        this.vsf2 = copy.getVsf2();
+        this.vsf1 = copy.getVsf1();
+        this.schwimmer = copy.getSchwimmer();
+        this.warnanlage = copy.getWarnanlage();
+        this.hersteller = copy.getHersteller();
+        this.typ = copy.getTyp();
+        this.bemerkung = copy.getBemerkung();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -482,7 +482,7 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
 
 
 		// TODO Auto-generated method stub
-		
+
 	}
 
     /* Custom code goes below here! */

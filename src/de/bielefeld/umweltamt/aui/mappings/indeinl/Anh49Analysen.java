@@ -41,7 +41,7 @@ public class Anh49Analysen  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAnh49Analysen;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Anh49Fachdaten anh49Fachdaten;
@@ -283,7 +283,7 @@ public class Anh49Analysen  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -292,28 +292,28 @@ public class Anh49Analysen  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("anh49Fachdaten").append("='").append(getAnh49Fachdaten()).append("' ");			
-        buffer.append("datum").append("='").append(getDatum()).append("' ");			
-        buffer.append("institut").append("='").append(getInstitut()).append("' ");			
-        buffer.append("csbWert").append("='").append(getCsbWert()).append("' ");			
-        buffer.append("csbGrenzwert").append("='").append(getCsbGrenzwert()).append("' ");			
-        buffer.append("aoxWert").append("='").append(getAoxWert()).append("' ");			
-        buffer.append("aoxGrenzwert").append("='").append(getAoxGrenzwert()).append("' ");			
-        buffer.append("kwWert").append("='").append(getKwWert()).append("' ");			
-        buffer.append("kwGrenzwert").append("='").append(getKwGrenzwert()).append("' ");			
-        buffer.append("zinkWert").append("='").append(getZinkWert()).append("' ");			
-        buffer.append("zinkGrenzwert").append("='").append(getZinkGrenzwert()).append("' ");			
-        buffer.append("bsb5Wert").append("='").append(getBsb5Wert()).append("' ");			
-        buffer.append("bsb5CsbRelation").append("='").append(getBsb5CsbRelation()).append("' ");			
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
-        buffer.append("bikGrenzwert").append("='").append(getBikGrenzwert()).append("' ");			
-        buffer.append("bikWert").append("='").append(getBikWert()).append("' ");			
-        buffer.append("phWert").append("='").append(getPhWert()).append("' ");			
-        buffer.append("phGrenzwert").append("='").append(getPhGrenzwert()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("anh49Fachdaten").append("='").append(getAnh49Fachdaten()).append("' ");
+        buffer.append("datum").append("='").append(getDatum()).append("' ");
+        buffer.append("institut").append("='").append(getInstitut()).append("' ");
+        buffer.append("csbWert").append("='").append(getCsbWert()).append("' ");
+        buffer.append("csbGrenzwert").append("='").append(getCsbGrenzwert()).append("' ");
+        buffer.append("aoxWert").append("='").append(getAoxWert()).append("' ");
+        buffer.append("aoxGrenzwert").append("='").append(getAoxGrenzwert()).append("' ");
+        buffer.append("kwWert").append("='").append(getKwWert()).append("' ");
+        buffer.append("kwGrenzwert").append("='").append(getKwGrenzwert()).append("' ");
+        buffer.append("zinkWert").append("='").append(getZinkWert()).append("' ");
+        buffer.append("zinkGrenzwert").append("='").append(getZinkGrenzwert()).append("' ");
+        buffer.append("bsb5Wert").append("='").append(getBsb5Wert()).append("' ");
+        buffer.append("bsb5CsbRelation").append("='").append(getBsb5CsbRelation()).append("' ");
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
+        buffer.append("bikGrenzwert").append("='").append(getBikGrenzwert()).append("' ");
+        buffer.append("bikWert").append("='").append(getBikWert()).append("' ");
+        buffer.append("phWert").append("='").append(getPhWert()).append("' ");
+        buffer.append("phGrenzwert").append("='").append(getPhGrenzwert()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -345,7 +345,7 @@ public class Anh49Analysen  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -379,27 +379,27 @@ public class Anh49Analysen  implements java.io.Serializable {
      * @param copy Anh49Analysen
      */
     private void copy(Anh49Analysen copy) {
-        this.anh49Fachdaten = copy.getAnh49Fachdaten();            
-        this.datum = copy.getDatum();            
-        this.institut = copy.getInstitut();            
-        this.csbWert = copy.getCsbWert();            
-        this.csbGrenzwert = copy.getCsbGrenzwert();            
-        this.aoxWert = copy.getAoxWert();            
-        this.aoxGrenzwert = copy.getAoxGrenzwert();            
-        this.kwWert = copy.getKwWert();            
-        this.kwGrenzwert = copy.getKwGrenzwert();            
-        this.zinkWert = copy.getZinkWert();            
-        this.zinkGrenzwert = copy.getZinkGrenzwert();            
-        this.bsb5Wert = copy.getBsb5Wert();            
-        this.bsb5CsbRelation = copy.getBsb5CsbRelation();            
-        this.bemerkungen = copy.getBemerkungen();            
-        this.bikGrenzwert = copy.getBikGrenzwert();            
-        this.bikWert = copy.getBikWert();            
-        this.phWert = copy.getPhWert();            
-        this.phGrenzwert = copy.getPhGrenzwert();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.anh49Fachdaten = copy.getAnh49Fachdaten();
+        this.datum = copy.getDatum();
+        this.institut = copy.getInstitut();
+        this.csbWert = copy.getCsbWert();
+        this.csbGrenzwert = copy.getCsbGrenzwert();
+        this.aoxWert = copy.getAoxWert();
+        this.aoxGrenzwert = copy.getAoxGrenzwert();
+        this.kwWert = copy.getKwWert();
+        this.kwGrenzwert = copy.getKwGrenzwert();
+        this.zinkWert = copy.getZinkWert();
+        this.zinkGrenzwert = copy.getZinkGrenzwert();
+        this.bsb5Wert = copy.getBsb5Wert();
+        this.bsb5CsbRelation = copy.getBsb5CsbRelation();
+        this.bemerkungen = copy.getBemerkungen();
+        this.bikGrenzwert = copy.getBikGrenzwert();
+        this.bikWert = copy.getBikWert();
+        this.phWert = copy.getPhWert();
+        this.phGrenzwert = copy.getPhGrenzwert();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

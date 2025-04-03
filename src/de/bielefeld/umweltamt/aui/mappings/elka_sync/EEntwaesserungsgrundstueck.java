@@ -81,7 +81,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     private Set<Abaverfahren> abwasserbehandlungsverfahrens;
     private Set<ZEntwaessgrAbwasbehverf> zEntwaessgrAbwasbehverfs;
-    
+
 
     private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
 
@@ -123,7 +123,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 	public Integer getOrigNr() {
 		return this.origNr;
 	}
-	
+
 	@JsonIgnore
 	public void setOrigNr(Integer origNr) {
 		this.origNr = origNr;
@@ -307,7 +307,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -316,26 +316,26 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("nr").append("='").append(getNr()).append("' ");			
-        buffer.append("erlFreiElTog").append("='").append(getErlFreiElTog()).append("' ");			
-        buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");			
-        buffer.append("regenhaeufigkeit").append("='").append(getRegenhaeufigkeit()).append("' ");			
-        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");			
-        buffer.append("regendauer").append("='").append(getRegendauer()).append("' ");			
-        buffer.append("grEntwGebiet").append("='").append(getGrEntwGebiet()).append("' ");			
-        buffer.append("dtvWert").append("='").append(getDtvWert()).append("' ");			
-        buffer.append("wasserableitungsstreckeOpt").append("='").append(getWasserableitungsstreckeOpt()).append("' ");			
-        buffer.append("nameEtwGebiet").append("='").append(getNameEtwGebiet()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("einlBereichOpt").append("='").append(getEinlBereichOpt()).append("' ");			
-        buffer.append("abwbeskonNr").append("='").append(getAbwbeskonnr()).append("' ");			
-        buffer.append("einbauartOpt").append("='").append(getEinbauartOpt()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("wasserecht").append("='").append(getWasserrecht()).append("' ");			
-        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");			
-        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");			
+        buffer.append("nr").append("='").append(getNr()).append("' ");
+        buffer.append("erlFreiElTog").append("='").append(getErlFreiElTog()).append("' ");
+        buffer.append("regenspende").append("='").append(getRegenspende()).append("' ");
+        buffer.append("regenhaeufigkeit").append("='").append(getRegenhaeufigkeit()).append("' ");
+        buffer.append("bemerkung").append("='").append(getBemerkung()).append("' ");
+        buffer.append("regendauer").append("='").append(getRegendauer()).append("' ");
+        buffer.append("grEntwGebiet").append("='").append(getGrEntwGebiet()).append("' ");
+        buffer.append("dtvWert").append("='").append(getDtvWert()).append("' ");
+        buffer.append("wasserableitungsstreckeOpt").append("='").append(getWasserableitungsstreckeOpt()).append("' ");
+        buffer.append("nameEtwGebiet").append("='").append(getNameEtwGebiet()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("einlBereichOpt").append("='").append(getEinlBereichOpt()).append("' ");
+        buffer.append("abwbeskonNr").append("='").append(getAbwbeskonnr()).append("' ");
+        buffer.append("einbauartOpt").append("='").append(getEinbauartOpt()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("wasserecht").append("='").append(getWasserrecht()).append("' ");
+        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");
+        buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -368,7 +368,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -402,8 +402,8 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
      * @param copy EEntwaesserungsgrundstueck
      */
     private void copy(EEntwaesserungsgrundstueck copy) {
-        this.nr = copy.getNr();            
-    }    
+        this.nr = copy.getNr();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

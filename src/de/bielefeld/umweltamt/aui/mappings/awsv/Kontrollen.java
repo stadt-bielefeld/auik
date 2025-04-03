@@ -41,7 +41,7 @@ public class Kontrollen  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forKontrollen;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Fachdaten fachdaten;
@@ -213,7 +213,7 @@ public class Kontrollen  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -222,21 +222,21 @@ public class Kontrollen  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");			
-        buffer.append("grundderpruefung").append("='").append(getGrundderpruefung()).append("' ");			
-        buffer.append("pruefturnus").append("='").append(getPruefturnus()).append("' ");			
-        buffer.append("pruefdatum").append("='").append(getPruefdatum()).append("' ");			
-        buffer.append("pruefer").append("='").append(getPruefer()).append("' ");			
-        buffer.append("pruefungabgeschlossen").append("='").append(getPruefungabgeschlossen()).append("' ");			
-        buffer.append("nachpruefung").append("='").append(getNachpruefung()).append("' ");			
-        buffer.append("nachpruefdatum").append("='").append(getNachpruefdatum()).append("' ");			
-        buffer.append("nachpruefer").append("='").append(getNachpruefer()).append("' ");			
-        buffer.append("naechstepruefung").append("='").append(getNaechstepruefung()).append("' ");			
-        buffer.append("pruefergebnis").append("='").append(getPruefergebnis()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");
+        buffer.append("grundderpruefung").append("='").append(getGrundderpruefung()).append("' ");
+        buffer.append("pruefturnus").append("='").append(getPruefturnus()).append("' ");
+        buffer.append("pruefdatum").append("='").append(getPruefdatum()).append("' ");
+        buffer.append("pruefer").append("='").append(getPruefer()).append("' ");
+        buffer.append("pruefungabgeschlossen").append("='").append(getPruefungabgeschlossen()).append("' ");
+        buffer.append("nachpruefung").append("='").append(getNachpruefung()).append("' ");
+        buffer.append("nachpruefdatum").append("='").append(getNachpruefdatum()).append("' ");
+        buffer.append("nachpruefer").append("='").append(getNachpruefer()).append("' ");
+        buffer.append("naechstepruefung").append("='").append(getNaechstepruefung()).append("' ");
+        buffer.append("pruefergebnis").append("='").append(getPruefergebnis()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -268,7 +268,7 @@ public class Kontrollen  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -302,20 +302,20 @@ public class Kontrollen  implements java.io.Serializable {
      * @param copy Kontrollen
      */
     private void copy(Kontrollen copy) {
-        this.fachdaten = copy.getFachdaten();            
-        this.grundderpruefung = copy.getGrundderpruefung();            
-        this.pruefturnus = copy.getPruefturnus();            
-        this.pruefdatum = copy.getPruefdatum();            
-        this.pruefer = copy.getPruefer();            
-        this.pruefungabgeschlossen = copy.getPruefungabgeschlossen();            
-        this.nachpruefung = copy.getNachpruefung();            
-        this.nachpruefdatum = copy.getNachpruefdatum();            
-        this.nachpruefer = copy.getNachpruefer();            
-        this.naechstepruefung = copy.getNaechstepruefung();            
-        this.pruefergebnis = copy.getPruefergebnis();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.fachdaten = copy.getFachdaten();
+        this.grundderpruefung = copy.getGrundderpruefung();
+        this.pruefturnus = copy.getPruefturnus();
+        this.pruefdatum = copy.getPruefdatum();
+        this.pruefer = copy.getPruefer();
+        this.pruefungabgeschlossen = copy.getPruefungabgeschlossen();
+        this.nachpruefung = copy.getNachpruefung();
+        this.nachpruefdatum = copy.getNachpruefdatum();
+        this.nachpruefer = copy.getNachpruefer();
+        this.naechstepruefung = copy.getNaechstepruefung();
+        this.pruefergebnis = copy.getPruefergebnis();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

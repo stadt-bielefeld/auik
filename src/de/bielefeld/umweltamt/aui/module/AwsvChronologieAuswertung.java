@@ -79,7 +79,7 @@ public class AwsvChronologieAuswertung extends AbstractQueryModul {
     private JCheckBox wiedervorlageCheck;
     private JCheckBox abgeschlossenCheck;
     private JButton submitButton;
-    
+
 
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#editObject(int)
@@ -181,7 +181,7 @@ public class AwsvChronologieAuswertung extends AbstractQueryModul {
                 public void actionPerformed(ActionEvent e) {
                     ((AwsvAnlagenchronoModel)getTableModel()).setList(
                         DatabaseQuery.getAnlagenchrono(
-                                wiedervorlageCheck.isSelected(), 
+                                wiedervorlageCheck.isSelected(),
                                 abgeschlossenCheck.isSelected()));
                     ((AwsvAnlagenchronoModel)getTableModel()).fireTableDataChanged();
                     frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");

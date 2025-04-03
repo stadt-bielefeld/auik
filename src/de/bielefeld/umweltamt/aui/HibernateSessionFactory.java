@@ -21,13 +21,11 @@
 
 package de.bielefeld.umweltamt.aui;
 
-import java.util.List;
 import java.util.Map;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
-import org.postgresql.util.PSQLException;
 
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -283,13 +281,12 @@ public class HibernateSessionFactory {
         String currentUser = DB_USER;
         String currentPw = DB_PASS;
         setDBData(user, pass);
-        //AUIKataster.debugOutput("User: " + DB_USER + ", Pass: " + DB_PASS, "HSF.checkCredentials");
 
         boolean tmp = false;
 
         try {
             Session session = currentSession();
-            List<?> test = session.createSQLQuery(
+            session.createSQLQuery(
                     "select count(*) from basis.adresse"
             ).list();
             tmp = true;

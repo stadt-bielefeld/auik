@@ -45,7 +45,7 @@ public class Parameter  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forParameter;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private String ordnungsbegriff;
     private Parametergruppen parametergruppen;
@@ -279,7 +279,7 @@ public class Parameter  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -288,28 +288,28 @@ public class Parameter  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("ordnungsbegriff").append("='").append(getOrdnungsbegriff()).append("' ");			
-        buffer.append("parametergruppen").append("='").append(getParametergruppen()).append("' ");			
-        buffer.append("mapElkaAnalysemethode").append("='").append(getMapElkaAnalysemethode()).append("' ");			
-        buffer.append("analyseverfahren").append("='").append(getAnalyseverfahren()).append("' ");			
-        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");			
-        buffer.append("einheiten").append("='").append(getEinheiten()).append("' ");			
-        buffer.append("grenzwert").append("='").append(getGrenzwert()).append("' ");			
-        buffer.append("grenzwertname").append("='").append(getGrenzwertname()).append("' ");			
-        buffer.append("sielhautGw").append("='").append(getSielhautGw()).append("' ");			
-        buffer.append("klaerschlammGw").append("='").append(getKlaerschlammGw()).append("' ");			
-        buffer.append("preisfueranalyse").append("='").append(getPreisfueranalyse()).append("' ");			
-        buffer.append("einzelnbeauftragbar").append("='").append(getEinzelnbeauftragbar()).append("' ");			
-        buffer.append("kennzeichnung").append("='").append(getKennzeichnung()).append("' ");			
-        buffer.append("konservierung").append("='").append(getKonservierung()).append("' ");			
-        buffer.append("reihenfolge").append("='").append(getReihenfolge()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("deaStoffeStoffNr").append("='").append(getDeaStoffeStoffNr()).append("' ");			
-        buffer.append("metaParameters").append("='").append(getMetaParameters()).append("' ");			
-        buffer.append("analysepositions").append("='").append(getAnalysepositions()).append("' ");			
+        buffer.append("ordnungsbegriff").append("='").append(getOrdnungsbegriff()).append("' ");
+        buffer.append("parametergruppen").append("='").append(getParametergruppen()).append("' ");
+        buffer.append("mapElkaAnalysemethode").append("='").append(getMapElkaAnalysemethode()).append("' ");
+        buffer.append("analyseverfahren").append("='").append(getAnalyseverfahren()).append("' ");
+        buffer.append("bezeichnung").append("='").append(getBezeichnung()).append("' ");
+        buffer.append("einheiten").append("='").append(getEinheiten()).append("' ");
+        buffer.append("grenzwert").append("='").append(getGrenzwert()).append("' ");
+        buffer.append("grenzwertname").append("='").append(getGrenzwertname()).append("' ");
+        buffer.append("sielhautGw").append("='").append(getSielhautGw()).append("' ");
+        buffer.append("klaerschlammGw").append("='").append(getKlaerschlammGw()).append("' ");
+        buffer.append("preisfueranalyse").append("='").append(getPreisfueranalyse()).append("' ");
+        buffer.append("einzelnbeauftragbar").append("='").append(getEinzelnbeauftragbar()).append("' ");
+        buffer.append("kennzeichnung").append("='").append(getKennzeichnung()).append("' ");
+        buffer.append("konservierung").append("='").append(getKonservierung()).append("' ");
+        buffer.append("reihenfolge").append("='").append(getReihenfolge()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("deaStoffeStoffNr").append("='").append(getDeaStoffeStoffNr()).append("' ");
+        buffer.append("metaParameters").append("='").append(getMetaParameters()).append("' ");
+        buffer.append("analysepositions").append("='").append(getAnalysepositions()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -341,7 +341,7 @@ public class Parameter  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -375,27 +375,27 @@ public class Parameter  implements java.io.Serializable {
      * @param copy Parameter
      */
     private void copy(Parameter copy) {
-        this.ordnungsbegriff = copy.getOrdnungsbegriff();            
-        this.parametergruppen = copy.getParametergruppen();    
-        this.mapElkaAnalysemethode = copy.getMapElkaAnalysemethode();     
-        this.einheiten = copy.getEinheiten();         
-        this.analyseverfahren = copy.getAnalyseverfahren();            
-        this.bezeichnung = copy.getBezeichnung();                     
-        this.grenzwert = copy.getGrenzwert();            
-        this.grenzwertname = copy.getGrenzwertname();            
-        this.sielhautGw = copy.getSielhautGw();            
-        this.klaerschlammGw = copy.getKlaerschlammGw();            
-        this.preisfueranalyse = copy.getPreisfueranalyse();            
-        this.einzelnbeauftragbar = copy.getEinzelnbeauftragbar();            
-        this.kennzeichnung = copy.getKennzeichnung();            
-        this.konservierung = copy.getKonservierung();            
-        this.reihenfolge = copy.getReihenfolge();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.deaStoffeStoffNr = copy.getDeaStoffeStoffNr();            
-        this.metaParameters = copy.getMetaParameters();            
-        this.analysepositions = copy.getAnalysepositions();            
-    }    
+        this.ordnungsbegriff = copy.getOrdnungsbegriff();
+        this.parametergruppen = copy.getParametergruppen();
+        this.mapElkaAnalysemethode = copy.getMapElkaAnalysemethode();
+        this.einheiten = copy.getEinheiten();
+        this.analyseverfahren = copy.getAnalyseverfahren();
+        this.bezeichnung = copy.getBezeichnung();
+        this.grenzwert = copy.getGrenzwert();
+        this.grenzwertname = copy.getGrenzwertname();
+        this.sielhautGw = copy.getSielhautGw();
+        this.klaerschlammGw = copy.getKlaerschlammGw();
+        this.preisfueranalyse = copy.getPreisfueranalyse();
+        this.einzelnbeauftragbar = copy.getEinzelnbeauftragbar();
+        this.kennzeichnung = copy.getKennzeichnung();
+        this.konservierung = copy.getKonservierung();
+        this.reihenfolge = copy.getReihenfolge();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.deaStoffeStoffNr = copy.getDeaStoffeStoffNr();
+        this.metaParameters = copy.getMetaParameters();
+        this.analysepositions = copy.getAnalysepositions();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

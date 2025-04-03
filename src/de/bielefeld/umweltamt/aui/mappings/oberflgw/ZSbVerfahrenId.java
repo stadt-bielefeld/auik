@@ -36,7 +36,7 @@ public class ZSbVerfahrenId  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZSbVerfahrenId;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private long sbNr;
     private Integer vorgabenOpt;
@@ -90,10 +90,10 @@ public class ZSbVerfahrenId  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("sbNr").append("='").append(getSbNr()).append("' ");			
-        buffer.append("vorgabenOpt").append("='").append(getVorgabenOpt()).append("' ");			
+        buffer.append("sbNr").append("='").append(getSbNr()).append("' ");
+        buffer.append("vorgabenOpt").append("='").append(getVorgabenOpt()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

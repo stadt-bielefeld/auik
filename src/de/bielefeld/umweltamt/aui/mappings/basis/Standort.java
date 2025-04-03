@@ -102,11 +102,11 @@ public class Standort  implements java.io.Serializable {
     public void setInhaber(Inhaber inhaber) {
         this.inhaber = inhaber;
     }
-	
+
 	public String getStrasse(){
 	    return inhaber.getAdresse().getStrasse();
 	}
-	
+
 	public void setStrasse(String strasse){
 	    this.inhaber.getAdresse().setStrasse(strasse);
 	}
@@ -114,7 +114,7 @@ public class Standort  implements java.io.Serializable {
 	public Integer getHausnr(){
 	    return inhaber.getAdresse().getHausnr();
 	}
-	
+
 	public void setHausnr(Integer hausnr){
 	    this.inhaber.getAdresse().setHausnr(hausnr);
 	}
@@ -122,7 +122,7 @@ public class Standort  implements java.io.Serializable {
 	public String getHausnrzus(){
 	    return inhaber.getAdresse().getHausnrzus();
 	}
-	
+
 	public void setHausnrzus(String hausnrzus){
 	    this.inhaber.getAdresse().setHausnrzus(hausnrzus);
 	}
@@ -130,7 +130,7 @@ public class Standort  implements java.io.Serializable {
 	public String getOrt(){
 	    return inhaber.getAdresse().getOrt();
 	}
-	
+
 	public void setOrt(String ort){
 	    this.inhaber.getAdresse().setOrt(ort);
 	}
@@ -382,7 +382,7 @@ public class Standort  implements java.io.Serializable {
     /* Setter and getter for lage and adresse fields*/
     //Getter
 
-    
+
 
     //Setter
 

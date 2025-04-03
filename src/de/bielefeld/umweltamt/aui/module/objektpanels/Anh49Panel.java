@@ -246,13 +246,13 @@ public class Anh49Panel extends AbstractAnhangPanel {
     @SuppressWarnings("deprecation")
     public Anh49Panel(BasisObjektBearbeiten hauptModul) {
         super("Abscheider", hauptModul);
-        
+
         abscheiderModel = new Anh49AbscheiderModel();
         abscheiderModel.setFachdaten(fachdaten);
 
         TableFocusListener tfl = TableFocusListener.getInstance();
         getAbscheiderTabelle().addFocusListener(tfl);
-        
+
         JScrollPane abscheiderScroller = new JScrollPane(
                 getAbscheiderTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -353,7 +353,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
         builder.addSeparator("Abscheiderdetails", cc.xyw(labelCol, row, cols));
         row += 2;
-        
+
         builder.add(abscheiderScroller, cc.xyw(labelCol, row, cols));
         row += 2;
 
@@ -456,14 +456,14 @@ public class Anh49Panel extends AbstractAnhangPanel {
      * @param absch Der Abscheider
      */
     public void editAbscheider(Anh49Abscheiderdetails absch) {
-        
+
         if (fachdaten.getId() == null) {
             JOptionPane.showMessageDialog(hauptModul.getFrame(),
                     "Bitte zuerst das Anhangobjekt speichern",
                     "Warnung",
                     JOptionPane.WARNING_MESSAGE);
         } else {
-            
+
             AbscheiderEditor editDialog = new AbscheiderEditor(absch,
                     hauptModul.getFrame());
 

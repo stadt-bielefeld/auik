@@ -42,7 +42,7 @@ public class Anhang  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAnhang;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer slNr;
     private Integer anhMaSlNr;
@@ -185,7 +185,7 @@ public class Anhang  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -194,19 +194,19 @@ public class Anhang  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("slNr").append("='").append(getSlNr()).append("' ");				
-        buffer.append("anhangId").append("='").append(getAnhangId()).append("' ");			
-        buffer.append("anhGueltigVon").append("='").append(getAnhGueltigVon()).append("' ");			
-        buffer.append("anhGueltigBis").append("='").append(getAnhGueltigBis()).append("' ");			
-        buffer.append("anhRegelwerk").append("='").append(getAnhRegelwerk()).append("' ");			
-        buffer.append("anhText").append("='").append(getAnhText()).append("' ");			
-        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");				
-        buffer.append("anhMaSlNr").append("='").append(getAnhMaSlNr()).append("' ");			
-        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");			
-        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");			
-        buffer.append("zeitstempel").append("='").append(getZeitstempel()).append("' ");			
+        buffer.append("slNr").append("='").append(getSlNr()).append("' ");
+        buffer.append("anhangId").append("='").append(getAnhangId()).append("' ");
+        buffer.append("anhGueltigVon").append("='").append(getAnhGueltigVon()).append("' ");
+        buffer.append("anhGueltigBis").append("='").append(getAnhGueltigBis()).append("' ");
+        buffer.append("anhRegelwerk").append("='").append(getAnhRegelwerk()).append("' ");
+        buffer.append("anhText").append("='").append(getAnhText()).append("' ");
+        buffer.append("herkunft").append("='").append(getHerkunft()).append("' ");
+        buffer.append("anhMaSlNr").append("='").append(getAnhMaSlNr()).append("' ");
+        buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
+        buffer.append("erstellDat").append("='").append(getErstellDat()).append("' ");
+        buffer.append("zeitstempel").append("='").append(getZeitstempel()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -238,7 +238,7 @@ public class Anhang  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -272,18 +272,18 @@ public class Anhang  implements java.io.Serializable {
      * @param copy Anhang
      */
     private void copy(Anhang copy) {
-        this.slNr = copy.getSlNr();                       
-        this.anhMaSlNr = copy.getAnhMaSlNr();            
-        this.anhangId = copy.getAnhangId();               
-        this.anhGueltigVon = copy.getAnhGueltigVon();                
-        this.anhGueltigBis = copy.getAnhGueltigBis();                
-        this.anhRegelwerk = copy.getAnhRegelwerk();                
-        this.anhText = copy.getAnhText();                
-        this.herkunft = copy.getHerkunft();           
-        this.aktualDat = copy.getAktualDat();            
-        this.erstellDat = copy.getErstellDat();               
-        this.zeitstempel = copy.getZeitstempel(); 
-    }    
+        this.slNr = copy.getSlNr();
+        this.anhMaSlNr = copy.getAnhMaSlNr();
+        this.anhangId = copy.getAnhangId();
+        this.anhGueltigVon = copy.getAnhGueltigVon();
+        this.anhGueltigBis = copy.getAnhGueltigBis();
+        this.anhRegelwerk = copy.getAnhRegelwerk();
+        this.anhText = copy.getAnhText();
+        this.herkunft = copy.getHerkunft();
+        this.aktualDat = copy.getAktualDat();
+        this.erstellDat = copy.getErstellDat();
+        this.zeitstempel = copy.getZeitstempel();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance
@@ -327,11 +327,11 @@ public class Anhang  implements java.io.Serializable {
      */
     public static Anhang findByAnhangId(java.lang.String anhangid) {
 
-		String query = "FROM Anhang WHERE anhang_id = '" + anhangid + "' " + 
+		String query = "FROM Anhang WHERE anhang_id = '" + anhangid + "' " +
 				"AND anh_gueltig_bis IS NULL";
 
 		Anhang anhg = (Anhang) HibernateSessionFactory.currentSession().createQuery(query).list().get(0);
-		
+
 		return anhg;
 
     }
