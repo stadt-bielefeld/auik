@@ -149,8 +149,8 @@ public class EAfsNiederschlagswasser implements java.io.Serializable {
         this.entwaesserungsgrundstueck = copy.getEntwaesserungsgrundstueck();
         this.befFlaeche = copy.getBefFlaeche();
         this.nwHerBereichOpt = copy.getNwHerBereichOpt();
-        this.abflussmenge = copy.getAbflussmenge();  
-    }
+        this.abflussmenge = copy.getAbflussmenge();
+        }
     /**
      * Find an <code>AtlKlaeranlagen</code> instance by its primary key
      * @param id the primary key value

@@ -216,8 +216,8 @@ public class EAnfallstelle implements java.io.Serializable {
         this.aktualDat = copy.getAktualDat();
         this.aufzBetriebTog = copy.getAufzBetriebTog();
         this.erstellDat = copy.getErstellDat();
-        this.herkunft = copy.getHerkunft(); 
-    }
+        this.herkunft = copy.getHerkunft();
+        }
     /**
      * Find an <code>AtlKlaeranlagen</code> instance by its primary key
      * @param id the primary key value

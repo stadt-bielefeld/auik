@@ -1237,7 +1237,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>List&lt;Fachdaten&gt;</code>
 	 */
 	public static List<Wasserrecht> findWasserrechtGenDatum(Date search) {
-	
 		if (search == null) {
 			return new DatabaseAccess().executeCriteriaToList(
 					DetachedCriteria.forClass(Wasserrecht.class),
@@ -1382,9 +1381,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	        DetachedCriteria.forClass(Objekt.class)
 	        	.add(Restrictions.eq("objektarten", art))
 	            .add(Restrictions.eq("inaktiv", false)),
-	        new Objekt());
-	            
-	    
+	        new Objekt());   
 	}
 	/**
 	 * Sucht alle Objekte des angemeldeten Sachbearbeiters, die ein
