@@ -142,7 +142,6 @@ abstract class DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all AfsNiederschlagswasser
-	 * 
 	 * @return <code>Eine Liste aller AfsNiederschlagswasser</code>
 	 */
 	public static List<AfsNiederschlagswasser> getAfsNwList(Entwaesserungsgrundstueck grundstueck) {

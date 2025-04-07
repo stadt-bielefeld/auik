@@ -1367,12 +1367,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	/* ********************************************************************** */
 	/* Queries for package INDEINL                                            */
 	/* ********************************************************************** */
-	
-	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-	/* Queries for package INDEINL: class Objekt                      */
+	/* Queries for package INDEINL: class Objekt                              */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-	
 	/**
 	 * Sucht alle Objekte einer Objektart,  die nicht erloschen sind.
 	 * @param Objektart Es sollen nur Datensätze dieser Artangezeigt werden.
@@ -1389,7 +1386,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	            
 	    
 	}
-
 	/**
 	 * Sucht alle Objekte des angemeldeten Sachbearbeiters, die ein
 	 * Wiedervorlagedatum haben.
@@ -1412,9 +1408,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	    if (nurWiedervorlageAbgelaufen) {
 	        detachedCriteria.add(Restrictions.le("wiedervorlage", new Date()));
 	    }
-	
-		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
-				new Objekt());
-	
+	    return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
+	new Objekt());
 	}
 }
