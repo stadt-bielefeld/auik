@@ -1381,8 +1381,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	        DetachedCriteria.forClass(Objekt.class)
 	        	.add(Restrictions.eq("objektarten", art))
 	            .add(Restrictions.eq("inaktiv", false)),
-	        new Objekt());   
-	}
+	        new Objekt());
+		}
 	/**
 	 * Sucht alle Objekte des angemeldeten Sachbearbeiters, die ein
 	 * Wiedervorlagedatum haben.
