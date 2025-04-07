@@ -30,7 +30,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenarten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
@@ -58,7 +57,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
-abstract class DatabaseAwSVQuery {
+abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();

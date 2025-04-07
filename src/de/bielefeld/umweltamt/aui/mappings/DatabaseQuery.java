@@ -46,8 +46,8 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 public abstract class DatabaseQuery extends DatabaseAtlQuery {
 // Essentially this is somewhat like this:
 // DatabaseQuery extends DatabaseAtlQuery, DatabaseBasisQuery,
-//                       DatabaseIndeinlQuery, DatabaseVawsQuery,
-//                       DatabaseTipiQuery
+//                       DatabaseIndeinlQuery, DatabaseAwSVQuery,
+//                       DatabaseDirekteinlQuery
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();

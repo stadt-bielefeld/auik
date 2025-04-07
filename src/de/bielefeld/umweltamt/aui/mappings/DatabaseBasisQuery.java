@@ -24,6 +24,7 @@ package de.bielefeld.umweltamt.aui.mappings;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,10 +56,13 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -1227,32 +1231,25 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	}
 
 	/**
-	 * Get an array with all <code>MapElkaGewkennz</code>en
-	 *
-	 * @return <code>Integer[]</code>
+	 * Durchsucht Fachdaten nach einem bestimmten Aktenzeichen und gibt
+	 * das Ergebnis als List zurück
+	 * 
+	 * @param search
+	 *            String
+	 * @return <code>List&lt;Fachdaten&gt;</code>
 	 */
-
-
-	public static Integer[] getMapElkaGewkennzArray() {
-
-		List<Integer> mapElkaGewkennzList = getMapElkaGewkennzList();
-
-		Integer[] mapElkaGew = new Integer[mapElkaGewkennzList.size()];
-		return mapElkaGew = mapElkaGewkennzList.toArray(mapElkaGew);
-
-	}
-
-	/**
-	 * Get all MapElkaGewkennz and sort them by their gewkz
-	 *
-	 * @return <code>Eine Liste aller Gewaesser</code>
-	 */
-	public static List<Integer> getMapElkaGewkennzList() {
-
-		String query = "SELECT gewkz " + "FROM MapElkaGewkennz ORDER BY gewkz";
-
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
-
+	public static List<Wasserrecht> findWasserrechtGenDatum(Date search) {
+	
+		if (search == null) {
+			return new DatabaseAccess().executeCriteriaToList(
+					DetachedCriteria.forClass(Wasserrecht.class),
+					new Wasserrecht());
+		} else {
+			return new DatabaseAccess().executeCriteriaToList(
+					DetachedCriteria.forClass(Wasserrecht.class).add(
+							Restrictions.eq("erstellungsDatum", search)),
+					new Wasserrecht());
+		}
 	}
 
 	/**
@@ -1367,5 +1364,59 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		NativeQuery<Object> q = HibernateSessionFactory.currentSession()
 			.createSQLQuery(query.toString());
 		return q.getResultList();
+	}
+
+	/* ********************************************************************** */
+	/* Queries for package INDEINL                                            */
+	/* ********************************************************************** */
+	
+	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+	/* Queries for package INDEINL: class Objekt                      */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+	
+	/**
+	 * Sucht alle Objekte einer Objektart,  die nicht erloschen sind.
+	 * @param Objektart Es sollen nur Datensätze dieser Artangezeigt werden.
+	 * @return <code>List&lt;Objekt&gt;</code>
+	 *         Eine Liste mit den entstprechenden Objekte.
+	 */
+	public static List<Objekt> getObjektByArt(
+			Objektarten art) {
+		return new DatabaseAccess().executeCriteriaToList(
+	        DetachedCriteria.forClass(Objekt.class)
+	        	.add(Restrictions.eq("objektarten", art))
+	            .add(Restrictions.eq("inaktiv", false)),
+	        new Objekt());
+	            
+	    
+	}
+
+	/**
+	 * Sucht alle Objekte des angemeldeten Sachbearbeiters, die ein
+	 * Wiedervorlagedatum haben.
+	 * @param nurWiedervorlageAbgelaufen Sollen nur Datensätze angezeigt werden,
+	 *            deren Wiedervorlage in der Vergangenheit liegt?
+	 * @return <code>List&lt;Objekt&gt;</code>
+	 *         Eine Liste mit den entstprechenden Objekten.
+	 */
+	public static List<Objekt> getObjektByWiedervorlage(
+			boolean nurWiedervorlageAbgelaufen) {
+		DetachedCriteria detachedCriteria = DetachedCriteria
+				.forClass(Objekt.class)
+	            .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
+				.add(Restrictions.eq("sachbearbeiter",
+						DatabaseBasisQuery.getCurrentSachbearbeiter()))
+				.add(Restrictions.isNotNull("wiedervorlage"))
+	            .add(Restrictions.eq("inaktiv", false))
+	            .addOrder(Order.asc("objektarten"))
+	            .addOrder(Order.asc("wiedervorlage"));
+	    if (nurWiedervorlageAbgelaufen) {
+	        detachedCriteria.add(Restrictions.le("wiedervorlage", new Date()));
+	    }
+	
+		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
+				new Objekt());
+	
 	}
 }

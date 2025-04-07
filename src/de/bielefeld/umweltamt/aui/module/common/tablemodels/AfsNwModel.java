@@ -57,91 +57,90 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Ein einfaches TableModel für Probenehmereinsaetze.
+ * 
  * @author Gerd Genuit
  */
 public class AfsNwModel extends ListTableModel {
-    private static final long serialVersionUID = 8683461766128779141L;
-    private Anfallstelle anfallstelle;
-    private Entwaesserungsgrundstueck grundstueck;
+	private static final long serialVersionUID = 8683461766128779141L;
+	private Anfallstelle anfallstelle;
+	private Entwaesserungsgrundstueck grundstueck;
 
-    public AfsNwModel() {
-        super(new String[]{
-                "Anfallstelle/Grundstück",
-                "Befestigte Fläche",
-                "Abflussmenge",
-                "Herkunftsbereich"
-        },
-        false);
-    }
+	public AfsNwModel() {
+		super(new String[] { "Anfallstelle/Grundstück", "Befestigte Fläche", "Abflussmenge", "Herkunftsbereich" },
+				false);
+	}
 
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
-     */
-    @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	AfsNiederschlagswasser fd = (AfsNiederschlagswasser) objectAtRow;
-        Object tmp;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue
+	 * (java.lang.Object, int)
+	 */
+	@Override
+	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+		AfsNiederschlagswasser fd = (AfsNiederschlagswasser) objectAtRow;
+		Object tmp;
 
-        switch (columnIndex) {
-        case 0:
-            if (fd.getAnfallstelle() != null)
-        		tmp = fd.getAnfallstelle().getAnlagenart();
-            else if (fd.getEntwaesserungsgrundstueck() != null)
-        		tmp = fd.getEntwaesserungsgrundstueck().getAdrNr();
-        	else
-        		tmp = "";
-            break;
-        case 1:
+		switch (columnIndex) {
+		case 0:
+			if (fd.getAnfallstelle() != null)
+				tmp = fd.getAnfallstelle().getAnlagenart();
+			else if (fd.getEntwaesserungsgrundstueck() != null)
+				tmp = fd.getEntwaesserungsgrundstueck().getAdrNr();
+			else
+				tmp = "";
+			break;
+		case 1:
 			tmp = fd.getBefFlaeche();
-            break;
-        case 2:
-            tmp = fd.getAbflussmenge();
-            break;
-        case 3:
-            tmp = fd.getNwHerBereichOpt();
-            break;
-        default:
-            tmp = "ERROR";
-            break;
-        }
-        return tmp;
-    }
+			break;
+		case 2:
+			tmp = fd.getAbflussmenge();
+			break;
+		case 3:
+			tmp = fd.getNwHerBereichOpt();
+			break;
+		default:
+			tmp = "ERROR";
+			break;
+		}
+		return tmp;
+	}
 
+	public void setAnfallstelle(Anfallstelle anfallstelle) {
+		this.anfallstelle = anfallstelle;
+	}
 
-    public void setAnfallstelle(Anfallstelle anfallstelle) {
-        this.anfallstelle = anfallstelle;
-    }
+	public void setEntwaesserungsgrundstueck(Entwaesserungsgrundstueck grundstueck) {
+		this.grundstueck = grundstueck;
+	}
 
-    public void setEntwaesserungsgrundstueck(Entwaesserungsgrundstueck grundstueck) {
-        this.grundstueck = grundstueck;
-    }
-    
-    /*
-     * Leer, da kein Updaten der Liste nötig/möglich.
-     */
-    @Override
-    public void updateList() {
-        if (anfallstelle != null) {
-            setList(DatabaseQuery.findAfsNw(anfallstelle));
+	/*
+	 * Leer, da kein Updaten der Liste nötig/möglich.
+	 */
+	@Override
+	public void updateList() {
+		if (anfallstelle != null) {
+			setList(DatabaseQuery.findAfsNw(anfallstelle));
 
-            fireTableDataChanged();
-        }
-        
-        if (grundstueck != null) {
-            setList(DatabaseQuery.findAfsNw(grundstueck));
+			fireTableDataChanged();
+		}
 
-            fireTableDataChanged();
-        }
-    }
-    
+		if (grundstueck != null) {
+			setList(DatabaseQuery.findAfsNw(grundstueck));
 
+			fireTableDataChanged();
+		}
+	}
 
-    /**
-     * Liefert das Objekt aus einer bestimmten Zeile.
-     * @param rowIndex Die Zeile
-     * @return Das Objekt bei rowIndex oder <code>null</code>, falls die Zeile nicht existiert
-     */
-    public AfsNiederschlagswasser getRow(int rowIndex) {
-        return (AfsNiederschlagswasser) getObjectAtRow(rowIndex);
-    }
+	/**
+	 * Liefert das Objekt aus einer bestimmten Zeile.
+	 * 
+	 * @param rowIndex Die Zeile
+	 * @return Das Objekt bei rowIndex oder <code>null</code>, falls die Zeile nicht
+	 *         existiert
+	 */
+	public AfsNiederschlagswasser getRow(int rowIndex) {
+		return (AfsNiederschlagswasser) getObjectAtRow(rowIndex);
+	}
 }

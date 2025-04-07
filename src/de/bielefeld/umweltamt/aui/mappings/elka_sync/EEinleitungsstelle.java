@@ -41,239 +41,245 @@ import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
  */
 public class EEinleitungsstelle implements java.io.Serializable {
 
-    private EStandort standort;
-    private Integer nr;
-    private Integer origNr;
-    private Boolean typIndirekteinleitungTog;
-    private boolean typIndusGewerbDirekteinleitungTog;
-    private boolean typKommNwMischTog;
-    private boolean typKommNwTrennTog;
-    private boolean typNwPrivatTrennTog;
-    private boolean typIndusGewerbNwMischTog;
-    private boolean typIndusGewerbNwTrennTog;
-    private boolean typGrubenwasserTog;
-    private boolean typKleinklaeranlageTog;
-    private boolean typKommKaTog;
-    private boolean typAusseroertlicheStrasseneinleitungTog;
-    private boolean typSonstigeTog;
-    private Integer abgaberelevanteEltOpt;
-    
+	private EStandort standort;
+	private Integer nr;
+	private Integer origNr;
+	private Boolean typIndirekteinleitungTog;
+	private boolean typIndusGewerbDirekteinleitungTog;
+	private boolean typKommNwMischTog;
+	private boolean typKommNwTrennTog;
+	private boolean typNwPrivatTrennTog;
+	private boolean typIndusGewerbNwMischTog;
+	private boolean typIndusGewerbNwTrennTog;
+	private boolean typGrubenwasserTog;
+	private boolean typKleinklaeranlageTog;
+	private boolean typKommKaTog;
+	private boolean typAusseroertlicheStrasseneinleitungTog;
+	private boolean typSonstigeTog;
+	private Integer abgaberelevanteEltOpt;
 
-    private Date stillgelegtAm;
-    private String gewaessernameAlias3;
-    private Double stationierungNs3;
-    private Double einzugsgebiet;
-    private Double stationierungSt3;
-    private Integer stationierung3Opt;
-    private Integer schutzzoneOpt;
-    private String seeNs3Id;
-    private String seenameAlias3;
-    private String seeAuflage3Id;
-    private String see3Id;
-    private String einleitungsstellenId;
-    private String gewaesserAuflage3Id;
-    private String flussGebiet3Id;
-    private String bemerkung;
-    private String flussAuflage3Id;
-    private String gewaessernameNs3;
-    private String gewaesser3Id;
-    private String gwkId;
-    private String kaNameAusserhalbNrw;
-    private String externalNr;
+	private Date stillgelegtAm;
+	private String gewaessernameAlias3;
+	private Double stationierungNs3;
+	private Double einzugsgebiet;
+	private Double stationierungSt3;
+	private Integer stationierung3Opt;
+	private Integer schutzzoneOpt;
+	private String seeNs3Id;
+	private String seenameAlias3;
+	private String seeAuflage3Id;
+	private String see3Id;
+	private String einleitungsstellenId;
+	private String gewaesserAuflage3Id;
+	private String flussGebiet3Id;
+	private String bemerkung;
+	private String flussAuflage3Id;
+	private String gewaessernameNs3;
+	private String gewaesser3Id;
+	private String gwkId;
+	private String kaNameAusserhalbNrw;
+	private String externalNr;
 
 	private String bezeichnung;
-    private Integer e32;
-    private Integer n32;
-    private Integer kanalArtOpt;
-    private Boolean kaNichtInNrwTog;
-    private Date aktualDat;
-    private Date erstellDat;
-    private String herkunft;
-    private Set<EWasserrecht> wasserrechts = new HashSet<EWasserrecht>(0);
+	private Integer e32;
+	private Integer n32;
+	private Integer kanalArtOpt;
+	private Boolean kaNichtInNrwTog;
+	private Date aktualDat;
+	private Date erstellDat;
+	private String herkunft;
+	private Set<EWasserrecht> wasserrechts = new HashSet<EWasserrecht>(0);
 
-    public EEinleitungsstelle() {
-    }
+	public EEinleitungsstelle() {
+	}
 
-    public EEinleitungsstelle(Integer nr) {
-        this.nr = nr;
-    }
+	public EEinleitungsstelle(Integer nr) {
+		this.nr = nr;
+	}
 
-    public EEinleitungsstelle(Integer nr, EStandort standort, Integer origNr,
-            Boolean typIndirekteinleitungTog, boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog, boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog, boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog, boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, String bezeichnung, Integer e32,
-            Integer n32, Boolean kaNichtInNrwTog, Date aktualDat, Date stillgelegtAm, 
-            Date erstellDat, String herkunft, Set<EWasserrecht> wasserrechts, Integer kanalArtOpt,
-            String gewaessernameAlias3, Double stationierungNs3, Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer stationierung3Opt, Integer schutzzoneOpt, Boolean deleted, Boolean enabled,
-            String gewaesser3Id, String ofwkNrwId, String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id, String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id, String bemerkung, String bemerkungGewDaten, String flussAuflage3Id, String gewaessernameNs3, String gwkId, String kaNameAusserhalbNrw, String externalNr) {
-        this.standort = standort;
-        this.nr = nr;
-        this.origNr = origNr;
-        this.typIndirekteinleitungTog = typIndirekteinleitungTog;
-        this.typIndusGewerbDirekteinleitungTog = typIndusGewerbDirekteinleitungTog;
-        this.typKommNwMischTog = typKommNwMischTog;
-        this.typKommNwTrennTog = typKommNwTrennTog;
-        this.typNwPrivatTrennTog = typNwPrivatTrennTog;
-        this.typIndusGewerbNwMischTog = typIndusGewerbNwMischTog;
-        this.typIndusGewerbNwTrennTog = typIndusGewerbNwTrennTog;
-        this.typGrubenwasserTog = typGrubenwasserTog;
-        this.typKleinklaeranlageTog = typKleinklaeranlageTog;
-        this.typKommKaTog = typKommKaTog;
-        this.typAusseroertlicheStrasseneinleitungTog = typAusseroertlicheStrasseneinleitungTog;
-        this.typSonstigeTog = typSonstigeTog;
-        this.bezeichnung = bezeichnung;
-        this.e32 = e32;
-        this.n32 = n32;
-        this.kaNichtInNrwTog = kaNichtInNrwTog;
-        this.aktualDat = aktualDat;
-        this.stillgelegtAm = stillgelegtAm;
-        this.erstellDat = erstellDat;
-        this.herkunft = herkunft;
-        this.kanalArtOpt = kanalArtOpt;
-        this.gewaessernameAlias3 = gewaessernameAlias3;
-        this.stationierungNs3 = stationierungNs3;
-        this.einzugsgebiet = einzugsgebiet;
-        this.stationierungSt3 = stationierungSt3;
-        this.stationierung3Opt = stationierung3Opt;
-        this.schutzzoneOpt = schutzzoneOpt;
-        this.seeNs3Id = seeNs3Id;
-        this.seenameAlias3 = seenameAlias3;
-        this.seeAuflage3Id = seeAuflage3Id;
-        this.see3Id = see3Id;
-        this.einleitungsstellenId = einleitungsstellenId;
-        this.gewaesserAuflage3Id = gewaesserAuflage3Id;
-        this.flussGebiet3Id = flussGebiet3Id;
-        this.bemerkung = bemerkung;
-        this.flussAuflage3Id = flussAuflage3Id;
-        this.gewaessernameNs3 = gewaessernameNs3;
-        this.gewaesser3Id = gewaesser3Id;
-        this.gwkId = gwkId;
-        this.kaNameAusserhalbNrw = kaNameAusserhalbNrw;
-        this.externalNr = externalNr;
-        this.setWasserrechts(wasserrechts);
-    }
+	public EEinleitungsstelle(Integer nr, EStandort standort, Integer origNr, Boolean typIndirekteinleitungTog,
+			boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog,
+			boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog,
+			boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog,
+			boolean typAusseroertlicheStrasseneinleitungTog, boolean typSonstigeTog, String bezeichnung, Integer e32,
+			Integer n32, Boolean kaNichtInNrwTog, Date aktualDat, Date stillgelegtAm, Date erstellDat, String herkunft,
+			Set<EWasserrecht> wasserrechts, Integer kanalArtOpt, String gewaessernameAlias3, Double stationierungNs3,
+			Double einzugsgebiet, Double stationierungSt3, Integer abgaberelEinl, Integer stationierung3Opt,
+			Integer schutzzoneOpt, Boolean deleted, Boolean enabled, String gewaesser3Id, String ofwkNrwId,
+			String ofwkNrwAuflageId, Integer ofwkNrwOpt, String seeNs3Id, String seenameAlias3, String seeAuflage3Id,
+			String see3Id, String einleitungsstellenId, String gewaesserAuflage3Id, String flussGebiet3Id,
+			String bemerkung, String bemerkungGewDaten, String flussAuflage3Id, String gewaessernameNs3, String gwkId,
+			String kaNameAusserhalbNrw, String externalNr) {
+		this.standort = standort;
+		this.nr = nr;
+		this.origNr = origNr;
+		this.typIndirekteinleitungTog = typIndirekteinleitungTog;
+		this.typIndusGewerbDirekteinleitungTog = typIndusGewerbDirekteinleitungTog;
+		this.typKommNwMischTog = typKommNwMischTog;
+		this.typKommNwTrennTog = typKommNwTrennTog;
+		this.typNwPrivatTrennTog = typNwPrivatTrennTog;
+		this.typIndusGewerbNwMischTog = typIndusGewerbNwMischTog;
+		this.typIndusGewerbNwTrennTog = typIndusGewerbNwTrennTog;
+		this.typGrubenwasserTog = typGrubenwasserTog;
+		this.typKleinklaeranlageTog = typKleinklaeranlageTog;
+		this.typKommKaTog = typKommKaTog;
+		this.typAusseroertlicheStrasseneinleitungTog = typAusseroertlicheStrasseneinleitungTog;
+		this.typSonstigeTog = typSonstigeTog;
+		this.bezeichnung = bezeichnung;
+		this.e32 = e32;
+		this.n32 = n32;
+		this.kaNichtInNrwTog = kaNichtInNrwTog;
+		this.aktualDat = aktualDat;
+		this.stillgelegtAm = stillgelegtAm;
+		this.erstellDat = erstellDat;
+		this.herkunft = herkunft;
+		this.kanalArtOpt = kanalArtOpt;
+		this.gewaessernameAlias3 = gewaessernameAlias3;
+		this.stationierungNs3 = stationierungNs3;
+		this.einzugsgebiet = einzugsgebiet;
+		this.stationierungSt3 = stationierungSt3;
+		this.stationierung3Opt = stationierung3Opt;
+		this.schutzzoneOpt = schutzzoneOpt;
+		this.seeNs3Id = seeNs3Id;
+		this.seenameAlias3 = seenameAlias3;
+		this.seeAuflage3Id = seeAuflage3Id;
+		this.see3Id = see3Id;
+		this.einleitungsstellenId = einleitungsstellenId;
+		this.gewaesserAuflage3Id = gewaesserAuflage3Id;
+		this.flussGebiet3Id = flussGebiet3Id;
+		this.bemerkung = bemerkung;
+		this.flussAuflage3Id = flussAuflage3Id;
+		this.gewaessernameNs3 = gewaessernameNs3;
+		this.gewaesser3Id = gewaesser3Id;
+		this.gwkId = gwkId;
+		this.kaNameAusserhalbNrw = kaNameAusserhalbNrw;
+		this.externalNr = externalNr;
+		this.setWasserrechts(wasserrechts);
+	}
 
-    public EStandort getStandort() {
-        return this.standort;
-    }
+	public EStandort getStandort() {
+		return this.standort;
+	}
 
-    public void setStandort(EStandort standort) {
-        this.standort = standort;
-    }
+	public void setStandort(EStandort standort) {
+		this.standort = standort;
+	}
 
-    public Integer getNr() {
-        return this.nr;
-    }
+	public Integer getNr() {
+		return this.nr;
+	}
 
-    public void setNr(Integer nr) {
-        this.nr = nr;
-    }
+	public void setNr(Integer nr) {
+		this.nr = nr;
+	}
 
-    @JsonIgnore
-    public Integer getOrigNr() {
-        return this.origNr;
-    }
+	@JsonIgnore
+	public Integer getOrigNr() {
+		return this.origNr;
+	}
 
-    @JsonIgnore
-    public void setOrigNr(Integer origNr) {
-        this.origNr = origNr;
-    }
+	@JsonIgnore
+	public void setOrigNr(Integer origNr) {
+		this.origNr = origNr;
+	}
 
-    public Boolean getTypIndirekteinleitungTog() {
-        return this.typIndirekteinleitungTog;
-    }
+	public Boolean getTypIndirekteinleitungTog() {
+		return this.typIndirekteinleitungTog;
+	}
 
-    public void setTypIndirekteinleitungTog(Boolean typIndirekteinleitungTog) {
-        this.typIndirekteinleitungTog = typIndirekteinleitungTog;
-    }
+	public void setTypIndirekteinleitungTog(Boolean typIndirekteinleitungTog) {
+		this.typIndirekteinleitungTog = typIndirekteinleitungTog;
+	}
 
-    public boolean getTypIndusGewerbDirekteinleitungTog() {
-        return this.typIndusGewerbDirekteinleitungTog;
-    }
+	public boolean getTypIndusGewerbDirekteinleitungTog() {
+		return this.typIndusGewerbDirekteinleitungTog;
+	}
 
-    public void setTypIndusGewerbDirekteinleitungTog(boolean typIndusGewerbDirekteinleitungTog) {
-        this.typIndusGewerbDirekteinleitungTog = typIndusGewerbDirekteinleitungTog;
-    }
+	public void setTypIndusGewerbDirekteinleitungTog(boolean typIndusGewerbDirekteinleitungTog) {
+		this.typIndusGewerbDirekteinleitungTog = typIndusGewerbDirekteinleitungTog;
+	}
 
-    public boolean getTypKommNwMischTog() {
-        return this.typKommNwMischTog;
-    }
+	public boolean getTypKommNwMischTog() {
+		return this.typKommNwMischTog;
+	}
 
-    public void setTypKommNwMischTog(boolean typKommNwMischTog) {
-        this.typKommNwMischTog = typKommNwMischTog;
-    }
+	public void setTypKommNwMischTog(boolean typKommNwMischTog) {
+		this.typKommNwMischTog = typKommNwMischTog;
+	}
 
-    public boolean getTypKommNwTrennTog() {
-        return this.typKommNwTrennTog;
-    }
+	public boolean getTypKommNwTrennTog() {
+		return this.typKommNwTrennTog;
+	}
 
-    public void setTypKommNwTrennTog(boolean typKommNwTrennTog) {
-        this.typKommNwTrennTog = typKommNwTrennTog;
-    }
+	public void setTypKommNwTrennTog(boolean typKommNwTrennTog) {
+		this.typKommNwTrennTog = typKommNwTrennTog;
+	}
 
-    public boolean getTypNwPrivatTrennTog() {
-        return this.typNwPrivatTrennTog;
-    }
+	public boolean getTypNwPrivatTrennTog() {
+		return this.typNwPrivatTrennTog;
+	}
 
-    public void setTypNwPrivatTrennTog(boolean typNwPrivatTrennTog) {
-        this.typNwPrivatTrennTog = typNwPrivatTrennTog;
-    }
+	public void setTypNwPrivatTrennTog(boolean typNwPrivatTrennTog) {
+		this.typNwPrivatTrennTog = typNwPrivatTrennTog;
+	}
 
-    public boolean getTypIndusGewerbNwMischTog() {
-        return this.typIndusGewerbNwMischTog;
-    }
+	public boolean getTypIndusGewerbNwMischTog() {
+		return this.typIndusGewerbNwMischTog;
+	}
 
-    public void setTypIndusGewerbNwMischTog(boolean typIndusGewerbNwMischTog) {
-        this.typIndusGewerbNwMischTog = typIndusGewerbNwMischTog;
-    }
+	public void setTypIndusGewerbNwMischTog(boolean typIndusGewerbNwMischTog) {
+		this.typIndusGewerbNwMischTog = typIndusGewerbNwMischTog;
+	}
 
-    public boolean getTypIndusGewerbNwTrennTog() {
-        return this.typIndusGewerbNwTrennTog;
-    }
+	public boolean getTypIndusGewerbNwTrennTog() {
+		return this.typIndusGewerbNwTrennTog;
+	}
 
-    public void setTypIndusGewerbNwTrennTog(boolean typIndusGewerbNwTrennTog) {
-        this.typIndusGewerbNwTrennTog = typIndusGewerbNwTrennTog;
-    }
+	public void setTypIndusGewerbNwTrennTog(boolean typIndusGewerbNwTrennTog) {
+		this.typIndusGewerbNwTrennTog = typIndusGewerbNwTrennTog;
+	}
 
-    public boolean getTypGrubenwasserTog() {
-        return this.typGrubenwasserTog;
-    }
+	public boolean getTypGrubenwasserTog() {
+		return this.typGrubenwasserTog;
+	}
 
-    public void setTypGrubenwasserTog(boolean typGrubenwasserTog) {
-        this.typGrubenwasserTog = typGrubenwasserTog;
-    }
+	public void setTypGrubenwasserTog(boolean typGrubenwasserTog) {
+		this.typGrubenwasserTog = typGrubenwasserTog;
+	}
 
-    public boolean getTypKleinklaeranlageTog() {
-        return this.typKleinklaeranlageTog;
-    }
+	public boolean getTypKleinklaeranlageTog() {
+		return this.typKleinklaeranlageTog;
+	}
 
-    public void setTypKleinklaeranlageTog(boolean typKleinklaeranlageTog) {
-        this.typKleinklaeranlageTog = typKleinklaeranlageTog;
-    }
+	public void setTypKleinklaeranlageTog(boolean typKleinklaeranlageTog) {
+		this.typKleinklaeranlageTog = typKleinklaeranlageTog;
+	}
 
-    public boolean getTypKommKaTog() {
-        return this.typKommKaTog;
-    }
+	public boolean getTypKommKaTog() {
+		return this.typKommKaTog;
+	}
 
-    public void setTypKommKaTog(boolean typKommKaTog) {
-        this.typKommKaTog = typKommKaTog;
-    }
+	public void setTypKommKaTog(boolean typKommKaTog) {
+		this.typKommKaTog = typKommKaTog;
+	}
 
-    public boolean getTypAusseroertlicheStrasseneinleitungTog() {
-        return this.typAusseroertlicheStrasseneinleitungTog;
-    }
+	public boolean getTypAusseroertlicheStrasseneinleitungTog() {
+		return this.typAusseroertlicheStrasseneinleitungTog;
+	}
 
-    public void setTypAusseroertlicheStrasseneinleitungTog(boolean typAusseroertlicheStrasseneinleitungTog) {
-        this.typAusseroertlicheStrasseneinleitungTog = typAusseroertlicheStrasseneinleitungTog;
-    }
+	public void setTypAusseroertlicheStrasseneinleitungTog(boolean typAusseroertlicheStrasseneinleitungTog) {
+		this.typAusseroertlicheStrasseneinleitungTog = typAusseroertlicheStrasseneinleitungTog;
+	}
 
-    public boolean getTypSonstigeTog() {
-        return this.typSonstigeTog;
-    }
+	public boolean getTypSonstigeTog() {
+		return this.typSonstigeTog;
+	}
 
-    public void setTypSonstigeTog(boolean typSonstigeTog) {
-        this.typSonstigeTog = typSonstigeTog;
-    }
-    
-    public Integer getAbgaberelevanteEltOpt() {
+	public void setTypSonstigeTog(boolean typSonstigeTog) {
+		this.typSonstigeTog = typSonstigeTog;
+	}
+
+	public Integer getAbgaberelevanteEltOpt() {
 		return abgaberelevanteEltOpt;
 	}
 
@@ -281,295 +287,297 @@ public class EEinleitungsstelle implements java.io.Serializable {
 		this.abgaberelevanteEltOpt = abgaberelevanteEltOpt;
 	}
 
-    public String getBezeichnung() {
-        return this.bezeichnung;
-    }
+	public String getBezeichnung() {
+		return this.bezeichnung;
+	}
 
-    public void setBezeichnung(String bezeichnung) {
-        this.bezeichnung = bezeichnung;
-    }
+	public void setBezeichnung(String bezeichnung) {
+		this.bezeichnung = bezeichnung;
+	}
 
-    public Integer getE32() {
-        return this.e32;
-    }
+	public Integer getE32() {
+		return this.e32;
+	}
 
-    public void setE32(Integer e32) {
-        this.e32 = e32;
-    }
+	public void setE32(Integer e32) {
+		this.e32 = e32;
+	}
 
-    public Integer getN32() {
-        return this.n32;
-    }
+	public Integer getN32() {
+		return this.n32;
+	}
 
-    public void setN32(Integer n32) {
-        this.n32 = n32;
-    }
+	public void setN32(Integer n32) {
+		this.n32 = n32;
+	}
 
-    public Boolean getKaNichtInNrwTog() {
-        return this.kaNichtInNrwTog;
-    }
+	public Boolean getKaNichtInNrwTog() {
+		return this.kaNichtInNrwTog;
+	}
 
-    public void setKaNichtInNrwTog(Boolean kaNichtInNrwTog) {
-        this.kaNichtInNrwTog = kaNichtInNrwTog;
-    }
+	public void setKaNichtInNrwTog(Boolean kaNichtInNrwTog) {
+		this.kaNichtInNrwTog = kaNichtInNrwTog;
+	}
 
-    public Integer getKanalArtOpt() {
-        return this.kanalArtOpt;
-    }
+	public Integer getKanalArtOpt() {
+		return this.kanalArtOpt;
+	}
 
-    public void setKanalArtOpt(Integer kanalArtOpt) {
-        this.kanalArtOpt = kanalArtOpt;
-    }
+	public void setKanalArtOpt(Integer kanalArtOpt) {
+		this.kanalArtOpt = kanalArtOpt;
+	}
 
-    public Date getAktualDat() {
-        return this.aktualDat;
-    }
+	public Date getAktualDat() {
+		return this.aktualDat;
+	}
 
-    public void setAktualDat(Date aktualDat) {
-        this.aktualDat = aktualDat;
-    }
-    public Date getStillgelegtAm() {
-        return this.stillgelegtAm;
-    }
+	public void setAktualDat(Date aktualDat) {
+		this.aktualDat = aktualDat;
+	}
 
-    public void setStillgelegtAm(Date stillgelegtAm) {
-        this.stillgelegtAm = stillgelegtAm;
-    }
+	public Date getStillgelegtAm() {
+		return this.stillgelegtAm;
+	}
 
-    public Date getErstellDat() {
-        return this.erstellDat;
-    }
+	public void setStillgelegtAm(Date stillgelegtAm) {
+		this.stillgelegtAm = stillgelegtAm;
+	}
 
-    public void setErstellDat(Date erstellDat) {
-        this.erstellDat = erstellDat;
-    }
+	public Date getErstellDat() {
+		return this.erstellDat;
+	}
 
-    public String getHerkunft() {
-        return this.herkunft;
-    }
+	public void setErstellDat(Date erstellDat) {
+		this.erstellDat = erstellDat;
+	}
 
-    public void setHerkunft(String herkunft) {
-        this.herkunft = herkunft;
-    }
-    
-    public String getGewaessernameAlias3() {
-        return this.gewaessernameAlias3;
-    }
+	public String getHerkunft() {
+		return this.herkunft;
+	}
 
-    public void setGewaessernameAlias3(String gewaessernameAlias3) {
-        this.gewaessernameAlias3 = gewaessernameAlias3;
-    }
+	public void setHerkunft(String herkunft) {
+		this.herkunft = herkunft;
+	}
 
-    public Double getStationierungNs3() {
-        return this.stationierungNs3;
-    }
+	public String getGewaessernameAlias3() {
+		return this.gewaessernameAlias3;
+	}
 
-    public void setStationierungNs3(Double stationierungNs3) {
-        this.stationierungNs3 = stationierungNs3;
-    }
+	public void setGewaessernameAlias3(String gewaessernameAlias3) {
+		this.gewaessernameAlias3 = gewaessernameAlias3;
+	}
 
-    public Double getEinzugsgebiet() {
-        return this.einzugsgebiet;
-    }
+	public Double getStationierungNs3() {
+		return this.stationierungNs3;
+	}
 
-    public void setEinzugsgebiet(Double einzugsgebiet) {
-        this.einzugsgebiet = einzugsgebiet;
-    }
+	public void setStationierungNs3(Double stationierungNs3) {
+		this.stationierungNs3 = stationierungNs3;
+	}
 
-    public Double getStationierungSt3() {
-        return this.stationierungSt3;
-    }
+	public Double getEinzugsgebiet() {
+		return this.einzugsgebiet;
+	}
 
-    public void setStationierungSt3(Double stationierungSt3) {
-        this.stationierungSt3 = stationierungSt3;
-    }
+	public void setEinzugsgebiet(Double einzugsgebiet) {
+		this.einzugsgebiet = einzugsgebiet;
+	}
 
-    public Integer getStationierung3Opt() {
-        return this.stationierung3Opt;
-    }
+	public Double getStationierungSt3() {
+		return this.stationierungSt3;
+	}
 
-    public void setStationierung3Opt(Integer stationierung3Opt) {
-        this.stationierung3Opt = stationierung3Opt;
-    }
+	public void setStationierungSt3(Double stationierungSt3) {
+		this.stationierungSt3 = stationierungSt3;
+	}
 
-    public Integer getSchutzzoneOpt() {
-        return this.schutzzoneOpt;
-    }
+	public Integer getStationierung3Opt() {
+		return this.stationierung3Opt;
+	}
 
-    public void setSchutzzoneOpt(Integer schutzzoneOpt) {
-        this.schutzzoneOpt = schutzzoneOpt;
-    }
+	public void setStationierung3Opt(Integer stationierung3Opt) {
+		this.stationierung3Opt = stationierung3Opt;
+	}
 
-    public String getSeeNs3Id() {
-        return this.seeNs3Id;
-    }
+	public Integer getSchutzzoneOpt() {
+		return this.schutzzoneOpt;
+	}
 
-    public void setSeeNs3Id(String seeNs3Id) {
-        this.seeNs3Id = seeNs3Id;
-    }
+	public void setSchutzzoneOpt(Integer schutzzoneOpt) {
+		this.schutzzoneOpt = schutzzoneOpt;
+	}
 
-    public String getSeenameAlias3() {
-        return this.seenameAlias3;
-    }
+	public String getSeeNs3Id() {
+		return this.seeNs3Id;
+	}
 
-    public void setSeenameAlias3(String seenameAlias3) {
-        this.seenameAlias3 = seenameAlias3;
-    }
+	public void setSeeNs3Id(String seeNs3Id) {
+		this.seeNs3Id = seeNs3Id;
+	}
 
-    public String getSeeAuflage3Id() {
-        return this.seeAuflage3Id;
-    }
+	public String getSeenameAlias3() {
+		return this.seenameAlias3;
+	}
 
-    public void setSeeAuflage3Id(String seeAuflage3Id) {
-        this.seeAuflage3Id = seeAuflage3Id;
-    }
+	public void setSeenameAlias3(String seenameAlias3) {
+		this.seenameAlias3 = seenameAlias3;
+	}
 
-    public String getSee3Id() {
-        return this.see3Id;
-    }
+	public String getSeeAuflage3Id() {
+		return this.seeAuflage3Id;
+	}
 
-    public void setSee3Id(String see3Id) {
-        this.see3Id = see3Id;
-    }
+	public void setSeeAuflage3Id(String seeAuflage3Id) {
+		this.seeAuflage3Id = seeAuflage3Id;
+	}
 
-    public String getEinleitungsstellenId() {
-        return this.einleitungsstellenId;
-    }
+	public String getSee3Id() {
+		return this.see3Id;
+	}
 
-    public void setEinleitungsstellenId(String einleitungsstellenId) {
-        this.einleitungsstellenId = einleitungsstellenId;
-    }
+	public void setSee3Id(String see3Id) {
+		this.see3Id = see3Id;
+	}
 
-    public String getGewaesserAuflage3Id() {
-        return this.gewaesserAuflage3Id;
-    }
+	public String getEinleitungsstellenId() {
+		return this.einleitungsstellenId;
+	}
 
-    public void setGewaesserAuflage3Id(String gewaesserAuflage3Id) {
-        this.gewaesserAuflage3Id = gewaesserAuflage3Id;
-    }
+	public void setEinleitungsstellenId(String einleitungsstellenId) {
+		this.einleitungsstellenId = einleitungsstellenId;
+	}
 
-    public String getFlussGebiet3Id() {
-        return this.flussGebiet3Id;
-    }
+	public String getGewaesserAuflage3Id() {
+		return this.gewaesserAuflage3Id;
+	}
 
-    public void setFlussGebiet3Id(String flussGebiet3Id) {
-        this.flussGebiet3Id = flussGebiet3Id;
-    }
+	public void setGewaesserAuflage3Id(String gewaesserAuflage3Id) {
+		this.gewaesserAuflage3Id = gewaesserAuflage3Id;
+	}
 
-    public String getBemerkung() {
-        return this.bemerkung;
-    }
+	public String getFlussGebiet3Id() {
+		return this.flussGebiet3Id;
+	}
 
-    public void setBemerkung(String bemerkung) {
-        this.bemerkung = bemerkung;
-    }
-    
-    public String getFlussAuflage3Id() {
-        return this.flussAuflage3Id;
-    }
+	public void setFlussGebiet3Id(String flussGebiet3Id) {
+		this.flussGebiet3Id = flussGebiet3Id;
+	}
 
-    public void setFlussAuflage3Id(String flussAuflage3Id) {
-        this.flussAuflage3Id = flussAuflage3Id;
-    }
+	public String getBemerkung() {
+		return this.bemerkung;
+	}
 
-    public String getGewaessernameNs3() {
-        return this.gewaessernameNs3;
-    }
+	public void setBemerkung(String bemerkung) {
+		this.bemerkung = bemerkung;
+	}
 
-    public void setGewaessernameNs3(String gewaessernameNs3) {
-        this.gewaessernameNs3 = gewaessernameNs3;
-    }
+	public String getFlussAuflage3Id() {
+		return this.flussAuflage3Id;
+	}
 
-    public String getGewaesser3Id() {
-        return this.gewaesser3Id;
-    }
+	public void setFlussAuflage3Id(String flussAuflage3Id) {
+		this.flussAuflage3Id = flussAuflage3Id;
+	}
 
-    public void setGewaesser3Id(String gewaesser3Id) {
-        this.gewaesser3Id = gewaesser3Id;
-    }
+	public String getGewaessernameNs3() {
+		return this.gewaessernameNs3;
+	}
 
-    public String getGwkId() {
-        return this.gwkId;
-    }
+	public void setGewaessernameNs3(String gewaessernameNs3) {
+		this.gewaessernameNs3 = gewaessernameNs3;
+	}
 
-    public void setGwkId(String gwkId) {
-        this.gwkId = gwkId;
-    }
+	public String getGewaesser3Id() {
+		return this.gewaesser3Id;
+	}
 
-    public String getKaNameAusserhalbNrw() {
-        return this.kaNameAusserhalbNrw;
-    }
+	public void setGewaesser3Id(String gewaesser3Id) {
+		this.gewaesser3Id = gewaesser3Id;
+	}
 
-    public void setKaNameAusserhalbNrw(String kaNameAusserhalbNrw) {
-        this.kaNameAusserhalbNrw = kaNameAusserhalbNrw;
-    }
+	public String getGwkId() {
+		return this.gwkId;
+	}
 
-    public String getExternalNr() {
-        return this.externalNr;
-    }    
+	public void setGwkId(String gwkId) {
+		this.gwkId = gwkId;
+	}
 
-    public void setExternalNr(String externalNr) {
-        this.externalNr = externalNr;
-    }
+	public String getKaNameAusserhalbNrw() {
+		return this.kaNameAusserhalbNrw;
+	}
 
-    /**
-     * Update this EEinleitungsstelle with its new values.<br>
-     * This is meant to be used after merging!
-     * @param copy AtlKlaeranlagen
-     */
-    private void copy(EEinleitungsstelle copy) {
-        this.bezeichnung = copy.getBezeichnung();
-        this.e32 = copy.getE32();
-        this.n32 = copy.getN32();
-        this.nr = copy.getNr();
-        this.standort = copy.getStandort();
-        this.typIndirekteinleitungTog = copy.getTypIndirekteinleitungTog();
-        this.aktualDat = copy.getAktualDat();
-        this.erstellDat = copy.getErstellDat();
-        this.kaNichtInNrwTog = copy.getKaNichtInNrwTog();
-        this.herkunft = copy.getHerkunft();
-        this.setWasserrechts(copy.getWasserrechts());
-    }
+	public void setKaNameAusserhalbNrw(String kaNameAusserhalbNrw) {
+		this.kaNameAusserhalbNrw = kaNameAusserhalbNrw;
+	}
 
-    /**
-     * Find an <code>EEinleitungsstelle</code> instance by its primary key
-     * @param id the primary key value
-     * @return <code>EEinleitungsstelle</code> the requested instance,
-     *         if one exists,
-     *         <code>null</code> otherwise
-     */
-    public static EEinleitungsstelle findById(java.lang.Integer id) {
-        return (EEinleitungsstelle)
-            new DatabaseAccess().get(EEinleitungsstelle.class, id);
-    }
+	public String getExternalNr() {
+		return this.externalNr;
+	}
 
-    /**
-     * Get a list of all <code>EEinleitungsstelle</code>
-     * @return <code>List&lt;EEinleitungsstelle&gt;</code>
-     *         all <code>EEinleitungsstelle</code>
-     */
-    public static List<EEinleitungsstelle> getAll() {
-        return DatabaseQuery.getAll(new EEinleitungsstelle());
-    }
+	public void setExternalNr(String externalNr) {
+		this.externalNr = externalNr;
+	}
 
-    public Set<EWasserrecht> getWasserrechts() {
-        return wasserrechts;
-    }
+	/**
+	 * Update this EEinleitungsstelle with its new values.<br>
+	 * This is meant to be used after merging!
+	 * 
+	 * @param copy AtlKlaeranlagen
+	 */
+	private void copy(EEinleitungsstelle copy) {
+		this.bezeichnung = copy.getBezeichnung();
+		this.e32 = copy.getE32();
+		this.n32 = copy.getN32();
+		this.nr = copy.getNr();
+		this.standort = copy.getStandort();
+		this.typIndirekteinleitungTog = copy.getTypIndirekteinleitungTog();
+		this.aktualDat = copy.getAktualDat();
+		this.erstellDat = copy.getErstellDat();
+		this.kaNichtInNrwTog = copy.getKaNichtInNrwTog();
+		this.herkunft = copy.getHerkunft();
+		this.setWasserrechts(copy.getWasserrechts());
+	}
 
-    public void setWasserrechts(Set<EWasserrecht> wasserrechts) {
-        this.wasserrechts = wasserrechts;
-    }
+	/**
+	 * Find an <code>EEinleitungsstelle</code> instance by its primary key
+	 * 
+	 * @param id the primary key value
+	 * @return <code>EEinleitungsstelle</code> the requested instance, if one
+	 *         exists, <code>null</code> otherwise
+	 */
+	public static EEinleitungsstelle findById(java.lang.Integer id) {
+		return (EEinleitungsstelle) new DatabaseAccess().get(EEinleitungsstelle.class, id);
+	}
 
-    /**
-     * Gets the connected Einleitungsstelle instance and returns its Referenz-Entities
-     */
-    @JsonIgnore
-    public List<Referenz> getReferenzs() {
-        Integer identifier = origNr != null ? origNr: nr;
-        Einleitungsstelle els = Einleitungsstelle.findByObjektId(identifier);
-        List<Referenz> referenzs = HibernateSessionFactory.currentSession().createQuery(
-            "from Referenz where q_els_nr = " + els.getObjekt().getId()
-        ).list();
-        return referenzs != null ? referenzs : new ArrayList<Referenz>();
-    }
+	/**
+	 * Get a list of all <code>EEinleitungsstelle</code>
+	 * 
+	 * @return <code>List&lt;EEinleitungsstelle&gt;</code> all
+	 *         <code>EEinleitungsstelle</code>
+	 */
+	public static List<EEinleitungsstelle> getAll() {
+		return DatabaseQuery.getAll(new EEinleitungsstelle());
+	}
+
+	public Set<EWasserrecht> getWasserrechts() {
+		return wasserrechts;
+	}
+
+	public void setWasserrechts(Set<EWasserrecht> wasserrechts) {
+		this.wasserrechts = wasserrechts;
+	}
+
+	/**
+	 * Gets the connected Einleitungsstelle instance and returns its
+	 * Referenz-Entities
+	 */
+	@JsonIgnore
+	public List<Referenz> getReferenzs() {
+		Integer identifier = origNr != null ? origNr : nr;
+		Einleitungsstelle els = Einleitungsstelle.findByObjektId(identifier);
+		List<Referenz> referenzs = HibernateSessionFactory.currentSession()
+				.createQuery("from Referenz where q_els_nr = " + els.getObjekt().getId()).list();
+		return referenzs != null ? referenzs : new ArrayList<Referenz>();
+	}
 }

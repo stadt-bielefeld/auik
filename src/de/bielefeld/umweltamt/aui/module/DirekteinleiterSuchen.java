@@ -52,136 +52,155 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Ein einfaches Such-Modul für Direkteinleiter anhand des Aktenzeichens.
+ * 
  * @author Gerhard Genuit
  */
 public class DirekteinleiterSuchen extends AbstractQueryModul {
 	/** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
+	private static final AuikLogger log = AuikLogger.getLogger();
 
-    /** Das obere Panel mit den Such-Optionen */
-    private JPanel queryPanel;
-    private String iconPath = "filefind32.png";  //Das Icon für Suchen
-    // Widgets für die Suche
-    private JTextField azFeld;
-    private TextFieldDateChooser genDatum;
-    private JButton suchenButton;
+	/** Das obere Panel mit den Such-Optionen */
+	private JPanel queryPanel;
+	private String iconPath = "filefind32.png"; // Das Icon für Suchen
+	// Widgets für die Suche
+	private JTextField azFeld;
+	private TextFieldDateChooser genDatum;
+	private JButton suchenButton;
 
-    /** Das TableModel fÃ¼r die Ergebnis-Tabelle */
-    private DirekteinleiterModel ergebnisModel;
+	/** Das TableModel fÃ¼r die Ergebnis-Tabelle */
+	private DirekteinleiterModel ergebnisModel;
 
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.Modul#getName()
-     */
-    // Der Name mit dem das Modul im AUIK angezeigt wird
-    @Override
-    public String getName() {
-        return "Aktenzeichen suchen";
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
+	 */
+	// Der Name mit dem das Modul im AUIK angezeigt wird
+	@Override
+	public String getName() {
+		return "Aktenzeichen suchen";
+	}
 
-    @Override
-    public String getCategory() {
-        return "Betriebe";
-    }
+	@Override
+	public String getCategory() {
+		return "Betriebe";
+	}
 
-    @Override
-    public String getIdentifier() {
-        return "m_auswertung_direkteinleiter";
-    }
+	@Override
+	public String getIdentifier() {
+		return "m_auswertung_direkteinleiter";
+	}
 
-    public HauptFrame getFrame() {
-        return frame;
-    }
+	public HauptFrame getFrame() {
+		return frame;
+	}
 
-    @Override
-    public Icon getIcon() {
-        return super.getIcon(iconPath);
-    }
-    //Aufruf der eigentlichen Suchfunktion in VawsFachdaten
+	@Override
+	public Icon getIcon() {
+		return super.getIcon(iconPath);
+	}
+
+	// Aufruf der eigentlichen Suchfunktion in VawsFachdaten
 	public void SuchStart() {
 
-        String aktenzeichen = azFeld.getText();
-        Date genDate = genDatum.getDate();
-        
-    	if (aktenzeichen != null && !aktenzeichen.isEmpty()) {
-	        log.debug(" Suche nach Aktenzeichen " + aktenzeichen);
-	        ((DirekteinleiterModel)getTableModel()).setList(
-	            DatabaseQuery.findWasserrechtAktenzeichen(aktenzeichen));// Aufruf der Suchfunktion. Startet eine Query in der Datenbank
-	        ((DirekteinleiterModel)getTableModel()).fireTableDataChanged();
-	        frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der gefundenen Objekte
-	        log.debug(getTableModel().getRowCount()
-	        		+ " Objekt(e) mit Aktenzeichen " + aktenzeichen + " gefunden");
-        }
-    	else if (genDate != null) {
-            log.debug(" Suche nach Genehmigungsdatum " + genDate);
-            ((DirekteinleiterModel)getTableModel()).setList(
-                DatabaseQuery.findWasserrechtGenDatum(genDate));// Aufruf der Suchfunktion. Startet eine Query in der Datenbank
-            ((DirekteinleiterModel)getTableModel()).fireTableDataChanged();
-            frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der gefundenen Objekte
-            log.debug(getTableModel().getRowCount()
-            		+ " Objekt(e) mit Genehmigungsdatum " + genDate + " gefunden");
-    	}
-    }
+		String aktenzeichen = azFeld.getText();
+		Date genDate = genDatum.getDate();
 
-    /* (non-Javadoc)
-     * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getQueryOptionsPanel()
-     */
-    @Override
-    public JPanel getQueryOptionsPanel() {
-        if (queryPanel == null) {
-            // Die Widgets initialisieren:
-            azFeld = new JTextField("", 12);
-            genDatum = new TextFieldDateChooser();
+		if (aktenzeichen != null && !aktenzeichen.isEmpty()) {
+			log.debug(" Suche nach Aktenzeichen " + aktenzeichen);
+			((DirekteinleiterModel) getTableModel()).setList(DatabaseQuery.findWasserrechtAktenzeichen(aktenzeichen));// Aufruf
+																														// der
+																														// Suchfunktion.
+																														// Startet
+																														// eine
+																														// Query
+																														// in
+																														// der
+																														// Datenbank
+			((DirekteinleiterModel) getTableModel()).fireTableDataChanged();
+			frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der
+																							// gefundenen Objekte
+			log.debug(getTableModel().getRowCount() + " Objekt(e) mit Aktenzeichen " + aktenzeichen + " gefunden");
+		} else if (genDate != null) {
+			log.debug(" Suche nach Genehmigungsdatum " + genDate);
+			((DirekteinleiterModel) getTableModel()).setList(DatabaseQuery.findWasserrechtGenDatum(genDate));// Aufruf
+																												// der
+																												// Suchfunktion.
+																												// Startet
+																												// eine
+																												// Query
+																												// in
+																												// der
+																												// Datenbank
+			((DirekteinleiterModel) getTableModel()).fireTableDataChanged();
+			frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der
+																							// gefundenen Objekte
+			log.debug(getTableModel().getRowCount() + " Objekt(e) mit Genehmigungsdatum " + genDate + " gefunden");
+		}
+	}
 
-            suchenButton = new JButton("Suchen");
-            suchenButton.setToolTipText("Aktenzeichen suchen");
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#
+	 * getQueryOptionsPanel()
+	 */
+	@Override
+	public JPanel getQueryOptionsPanel() {
+		if (queryPanel == null) {
+			// Die Widgets initialisieren:
+			azFeld = new JTextField("", 12);
+			genDatum = new TextFieldDateChooser();
+
+			suchenButton = new JButton("Suchen");
+			suchenButton.setToolTipText("Aktenzeichen suchen");
 
 //             Ein KeyListener fÃ¼r das Textfeld(herstellFeld),
-            // der die eigentliche Suche auslÃ¶st:
+			// der die eigentliche Suche auslÃ¶st:
 
-            azFeld.addKeyListener(new KeyAdapter() {
-                // Suche wird mit Return oder Enter ausgelÃ¶st
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyCode() == 10) {
-                        SuchStart();
-                    }
-                }
-            });
+			azFeld.addKeyListener(new KeyAdapter() {
+				// Suche wird mit Return oder Enter ausgelÃ¶st
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if (e.getKeyCode() == 10) {
+						SuchStart();
+					}
+				}
+			});
 
-            // Ein ActionListener fÃ¼r den Button(suchenButton),
-            // der die eigentliche Suche auslÃ¶st:
-            suchenButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SuchStart();
-                }
-            });
+			// Ein ActionListener fÃ¼r den Button(suchenButton),
+			// der die eigentliche Suche auslÃ¶st:
+			suchenButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					SuchStart();
+				}
+			});
 
-            // Noch etwas Layout...
-            FormLayout layout = new FormLayout(
-                    "pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref"
-                    );
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			// Noch etwas Layout...
+			FormLayout layout = new FormLayout(
+					"pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
+			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            // FÃ¼r Darstellung der Suchoptionen im oberen Panel
-            builder.append("Aktenzeichen:", azFeld);
-            builder.append("Genehmigungsdatum:", genDatum);
-            builder.append(suchenButton, createExportButton());
-            builder.nextLine();
-            builder.append("");
+			// FÃ¼r Darstellung der Suchoptionen im oberen Panel
+			builder.append("Aktenzeichen:", azFeld);
+			builder.append("Genehmigungsdatum:", genDatum);
+			builder.append(suchenButton, createExportButton());
+			builder.nextLine();
+			builder.append("");
 
-            queryPanel = builder.getPanel();
-        }
+			queryPanel = builder.getPanel();
+		}
 
-        return queryPanel;
-    }
+		return queryPanel;
+	}
 
-    //Aufruf des Modells fÃ¼r die Ergebnis-Tabelle
-    @Override
-    public ListTableModel getTableModel() {
-        if (ergebnisModel == null) {
-            ergebnisModel = new DirekteinleiterModel();
-        }
-        return ergebnisModel;
-    }
+	// Aufruf des Modells fÃ¼r die Ergebnis-Tabelle
+	@Override
+	public ListTableModel getTableModel() {
+		if (ergebnisModel == null) {
+			ergebnisModel = new DirekteinleiterModel();
+		}
+		return ergebnisModel;
+	}
 }

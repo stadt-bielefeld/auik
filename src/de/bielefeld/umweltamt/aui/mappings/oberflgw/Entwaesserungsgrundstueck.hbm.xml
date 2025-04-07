@@ -64,6 +64,12 @@
 		<property name="externalNr" type="java.lang.String">
 			<column name="external_nr" length="50" />
 		</property>
+        <property name="enabled" type="boolean">
+            <column name="_enabled" not-null="true" />
+        </property>
+        <property name="deleted" type="boolean">
+            <column name="_deleted" not-null="true" />
+        </property>
 		<property name="woTog" type="java.lang.Boolean">
 			<column name="wo_tog" />
 		</property>

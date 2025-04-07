@@ -31,6 +31,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
@@ -59,123 +60,101 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
 abstract class DatabaseDirekteinlQuery {
-	
-    private static Entsorger[] entsorger = null;
 
-    private static Abaverfahren[] verfahren = null;
-    
-    private static Integer[] anhaenge = null;
-    
-    
-    /* ********************************************************************** */
-    /* Queries for package INDEINL                                            */
-    /* ********************************************************************** */
+	private static Entsorger[] entsorger = null;
 
+	private static Abaverfahren[] verfahren = null;
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package INDEINL: class Objekt                      */
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+	private static Integer[] anhaenge = null;
 
-    /**
-     * Sucht alle Objekte einer Objektart,  die nicht erloschen sind.
-     * @param Objektart Es sollen nur Datensätze dieser Artangezeigt werden.
-     * @return <code>List&lt;Objekt&gt;</code>
-     *         Eine Liste mit den entstprechenden Objekte.
-     */
-    public static List<Objekt> getObjektByArt(
-    		Objektarten art) {
-    	return new DatabaseAccess().executeCriteriaToList(
-            DetachedCriteria.forClass(Objekt.class)
-            	.add(Restrictions.eq("objektarten", art))
-                .add(Restrictions.eq("inaktiv", false)),
-            new Objekt());
-                
-        
-    }
-    /**
-     * Sucht alle Objekte des angemeldeten Sachbearbeiters, die ein
-     * Wiedervorlagedatum haben.
-     * @param nurWiedervorlageAbgelaufen Sollen nur Datensätze angezeigt werden,
-     *            deren Wiedervorlage in der Vergangenheit liegt?
-     * @return <code>List&lt;Objekt&gt;</code>
-     *         Eine Liste mit den entstprechenden Objekten.
-     */
-	public static List<Objekt> getObjektByWiedervorlage(
-			boolean nurWiedervorlageAbgelaufen) {
-		DetachedCriteria detachedCriteria = DetachedCriteria
-				.forClass(Objekt.class)
-                .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
-				.add(Restrictions.eq("sachbearbeiter",
-						DatabaseBasisQuery.getCurrentSachbearbeiter()))
-				.add(Restrictions.isNotNull("wiedervorlage"))
-                .add(Restrictions.eq("inaktiv", false))
-                .addOrder(Order.asc("objektarten"))
-                .addOrder(Order.asc("wiedervorlage"));
-        if (nurWiedervorlageAbgelaufen) {
-            detachedCriteria.add(Restrictions.le("wiedervorlage", new Date()));
-        }
+	/* ********************************************************************** */
+	/* Queries for package DirektEinl */
+	/* ********************************************************************** */
 
-		return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
-				new Objekt());
-
-	}
-    
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package INDEINL: class Anfallstelle                      */
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-
-    /**
-     * Get a list of all Anfallstelle
-     * @return <code>List&lt;Anfallstelle&gt;</code>
-     */
+	/**
+	 * Get a list of all Anfallstelle
+	 * 
+	 * @return <code>List&lt;Anfallstelle&gt;</code>
+	 */
 	public static List<Anfallstelle> getAnfallstelle(String anh, String art, Sachbearbeiter sachbe) {
 
-		DetachedCriteria criteria = 
-				DetachedCriteria.forClass(Anfallstelle.class)
-                        .setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY)
-						.createAlias("objekt", "objekt")
-						.add(Restrictions.eq("objekt.deleted", false))
-						.add(Restrictions.eq("objekt.inaktiv", false));
+		DetachedCriteria criteria = DetachedCriteria.forClass(Anfallstelle.class)
+				.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY).createAlias("objekt", "objekt")
+				.add(Restrictions.eq("objekt.deleted", false)).add(Restrictions.eq("objekt.inaktiv", false));
 
-		        if (!anh.isEmpty() && !anh.equals("99")) {
-		            criteria.add(Restrictions.eq("anhangId", anh));
-		        } else if (!art.equals("-")) {
-		            criteria.add(Restrictions.eq("anlagenart", art));
-		        }
-		        if (sachbe != null) {
-		            criteria.add(Restrictions.eq("objekt.sachbearbeiter", sachbe));
-		        }
-		        
-		        
-        return new DatabaseAccess().executeCriteriaToList(
-                criteria, new Anfallstelle());
+		if (!anh.isEmpty() && !anh.equals("99")) {
+			criteria.add(Restrictions.eq("anhangId", anh));
+		} else if (!art.equals("-")) {
+			criteria.add(Restrictions.eq("anlagenart", art));
+		}
+		if (sachbe != null) {
+			criteria.add(Restrictions.eq("objekt.sachbearbeiter", sachbe));
+		}
+
+		return new DatabaseAccess().executeCriteriaToList(criteria, new Anfallstelle());
 	}
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-    /* Queries for package DIREKTEINL: class AfsNiederschalgswasser              */
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	/* Queries for package DIREKTEINL: class AfsNiederschalgswasser */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
 	 * Liefert alle Probenahme eines bestimmten Probepunktes.
 	 *
-	 * @param anfallstelle
-	 *            Die Anfallstelle.
+	 * @param anfallstelle Die Anfallstelle.
 	 * @return List&lt;AfsNiederschlagswasser&gt;
 	 */
-	
-	public static List<AfsNiederschlagswasser> findAfsNw(Anfallstelle anfallstelle)
-	{
-		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria.forClass(AfsNiederschlagswasser.class)
-																	.add(Restrictions.eq("anfallstelle", anfallstelle)),
-															new AfsNiederschlagswasser());
+
+	public static List<AfsNiederschlagswasser> findAfsNw(Anfallstelle anfallstelle) {
+		return new DatabaseAccess().executeCriteriaToList(DetachedCriteria.forClass(AfsNiederschlagswasser.class)
+				.add(Restrictions.eq("anfallstelle", anfallstelle)), new AfsNiederschlagswasser());
 	}
-	
-	public static List<AfsNiederschlagswasser> findAfsNw(Entwaesserungsgrundstueck grundstueck)
-	{
-		return new DatabaseAccess().executeCriteriaToList(
-															DetachedCriteria.forClass(AfsNiederschlagswasser.class)
-																	.add(Restrictions.eq("entwaesserungsgrundstueck", grundstueck)),
-															new AfsNiederschlagswasser());
+
+	public static List<AfsNiederschlagswasser> findAfsNw(Entwaesserungsgrundstueck grundstueck) {
+		return new DatabaseAccess().executeCriteriaToList(DetachedCriteria.forClass(AfsNiederschlagswasser.class)
+				.add(Restrictions.eq("entwaesserungsgrundstueck", grundstueck)), new AfsNiederschlagswasser());
+	}
+
+	/**
+	 * Get an array with all <code>MapElkaGewkennz</code>en
+	 *
+	 * @return <code>Integer[]</code>
+	 */
+
+	public static Integer[] getMapElkaGewkennzArray() {
+
+		List<Integer> mapElkaGewkennzList = getMapElkaGewkennzList();
+
+		Integer[] mapElkaGew = new Integer[mapElkaGewkennzList.size()];
+		return mapElkaGew = mapElkaGewkennzList.toArray(mapElkaGew);
+
+	}
+
+	/**
+	 * Get all MapElkaGewkennz and sort them by their gewkz
+	 *
+	 * @return <code>Eine Liste aller Gewaesser</code>
+	 */
+	public static List<Integer> getMapElkaGewkennzList() {
+
+		String query = "SELECT gewkz " + "FROM MapElkaGewkennz ORDER BY gewkz";
+
+		return HibernateSessionFactory.currentSession().createQuery(query).list();
+
+	}
+
+	/**
+	 * Get all AfsNiederschlagswasser
+	 * 
+	 * @return <code>Eine Liste aller AfsNiederschlagswasser</code>
+	 */
+	public static List<AfsNiederschlagswasser> getAfsNwList(Entwaesserungsgrundstueck grundstueck) {
+		return new DatabaseAccess().executeCriteriaToList(DetachedCriteria.forClass(AfsNiederschlagswasser.class)
+				.add(Restrictions.eq("entwaesserungsgrundstueck", grundstueck)), new AfsNiederschlagswasser());
+	}
+
+	public static List<AfsNiederschlagswasser> getAfsNwList(Anfallstelle anfallstelle) {
+		return new DatabaseAccess().executeCriteriaToList(DetachedCriteria.forClass(AfsNiederschlagswasser.class)
+				.add(Restrictions.eq("anfallstelle", anfallstelle)), new AfsNiederschlagswasser());
 	}
 }

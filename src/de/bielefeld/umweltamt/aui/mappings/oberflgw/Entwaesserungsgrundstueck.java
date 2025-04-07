@@ -72,7 +72,8 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private Date aktualDat;
     private Integer adrNr;
     private String externalNr;
-    private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
+    private boolean enabled;
+    private boolean deleted;
     private Boolean woTog;
     private Boolean miTog;
     private Boolean geTog;
@@ -82,8 +83,9 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private Boolean parkplatzTog;
     private Set<Abaverfahren> Abaverfahrens = new HashSet<Abaverfahren>(0);
     private Set<Wasserrecht> Wasserrechts = new HashSet<Wasserrecht>(0);
+    private Set<AfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<AfsNiederschlagswasser>(0);
 
-    /** Logging */
+	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
     /** Default constructor */
@@ -287,6 +289,22 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
 
     public void setExternalNr(String externalNr) {
         this.externalNr = externalNr;
+    }
+
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isDeleted() {
+        return this.deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Boolean getWoTog() {
