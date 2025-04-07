@@ -169,7 +169,7 @@ public class AwsvEditor extends AbstractBaseEditor {
     private JTable anlagenChronoTabelle;
     private VawsAnlagenChronoModel anlagenChronoModel;
 	private JSplitPane tabellenSplit;
-	
+
     // Benötigt bei Lageranlagen & Rohrleitungen
     private JComboBox behaelterArtBox;
     private JComboBox materialBox;
@@ -288,7 +288,7 @@ public class AwsvEditor extends AbstractBaseEditor {
     private JCheckBox schieberCheck;
     private JCheckBox abdeckungCheck;
     private JCheckBox leitung_geprueftCheck;
-    
+
     // Ausführung (Abfüllflächen)
     private JPanel ausfuehrungAbfuellflaechenTab;
     private JComboBox bodenflaechenAusfBox;
@@ -530,8 +530,8 @@ public class AwsvEditor extends AbstractBaseEditor {
         schutzAntiheberCheck = new JCheckBox("Antihebersicherung");
         beschreibungAFeld = new LimitedTextArea(1250);
         beschreibungSFeld = new LimitedTextArea(1250);
-        
-        //JGS 
+
+        //JGS
         lagerflaecheFeld = new IntegerField();
         abstandGewFeld = new IntegerField();
         gewNameFeld = new LimitedTextField(25);
@@ -1051,8 +1051,8 @@ public class AwsvEditor extends AbstractBaseEditor {
             beschrFugenmaterialArea.setText(getAbfuellflaeche().getBeschfugenmat());
             beschrAblNiederschlArea.setText(getAbfuellflaeche().getBeschableitung());
         } else if (
-        	getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_FS) || 
-            getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GK) || 
+        	getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_FS) ||
+            getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GK) ||
             getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GHB))
         {
             tabbedPane.addTab("Daten", getDatenJgsTab());
@@ -1064,20 +1064,20 @@ public class AwsvEditor extends AbstractBaseEditor {
             gewNameFeld.setText(getJgs().getGewaesserName());
             abstandBrunnenFeld.setValue(getJgs().getBrunnenAbstand());
             tierhaltungFeld.setText(getJgs().getTierhaltung());
-                        
+
             if(getJgs().getSeitenwaende()!=null)
                 seitenwandCheck.setSelected(getJgs().getSeitenwaende());
             else
             	seitenwandCheck.setSelected(false);
-            
+
             wandhoeheFeld.setValue(getJgs().getWandhoehe());
             bodenflaechenAusfBox.setSelectedItem(getJgs().getBodenplatte());
 
 			if (getJgs().getUeberdachung() != null)
 				ueberdachungCheck.setSelected(getJgs().getUeberdachung());
 			else
-				ueberdachungCheck.setSelected(false);    
-			
+				ueberdachungCheck.setSelected(false);
+
 			auffangbehBox.setSelectedItem(getJgs().getAuffangbeh());
 			volumenAuffangbehFeld.setValue(getJgs().getVolumenAuffangbeh());
 			rohrleitungBox.setSelectedItem(getJgs().getRohrleitung());
@@ -1086,28 +1086,28 @@ public class AwsvEditor extends AbstractBaseEditor {
 			if (getJgs().getDrainage() != null)
 				drainageCheck.setSelected(getJgs().getDrainage());
 			else
-				drainageCheck.setSelected(false);  
+				drainageCheck.setSelected(false);
 
 			if (getJgs().getFuellanzeiger() != null)
 				fuellanzeigerCheck.setSelected(getJgs().getFuellanzeiger());
 			else
-				fuellanzeigerCheck.setSelected(false);  
+				fuellanzeigerCheck.setSelected(false);
 
 			if (getJgs().getSchieber() != null)
 				schieberCheck.setSelected(getJgs().getSchieber());
 			else
-				schieberCheck.setSelected(false);  
+				schieberCheck.setSelected(false);
 
 			if (getJgs().getAbdeckung() != null)
 				abdeckungCheck.setSelected(getJgs().getAbdeckung());
 			else
-				abdeckungCheck.setSelected(false);  
+				abdeckungCheck.setSelected(false);
 
 			if (getJgs().getLeitungGeprueft() != null)
 				leitung_geprueftCheck.setSelected(getJgs().getLeitungGeprueft());
 			else
-				leitung_geprueftCheck.setSelected(false);  
-            
+				leitung_geprueftCheck.setSelected(false);
+
         }
         tabbedPane.addTab("Sachverständigenprüfung", getSvPruefungTab());
         svPruefungModel.setFachdaten(getFachdaten());
@@ -1288,14 +1288,14 @@ public class AwsvEditor extends AbstractBaseEditor {
 
         }
         if (getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_FS) ||
-            getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GK) || 
+            getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GK) ||
             getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_GHB)) {
-         
+
         	getJgs().setBodenplatte((String)bodenflaechenAusfBox.getSelectedItem());
         	getJgs().setBrunnenAbstand(abstandBrunnenFeld.getIntValue());
         	getJgs().setGewaesserAbstand(abstandGewFeld.getIntValue());
         	getJgs().setGewaesserName(gewNameFeld.getText());
-        	getJgs().setLagerflaeche(lagerflaecheFeld.getIntValue());   
+        	getJgs().setLagerflaeche(lagerflaecheFeld.getIntValue());
         	getJgs().setSeitenwaende(seitenwandCheck.isSelected());
         	getJgs().setTierhaltung(tierhaltungFeld.getText());
         	getJgs().setWandhoehe(wandhoeheFeld.getDoubleValue());
@@ -1308,8 +1308,8 @@ public class AwsvEditor extends AbstractBaseEditor {
         	getJgs().setSchieber(schieberCheck.isSelected());
         	getJgs().setAbdeckung(abdeckungCheck.isSelected());
         	getJgs().setLeitungGeprueft(leitung_geprueftCheck.isSelected());
-        	
-        	
+
+
 
             success = success && getJgs().merge();
         }
@@ -1439,13 +1439,12 @@ public class AwsvEditor extends AbstractBaseEditor {
 			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        	
+
 			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
 					chronoScroller, 0.8);
 			this.tabellenSplit.setDividerLocation(0.8);
         	
-            
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g"
             );
@@ -1486,7 +1485,7 @@ public class AwsvEditor extends AbstractBaseEditor {
             builder.nextLine(2);
 
             builder.append(this.tabellenSplit, 8);
-            
+
 
 
             datenVAWSAbscheiderTab = builder.getPanel();
@@ -1589,13 +1588,12 @@ public class AwsvEditor extends AbstractBaseEditor {
 			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        	
+
 			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
 					chronoScroller, 0.8);
 			this.tabellenSplit.setDividerLocation(0.8);
         	
-            
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g"
             );
@@ -1703,13 +1701,12 @@ public class AwsvEditor extends AbstractBaseEditor {
 			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        	
+
 			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
 					chronoScroller, 0.8);
 			this.tabellenSplit.setDividerLocation(0.8);
         	
-            
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, p, 10dlu, r:p, 3dlu, p, 0:g"
             );
@@ -1760,13 +1757,12 @@ public class AwsvEditor extends AbstractBaseEditor {
 			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        	
+
 			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
 					chronoScroller, 0.8);
 			this.tabellenSplit.setDividerLocation(0.8);
-        	
-            
+
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
             );
@@ -1812,13 +1808,13 @@ public class AwsvEditor extends AbstractBaseEditor {
     private JPanel getAbfuellflaecheJgsTab() {
         if (datenAbfuellflaechenJgsTab == null) {
 
-        	
+
 			JScrollPane bemerkungScroller = new JScrollPane(
 					bemerkungArea,
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			
-            
+
+
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
             );
@@ -1828,7 +1824,7 @@ public class AwsvEditor extends AbstractBaseEditor {
             builder.appendSeparator("Ausführung");
 
             builder.append("Bodenplatte", bodenflaechenAusfBox);
-            
+
             builder.nextLine();
 
             builder.append("", seitenwandCheck);
@@ -1839,14 +1835,14 @@ public class AwsvEditor extends AbstractBaseEditor {
 
             builder.append("", abdeckungCheck);
             builder.append("", leitung_geprueftCheck);
-            
+
             builder.nextLine();
 
             builder.appendSeparator("Auffangvorrichtung");
-            
+
             builder.append("Auffangbehälter", auffangbehBox);
             builder.append("Behältervolumen [m³]", volumenAuffangbehFeld);
-            
+
             builder.append("Rohrleitung", rohrleitungBox);
             builder.append("Wandhöhe [m]", wandhoeheFeld);
 
@@ -1871,9 +1867,9 @@ public class AwsvEditor extends AbstractBaseEditor {
 			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        	
-        	
-            
+
+
+
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"
             );
@@ -1883,13 +1879,13 @@ public class AwsvEditor extends AbstractBaseEditor {
             builder.appendSeparator("Stammdaten");
             builder.append("Baujahr:", baujahrFeld);
             builder.append("Aktenzeichen:", aktenzeichenField);
-            
+
             builder.append("Lagerfläche [m²]:", lagerflaecheFeld);
             builder.append("Lagervolumen [m³]:", mengeFeld);
-            
+
             builder.append("Abstand zu Gewässer [m]:", abstandGewFeld);
             builder.append("Gewässername:", gewNameFeld);
-            
+
             builder.append("Abstand zu Brunnen [m]:", abstandBrunnenFeld);
             builder.append("Tierhaltung:", tierhaltungFeld);
 

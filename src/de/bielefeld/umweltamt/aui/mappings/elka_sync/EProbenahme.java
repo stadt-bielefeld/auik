@@ -49,7 +49,7 @@ public class EProbenahme implements java.io.Serializable {
 	private String herkunft;
 	private Set<EProbenahmeUeberwachungsergeb> probenahmeUeberwachungsergebs =
 		new HashSet<EProbenahmeUeberwachungsergeb>(0);
-	
+
 	public EProbenahme() {
 	}
 
@@ -81,12 +81,12 @@ public class EProbenahme implements java.io.Serializable {
 	public void setNr(Integer nr) {
 		this.nr = nr;
 	}
-	
+
 	@JsonIgnore
 	public Integer getOrigNr() {
 		return this.origNr;
 	}
-	
+
 	@JsonIgnore
 	public void setOrigNr(Integer origNr) {
 		this.origNr = origNr;

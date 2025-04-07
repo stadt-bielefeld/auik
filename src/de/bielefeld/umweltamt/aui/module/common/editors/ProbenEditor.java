@@ -555,7 +555,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             else {
                 tmp.delete();
             }
-    	
+
             return true;
         }
 
@@ -574,11 +574,11 @@ public class ProbenEditor extends AbstractApplyEditor {
                 case 3:
                     tmp = Einheiten.class;
                     break;
-                    
+
                 case 4:
                 	tmp = MapElkaAnalysemethode.class;
                     break;
-                    
+
                 case 5:
                     tmp = Double.class;
                     break;
@@ -723,9 +723,9 @@ public class ProbenEditor extends AbstractApplyEditor {
                         "Der Probenahmeauftrag wurde erfolgreich unter '"
                             + path.getAbsolutePath() + "' gespeichert.",
                         "Probenahmeauftrag erfolgreich");
-                    
+
                     close();
-                    
+
                 } catch (Exception ex) {
                     log.error("Druck schlug fehlt: " + ex.getMessage());
                     GUIManager.getInstance().showErrorMessage(
@@ -996,7 +996,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         row += 2;
         builder.add(parameterScroller, cc.xyw(1, row, 14));
-        
+
         builder.getPanel().setFocusCycleRoot(true);
 
         return builder.getPanel();
@@ -1250,7 +1250,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         parameterBox = new JComboBox(parameter);
         parameterBox.setEditable(false);
-        
+
         parameterBox.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -1260,12 +1260,12 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         parameterColumn.setCellEditor(new DefaultCellEditor(parameterBox));
         parameterColumn.setCellRenderer(new ComboBoxRenderer());
-        
+
         //Werte
         TableColumn gkColumn = this.parameterTabelle.getColumnModel()
                 .getColumn(1);
         gkColumn.setMaxWidth(50);
-        
+
         TableColumn wertColumn = this.parameterTabelle.getColumnModel()
                 .getColumn(2);
         wertColumn.setPreferredWidth(60);DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
@@ -1276,7 +1276,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         TableColumn einheitenColumn = this.parameterTabelle.getColumnModel()
             .getColumn(3);
         einheitenColumn.setPreferredWidth(40);
-        
+
         einheitenBox = new JComboBox(DatabaseQuery.getEinheiten());
         einheitenBox.setEditable(false);
         einheitenBox.addFocusListener(new FocusAdapter() {
@@ -1294,7 +1294,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         TableColumn methodeColumn = this.parameterTabelle.getColumnModel()
             .getColumn(4);
         methodeColumn.setPreferredWidth(200);
-        
+
         methodeBox = new JComboBox(DatabaseQuery.getMapElkaAnalysemethode());
         methodeBox.setEditable(false);
         methodeBox.addFocusListener(new FocusAdapter() {
@@ -1333,7 +1333,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         TableColumn gwColumn = this.parameterTabelle.getColumnModel()
                 .getColumn(6);
         gwColumn.setPreferredWidth(100);
-        
+
         // Normwert
         TableColumn normwertColumn = this.parameterTabelle.getColumnModel()
             .getColumn(7);
@@ -1454,7 +1454,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         } else {
             probe.setBemerkung(null);
         }
-        
+
         probe.setEnabled(true);
         probe.setDeleted(false);
         if (probe.getQbAusschliessen() == null)
@@ -1477,10 +1477,10 @@ public class ProbenEditor extends AbstractApplyEditor {
             position.setProbenahme(probe);
             if (position.getParameter().getSielhautGw() != null) {
             	position.setNormwert(position.getWert()/position.getParameter().getSielhautGw());
-            }  
+            }
             if (position.getMapElkaAnalysemethode() == null) {
             	position.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
-            }           
+            }
             success = success && position.merge();
         }
 

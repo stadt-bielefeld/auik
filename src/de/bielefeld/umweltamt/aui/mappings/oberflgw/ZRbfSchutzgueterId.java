@@ -36,7 +36,7 @@ public class ZRbfSchutzgueterId  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forZRbfSchutzgueterId;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private long sbNr;
     private Integer schutzgueterOpt;
@@ -90,10 +90,10 @@ public class ZRbfSchutzgueterId  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("sbNr").append("='").append(getSbNr()).append("' ");			
-        buffer.append("schutzgueterOpt").append("='").append(getSchutzgueterOpt()).append("' ");			
+        buffer.append("sbNr").append("='").append(getSbNr()).append("' ");
+        buffer.append("schutzgueterOpt").append("='").append(getSchutzgueterOpt()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

@@ -76,7 +76,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
  * Das "EntwaesserungsgrundstueckPanel"-Tab des ObjektBearbeiten-Moduls
- * 
+ *
  * @author Gerd Genuit
  * @date 15.01.2018
  */
@@ -255,19 +255,12 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	 * Methode verknüpft das lokal erstelle Objekt einleitungstelle mit der
 	 * ElkaSonderbauwerk der Datenbank und holt sich die Klaeranlagen aus der
 	 * Datenbank
-	 * 
+	 *
 	 * @throws RuntimeException
 	 */
 	public void fetchFormData() throws RuntimeException {
-		if (this.hauptModul.getObjekt().getEntwaesserungsgrundstuecks().isEmpty()) {
-			Entwaesserungsgrundstueck entw = new Entwaesserungsgrundstueck();
-			entw.setObjekt(this.hauptModul.getObjekt());
-			this.entwaesserungsgrundstueck = entw;
-		} else {
-			this.entwaesserungsgrundstueck = this.hauptModul.getObjekt().getEntwaesserungsgrundstuecks().iterator().next();
-			log.debug("Entwaesserungsgrundstueck aus DB geholt: " + this.entwaesserungsgrundstueck.toString());
-		}
-
+		this.entwaesserungsgrundstueck = Entwaesserungsgrundstueck.findByObjektId(this.hauptModul.getObjekt().getId());
+		log.debug("Entwaesserungsgrundstueck aus DB geholt: " + this.entwaesserungsgrundstueck.toString());
 		this.abaverfahrens.setData(Abaverfahren.getNwBehandel());
 		List<Abaverfahren> selected = new ArrayList<Abaverfahren>();
 		if (this.entwaesserungsgrundstueck != null) {
@@ -281,7 +274,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	 * Methode setzt die Attribute des Entwaesserungsgrundstueckes aus der Datenbank
 	 * auf die der lokalen Einleitungstelle und die Verknüpfung mit der Kläranlage
 	 * über die Tabelle referenz
-	 * 
+	 *
 	 * @throws RuntimeException
 	 */
 	public void updateForm() throws RuntimeException {
@@ -339,17 +332,17 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 					getErlaubnisfreiBox().setSelected(false);
 				}
 			}
-			
+
 			if( this.entwaesserungsgrundstueck.getEinbauartOpt() !=null) {
 				getEinbauartBox().setSelectedIndex(this.entwaesserungsgrundstueck.getEinbauartOpt());
 			}else {
-			 getEinbauartBox().setSelectedIndex(-1);	
+			 getEinbauartBox().setSelectedIndex(-1);
 			}
-			
+
 			if(this.entwaesserungsgrundstueck.getDtvWert() !=null) {
 				this.dtvWertFeld.setText(entwaesserungsgrundstueck.getDtvWert().toString());
 			}
-			
+
 			if(this.entwaesserungsgrundstueck.getWoTog() !=null) {
 				if (this.entwaesserungsgrundstueck.getWoTog()== true) {
 					getWoTog().setSelected(true);
@@ -357,7 +350,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 					getWoTog().setSelected(false);
 				}
 			}
-		
+
 			if(this.entwaesserungsgrundstueck.getMiTog() !=null) {
 				if (this.entwaesserungsgrundstueck.getMiTog()== true) {
 					getMiTog().setSelected(true);
@@ -365,7 +358,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 					getMiTog().setSelected(false);
 				}
 			}
-			
+
 			if(this.entwaesserungsgrundstueck.getGeTog() !=null) {
 				if (this.entwaesserungsgrundstueck.getGeTog()== true) {
 					getGeTog().setSelected(true);
@@ -401,10 +394,10 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 					getParkplatzTog().setSelected(false);
 				}
 			}
-			
+
 			List list = new ArrayList(entwaesserungsgrundstueck.getAbaverfahrens());
 			abaverfahrens.setListData(list);
-						
+
 			switchEinlBereichItems((String) getEinleitungsbereichBox().getSelectedItem());
 		}
 	}
@@ -438,7 +431,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	/**
 	 * Methode die je nach Eingabewert alles Eingabefelder des Panels aktiviert oder
 	 * deaktiviert.
-	 * 
+	 *
 	 * @param enabled
 	 */
 	public void enableAll(boolean enabled) {
@@ -473,7 +466,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	/**
 	 * Methode die, die Eingabefelder des Panels welche einen Wert haben in die
 	 * Einleitungsstelle der Datenbank schreibt.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	protected boolean doSavePanelData() {
@@ -582,12 +575,12 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 				break;
 			}
 		}
-		
+
         List<Abaverfahren> selected = abaverfahrens.getSelected();
         List<Abaverfahren> removed = new ArrayList<>();
         Set set = new HashSet(selected);
         entwaesserungsgrundstueck.setAbaverfahrens(set);
-        Set<Abaverfahren> verfahrens = 
+        Set<Abaverfahren> verfahrens =
         		entwaesserungsgrundstueck.getAbaverfahrens();
         if (abaverfahrens != null) {
             verfahrens.forEach(item -> {
@@ -602,7 +595,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
             });
         }
         verfahrens.removeAll(removed);
-        
+
 		if (this.entwaesserungsgrundstueck.merge()) {
 			success = true;
 		} else {
@@ -611,7 +604,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 
 		return success;
 	}
-	
+
 	public void switchEinlBereichItems(String type) {
 		if (type == null) {
 			return;
@@ -757,7 +750,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 		}
 	}
 
-//Getter 
+//Getter
 	private TextFieldDateChooser getErstellDatDatum() {
 		if (this.erstellDatDatum == null) {
 			this.erstellDatDatum = new TextFieldDateChooser();
@@ -986,7 +979,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	 * existiert, ansonsten wird ein neuer erstellt und diesem einen
 	 * {@link ActionListener} hinzugefügt, der bei einem Klick die Methoden
 	 * <code>saveEntwaesserungsgrundstueckDaten</code>.
-	 * 
+	 *
 	 * @see #saveEntwaesserungsgrundstueck()
 	 * @return {@link JButton}
 	 */

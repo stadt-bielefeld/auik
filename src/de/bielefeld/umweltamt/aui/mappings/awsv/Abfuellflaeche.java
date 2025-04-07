@@ -44,7 +44,7 @@ public class Abfuellflaeche  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAbfuellflaeche;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer behaelterid;
     private Fachdaten fachdaten;
@@ -268,7 +268,7 @@ public class Abfuellflaeche  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -277,26 +277,26 @@ public class Abfuellflaeche  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");			
-        buffer.append("eoh").append("='").append(getEoh()).append("' ");			
-        buffer.append("ef").append("='").append(getEf()).append("' ");			
-        buffer.append("abfsaniert").append("='").append(getAbfsaniert()).append("' ");			
-        buffer.append("abfneuerstellt").append("='").append(getAbfneuerstellt()).append("' ");			
-        buffer.append("bodenflaechenausf").append("='").append(getBodenflaechenausf()).append("' ");			
-        buffer.append("beschbodenfl").append("='").append(getBeschbodenfl()).append("' ");			
-        buffer.append("dicke").append("='").append(getDicke()).append("' ");			
-        buffer.append("guete").append("='").append(getGuete()).append("' ");			
-        buffer.append("fugenmaterial").append("='").append(getFugenmaterial()).append("' ");			
-        buffer.append("beschfugenmat").append("='").append(getBeschfugenmat()).append("' ");			
-        buffer.append("niederschlagschutz").append("='").append(getNiederschlagschutz()).append("' ");			
-        buffer.append("abscheidervorh").append("='").append(getAbscheidervorh()).append("' ");			
-        buffer.append("beschableitung").append("='").append(getBeschableitung()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("groesse").append("='").append(getGroesse()).append("' ");			
+        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");
+        buffer.append("eoh").append("='").append(getEoh()).append("' ");
+        buffer.append("ef").append("='").append(getEf()).append("' ");
+        buffer.append("abfsaniert").append("='").append(getAbfsaniert()).append("' ");
+        buffer.append("abfneuerstellt").append("='").append(getAbfneuerstellt()).append("' ");
+        buffer.append("bodenflaechenausf").append("='").append(getBodenflaechenausf()).append("' ");
+        buffer.append("beschbodenfl").append("='").append(getBeschbodenfl()).append("' ");
+        buffer.append("dicke").append("='").append(getDicke()).append("' ");
+        buffer.append("guete").append("='").append(getGuete()).append("' ");
+        buffer.append("fugenmaterial").append("='").append(getFugenmaterial()).append("' ");
+        buffer.append("beschfugenmat").append("='").append(getBeschfugenmat()).append("' ");
+        buffer.append("niederschlagschutz").append("='").append(getNiederschlagschutz()).append("' ");
+        buffer.append("abscheidervorh").append("='").append(getAbscheidervorh()).append("' ");
+        buffer.append("beschableitung").append("='").append(getBeschableitung()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("groesse").append("='").append(getGroesse()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -328,7 +328,7 @@ public class Abfuellflaeche  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -362,25 +362,25 @@ public class Abfuellflaeche  implements java.io.Serializable {
      * @param copy Abfuellflaeche
      */
     private void copy(Abfuellflaeche copy) {
-        this.fachdaten = copy.getFachdaten();            
-        this.eoh = copy.getEoh();            
-        this.ef = copy.getEf();            
-        this.abfsaniert = copy.getAbfsaniert();            
-        this.abfneuerstellt = copy.getAbfneuerstellt();            
-        this.bodenflaechenausf = copy.getBodenflaechenausf();            
-        this.beschbodenfl = copy.getBeschbodenfl();            
-        this.dicke = copy.getDicke();            
-        this.guete = copy.getGuete();            
-        this.fugenmaterial = copy.getFugenmaterial();            
-        this.beschfugenmat = copy.getBeschfugenmat();            
-        this.niederschlagschutz = copy.getNiederschlagschutz();            
-        this.abscheidervorh = copy.getAbscheidervorh();            
-        this.beschableitung = copy.getBeschableitung();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.id = copy.getId();            
-        this.groesse = copy.getGroesse();            
-    }    
+        this.fachdaten = copy.getFachdaten();
+        this.eoh = copy.getEoh();
+        this.ef = copy.getEf();
+        this.abfsaniert = copy.getAbfsaniert();
+        this.abfneuerstellt = copy.getAbfneuerstellt();
+        this.bodenflaechenausf = copy.getBodenflaechenausf();
+        this.beschbodenfl = copy.getBeschbodenfl();
+        this.dicke = copy.getDicke();
+        this.guete = copy.getGuete();
+        this.fugenmaterial = copy.getFugenmaterial();
+        this.beschfugenmat = copy.getBeschfugenmat();
+        this.niederschlagschutz = copy.getNiederschlagschutz();
+        this.abscheidervorh = copy.getAbscheidervorh();
+        this.beschableitung = copy.getBeschableitung();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.id = copy.getId();
+        this.groesse = copy.getGroesse();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

@@ -36,7 +36,7 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
 
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 99251332998082843L;
 	boolean isnew = new Boolean(false);
@@ -99,7 +99,7 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
 
 	@Override
 	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		
+
 		Sachbearbeiter tmp = (Sachbearbeiter) objectAtRow;
 		switch (columnIndex) {
         case 0:
@@ -114,47 +114,47 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
         	}else {
         		tmp.setKennummer(tmpID);
     		}
-        	
+
         	break;
-        	
+
         case 1:
         	String tmpName = (String) newValue;
         	tmp.setName(tmpName);
         	break;
-        	
+
         case 2:
         	String tmpZeichen = (String) newValue;
         	tmp.setZeichen(tmpZeichen);
         	break;
-        	
+
         case 3:
         	String tmpZimmer = (String) newValue;
         	tmp.setZimmer(tmpZimmer);
         	break;
-        	
+
         case 4:
         	String tmpTelefon = (String) newValue;
         	tmp.setTelefon(tmpTelefon);
         	break;
-        	
+
         case 5:
         	String tmpEmail = (String) newValue;
         	tmp.setEmail(tmpEmail);
         	break;
-        	
+
         case 6:
         	String tmpGruppe = (String) newValue;
         	tmp.setGehoertzuarbeitsgr(tmpGruppe);
         	break;
 
         default:
-            break;        	
-        	
+            break;
+
 		}
 
 		tmp.merge();
 		isnew = false;
-		
+
 	}
 
 	@Override

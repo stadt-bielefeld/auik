@@ -75,7 +75,7 @@ public class FettabschModel extends ListTableModel {
     		case 4:
     			tmp = fd.getAnh49Fachdatens().iterator().next().getBemerkungen();
     			break;
-    		case 5: 
+    		case 5:
     			tmp= fd.getObjekt().getBeschreibung();
     			break;
     		case 6:

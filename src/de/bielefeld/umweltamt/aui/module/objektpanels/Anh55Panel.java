@@ -485,7 +485,7 @@ public class Anh55Panel extends ObjectPanel {
     public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
 
         this.fachdaten = anfallstelle.getAnh55Fachdatens().iterator().next();
-        
+
         if (this.fachdaten != null) {
             if (this.fachdaten.getBemerkungen() != null) {
                 getBemerkungenArea().setText(this.fachdaten.getBemerkungen());

@@ -42,7 +42,7 @@ public class Probeart  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forProbeart;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String art;
@@ -127,7 +127,7 @@ public class Probeart  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -136,13 +136,13 @@ public class Probeart  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("art").append("='").append(getArt()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("messstelles").append("='").append(getMessstelles()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("art").append("='").append(getArt()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("messstelles").append("='").append(getMessstelles()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -174,7 +174,7 @@ public class Probeart  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -208,12 +208,12 @@ public class Probeart  implements java.io.Serializable {
      * @param copy Probeart
      */
     private void copy(Probeart copy) {
-        this.id = copy.getId();            
-        this.art = copy.getArt();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.messstelles = copy.getMessstelles();            
-    }    
+        this.id = copy.getId();
+        this.art = copy.getArt();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.messstelles = copy.getMessstelles();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

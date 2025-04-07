@@ -82,7 +82,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     private Boolean parkplatzTog;
     private Set<Abaverfahren> Abaverfahrens = new HashSet<Abaverfahren>(0);
     private Set<Wasserrecht> Wasserrechts = new HashSet<Wasserrecht>(0);
-    
+
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -288,7 +288,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     public void setExternalNr(String externalNr) {
         this.externalNr = externalNr;
     }
-    
+
     public Boolean getWoTog() {
         return this.woTog;
     }
@@ -302,7 +302,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     public void setMiTog(Boolean miTog) {
         this.miTog = miTog;
     }
-    
+
     public Boolean getGeTog() {
         return this.geTog;
     }
@@ -315,7 +315,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
     public void setGiTog(Boolean giTog) {
         this.giTog = giTog;
     }
-    
+
     public Boolean getGemTog() {
         return this.gemTog;
     }
@@ -392,15 +392,15 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         buffer.append("aktualDat").append("='").append(getAktualDat()).append("' ");
         buffer.append("adrNr").append("='").append(getAdrNr()).append("' ");
         buffer.append("externalNr").append("='").append(getExternalNr()).append("' ");
-        buffer.append("woTog").append("='").append(getWoTog()).append("' ");	
+        buffer.append("woTog").append("='").append(getWoTog()).append("' ");
         buffer.append("miTog").append("='").append(getMiTog()).append("' ");
         buffer.append("geTog").append("='").append(getGeTog()).append("' ");
         buffer.append("giTog").append("='").append(getGiTog()).append("' ");
         buffer.append("gemTog").append("='").append(getGemTog()).append("' ");
-        buffer.append("strTog").append("='").append(getStrTog()).append("' ");  
-        buffer.append("parkplatzTog").append("='").append(getParkplatzTog()).append("' ");    
+        buffer.append("strTog").append("='").append(getStrTog()).append("' ");
+        buffer.append("parkplatzTog").append("='").append(getParkplatzTog()).append("' ");
         buffer.append("afsNiederschlagswassers").append("='").append(getAfsNiederschlagswassers()).append("' ");
-        buffer.append("Abaverfahrens").append("='").append(getAbaverfahrens()).append("' ");	
+        buffer.append("Abaverfahrens").append("='").append(getAbaverfahrens()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -485,8 +485,8 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.aktualDat = copy.getAktualDat();
         this.adrNr = copy.getAdrNr();
         this.externalNr = copy.getExternalNr();
-        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();       
-        this.Abaverfahrens = copy.getAbaverfahrens();  
+        this.afsNiederschlagswassers = copy.getAfsNiederschlagswassers();
+        this.Abaverfahrens = copy.getAbaverfahrens();
         this.woTog = copy.getWoTog();
         this.miTog = copy.getMiTog();
         this.geTog = copy.getGeTog();
@@ -494,7 +494,7 @@ public class Entwaesserungsgrundstueck  implements java.io.Serializable {
         this.gemTog = copy.getGemTog();
         this.strTog = copy.getStrTog();
         this.parkplatzTog = copy.getParkplatzTog();
-        
+
     }
 
     /**

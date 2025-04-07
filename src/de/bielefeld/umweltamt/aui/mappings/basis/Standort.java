@@ -62,6 +62,7 @@ public class Standort  implements java.io.Serializable {
     private boolean ueberschgeb;
     private boolean enabled;
     private boolean deleted;
+    private Set<Objekt> objektsForStandortid = new HashSet<Objekt>(0);
     private Set<ZBetriebMassnahme> ZBetriebMassnahmes = new HashSet<ZBetriebMassnahme>(0);
 
     /** Logging */
@@ -82,6 +83,7 @@ public class Standort  implements java.io.Serializable {
     	this.bezeichnung = bezeichnung;
         this.enabled = enabled;
         this.deleted = deleted;
+        this.objektsForStandortid = objektsForStandortid;
         this.ZBetriebMassnahmes = zBetriebMassnahmes;
     }
 
@@ -100,11 +102,11 @@ public class Standort  implements java.io.Serializable {
     public void setInhaber(Inhaber inhaber) {
         this.inhaber = inhaber;
     }
-	
+
 	public String getStrasse(){
 	    return inhaber.getAdresse().getStrasse();
 	}
-	
+
 	public void setStrasse(String strasse){
 	    this.inhaber.getAdresse().setStrasse(strasse);
 	}
@@ -112,7 +114,7 @@ public class Standort  implements java.io.Serializable {
 	public Integer getHausnr(){
 	    return inhaber.getAdresse().getHausnr();
 	}
-	
+
 	public void setHausnr(Integer hausnr){
 	    this.inhaber.getAdresse().setHausnr(hausnr);
 	}
@@ -120,7 +122,7 @@ public class Standort  implements java.io.Serializable {
 	public String getHausnrzus(){
 	    return inhaber.getAdresse().getHausnrzus();
 	}
-	
+
 	public void setHausnrzus(String hausnrzus){
 	    this.inhaber.getAdresse().setHausnrzus(hausnrzus);
 	}
@@ -128,7 +130,7 @@ public class Standort  implements java.io.Serializable {
 	public String getOrt(){
 	    return inhaber.getAdresse().getOrt();
 	}
-	
+
 	public void setOrt(String ort){
 	    this.inhaber.getAdresse().setOrt(ort);
 	}
@@ -215,6 +217,14 @@ public class Standort  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
+    public Set<Objekt> getObjektsForStandortid() {
+        return this.objektsForStandortid;
+    }
+
+    public void setObjektsForStandortid(Set<Objekt> objektsForStandortid) {
+        this.objektsForStandortid = objektsForStandortid;
+    }
+
     public Set<ZBetriebMassnahme> getZBetriebMassnahmes() {
         return this.ZBetriebMassnahmes;
     }
@@ -246,6 +256,8 @@ public class Standort  implements java.io.Serializable {
         buffer.append("Inhaber").append("='").append(getInhaber()).append("' ");
         buffer.append("enabled").append("='").append(isEnabled()).append("' ");
         buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("objektsForStandortid").append("='").append(getObjektsForStandortid()).append("' ");
+        buffer.append("]");
 
         return buffer.toString();
     }
@@ -319,6 +331,7 @@ public class Standort  implements java.io.Serializable {
         this.ueberschgeb = copy.isUeberschgeb();
         this.enabled = copy.isEnabled();
         this.deleted = copy.isDeleted();
+        this.objektsForStandortid = copy.getObjektsForStandortid();
         this.ZBetriebMassnahmes = copy.getZBetriebMassnahmes();
 
 
@@ -369,7 +382,7 @@ public class Standort  implements java.io.Serializable {
     /* Setter and getter for lage and adresse fields*/
     //Getter
 
-    
+
 
     //Setter
 

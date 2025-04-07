@@ -41,7 +41,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forViewAtlAnalysepositionAll;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private String grkl;
@@ -213,7 +213,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -222,22 +222,22 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("grkl").append("='").append(getGrkl()).append("' ");			
-        buffer.append("wert").append("='").append(getWert()).append("' ");			
-        buffer.append("analyseVon").append("='").append(getAnalyseVon()).append("' ");			
-        buffer.append("bericht").append("='").append(getBericht()).append("' ");			
-        buffer.append("normwert").append("='").append(getNormwert()).append("' ");			
-        buffer.append("einheitenId").append("='").append(getEinheitenId()).append("' ");			
-        buffer.append("parameterId").append("='").append(getParameterId()).append("' ");			
-        buffer.append("probenahmeId").append("='").append(getProbenahmeId()).append("' ");			
-        buffer.append("enabled").append("='").append(getEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
-        buffer.append("datumDerEntnahme").append("='").append(getDatumDerEntnahme()).append("' ");			
-        buffer.append("probepktId").append("='").append(getProbepktId()).append("' ");			
-        buffer.append("kennummer").append("='").append(getKennummer()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("grkl").append("='").append(getGrkl()).append("' ");
+        buffer.append("wert").append("='").append(getWert()).append("' ");
+        buffer.append("analyseVon").append("='").append(getAnalyseVon()).append("' ");
+        buffer.append("bericht").append("='").append(getBericht()).append("' ");
+        buffer.append("normwert").append("='").append(getNormwert()).append("' ");
+        buffer.append("einheitenId").append("='").append(getEinheitenId()).append("' ");
+        buffer.append("parameterId").append("='").append(getParameterId()).append("' ");
+        buffer.append("probenahmeId").append("='").append(getProbenahmeId()).append("' ");
+        buffer.append("enabled").append("='").append(getEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(getDeleted()).append("' ");
+        buffer.append("datumDerEntnahme").append("='").append(getDatumDerEntnahme()).append("' ");
+        buffer.append("probepktId").append("='").append(getProbepktId()).append("' ");
+        buffer.append("kennummer").append("='").append(getKennummer()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -269,7 +269,7 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -303,21 +303,21 @@ public class ViewAtlAnalysepositionAll  implements java.io.Serializable {
      * @param copy ViewAtlAnalysepositionAll
      */
     private void copy(ViewAtlAnalysepositionAll copy) {
-        this.id = copy.getId();            
-        this.grkl = copy.getGrkl();            
-        this.wert = copy.getWert();            
-        this.analyseVon = copy.getAnalyseVon();            
-        this.bericht = copy.getBericht();            
-        this.normwert = copy.getNormwert();            
-        this.einheitenId = copy.getEinheitenId();            
-        this.parameterId = copy.getParameterId();            
-        this.probenahmeId = copy.getProbenahmeId();            
-        this.enabled = copy.getEnabled();            
-        this.deleted = copy.getDeleted();            
-        this.datumDerEntnahme = copy.getDatumDerEntnahme();            
-        this.probepktId = copy.getProbepktId();            
-        this.kennummer = copy.getKennummer();            
-    }    
+        this.id = copy.getId();
+        this.grkl = copy.getGrkl();
+        this.wert = copy.getWert();
+        this.analyseVon = copy.getAnalyseVon();
+        this.bericht = copy.getBericht();
+        this.normwert = copy.getNormwert();
+        this.einheitenId = copy.getEinheitenId();
+        this.parameterId = copy.getParameterId();
+        this.probenahmeId = copy.getProbenahmeId();
+        this.enabled = copy.getEnabled();
+        this.deleted = copy.getDeleted();
+        this.datumDerEntnahme = copy.getDatumDerEntnahme();
+        this.probepktId = copy.getProbepktId();
+        this.kennummer = copy.getKennummer();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

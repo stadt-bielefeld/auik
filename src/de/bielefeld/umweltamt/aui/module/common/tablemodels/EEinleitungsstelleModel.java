@@ -27,7 +27,7 @@ public class EEinleitungsstelleModel extends ListTableModel {
 
 	public EEinleitungsstelleModel() {
         super(new String[]{
-                "Standort",
+                "Standort-Nr",
                 "Bezeichnung",
                 "Typ"},
                 false,

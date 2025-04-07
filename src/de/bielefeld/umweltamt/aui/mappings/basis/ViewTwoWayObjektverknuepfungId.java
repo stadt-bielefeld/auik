@@ -36,7 +36,7 @@ public class ViewTwoWayObjektverknuepfungId  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forViewTwoWayObjektverknuepfungId;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Integer istVerknuepftMit;
@@ -110,7 +110,7 @@ public class ViewTwoWayObjektverknuepfungId  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -119,13 +119,13 @@ public class ViewTwoWayObjektverknuepfungId  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("istVerknuepftMit").append("='").append(getIstVerknuepftMit()).append("' ");			
-        buffer.append("objekt").append("='").append(getObjekt()).append("' ");			
-        buffer.append("enabled").append("='").append(getEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("istVerknuepftMit").append("='").append(getIstVerknuepftMit()).append("' ");
+        buffer.append("objekt").append("='").append(getObjekt()).append("' ");
+        buffer.append("enabled").append("='").append(getEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(getDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

@@ -40,7 +40,7 @@ public class MetaParameter  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forMetaParameter;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Einheiten einheiten;
@@ -174,7 +174,7 @@ public class MetaParameter  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -183,18 +183,18 @@ public class MetaParameter  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("einheiten").append("='").append(getEinheiten()).append("' ");			
-        buffer.append("parameter").append("='").append(getParameter()).append("' ");			
-        buffer.append("deaRegelwerkNr").append("='").append(getDeaRegelwerkNr()).append("' ");			
-        buffer.append("deaGruppeDev").append("='").append(getDeaGruppeDev()).append("' ");			
-        buffer.append("deaVariantenNr").append("='").append(getDeaVariantenNr()).append("' ");			
-        buffer.append("deaTrennNrOpt").append("='").append(getDeaTrennNrOpt()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
-        buffer.append("ueberwachungswert").append("='").append(getUeberwachungswert()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("einheiten").append("='").append(getEinheiten()).append("' ");
+        buffer.append("parameter").append("='").append(getParameter()).append("' ");
+        buffer.append("deaRegelwerkNr").append("='").append(getDeaRegelwerkNr()).append("' ");
+        buffer.append("deaGruppeDev").append("='").append(getDeaGruppeDev()).append("' ");
+        buffer.append("deaVariantenNr").append("='").append(getDeaVariantenNr()).append("' ");
+        buffer.append("deaTrennNrOpt").append("='").append(getDeaTrennNrOpt()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
+        buffer.append("ueberwachungswert").append("='").append(getUeberwachungswert()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -226,7 +226,7 @@ public class MetaParameter  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -260,17 +260,17 @@ public class MetaParameter  implements java.io.Serializable {
      * @param copy MetaParameter
      */
     private void copy(MetaParameter copy) {
-        this.id = copy.getId();            
-        this.einheiten = copy.getEinheiten();            
-        this.parameter = copy.getParameter();            
-        this.deaRegelwerkNr = copy.getDeaRegelwerkNr();            
-        this.deaGruppeDev = copy.getDeaGruppeDev();            
-        this.deaVariantenNr = copy.getDeaVariantenNr();            
-        this.deaTrennNrOpt = copy.getDeaTrennNrOpt();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-        this.ueberwachungswert = copy.getUeberwachungswert();            
-    }    
+        this.id = copy.getId();
+        this.einheiten = copy.getEinheiten();
+        this.parameter = copy.getParameter();
+        this.deaRegelwerkNr = copy.getDeaRegelwerkNr();
+        this.deaGruppeDev = copy.getDeaGruppeDev();
+        this.deaVariantenNr = copy.getDeaVariantenNr();
+        this.deaTrennNrOpt = copy.getDeaTrennNrOpt();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+        this.ueberwachungswert = copy.getUeberwachungswert();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

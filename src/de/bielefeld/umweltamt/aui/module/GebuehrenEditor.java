@@ -42,7 +42,7 @@ public class GebuehrenEditor extends JDialog {
 
     private JButton okButton = null;
     private JButton cancelButton = null;
-    
+
     private KeyEventDispatcher keyEventDispatcher;
     private static final long serialVersionUID = 3466100112259802102L;
 

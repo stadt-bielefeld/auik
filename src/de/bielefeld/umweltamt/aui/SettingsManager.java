@@ -93,7 +93,7 @@ import de.bielefeld.umweltamt.aui.utils.SortedProperties;
 /**
  * Diese Klasse verwaltet alle Programm-Einstellungen. Alle momentan benutzten
  * Keys: siehe doc/properties.txt
- * 
+ *
  * @author David Klotz
  */
 public class SettingsManager {
@@ -126,7 +126,7 @@ public class SettingsManager {
 	 * Liefert den (einzigen) SettingsManager. Wenn diese Methode zum ersten Mal
 	 * aufgerufen wird, wird eine Instanz dieser Klasse erzeugt und
 	 * initialisiert.
-	 * 
+	 *
 	 * @return Eine (evtl. neu erzeugte) Instanz dieser Klasse.
 	 */
 	public static synchronized SettingsManager getInstance() {
@@ -139,7 +139,7 @@ public class SettingsManager {
 
 	/**
 	 * Überschreibt die Settings mit den Werten aus dem EinstellungenEditor
-	 * 
+	 *
 	 * @param instance
 	 *            Eine Settingsmanager Instanz.
 	 * @return boolean True, wenn das Speichern erfolgreich war.
@@ -173,7 +173,7 @@ public class SettingsManager {
 		appSettings
 				.setProperty(
 						"auik.system.module",
-				
+
 						"BasisStandortSuchen, BasisAdresseSuchen, DirekteinleiterSuchen, BasisObjektBearbeiten, BasisAdresseNeu, BasisAuswertung,"
 						+ " AnalyseImport, AwsvChronologieAuswertung, AwsvHerstellernummerSuchen, AwsvKontrollenAuswertung, AwsvVerwaltungsverfAuswertung,"
 						+ " EditorEinheiten, EditorEntsorger, EditorGemarkungen, EditorKlaeranlagen, EditorObjektarten,"
@@ -241,7 +241,7 @@ public class SettingsManager {
 
 	/**
 	 * Setzt eine Einstellung.
-	 * 
+	 *
 	 * @param setting
 	 *            Den Key der Einstellung.
 	 * @param value
@@ -260,7 +260,7 @@ public class SettingsManager {
 	/**
 	 * Setzt eine Einstellung. Wrapper-Methode für setSetting(String, String,
 	 * boolean).
-	 * 
+	 *
 	 * @param setting
 	 *            Den Key der Einstellung.
 	 * @param value
@@ -275,7 +275,7 @@ public class SettingsManager {
 	/**
 	 * Setzt eine Einstellung. Wrapper-Methode für setSetting(String, String,
 	 * boolean).
-	 * 
+	 *
 	 * @param setting
 	 *            Den Key der Einstellung.
 	 * @param value
@@ -290,7 +290,7 @@ public class SettingsManager {
 	/**
 	 * Setzt eine Einstellung. Wrapper-Methode für setSetting(String,
 	 * Lage, boolean).
-	 * 
+	 *
 	 * @param setting
 	 *            Den Key der Einstellung.
 	 * @param value
@@ -304,7 +304,7 @@ public class SettingsManager {
 
 	/**
 	 * Liefert alle Einstellungen.
-	 * 
+	 *
 	 * @return Liste aller Einstellungen.
 	 */
 	public String[][] getSettingList() {
@@ -329,7 +329,7 @@ public class SettingsManager {
 
 	/**
 	 * Liefert den aktuellen Wert einer Einstellung.
-	 * 
+	 *
 	 * @param setting
 	 *            Den Key der Einstellung.
 	 * @return Den Wert der Einstellung oder <code>null</code>, falls diese
@@ -345,7 +345,7 @@ public class SettingsManager {
 
 	/**
 	 * Liefert den aktuellen Wert einer Einstellung. Wrapper-Methode.
-	 * 
+	 *
 	 * @param setting
 	 *            Den Key der Einstellung.
 	 * @return Den Wert der Einstellung oder -1, falls diese nicht existiert.
@@ -365,7 +365,7 @@ public class SettingsManager {
 
 	/**
 	 * Liefert den aktuellen Wert einer Einstellung. Wrapper-Methode.
-	 * 
+	 *
 	 * @param setting
 	 *            Den Key der Einstellung.
 	 * @return Den Wert der Einstellung oder <code>false</code>, falls diese
@@ -382,7 +382,7 @@ public class SettingsManager {
 
 	/**
 	 * Liefert den aktuellen Wert einer Einstellung. Wrapper-Methode.
-	 * 
+	 *
 	 * @param setting
 	 *            Den Key der Einstellung.
 	 * @return Den Wert der Einstellung oder <code>false</code>, falls diese
@@ -419,7 +419,7 @@ public class SettingsManager {
 
 	/**
 	 * Entfernt eine Einstellung komplett.
-	 * 
+	 *
 	 * @param setting
 	 *            Den Key der Einstellung.
 	 */

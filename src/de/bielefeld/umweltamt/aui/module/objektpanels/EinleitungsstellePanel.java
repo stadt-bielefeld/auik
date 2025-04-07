@@ -774,10 +774,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
  		if (type == null) {
 			return;
 		}
- 		int i = hauptModul.getTabCount();
-        if (i > 3) {
-            hauptModul.removeTabAt(3);
-        }
+
 		if (type == "Indirekteinleitung") {
 
 			klaeranlageLb.setVisible(true);
@@ -789,9 +786,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			abwAgLb.setVisible(false);
 			abwAgEinlFeld.setVisible(false);
 
-		} else if (type == "Indus./gew. Direkteinleitung" || type == "Außerörtliche Straßeneinleitung"
-				 || type == "Sonstige Direkteinleitung" || type == "Kommunales NW (Mischverfahren)"
-				 || type == "Kommunales NW (Trennverfahren)") {
+		} else if (type != "Indirekteinleitung" && type != null) {
 
 			klaeranlageLb.setVisible(false);
 			klaeranlageBox.setVisible(false);
@@ -801,8 +796,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			abgaberelEinlBox.setVisible(true);
 			abwAgLb.setVisible(true);
 			abwAgEinlFeld.setVisible(true);
-			hauptModul.addTab("Gewässerdaten", getGewaesserTab());
-			getGewaesserTab().updateForm(einleitungsstelle);
+
 		}
 		else {
 
@@ -814,6 +808,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			abgaberelEinlBox.setVisible(false);
 			abwAgLb.setVisible(false);
 			abwAgEinlFeld.setVisible(false);
+
 		}
 
 			this.einleitungsstelle.setTypAusseroertlicheStrasseneinleitungTog(false);
@@ -865,6 +860,13 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			} else if (this.einleitungsartBox.getSelectedIndex() == 11) {
 				this.einleitungsstelle.setTypSonstigeTog(true);
 			}
+
+			hauptModul.addTab("Gewässerdaten", getGewaesserTab());
+			getGewaesserTab().enableAll(true);
+			getGewaesserTab().clearForm();
+			getGewaesserTab().updateForm(einleitungsstelle);
+			hauptModul.setSelectedIndex(2);
+
 
 	}
 

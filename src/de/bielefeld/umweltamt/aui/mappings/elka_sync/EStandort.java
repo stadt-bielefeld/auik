@@ -52,7 +52,7 @@ public class EStandort implements java.io.Serializable {
 	private Date aktualDat;
 	private Date erstellDat;
 	private String herkunft;
-	
+
 	public EStandort() {
 	}
 
@@ -97,12 +97,12 @@ public class EStandort implements java.io.Serializable {
 	public Integer getOrigNr() {
 		return this.origNr;
 	}
-	
+
 	@JsonIgnore
 	public void setOrigNr(Integer origNr) {
 		this.origNr =  origNr;
 	}
-	
+
 	public EAdresse getAdresse() {
 		return adresse;
 	}

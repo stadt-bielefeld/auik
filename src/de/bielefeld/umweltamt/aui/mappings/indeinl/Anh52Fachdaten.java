@@ -45,7 +45,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAnh52Fachdaten;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Anfallstelle anfallstelle;
@@ -190,7 +190,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -199,19 +199,19 @@ public class Anh52Fachdaten  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
-        buffer.append("nrbetriebsstaette").append("='").append(getNrbetriebsstaette()).append("' ");			
-        buffer.append("firmenname").append("='").append(getFirmenname()).append("' ");			
-        buffer.append("telefon").append("='").append(getTelefon()).append("' ");			
-        buffer.append("telefax").append("='").append(getTelefax()).append("' ");			
-        buffer.append("ansprechpartner").append("='").append(getAnsprechpartner()).append("' ");			
-        buffer.append("datumgenehmigung").append("='").append(getDatumgenehmigung()).append("' ");			
-        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");
+        buffer.append("nrbetriebsstaette").append("='").append(getNrbetriebsstaette()).append("' ");
+        buffer.append("firmenname").append("='").append(getFirmenname()).append("' ");
+        buffer.append("telefon").append("='").append(getTelefon()).append("' ");
+        buffer.append("telefax").append("='").append(getTelefax()).append("' ");
+        buffer.append("ansprechpartner").append("='").append(getAnsprechpartner()).append("' ");
+        buffer.append("datumgenehmigung").append("='").append(getDatumgenehmigung()).append("' ");
+        buffer.append("bemerkungen").append("='").append(getBemerkungen()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -243,7 +243,7 @@ public class Anh52Fachdaten  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -277,18 +277,18 @@ public class Anh52Fachdaten  implements java.io.Serializable {
      * @param copy Anh52Fachdaten
      */
     private void copy(Anh52Fachdaten copy) {
-        this.id = copy.getId();            
-        this.anfallstelle = copy.getAnfallstelle();            
-        this.nrbetriebsstaette = copy.getNrbetriebsstaette();            
-        this.firmenname = copy.getFirmenname();            
-        this.telefon = copy.getTelefon();            
-        this.telefax = copy.getTelefax();            
-        this.ansprechpartner = copy.getAnsprechpartner();            
-        this.datumgenehmigung = copy.getDatumgenehmigung();            
-        this.bemerkungen = copy.getBemerkungen();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.id = copy.getId();
+        this.anfallstelle = copy.getAnfallstelle();
+        this.nrbetriebsstaette = copy.getNrbetriebsstaette();
+        this.firmenname = copy.getFirmenname();
+        this.telefon = copy.getTelefon();
+        this.telefax = copy.getTelefax();
+        this.ansprechpartner = copy.getAnsprechpartner();
+        this.datumgenehmigung = copy.getDatumgenehmigung();
+        this.bemerkungen = copy.getBemerkungen();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

@@ -44,7 +44,7 @@ public class Abscheider  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAbscheider;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Fachdaten fachdaten;
@@ -439,7 +439,7 @@ public class Abscheider  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -448,44 +448,44 @@ public class Abscheider  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");			
-        buffer.append("sfhersteller").append("='").append(getSfhersteller()).append("' ");			
-        buffer.append("sftyp").append("='").append(getSftyp()).append("' ");			
-        buffer.append("sfvolumen").append("='").append(getSfvolumen()).append("' ");			
-        buffer.append("sfmaterial").append("='").append(getSfmaterial()).append("' ");			
-        buffer.append("sfbeschichtung").append("='").append(getSfbeschichtung()).append("' ");			
-        buffer.append("abhersteller").append("='").append(getAbhersteller()).append("' ");			
-        buffer.append("abtyp").append("='").append(getAbtyp()).append("' ");			
-        buffer.append("abpruefz").append("='").append(getAbpruefz()).append("' ");			
-        buffer.append("abmaterial").append("='").append(getAbmaterial()).append("' ");			
-        buffer.append("abbeschichtung").append("='").append(getAbbeschichtung()).append("' ");			
-        buffer.append("abnenngr").append("='").append(getAbnenngr()).append("' ");			
-        buffer.append("zuldn").append("='").append(getZuldn()).append("' ");			
-        buffer.append("zulmaterial").append("='").append(getZulmaterial()).append("' ");			
-        buffer.append("zullaenge").append("='").append(getZullaenge()).append("' ");			
-        buffer.append("verbdn").append("='").append(getVerbdn()).append("' ");			
-        buffer.append("verbmaterial").append("='").append(getVerbmaterial()).append("' ");			
-        buffer.append("verblaenge").append("='").append(getVerblaenge()).append("' ");			
-        buffer.append("sondn").append("='").append(getSondn()).append("' ");			
-        buffer.append("sonmaterial").append("='").append(getSonmaterial()).append("' ");			
-        buffer.append("sonlaenge").append("='").append(getSonlaenge()).append("' ");			
-        buffer.append("oelspeichervol").append("='").append(getOelspeichervol()).append("' ");			
-        buffer.append("kompaktanlage").append("='").append(getKompaktanlage()).append("' ");			
-        buffer.append("sf").append("='").append(getSf()).append("' ");			
-        buffer.append("kkl1").append("='").append(getKkl1()).append("' ");			
-        buffer.append("lfkl2").append("='").append(getLfkl2()).append("' ");			
-        buffer.append("ps").append("='").append(getPs()).append("' ");			
-        buffer.append("ueberhausr").append("='").append(getUeberhausr()).append("' ");			
-        buffer.append("waschanlvorh").append("='").append(getWaschanlvorh()).append("' ");			
-        buffer.append("abgabe").append("='").append(getAbgabe()).append("' ");			
-        buffer.append("hlzapfanl").append("='").append(getHlzapfanl()).append("' ");			
-        buffer.append("belvonlagerbh").append("='").append(getBelvonlagerbh()).append("' ");			
-        buffer.append("rueckhalteausr").append("='").append(getRueckhalteausr()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");
+        buffer.append("sfhersteller").append("='").append(getSfhersteller()).append("' ");
+        buffer.append("sftyp").append("='").append(getSftyp()).append("' ");
+        buffer.append("sfvolumen").append("='").append(getSfvolumen()).append("' ");
+        buffer.append("sfmaterial").append("='").append(getSfmaterial()).append("' ");
+        buffer.append("sfbeschichtung").append("='").append(getSfbeschichtung()).append("' ");
+        buffer.append("abhersteller").append("='").append(getAbhersteller()).append("' ");
+        buffer.append("abtyp").append("='").append(getAbtyp()).append("' ");
+        buffer.append("abpruefz").append("='").append(getAbpruefz()).append("' ");
+        buffer.append("abmaterial").append("='").append(getAbmaterial()).append("' ");
+        buffer.append("abbeschichtung").append("='").append(getAbbeschichtung()).append("' ");
+        buffer.append("abnenngr").append("='").append(getAbnenngr()).append("' ");
+        buffer.append("zuldn").append("='").append(getZuldn()).append("' ");
+        buffer.append("zulmaterial").append("='").append(getZulmaterial()).append("' ");
+        buffer.append("zullaenge").append("='").append(getZullaenge()).append("' ");
+        buffer.append("verbdn").append("='").append(getVerbdn()).append("' ");
+        buffer.append("verbmaterial").append("='").append(getVerbmaterial()).append("' ");
+        buffer.append("verblaenge").append("='").append(getVerblaenge()).append("' ");
+        buffer.append("sondn").append("='").append(getSondn()).append("' ");
+        buffer.append("sonmaterial").append("='").append(getSonmaterial()).append("' ");
+        buffer.append("sonlaenge").append("='").append(getSonlaenge()).append("' ");
+        buffer.append("oelspeichervol").append("='").append(getOelspeichervol()).append("' ");
+        buffer.append("kompaktanlage").append("='").append(getKompaktanlage()).append("' ");
+        buffer.append("sf").append("='").append(getSf()).append("' ");
+        buffer.append("kkl1").append("='").append(getKkl1()).append("' ");
+        buffer.append("lfkl2").append("='").append(getLfkl2()).append("' ");
+        buffer.append("ps").append("='").append(getPs()).append("' ");
+        buffer.append("ueberhausr").append("='").append(getUeberhausr()).append("' ");
+        buffer.append("waschanlvorh").append("='").append(getWaschanlvorh()).append("' ");
+        buffer.append("abgabe").append("='").append(getAbgabe()).append("' ");
+        buffer.append("hlzapfanl").append("='").append(getHlzapfanl()).append("' ");
+        buffer.append("belvonlagerbh").append("='").append(getBelvonlagerbh()).append("' ");
+        buffer.append("rueckhalteausr").append("='").append(getRueckhalteausr()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -517,7 +517,7 @@ public class Abscheider  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -551,43 +551,43 @@ public class Abscheider  implements java.io.Serializable {
      * @param copy Abscheider
      */
     private void copy(Abscheider copy) {
-        this.id = copy.getId();            
-        this.fachdaten = copy.getFachdaten();            
-        this.sfhersteller = copy.getSfhersteller();            
-        this.sftyp = copy.getSftyp();            
-        this.sfvolumen = copy.getSfvolumen();            
-        this.sfmaterial = copy.getSfmaterial();            
-        this.sfbeschichtung = copy.getSfbeschichtung();            
-        this.abhersteller = copy.getAbhersteller();            
-        this.abtyp = copy.getAbtyp();            
-        this.abpruefz = copy.getAbpruefz();            
-        this.abmaterial = copy.getAbmaterial();            
-        this.abbeschichtung = copy.getAbbeschichtung();            
-        this.abnenngr = copy.getAbnenngr();            
-        this.zuldn = copy.getZuldn();            
-        this.zulmaterial = copy.getZulmaterial();            
-        this.zullaenge = copy.getZullaenge();            
-        this.verbdn = copy.getVerbdn();            
-        this.verbmaterial = copy.getVerbmaterial();            
-        this.verblaenge = copy.getVerblaenge();            
-        this.sondn = copy.getSondn();            
-        this.sonmaterial = copy.getSonmaterial();            
-        this.sonlaenge = copy.getSonlaenge();            
-        this.oelspeichervol = copy.getOelspeichervol();            
-        this.kompaktanlage = copy.getKompaktanlage();            
-        this.sf = copy.getSf();            
-        this.kkl1 = copy.getKkl1();            
-        this.lfkl2 = copy.getLfkl2();            
-        this.ps = copy.getPs();            
-        this.ueberhausr = copy.getUeberhausr();            
-        this.waschanlvorh = copy.getWaschanlvorh();            
-        this.abgabe = copy.getAbgabe();            
-        this.hlzapfanl = copy.getHlzapfanl();            
-        this.belvonlagerbh = copy.getBelvonlagerbh();            
-        this.rueckhalteausr = copy.getRueckhalteausr();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.id = copy.getId();
+        this.fachdaten = copy.getFachdaten();
+        this.sfhersteller = copy.getSfhersteller();
+        this.sftyp = copy.getSftyp();
+        this.sfvolumen = copy.getSfvolumen();
+        this.sfmaterial = copy.getSfmaterial();
+        this.sfbeschichtung = copy.getSfbeschichtung();
+        this.abhersteller = copy.getAbhersteller();
+        this.abtyp = copy.getAbtyp();
+        this.abpruefz = copy.getAbpruefz();
+        this.abmaterial = copy.getAbmaterial();
+        this.abbeschichtung = copy.getAbbeschichtung();
+        this.abnenngr = copy.getAbnenngr();
+        this.zuldn = copy.getZuldn();
+        this.zulmaterial = copy.getZulmaterial();
+        this.zullaenge = copy.getZullaenge();
+        this.verbdn = copy.getVerbdn();
+        this.verbmaterial = copy.getVerbmaterial();
+        this.verblaenge = copy.getVerblaenge();
+        this.sondn = copy.getSondn();
+        this.sonmaterial = copy.getSonmaterial();
+        this.sonlaenge = copy.getSonlaenge();
+        this.oelspeichervol = copy.getOelspeichervol();
+        this.kompaktanlage = copy.getKompaktanlage();
+        this.sf = copy.getSf();
+        this.kkl1 = copy.getKkl1();
+        this.lfkl2 = copy.getLfkl2();
+        this.ps = copy.getPs();
+        this.ueberhausr = copy.getUeberhausr();
+        this.waschanlvorh = copy.getWaschanlvorh();
+        this.abgabe = copy.getAbgabe();
+        this.hlzapfanl = copy.getHlzapfanl();
+        this.belvonlagerbh = copy.getBelvonlagerbh();
+        this.rueckhalteausr = copy.getRueckhalteausr();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

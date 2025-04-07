@@ -48,7 +48,7 @@ public class Adresse  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAdresse;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Standortgghwsg standortgghwsg;
@@ -155,7 +155,7 @@ public class Adresse  implements java.io.Serializable {
 	public Standortgghwsg getStandortgghwsg(){
 	    return this.standortgghwsg;
 	}
-	
+
 	public void setStandortgghwsg(Standortgghwsg standortgghwsg){
 	    this.standortgghwsg  = standortgghwsg;
 	}
@@ -163,7 +163,7 @@ public class Adresse  implements java.io.Serializable {
 	public Wassereinzugsgebiet getWassereinzugsgebiet(){
 	    return this.wassereinzugsgebiet;
 	}
-	
+
 	public void setWassereinzugsgebiet(Wassereinzugsgebiet wassereinzugsgebiet){
 	    this.wassereinzugsgebiet = wassereinzugsgebiet;
 	}
@@ -219,7 +219,7 @@ public class Adresse  implements java.io.Serializable {
 	public String getFlur(){
 	    return this.flur;
 	}
-	
+
 	public void setFlur(String flur){
 	    this.flur = flur;
 	}
@@ -227,7 +227,7 @@ public class Adresse  implements java.io.Serializable {
 	public String getFlurstueck(){
 	    return this.flurstueck;
 	}
-	
+
 	public void setFlurstueck(String flurstueck){
 	    this.flurstueck = flurstueck;
 	}
@@ -332,7 +332,7 @@ public class Adresse  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -341,7 +341,7 @@ public class Adresse  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("id").append("='").append(getId()).append("' ");							
         buffer.append("hausnr").append("='").append(getHausnr()).append("' ");			
@@ -387,7 +387,7 @@ public class Adresse  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -421,16 +421,16 @@ public class Adresse  implements java.io.Serializable {
      * @param copy Adresse
      */
     private void copy(Adresse copy) {
-        this.id = copy.getId();   
+        this.id = copy.getId();
         this.standortgghwsg = copy.getStandortgghwsg();
         this.wassereinzugsgebiet = copy.getWassereinzugsgebiet();
-        this.gemarkung = copy.getGemarkung();                          
-        this.strasse = copy.getStrasse();            
-        this.hausnr = copy.getHausnr();            
-        this.hausnrzus = copy.getHausnrzus();            
-        this.plzzs = copy.getPlzzs();            
-        this.plz = copy.getPlz();            
-        this.ort = copy.getOrt();  
+        this.gemarkung = copy.getGemarkung();
+        this.strasse = copy.getStrasse();
+        this.hausnr = copy.getHausnr();
+        this.hausnrzus = copy.getHausnrzus();
+        this.plzzs = copy.getPlzzs();
+        this.plz = copy.getPlz();
+        this.ort = copy.getOrt();
         this.flur = copy.getFlur();
         this.flurstueck = copy.getFlurstueck();
         this.entgebid = copy.getEntgebid();
@@ -492,11 +492,11 @@ public class Adresse  implements java.io.Serializable {
     }
 
     /* Custom code goes below here! */
-    
+
     public String getE32(Adresse adr) {
     	String e32 = null;
-    	
-		return e32;    	
+
+		return e32;
     }
 
 }

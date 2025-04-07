@@ -44,7 +44,7 @@ public class AfsStoffe  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forAfsStoffe;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer anfallstellenNr;
     private Integer origNr;
@@ -121,7 +121,7 @@ public class AfsStoffe  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -130,11 +130,11 @@ public class AfsStoffe  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getAnfallstellenNr()).append("' ");			
-        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");			
-        buffer.append("produkt").append("='").append(getProdukt()).append("' ");			
+        buffer.append("id").append("='").append(getAnfallstellenNr()).append("' ");
+        buffer.append("anfallstelle").append("='").append(getAnfallstelle()).append("' ");
+        buffer.append("produkt").append("='").append(getProdukt()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -166,7 +166,7 @@ public class AfsStoffe  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -200,10 +200,10 @@ public class AfsStoffe  implements java.io.Serializable {
      * @param copy AfsStoffe
      */
     private void copy(AfsStoffe copy) {
-        this.anfallstellenNr = copy.getAnfallstellenNr();            
-        this.anfallstelle = copy.getAnfallstelle();            
-        this.produkt = copy.getProdukt();            
-    }    
+        this.anfallstellenNr = copy.getAnfallstellenNr();
+        this.anfallstelle = copy.getAnfallstelle();
+        this.produkt = copy.getProdukt();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

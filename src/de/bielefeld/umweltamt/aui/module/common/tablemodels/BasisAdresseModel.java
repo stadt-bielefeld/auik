@@ -67,7 +67,7 @@ public class BasisAdresseModel extends ListTableModel {
 //    private String secondColumn = null;
 
     //    private String secondColumn = null;
-	
+
 
 
 	public BasisAdresseModel() {
@@ -90,17 +90,17 @@ public class BasisAdresseModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	
+
     	Inhaber inh = null;
     	Adresse adr = null;
-    	
+
     	if (objectAtRow instanceof Inhaber) {
         	inh = (Inhaber) objectAtRow;
         	adr = inh.getAdresse();
     	} else {
         	adr = (Adresse) objectAtRow;
     	}
-    	
+
 
         Object tmp;
 
@@ -170,7 +170,7 @@ public class BasisAdresseModel extends ListTableModel {
      * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
      */
 
-    
+
     public void filterStandort(String strasse, Integer hausnr) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(strasse, hausnr));

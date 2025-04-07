@@ -65,6 +65,11 @@ Kompilieren und Starten der Anwendung:
 mvn clean compile exec:java
 ```
 
+Unter OpenJDK 17 muss die JVM mit den Optionen
+`--add-opens java.desktop/javax.swing=ALL-UNNAMED` und
+`--add-opens java.desktop/javax.swing.plaf.basic=ALL-UNNAMED`
+gestartet werden (siehe <https://maven.apache.org/configure.html>).
+
 Für die Anmeldung kann der Datenbankbenutzer verwendet werden:
 
 `auikadmin`, Passwort: `secret`
@@ -94,6 +99,9 @@ Starten der Anwendung:
 ```bash
 java -jar auik_prod-*.jar
 ```
+
+Siehe auch die Hinweise zu OpenJDK 17 unter
+[Starten der Anwendung](#starten-der-anwendung).
 
 Für die Anmeldung kann der Datenbankbenutzer verwendet werden.
 

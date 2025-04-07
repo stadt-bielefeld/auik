@@ -80,7 +80,7 @@ public class ObjektChooser extends OkCancelDialog {
         } else {
         	objektModel.searchByStandort(objekt);
         }
-        
+
         // Remove this BasisObjekt from the list as we do not want to connect the
         // BasisObjekt with itself
         objektModel.removeFromList(objekt);

@@ -45,7 +45,7 @@ public class Jgs  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forJgs;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Fachdaten fachdaten;
@@ -297,7 +297,7 @@ public class Jgs  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -306,30 +306,30 @@ public class Jgs  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("id").append("='").append(getId()).append("' ");			
-        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");			
-        buffer.append("lagerflaeche").append("='").append(getLagerflaeche()).append("' ");			
-        buffer.append("gewaesserAbstand").append("='").append(getGewaesserAbstand()).append("' ");			
-        buffer.append("gewaesserName").append("='").append(getGewaesserName()).append("' ");			
-        buffer.append("brunnenAbstand").append("='").append(getBrunnenAbstand()).append("' ");			
-        buffer.append("tierhaltung").append("='").append(getTierhaltung()).append("' ");			
-        buffer.append("seitenwaende").append("='").append(getSeitenwaende()).append("' ");			
-        buffer.append("wandhoehe").append("='").append(getWandhoehe()).append("' ");			
-        buffer.append("bodenplatte").append("='").append(getBodenplatte()).append("' ");			
-        buffer.append("ueberdachung").append("='").append(getUeberdachung()).append("' ");			
-        buffer.append("auffangbeh").append("='").append(getAuffangbeh()).append("' ");			
-        buffer.append("volumenAuffangbeh").append("='").append(getVolumenAuffangbeh()).append("' ");			
-        buffer.append("rohrleitung").append("='").append(getRohrleitung()).append("' ");			
-        buffer.append("dichtheitspruefung").append("='").append(getDichtheitspruefung()).append("' ");			
-        buffer.append("drainage").append("='").append(getDrainage()).append("' ");			
-        buffer.append("fuellanzeiger").append("='").append(getFuellanzeiger()).append("' ");			
-        buffer.append("schieber").append("='").append(getSchieber()).append("' ");			
-        buffer.append("abdeckung").append("='").append(getAbdeckung()).append("' ");			
-        buffer.append("leitungGeprueft").append("='").append(getLeitungGeprueft()).append("' ");			
-        buffer.append("enabled").append("='").append(getEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(getDeleted()).append("' ");			
+        buffer.append("id").append("='").append(getId()).append("' ");
+        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");
+        buffer.append("lagerflaeche").append("='").append(getLagerflaeche()).append("' ");
+        buffer.append("gewaesserAbstand").append("='").append(getGewaesserAbstand()).append("' ");
+        buffer.append("gewaesserName").append("='").append(getGewaesserName()).append("' ");
+        buffer.append("brunnenAbstand").append("='").append(getBrunnenAbstand()).append("' ");
+        buffer.append("tierhaltung").append("='").append(getTierhaltung()).append("' ");
+        buffer.append("seitenwaende").append("='").append(getSeitenwaende()).append("' ");
+        buffer.append("wandhoehe").append("='").append(getWandhoehe()).append("' ");
+        buffer.append("bodenplatte").append("='").append(getBodenplatte()).append("' ");
+        buffer.append("ueberdachung").append("='").append(getUeberdachung()).append("' ");
+        buffer.append("auffangbeh").append("='").append(getAuffangbeh()).append("' ");
+        buffer.append("volumenAuffangbeh").append("='").append(getVolumenAuffangbeh()).append("' ");
+        buffer.append("rohrleitung").append("='").append(getRohrleitung()).append("' ");
+        buffer.append("dichtheitspruefung").append("='").append(getDichtheitspruefung()).append("' ");
+        buffer.append("drainage").append("='").append(getDrainage()).append("' ");
+        buffer.append("fuellanzeiger").append("='").append(getFuellanzeiger()).append("' ");
+        buffer.append("schieber").append("='").append(getSchieber()).append("' ");
+        buffer.append("abdeckung").append("='").append(getAbdeckung()).append("' ");
+        buffer.append("leitungGeprueft").append("='").append(getLeitungGeprueft()).append("' ");
+        buffer.append("enabled").append("='").append(getEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(getDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -361,7 +361,7 @@ public class Jgs  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -395,29 +395,29 @@ public class Jgs  implements java.io.Serializable {
      * @param copy Jgs
      */
     private void copy(Jgs copy) {
-        this.id = copy.getId();            
-        this.fachdaten = copy.getFachdaten();            
-        this.lagerflaeche = copy.getLagerflaeche();            
-        this.gewaesserAbstand = copy.getGewaesserAbstand();            
-        this.gewaesserName = copy.getGewaesserName();            
-        this.brunnenAbstand = copy.getBrunnenAbstand();            
-        this.tierhaltung = copy.getTierhaltung();            
-        this.seitenwaende = copy.getSeitenwaende();            
-        this.wandhoehe = copy.getWandhoehe();            
-        this.bodenplatte = copy.getBodenplatte();            
-        this.ueberdachung = copy.getUeberdachung();            
-        this.auffangbeh = copy.getAuffangbeh();            
-        this.volumenAuffangbeh = copy.getVolumenAuffangbeh();            
-        this.rohrleitung = copy.getRohrleitung();            
-        this.dichtheitspruefung = copy.getDichtheitspruefung();            
-        this.drainage = copy.getDrainage();            
-        this.fuellanzeiger = copy.getFuellanzeiger();            
-        this.schieber = copy.getSchieber();            
-        this.abdeckung = copy.getAbdeckung();            
-        this.leitungGeprueft = copy.getLeitungGeprueft();            
-        this.enabled = copy.getEnabled();            
-        this.deleted = copy.getDeleted();            
-    }    
+        this.id = copy.getId();
+        this.fachdaten = copy.getFachdaten();
+        this.lagerflaeche = copy.getLagerflaeche();
+        this.gewaesserAbstand = copy.getGewaesserAbstand();
+        this.gewaesserName = copy.getGewaesserName();
+        this.brunnenAbstand = copy.getBrunnenAbstand();
+        this.tierhaltung = copy.getTierhaltung();
+        this.seitenwaende = copy.getSeitenwaende();
+        this.wandhoehe = copy.getWandhoehe();
+        this.bodenplatte = copy.getBodenplatte();
+        this.ueberdachung = copy.getUeberdachung();
+        this.auffangbeh = copy.getAuffangbeh();
+        this.volumenAuffangbeh = copy.getVolumenAuffangbeh();
+        this.rohrleitung = copy.getRohrleitung();
+        this.dichtheitspruefung = copy.getDichtheitspruefung();
+        this.drainage = copy.getDrainage();
+        this.fuellanzeiger = copy.getFuellanzeiger();
+        this.schieber = copy.getSchieber();
+        this.abdeckung = copy.getAbdeckung();
+        this.leitungGeprueft = copy.getLeitungGeprueft();
+        this.enabled = copy.getEnabled();
+        this.deleted = copy.getDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

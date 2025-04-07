@@ -94,8 +94,11 @@ public class AnfallstellePanel extends ObjectPanel {
     private JTextField anhangIdFeld = null;
     private JTextField anwendungsbereichFeld = null;
 
+    private JComboBox herkunftBox = null;
+    private IntegerField befestFlaecheFeld = null;
     private DoubleField lProSFeld = null;
     private DoubleField qmProHFeld = null;
+    private DoubleField qmProDFeld = null;
     private IntegerField qmProAFeld = null;
 
     private JFormattedTextField bezeichnungFeld = null;
@@ -116,7 +119,6 @@ public class AnfallstellePanel extends ObjectPanel {
     private Anh55Panel anhang55Tab;
     private Anh56Panel anhang56Tab;
     private BWKPanel bwkTab;
-    private AfsNwPanel afsNwTab;
 
     //Label
     private JLabel anhangLb = new JLabel("Anhang AbwV:");
@@ -161,8 +163,14 @@ public class AnfallstellePanel extends ObjectPanel {
         builder.append(anhangLb);
         builder.append(getAnhangBox(), 11);
         builder.nextLine();
+        builder.append(herkunftsbereichLb);
+        builder.append(getHerkunftBox(), 11);
+        builder.nextLine();
         builder.append(anlagenartLb);
         builder.append(getAnlagenartBox(), 11);
+        builder.nextLine();
+        builder.append(befestFlaecheLb);
+        builder.append(getBefestFlaecheFeld(), 11);
         builder.nextLine();
         builder.append(anwendungsbereichLb);
         builder.append(getAnwendungsbereichFeld(), 11);
@@ -172,6 +180,8 @@ public class AnfallstellePanel extends ObjectPanel {
         builder.append(lProSLb);
         builder.append(getQmProHFeld());
         builder.append(qmProHLb);
+        builder.append(getQmProDFeld());
+        builder.append(qmProDLb);
         builder.nextLine();
         builder.append(abwasserProALb);
         builder.append(getQmProAFeld());
@@ -260,7 +270,7 @@ public class AnfallstellePanel extends ObjectPanel {
 
             String[] arten = {"-", "Aufbereitung Medizinprodukte", "Brennwertkessel", "Blockheizkraftwerk",
                     "Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor",
-                    "Niederschlagswasser", "RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
+                    "RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
             getAnlagenartBox().setModel(new DefaultComboBoxModel(arten));
 
             if (this.anfallstelle.getAnlagenart() != null) {
@@ -273,7 +283,12 @@ public class AnfallstellePanel extends ObjectPanel {
             if(this.anfallstelle.getAnhangId() != null) {
                 getAnhangBox().setSelectedItem(Anhang.findByAnhangId(this.anfallstelle.getAnhangId()));
             }
-            
+
+            String[] herkunft = {"-", "Kategorie I: Unbelastetes NW", "Kategorie IIa: Schwach belastetes NW (nicht behandlungsbedürftig)",
+                    "Kategorie IIb: Schwach belastetes NW (behandlungsbedürftig)",
+                    "Kategorie III: Stark belastetes NW"};
+            getHerkunftBox().setModel(new DefaultComboBoxModel(herkunft));
+
             if(this.anfallstelle.getAnwendungsbereich() != null) {
                 getAnwendungsbereichFeld().setText(this.anfallstelle.getAnwendungsbereich());
             }
@@ -288,6 +303,10 @@ public class AnfallstellePanel extends ObjectPanel {
 
             if(this.anfallstelle.getMaxVolStunde() != null) {
                 getQmProHFeld().setText(this.anfallstelle.getMaxVolStunde().toString());
+            }
+
+            if(this.anfallstelle.getMaxVolTag() != null) {
+                getQmProDFeld().setText(this.anfallstelle.getMaxVolTag().toString());
             }
 
             if(this.anfallstelle.getStillgelegtAm() != null) {
@@ -316,7 +335,9 @@ public class AnfallstellePanel extends ObjectPanel {
                 getErstellDatDatum(), getAnhangIdFeld(),
                 getAnwendungsbereichFeld(), getBezeichnungFeld(),
                 getStillgelegtAmDatum(), getAbwaBeschaffOptFeld(),
-                getLProSFeld(), getQmProHFeld(), getQmProAFeld(),
+                getBetriebsweiseBox(), getBefestFlaecheFeld(),
+                getLProSFeld(), getQmProHFeld(),
+                getQmProDFeld(), getQmProAFeld(),
                 getBemerkungenArea());
         }
         setDirty(false);
@@ -333,8 +354,11 @@ public class AnfallstellePanel extends ObjectPanel {
         getStillgelegtAmDatum().setDate(null);
         getAbwaBeschaffOptFeld().setText(null);
         getBetriebsweiseOptFeld().setText(null);
+//		getHerkunftBox().setSelectedIndex(1);
+        getBefestFlaecheFeld().setText(null);
         getLProSFeld().setText(null);
         getQmProHFeld().setText(null);
+        getQmProDFeld().setText(null);
         getQmProAFeld().setText(null);
         getBemerkungenArea().setText(null);
 
@@ -372,36 +396,13 @@ public class AnfallstellePanel extends ObjectPanel {
                         getAnh49Tab().clearForm();
                         getAnh49AbfuhrTab().clearForm();
                         break;
-                    case "Niederschlagswasser":
-                        getAfsTab().clearForm();
-                        break;
-                    }
-                }
-            default:
-                log.debug("Unknown Anfallstelle: " + anfallstelle);
-            } 
-        }
-            
-            else if (anfallstelle != null && anfallstelle.getAbwaBeschaffOpt() != null) {
-            switch (anfallstelle.getAnhangId()) {
-            case "99":
-                if (abwaBeschaffOptFeld != null) {
-                    switch (anfallstelle.getAbwaBeschaffOpt()) {
-                    case 3:
-                        getAfsTab().clearForm();
-                        break;
-                    case 4:
-                    	getAfsTab().clearForm();
-                        break;
                     }
                 }
             default:
                 log.debug("Unknown Anfallstelle: " + anfallstelle);
             }
         }
-        
         setDirty(false);
-        
     }
 
     /**
@@ -412,13 +413,17 @@ public class AnfallstellePanel extends ObjectPanel {
     public void enableAll(boolean enabled) {
         getErstellDatDatum().setEnabled(enabled);
         getAnhangIdFeld().setEnabled(enabled);
+        getHerkunftBox().setEnabled(enabled);
         getAnwendungsbereichFeld().setEnabled(enabled);
         getBezeichnungFeld().setEnabled(enabled);
         getStillgelegtAmDatum().setEnabled(enabled);
         getAbwaBeschaffOptFeld().setEnabled(enabled);
         getBetriebsweiseOptFeld().setEnabled(enabled);
+        getHerkunftBox().setEnabled(enabled);
+        getBefestFlaecheFeld().setEnabled(enabled);
         getLProSFeld().setEnabled(enabled);
         getQmProHFeld().setEnabled(enabled);
+        getQmProDFeld().setEnabled(enabled);
         getQmProAFeld().setEnabled(enabled);
         getBemerkungenArea().setEnabled(enabled);
     }
@@ -474,9 +479,11 @@ public class AnfallstellePanel extends ObjectPanel {
         Integer qmproa = ((IntegerField) this.qmProAFeld)
             .getIntValue();
         this.anfallstelle.setVolJahr(qmproa);
-        
+
         Float maxVolH = ((DoubleField) getQmProHFeld()).getFloatValue();
         this.anfallstelle.setMaxVolStunde(maxVolH);
+        Float maxVolD = ((DoubleField) getQmProDFeld()).getFloatValue();
+        this.anfallstelle.setMaxVolTag(maxVolD);
 
         Date stillgelegtAm = this.stillgelegtAmDatum.getDate();
         this.anfallstelle.setStillgelegtAm(stillgelegtAm);
@@ -578,11 +585,29 @@ public class AnfallstellePanel extends ObjectPanel {
         return this.anhangIdFeld;
     }
 
+    /**
+     * @return the herkunftBox
+     */
+    private JComboBox getHerkunftBox() {
+        if (this.herkunftBox == null) {
+            this.herkunftBox = new JComboBox();
+            this.herkunftBox.setEditable(false);
+        }
+        return herkunftBox;
+    }
+
     private JTextField getAnwendungsbereichFeld() {
         if (this.anwendungsbereichFeld == null) {
             this.anwendungsbereichFeld = new LimitedTextField(50);
         }
         return this.anwendungsbereichFeld;
+    }
+
+    private IntegerField getBefestFlaecheFeld() {
+        if (this.befestFlaecheFeld == null) {
+            this.befestFlaecheFeld = new IntegerField();
+        }
+        return this.befestFlaecheFeld;
     }
 
     private JFormattedTextField getLProSFeld() {
@@ -597,6 +622,13 @@ public class AnfallstellePanel extends ObjectPanel {
             this.qmProHFeld = new DoubleField(1);
         }
         return this.qmProHFeld;
+    }
+
+    private JFormattedTextField getQmProDFeld() {
+        if (this.qmProDFeld == null) {
+            this.qmProDFeld = new DoubleField(1);
+        }
+        return this.qmProDFeld;
     }
 
     private IntegerField getQmProAFeld() {
@@ -1021,7 +1053,7 @@ public class AnfallstellePanel extends ObjectPanel {
                 } else {
                     anfallstelle.setAnhangId("99");
                     anfallstelle.setAnlagenart("Abscheider");
-                    getAnh49Tab().clearForm();
+                    getBWKTab().clearForm();
                     getAnh49Tab().completeObjekt(anfallstelle);
                     hauptModul.setSelectedIndex(3);
                 }
@@ -1039,17 +1071,6 @@ public class AnfallstellePanel extends ObjectPanel {
         if (type == null) {
             return;
         }
-        
-        int i = hauptModul.getTabCount();
-        if (i > 5) {
-            hauptModul.removeTabAt(5);
-        }
-        if (i > 4) {
-            hauptModul.removeTabAt(4);
-        }
-        if (i > 3) {
-            hauptModul.removeTabAt(3);
-        }
 
         if (type == "Niederschlagswasser mit Sonderbauwerk" || type == "Niederschlagswasser ohne Sonderbauwerk") {
 
@@ -1061,20 +1082,18 @@ public class AnfallstellePanel extends ObjectPanel {
             getAnwendungsbereichFeld().setVisible(false);
 
             herkunftsbereichLb.setVisible(true);
+            getHerkunftBox().setVisible(true);
             befestFlaecheLb.setVisible(true);
+            getBefestFlaecheFeld().setVisible(true);
             maxAbflussmengeLb.setVisible(true);
             getLProSFeld().setVisible(true);
             lProSLb.setVisible(true);
             getQmProHFeld().setVisible(true);
             qmProHLb.setVisible(true);
+            getQmProDFeld().setVisible(true);
             qmProDLb.setVisible(true);
             getQmProAFeld().setVisible(true);
             abwasserProALb.setVisible(true);
-            
-        	getAfsTab().fetchFormData();
-            getAfsTab().enableAll(true);
-            getAfsTab().updateForm();
-            hauptModul.addTab("Niederschlagswasser", getAfsTab());
 
         } else {
 
@@ -1086,12 +1105,15 @@ public class AnfallstellePanel extends ObjectPanel {
             getAnwendungsbereichFeld().setVisible(true);
 
             herkunftsbereichLb.setVisible(false);
+            getHerkunftBox().setVisible(false);
             befestFlaecheLb.setVisible(false);
+            getBefestFlaecheFeld().setVisible(false);
             maxAbflussmengeLb.setVisible(false);
             getLProSFeld().setVisible(false);
             lProSLb.setVisible(false);
             getQmProHFeld().setVisible(false);
             qmProHLb.setVisible(false);
+            getQmProDFeld().setVisible(false);
             qmProDLb.setVisible(false);
             getQmProAFeld().setVisible(false);
             abwasserProALb.setVisible(false);
@@ -1172,14 +1194,6 @@ public class AnfallstellePanel extends ObjectPanel {
             bwkTab.setBorder(Paddings.DIALOG);
         }
         return bwkTab;
-    }
-
-    public AfsNwPanel getAfsTab() {
-        if (afsNwTab == null) {
-        	afsNwTab = new AfsNwPanel(hauptModul);
-        	afsNwTab.setBorder(Paddings.DIALOG);
-        }
-        return afsNwTab;
     }
 
 

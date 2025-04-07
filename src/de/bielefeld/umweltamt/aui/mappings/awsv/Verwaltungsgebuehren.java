@@ -41,7 +41,7 @@ public class Verwaltungsgebuehren  implements java.io.Serializable {
     /** Generated serialVersionUID for Serializable interface */
     private static final long serialVersionUID =
         DatabaseSerialVersionUID.forVerwaltungsgebuehren;
-    
+
     /* Primary key, foreign keys (relations) and table columns */
     private Integer id;
     private Fachdaten fachdaten;
@@ -163,7 +163,7 @@ public class Verwaltungsgebuehren  implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        return DatabaseClassToString.toStringForClass(this); 
+        return DatabaseClassToString.toStringForClass(this);
     }
 
     /**
@@ -172,16 +172,16 @@ public class Verwaltungsgebuehren  implements java.io.Serializable {
      */
     public String toDebugString() {
         StringBuffer buffer = new StringBuffer();
-        
+
         buffer.append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");			
-        buffer.append("gebuehrenarten").append("='").append(getGebuehrenarten()).append("' ");			
-        buffer.append("datum").append("='").append(getDatum()).append("' ");			
-        buffer.append("betrag").append("='").append(getBetrag()).append("' ");			
-        buffer.append("abschnitt").append("='").append(getAbschnitt()).append("' ");			
-        buffer.append("kassenzeichen").append("='").append(getKassenzeichen()).append("' ");			
-        buffer.append("enabled").append("='").append(isEnabled()).append("' ");			
-        buffer.append("deleted").append("='").append(isDeleted()).append("' ");			
+        buffer.append("fachdaten").append("='").append(getFachdaten()).append("' ");
+        buffer.append("gebuehrenarten").append("='").append(getGebuehrenarten()).append("' ");
+        buffer.append("datum").append("='").append(getDatum()).append("' ");
+        buffer.append("betrag").append("='").append(getBetrag()).append("' ");
+        buffer.append("abschnitt").append("='").append(getAbschnitt()).append("' ");
+        buffer.append("kassenzeichen").append("='").append(getKassenzeichen()).append("' ");
+        buffer.append("enabled").append("='").append(isEnabled()).append("' ");
+        buffer.append("deleted").append("='").append(isDeleted()).append("' ");
         buffer.append("]");
 
         return buffer.toString();
@@ -213,7 +213,7 @@ public class Verwaltungsgebuehren  implements java.io.Serializable {
         result = result * 37 + idValue;
         return result;
     }
-    
+
     /**
      * Merge (save or update) a detached instance
      * @param detachedInstance the instance to merge
@@ -247,15 +247,15 @@ public class Verwaltungsgebuehren  implements java.io.Serializable {
      * @param copy Verwaltungsgebuehren
      */
     private void copy(Verwaltungsgebuehren copy) {
-        this.fachdaten = copy.getFachdaten();            
-        this.gebuehrenarten = copy.getGebuehrenarten();            
-        this.datum = copy.getDatum();            
-        this.betrag = copy.getBetrag();            
-        this.abschnitt = copy.getAbschnitt();            
-        this.kassenzeichen = copy.getKassenzeichen();            
-        this.enabled = copy.isEnabled();            
-        this.deleted = copy.isDeleted();            
-    }    
+        this.fachdaten = copy.getFachdaten();
+        this.gebuehrenarten = copy.getGebuehrenarten();
+        this.datum = copy.getDatum();
+        this.betrag = copy.getBetrag();
+        this.abschnitt = copy.getAbschnitt();
+        this.kassenzeichen = copy.getKassenzeichen();
+        this.enabled = copy.isEnabled();
+        this.deleted = copy.isDeleted();
+    }
 
     /**
      * Delete (mark as deleted) a detached instance

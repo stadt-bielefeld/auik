@@ -58,12 +58,12 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * @author <a href="mailto:post@connz.de">Conny Pearce (u633z)</a>
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
-abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
+abstract class DatabaseAwSVQuery {
 
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
-	
-	
+
+
 	private static String[] bodenflaechenausf = null;
 	private static String[] niederschlagschutz = null;
 	private static Anlagenarten[] anlagenarten = null;
@@ -91,11 +91,11 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 
 
-	
+
 
 	/**
 	 * Get all used Bodenflaechenausf from Abfuellflaeche
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getBodenflaechenausf() {
@@ -115,7 +115,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all used Niederschlagschutz from Abfuellflaeche
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getNiederschlagschutz() {
@@ -140,7 +140,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Anlagenarten
-	 * 
+	 *
 	 * @return <code>Anlagenarten[]</code>
 	 */
 	public static Anlagenarten[] getAnlagenarten() {
@@ -157,7 +157,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get Anlagenchrono for Fachdaten
-	 * 
+	 *
 	 * @param fachdaten
 	 *            Fachdaten
 	 * @return <code>List&lt;Anlagenchrono&gt;</code>
@@ -177,7 +177,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Behaelterart
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getBehaelterarten() {
@@ -202,7 +202,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 	/**
 	 * Get Fachdaten for a given Objekt. TODO: We could use
 	 * objekt.getFachdatens()...
-	 * 
+	 *
 	 * @param objekt
 	 *            Objekt
 	 * @return <code>List&lt;Fachdaten&gt;</code>
@@ -221,7 +221,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all used Ausführungen from Fachdaten
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getAusfuehrungen() {
@@ -243,7 +243,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 	 * Everything that is NOT (Abfüllfläche OR Rohrleitung OR Fahrsilo OR Güllekeller OR Güllehochbehälter) is
 	 * Lageranlage. TODO: Check this. We have a Anlagenart Lageranlage, but also
 	 * some others
-	 * 
+	 *
 	 * @param fachdaten
 	 *            Fachdaten
 	 * @return <code>true</code>, if Anlagenart is NOT (Abfüllfläche OR
@@ -253,11 +253,11 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 		return (!(fachdaten.getAnlagenart().equals(
 				DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)
 				|| fachdaten.getAnlagenart().equals(
-						DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG) 
+						DatabaseConstants.VAWS_ANLAGENART_ROHRLEITUNG)
 				|| fachdaten.getAnlagenart().equals(
-						DatabaseConstants.VAWS_ANLAGENART_FS) 
+						DatabaseConstants.VAWS_ANLAGENART_FS)
 				|| fachdaten.getAnlagenart().equals(
-						DatabaseConstants.VAWS_ANLAGENART_GK) 
+						DatabaseConstants.VAWS_ANLAGENART_GK)
 				|| fachdaten.getAnlagenart().equals(
 						DatabaseConstants.VAWS_ANLAGENART_GHB)));
 	}
@@ -265,7 +265,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 	/**
 	 * Durchsucht Fachdaten nach einer bestimmten Herstellnummer und gibt
 	 * das Ergebnis als List zurück
-	 * 
+	 *
 	 * @param search
 	 *            String
 	 * @return <code>List&lt;Fachdaten&gt;</code>
@@ -290,7 +290,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Fluessigkeit
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getFluessigkeiten() {
@@ -314,7 +314,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Gebuehrenarten
-	 * 
+	 *
 	 * @return <code>Gebuehrenarten[]</code>
 	 */
 	public static Gebuehrenarten[] getGebuehrenarten() {
@@ -332,7 +332,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Gefaehrdungsstufen
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getGefaehrdungsstufen() {
@@ -357,7 +357,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 	/**
 	 * Get all Kontrollen with "naechstepruefung" in the past and not
 	 * "pruefungabgeschlossen"
-	 * 
+	 *
 	 * @return <code>List&lt;Kontrollen&gt;</code>
 	 */
 	public static List<Kontrollen> getWiedervorlageKontrollen() {
@@ -372,7 +372,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get Kontrollen for a Fachdaten object
-	 * 
+	 *
 	 * @param fachdaten
 	 *            Fachdaten
 	 * @return <code>List&lt;Kontrollen&gt;</code>
@@ -393,7 +393,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Material
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getMaterialien() {
@@ -416,7 +416,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Pruefer
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getPruefer() {
@@ -439,7 +439,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Pruefergebniss
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getPruefergebniss() {
@@ -463,7 +463,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Standortgghwsg
-	 * 
+	 *
 	 * @return <code>Standortgghwsg[]</code>
 	 */
 	public static Standortgghwsg[] getStandortgghwsg() {
@@ -481,7 +481,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Vbfeinstufung
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getVawsVbfEinstufungen() {
@@ -505,7 +505,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Verwaltungsgebuehren
-	 * 
+	 *
 	 * @return <code>List&lt;Verwaltungsgebuehren&gt;</code>
 	 */
 	public static List<Verwaltungsgebuehren> getVerwaltungsgebuehren(
@@ -525,7 +525,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Verwaltungsverf
-	 * 
+	 *
 	 * @return <code>List&lt;Verwaltungsverf&gt;</code>
 	 */
 	public static List<Verwaltungsverf> getVerwaltungsverf(
@@ -542,7 +542,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 	/**
 	 * Get all Verwaltungsverf with "wiedervorlage" in the past and
 	 * "wvverwverf" either <code>false</code> or <code>null</code>
-	 * 
+	 *
 	 * @return <code>List&lt;Verwaltungsverf&gt;</code>
 	 */
 	public static List<Verwaltungsverf> getWiedervorlageVerwaltungsverf() {
@@ -563,7 +563,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Verwmassnahmen
-	 * 
+	 *
 	 * @return <code>String[]</code>
 	 */
 	public static String[] getVerwaltungsMassnahmen() {
@@ -586,7 +586,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all Wassereinzugsgebiet
-	 * 
+	 *
 	 * @return <code>Wassereinzugsgebiet[]</code>
 	 */
 	public static Wassereinzugsgebiet[] getWassereinzugsgebiet() {
@@ -597,14 +597,14 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 		}
 		return DatabaseAwSVQuery.wassereinzugsgebiet;
 	}
-	
+
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	/* Queries for package AWSV: class Wirtschaftszweig */
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
 	 * Get all Wirtschaftszweig
-	 * 
+	 *
 	 * @return <code>Wirtschaftszweig[]</code>
 	 */
 	public static Wirtschaftszweig[] getWirtschaftszweig() {
@@ -622,7 +622,7 @@ abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
 
 	/**
 	 * Get Anlagenchronologie
-	 * 
+	 *
 	 * @return <code>List&lt;Anlagenchronologie;</code>
 	 */
 	public static List<Anlagenchrono> getAnlagenchrono(
