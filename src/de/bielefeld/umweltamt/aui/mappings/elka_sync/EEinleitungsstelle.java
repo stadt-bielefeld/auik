@@ -522,7 +522,6 @@ public class EEinleitungsstelle implements java.io.Serializable {
 	/**
 	 * Update this EEinleitungsstelle with its new values.<br>
 	 * This is meant to be used after merging!
-	 * 
 	 * @param copy AtlKlaeranlagen
 	 */
 	private void copy(EEinleitungsstelle copy) {
@@ -541,7 +540,6 @@ public class EEinleitungsstelle implements java.io.Serializable {
 
 	/**
 	 * Find an <code>EEinleitungsstelle</code> instance by its primary key
-	 * 
 	 * @param id the primary key value
 	 * @return <code>EEinleitungsstelle</code> the requested instance, if one
 	 *         exists, <code>null</code> otherwise
@@ -552,7 +550,6 @@ public class EEinleitungsstelle implements java.io.Serializable {
 
 	/**
 	 * Get a list of all <code>EEinleitungsstelle</code>
-	 * 
 	 * @return <code>List&lt;EEinleitungsstelle&gt;</code> all
 	 *         <code>EEinleitungsstelle</code>
 	 */

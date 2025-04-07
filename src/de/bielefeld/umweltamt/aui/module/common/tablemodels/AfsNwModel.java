@@ -57,7 +57,6 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Ein einfaches TableModel für Probenehmereinsaetze.
- * 
  * @author Gerd Genuit
  */
 public class AfsNwModel extends ListTableModel {
@@ -72,7 +71,6 @@ public class AfsNwModel extends ListTableModel {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue
 	 * (java.lang.Object, int)
@@ -135,7 +133,6 @@ public class AfsNwModel extends ListTableModel {
 
 	/**
 	 * Liefert das Objekt aus einer bestimmten Zeile.
-	 * 
 	 * @param rowIndex Die Zeile
 	 * @return Das Objekt bei rowIndex oder <code>null</code>, falls die Zeile nicht
 	 *         existiert

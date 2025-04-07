@@ -52,7 +52,6 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Ein einfaches Such-Modul für Direkteinleiter anhand des Aktenzeichens.
- * 
  * @author Gerhard Genuit
  */
 public class DirekteinleiterSuchen extends AbstractQueryModul {
@@ -72,7 +71,6 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see de.bielefeld.umweltamt.aui.Modul#getName()
 	 */
 	// Der Name mit dem das Modul im AUIK angezeigt wird
@@ -141,7 +139,6 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#
 	 * getQueryOptionsPanel()
 	 */

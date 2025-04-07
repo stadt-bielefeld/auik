@@ -125,7 +125,6 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
  * Ein Editor für VAWS-Datensätze.
- * 
  * @author David Klotz
  */
 public class AwsvEditor extends AbstractBaseEditor {
@@ -334,7 +333,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten von VAWS-Fachdaten. Schaltet zu
 	 * einem bestimmten Tab um.
-	 * 
 	 * @param tab "Sachverständigenprüfung", "Verwaltungsverfahren" oder
 	 *            "Herstellnummer"
 	 */
@@ -373,7 +371,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	/**
 	 * Liefert das bearbeitete Objekt.
-	 * 
 	 * @return Ein VawsFachdaten-Objekt.
 	 */
 	public Fachdaten getFachdaten() {
@@ -394,7 +391,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 	/**
 	 * Liefert die Abfüllflächen-Fachdaten zum bearbeiteten Objekt. Achtung: Nur bei
 	 * Abfüllflächen-Objekten aufrufen!
-	 * 
 	 * @return Ein VawsAbfuellflaechen-Objekt
 	 */
 	private Abfuellflaeche getAbfuellflaeche() {
@@ -411,7 +407,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 	/**
 	 * Liefert die Abfüllflächen-Fachdaten zum bearbeiteten Objekt. Achtung: Nur bei
 	 * Abfüllflächen-Objekten aufrufen!
-	 * 
 	 * @return Ein VawsAbfuellflaechen-Objekt
 	 */
 	private Jgs getJgs() {
@@ -427,7 +422,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog#buildContentArea()
 	 */
@@ -784,7 +778,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#fillForm(
 	 * )
@@ -1125,7 +1118,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#canSave()
 	 */
@@ -1145,7 +1137,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * de.bielefeld.umweltamt.aui.module.common.editors.AbstractBaseEditor#doSave()
 	 */
@@ -1362,7 +1353,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	/**
 	 * Zeigt ein Kontextmenü an, wenn ein entsprechendes MouseEvent vorliegt.
-	 * 
 	 * @param e Das MouseEvent.
 	 */
 	private void showTabellenPopup(MouseEvent e) {
@@ -1955,11 +1945,10 @@ public class AwsvEditor extends AbstractBaseEditor {
 	}
 }
 
-/**
- * Ein editierbares TableModel für die Vaws-Anlagenchronologie.
- * 
- * @author David Klotz
- */
+	/**
+	 * Ein editierbares TableModel für die Vaws-Anlagenchronologie.
+	 * @author David Klotz
+	 */
 class VawsAnlagenChronoModel extends EditableListTableModel {
 	private static final long serialVersionUID = -2520120636324926275L;
 	private List<Anlagenchrono> geloeschte;
@@ -1975,7 +1964,6 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 
 	/**
 	 * Setzt das Fachdaten-Objekt und aktualisiert die Tabelle.
-	 * 
 	 * @param fachdaten Das Fachdaten-Objekt
 	 */
 	public void setFachdaten(Fachdaten fachdaten) {
@@ -2060,7 +2048,6 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue
 	 * (java.lang.Object, int)
@@ -2108,7 +2095,6 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 
 	/**
 	 * Liefert einen Datensatz in einer bestimmten Zeile.
-	 * 
 	 * @param row Die Zeile der Tabelle.
 	 * @return Den Datensatz, der in dieser Zeile angezeigt wird.
 	 */
@@ -2125,12 +2111,11 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	}
 }
 
-/**
- * Ein editierbares TableModel für die Vaws-Kontrollen
- * (Sachverständigenprüfung).
- * 
- * @author David Klotz
- */
+	/**
+	 * Ein editierbares TableModel für die Vaws-Kontrollen
+	 * (Sachverständigenprüfung).
+	 * @author David Klotz
+	 */
 class VawsKontrollenModel extends EditableListTableModel {
 	private static final long serialVersionUID = 1747805482011126348L;
 	private List<Kontrollen> geloeschte;
@@ -2147,7 +2132,6 @@ class VawsKontrollenModel extends EditableListTableModel {
 
 	/**
 	 * Setzt das Fachdaten-Objekt und aktualisiert die Tabelle.
-	 * 
 	 * @param fachdaten Das Fachdaten-Objekt
 	 */
 	public void setFachdaten(Fachdaten fachdaten) {
@@ -2232,7 +2216,6 @@ class VawsKontrollenModel extends EditableListTableModel {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue
 	 * (java.lang.Object, int)
@@ -2284,7 +2267,6 @@ class VawsKontrollenModel extends EditableListTableModel {
 
 	/**
 	 * Liefert einen Datensatz in einer bestimmten Zeile.
-	 * 
 	 * @param row Die Zeile der Tabelle.
 	 * @return Den Datensatz, der in dieser Zeile angezeigt wird.
 	 */
@@ -2303,7 +2285,6 @@ class VawsKontrollenModel extends EditableListTableModel {
 
 /**
  * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
- * 
  * @author David Klotz
  */
 class VerwVerfahrenModel extends EditableListTableModel {
@@ -2321,7 +2302,6 @@ class VerwVerfahrenModel extends EditableListTableModel {
 
 	/**
 	 * Setzt das Fachdaten-Objekt und aktualisiert die Tabelle.
-	 * 
 	 * @param fachdaten Das Fachdaten-Objekt
 	 */
 	public void setFachdaten(Fachdaten fachdaten) {
@@ -2403,7 +2383,6 @@ class VerwVerfahrenModel extends EditableListTableModel {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue
 	 * (java.lang.Object, int)
@@ -2451,7 +2430,6 @@ class VerwVerfahrenModel extends EditableListTableModel {
 
 	/**
 	 * Liefert einen Datensatz in einer bestimmten Zeile.
-	 * 
 	 * @param row Die Zeile der Tabelle.
 	 * @return Den Datensatz, der in dieser Zeile angezeigt wird.
 	 */
@@ -2468,11 +2446,10 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	}
 }
 
-/**
- * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
- * 
- * @author David Klotz
- */
+	/**
+	 * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
+	 * @author David Klotz
+	 */
 class VerwGebuehrenModel extends EditableListTableModel {
 	private static final long serialVersionUID = 8662150283828728780L;
 	private List<Verwaltungsgebuehren> geloeschte;
@@ -2488,7 +2465,6 @@ class VerwGebuehrenModel extends EditableListTableModel {
 
 	/**
 	 * Setzt das Fachdaten-Objekt und aktualisiert die Tabelle.
-	 * 
 	 * @param fachdaten Das Fachdaten-Objekt
 	 */
 	public void setFachdaten(Fachdaten fachdaten) {
@@ -2569,7 +2545,6 @@ class VerwGebuehrenModel extends EditableListTableModel {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue
 	 * (java.lang.Object, int)
@@ -2627,7 +2602,6 @@ class VerwGebuehrenModel extends EditableListTableModel {
 
 	/**
 	 * Liefert einen Datensatz in einer bestimmten Zeile.
-	 * 
 	 * @param row Die Zeile der Tabelle.
 	 * @return Den Datensatz, der in dieser Zeile angezeigt wird.
 	 */

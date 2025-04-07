@@ -1211,7 +1211,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	/**
 	 * Durchsucht Fachdaten nach einem bestimmten Aktenzeichen und gibt
 	 * das Ergebnis als List zurück
-	 *
 	 * @param search
 	 *            String
 	 * @return <code>List&lt;Fachdaten&gt;</code>
@@ -1233,7 +1232,6 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	/**
 	 * Durchsucht Fachdaten nach einem bestimmten Aktenzeichen und gibt
 	 * das Ergebnis als List zurück
-	 * 
 	 * @param search
 	 *            String
 	 * @return <code>List&lt;Fachdaten&gt;</code>
@@ -1261,9 +1259,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @param entwGebiet entwGebiet filter
 	 * @param prioritaet Prioritaet filter
 	 * @param wiedervorlage Wiedervorlage filter.
-	 *        Possible values:
-	 *           - BasisAbfrage.VALUE_WIEDERVORLAGE_AKTIV
-	 *           - BAsisAbfrage.VALUE_WIEDERVORLAGE_ABGELAUFEN
+	 * Possible values:
+	 *     - BasisAbfrage.VALUE_WIEDERVORLAGE_AKTIV
+	 *     - BAsisAbfrage.VALUE_WIEDERVORLAGE_ABGELAUFEN
 	 * @return Object array containing results
 	 */
 	public static List executeBaseQuery(
@@ -1379,7 +1377,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * Sucht alle Objekte einer Objektart,  die nicht erloschen sind.
 	 * @param Objektart Es sollen nur Datensätze dieser Artangezeigt werden.
 	 * @return <code>List&lt;Objekt&gt;</code>
-	 *         Eine Liste mit den entstprechenden Objekte.
+	 * Eine Liste mit den entstprechenden Objekte.
 	 */
 	public static List<Objekt> getObjektByArt(
 			Objektarten art) {
@@ -1396,9 +1394,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * Sucht alle Objekte des angemeldeten Sachbearbeiters, die ein
 	 * Wiedervorlagedatum haben.
 	 * @param nurWiedervorlageAbgelaufen Sollen nur Datensätze angezeigt werden,
-	 *            deren Wiedervorlage in der Vergangenheit liegt?
+	 *	deren Wiedervorlage in der Vergangenheit liegt?
 	 * @return <code>List&lt;Objekt&gt;</code>
-	 *         Eine Liste mit den entstprechenden Objekten.
+	 * 	Eine Liste mit den entstprechenden Objekten.
 	 */
 	public static List<Objekt> getObjektByWiedervorlage(
 			boolean nurWiedervorlageAbgelaufen) {

@@ -73,7 +73,6 @@ abstract class DatabaseDirekteinlQuery {
 
 	/**
 	 * Get a list of all Anfallstelle
-	 * 
 	 * @return <code>List&lt;Anfallstelle&gt;</code>
 	 */
 	public static List<Anfallstelle> getAnfallstelle(String anh, String art, Sachbearbeiter sachbe) {
@@ -117,7 +116,6 @@ abstract class DatabaseDirekteinlQuery {
 
 	/**
 	 * Get an array with all <code>MapElkaGewkennz</code>en
-	 *
 	 * @return <code>Integer[]</code>
 	 */
 
@@ -132,7 +130,6 @@ abstract class DatabaseDirekteinlQuery {
 
 	/**
 	 * Get all MapElkaGewkennz and sort them by their gewkz
-	 *
 	 * @return <code>Eine Liste aller Gewaesser</code>
 	 */
 	public static List<Integer> getMapElkaGewkennzList() {

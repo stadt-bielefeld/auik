@@ -223,8 +223,8 @@ public class EAnfallstelle implements java.io.Serializable {
      * Find an <code>AtlKlaeranlagen</code> instance by its primary key
      * @param id the primary key value
      * @return <code>AtlKlaeranlagen</code> the requested instance,
-     *         if one exists,
-     *         <code>null</code> otherwise
+     * if one exists,
+     * <code>null</code> otherwise
      */
     public static EAnfallstelle findById(java.lang.Integer id) {
         return (EAnfallstelle)

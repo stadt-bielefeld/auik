@@ -84,9 +84,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
- * Das Panel zum Bearbeiten von Druckereien
- * 
- * @author u633d
+ * Das Panel zum Bearbeiten von Druckereien* @author u633d
  */
 public class AfsNwPanel extends ObjectPanel {
 	private static final long serialVersionUID = -1240254202213465142L;
@@ -139,7 +137,6 @@ public class AfsNwPanel extends ObjectPanel {
 
 		/**
 		 * Erzeugt ein einfaches TableModel für die Chronologie.
-		 * 
 		 * @param obj
 		 */
 		public AfsNwModel() {
@@ -150,7 +147,6 @@ public class AfsNwPanel extends ObjectPanel {
 
 		/**
 		 * Setzt die Anfallstelle und aktualisiert die Tabelle.
-		 * 
 		 * @param obj Die Anfallstelle
 		 */
 		public void setAnfallstelle(Anfallstelle anfallstelle) {
@@ -164,7 +160,6 @@ public class AfsNwPanel extends ObjectPanel {
 
 		/**
 		 * Setzt das Grundstück und aktualisiert die Tabelle.
-		 * 
 		 * @param obj Das Grundstück
 		 */
 		public void setGrundstueck(Entwaesserungsgrundstueck grundstueck) {
@@ -255,7 +250,6 @@ public class AfsNwPanel extends ObjectPanel {
 
 		/*
 		 * (non-Javadoc)
-		 * 
 		 * @see
 		 * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue
 		 * (java.lang.Object, int)
@@ -298,7 +292,6 @@ public class AfsNwPanel extends ObjectPanel {
 
 		/**
 		 * Liefert einen Datensatz in einer bestimmten Zeile.
-		 * 
 		 * @param row Die Zeile der Tabelle.
 		 * @return Den Datensatz, der in dieser Zeile angezeigt wird.
 		 */

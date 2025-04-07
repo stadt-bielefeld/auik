@@ -399,7 +399,6 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 			abaverfahrens.setListData(list);
 
 			switchEinlBereichItems((String) getEinleitungsbereichBox().getSelectedItem());
-			
 			setDirty(false);
 		}
 	}

@@ -319,7 +319,6 @@ public class Adresse implements java.io.Serializable {
 	 * Basically we either call on <code>toDebugString</code> for a debug string,
 	 * call on <code>toGuiString</code> for a gui representation or do something
 	 * completely different.
-	 * 
 	 * @return String
 	 */
 	@Override
@@ -329,7 +328,6 @@ public class Adresse implements java.io.Serializable {
 
 	/**
 	 * Get a string representation for debugging
-	 * 
 	 * @return String
 	 */
 	public String toDebugString() {
@@ -372,7 +370,6 @@ public class Adresse implements java.io.Serializable {
 
 	/**
 	 * Calculate a unique hashCode
-	 * 
 	 * @return <code>int</code>
 	 */
 	@Override
@@ -385,7 +382,6 @@ public class Adresse implements java.io.Serializable {
 
 	/**
 	 * Merge (save or update) a detached instance
-	 * 
 	 * @param detachedInstance the instance to merge
 	 * @return <code>Adresse</code> the merged instance, if everything went okay,
 	 *         <code>null</code> otherwise
@@ -397,7 +393,6 @@ public class Adresse implements java.io.Serializable {
 
 	/**
 	 * Merge (save or update) this instance
-	 * 
 	 * @return <code>true</code>, if everything went okay, <code>false</code>
 	 *         otherwise
 	 */
@@ -414,7 +409,6 @@ public class Adresse implements java.io.Serializable {
 	/**
 	 * Update this Adresse with its new values.<br>
 	 * This is meant to be used after merging!
-	 * 
 	 * @param copy Adresse
 	 */
 	private void copy(Adresse copy) {
@@ -448,7 +442,6 @@ public class Adresse implements java.io.Serializable {
 
 	/**
 	 * Delete (mark as deleted) a detached instance
-	 * 
 	 * @param detachedInstance the instance to delete
 	 * @return <code>true</code>, if everything went okay, <code>false</code>
 	 *         otherwise
@@ -460,7 +453,6 @@ public class Adresse implements java.io.Serializable {
 
 	/**
 	 * Delete (mark as deleted) this instance
-	 * 
 	 * @return <code>true</code>, if everything went okay, <code>false</code>
 	 *         otherwise
 	 */
@@ -470,7 +462,6 @@ public class Adresse implements java.io.Serializable {
 
 	/**
 	 * Find an <code>Adresse</code> instance by its primary key
-	 * 
 	 * @param id the primary key value
 	 * @return <code>Adresse</code> the requested instance, if one exists,
 	 *         <code>null</code> otherwise
@@ -482,7 +473,6 @@ public class Adresse implements java.io.Serializable {
 
 	/**
 	 * Get a list of all <code>Adresse</code>
-	 * 
 	 * @return <code>List&lt;Adresse&gt;</code> all <code>Adresse</code>
 	 */
 	public static List<Adresse> getAll() {
