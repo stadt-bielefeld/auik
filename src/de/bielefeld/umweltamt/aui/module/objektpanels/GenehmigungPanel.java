@@ -181,7 +181,7 @@ public class GenehmigungPanel extends ObjectPanel{
 
     public void fetchFormData() throws RuntimeException {
         this.fachdaten = Wasserrecht.findByObjektId(
-            this.hauptModul.getObjekt().getId());
+            this.hauptModul.getObjekt());
         log.debug("Genehmigung Objekt aus DB geholt: ID" + this.fachdaten);
     }
 

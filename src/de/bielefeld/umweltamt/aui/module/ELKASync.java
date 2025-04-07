@@ -68,6 +68,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EBetrieb;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle;
@@ -78,7 +79,6 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahmeUeberwachungserg
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
@@ -980,7 +980,7 @@ public class ELKASync extends AbstractModul {
             prependIdentifierToNr(ewg);
             prependIdentifierToNr(ewg.getAdresse());
             prependIdentifierToNr(ewg.getStandort());
-            prependIdentifierToNr(ewg.getStandort().getAdresse());
+//            prependIdentifierToNr(ewg.getStandort().getAdresse());
             EWasserrecht recht = ewg.getWasserrecht();
             if (recht != null) {
                 prependIdentifierToNr(recht);
@@ -989,7 +989,7 @@ public class ELKASync extends AbstractModul {
 //            for (Abaverfahren verfahren: ewg.getAbwasserbehandlungsverfahrens()) {
 //                prependIdentifierToNr(verfahren);
 //            }
-            for (AfsNiederschlagswasser afsn: ewg.getAfsNiederschlagswassers()) {
+            for (EAfsNiederschlagswasser afsn: ewg.getAfsNiederschlagswassers()) {
                 prependIdentifierToNr(afsn);
             }
         }
@@ -1009,7 +1009,7 @@ public class ELKASync extends AbstractModul {
             for (AfsStoffe afsStoff: stelle.getAfsStoffes()) {
                 prependIdentifierToProperty(afsStoff, "anfallstellenNr");
             }
-            for (AfsNiederschlagswasser afsNiederschlagwasser: stelle.getAfsNiederschlagswassers()) {
+            for (EAfsNiederschlagswasser afsNiederschlagwasser: stelle.getAfsNiederschlagswassers()) {
                 prependIdentifierToNr(afsNiederschlagwasser);
             }
         }
@@ -1035,7 +1035,6 @@ public class ELKASync extends AbstractModul {
         for (EEinleitungsstelle stelle : objects) {
             prependIdentifierToNr(stelle);
             prependIdentifierToNr(stelle.getStandort());
-            prependIdentifierToNr(stelle.getStandort().getAdresse());
             for (EWasserrecht recht : stelle.getWasserrechts()) {
                 prependIdentifierToNr(recht);
                 prependIdentifierToNr(recht.getAdresse());

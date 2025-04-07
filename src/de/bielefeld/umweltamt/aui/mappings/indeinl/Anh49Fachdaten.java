@@ -36,6 +36,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 /**
  * A class that represents a row in the Anh49Fachdaten database table.<br>
  * This class is meant to serve as a model and should be copied into the
@@ -769,6 +772,9 @@ public class Anh49Fachdaten  implements java.io.Serializable {
 
 
     /* Custom code goes below here! */
+
+
+    /* Custom code goes below here! */
     public static Anh49Fachdaten findByAnfallstelleId(java.lang.Integer id){
         log.debug("Found no Anh49Fachdaten with BasisObjekt id: " + id);
         /*List<Anh49Fachdaten> list = Anh49Fachdaten.getAll();
@@ -785,11 +791,9 @@ public class Anh49Fachdaten  implements java.io.Serializable {
         return list.iterator().next();
     }
 
-	public static Anh49Fachdaten findByObjektId(java.lang.Integer id) {
-		Objekt objekt = (Objekt) HibernateSessionFactory.currentSession().createQuery("from Objekt where id= " + id)
-				.list().get(0);
-		// BasisObjekt.findById(id);
-		Set<Anh49Fachdaten> list = objekt.getAnh49Fachdatens();
-		return list.iterator().next();
+	public static Anh49Fachdaten findByObjektId(Objekt obj) {
+
+		return new DatabaseAccess().executeCriteriaToUniqueResult(
+				DetachedCriteria.forClass(Anh49Fachdaten.class).add(Restrictions.eq("objekt", obj)), new Anh49Fachdaten());
 	}
 }

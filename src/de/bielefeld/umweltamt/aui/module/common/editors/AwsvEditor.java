@@ -766,11 +766,11 @@ public class AwsvEditor extends AbstractBaseEditor {
         topBuilder.append(gefStufeBox, wgkBox);
 
         topPanel = topBuilder.getPanel();
-        topPanel.setBorder(Paddings.DLU2);
+//        topPanel.setBorder(Paddings.DLU2);
         // Panel bauen:
         JPanel panel = new JPanel(new BorderLayout());
 
-        panel.add(topPanel, BorderLayout.NORTH);
+        panel.add(topPanel, BorderLayout.CENTER);
         panel.add(tabbedPane, BorderLayout.CENTER);
 
         return panel;
@@ -1442,9 +1442,9 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-					chronoScroller, 0.3);
-
-
+					chronoScroller, 0.8);
+			this.tabellenSplit.setDividerLocation(0.8);
+        	
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g"
             );
@@ -1591,9 +1591,9 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-					chronoScroller, 0.3);
-
-
+					chronoScroller, 0.8);
+			this.tabellenSplit.setDividerLocation(0.8);
+        	
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g"
             );
@@ -1704,9 +1704,9 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-					chronoScroller, 0.3);
-
-
+					chronoScroller, 0.8);
+			this.tabellenSplit.setDividerLocation(0.8);
+        	
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, p, 10dlu, r:p, 3dlu, p, 0:g"
             );
@@ -1760,8 +1760,8 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
 					JSplitPane.VERTICAL_SPLIT, bemerkungScroller,
-					chronoScroller, 0.3);
-
+					chronoScroller, 0.8);
+			this.tabellenSplit.setDividerLocation(0.8);
 
             FormLayout layout = new FormLayout(
                     "r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"//, 10dlu, l:p:g"

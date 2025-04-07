@@ -50,7 +50,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
         DatabaseSerialVersionUID.forAfsNiederschlagswasser;
 
     /* Primary key, foreign keys (relations) and table columns */
-    private Integer nr;
+    private Long nr;
     private Integer origNr;
     private Anfallstelle anfallstelle;
     private Entwaesserungsgrundstueck entwaesserungsgrundstueck;
@@ -59,6 +59,8 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
     private Integer befFlaeche;
     private Integer nwHerBereichOpt;
     private BigDecimal abflussmenge;
+    private boolean enabled;
+    private boolean deleted;
     private Set<Referenz> referenzsForQNwAfsNr = new HashSet<Referenz>(0);
     private Set<Referenz> referenzsForZNwAfsNr = new HashSet<Referenz>(0);
 
@@ -72,13 +74,13 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
 
     /** Minimal constructor */
     public AfsNiederschlagswasser(
-        int nr) {
+        long nr) {
         this.nr = nr;
     }
 
     /** Full constructor */
     public AfsNiederschlagswasser(
-        int nr, Anfallstelle anfallstelle, Entwaesserungsgrundstueck entwaesserungsgrundstueck, Integer lfdNr, String bezeichnung, Integer befFlaeche, Integer nwHerBereichOpt, BigDecimal abflussmenge, Set<Referenz> referenzsForQNwAfsNr, Set<Referenz> referenzsForZNwAfsNr) {
+        long nr, Anfallstelle anfallstelle, Entwaesserungsgrundstueck entwaesserungsgrundstueck, Integer lfdNr, String bezeichnung, Integer befFlaeche, Integer nwHerBereichOpt, BigDecimal abflussmenge, Set<Referenz> referenzsForQNwAfsNr, Set<Referenz> referenzsForZNwAfsNr) {
         this.nr = nr;
         this.anfallstelle = anfallstelle;
         this.entwaesserungsgrundstueck = entwaesserungsgrundstueck;
@@ -92,11 +94,11 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
     }
 
     /* Setter and getter methods */
-    public Integer getNr() {
+    public Long getNr() {
         return this.nr;
     }
 
-    public void setNr(Integer nr) {
+    public void setNr(Long nr) {
         this.nr = nr;
     }
 
@@ -156,6 +158,22 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
 
     public void setAbflussmenge(BigDecimal abflussmenge) {
         this.abflussmenge = abflussmenge;
+    }
+
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isDeleted() {
+        return this.deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @JsonIgnore
@@ -310,7 +328,7 @@ public class AfsNiederschlagswasser  implements java.io.Serializable {
      *         if one exists,
      *         <code>null</code> otherwise
      */
-    public static AfsNiederschlagswasser findById(long id) {
+    public static AfsNiederschlagswasser findById(Integer id) {
         log.debug("Getting AfsNiederschlagswasser instance with id: " + id);
         return (AfsNiederschlagswasser)
             new DatabaseAccess().get(AfsNiederschlagswasser.class, id);
