@@ -766,11 +766,11 @@ public class AwsvEditor extends AbstractBaseEditor {
 		topBuilder.append(gefStufeBox, wgkBox);
 
 		topPanel = topBuilder.getPanel();
-//        topPanel.setBorder(Paddings.DLU2);
+        topPanel.setBorder(Paddings.DLU2);
 		// Panel bauen:
 		JPanel panel = new JPanel(new BorderLayout());
 
-		panel.add(topPanel, BorderLayout.CENTER);
+		panel.add(topPanel, BorderLayout.NORTH);
 		panel.add(tabbedPane, BorderLayout.CENTER);
 
 		return panel;
