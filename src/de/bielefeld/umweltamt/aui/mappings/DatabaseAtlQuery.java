@@ -1164,6 +1164,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	public static Analyseposition getAnalysepositionFromView(
 			ViewAtlAnalysepositionAll viewPos)
 	{
+		Integer nahmeID = viewPos.getProbenahmeId();
 		Analyseposition pos = new Analyseposition();
 		pos.setId(viewPos.getId());
 		pos.setGrkl(viewPos.getGrkl());
@@ -1173,8 +1174,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 		pos.setNormwert(viewPos.getNormwert());
 		pos.setEinheiten(Einheiten.findById(viewPos.getEinheitenId()));
 		pos.setParameter(Parameter.findById(viewPos.getParameterId()));
-		pos.setProbenahme(
-				Probenahme.findById(viewPos.getProbenahmeId()));
+		pos.setProbenahme(Probenahme.findById(nahmeID));
 		pos.setEnabled(viewPos.getEnabled());
 		pos.setDeleted(viewPos.getDeleted());
 		return pos;

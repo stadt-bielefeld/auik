@@ -139,7 +139,7 @@
 		<property name="externalNr" type="java.lang.String">
 			<column name="external_nr" length="50" />
 		</property>
-		<set name="wasserrechts" table="elka.e_z_els_wasserrecht" lazy="true" fetch="select">
+		<set name="wasserrechts" table="elka.e_z_els_wasserrecht" lazy="false" fetch="select">
 			<key>
 				<column name="els_nr" not-null="true" />
 			</key>
