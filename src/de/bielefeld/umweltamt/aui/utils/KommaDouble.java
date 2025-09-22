@@ -77,6 +77,7 @@ public class KommaDouble {
         if (formatter == null) {
             formatter = NumberFormat.getNumberInstance();
             formatter.setGroupingUsed(false);
+            formatter.setMaximumFractionDigits(4);
         }
 
         return formatter.format(value);

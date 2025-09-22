@@ -1150,7 +1150,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             probe.getMessstelle().getObjekt().getBetreiberid();
 
         probenummer.setText(probe.getKennummer());
-        probenummer.setEnabled(false);
+        probenummer.setEnabled(true);
         entnahmepunkt.setText(probe.getMessstelle().getObjekt()
             .getBeschreibung());
         Date entnahmeDatum = probe.getDatumDerEntnahme();
