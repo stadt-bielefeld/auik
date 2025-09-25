@@ -21,7 +21,6 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 
 import javax.swing.DefaultComboBoxModel;

@@ -43,8 +43,6 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.util.List;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;

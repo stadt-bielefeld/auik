@@ -28,17 +28,12 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.BoxLayout;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import org.apache.commons.collections.iterators.ArrayListIterator;
-
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueterId;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;

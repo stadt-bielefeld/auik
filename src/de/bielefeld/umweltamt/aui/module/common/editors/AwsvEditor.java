@@ -62,7 +62,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -74,7 +73,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -807,7 +805,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 		anlagenChronoModel.setFachdaten(getFachdaten());
 
 		if (getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_VAWS_ABSCHEIDER)) {
-			Abscheider abs = this.getAbscheider();
 			tabbedPane.addTab("Daten", getDatenVAWSAbscheiderTab());
 			tabbedPane.addTab("Ausführung", getAusfuehrungVAWSAbscheiderTab());
 			tabbedPane.addTab("Schutzvorkehrungen", getSchutzvorkehrungenVAWSAbscheiderTab());

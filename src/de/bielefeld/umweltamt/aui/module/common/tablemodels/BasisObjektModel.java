@@ -21,20 +21,16 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.awt.Color;
 import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
-import de.bielefeld.umweltamt.aui.module.BasisAdresseSuchen;
 
 /**
  * Ein TableModel für die Basis-Objektdaten bei der Betreiber/Standort-Suche.

@@ -127,8 +127,8 @@ Maven Checkstyle plugin. Some design related checks where removed.
       <property name="severity" value="warning"/>
     </module>
     <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
-    <!-- <module name="RedundantImport"/> -->
-    <!-- <module name="UnusedImports"/> -->
+    <module name="RedundantImport"/>
+    <module name="UnusedImports"/>
 
 
     <!-- Checks for Size Violations.                    -->

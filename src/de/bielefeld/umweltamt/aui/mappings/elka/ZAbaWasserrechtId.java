@@ -23,7 +23,6 @@
 
 package de.bielefeld.umweltamt.aui.mappings.elka;
 
-import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 
 /**

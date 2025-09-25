@@ -23,7 +23,6 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.FlowLayout;
 
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;

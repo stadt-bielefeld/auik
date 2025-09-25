@@ -21,35 +21,16 @@
 
 package de.bielefeld.umweltamt.aui.mappings;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
-import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
-import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Analysen;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.SuevFachdaten;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
 
