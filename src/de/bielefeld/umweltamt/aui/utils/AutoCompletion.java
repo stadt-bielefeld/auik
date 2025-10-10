@@ -93,9 +93,7 @@ public class AutoCompletion extends PlainDocument {
                     	break;
                     // ignore delete key
                     case KeyEvent.VK_DELETE :
-                    	if (comboBox.allowsNewValues()) {
-                    		// This block is intentionally left blank
-                    	} else {
+                    	if (!comboBox.allowsNewValues()) {
                         	e.consume();
                         	comboBox.getToolkit().beep();
                     	}

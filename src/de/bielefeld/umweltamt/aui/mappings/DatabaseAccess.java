@@ -412,10 +412,6 @@ public class DatabaseAccess
 		{
 			this.handleDBException(he, false);
 		}
-		finally
-		{
-			// This place is intentionally left blank.
-		}
 	}
 
 	/**
@@ -524,10 +520,6 @@ public class DatabaseAccess
 			{
 				this.handleDBException(he, true);
 			}
-			finally
-			{
-				// This place is intentionally left blank.
-			}
 		}
 		return this.session;
 	}
@@ -561,10 +553,6 @@ public class DatabaseAccess
 		catch (HibernateException he)
 		{
 			this.handleDBException(he, true);
-		}
-		finally
-		{
-			// This place is intentionally left blank.
 		}
 		return success;
 	}

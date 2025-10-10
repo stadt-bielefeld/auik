@@ -55,7 +55,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -293,17 +292,6 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 
 			this.einstellungenTabelle.addFocusListener(TableFocusListener
 					.getInstance());
-			this.einstellungenTabelle.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(java.awt.event.MouseEvent e) {
-					if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-						// TODO: Check this: Nothing happens here
-						// Point origin = e.getPoint();
-						// int row = ergebnisTabelle.rowAtPoint(origin);
-					}
-				}
-			});
-
 		}
 
 		return this.einstellungenTabelle;

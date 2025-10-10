@@ -581,8 +581,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 }
                 else {
                     log.debug("Bearbeite Objekt: " + objekt);
-                    String betr = objekt.getBetreiberid().toString();
-                    Standort std = objekt.getStandortid();
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
                     getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getStandortid()) +
                             "; " + objekt.getBetreiberid()+"; "+objekt.getObjektarten().getObjektart());

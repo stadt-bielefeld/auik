@@ -144,9 +144,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	// Widgets fürs Top-Panel:
 	private JLabel header;
-//    private JLabel subHeader;
-//    private JLabel hnrLabel;
-//    private JButton reportButton;
 	private LimitedTextField hnrFeld;
 	private JComboBox fluessigkeitBox;
 	private JComboBox vbfBox;
@@ -340,9 +337,8 @@ public class AwsvEditor extends AbstractBaseEditor {
 			tabbedPane.setSelectedComponent(getSvPruefungTab());
 		} else if ("Verwaltungsverfahren".equals(tab)) {
 			tabbedPane.setSelectedComponent(getVerwVerfahrenTab());
-		} else if ("Herstellnummer".equals(tab)) {
+            //} else if ("Herstellnummer".equals(tab)) {
 			// Der Reiter Daten wird aufgerufen
-
 		}
 
 	}
@@ -1006,7 +1002,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 			ausfuehrungBox.setSelectedItem(getFachdaten().getAusfuehrung());
 
 		} else if (getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)) {
-			Abfuellflaeche flaeche = this.getAbfuellflaeche();
 			tabbedPane.addTab("Daten", getDatenAbfuellflaechenTab());
 			tabbedPane.addTab("Ausführung", getAusfuehrungAbfuellflaechenTab());
 

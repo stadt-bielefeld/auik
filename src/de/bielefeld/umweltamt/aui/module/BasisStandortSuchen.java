@@ -1432,8 +1432,6 @@ public class BasisStandortSuchen extends AbstractModul
 		{
 			this.objektPopup = new JPopupMenu("Objekt");
 			JMenuItem bearbItem = new JMenuItem(getObjektEditAction());
-			JMenuItem objbetrItem = new JMenuItem(getObjektBetreiberEditAction());
-			JMenuItem objstdItem = new JMenuItem(getObjektStandortEditAction());
 			JMenuItem loeschItem = new JMenuItem(getObjektLoeschAction());
 			this.objektPopup.add(bearbItem);
 			this.objektPopup.add(loeschItem);

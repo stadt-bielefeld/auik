@@ -305,7 +305,7 @@ public class PDFExporter {
 	 * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
 	 */
 	public JasperPrint exportBescheid(Map<String, Object> fields,
-			JRDataSource subdata, String report, String dest, boolean printPDF)
+			JRDataSource subdata, String report, String dest)
 			throws Exception {
 		InputStream inputStream = getResourceAsStream(report);
 
@@ -318,11 +318,6 @@ public class PDFExporter {
 
 		try {
 			JasperPrint jprint = export(fields, inputStream, dest);
-
-			if (printPDF) {
-				// print(jprint);
-			}
-
 			return jprint;
 		} catch (JRException jre) {
 			throw new Exception("Druck des Reports schlug fehl: "

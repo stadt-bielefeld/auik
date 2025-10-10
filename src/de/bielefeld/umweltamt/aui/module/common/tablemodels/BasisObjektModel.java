@@ -105,7 +105,6 @@ public class BasisObjektModel extends ListTableModel {
 						tmp = "Anfallstelle";
 					}
 				} else if (bo.getSonderbauwerks().size() > 0) {
-					Set<Sonderbauwerk> list = bo.getSonderbauwerks();
 					Sonderbauwerk sonderbauwerk = bo.getSonderbauwerks().iterator().next();
 					if (sonderbauwerk.getTypOpt() == 1) {
 						tmp = "Sonderbauwerk (RRB)";
