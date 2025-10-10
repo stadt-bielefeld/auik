@@ -23,7 +23,6 @@ public class SielhautModel extends ListTableModel {
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
     	Object[] obj = (Object[]) objectAtRow;
         Object tmp;
-        Boolean b = (Boolean) obj[3];
 
         switch (columnIndex) {
             case 0:

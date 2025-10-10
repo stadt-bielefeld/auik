@@ -52,9 +52,7 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Arrays;
 import java.util.List;
 
@@ -177,17 +175,6 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 
 	@Override
 	protected JComponent buildContentArea() {
-
-		// Der folgende KeyListener wird benutzt um mit Escape
-		// das Bearbeiten abzubrechen.
-		KeyListener escListener = new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					doCancel();
-				}
-			}
-		};
 		getEinstellungenTabelle().setModel(getEinstellungenModel());
 		JScrollPane tabellenScroller = new JScrollPane(
 				getEinstellungenTabelle(),

@@ -260,7 +260,6 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 		this.abaverfahrens.setData(Abaverfahren.getNwBehandel());
 		List<Abaverfahren> selected = new ArrayList<Abaverfahren>();
 		if (this.entwaesserungsgrundstueck != null) {
-			Set<Abaverfahren> verfs = this.entwaesserungsgrundstueck.getAbaverfahrens();
 			this.abaverfahrens.applyEntries(selected);
 		}
 		setDirty(false);

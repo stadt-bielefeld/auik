@@ -270,8 +270,6 @@ private static final long serialVersionUID = -4030805403749508467L;
             this.fachdaten = new Aba();
             // Objekt_Id setzen
             this.fachdaten.setObjekt(this.hauptModul.getObjekt());
-            // Verfahren auf "unbekannt" setzen
-            Abaverfahren verfahren = Abaverfahren.findById(1);
 
             // Abwasserbehandlungsanlage speichern
             this.fachdaten.merge();

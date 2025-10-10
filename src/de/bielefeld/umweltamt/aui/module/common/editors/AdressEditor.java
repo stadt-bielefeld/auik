@@ -136,12 +136,6 @@ public class AdressEditor extends AbstractBaseEditor
 		JScrollPane bemerkungsScroller = new JScrollPane(bemerkungsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-
-
-		String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
-		String rechteSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g";
-		int rS = 10;
-
 		FormLayout layout = new FormLayout(
 				"right:pref, 3dlu, 20dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu", // Spalten
 						"pref, 3dlu, " +

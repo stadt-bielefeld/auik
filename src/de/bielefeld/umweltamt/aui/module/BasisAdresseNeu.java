@@ -567,11 +567,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 					@Override
 					public void mousePressed(MouseEvent e) {
-
-						if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-							Point origin = e.getPoint();
-							int row = getStandorteTabelle().rowAtPoint(origin);
-						}else if ((e.getButton() == 3)){
+						if ((e.getButton() == 3)){
 							showStandortPopup(e);
 						}
 					}

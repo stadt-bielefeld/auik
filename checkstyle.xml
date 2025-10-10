@@ -222,7 +222,7 @@ Maven Checkstyle plugin. Some design related checks where removed.
     <!-- <module name="SimplifyBooleanExpression"/> -->
     <!-- <module name="SimplifyBooleanReturn"/> -->
     <!-- <module name="StringLiteralEquality"/> -->
-    <!-- <module name="UnusedLocalVariable"/> -->
+    <module name="UnusedLocalVariable"/>
 
     <!-- Checks for class design                         -->
     <!-- See http://checkstyle.sf.net/config_design.html -->
