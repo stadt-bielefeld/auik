@@ -451,35 +451,6 @@ public class BasisAdresseNeu extends AbstractModul {
 	}
 
 	/**
-	 * Methode liefert die eingegebene oder ausgewählte Straße
-	 *
-	 * @return
-	 */
-	private String getStrasse() {
-		String str = "";
-
-		if (strassenBox.getSelectedItem() != null) {
-			if (strassenBox.getSelectedItem().getClass() == TabStreets.class) {
-				TabStreets selstrasse = (TabStreets) strassenBox.getSelectedItem();
-				if (selstrasse != null) {
-					str = selstrasse.getStrasse();
-				}
-			} else if (strassenBox.getSelectedItem().getClass() == String.class) {
-				str = (String) strassenBox.getSelectedItem();
-			}
-		}
-		str = str.trim();
-
-		// Weil ich bis jetzt noch keine LimitedComboBox oder so habe...
-		if (str.length() > 50) {
-			// ... kürze ich hier den String auf 50 Zeichen
-			str = str.substring(0, 50);
-		}
-
-		return str;
-	}
-
-	/**
 	 * öffnet einen Dialog um einen Betreiber-Datensatz zu bearbeiten.
 	 *
 	 * @param betr Der Betreiber

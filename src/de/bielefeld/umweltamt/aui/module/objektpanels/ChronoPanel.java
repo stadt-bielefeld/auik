@@ -493,32 +493,6 @@ public class ChronoPanel extends ObjectPanel {
     }
 
     /**
-     * Liefert die Action um ein Dokument zu öffnen.
-     */
-    private Action getChronoItemOpenDocAction() {
-        if (this.openDocAction == null) {
-            this.openDocAction = new AbstractAction("Dokument öffnen") {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int row = getChronoTable().getSelectedRow();
-
-                    // Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
-                    if (row != -1) {
-                        ChronoPanel.this.chronoModel.getObjectAtRow(row);
-                    }
-                }
-            };
-            this.openDocAction.putValue(Action.MNEMONIC_KEY,
-                new Integer(KeyEvent.VK_L));
-            this.openDocAction.putValue(Action.ACCELERATOR_KEY,
-                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
-        }
-
-        return this.openDocAction;
-    }
-
-    /**
      * Liefert die Action um die ganze Chronologie zu speichern.
      */
     private Action getChronoSaveAction() {

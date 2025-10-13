@@ -49,7 +49,6 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
@@ -60,7 +59,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -98,7 +96,6 @@ public class AfsNwPanel extends ObjectPanel {
 
 	// Widgets
 	private JTable afsNwTabelle = null;
-	private JButton saveAfsButton = null;
 
 	// Daten
 	private AfsNwModel afsModel = new AfsNwModel();
@@ -372,20 +369,6 @@ public class AfsNwPanel extends ObjectPanel {
 		return name;
 	}
 
-	private JButton getSaveAfsNw() {
-		if (saveAfsButton == null) {
-			saveAfsButton = new JButton("Speichern");
-
-			this.saveAfsButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					hauptModul.saveAllTabs();
-				}
-			});
-		}
-		return saveAfsButton;
-	}
-
 	private JTable getAfsNwTabelle() {
 		if (this.afsNwTabelle == null) {
 			this.afsNwTabelle = new JTable(this.afsModel);
@@ -398,7 +381,6 @@ public class AfsNwPanel extends ObjectPanel {
 			this.afsNwTabelle.setRowSelectionAllowed(true);
 
 			// Für die ComboBox bei "Herkunftsbereich"
-
 			herkunftBox = new JComboBox(herkunft);
 			herkunftBox.setEditable(false);
 			herkunftBox.addFocusListener(new FocusAdapter() {
