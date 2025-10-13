@@ -79,7 +79,6 @@ public class EAnfallstelle implements java.io.Serializable {
         this.erstellDat = erstellDat;
         this.herkunft = herkunft;
         this.afsStoffes = afsStoffes;
-        this.afsNiederschlagswassers = afsNiederschlagswassers;
     }
 
     public Integer getNr() {

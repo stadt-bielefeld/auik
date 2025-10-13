@@ -103,7 +103,6 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
         this.vsf2 = vsf2;
         this.vsf1 = vsf1;
         this.schwimmer = schwimmer;
-        this.warnanlage = warnanlage;
         this.hersteller = hersteller;
         this.typ = typ;
         this.bemerkung = bemerkung;

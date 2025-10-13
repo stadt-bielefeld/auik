@@ -259,14 +259,14 @@ public class AnfallstellePanel extends ObjectPanel {
             String[] betriebsweise = {"-", "Chargenbetrieb", "Durchlaufbetrieb", "Kampagnebetrieb"};
             getBetriebsweiseBox().setModel(new DefaultComboBoxModel(betriebsweise));
 
-            getBetriebsweiseBox().setSelectedItem(anfallstelle.getBetriebsweiseDescriptionFromId(this.anfallstelle.getBetriebsweiseOpt()));
+            getBetriebsweiseBox().setSelectedItem(Anfallstelle.getBetriebsweiseDescriptionFromId(this.anfallstelle.getBetriebsweiseOpt()));
 
             String[] beschaffenheit = {"Produktionsabwasser",  "Kühlwasser", "Sanitärwasser",
                     "Niederschlagswasser mit Sonderbauwerk", "Niederschlagswasser ohne Sonderbauwerk",
                     "Grubenwasser", "Fischteiche", "sonstiges Wasser"};
             getBeschaffenheitBox().setModel(new DefaultComboBoxModel(beschaffenheit));
 
-            getBeschaffenheitBox().setSelectedItem(anfallstelle.getBeschaffenheitDescriptionFromId(this.anfallstelle.getAbwaBeschaffOpt()));
+            getBeschaffenheitBox().setSelectedItem(Anfallstelle.getBeschaffenheitDescriptionFromId(this.anfallstelle.getAbwaBeschaffOpt()));
 
             String[] arten = {"-", "Aufbereitung Medizinprodukte", "Brennwertkessel", "Blockheizkraftwerk",
                     "Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor",

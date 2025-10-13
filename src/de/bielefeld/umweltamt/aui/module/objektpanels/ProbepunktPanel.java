@@ -803,11 +803,7 @@ public class ProbepunktPanel extends ObjectPanel {
             this.printDeckblattButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    try {
-                        showReport();
-                    } catch (Exception e1) {
-                        // TODO Auto-generated catch block
-                    }
+                    showReport();
                 }
             });
         }
