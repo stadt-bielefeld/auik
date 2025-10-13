@@ -58,7 +58,6 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
-import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
@@ -99,7 +98,6 @@ public class SonderbauwerkPanel extends ObjectPanel {
     private LimitedTextArea bemerkungArea = null;
     // Daten
     private Sonderbauwerk  sonderbauwerk = null;
-    private Referenz referenz = null;
     private JButton saveSonderbauwerkButton = null;
 
     // Objektverknuepfer

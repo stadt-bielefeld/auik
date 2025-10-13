@@ -94,7 +94,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
-import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
@@ -168,10 +167,8 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JComboBox strassenBox;
 	private JComboBox wirtschaftszweigBox;
 
-	private Orte[] orte = null;
 	private Wirtschaftszweig[] wirtschaftszweige = null;
 	private String[] tabstreets = null;
-	private String street = null;
 
 	private Action standortLoeschAction;
 	private Action standortNeuAction;

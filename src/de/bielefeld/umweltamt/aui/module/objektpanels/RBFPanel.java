@@ -36,16 +36,11 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueterId;
-import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ZuordnungChooser;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 
 public class RBFPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
-
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     //Fields
     private JTextField stauvolumenField;
@@ -73,11 +68,8 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
 
     private ZuordnungChooser<CBoxItem> schutzgueterChooser;
 
-    private BasisObjektBearbeiten parentModule;
-
-    public RBFPanel (BasisObjektBearbeiten parentModule) {
+    public RBFPanel() {
         this.name = "RBF";
-        this.parentModule = parentModule;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

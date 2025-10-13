@@ -44,19 +44,14 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * Das "Foto"-Panel des Objekt-Bearbeiten-Moduls.
  * @author Gerd Genuit
  */
 public class FotoPanel extends JPanel {
-    /**
-     *
-     */
     private static final long serialVersionUID = -9086697143957142239L;
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
+
     protected JPanel panel = null;
     private String name;
     private BasisObjektBearbeiten hauptModul;

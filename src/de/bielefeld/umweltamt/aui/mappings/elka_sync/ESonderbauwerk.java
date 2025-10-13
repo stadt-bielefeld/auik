@@ -170,7 +170,6 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private String externalNr;
 
     private Set<ZRbfSchutzgueter> zuordnungRfbSchutguts;
-    private Set<ZSbVerfahren> zuordnungSbVerfahrens;
     private Set <ZSbRegeln> zuordnungSbRegels;
     private Set<SbEntlastung> sbEntlastungs;
     private Sonderbauwerk sonderbauwerk;

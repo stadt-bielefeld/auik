@@ -71,7 +71,6 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -89,9 +88,6 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 	private JLabel titel;
 	private EinstellungenModel einstModel;
 	private List settinglist;
-
-	/** Logging */
-	private static final AuikLogger log = AuikLogger.getLogger();
 
 	private class EinstellungenModel extends EditableListTableModel {
 		private static final long serialVersionUID = 6042681141925302970L;

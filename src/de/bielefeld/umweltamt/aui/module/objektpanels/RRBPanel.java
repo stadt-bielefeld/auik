@@ -30,8 +30,6 @@ import javax.swing.JTextField;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 
 /**
@@ -39,11 +37,6 @@ import de.bielefeld.umweltamt.aui.utils.CBoxItem;
  */
 public class RRBPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
-
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-
-    private BasisObjektBearbeiten parentModule;
 
     private JComboBox<CBoxItem> funktionenBox;
     private DefaultComboBoxModel<CBoxItem> funktionenModel;
@@ -53,9 +46,8 @@ public class RRBPanel extends AbstractSonderbauwerkTypPanel {
     private JTextField ueberlaufhaeufigkeitField;
     private JTextField entleerungszeit;
 
-    public RRBPanel (BasisObjektBearbeiten parentModule) {
+    public RRBPanel() {
         this.name = "RRB";
-        this.parentModule = parentModule;
 
         createFields();
         createMappings();

@@ -1126,7 +1126,7 @@ public class AnfallstellePanel extends ObjectPanel {
 
     public Anh40Panel getAnh40Tab() {
         if (anhang40Tab == null) {
-            anhang40Tab = new Anh40Panel(hauptModul, anfallstelle);
+            anhang40Tab = new Anh40Panel(hauptModul);
             anhang40Tab.setBorder(Paddings.DIALOG);
         }
         return anhang40Tab;
@@ -1134,7 +1134,7 @@ public class AnfallstellePanel extends ObjectPanel {
 
     public Anh49Panel getAnh49Tab() {
         if (anhang49Tab == null) {
-            anhang49Tab = new Anh49Panel(hauptModul, anfallstelle);
+            anhang49Tab = new Anh49Panel(hauptModul);
             anhang49Tab.setBorder(Paddings.DIALOG);
         }
         return anhang49Tab;

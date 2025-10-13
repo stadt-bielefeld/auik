@@ -64,7 +64,6 @@ public class Anh40Panel extends ObjectPanel {
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
-    private Anfallstelle anfallstelle;
 
     // Widgets
     private JTextArea anh40BemerkungArea = null;
@@ -89,11 +88,9 @@ public class Anh40Panel extends ObjectPanel {
     private Anh40Fachdaten fachdaten = null;
 
     @SuppressWarnings("deprecation")
-    public Anh40Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
+    public Anh40Panel(BasisObjektBearbeiten hauptModul) {
         this.name = "Anhang 40";
         this.hauptModul = hauptModul;
-        this.anfallstelle = anfallstelle;
-
 
         FormLayout layout = new FormLayout(
             "r:120dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 100dlu", // Spalten
@@ -374,7 +371,6 @@ public class Anh40Panel extends ObjectPanel {
             // Neues Anhang 40 Objekt erzeugen
             this.fachdaten = new Anh40Fachdaten();
             // Anfallstelle setzen
-            this.anfallstelle = anfallstelle;
             this.fachdaten.setAnfallstelle(anfallstelle);
 
         }

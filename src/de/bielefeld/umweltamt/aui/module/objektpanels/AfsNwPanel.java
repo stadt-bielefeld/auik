@@ -98,7 +98,6 @@ public class AfsNwPanel extends ObjectPanel {
 
 	// Widgets
 	private JTable afsNwTabelle = null;
-	private JButton anlegenButton = null;
 	private JButton saveAfsButton = null;
 
 	// Daten

@@ -49,7 +49,6 @@ public class CredentialsDialog extends JDialog {
 
     private SettingsManager settings;
     private ELKASync modul;
-    private String selection;
 
     private JLabel textLabel;
     private JTextField benutzerFeld;

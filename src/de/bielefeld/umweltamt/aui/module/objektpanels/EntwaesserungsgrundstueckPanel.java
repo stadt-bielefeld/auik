@@ -59,7 +59,6 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
-import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
@@ -90,7 +89,6 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private JTextField bezeichnungFeld = null;
 	// Daten
 	private Entwaesserungsgrundstueck entwaesserungsgrundstueck = null;
-	private Referenz referenz = null;
 	private JButton saveEntwaesserungsgrundstueckButton = null;
 
 	// Objektverknuepfer

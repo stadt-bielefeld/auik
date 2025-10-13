@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -89,8 +88,6 @@ public class AdressEditor extends AbstractBaseEditor
 	private JComboBox wEinzugsGebBox;
 
 	private JTextArea bemerkungsArea;
-
-	private JButton sapeichernButton;
 
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Standorts.

@@ -28,9 +28,7 @@ import org.hibernate.criterion.Restrictions;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
-import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
 
@@ -41,12 +39,6 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
 abstract class DatabaseDirekteinlQuery {
-
-	private static Entsorger[] entsorger = null;
-
-	private static Abaverfahren[] verfahren = null;
-
-	private static Integer[] anhaenge = null;
 
 	/* ********************************************************************** */
 	/* Queries for package DirektEinl */

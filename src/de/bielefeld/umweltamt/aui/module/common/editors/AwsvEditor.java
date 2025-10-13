@@ -272,7 +272,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 	private LimitedTextField tierhaltungFeld;
 	private JCheckBox seitenwandCheck;
 	private DoubleField wandhoeheFeld;
-	private LimitedTextField bodenplatteFeld;
 	private JCheckBox ueberdachungCheck;
 	private JComboBox auffangbehBox;
 	private DoubleField volumenAuffangbehFeld;
@@ -539,7 +538,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 		tierhaltungFeld = new LimitedTextField(25);
 		seitenwandCheck = new JCheckBox("Seitenwand");
 		wandhoeheFeld = new DoubleField(0);
-		bodenplatteFeld = new LimitedTextField(25);
 		ueberdachungCheck = new JCheckBox("Überdachung");
 		auffangbehBox = new JComboBox(DatabaseQuery.getBehaelterarten());
 		auffangbehBox.setEditable(false);

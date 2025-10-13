@@ -96,7 +96,6 @@ import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -118,7 +117,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
-import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaVerfahrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AfsNwPanel;
@@ -184,7 +182,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
     // Daten
     private Objekt objekt;
     private boolean isNew = true;
-    private Anfallstelle anfallstelle;
 
     public BasisObjektBearbeiten() {
         this.activePanels = new ArrayList<ObjectPanel>();
@@ -502,11 +499,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 getBasisTab().fetchFormData();
-
-                if (objekt.getAnfallstelles().size() > 0) {
-                    Set<Anfallstelle> list = objekt.getAnfallstelles();
-                    anfallstelle = list.iterator().next();
-                }
 
                 // Daten für verschiedene Objektarten holen
                 if (objekt.getObjektarten() != null) {

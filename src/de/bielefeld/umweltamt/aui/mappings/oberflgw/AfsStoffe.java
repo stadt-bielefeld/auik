@@ -47,7 +47,6 @@ public class AfsStoffe  implements java.io.Serializable {
 
     /* Primary key, foreign keys (relations) and table columns */
     private Integer anfallstellenNr;
-    private Integer origNr;
     private Anfallstelle anfallstelle;
     private String produkt;
     private Integer stoffNr;

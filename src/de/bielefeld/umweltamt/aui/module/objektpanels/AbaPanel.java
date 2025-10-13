@@ -58,7 +58,6 @@ import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
-import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
@@ -83,16 +82,11 @@ private static final long serialVersionUID = -4030805403749508467L;
     private JCheckBox wartungCheck = null;
     private JCheckBox einzelabnahmeCheck = null;
     private JTextArea abaBezeichnungArea = null;
-    private IntegerField abaE32Field = null;
-    private IntegerField abaN32Field = null;
     private JButton saveAbaButton = null;
 
     // Daten
     private Aba fachdaten = null;
     private Abaverfahren[] verfahren = null;
-
-    // Listener
-    private ActionListener editButtonListener;
 
     // Objektverknuepfer
     private ObjektVerknuepfungModel objektVerknuepfungModel;
