@@ -479,12 +479,5 @@ public class Anh49Abscheiderdetails  implements java.io.Serializable {
     public static List<Anh49Abscheiderdetails> getAll() {
         return DatabaseQuery.getAll(new Anh49Abscheiderdetails());
     }
-
-
-		// TODO Auto-generated method stub
-
-	}
-
-    /* Custom code goes below here! */
-
+}
 

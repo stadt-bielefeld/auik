@@ -359,11 +359,6 @@ public class AfsNwPanel extends ObjectPanel {
 
 	}
 
-	public void completeObjekt() {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public String getName() {
 		return name;

@@ -378,7 +378,6 @@ public final class GUIManager
 
 	public final HauptFrame getRunningFrame()
 	{
-		// TODO Auto-generated method stub
 		return this.runningFrame;
 	}
 }
