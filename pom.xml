@@ -388,6 +388,25 @@
           <includeResources>false</includeResources>
         </configuration>
       </plugin>
-	</plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.9.0</version>
+        <executions>
+          <execution>
+            <id>analyze</id>
+            <goals>
+              <goal>analyze-only</goal>
+            </goals>
+            <configuration>
+              <failOnWarning>true</failOnWarning>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <ignoreUnusedRuntime>true</ignoreUnusedRuntime>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
