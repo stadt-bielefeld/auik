@@ -915,7 +915,7 @@ public class AnfallstellePanel extends ObjectPanel {
             hauptModul.removeTabAt(3);
         }
 
-        this.anlagenartBox.enable(false);
+        this.anlagenartBox.setEnabled(false);
 
         switch ((String) type) {
         case "40":
@@ -996,7 +996,7 @@ public class AnfallstellePanel extends ObjectPanel {
             }
             break;
         case "99":
-            this.anlagenartBox.enable(true);
+            this.anlagenartBox.setEnabled(true);
             switch ((String) anlagenart) {
             case "Brennwertkessel":
                 hauptModul.addTab(getBWKTab().getName(), getBWKTab());
