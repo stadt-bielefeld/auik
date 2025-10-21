@@ -30,7 +30,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.hibernate.NullPrecedence;
-import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -269,7 +268,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			query += " AND a._deleted = false";
 		}
 		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC NULLS FIRST;";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+		NativeQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("i", Inhaber.class);
 		return q.list();
 	}
@@ -660,7 +659,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		}
 		query += " ORDER BY o.inaktiv, o.objektartid";
 
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+		NativeQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 
 		q.addEntity("o", Objekt.class);
 		return q.list();
@@ -696,7 +695,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			}
 		}
 		query += " ORDER BY o.inaktiv, o.objektartid";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+		NativeQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("o", Objekt.class);
 		return q.list();
 	}
@@ -709,7 +708,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				+ " WHERE o.standortid = '" + stdId + "'";
 
 		query += " ORDER BY o.inaktiv, o.objektartid";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+		NativeQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("o", Objekt.class);
 		return q.list();
 	}

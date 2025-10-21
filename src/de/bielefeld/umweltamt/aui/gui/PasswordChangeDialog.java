@@ -43,9 +43,9 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.jfree.ui.tabbedui.VerticalLayout;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -254,10 +254,9 @@ public class PasswordChangeDialog extends JDialog {
                 escapeUserString(user),
                 escapePasswordString(String.valueOf(newPw)));
         boolean success = false;
-        SQLQuery query = session.createSQLQuery(queryString);
+        NativeQuery<?> query = session.createSQLQuery(queryString);
         try {
-			Transaction tx = null;
-		    tx = session.beginTransaction();
+			Transaction tx = session.beginTransaction();
 		    query.executeUpdate();
 		    tx.commit();
         	success = true;
