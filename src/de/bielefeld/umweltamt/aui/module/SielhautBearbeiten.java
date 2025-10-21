@@ -262,8 +262,8 @@ public class SielhautBearbeiten extends ObjectModule {
 		super.show();
 
 		if (this.manager.getSettingsManager().getSetting("auik.imc.edit_object") != null) {
-			this.objekt = Objekt
-					.findById(new Integer(this.manager.getSettingsManager().getIntSetting("auik.imc.edit_object")));
+			this.objekt = Objekt.findById(this.manager.getSettingsManager()
+                .getIntSetting("auik.imc.edit_object"));
 			this.manager.getSettingsManager().removeSetting("auik.imc.edit_object");
 			this.sprobePkt = Messstelle.findByObjektId(this.objekt.getId());
 			this.spunkt = Sielhaut.findById(this.objekt.getId());
@@ -661,7 +661,7 @@ public class SielhautBearbeiten extends ObjectModule {
 					}
 				}
 			};
-			probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
+			probeEditAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_B));
 			probeEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
 		}
 
@@ -692,7 +692,7 @@ public class SielhautBearbeiten extends ObjectModule {
 					}
 				}
 			};
-			probeLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
+			probeLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_L));
 			probeLoeschAction.putValue(Action.ACCELERATOR_KEY,
 					KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
 		}

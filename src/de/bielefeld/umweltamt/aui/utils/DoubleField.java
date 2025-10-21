@@ -71,7 +71,7 @@ public class DoubleField extends BasicFormattedField {
         try {
             commitEdit();
             if (getValue() instanceof Long) {
-                nummer = new Double(((Long) getValue()).doubleValue());
+                nummer = ((Long) getValue()).doubleValue();
             } else {
                 nummer = (Double) getValue();
             }
@@ -90,9 +90,8 @@ public class DoubleField extends BasicFormattedField {
     public Float getFloatValue() {
         Double val = getDoubleValue();
         if (val != null) {
-            return new Float(val.floatValue());
-        } else {
-            return null;
+            return val.floatValue();
         }
+        return null;
     }
 }

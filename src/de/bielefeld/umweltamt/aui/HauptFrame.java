@@ -353,7 +353,7 @@ public class HauptFrame extends JFrame {
             closeAction.putValue(
                     Action.SHORT_DESCRIPTION, "Beendet das Programm");
             closeAction.putValue(
-                    Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
+                    Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_B));
             closeAction.putValue(
                     Action.SMALL_ICON, AuikUtils.getIcon(16, "exit.png"));
         }

@@ -613,9 +613,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>Gemarkung</code>
 	 */
 	public static Integer newGemarkungID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Gemarkung.class).setProjection(Property.forName("id").max()), new Integer(0));
-		return id + 1;
+        return newID(Gemarkung.class);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -809,10 +807,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>ObjektartenID</code>
 	 */
 	public static Integer newObjektartenID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Objektarten.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Objektarten.class);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -941,10 +936,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>SachbearbeiterID</code>
 	 */
 	public static Integer newSachbearbeiterID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Sachbearbeiter.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Sachbearbeiter.class);
 	}
 
 	/**
@@ -1092,9 +1084,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>EinheitenID</code>
 	 */
 	public static Integer newEinheitenID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Einheiten.class).setProjection(Property.forName("id").max()), new Integer(0));
-		return id + 1;
+        return newID(Einheiten.class);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1133,10 +1123,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>KlaeranlageID</code>
 	 */
 	public static Integer newKlaeranlageID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Klaeranlage.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Klaeranlage.class);
 	}
 
 	/* ********************************************************************** */
@@ -1166,10 +1153,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>WassereinzugsgebietID</code>
 	 */
 	public static Integer newWSGID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Wassereinzugsgebiet.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Wassereinzugsgebiet.class);
 	}
 
 	/**
@@ -1403,5 +1387,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	    }
 	    return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
 	new Objekt());
+	}
+
+	private static Integer newID(Class<?> clazz) {
+		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(clazz).setProjection(
+                Property.forName("id").max()),
+            0);
+		return id + 1;
 	}
 }

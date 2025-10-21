@@ -521,8 +521,8 @@ public class BasisAdresseSuchen extends AbstractModul {
                     }
                 }
             };
-            this.betreiberEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_B));
+            this.betreiberEditAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_B));
             this.betreiberEditAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
         }
@@ -573,7 +573,7 @@ public class BasisAdresseSuchen extends AbstractModul {
                 }
             };
             this.betreiberLoeschAction.putValue(Action.MNEMONIC_KEY,
-                new Integer(KeyEvent.VK_L));
+                Integer.valueOf(KeyEvent.VK_L));
             this.betreiberLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
@@ -607,8 +607,8 @@ public class BasisAdresseSuchen extends AbstractModul {
                     }
                 }
             };
-            this.objektNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_O));
+            this.objektNeuAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_O));
         }
 
         return this.objektNeuAction;
@@ -644,8 +644,8 @@ public class BasisAdresseSuchen extends AbstractModul {
                     }
                 }
             };
-            this.objektEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_B));
+            this.objektEditAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_B));
             this.objektEditAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
         }
@@ -670,8 +670,8 @@ public class BasisAdresseSuchen extends AbstractModul {
                     }
                 }
             };
-            this.objektBetreiberEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_F1));
+            this.objektBetreiberEditAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_F1));
             this.objektBetreiberEditAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0, false));
         }
@@ -698,8 +698,8 @@ public class BasisAdresseSuchen extends AbstractModul {
                     }
                 }
             };
-            this.objektStandortEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_F2));
+            this.objektStandortEditAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_F2));
             this.objektStandortEditAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0, false));
         }
@@ -743,8 +743,8 @@ public class BasisAdresseSuchen extends AbstractModul {
                     }
                 }
             };
-            this.objektLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                    KeyEvent.VK_L));
+            this.objektLoeschAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_L));
             this.objektLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
