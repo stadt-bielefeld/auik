@@ -309,7 +309,9 @@ public class ProbenEditor extends AbstractApplyEditor {
                         }
                     }
 
-                    if (grenzWert != null && !grenzWert.equals(new Double(0.0))) {
+                    if (grenzWert != null
+                        && !grenzWert.equals(Double.valueOf(0.0))
+                    ) {
                         value = grenzWert;
                     }
                     break;
@@ -322,7 +324,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         if (DatabaseQuery.isKlaerschlammProbe(this.probe)) {
                             if (pos.getParameter().getKlaerschlammGw() != null) {
                                 if (!pos.getParameter().getKlaerschlammGw()
-                                    .equals(new Double(0.0))) {
+                                    .equals(Double.valueOf(0.0))) {
                                     tmpVal = pos.getWert().doubleValue()
                                         / pos.getParameter()
                                             .getKlaerschlammGw().doubleValue();
@@ -332,7 +334,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                             DatabaseConstants.ATL_PROBEART_ID_SIELHAUT)) {
                             if (pos.getParameter().getSielhautGw() != null) {
                                 if (!pos.getParameter().getSielhautGw()
-                                    .equals(new Double(0.0))) {
+                                    .equals(Double.valueOf(0.0))) {
                                     tmpVal = pos.getWert().doubleValue()
                                         / pos.getParameter().getSielhautGw()
                                             .doubleValue();
@@ -448,7 +450,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
             tmp.setParameter((Parameter) ProbenEditor.this.parameterBox
                 .getSelectedItem());
-            tmp.setWert(new Float(0));
+            tmp.setWert(0f);
 			if (tmp.getParameter() != null) {
 				tmp.setEinheiten(tmp.getParameter().getEinheiten());
 			}
@@ -472,12 +474,11 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             pos.setProbenahme(this.probe);
             pos.setParameter(parameter);
-            pos.setWert(new Float(0));
+            pos.setWert(0f);
             pos.setEinheiten(parameter
                 .getEinheiten());
             pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
 
-//            getList().add(pos);
             List<Analyseposition> list = (List<Analyseposition>) getList();
             list.add(pos);
 
@@ -501,7 +502,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             pos.setProbenahme(this.probe);
             pos.setParameter(parameter);
-            pos.setWert(new Float(0));
+            pos.setWert(0f);
             pos.setEinheiten(einheit);
             pos.setAnalyseVon(analysevon);
             pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
@@ -1665,10 +1666,8 @@ public class ProbenEditor extends AbstractApplyEditor {
     /**
      * Diese Funktion liefert die Anzahl der beteiligten Probenehmer.
      */
-    protected Integer getAnzahl() {
-        Integer anzahl = new Integer(this.beteiligte.getText());
-
-        return anzahl;
+    protected int getAnzahl() {
+        return Integer.parseInt(this.beteiligte.getText());
     }
 
     /**
@@ -2041,10 +2040,9 @@ class ParameterAuswahlModel extends ListTableModel {
     public Object getValueAt(int row, int col) {
         if (rowExists(row)) {
             if (col < this.columns.length) {
-
                 switch (col) {
                     case 0:
-                        return new Boolean(this.selection[row]);
+                        return Boolean.valueOf(this.selection[row]);
                     case 1:
                         Parameter p = (Parameter) getObjectAtRow(row);
                         return p.getBezeichnung();

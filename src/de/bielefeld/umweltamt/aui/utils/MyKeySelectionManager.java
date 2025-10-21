@@ -68,9 +68,9 @@ public class MyKeySelectionManager implements KeySelectionManager {
             keys = null;
         } else {
             if (keys != null) {
-                keys = keys + (new Character(aKey)).toString();
+                keys = keys + aKey;
             } else {
-                keys = (new Character(aKey)).toString();
+                keys = String.valueOf(aKey);
             }
 
             if (keys != null) {
@@ -92,7 +92,6 @@ public class MyKeySelectionManager implements KeySelectionManager {
             }
         }
 
-        //log.debug("KEYMANAGER - char: '" + aKey + "', keys: \"" + keys + "\", curSel: " + curSelected + ", timeDif: " + timeDif);
         lastTime = curTime;
         return curSelected;
     }

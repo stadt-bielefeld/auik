@@ -336,7 +336,7 @@ public class AwsvPanel extends JPanel {
                     }
                 }
             };
-            awsvEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
+            awsvEditAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_B));
             awsvEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
         }
 
@@ -362,7 +362,7 @@ public class AwsvPanel extends JPanel {
                     }
                 }
             };
-            awsvLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
+            awsvLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_L));
             awsvLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
 
@@ -382,8 +382,8 @@ public class AwsvPanel extends JPanel {
                     showReportAnlage();
                 }
             };
-            reportAnlageAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_D));
-//            reportAnlageAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.ALT_DOWN_MASK, false));
+            reportAnlageAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_D));
         }
 
         return reportAnlageAction;

@@ -34,12 +34,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  */
 public class EditorSachbearbeiterModel extends EditableListTableModel {
 
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 99251332998082843L;
-	boolean isnew = new Boolean(false);
+
+	boolean isnew = false;
 
 	public EditorSachbearbeiterModel() {
         super(new String[]{

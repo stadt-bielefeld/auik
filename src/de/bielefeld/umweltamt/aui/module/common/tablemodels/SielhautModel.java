@@ -32,28 +32,17 @@ public class SielhautModel extends ListTableModel {
                 tmp = obj[2];
                 break;
             case 2:
-                if (obj[3] == null) {
-                    tmp = new Boolean(false);
-                } else {
-                    tmp = new Boolean((Boolean) obj[3]);
-                }
-                break;
             case 3:
-                if (obj[4] == null) {
-                    tmp = new Boolean(false);
-                } else {
-                    tmp = new Boolean((Boolean) obj[4]);
-                }
-                break;
             case 4:
-                if (obj[5] == null) {
-                    tmp = new Boolean(false);
+                Object val = obj[columnIndex + 1];
+                if (val == null) {
+                    tmp = Boolean.FALSE;
                 } else {
-                    tmp = new Boolean((Boolean) obj[5]);
+                    tmp = (Boolean) val;
                 }
                 break;
             case 5:
-                tmp = new Boolean((Boolean) obj[6]);
+                tmp = (Boolean) obj[6];
                 break;
             default:
                 tmp = "FEHLER!";

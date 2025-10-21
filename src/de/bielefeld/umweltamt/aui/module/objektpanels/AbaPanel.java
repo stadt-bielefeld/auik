@@ -481,7 +481,7 @@ private static final long serialVersionUID = -4030805403749508467L;
                 }
             };
             this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
-                new Integer(KeyEvent.VK_L));
+                Integer.valueOf(KeyEvent.VK_L));
             this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
