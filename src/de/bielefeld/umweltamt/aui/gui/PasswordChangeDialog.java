@@ -27,6 +27,7 @@ import java.awt.KeyEventDispatcher;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -209,7 +210,7 @@ public class PasswordChangeDialog extends JDialog {
      * @return True if empty, else false
      */
     private boolean checkPasswordEmpty() {
-        return newPasswordField.getText().isEmpty();
+        return newPasswordField.getPassword().length == 0;
     }
 
     /**
@@ -217,7 +218,8 @@ public class PasswordChangeDialog extends JDialog {
      * @return True if password is confirmed, else false
      */
     private boolean checkPasswordConfirmation() {
-        return newPasswordField.getText().equals(newPasswordConfirmField.getText());
+        return Arrays.equals(newPasswordField.getPassword(),
+            newPasswordConfirmField.getPassword());
     }
 
     /**
