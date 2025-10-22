@@ -662,7 +662,7 @@ public class HauptFrame extends JFrame {
             passwordChangeMenuItem.setText("Password ändern");
             passwordChangeMenuItem.setMnemonic(KeyEvent.VK_P);
             passwordChangeMenuItem.setEnabled(true);
-            final JFrame owner = this;
+            final HauptFrame owner = this;
             passwordChangeMenuItem.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
