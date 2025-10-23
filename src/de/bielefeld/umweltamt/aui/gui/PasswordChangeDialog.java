@@ -20,26 +20,17 @@
  */
 package de.bielefeld.umweltamt.aui.gui;
 
-import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.util.Arrays;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
-import org.jfree.ui.tabbedui.VerticalLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -53,10 +44,6 @@ public class PasswordChangeDialog extends OkCancelDialog {
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
-
-    private JLabel currentPasswordLabel;
-    private JLabel newPasswordLabel;
-    private JLabel newPasswordConfirmLabel;
 
     private JPasswordField currentPasswordField;
     private JPasswordField newPasswordField;
@@ -74,38 +61,18 @@ public class PasswordChangeDialog extends OkCancelDialog {
 
     @Override
     protected JComponent buildContentArea() {
-        currentPasswordLabel = new JLabel("Aktuelles Passwort:");
-        newPasswordLabel = new JLabel("Neues Passwort:");
-        newPasswordConfirmLabel = new JLabel("Passwort bestätigen:");
-        currentPasswordField = new JPasswordField();
-        newPasswordField = new JPasswordField();
-        newPasswordConfirmField = new JPasswordField();
-
-        currentPasswordField.setPreferredSize(new Dimension(150, 22));
+        final int nColumns = 24;
+        currentPasswordField = new JPasswordField(nColumns);
+        newPasswordField = new JPasswordField(nColumns);
+        newPasswordConfirmField = new JPasswordField(nColumns);
 
         //Create form
-        FormLayout layout = new FormLayout(
-            "right:pref, 4dlu, pref:grow, 4dlu, pref", // Spalten
-            "pref:grow, 3dlu, pref, 3dlu, pref, 3dlu, p" // Zeilen
-        );
+        Form formPanel = new Form();
+        formPanel.appendField("Aktuelles Passwort:", currentPasswordField);
+        formPanel.appendField("Neues Passwort:", newPasswordField);
+        formPanel.appendField("Passwort bestätigen:", newPasswordConfirmField);
 
-        JPanel contentPanel = new JPanel(new VerticalLayout());
-
-        layout.setRowGroups(new int[][]{{1, 3, 5}});
-
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-        builder.add(currentPasswordLabel, cc.xy(1, 1));
-        builder.add(currentPasswordField, cc.xy(3, 1));
-        builder.add(newPasswordLabel, cc.xy(1, 3));
-        builder.add(newPasswordField, cc.xy(3, 3));
-        builder.add(newPasswordConfirmLabel, cc.xy(1, 5));
-        builder.add(newPasswordConfirmField, cc.xy(3, 5));
-        JPanel formPanel = builder.getPanel();
-        formPanel.setBorder(Paddings.DIALOG);
-        contentPanel.add(formPanel);
-
-        return contentPanel;
+        return formPanel;
     }
 
     /**
