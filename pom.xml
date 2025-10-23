@@ -72,11 +72,6 @@
       <artifactId>jfreechart</artifactId>
       <version>1.5.4</version>
     </dependency>
-    <dependency>
-      <groupId>org.jfree</groupId>
-      <artifactId>jcommon</artifactId>
-      <version>1.0.23</version>
-    </dependency>
 
     <!--jackson-->
     <dependency>
