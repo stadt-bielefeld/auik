@@ -109,8 +109,8 @@ abstract class DatabaseDirekteinlQuery {
 
 		String query = "SELECT gewkz " + "FROM MapElkaGewkennz ORDER BY gewkz";
 
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
-
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Integer.class).list();
 	}
 
 	/**
