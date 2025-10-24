@@ -203,7 +203,7 @@ public class BasisAbfrage extends AbstractQueryModul {
                 } else {
                     sb = selectedSb;
                 }
-                List<Object> result = DatabaseQuery.executeBaseQuery(
+                List<Object[]> result = DatabaseQuery.executeBaseQuery(
                     art, anhang, anlagenart, sb, einzGeb, prior,wiedervorlage, group);
                 ((BasisAbfrageModel)getTableModel()).setList(result);
             }
