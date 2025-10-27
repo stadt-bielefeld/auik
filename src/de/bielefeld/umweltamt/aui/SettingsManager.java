@@ -86,7 +86,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SortedProperties;
 
@@ -102,7 +101,6 @@ public class SettingsManager {
 	/** GUI Manager */
 	private static final GUIManager guiManager = GUIManager.getInstance();
 
-	private Standort standort;
 	private Properties instanceSettings;
 	private SortedProperties appSettings;
 
@@ -288,21 +286,6 @@ public class SettingsManager {
 	}
 
 	/**
-	 * Setzt eine Einstellung. Wrapper-Methode für setSetting(String,
-	 * Lage, boolean).
-	 *
-	 * @param setting
-	 *            Den Key der Einstellung.
-	 * @param value
-	 *            Den Wert der Einstellung.
-	 * @param persist
-	 *            Soll die Einstellung beim Programm-Ende gespeichert werden.
-	 */
-	public void setStandort(Standort std) {
-		this.standort = std;
-	}
-
-	/**
 	 * Liefert alle Einstellungen.
 	 *
 	 * @return Liste aller Einstellungen.
@@ -378,20 +361,6 @@ public class SettingsManager {
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Liefert den aktuellen Wert einer Einstellung. Wrapper-Methode.
-	 *
-	 * @param setting
-	 *            Den Key der Einstellung.
-	 * @return Den Wert der Einstellung oder <code>false</code>, falls diese
-	 *         nicht existiert.
-	 */
-	public Standort getStandort() {
-
-		return standort;
-
 	}
 
 	/**
