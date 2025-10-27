@@ -316,11 +316,9 @@ public class BasisAdresseSuchen extends AbstractModul {
             getBetreiberTabelle()) {
             @Override
 			protected void doNonUILogic() throws RuntimeException {
-//				if (name != "" || strasse != ""
-//						|| fhausnr != -1 || ort != "") {
-				BasisAdresseSuchen.this.inhaberModel.filterAllList(name, strasse, fhausnr, ort, property);
+				BasisAdresseSuchen.this.inhaberModel.filterAllList(
+                    name, strasse, fhausnr, ort, property);
             }
-//			}
 
 			@Override
 			protected void doUIUpdateLogic() throws RuntimeException {
@@ -361,15 +359,11 @@ public class BasisAdresseSuchen extends AbstractModul {
 
 			@Override
 			protected void doNonUILogic() {
-
-				if(!name.isEmpty() || !str.isEmpty() || !ort.isEmpty()) {
-					BasisAdresseSuchen.this.inhaberModel.filterBetreiber(getSuchFeld().getText(),
+				if (!name.isEmpty() || !str.isEmpty() || !ort.isEmpty()) {
+					BasisAdresseSuchen.this.inhaberModel.filterBetreiber(
+                        getSuchFeld().getText(),
                         getStrassenFeld().getText(), fhausnr, ort);
                 }
-//				getSuchFeld().setText("");
-//				getStrassenFeld().setText("");
-//				getHausnrFeld().setText("");
-//				getOrtFeld().setText("");
             }
 
 			@Override

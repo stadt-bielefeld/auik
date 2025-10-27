@@ -238,7 +238,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            String
 	 * @return <code>List&lt;Object[]&gt;</code>
 	 */
-	public static List<Object[]> findInhaber(String strasse, Integer hausnr, String ort) {
+	public static List<Inhaber> findInhaber(String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
 		boolean bHausnr = (hausnr != null && hausnr != -1);
@@ -270,7 +270,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		}
 		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC NULLS FIRST;";
 		return HibernateSessionFactory.currentSession()
-            .createNativeQuery(query, Object[].class)
+            .createNativeQuery(query, Inhaber.class)
             .getResultList();
 	}
 
