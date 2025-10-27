@@ -45,7 +45,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -55,7 +54,6 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class BasisAdresseModel extends ListTableModel {
     private AuikLogger log = AuikLogger.getLogger();
-    private String strasse = null;
 
 	public BasisAdresseModel() {
         super(new String[]{
@@ -77,18 +75,7 @@ public class BasisAdresseModel extends ListTableModel {
      */
     @Override
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
-
-    	Inhaber inh = null;
-    	Adresse adr = null;
-
-    	if (objectAtRow instanceof Inhaber) {
-        	inh = (Inhaber) objectAtRow;
-        	adr = inh.getAdresse();
-    	} else {
-        	adr = (Adresse) objectAtRow;
-    	}
-
-
+    	Adresse adr = (Adresse) objectAtRow;
         Object tmp;
 
         switch (columnIndex) {
@@ -127,18 +114,9 @@ public class BasisAdresseModel extends ListTableModel {
         return tmp;
     }
 
-    public void setStrasse(String strasse) {
-        this.strasse = strasse;
-    }
-
     @Override
     public void updateList() {
-        if (strasse != null) {
-            setList(DatabaseQuery.findStandorte(strasse));
-
-            fireTableDataChanged();
-        }
-        else setList(null);
+        setList(null);
     }
 
     /**
