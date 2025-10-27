@@ -29,7 +29,6 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
@@ -392,9 +391,8 @@ public class AdresseChooser extends JDialog {
 
 			@Override
 			protected void doNonUILogic() {
-				if (SettingsManager.getInstance().getStandort() == null) {
-					AdresseChooser.this.inhaberModel.filterStandort(getStrassenFeld().getText(), fhausnr, null);
-				}
+                AdresseChooser.this.inhaberModel.filterStandort(
+                    getStrassenFeld().getText(), fhausnr, null);
 				getNameFeld().setText("");
 			}
 

@@ -21,14 +21,12 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 
 /**
  * Ein TableModel für die Basis-Standortdaten.
@@ -111,19 +109,6 @@ public class BasisLageModel extends ListTableModel
 	}
 
 	/**
-	 * Filtert den Tabelleninhalt nach einem Standort.
-	 *
-	 * @param std
-	 *            Lage
-	 */
-	public void filterList(Standort std)
-	{
-		List<Standort> oneItemList = new ArrayList<Standort>();
-		oneItemList.add(std);
-		setList(oneItemList);
-	}
-
-	/**
 	 * Liefert den Inhalt der Spalte mit den gegebenen Koordinaten.
 	 *
 	 * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(Object,
@@ -200,13 +185,6 @@ public class BasisLageModel extends ListTableModel
 		}
 		return value;
 
-	}
-
-	@Override
-	public boolean objectRemoved(Object objectAtRow)
-	{
-		Standort removedStandort = (Standort) objectAtRow;
-		return Standort.delete(removedStandort);
 	}
 
 	@Override
