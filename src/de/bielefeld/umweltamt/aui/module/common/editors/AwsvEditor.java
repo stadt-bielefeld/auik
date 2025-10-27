@@ -1375,13 +1375,13 @@ public class AwsvEditor extends AbstractBaseEditor {
 					int index = tabbedPane.getSelectedIndex();
 					log.debug("index: " + index);
 					if (index == 0) {
-						removeRowFromTable(anlagenChronoTabelle, anlagenChronoModel);
+						removeRowFromTable(anlagenChronoTabelle);
 					} else if (index == (tabbedPane.getTabCount() - 3)) {
-						removeRowFromTable(svPruefungTabelle, svPruefungModel);
+						removeRowFromTable(svPruefungTabelle);
 					} else if (index == (tabbedPane.getTabCount() - 2)) {
-						removeRowFromTable(verwVerfahrenTabelle, verwVerfahrenModel);
+						removeRowFromTable(verwVerfahrenTabelle);
 					} else if (index == (tabbedPane.getTabCount() - 1)) {
-						removeRowFromTable(verwGebuehrenTabelle, verwGebuehrenModel);
+						removeRowFromTable(verwGebuehrenTabelle);
 					}
 				}
 			};
@@ -1392,12 +1392,12 @@ public class AwsvEditor extends AbstractBaseEditor {
 		return tabellenItemLoeschAction;
 	}
 
-	private void removeRowFromTable(JTable table, EditableListTableModel model) {
+	private void removeRowFromTable(JTable table) {
 		int row = table.getSelectedRow();
 
 		// Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
 		if (row != -1) {
-			model.removeRow(row);
+            ((EditableListTableModel) table.getModel()).removeRow(row);
 		}
 	}
 
