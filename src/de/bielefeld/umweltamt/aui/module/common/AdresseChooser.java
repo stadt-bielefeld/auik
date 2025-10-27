@@ -97,7 +97,7 @@ public class AdresseChooser extends JDialog {
         } else if (initial instanceof Inhaber && caller == "betreiber") {
             setTitle("Inhaber auswählen");
             this.inhaber = (Inhaber) initial;
-            this.inhaberModel = new BasisInhaberModel(true);
+            this.inhaberModel = new BasisInhaberModel();
             if (this.inhaber.getId() != null) {
                 this.inhaberModel.setList(initialList);
             }
