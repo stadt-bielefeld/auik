@@ -233,7 +233,7 @@ public class AbwasserImporter extends AbstractImporter {
 
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(String[] objectAtRow, int columnIndex) {
         return null;
     }
 

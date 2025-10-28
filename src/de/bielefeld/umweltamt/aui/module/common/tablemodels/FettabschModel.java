@@ -32,7 +32,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Fettabscheider.
  * @author Sebastian Geller
  */
-public class FettabschModel extends ListTableModel {
+public class FettabschModel extends ListTableModel<Anfallstelle> {
     private static final long serialVersionUID = 6474195217246081874L;
 
     public FettabschModel() {
@@ -53,8 +53,7 @@ public class FettabschModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
 	@Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Anfallstelle fd = (Anfallstelle) objectAtRow;
+    public Object getColumnValue(Anfallstelle fd, int columnIndex) {
 		Object tmp = null;
 		Inhaber inh = fd.getObjekt().getStandortid().getInhaber();
 		Adresse addr = inh != null ? inh.getAdresse() : null;

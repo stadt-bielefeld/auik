@@ -33,8 +33,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  *
  * @author David Klotz
  */
-public class BasisLageModel extends ListTableModel
-{
+public class BasisLageModel extends ListTableModel<Adresse> {
 	private static final long serialVersionUID = 3532697905957103920L;
 	private String lastStrasse = null;
 	private String lastOrt = null;
@@ -118,9 +117,8 @@ public class BasisLageModel extends ListTableModel
 	 * @return Den Wert der Zelle oder null (falls die Zelle nicht existiert)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	public Object getColumnValue(Adresse bsta, int columnIndex) {
 		Object value = null;
-		Adresse bsta = (Adresse) objectAtRow;
 		if (bsta != null) {
 			switch (columnIndex) {
 

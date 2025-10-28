@@ -33,7 +33,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * Ein TableModel für die Basis-Betreiberdaten.
  * @author David Klotz
  */
-public class BasisInhaberModel extends ListTableModel {
+public class BasisInhaberModel extends ListTableModel<Inhaber> {
     private static final long serialVersionUID = -1943023265274962194L;
     private AuikLogger log = AuikLogger.getLogger();
     private static final ResourceBundle I18N =
@@ -61,9 +61,8 @@ public class BasisInhaberModel extends ListTableModel {
      * @return Den Wert der Zelle oder null (falls die Zelle nicht existiert)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Inhaber betr, int columnIndex) {
         Object tmp = null;
-        Inhaber betr = (Inhaber) objectAtRow;
 
         switch (columnIndex) {
         case 0:
@@ -114,9 +113,7 @@ public class BasisInhaberModel extends ListTableModel {
     }
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-        Object obj = objectAtRow;
-        Inhaber removedBetreiber = (Inhaber) obj;
+    public boolean objectRemoved(Inhaber removedBetreiber) {
         return Inhaber.delete(removedBetreiber);
     }
 

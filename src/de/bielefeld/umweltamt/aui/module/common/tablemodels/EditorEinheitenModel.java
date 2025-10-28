@@ -29,7 +29,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Ein einfaches TableModel für die Einheitentabelle.
  * @author Gerd Genuit
  */
-public class EditorEinheitenModel extends EditableListTableModel {
+public class EditorEinheitenModel extends EditableListTableModel<Einheiten> {
 
 	/**
 	 *
@@ -62,8 +62,7 @@ public class EditorEinheitenModel extends EditableListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Einheiten einheit = (Einheiten) objectAtRow;
+    public Object getColumnValue(Einheiten einheit, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -87,9 +86,7 @@ public class EditorEinheitenModel extends EditableListTableModel {
     }
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-
-		Einheiten tmp = (Einheiten) objectAtRow;
+	public void editObject(Einheiten tmp, int columnIndex, Object newValue) {
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -109,15 +106,14 @@ public class EditorEinheitenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Einheiten newObject() {
 		Einheiten tmp = new Einheiten();
 		tmp.setId(DatabaseQuery.newEinheitenID());
 		return tmp;
 	}
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-    	Einheiten removedEinheit = (Einheiten) objectAtRow;
+    public boolean objectRemoved(Einheiten removedEinheit) {
         return Einheiten.delete(removedEinheit);
     }
 

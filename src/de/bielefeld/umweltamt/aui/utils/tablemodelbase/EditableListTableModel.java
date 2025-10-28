@@ -31,7 +31,7 @@ package de.bielefeld.umweltamt.aui.utils.tablemodelbase;
  * Im EditableListTableModel ist die Liste zusätzlich noch editier- und erweiterbar.
  * @author David Klotz
  */
-public abstract class EditableListTableModel extends ListTableModel {
+public abstract class EditableListTableModel<T> extends ListTableModel<T> {
     private static final long serialVersionUID = 5771782454750103490L;
     private boolean hasChanged;
 
@@ -75,7 +75,7 @@ public abstract class EditableListTableModel extends ListTableModel {
             editObject(getObjectAtRow(rowIndex), columnIndex, aValue);
         } else {
             //log.debug("%%% EDIT NEU! %%%");
-            Object tmp = newObject();
+            T tmp = newObject();
             getList().add(tmp);
             editObject(tmp, columnIndex, aValue);
             //log.debug("NEU: " + tmp);
@@ -126,7 +126,7 @@ public abstract class EditableListTableModel extends ListTableModel {
      * @param columnIndex Welche Spalte verändert werden soll
      * @param newValue Der geänderte Wert
      */
-    public abstract void editObject(Object objectAtRow, int columnIndex, Object newValue);
+    public abstract void editObject(T objectAtRow, int columnIndex, Object newValue);
 
     /**
      * Wird aufgerufen um ein neues (mit Standard-Werten initialisiertes)
@@ -134,5 +134,5 @@ public abstract class EditableListTableModel extends ListTableModel {
      * eine neue Zeile anlegt.
      * @return Ein neues Objekt, dass der Liste hinzugefügt wird
      */
-    public abstract Object newObject();
+    public abstract T newObject();
 }

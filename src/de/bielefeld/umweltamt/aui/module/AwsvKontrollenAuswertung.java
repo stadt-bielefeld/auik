@@ -168,7 +168,7 @@ public class AwsvKontrollenAuswertung extends AbstractQueryModul {
     }
 }
 
-class WiedervorlageSVModel extends ListTableModel {
+class WiedervorlageSVModel extends ListTableModel<Kontrollen> {
     private static final long serialVersionUID = 8869570451383123968L;
 
     public WiedervorlageSVModel() {
@@ -185,9 +185,8 @@ class WiedervorlageSVModel extends ListTableModel {
     }
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Kontrollen vk, int columnIndex) {
         Object tmp;
-        Kontrollen vk = (Kontrollen) objectAtRow;
 
         switch (columnIndex) {
             case 0:

@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EBetrieb;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
-public class EBetriebModel extends ListTableModel {
+public class EBetriebModel extends ListTableModel<EBetrieb> {
 
     public EBetriebModel() {
         super(new String[]{
@@ -46,10 +46,9 @@ public class EBetriebModel extends ListTableModel {
 	}
 
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	public Object getColumnValue(EBetrieb betrieb, int columnIndex) {
         Object value;
 
-        EBetrieb betrieb = (EBetrieb) objectAtRow;
         switch(columnIndex) {
             case 0:
                 value = betrieb.getStandort().getAdresse().getAnrede();

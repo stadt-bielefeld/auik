@@ -59,7 +59,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Probenehmereinsaetze.
  * @author Gerd Genuit
  */
-public class AfsNwModel extends ListTableModel {
+public class AfsNwModel extends ListTableModel<AfsNiederschlagswasser> {
 	private static final long serialVersionUID = 8683461766128779141L;
 	private Anfallstelle anfallstelle;
 	private Entwaesserungsgrundstueck grundstueck;
@@ -76,8 +76,7 @@ public class AfsNwModel extends ListTableModel {
 	 * (java.lang.Object, int)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		AfsNiederschlagswasser fd = (AfsNiederschlagswasser) objectAtRow;
+	public Object getColumnValue(AfsNiederschlagswasser fd, int columnIndex) {
 		Object tmp;
 
 		switch (columnIndex) {

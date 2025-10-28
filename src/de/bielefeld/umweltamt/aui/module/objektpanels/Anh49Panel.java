@@ -314,7 +314,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                     if (row != -1
                         && getAbscheiderTabelle().getEditingRow() == -1) {
                         Anh49Abscheiderdetails abscheider = abscheiderModel
-                            .getRow(row);
+                            .getObjectAtRow(row);
 
                         if (GUIManager
                             .getInstance()

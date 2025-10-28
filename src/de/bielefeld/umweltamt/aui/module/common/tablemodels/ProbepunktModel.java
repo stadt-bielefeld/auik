@@ -55,7 +55,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Probenahmen zum Bescheiddruck.
  * @author Gerd Genuit
  */
-public class ProbepunktModel extends ListTableModel {
+public class ProbepunktModel extends ListTableModel<Messstelle> {
     private static final long serialVersionUID = -6195343069784409388L;
 
     public ProbepunktModel() {
@@ -72,8 +72,7 @@ public class ProbepunktModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Messstelle pkt = (Messstelle) objectAtRow;
+    public Object getColumnValue(Messstelle pkt, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {

@@ -51,13 +51,10 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für eine Standortliste.
  * @author Gerd Genuit
  */
-public class BasisTabStreetsModel extends ListTableModel {
-	/**
-	 *
-	 */
+public class BasisTabStreetsModel extends ListTableModel<TabStreets> {
+
 	private static final long serialVersionUID = 4586459781908256454L;
 	private String strasse = null;
-//    private String secondColumn = null;
 
     public BasisTabStreetsModel() {
         super(new String[]{
@@ -73,8 +70,7 @@ public class BasisTabStreetsModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	TabStreets ts = (TabStreets) objectAtRow;
+    public Object getColumnValue(TabStreets ts, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {

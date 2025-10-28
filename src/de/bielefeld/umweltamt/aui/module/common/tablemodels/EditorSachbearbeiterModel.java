@@ -32,7 +32,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Ein einfaches TableModel für die Sachbearbeitertabelle.
  * @author Gerd Genuit
  */
-public class EditorSachbearbeiterModel extends EditableListTableModel {
+public class EditorSachbearbeiterModel
+    extends EditableListTableModel<Sachbearbeiter> {
 
 	private static final long serialVersionUID = 99251332998082843L;
 
@@ -55,8 +56,7 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Sachbearbeiter bearbeiter = (Sachbearbeiter) objectAtRow;
+    public Object getColumnValue(Sachbearbeiter bearbeiter, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -95,9 +95,9 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
     }
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-
-		Sachbearbeiter tmp = (Sachbearbeiter) objectAtRow;
+	public void editObject(
+        Sachbearbeiter tmp, int columnIndex, Object newValue
+    ) {
 		switch (columnIndex) {
         case 0:
         	String tmpID = (String) newValue;
@@ -155,7 +155,7 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Sachbearbeiter newObject() {
 		Sachbearbeiter tmp = new Sachbearbeiter();
         tmp.setId(DatabaseQuery.newSachbearbeiterID());
         isnew = true;
@@ -163,8 +163,7 @@ public class EditorSachbearbeiterModel extends EditableListTableModel {
 	}
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-    	Sachbearbeiter removedSachbearbieter = (Sachbearbeiter) objectAtRow;
+    public boolean objectRemoved(Sachbearbeiter removedSachbearbieter) {
         return Sachbearbeiter.delete(removedSachbearbieter);
     }
 

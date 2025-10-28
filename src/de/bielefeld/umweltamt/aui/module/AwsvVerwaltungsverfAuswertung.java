@@ -168,7 +168,7 @@ public class AwsvVerwaltungsverfAuswertung extends AbstractQueryModul {
     }
 }
 
-class WiedervorlageVVModel extends ListTableModel {
+class WiedervorlageVVModel extends ListTableModel<Verwaltungsverf> {
     private static final long serialVersionUID = -325284569406149762L;
 
     public WiedervorlageVVModel() {
@@ -185,9 +185,8 @@ class WiedervorlageVVModel extends ListTableModel {
     }
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Verwaltungsverf vf, int columnIndex) {
         Object tmp;
-        Verwaltungsverf vf = (Verwaltungsverf) objectAtRow;
 
         switch (columnIndex) {
         case 0:
