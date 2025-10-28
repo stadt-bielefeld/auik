@@ -182,7 +182,9 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     private double personalkosten = -1;
 
-    private class ParameterModel extends EditableListTableModel {
+    private class ParameterModel
+        extends EditableListTableModel<Analyseposition> {
+
         private static final long serialVersionUID = 6042681141925302970L;
         private Probenahme probe;
         private boolean isNew;
@@ -225,7 +227,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         params[i] = Parameter.findById(paramIDs[i]);
                     }
                     String analyse_von = "OWL-Umwelt";
-                    setList(new ArrayList<Object>());
+                    setList(new ArrayList<Analyseposition>());
                     for (Parameter param : params) {
                         addParameter(param,
                             DatabaseConstants.ATL_EINHEIT_MG_KG,
@@ -239,7 +241,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                             DatabaseConstants.ATL_PARAMETER_ID_TEMPERATUR)
                     };
                     String analyse_von = "Betriebslabor";
-                    setList(new ArrayList<Object>());
+                    setList(new ArrayList<Analyseposition>());
                     for (Parameter param : params) {
                         addParameter(param,
                             param.getEinheiten(),
@@ -255,7 +257,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                             DatabaseConstants.ATL_PARAMETER_ID_LEITFAEHIGKEIT)
                     };
                     String analyse_von = "360.33";
-                    setList(new ArrayList<Object>());
+                    setList(new ArrayList<Analyseposition>());
                     for (Parameter param : params) {
                         addParameter(param,
                             param.getEinheiten(),
@@ -267,9 +269,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         @Override
-        public Object getColumnValue(Object objectAtRow, int columnIndex) {
+        public Object getColumnValue(Analyseposition pos, int columnIndex) {
             Object value;
-            Analyseposition pos = (Analyseposition) objectAtRow;
             switch (columnIndex) {
                 // Parameter
                 case 0:
@@ -372,10 +373,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         @Override
-        public void editObject(Object objectAtRow, int columnIndex,
-            Object newValue) {
-            Analyseposition tmp = (Analyseposition) objectAtRow;
-
+        public void editObject(
+            Analyseposition tmp, int columnIndex, Object newValue
+        ) {
             switch (columnIndex) {
                 case 0:
                     Parameter tmpPara = (Parameter) newValue;
@@ -438,7 +438,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         @Override
-        public Object newObject() {
+        public Analyseposition newObject() {
             Analyseposition tmp = new Analyseposition();
             tmp.setProbenahme(this.probe);
             if (DatabaseQuery.isKlaerschlammProbe(this.probe)
@@ -540,8 +540,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         @Override
-        public boolean objectRemoved(Object objectAtRow) {
-            Analyseposition tmp = (Analyseposition) objectAtRow;
+        public boolean objectRemoved(Analyseposition tmp) {
             tmp.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
 
             if(tmp.getId() == null) {
@@ -1991,7 +1990,7 @@ class ParameterChooser extends OkCancelApplyDialog {
 
 }
 
-class ParameterAuswahlModel extends ListTableModel {
+class ParameterAuswahlModel extends ListTableModel<Parameter> {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     private static final long serialVersionUID = -502436804713980533L;
@@ -2002,7 +2001,7 @@ class ParameterAuswahlModel extends ListTableModel {
     }
 
     @Override
-    public void setList(List<?> newList) {
+    public void setList(List<Parameter> newList) {
         super.setList(newList);
 
         selection = new boolean[newList.size()];
@@ -2031,7 +2030,7 @@ class ParameterAuswahlModel extends ListTableModel {
      * (java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Parameter objectAtRow, int columnIndex) {
         // we don't need this method
         return null;
     }

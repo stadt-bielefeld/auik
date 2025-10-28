@@ -125,7 +125,8 @@ public class AfsNwPanel extends ObjectPanel {
 
 	}
 
-	public class AfsNwModel extends EditableListTableModel {
+	public class AfsNwModel
+        extends EditableListTableModel<AfsNiederschlagswasser> {
 
 		private Entwaesserungsgrundstueck grundstueck;
 		private Anfallstelle anfallstelle;
@@ -177,9 +178,9 @@ public class AfsNwPanel extends ObjectPanel {
 		}
 
 		@Override
-		public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-
-			AfsNiederschlagswasser tmp = (AfsNiederschlagswasser) objectAtRow;
+		public void editObject(
+            AfsNiederschlagswasser tmp, int columnIndex, Object newValue
+        ) {
 			switch (columnIndex) {
 			case 0:
 				String tmpBez = (String) newValue;
@@ -222,7 +223,7 @@ public class AfsNwPanel extends ObjectPanel {
 		}
 
 		@Override
-		public Object newObject() {
+		public AfsNiederschlagswasser newObject() {
 			AfsNiederschlagswasser afs = new AfsNiederschlagswasser();
 			afs.setEntwaesserungsgrundstueck(grundstueck);
 			setDirty(true);
@@ -230,8 +231,7 @@ public class AfsNwPanel extends ObjectPanel {
 		}
 
 		@Override
-		public boolean objectRemoved(Object objectAtRow) {
-			AfsNiederschlagswasser removedcafs = (AfsNiederschlagswasser) objectAtRow;
+		public boolean objectRemoved(AfsNiederschlagswasser removedcafs) {
 			boolean removed;
 
 			if (removedcafs.getNr() != null) {
@@ -250,8 +250,9 @@ public class AfsNwPanel extends ObjectPanel {
 		 * (java.lang.Object, int)
 		 */
 		@Override
-		public Object getColumnValue(Object objectAtRow, int columnIndex) {
-			AfsNiederschlagswasser afs = (AfsNiederschlagswasser) objectAtRow;
+		public Object getColumnValue(
+            AfsNiederschlagswasser afs, int columnIndex
+        ) {
 			Object tmp;
 
 			switch (columnIndex) {

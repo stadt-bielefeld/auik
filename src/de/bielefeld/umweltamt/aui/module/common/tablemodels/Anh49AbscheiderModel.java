@@ -25,7 +25,9 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
-public class Anh49AbscheiderModel extends ListTableModel {
+public class Anh49AbscheiderModel
+    extends ListTableModel<Anh49Abscheiderdetails> {
+
     private static final long serialVersionUID = 6154019963876247085L;
     private Anh49Fachdaten fachdaten;
 
@@ -55,9 +57,9 @@ public class Anh49AbscheiderModel extends ListTableModel {
     }
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Anh49Abscheiderdetails details = (Anh49Abscheiderdetails) objectAtRow;
-
+    public Object getColumnValue(
+        Anh49Abscheiderdetails details, int columnIndex
+    ) {
         Object tmp;
 
         switch (columnIndex) {
@@ -87,8 +89,7 @@ public class Anh49AbscheiderModel extends ListTableModel {
     }
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-        Anh49Abscheiderdetails removedAbsch = (Anh49Abscheiderdetails) objectAtRow;
+    public boolean objectRemoved(Anh49Abscheiderdetails removedAbsch) {
         if (removedAbsch.getId() != null) {
             return Anh49Abscheiderdetails.delete(removedAbsch);
         }
@@ -101,9 +102,5 @@ public class Anh49AbscheiderModel extends ListTableModel {
             setList(DatabaseQuery.getAbscheiderDetails(fachdaten));
         }
         fireTableDataChanged();
-    }
-
-    public Anh49Abscheiderdetails getRow(int rowIndex) {
-        return (Anh49Abscheiderdetails) getObjectAtRow(rowIndex);
     }
 }

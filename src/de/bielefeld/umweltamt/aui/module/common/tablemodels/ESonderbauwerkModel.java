@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
-public class ESonderbauwerkModel extends ListTableModel {
+public class ESonderbauwerkModel extends ListTableModel<ESonderbauwerk> {
 
     public ESonderbauwerkModel() {
         super(new String[]{
@@ -44,10 +44,9 @@ public class ESonderbauwerkModel extends ListTableModel {
 	}
 
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	public Object getColumnValue(ESonderbauwerk sb, int columnIndex) {
         Object value;
 
-        ESonderbauwerk sb = (ESonderbauwerk) objectAtRow;
         switch(columnIndex) {
             case 0: return sb.getNr();
             case 1: return sb.getBezeichnung();

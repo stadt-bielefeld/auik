@@ -171,7 +171,7 @@ public class ChronoPanel extends ObjectPanel {
         builder.append(this.reportListeButton, getAllButton(), getSaveButton());
     }
 
-    public class ChronoModel extends EditableListTableModel {
+    public class ChronoModel extends EditableListTableModel<Objektchrono> {
         private static final long serialVersionUID = 1268693292182383330L;
         private Objekt obj;
 
@@ -198,22 +198,10 @@ public class ChronoPanel extends ObjectPanel {
             }
         }
 
-    	/**
-    	 * Liefert das Objekt aus einer bestimmten Zeile.
-    	 *
-    	 * @param rowIndex
-    	 *            Die Zeile
-    	 * @return Das Objekt bei rowIndex
-    	 */
-    	public Objektchrono getRow(int rowIndex)
-    	{
-    		return (Objektchrono) getObjectAtRow(rowIndex);
-    	}
-
         @Override
-        public void editObject(Object objectAtRow, int columnIndex,
-            Object newValue) {
-            Objektchrono chrono = (Objektchrono) objectAtRow;
+        public void editObject(
+            Objektchrono chrono, int columnIndex, Object newValue
+        ) {
             String tmp = "";
             if (newValue instanceof String) {
                 tmp = (String) newValue;
@@ -263,7 +251,7 @@ public class ChronoPanel extends ObjectPanel {
         }
 
         @Override
-        public Object newObject() {
+        public Objektchrono newObject() {
             Objektchrono chr = new Objektchrono();
             chr.setObjekt(ChronoPanel.this.hauptModul.getObjekt());
             chr.setDatum(new Date());
@@ -272,8 +260,7 @@ public class ChronoPanel extends ObjectPanel {
         }
 
         @Override
-        public boolean objectRemoved(Object objectAtRow) {
-            Objektchrono removedchr = (Objektchrono) objectAtRow;
+        public boolean objectRemoved(Objektchrono removedchr) {
             boolean removed;
 
             if (removedchr.getId() != null) {
@@ -289,8 +276,7 @@ public class ChronoPanel extends ObjectPanel {
          * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
          */
         @Override
-        public Object getColumnValue(Object objectAtRow, int columnIndex) {
-            Objektchrono oc = (Objektchrono) objectAtRow;
+        public Object getColumnValue(Objektchrono oc, int columnIndex) {
             Object tmp;
 
             switch (columnIndex) {
@@ -627,7 +613,7 @@ public class ChronoPanel extends ObjectPanel {
 					int row = ChronoPanel.this.chronoTable
 							.getSelectedRow();
 					Objektchrono bchro = ChronoPanel.this.chronoModel
-							.getRow(row);
+                        .getObjectAtRow(row);
 
 					ProcessBuilder pb = new ProcessBuilder("cmd", "/C", bchro.getPfad());
 
@@ -674,7 +660,8 @@ public class ChronoPanel extends ObjectPanel {
 			        System.out.println(f.getSelectedFile());
 			        System.out.println(chronoTable.getSelectedRow());
 
-			        Objektchrono oc = chronoModel.getRow(chronoTable.getSelectedRow());
+			        Objektchrono oc = chronoModel.getObjectAtRow(
+                        chronoTable.getSelectedRow());
 			        oc.setPfad(f.getSelectedFile().toString());
 			        chronoModel.fireTableDataChanged();
 

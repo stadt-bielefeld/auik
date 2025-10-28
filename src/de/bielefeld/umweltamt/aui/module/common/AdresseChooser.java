@@ -83,14 +83,13 @@ public class AdresseChooser extends JDialog {
 		this.frame = frame;
 		this.caller = caller;
 
-		List<Object> initialList = new ArrayList<Object>();
-		initialList.add(initial);
-
 		if (initial instanceof Adresse && caller == "adresse") {
             setTitle("Adresse auswählen");
             this.adresse = (Adresse) initial;
             this.adresseModel = new BasisAdresseModel();
             if (this.adresse.getId() != null) {
+                List<Adresse> initialList = new ArrayList<>();
+                initialList.add(this.adresse);
                 this.adresseModel.setList(initialList);
             }
         } else if (initial instanceof Inhaber && caller == "betreiber") {
@@ -98,6 +97,8 @@ public class AdresseChooser extends JDialog {
             this.inhaber = (Inhaber) initial;
             this.inhaberModel = new BasisInhaberModel();
             if (this.inhaber.getId() != null) {
+                List<Inhaber> initialList = new ArrayList<>();
+                initialList.add(this.inhaber);
                 this.inhaberModel.setList(initialList);
             }
         } else if (initial instanceof Standort && caller == "standort") {
@@ -105,6 +106,8 @@ public class AdresseChooser extends JDialog {
 			this.standort = (Standort) initial;
 			this.standortModel = new BasisStandortModel();
 			if (this.standort.getId() != null) {
+                List<Standort> initialList = new ArrayList<>();
+                initialList.add(this.standort);
 				this.standortModel.setList(initialList);
 			}
 		} else {
