@@ -208,7 +208,7 @@ public class Anh49DetailsPanel extends JPanel {
                     if (row != -1
                         && getAbscheiderTabelle().getEditingRow() == -1) {
                         Anh49Abscheiderdetails abscheider = abscheiderModel
-                            .getRow(row);
+                            .getObjectAtRow(row);
 
                         if (GUIManager
                             .getInstance()

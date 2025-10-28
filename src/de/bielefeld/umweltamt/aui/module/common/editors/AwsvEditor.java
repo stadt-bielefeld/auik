@@ -1939,7 +1939,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 	 * Ein editierbares TableModel für die Vaws-Anlagenchronologie.
 	 * @author David Klotz
 	 */
-class VawsAnlagenChronoModel extends EditableListTableModel {
+class VawsAnlagenChronoModel extends EditableListTableModel<Anlagenchrono> {
 	private static final long serialVersionUID = -2520120636324926275L;
 	private List<Anlagenchrono> geloeschte;
 	private Fachdaten fachdaten;
@@ -1966,8 +1966,9 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	}
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		Anlagenchrono chrono = (Anlagenchrono) objectAtRow;
+	public void editObject(
+        Anlagenchrono chrono, int columnIndex, Object newValue
+    ) {
 		String tmp = "";
 		if (newValue instanceof String) {
 			tmp = (String) newValue;
@@ -2016,7 +2017,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Anlagenchrono newObject() {
 		Anlagenchrono chr = new Anlagenchrono();
 		chr.setFachdaten(fachdaten);
 		chr.setDatum(new Date());
@@ -2024,8 +2025,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	}
 
 	@Override
-	public boolean objectRemoved(Object objectAtRow) {
-		Anlagenchrono chrono = (Anlagenchrono) objectAtRow;
+	public boolean objectRemoved(Anlagenchrono chrono) {
 		if (chrono.getId() != null) {
 			geloeschte.add(chrono);
 		}
@@ -2043,8 +2043,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	 * (java.lang.Object, int)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Anlagenchrono ac = (Anlagenchrono) objectAtRow;
+	public Object getColumnValue(Anlagenchrono ac, int columnIndex) {
 		Object tmp;
 
 		switch (columnIndex) {
@@ -2106,7 +2105,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	 * (Sachverständigenprüfung).
 	 * @author David Klotz
 	 */
-class VawsKontrollenModel extends EditableListTableModel {
+class VawsKontrollenModel extends EditableListTableModel<Kontrollen> {
 	private static final long serialVersionUID = 1747805482011126348L;
 	private List<Kontrollen> geloeschte;
 	private Fachdaten fachdaten;
@@ -2134,8 +2133,7 @@ class VawsKontrollenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		Kontrollen ktrl = (Kontrollen) objectAtRow;
+	public void editObject(Kontrollen ktrl, int columnIndex, Object newValue) {
 		String tmp = "";
 		if (newValue instanceof String) {
 			tmp = (String) newValue;
@@ -2183,7 +2181,7 @@ class VawsKontrollenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Kontrollen newObject() {
 		Kontrollen ktr = new Kontrollen();
 		ktr.setFachdaten(fachdaten);
 		ktr.setPruefdatum(new Date());
@@ -2192,8 +2190,7 @@ class VawsKontrollenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public boolean objectRemoved(Object objectAtRow) {
-		Kontrollen ktr = (Kontrollen) objectAtRow;
+	public boolean objectRemoved(Kontrollen ktr) {
 		if (ktr.getId() != null) {
 			geloeschte.add(ktr);
 		}
@@ -2211,8 +2208,7 @@ class VawsKontrollenModel extends EditableListTableModel {
 	 * (java.lang.Object, int)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Kontrollen ac = (Kontrollen) objectAtRow;
+	public Object getColumnValue(Kontrollen ac, int columnIndex) {
 		Object tmp;
 
 		switch (columnIndex) {
@@ -2277,7 +2273,7 @@ class VawsKontrollenModel extends EditableListTableModel {
  * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
  * @author David Klotz
  */
-class VerwVerfahrenModel extends EditableListTableModel {
+class VerwVerfahrenModel extends EditableListTableModel<Verwaltungsverf> {
 	private static final long serialVersionUID = -7932308301889587228L;
 	private List<Verwaltungsverf> geloeschte;
 	private Fachdaten fachdaten;
@@ -2304,8 +2300,9 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		Verwaltungsverf verf = (Verwaltungsverf) objectAtRow;
+	public void editObject(
+        Verwaltungsverf verf, int columnIndex, Object newValue
+    ) {
 		String tmp = "";
 		if (newValue instanceof String) {
 			tmp = (String) newValue;
@@ -2350,7 +2347,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Verwaltungsverf newObject() {
 		Verwaltungsverf verf = new Verwaltungsverf();
 		verf.setFachdaten(fachdaten);
 		verf.setWvverwverf(false);
@@ -2359,8 +2356,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public boolean objectRemoved(Object objectAtRow) {
-		Verwaltungsverf verf = (Verwaltungsverf) objectAtRow;
+	public boolean objectRemoved(Verwaltungsverf verf) {
 		if (verf.getId() != null) {
 			geloeschte.add(verf);
 		}
@@ -2378,8 +2374,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	 * (java.lang.Object, int)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Verwaltungsverf verf = (Verwaltungsverf) objectAtRow;
+	public Object getColumnValue(Verwaltungsverf verf, int columnIndex) {
 		Object tmp;
 
 		switch (columnIndex) {
@@ -2440,7 +2435,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	 * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
 	 * @author David Klotz
 	 */
-class VerwGebuehrenModel extends EditableListTableModel {
+class VerwGebuehrenModel extends EditableListTableModel<Verwaltungsgebuehren> {
 	private static final long serialVersionUID = 8662150283828728780L;
 	private List<Verwaltungsgebuehren> geloeschte;
 	private Fachdaten fachdaten;
@@ -2467,8 +2462,9 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		Verwaltungsgebuehren gebuehr = (Verwaltungsgebuehren) objectAtRow;
+	public void editObject(
+        Verwaltungsgebuehren gebuehr, int columnIndex, Object newValue
+    ) {
 		String tmp = "";
 		if (newValue instanceof String) {
 			tmp = (String) newValue;
@@ -2511,7 +2507,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Verwaltungsgebuehren newObject() {
 		Verwaltungsgebuehren gebuehr = new Verwaltungsgebuehren();
 		gebuehr.setBetrag(0.0f);
 		gebuehr.setAbschnitt("360.12 LW");
@@ -2521,8 +2517,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public boolean objectRemoved(Object objectAtRow) {
-		Verwaltungsgebuehren gebuehr = (Verwaltungsgebuehren) objectAtRow;
+	public boolean objectRemoved(Verwaltungsgebuehren gebuehr) {
 		if (gebuehr.getId() != null) {
 			geloeschte.add(gebuehr);
 		}
@@ -2540,8 +2535,9 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	 * (java.lang.Object, int)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Verwaltungsgebuehren gebuehr = (Verwaltungsgebuehren) objectAtRow;
+	public Object getColumnValue(
+        Verwaltungsgebuehren gebuehr, int columnIndex
+    ) {
 		Object tmp;
 
 		switch (columnIndex) {
