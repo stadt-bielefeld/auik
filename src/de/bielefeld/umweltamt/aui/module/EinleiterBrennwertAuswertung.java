@@ -75,7 +75,7 @@ public class EinleiterBrennwertAuswertung
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
     // Widgets für die Abfrage
-    private JComboBox jahrBox;
+    private JComboBox<String> jahrBox;
     private JComboBox<String> typBox;
     private JButton submitButton;
 
@@ -107,7 +107,7 @@ public class EinleiterBrennwertAuswertung
                 jahrBoxValues[i+1] =
                     (iJahre[i] != null? iJahre[i].toString() : "keine Angabe");
             }
-            jahrBox = new JComboBox(jahrBoxValues);
+            jahrBox = new JComboBox<>(jahrBoxValues);
             jahrBox.setSelectedItem(
                 Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
 //            jahrBox.setEditable(true);

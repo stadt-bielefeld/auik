@@ -108,7 +108,8 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
 
         sachbearbeiterBox = new JComboBox<>();
         List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
-        sachbearbeiterBox.setModel(new DefaultComboBoxModel(sachbearbeiter.toArray()));
+        sachbearbeiterBox.setModel(new DefaultComboBoxModel<>(
+                sachbearbeiter.toArray(Sachbearbeiter[]::new)));
         //Insert dummy Sachbearbeiter used for group filtering
         Sachbearbeiter group = new Sachbearbeiter();
         group.setId(-1);

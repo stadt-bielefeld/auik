@@ -36,7 +36,7 @@ import javax.swing.table.TableCellRenderer;
  * Dient dazu deutlich zu machen, dass sich hinter einer Zelle eine ComboBox versteckt.
  * @author David Klotz
  */
-public class ComboBoxRenderer extends JComboBox implements TableCellRenderer {
+public class ComboBoxRenderer<E> extends JComboBox<E> implements TableCellRenderer {
     private static final long serialVersionUID = -6998892781329673586L;
 
     public ComboBoxRenderer() {
@@ -47,11 +47,12 @@ public class ComboBoxRenderer extends JComboBox implements TableCellRenderer {
     /* (non-Javadoc)
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
         removeAllItems();
-        addItem(value);
+        addItem((E) value);
         if (isSelected && !hasFocus) {
             this.setBackground(table.getSelectionBackground());
             this.setForeground(table.getSelectionForeground());

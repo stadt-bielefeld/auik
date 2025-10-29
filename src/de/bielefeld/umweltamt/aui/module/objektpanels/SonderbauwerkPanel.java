@@ -56,6 +56,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -88,13 +89,13 @@ public class SonderbauwerkPanel extends ObjectPanel {
     private JTextField kurzbezeichnungFeld = null;
     private JCheckBox stillgelegtCheck = null;
     private TextFieldDateChooser stillegdatDatum = null;
-    private JComboBox verfahrenBox = null;
+    private JComboBox<String> verfahrenBox;
     private JComboBox<String> typBox = null;
     private JFormattedTextField inbetriebnahmeFeld = null;
     private TextFieldDateChooser wiederinebetriebdatDatum = null;
     private JFormattedTextField e32Feld = null;
     private JFormattedTextField n32Feld = null;
-    private JComboBox klaeranlageBox = null;
+    private JComboBox<Klaeranlage> klaeranlageBox;
     private LimitedTextArea bemerkungArea = null;
     // Daten
     private Sonderbauwerk  sonderbauwerk = null;
@@ -211,9 +212,9 @@ public class SonderbauwerkPanel extends ObjectPanel {
     /**
      * @return the verfahrenBox
      */
-    private JComboBox getVerfahrenBox() {
+    private JComboBox<String> getVerfahrenBox() {
         if (this.verfahrenBox == null) {
-            this.verfahrenBox = new JComboBox();
+            this.verfahrenBox = new JComboBox<>();
         }
         return verfahrenBox;
     }
@@ -221,9 +222,9 @@ public class SonderbauwerkPanel extends ObjectPanel {
     /**
      * @return the typBox
      */
-    private JComboBox getTypBox() {
+    private JComboBox<String> getTypBox() {
         if (this.typBox == null) {
-            this.typBox = new JComboBox();
+            this.typBox = new JComboBox<>();
         }
         return typBox;
     }
@@ -271,9 +272,9 @@ public class SonderbauwerkPanel extends ObjectPanel {
     /**
      * @return the kläranlageBox
      */
-    private JComboBox getKlaeranlageBox() {
+    private JComboBox<Klaeranlage> getKlaeranlageBox() {
         if (this.klaeranlageBox == null) {
-            klaeranlageBox = new JComboBox(DatabaseQuery.getKlaeranlage());
+            klaeranlageBox = new JComboBox<>(DatabaseQuery.getKlaeranlage());
         }
         return klaeranlageBox;
     }
@@ -318,10 +319,10 @@ public class SonderbauwerkPanel extends ObjectPanel {
 
 
             String[] verfahren = {"-", "Trennverfahren", "Mischverfahren"};
-            getVerfahrenBox().setModel(new DefaultComboBoxModel(verfahren));
+            getVerfahrenBox().setModel(new DefaultComboBoxModel<>(verfahren));
 
             String[] typ = {"-", "RRB", "RKB", "RBF", "BF", "RÜT", "RST", "AL"};
-            getTypBox().setModel(new DefaultComboBoxModel(typ));
+            getTypBox().setModel(new DefaultComboBoxModel<>(typ));
 
             if (this.sonderbauwerk.getErstellDat() != null) {
                 getErstellDatDatum().setDate(this.sonderbauwerk.getErstellDat());

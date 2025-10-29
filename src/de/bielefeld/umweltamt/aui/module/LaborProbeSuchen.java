@@ -115,7 +115,7 @@ public class LaborProbeSuchen extends AbstractModul {
 
     private String iconPath = "filefind32.png";
 
-    private JComboBox suchBox;
+    private JComboBox<NamedObject> suchBox;
     private JTextField suchFeld;
     private JButton submitButton;
     private JTable probeTabelle;
@@ -459,9 +459,9 @@ public class LaborProbeSuchen extends AbstractModul {
         return this.probeTabelle;
     }
 
-    private JComboBox getSuchBox() {
+    private JComboBox<NamedObject> getSuchBox() {
         if (this.suchBox == null) {
-            this.suchBox = new JComboBox(new NamedObject[] {
+            this.suchBox = new JComboBox<>(new NamedObject[] {
                     new NamedObject("Kennnummer:", "kennummer"),
                     new NamedObject("Bemerkung:", "bemerkung")});
         }
