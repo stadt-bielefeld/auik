@@ -130,7 +130,7 @@ public class AwsvPanel extends JPanel {
     protected String art;
     protected Integer behaelterid;
 
-    private JComboBox anlagenartBox;
+    private JComboBox<Anlagenarten> anlagenartBox;
     private JButton anlegenButton;
     private JButton reportListeButton;
     private JButton reportAnlageButton;
@@ -146,7 +146,7 @@ public class AwsvPanel extends JPanel {
 
         JScrollPane awsvScroller = new JScrollPane(getAwsvTable());
 
-        anlagenartBox = new JComboBox(DatabaseQuery.getAnlagenarten());
+        anlagenartBox = new JComboBox<>(DatabaseQuery.getAnlagenarten());
         anlegenButton = new JButton("Anlegen");
         anlegenButton.addActionListener(new ActionListener() {
             @Override

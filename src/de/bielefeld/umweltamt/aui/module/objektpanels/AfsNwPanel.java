@@ -99,7 +99,7 @@ public class AfsNwPanel extends ObjectPanel {
 
 	// Daten
 	private AfsNwModel afsModel = new AfsNwModel();
-	private JComboBox herkunftBox;
+	private JComboBox<String> herkunftBox;
 	private String[] herkunft = { "nicht definiert", "Kategorie I: Unbelastetes NW",
 			"Kategorie II: Schwach belastetes NW", "Kategorie III: Stark belastetes NW" };
 
@@ -377,7 +377,7 @@ public class AfsNwPanel extends ObjectPanel {
 			this.afsNwTabelle.setRowSelectionAllowed(true);
 
 			// Für die ComboBox bei "Herkunftsbereich"
-			herkunftBox = new JComboBox(herkunft);
+			herkunftBox = new JComboBox<>(herkunft);
 			herkunftBox.setEditable(false);
 			herkunftBox.addFocusListener(new FocusAdapter() {
 				@Override

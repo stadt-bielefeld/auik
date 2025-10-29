@@ -99,7 +99,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private JPopupMenu verknuepfungPopup;
 
 	// Fields and Labels and Models
-	private JComboBox einleitungsbereichBox = null;
+	private JComboBox<String> einleitungsbereichBox;
 	private JTextField gebNameFeld = null;
 	private JTextField konzeptNrFeld = null;
 	private JTextField gebGroesseFeld = null;
@@ -107,7 +107,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private JTextField regenhaufigkeitFeld = null;
 	private JTextField regendauerFeld = null;
 	private JCheckBox erlaubnisfreiBox = null;
-	private JComboBox einbauartBox = null;
+	private JComboBox<String> einbauartBox;
 	private JTextField dtvWertFeld = null;
 	private JCheckBox woTog;
 	private JCheckBox miTog;
@@ -116,7 +116,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private JCheckBox gemTog;
 	private JCheckBox strTog;
 	private JCheckBox parkplatzTog;
-	private JComboBox wasserableitungsstreckeOptBox = null;
+	private JComboBox<String> wasserableitungsstreckeOptBox;
 	private ZuordnungChooser<Abaverfahren> abaverfahrens;
 
 	public void createFields() {
@@ -759,18 +759,20 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 		return this.bezeichnungFeld;
 	}
 
-	private JComboBox getEinleitungsbereichBox() {
+	private JComboBox<String> getEinleitungsbereichBox() {
 		if (this.einleitungsbereichBox == null) {
-			this.einleitungsbereichBox = new JComboBox();
-			this.einleitungsbereichBox.setModel(new DefaultComboBoxModel(this.einlBereichItems));
+			this.einleitungsbereichBox = new JComboBox<>();
+			this.einleitungsbereichBox.setModel(
+                new DefaultComboBoxModel<>(this.einlBereichItems));
 		}
 		return this.einleitungsbereichBox;
 	}
 
-	private JComboBox getWasserableitungsstreckeOptBox() {
+	private JComboBox<String> getWasserableitungsstreckeOptBox() {
 		if (this.wasserableitungsstreckeOptBox == null) {
-			this.wasserableitungsstreckeOptBox = new JComboBox();
-			this.wasserableitungsstreckeOptBox.setModel(new DefaultComboBoxModel(this.streckeItems));
+			this.wasserableitungsstreckeOptBox = new JComboBox<>();
+			this.wasserableitungsstreckeOptBox.setModel(
+                new DefaultComboBoxModel<>(this.streckeItems));
 		}
 		return this.wasserableitungsstreckeOptBox;
 	}
@@ -831,10 +833,11 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 		return this.erlaubnisfreiBox;
 	}
 
-	private JComboBox getEinbauartBox() {
+	private JComboBox<String> getEinbauartBox() {
 		if (this.einbauartBox == null) {
-			this.einbauartBox = new JComboBox();
-			this.einbauartBox.setModel(new DefaultComboBoxModel(this.einbauartItems));
+			this.einbauartBox = new JComboBox<>();
+			this.einbauartBox.setModel(
+                new DefaultComboBoxModel<>(this.einbauartItems));
 		}
 		return this.einbauartBox;
 	}

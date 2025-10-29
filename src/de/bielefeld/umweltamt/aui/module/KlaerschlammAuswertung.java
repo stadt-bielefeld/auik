@@ -682,7 +682,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 	}
 
 	private JList klaeranlagen;
-	private JComboBox artBox;
+	private JComboBox<Probeart> artBox;
 	private JDateChooser vonDateChooser;
 	private JDateChooser bisDateChooser;
 
@@ -691,11 +691,11 @@ public class KlaerschlammAuswertung extends AbstractModul
 	private JList leftList;
 	private JButton submitButton;
 
-	private JComboBox parameterBox;
+	private JComboBox<Parameter> parameterBox;
 	private JButton leftDeleteButton;
 	private JButton rightDeleteButton;
-	private JComboBox leftEinheitenBox;
-	private JComboBox rightEinheitenBox;
+	private JComboBox<Einheiten> leftEinheitenBox;
+	private JComboBox<Einheiten> rightEinheitenBox;
 	private JTextField leftAnalyseFeld;
 	private JTextField rightAnalyseFeld;
 
@@ -987,7 +987,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.klaeranlagen;
 	}
 
-	private JComboBox getArtBox()
+	private JComboBox<Probeart> getArtBox()
 	{
 		if (this.artBox == null)
 		{
@@ -1002,7 +1002,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			{
 				arten[i] = Probeart.findById(artIDs[i]);
 			}
-			this.artBox = new JComboBox(arten);
+			this.artBox = new JComboBox<>(arten);
 		}
 
 		return this.artBox;
@@ -1153,11 +1153,11 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.leftList;
 	}
 
-	private JComboBox getParameterBox()
+	private JComboBox<Parameter> getParameterBox()
 	{
 		if (this.parameterBox == null)
 		{
-			this.parameterBox = new SearchBox(
+			this.parameterBox = new SearchBox<>(
 					DatabaseQuery.getKlaerschlammParameter());
 		}
 
@@ -1254,11 +1254,11 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.rightDeleteButton;
 	}
 
-	private JComboBox getLeftEinheitenBox()
+	private JComboBox<Einheiten> getLeftEinheitenBox()
 	{
 		if (this.leftEinheitenBox == null)
 		{
-			this.leftEinheitenBox = new SearchBox(this.einheiten);
+			this.leftEinheitenBox = new SearchBox<>(this.einheiten);
 			this.leftEinheitenBox.setSelectedItem(
 					DatabaseConstants.ATL_EINHEIT_MG_KG);
 		}
@@ -1266,11 +1266,11 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.leftEinheitenBox;
 	}
 
-	private JComboBox getRightEinheitenBox()
+	private JComboBox<Einheiten> getRightEinheitenBox()
 	{
 		if (this.rightEinheitenBox == null)
 		{
-			this.rightEinheitenBox = new SearchBox(this.einheiten);
+			this.rightEinheitenBox = new SearchBox<>(this.einheiten);
 			this.rightEinheitenBox.setSelectedItem(
 					DatabaseConstants.ATL_EINHEIT_MG_KG);
 		}

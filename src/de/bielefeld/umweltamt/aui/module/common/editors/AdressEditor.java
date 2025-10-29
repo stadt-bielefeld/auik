@@ -82,10 +82,10 @@ public class AdressEditor extends AbstractBaseEditor
 	private Standortgghwsg[] standortggs = null;
 	private Wassereinzugsgebiet[] wEinzugsgebiete = null;
 
-	private JComboBox gemarkungBox;
-	private JComboBox entwGebBox;
-	private JComboBox standortGgBox;
-	private JComboBox wEinzugsGebBox;
+	private JComboBox<Gemarkung> gemarkungBox;
+	private JComboBox<String> entwGebBox;
+	private JComboBox<Standortgghwsg> standortGgBox;
+	private JComboBox<Wassereinzugsgebiet> wEinzugsGebBox;
 
 	private JTextArea bemerkungsArea;
 
@@ -114,10 +114,10 @@ public class AdressEditor extends AbstractBaseEditor
 		ueberschgebCheck = new JCheckBox("Überschwemm.-gebiet");
 		strasseeigentFeld = new JTextField();
 
-		gemarkungBox = new JComboBox();
-		entwGebBox = new JComboBox();
-		standortGgBox = new JComboBox();
-		wEinzugsGebBox = new JComboBox();
+		gemarkungBox = new JComboBox<>();
+		entwGebBox = new JComboBox<>();
+		standortGgBox = new JComboBox<>();
+		wEinzugsGebBox = new JComboBox<>();
 
 		revidatumFeld = new JTextField();
 		revidatumFeld.setEditable(false);
@@ -218,24 +218,28 @@ public class AdressEditor extends AbstractBaseEditor
 
 				if (gemarkungen != null)
 				{
-					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
+					gemarkungBox.setModel(
+                        new DefaultComboBoxModel<>(gemarkungen));
 					gemarkungBox.setSelectedItem(adresse.getGemarkung());
 				}
 				if (standortggs != null)
 				{
-					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
+					standortGgBox.setModel(
+                        new DefaultComboBoxModel<>(standortggs));
 					standortGgBox.setSelectedItem(adresse.getStandortgghwsg());
 				}
 
 				if (entwgebiete != null)
 				{
-					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+					entwGebBox.setModel(
+                        new DefaultComboBoxModel<>(entwgebiete));
 					entwGebBox.setSelectedItem(adresse.getEntgebid());
 				}
 
 				if (wEinzugsgebiete != null)
 				{
-					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
+					wEinzugsGebBox.setModel(
+                        new DefaultComboBoxModel<>(wEinzugsgebiete));
 					wEinzugsGebBox.setSelectedItem(adresse.getWassereinzugsgebiet());
 				}
 

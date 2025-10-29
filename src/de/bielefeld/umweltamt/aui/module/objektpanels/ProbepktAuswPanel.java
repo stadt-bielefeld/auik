@@ -108,7 +108,7 @@ public class ProbepktAuswPanel extends JPanel {
 
     private JDateChooser vonDateChooser;
     private JDateChooser bisDateChooser;
-    private JComboBox analyseVonBox;
+    private JComboBox<String> analyseVonBox;
 
     private String name;
     private BasisObjektBearbeiten hauptModul;
@@ -129,9 +129,9 @@ public class ProbepktAuswPanel extends JPanel {
 
     // Daten
     private Messstelle pkt;
-    private JComboBox parameterBox;
-    private JComboBox leftEinheitenBox;
-    private JComboBox rightEinheitenBox;
+    private JComboBox<Parameter> parameterBox;
+    private JComboBox<Einheiten> leftEinheitenBox;
+    private JComboBox<Einheiten> rightEinheitenBox;
 
     private HauptFrame frame;
 
@@ -664,9 +664,10 @@ public class ProbepktAuswPanel extends JPanel {
         }
     }
 
-    private JComboBox getParameterBox() {
+    private JComboBox<Parameter> getParameterBox() {
         if (this.parameterBox == null) {
-            this.parameterBox = new SearchBox(DatabaseQuery.getAllParameterAsArray());
+            this.parameterBox = new SearchBox<>(
+                DatabaseQuery.getAllParameterAsArray());
         }
 
         return this.parameterBox;
@@ -694,9 +695,9 @@ public class ProbepktAuswPanel extends JPanel {
         return this.submitButton;
     }
 
-    private JComboBox getLeftEinheitenBox() {
+    private JComboBox<Einheiten> getLeftEinheitenBox() {
         if (this.leftEinheitenBox == null) {
-            this.leftEinheitenBox = new SearchBox(this.einheiten);
+            this.leftEinheitenBox = new SearchBox<>(this.einheiten);
             this.leftEinheitenBox.setSelectedItem(
                 DatabaseConstants.ATL_EINHEIT_MG_L);
         }
@@ -704,12 +705,11 @@ public class ProbepktAuswPanel extends JPanel {
         return this.leftEinheitenBox;
     }
 
-    private JComboBox getRightEinheitenBox() {
+    private JComboBox<Einheiten> getRightEinheitenBox() {
         if (this.rightEinheitenBox == null) {
-            this.rightEinheitenBox = new SearchBox(this.einheiten);
+            this.rightEinheitenBox = new SearchBox<>(this.einheiten);
             this.rightEinheitenBox.setSelectedItem(
                 DatabaseConstants.ATL_EINHEIT_MG_L);
-
         }
 
         return this.rightEinheitenBox;
@@ -853,7 +853,7 @@ public class ProbepktAuswPanel extends JPanel {
         return this.bisDateChooser;
     }
 
-    private JComboBox getAnalyseVonBox() {
+    private JComboBox<String> getAnalyseVonBox() {
     	List<String> list1 = Arrays.asList(DatabaseQuery.getAnalysierer());
     	List<String> list2 = new ArrayList<String>();
     	list2.add(new String("Selbstüberwachung"));
@@ -864,9 +864,9 @@ public class ProbepktAuswPanel extends JPanel {
     	  array[i++] = s;
     	}
         if (this.analyseVonBox == null) {
-            this.analyseVonBox = new JComboBox();
+            this.analyseVonBox = new JComboBox<>();
             this.analyseVonBox.setModel(
-                new DefaultComboBoxModel(array));
+                new DefaultComboBoxModel<>(array));
             this.analyseVonBox.setSelectedIndex(-1);
         }
 

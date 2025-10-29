@@ -117,7 +117,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private String iconPath = "filefind32.png";
 
-    private JComboBox suchBox;
+    private JComboBox<NamedObject> suchBox;
     private JTextField suchFeld;
 
 	private JTextField strassenFeld;
@@ -1371,9 +1371,9 @@ public class BasisAdresseSuchen extends AbstractModul {
 		return this.suchTimer;
         }
 
-	private JComboBox getSuchBox() {
+	private JComboBox<NamedObject> getSuchBox() {
 	    if (this.suchBox == null) {
-	        this.suchBox = new JComboBox(new NamedObject[] {
+	        this.suchBox = new JComboBox<>(new NamedObject[] {
 	                new NamedObject("Anrede:", "anrede"),
 	                new NamedObject("Vorname:", "vorname"),
 	                new NamedObject("Name:", "name"),

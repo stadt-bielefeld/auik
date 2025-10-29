@@ -152,10 +152,10 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JCheckBox ueberschgebCheck;
 	private JTextField flurFeld;
 	private JTextField flurStkFeld;
-	private JComboBox gemarkungBox;
-	private JComboBox entwGebBox;
-	private JComboBox standortGgBox;
-	private JComboBox wEinzugsGebBox;
+	private JComboBox<Gemarkung> gemarkungBox;
+	private JComboBox<String> entwGebBox;
+	private JComboBox<Standortgghwsg> standortGgBox;
+	private JComboBox<Wassereinzugsgebiet> wEinzugsGebBox;
 
 	private Gemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;
@@ -164,8 +164,8 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	private JTextArea bemerkungsArea;
 
-	private JComboBox strassenBox;
-	private JComboBox wirtschaftszweigBox;
+	private JComboBox<String> strassenBox;
+	private JComboBox<Wirtschaftszweig> wirtschaftszweigBox;
 
 	private Wirtschaftszweig[] wirtschaftszweige = null;
 	private String[] tabstreets = null;
@@ -254,11 +254,11 @@ public class BasisAdresseNeu extends AbstractModul {
 
 			flurFeld = new LimitedTextField(50);
 			flurStkFeld = new LimitedTextField(50);
-			gemarkungBox = new JComboBox();
-			entwGebBox = new JComboBox();
+			gemarkungBox = new JComboBox<>();
+			entwGebBox = new JComboBox<>();
 //			entwGebBox.setEditable(true);
-			standortGgBox = new JComboBox();
-			wEinzugsGebBox = new JComboBox();
+			standortGgBox = new JComboBox<>();
+			wEinzugsGebBox = new JComboBox<>();
 
 			revdatumsFeld = new JTextField();
 			revdatumsFeld.setEditable(false);
@@ -274,7 +274,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			JScrollPane bemerkungsScroller = new JScrollPane(bemerkungsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 					JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-			wirtschaftszweigBox = new JComboBox();
+			wirtschaftszweigBox = new JComboBox<>();
 			wirtschaftszweigBox.setRenderer(new LongNameComboBoxRenderer());
 
 			JComponent buttonBar = ComponentFactory.buildOKBar(getSpeichernButton());
@@ -444,7 +444,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	private Component getStrassenBox() {
 
-		strassenBox = new JComboBox();
+		strassenBox = new JComboBox<>();
 		strassenBox.setRenderer(new LongNameComboBoxRenderer());
 
 		return strassenBox;
@@ -953,10 +953,12 @@ public class BasisAdresseNeu extends AbstractModul {
 				standort = new Standort();
 
 				if (wirtschaftszweige != null) {
-					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
+					wirtschaftszweigBox.setModel(
+                        new DefaultComboBoxModel<>(wirtschaftszweige));
 				}
 				if (tabstreets != null) {
-					strassenBox.setModel(new DefaultComboBoxModel(tabstreets));
+					strassenBox.setModel(
+                        new DefaultComboBoxModel<>(tabstreets));
 				}
 				if (standorteTabelle != null) {
 
@@ -965,24 +967,25 @@ public class BasisAdresseNeu extends AbstractModul {
 
 				if (gemarkungen != null)
 				{
-					gemarkungBox
-							.setModel(new DefaultComboBoxModel(gemarkungen));
+					gemarkungBox.setModel(
+                        new DefaultComboBoxModel<>(gemarkungen));
 				}
 				if (standortggs != null)
 				{
-					standortGgBox
-							.setModel(new DefaultComboBoxModel(standortggs));
+					standortGgBox.setModel(
+                        new DefaultComboBoxModel<>(standortggs));
 				}
 
 				if (entwgebiete != null)
 				{
-					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+					entwGebBox.setModel(
+                        new DefaultComboBoxModel<>(entwgebiete));
 				}
 
 				if (wEinzugsgebiete != null)
 				{
-					wEinzugsGebBox.setModel(new DefaultComboBoxModel(
-							wEinzugsgebiete));
+					wEinzugsGebBox.setModel(
+                        new DefaultComboBoxModel<>(wEinzugsgebiete));
 				}
 
 				ortFeld.setText("Bielefeld");

@@ -97,7 +97,7 @@ public class EinleiterAnh49Auswertung
     private JCheckBox abwasserfreiCheck;
     private JCheckBox aktivCheck;
     private JCheckBox wiedervorlageCheck;
-    private JComboBox sachbBox;
+    private JComboBox<Sachbearbeiter> sachbBox;
 //    private JComboBox dekraTuevBox;
     private JButton auswahlButton;
     private JButton tabelleExportButton;
@@ -136,8 +136,8 @@ public class EinleiterAnh49Auswertung
             abgemeldetCheck.setSelected(false);
             abwasserfreiCheck.setSelected(false);
             aktivCheck.setSelected(false);
-            sachbBox = new JComboBox();
-            sachbBox.setModel(new DefaultComboBoxModel(
+            sachbBox = new JComboBox<>();
+            sachbBox.setModel(new DefaultComboBoxModel<>(
                 DatabaseQuery.getOrderedAll(new Sachbearbeiter(), "name")
                     .toArray(new Sachbearbeiter[0])));
             sachbBox.insertItemAt(null, 0);
