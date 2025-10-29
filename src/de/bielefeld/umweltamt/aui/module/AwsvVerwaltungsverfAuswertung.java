@@ -66,7 +66,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein Modul um noch ausstehende Prüfungen anzeigen zu lassen.
  * @author David Klotz
  */
-public class AwsvVerwaltungsverfAuswertung extends AbstractQueryModul {
+public class AwsvVerwaltungsverfAuswertung
+    extends AbstractQueryModul<Verwaltungsverf> {
+
     private WiedervorlageVVModel model;
 
     /* (non-Javadoc)
@@ -75,7 +77,7 @@ public class AwsvVerwaltungsverfAuswertung extends AbstractQueryModul {
     @Override
     protected void editObject(int row) {
         if (row != -1) {
-            Fachdaten fd = ((Verwaltungsverf)model.getObjectAtRow(row)).getFachdaten();
+            Fachdaten fd = model.getObjectAtRow(row).getFachdaten();
 
             AwsvEditor editor = new AwsvEditor(fd, frame, "Verwaltungsverfahren");
 
@@ -105,7 +107,7 @@ public class AwsvVerwaltungsverfAuswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<Verwaltungsverf> getTableModel() {
         if (model == null) {
             model = new WiedervorlageVVModel();
         }
