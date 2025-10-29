@@ -72,6 +72,7 @@ import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49Model;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -83,7 +84,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Fettabscheider).
  * @author David Klotz
  */
-public class EinleiterAnh49Auswertung extends AbstractQueryModul {
+public class EinleiterAnh49Auswertung
+    extends AbstractQueryModul<Anh49Fachdaten> {
+
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     /** Das obere Panel mit den Abfrage-Optionen */
@@ -152,12 +155,12 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
             auswahlButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Anh49Model model = (Anh49Model) getTableModel();
+                    ListTableModel<Anh49Fachdaten> model = getTableModel();
                     model.setList(DatabaseQuery.getAnh49FachdatenAuswahl(
                         aktivCheck.isSelected(),
                         abgemeldetCheck.isSelected(),
                         abwasserfreiCheck.isSelected(),
-                       wiedervorlageCheck.isSelected(),
+                        wiedervorlageCheck.isSelected(),
 //                        (Integer) dekraTuevBox.getSelectedItem(),
                         (Sachbearbeiter) sachbBox.getSelectedItem()));
                     model.fireTableDataChanged();
@@ -193,7 +196,7 @@ public class EinleiterAnh49Auswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<Anh49Fachdaten> getTableModel() {
         if (tmodel == null) {
             tmodel = new Anh49Model();
         }

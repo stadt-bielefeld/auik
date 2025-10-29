@@ -69,7 +69,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches Auswertungs-Modul für BWK-Datensätze.
  * @author David Klotz
  */
-public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
+public class EinleiterBrennwertAuswertung
+    extends AbstractQueryModul<BwkFachdaten> {
+
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
     // Widgets für die Abfrage
@@ -148,12 +150,12 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
                                 case "ABA":
                                     result = DatabaseQuery.getABA(fJahr);
                             }
-                            ((AnhBwkModel)getTableModel()).setList(result);
+                            getTableModel().setList(result);
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((AnhBwkModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -179,7 +181,7 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<BwkFachdaten> getTableModel() {
         if (tmodel == null) {
             tmodel = new AnhBwkModel();
         }

@@ -76,7 +76,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches Auswertungs-Modul für Probenehmereinsaetze.
  * @author Gerd Genuit
  */
-public class ProbepunkteAuswertung extends AbstractQueryModul {
+public class ProbepunkteAuswertung extends AbstractQueryModul<Messstelle> {
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
 
@@ -167,12 +167,12 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
                                     result = DatabaseQuery.getProbePunkte(sb);
                                     break;
                                 }
-                            ((ProbepunkteModel)getTableModel()).setList(result);
+                            getTableModel().setList(result);
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((ProbepunkteModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -198,7 +198,7 @@ public class ProbepunkteAuswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<Messstelle> getTableModel() {
         if (tmodel == null) {
             tmodel = new ProbepunkteModel();
         }
