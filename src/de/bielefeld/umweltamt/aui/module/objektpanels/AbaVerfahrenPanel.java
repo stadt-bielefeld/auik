@@ -162,7 +162,7 @@ public class AbaVerfahrenPanel extends ObjectPanel {
 
     }
 
-    private JList getLeftList()
+    private JList<Abaverfahren> getLeftList()
     {
         if (this.leftList == null)
         {
