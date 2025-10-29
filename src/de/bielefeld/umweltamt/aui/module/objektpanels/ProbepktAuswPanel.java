@@ -116,8 +116,8 @@ public class ProbepktAuswPanel extends JPanel {
     private static final String RIGHT = "right";
 
     // Widgets
-    private JList leftList;
-    private JList rightList;
+    private JList<Parameter> leftList;
+    private JList<Parameter> rightList;
     private JButton submitButton;
 
     private JButton leftDeleteButton;
@@ -189,8 +189,8 @@ public class ProbepktAuswPanel extends JPanel {
         builder.add(new JLabel("Erste Y-Achse"), cc.xyw(1, 7, 7));
         builder.add(new JLabel("Zweite Y-Achse"), cc.xy(15, 7));
 
-        JList lList = getLeftList();
-        JList rList = getRightList();
+        JList<Parameter> lList = getLeftList();
+        JList<Parameter> rList = getRightList();
         builder.add(new JScrollPane(lList), cc.xywh(1, 9, 7, 15, "fill, fill"));
         builder
             .add(new JScrollPane(rList), cc.xywh(15, 9, 1, 15, "fill, fill"));
@@ -785,7 +785,7 @@ public class ProbepktAuswPanel extends JPanel {
 
 //        int parameterAnzahl;
         Einheiten einheit;
-        JList paramList;
+        JList<Parameter> paramList;
         if (axis.equals(LEFT)) {
 //            parameterAnzahl = getLeftList().getModel().getSize();
             einheit = (Einheiten) getLeftEinheitenBox().getSelectedItem();
@@ -815,7 +815,7 @@ public class ProbepktAuswPanel extends JPanel {
         return col;
     }
 
-    private void createSeries(JList paramList, Messstelle pkt,
+    private void createSeries(JList<Parameter> paramList, Messstelle pkt,
         Einheiten einheit, Date vonDate, Date bisDate,
         String analyseVon, TimeSeriesCollection col) {
 
@@ -873,11 +873,10 @@ public class ProbepktAuswPanel extends JPanel {
         return this.analyseVonBox;
     }
 
-    private JList getLeftList() {
+    private JList<Parameter> getLeftList() {
         if (this.leftList == null) {
-            DefaultListModel listModel = new DefaultListModel();
-            this.leftList = new JList(listModel);
-            this.leftList.setPrototypeCellValue("Abcdefghij (Ab)");
+            DefaultListModel<Parameter> listModel = new DefaultListModel<>();
+            this.leftList = new JList<>(listModel);
 
             this.leftList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         }
@@ -885,11 +884,10 @@ public class ProbepktAuswPanel extends JPanel {
         return this.leftList;
     }
 
-    private JList getRightList() {
+    private JList<Parameter> getRightList() {
         if (this.rightList == null) {
-            DefaultListModel listModel = new DefaultListModel();
-            this.rightList = new JList(listModel);
-            this.rightList.setPrototypeCellValue("Abcdefghij (Ab)");
+            DefaultListModel<Parameter> listModel = new DefaultListModel<>();
+            this.rightList = new JList<>(listModel);
 
             this.rightList
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -932,8 +930,9 @@ public class ProbepktAuswPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int index = getLeftList().getSelectedIndex();
-                    DefaultListModel leftModel = ((DefaultListModel) getLeftList()
-                        .getModel());
+                    DefaultListModel<Parameter> leftModel
+                        = (DefaultListModel<Parameter>) getLeftList()
+                        .getModel();
 
                     if (index != -1) {
                         leftModel.remove(index);
@@ -968,8 +967,9 @@ public class ProbepktAuswPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int index = getRightList().getSelectedIndex();
-                    DefaultListModel rightModel = ((DefaultListModel) getRightList()
-                        .getModel());
+                    DefaultListModel<Parameter> rightModel
+                        = (DefaultListModel<Parameter>) getRightList()
+                            .getModel();
 
                     if (index != -1) {
                         rightModel.remove(index);
@@ -1016,9 +1016,11 @@ public class ProbepktAuswPanel extends JPanel {
                     }
 
                     if (param != null) {
-                        DefaultListModel leftModel = (DefaultListModel) getLeftList()
+                        DefaultListModel<Parameter> leftModel
+                            = (DefaultListModel<Parameter>) getLeftList()
                             .getModel();
-                        DefaultListModel rightModel = (DefaultListModel) getRightList()
+                        DefaultListModel<Parameter> rightModel
+                            = (DefaultListModel<Parameter>) getRightList()
                             .getModel();
 
                         if (direction.equals(LEFT)) {
