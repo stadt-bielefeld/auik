@@ -145,10 +145,10 @@ public class AwsvEditor extends AbstractBaseEditor {
 	// Widgets fürs Top-Panel:
 	private JLabel header;
 	private LimitedTextField hnrFeld;
-	private JComboBox fluessigkeitBox;
-	private JComboBox vbfBox;
-	private JComboBox gefStufeBox;
-	private JComboBox wgkBox;
+	private JComboBox<String> fluessigkeitBox;
+	private JComboBox<String> vbfBox;
+	private JComboBox<String> gefStufeBox;
+	private JComboBox<String> wgkBox;
 
 	// Tabs:
 	// Widgets für alle Daten-Tabs:
@@ -166,8 +166,8 @@ public class AwsvEditor extends AbstractBaseEditor {
 	private JSplitPane tabellenSplit;
 
 	// Benötigt bei Lageranlagen & Rohrleitungen
-	private JComboBox behaelterArtBox;
-	private JComboBox materialBox;
+	private JComboBox<String> behaelterArtBox;
+	private JComboBox<String> materialBox;
 
 	// Beschreibung für die Felder bei VAwS-Abscheider ### START
 	private JPanel datenVAWSAbscheiderTab;
@@ -250,7 +250,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	// Daten (Rohrleitungen)
 	private JPanel datenRohrleitungenTab;
-	private JComboBox ausfuehrungBox;
+	private JComboBox<String> ausfuehrungBox;
 
 	// Daten (Abfüllflächen)
 	private JPanel datenAbfuellflaechenTab;
@@ -273,9 +273,9 @@ public class AwsvEditor extends AbstractBaseEditor {
 	private JCheckBox seitenwandCheck;
 	private DoubleField wandhoeheFeld;
 	private JCheckBox ueberdachungCheck;
-	private JComboBox auffangbehBox;
+	private JComboBox<String> auffangbehBox;
 	private DoubleField volumenAuffangbehFeld;
-	private JComboBox rohrleitungBox;
+	private JComboBox<String> rohrleitungBox;
 	private TextFieldDateChooser dichtheitChooser;
 	private JCheckBox drainageCheck;
 	private JCheckBox fuellanzeigerCheck;
@@ -285,11 +285,11 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	// Ausführung (Abfüllflächen)
 	private JPanel ausfuehrungAbfuellflaechenTab;
-	private JComboBox bodenflaechenAusfBox;
+	private JComboBox<String> bodenflaechenAusfBox;
 	private DoubleField dickeFeld;
 	private LimitedTextField gueteFeld;
 	private LimitedTextField fugenMaterialFeld;
-	private JComboBox niederschlagSchutzBox;
+	private JComboBox<String> niederschlagSchutzBox;
 	private JCheckBox abscheiderVorhandenCheck;
 	private LimitedTextArea beschrBodenflaecheArea;
 	private LimitedTextArea beschrFugenmaterialArea;
@@ -298,20 +298,20 @@ public class AwsvEditor extends AbstractBaseEditor {
 	// Sachverständigenprüfung
 	private JPanel svPruefungTab;
 	private JTable svPruefungTabelle;
-	private JComboBox prueferBox;
-	private JComboBox pruefergebnisBox;
+	private JComboBox<String> prueferBox;
+	private JComboBox<String> pruefergebnisBox;
 	private VawsKontrollenModel svPruefungModel;
 
 	// Verwaltungsverfahren
 	private JPanel verwVerfahrenTab;
 	private JTable verwVerfahrenTabelle;
-	private JComboBox massnahmenBox;
+	private JComboBox<String> massnahmenBox;
 	private VerwVerfahrenModel verwVerfahrenModel;
 
 	// Verwaltungsgebühren
 	private JPanel verwGebuehrenTab;
 	private JTable verwGebuehrenTabelle;
-	private JComboBox gebArtenBox;
+	private JComboBox<Gebuehrenarten> gebArtenBox;
 	private VerwGebuehrenModel verwGebuehrenModel;
 
 	/**
@@ -429,21 +429,21 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 		hnrFeld = new LimitedTextField(100);
 
-		fluessigkeitBox = new JComboBox(DatabaseQuery.getFluessigkeiten());
+		fluessigkeitBox = new JComboBox<>(DatabaseQuery.getFluessigkeiten());
 		fluessigkeitBox.setEditable(true);
 		fluessigkeitBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		// fluessigkeitBox.setPrototypeDisplayValue("Lösungsmittelrückstände");
 
-		vbfBox = new JComboBox(DatabaseQuery.getVawsVbfEinstufungen());
+		vbfBox = new JComboBox<>(DatabaseQuery.getVawsVbfEinstufungen());
 		vbfBox.setEditable(false);
 		// vbfBox.setPrototypeDisplayValue(" A III ");
 
-		gefStufeBox = new JComboBox(DatabaseQuery.getGefaehrdungsstufen());
+		gefStufeBox = new JComboBox<>(DatabaseQuery.getGefaehrdungsstufen());
 		gefStufeBox.setEditable(false);
 		// gefStufeBox.setPrototypeDisplayValue(" A ");
 
 		String[] items = { "1", "2", "3", "awg", "nwg" };
-		wgkBox = new JComboBox(items);
+		wgkBox = new JComboBox<>(items);
 		wgkBox.setEditable(false);
 		// wgkBox.setPrototypeDisplayValue(" 3 ");
 
@@ -459,10 +459,10 @@ public class AwsvEditor extends AbstractBaseEditor {
 		aktenzeichenField = new LimitedTextField(50);
 		pruefTurnusFeld = new DoubleField(0);
 
-		behaelterArtBox = new JComboBox(DatabaseQuery.getBehaelterarten());
+		behaelterArtBox = new JComboBox<>(DatabaseQuery.getBehaelterarten());
 		behaelterArtBox.setEditable(false);
 
-		materialBox = new JComboBox(DatabaseQuery.getMaterialien());
+		materialBox = new JComboBox<>(DatabaseQuery.getMaterialien());
 		materialBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		// TODO: Material-Box editable / Tabelleninhalt?
 		materialBox.setEditable(true);
@@ -498,7 +498,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 		mengeFeld = new DoubleField(0);
 
 		// Daten (Rohrleitungen)
-		ausfuehrungBox = new JComboBox(DatabaseQuery.getAusfuehrungen());
+		ausfuehrungBox = new JComboBox<>(DatabaseQuery.getAusfuehrungen());
 		ausfuehrungBox.setEditable(false);
 		// TODO: Ausführung aus anderer Tabelle / Vorgaben? Welche noch?
 
@@ -539,10 +539,10 @@ public class AwsvEditor extends AbstractBaseEditor {
 		seitenwandCheck = new JCheckBox("Seitenwand");
 		wandhoeheFeld = new DoubleField(0);
 		ueberdachungCheck = new JCheckBox("Überdachung");
-		auffangbehBox = new JComboBox(DatabaseQuery.getBehaelterarten());
+		auffangbehBox = new JComboBox<>(DatabaseQuery.getBehaelterarten());
 		auffangbehBox.setEditable(false);
 		volumenAuffangbehFeld = new DoubleField(0);
-		rohrleitungBox = new JComboBox(DatabaseQuery.getBehaelterarten());
+		rohrleitungBox = new JComboBox<>(DatabaseQuery.getBehaelterarten());
 		rohrleitungBox.setEditable(false);
 		dichtheitChooser = new TextFieldDateChooser();
 		drainageCheck = new JCheckBox("Kontrolldrainage");
@@ -564,12 +564,14 @@ public class AwsvEditor extends AbstractBaseEditor {
 		beschreibungRFeld = new LimitedTextArea(1250);
 
 		// Ausführung (Abfüllflächen)
-		bodenflaechenAusfBox = new JComboBox(DatabaseQuery.getBodenflaechenausf());
+		bodenflaechenAusfBox = new JComboBox<>(
+            DatabaseQuery.getBodenflaechenausf());
 		bodenflaechenAusfBox.setEditable(true);
 		dickeFeld = new DoubleField(0);
 		gueteFeld = new LimitedTextField(50);
 		fugenMaterialFeld = new LimitedTextField(50);
-		niederschlagSchutzBox = new JComboBox(DatabaseQuery.getNiederschlagschutz());
+		niederschlagSchutzBox = new JComboBox<>(
+            DatabaseQuery.getNiederschlagschutz());
 		niederschlagSchutzBox.setEditable(false);
 		abscheiderVorhandenCheck = new JCheckBox("Abscheider vorhanden?");
 		beschrBodenflaecheArea = new LimitedTextArea(255);
@@ -625,7 +627,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 		svPruefungTabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
 
 		// Für die ComboBox bei "Prüfer"
-		prueferBox = new JComboBox(DatabaseQuery.getPruefer());
+		prueferBox = new JComboBox<>(DatabaseQuery.getPruefer());
 		prueferBox.setEditable(false);
 		prueferBox.addFocusListener(new FocusAdapter() {
 			@Override
@@ -637,7 +639,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 		svPruefungTabelle.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(prueferBox));
 
 		// Für die ComboBox bei "Prüfergebnis"
-		pruefergebnisBox = new JComboBox(DatabaseQuery.getPruefergebniss());
+		pruefergebnisBox = new JComboBox<>(DatabaseQuery.getPruefergebniss());
 		pruefergebnisBox.setEditable(false);
 		pruefergebnisBox.addFocusListener(new FocusAdapter() {
 			@Override
@@ -674,7 +676,8 @@ public class AwsvEditor extends AbstractBaseEditor {
 		verwVerfahrenTabelle.getColumnModel().getColumn(3).setPreferredWidth(50);
 
 		// Für die ComboBox bei "Maßnahme"
-		massnahmenBox = new JComboBox(DatabaseQuery.getVerwaltungsMassnahmen());
+		massnahmenBox = new JComboBox<>(
+            DatabaseQuery.getVerwaltungsMassnahmen());
 		massnahmenBox.setEditable(true);
 		massnahmenBox.addFocusListener(new FocusAdapter() {
 			@Override
@@ -713,7 +716,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 		verwGebuehrenTabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
 
 		// Für die ComboBox bei "Gebührenart"
-		gebArtenBox = new JComboBox(DatabaseQuery.getGebuehrenarten());
+		gebArtenBox = new JComboBox<>(DatabaseQuery.getGebuehrenarten());
 		gebArtenBox.setEditable(false);
 		gebArtenBox.addFocusListener(new FocusAdapter() {
 			@Override

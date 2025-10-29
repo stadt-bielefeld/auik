@@ -37,7 +37,7 @@ import javax.swing.ListCellRenderer;
  * @author David Klotz
  */
 public class LongNameComboBoxRenderer extends JLabel implements
-        ListCellRenderer {
+        ListCellRenderer<Object> {
     private static final long serialVersionUID = -6509345893092864888L;
 
     /**
@@ -54,8 +54,13 @@ public class LongNameComboBoxRenderer extends JLabel implements
      * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
     @Override
-    public Component getListCellRendererComponent(JList list, Object value,
-            int index, boolean isSelected, boolean cellHasFocus) {
+    public Component getListCellRendererComponent(
+        JList<? extends Object> list,
+        Object value,
+        int index,
+        boolean isSelected,
+        boolean cellHasFocus
+    ) {
 
         String tmp = null;
         if (value != null) {

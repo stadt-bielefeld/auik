@@ -89,7 +89,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	// Allgemeine Felder
 	private JTextField bezeichnungFeld = null;
-	private JComboBox einleitungsartBox = null;
+	private JComboBox<String> einleitungsartBox;
 	private TextFieldDateChooser erstellDatDatum = null;
 	private TextFieldDateChooser stillgelegtAmDatum = null;
 	private JTextArea bemerkungenArea = null;
@@ -97,11 +97,11 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	// Indirekteinleitung
 	private Klaeranlage[] klaeranlagen = null;
 	private JComboBox<Klaeranlage> klaeranlageBox = null;
-	private JComboBox kanalArtOptBox = null;
+	private JComboBox<String> kanalArtOptBox;
 
 	// Direkteinleitung
 
-	private JComboBox abgaberelEinlBox = null;
+	private JComboBox<String> abgaberelEinlBox;
 	private JTextField abwAgEinlFeld = null;
 
 
@@ -609,10 +609,11 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	 *
 	 * @return {@link JFormattedTextField}
 	 */
-	private JComboBox getAbgaberelEinlBox() {
+	private JComboBox<String> getAbgaberelEinlBox() {
 		if (this.abgaberelEinlBox == null) {
-			this.abgaberelEinlBox = new JComboBox();
-			this.abgaberelEinlBox.setModel(new DefaultComboBoxModel(this.abgabeItems));
+			this.abgaberelEinlBox = new JComboBox<>();
+			this.abgaberelEinlBox.setModel(
+                new DefaultComboBoxModel<>(this.abgabeItems));
 		}
 		return this.abgaberelEinlBox;
 	}
@@ -622,10 +623,11 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	 *
 	 * @return {@link JComboBox}
 	 */
-	private JComboBox getKanalArtOptBox() {
+	private JComboBox<String> getKanalArtOptBox() {
 		if (this.kanalArtOptBox == null) {
-			this.kanalArtOptBox = new JComboBox();
-			this.kanalArtOptBox.setModel(new DefaultComboBoxModel(this.kanalArtItems));
+			this.kanalArtOptBox = new JComboBox<>();
+			this.kanalArtOptBox.setModel(
+                new DefaultComboBoxModel<>(this.kanalArtItems));
 		}
 		return this.kanalArtOptBox;
 	}
@@ -635,10 +637,11 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	 *
 	 * @return {@link JComboBox}
 	 */
-	private JComboBox getEinleitungsartBox() {
+	private JComboBox<String> getEinleitungsartBox() {
 		if (this.einleitungsartBox == null) {
-			this.einleitungsartBox = new JComboBox();
-			this.einleitungsartBox.setModel(new DefaultComboBoxModel(this.einleitungItems));
+			this.einleitungsartBox = new JComboBox<>();
+			this.einleitungsartBox.setModel(
+                new DefaultComboBoxModel<>(this.einleitungItems));
 		}
 		return this.einleitungsartBox;
 	}
