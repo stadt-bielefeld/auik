@@ -1438,7 +1438,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
         if (zuordnungRfbSchutguts == null) {
             zuordnungRfbSchutguts = new HashSet<ZRbfSchutzgueter>(
                 HibernateSessionFactory.currentSession().createQuery(
-                    "from ZRbfSchutzgueter where sb_nr=" + getSonderbauwerkNr()).list()
+                    "from ZRbfSchutzgueter where sb_nr=" + getSonderbauwerkNr(),
+                    ZRbfSchutzgueter.class).list()
             );
         }
         return zuordnungRfbSchutguts;
@@ -1464,7 +1465,8 @@ public class ESonderbauwerk  implements java.io.Serializable {
         if (zuordnungSbRegels == null) {
             zuordnungSbRegels = new HashSet<ZSbRegeln>(
                 HibernateSessionFactory.currentSession().createQuery(
-                    "from ZSbRegeln where sb_nr=" + getSonderbauwerkNr()).list()
+                    "from ZSbRegeln where sb_nr=" + getSonderbauwerkNr(),
+                    ZSbRegeln.class).list()
             );
         }
         return zuordnungSbRegels;
@@ -1478,8 +1480,9 @@ public class ESonderbauwerk  implements java.io.Serializable {
     public Set<SbEntlastung> getSbEntlastungs() {
         if (sbEntlastungs == null) {
             sbEntlastungs = new HashSet<SbEntlastung>(
-                    HibernateSessionFactory.currentSession().createQuery(
-                    "from SbEntlastung where sb_nr= " + getSonderbauwerkNr()).list());
+                HibernateSessionFactory.currentSession().createQuery(
+                    "from SbEntlastung where sb_nr= " + getSonderbauwerkNr(),
+                    SbEntlastung.class).list());
         }
         return sbEntlastungs;
     }

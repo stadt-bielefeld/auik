@@ -293,11 +293,11 @@ public class SettingsManager {
 	public String[][] getSettingList() {
 
 		String[][] result;
-		Enumeration<String> keys = appSettings.keys();
+		Enumeration<Object> keys = appSettings.keys();
 		ArrayList<String> temp = new ArrayList<String>();
 
-		for (Enumeration<String> e = keys; keys.hasMoreElements();) {
-			String key = e.nextElement();
+		while (keys.hasMoreElements()) {
+			String key = (String) keys.nextElement();
 			temp.add(key);
 		}
 		result = new String[temp.size()][2];
