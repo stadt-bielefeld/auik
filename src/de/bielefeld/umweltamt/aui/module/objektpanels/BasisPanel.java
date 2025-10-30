@@ -80,7 +80,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -148,8 +147,8 @@ public class BasisPanel extends ObjectPanel {
     private JTextField lageFeld;
 
     // Art, Sachbearbeiter, Inaktiv, Priorität, Beschreibung, Speichern
-    private JComboBox artBox;
-    private JComboBox sachbearbeiterBox;
+    private JComboBox<Objektarten> artBox;
+    private JComboBox<Sachbearbeiter> sachbearbeiterBox;
     private TextFieldDateChooser wiedervorlageDatum = null;
     private JCheckBox inaktivBox;
     private JCheckBox elkarelevantBox;
@@ -282,9 +281,9 @@ public class BasisPanel extends ObjectPanel {
             // Create a new object
             log.debug("Creating new Objekt");
             //TODO: set new Objekt's elkarelevant-Field to a default value?
-            hauptModul.getObjekt().setElkarelevant(new Boolean(false));
+            hauptModul.getObjekt().setElkarelevant(false);
             // Only load enabled Sachbearbeiter
-            getSachbearbeiterBox().setModel(new DefaultComboBoxModel(
+            getSachbearbeiterBox().setModel(new DefaultComboBoxModel<>(
                 DatabaseQuery.getEnabledSachbearbeiter()));
             // Preset the current Sachbearbeiter
             getSachbearbeiterBox().setSelectedItem(
@@ -294,12 +293,12 @@ public class BasisPanel extends ObjectPanel {
             if (this.objektarten != null
                 && (this.objektarten.length != getArtBox().getItemCount())) {
                 getArtBox()
-                    .setModel(new DefaultComboBoxModel(this.objektarten));
+                    .setModel(new DefaultComboBoxModel<>(this.objektarten));
             }
             // hauptModul.getObjekt().setPrioritaet(0);
         } else {
             // Show / edit an existing object
-            getSachbearbeiterBox().setModel(new DefaultComboBoxModel(
+            getSachbearbeiterBox().setModel(new DefaultComboBoxModel<>(
                 DatabaseQuery.getEnabledSachbearbeiter()));
 
             getArtBox().removeAllItems();
@@ -813,20 +812,20 @@ public class BasisPanel extends ObjectPanel {
         return this.standortNewButton;
     }
 
-    private JComboBox getArtBox() {
+    private JComboBox<Objektarten> getArtBox() {
         if (this.artBox == null) {
 
-            this.artBox = new JComboBox();
+            this.artBox = new JComboBox<>();
             this.artBox.setKeySelectionManager(new MyKeySelectionManager());
 
         }
         return this.artBox;
     }
 
-    private JComboBox getSachbearbeiterBox() {
+    private JComboBox<Sachbearbeiter> getSachbearbeiterBox() {
         if (this.sachbearbeiterBox == null) {
 
-            this.sachbearbeiterBox = new JComboBox();
+            this.sachbearbeiterBox = new JComboBox<>();
             this.sachbearbeiterBox
                 .setKeySelectionManager(new MyKeySelectionManager());
 
@@ -1073,7 +1072,7 @@ public class BasisPanel extends ObjectPanel {
                 }
             };
             this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
-                new Integer(KeyEvent.VK_L));
+                Integer.valueOf(KeyEvent.VK_L));
             this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }

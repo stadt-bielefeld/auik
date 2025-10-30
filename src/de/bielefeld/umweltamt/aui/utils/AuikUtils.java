@@ -66,12 +66,6 @@ public class AuikUtils {
 //            public void run() {
         // log.debug("Spawning default Editor for: '" +f+ "'");
         if (f.exists() && f.isFile() && f.canRead()) {
-            // String comspec = System.getenv("COMSPEC");
-            String comspec = "cmd";
-//                    if (comspec == null) {
-//                        comspec = "cmd";
-//                    }
-
             try {
 //                        Thread.sleep(500);
                 /*Runtime.getRuntime().exec(

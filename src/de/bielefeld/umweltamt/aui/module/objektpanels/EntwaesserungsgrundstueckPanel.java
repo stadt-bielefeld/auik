@@ -45,7 +45,6 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -58,18 +57,14 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
-import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.ZuordnungChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -94,7 +89,6 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private JTextField bezeichnungFeld = null;
 	// Daten
 	private Entwaesserungsgrundstueck entwaesserungsgrundstueck = null;
-	private Referenz referenz = null;
 	private JButton saveEntwaesserungsgrundstueckButton = null;
 
 	// Objektverknuepfer
@@ -105,7 +99,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private JPopupMenu verknuepfungPopup;
 
 	// Fields and Labels and Models
-	private JComboBox einleitungsbereichBox = null;
+	private JComboBox<String> einleitungsbereichBox;
 	private JTextField gebNameFeld = null;
 	private JTextField konzeptNrFeld = null;
 	private JTextField gebGroesseFeld = null;
@@ -113,7 +107,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private JTextField regenhaufigkeitFeld = null;
 	private JTextField regendauerFeld = null;
 	private JCheckBox erlaubnisfreiBox = null;
-	private JComboBox einbauartBox = null;
+	private JComboBox<String> einbauartBox;
 	private JTextField dtvWertFeld = null;
 	private JCheckBox woTog;
 	private JCheckBox miTog;
@@ -122,7 +116,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private JCheckBox gemTog;
 	private JCheckBox strTog;
 	private JCheckBox parkplatzTog;
-	private JComboBox wasserableitungsstreckeOptBox = null;
+	private JComboBox<String> wasserableitungsstreckeOptBox;
 	private ZuordnungChooser<Abaverfahren> abaverfahrens;
 
 	public void createFields() {
@@ -264,7 +258,6 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 		this.abaverfahrens.setData(Abaverfahren.getNwBehandel());
 		List<Abaverfahren> selected = new ArrayList<Abaverfahren>();
 		if (this.entwaesserungsgrundstueck != null) {
-			Set<Abaverfahren> verfs = this.entwaesserungsgrundstueck.getAbaverfahrens();
 			this.abaverfahrens.applyEntries(selected);
 		}
 		setDirty(false);
@@ -395,7 +388,8 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 				}
 			}
 
-			List list = new ArrayList(entwaesserungsgrundstueck.getAbaverfahrens());
+			List<Abaverfahren> list = new ArrayList<>(
+                entwaesserungsgrundstueck.getAbaverfahrens());
 			abaverfahrens.setListData(list);
 
 			switchEinlBereichItems((String) getEinleitungsbereichBox().getSelectedItem());
@@ -579,7 +573,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 
         List<Abaverfahren> selected = abaverfahrens.getSelected();
         List<Abaverfahren> removed = new ArrayList<>();
-        Set set = new HashSet(selected);
+        Set<Abaverfahren> set = new HashSet<>(selected);
         entwaesserungsgrundstueck.setAbaverfahrens(set);
         Set<Abaverfahren> verfahrens =
         		entwaesserungsgrundstueck.getAbaverfahrens();
@@ -766,18 +760,20 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 		return this.bezeichnungFeld;
 	}
 
-	private JComboBox getEinleitungsbereichBox() {
+	private JComboBox<String> getEinleitungsbereichBox() {
 		if (this.einleitungsbereichBox == null) {
-			this.einleitungsbereichBox = new JComboBox();
-			this.einleitungsbereichBox.setModel(new DefaultComboBoxModel(this.einlBereichItems));
+			this.einleitungsbereichBox = new JComboBox<>();
+			this.einleitungsbereichBox.setModel(
+                new DefaultComboBoxModel<>(this.einlBereichItems));
 		}
 		return this.einleitungsbereichBox;
 	}
 
-	private JComboBox getWasserableitungsstreckeOptBox() {
+	private JComboBox<String> getWasserableitungsstreckeOptBox() {
 		if (this.wasserableitungsstreckeOptBox == null) {
-			this.wasserableitungsstreckeOptBox = new JComboBox();
-			this.wasserableitungsstreckeOptBox.setModel(new DefaultComboBoxModel(this.streckeItems));
+			this.wasserableitungsstreckeOptBox = new JComboBox<>();
+			this.wasserableitungsstreckeOptBox.setModel(
+                new DefaultComboBoxModel<>(this.streckeItems));
 		}
 		return this.wasserableitungsstreckeOptBox;
 	}
@@ -838,10 +834,11 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 		return this.erlaubnisfreiBox;
 	}
 
-	private JComboBox getEinbauartBox() {
+	private JComboBox<String> getEinbauartBox() {
 		if (this.einbauartBox == null) {
-			this.einbauartBox = new JComboBox();
-			this.einbauartBox.setModel(new DefaultComboBoxModel(this.einbauartItems));
+			this.einbauartBox = new JComboBox<>();
+			this.einbauartBox.setModel(
+                new DefaultComboBoxModel<>(this.einbauartItems));
 		}
 		return this.einbauartBox;
 	}
@@ -1039,7 +1036,8 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 					}
 				}
 			};
-			this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
+			this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_L));
 			this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
 					KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
 		}

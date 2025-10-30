@@ -21,33 +21,15 @@
 
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.util.Date;
-
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import org.hibernate.criterion.MatchMode;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Paddings;
@@ -58,19 +40,13 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
-import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.AuikUtils;
-import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
-import de.bielefeld.umweltamt.aui.utils.SearchBox;
-import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 
 /**
  * Ein Dialog zum Bearbeiten eines Standorts.
@@ -106,14 +82,12 @@ public class AdressEditor extends AbstractBaseEditor
 	private Standortgghwsg[] standortggs = null;
 	private Wassereinzugsgebiet[] wEinzugsgebiete = null;
 
-	private JComboBox gemarkungBox;
-	private JComboBox entwGebBox;
-	private JComboBox standortGgBox;
-	private JComboBox wEinzugsGebBox;
+	private JComboBox<Gemarkung> gemarkungBox;
+	private JComboBox<String> entwGebBox;
+	private JComboBox<Standortgghwsg> standortGgBox;
+	private JComboBox<Wassereinzugsgebiet> wEinzugsGebBox;
 
 	private JTextArea bemerkungsArea;
-
-	private JButton sapeichernButton;
 
 	/**
 	 * Erzeugt einen neuen Dialog zum Bearbeiten eines Standorts.
@@ -140,10 +114,10 @@ public class AdressEditor extends AbstractBaseEditor
 		ueberschgebCheck = new JCheckBox("Überschwemm.-gebiet");
 		strasseeigentFeld = new JTextField();
 
-		gemarkungBox = new JComboBox();
-		entwGebBox = new JComboBox();
-		standortGgBox = new JComboBox();
-		wEinzugsGebBox = new JComboBox();
+		gemarkungBox = new JComboBox<>();
+		entwGebBox = new JComboBox<>();
+		standortGgBox = new JComboBox<>();
+		wEinzugsGebBox = new JComboBox<>();
 
 		revidatumFeld = new JTextField();
 		revidatumFeld.setEditable(false);
@@ -158,12 +132,6 @@ public class AdressEditor extends AbstractBaseEditor
 		bemerkungsArea.setWrapStyleWord(true);
 		JScrollPane bemerkungsScroller = new JScrollPane(bemerkungsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-
-
-		String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
-		String rechteSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g";
-		int rS = 10;
 
 		FormLayout layout = new FormLayout(
 				"right:pref, 3dlu, 20dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu", // Spalten
@@ -250,24 +218,28 @@ public class AdressEditor extends AbstractBaseEditor
 
 				if (gemarkungen != null)
 				{
-					gemarkungBox.setModel(new DefaultComboBoxModel(gemarkungen));
+					gemarkungBox.setModel(
+                        new DefaultComboBoxModel<>(gemarkungen));
 					gemarkungBox.setSelectedItem(adresse.getGemarkung());
 				}
 				if (standortggs != null)
 				{
-					standortGgBox.setModel(new DefaultComboBoxModel(standortggs));
+					standortGgBox.setModel(
+                        new DefaultComboBoxModel<>(standortggs));
 					standortGgBox.setSelectedItem(adresse.getStandortgghwsg());
 				}
 
 				if (entwgebiete != null)
 				{
-					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+					entwGebBox.setModel(
+                        new DefaultComboBoxModel<>(entwgebiete));
 					entwGebBox.setSelectedItem(adresse.getEntgebid());
 				}
 
 				if (wEinzugsgebiete != null)
 				{
-					wEinzugsGebBox.setModel(new DefaultComboBoxModel(wEinzugsgebiete));
+					wEinzugsGebBox.setModel(
+                        new DefaultComboBoxModel<>(wEinzugsgebiete));
 					wEinzugsGebBox.setSelectedItem(adresse.getWassereinzugsgebiet());
 				}
 

@@ -43,7 +43,6 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Parametergruppen;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
-import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
@@ -1013,7 +1012,7 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 	 */
 
 
-	public static Object[] findSielhaut(String search)
+	public static List<Object[]> findSielhaut(String search)
 	{
 
 		boolean bSearch = (search != null && search.length() > 0);
@@ -1027,9 +1026,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 				query +=  "ORDER BY s.PSielhaut DESC, s.PFirmenprobe DESC, o.inaktiv ASC, s.bezeichnung ASC" ;
 
 
-		List sielhaut = HibernateSessionFactory.currentSession().createQuery(query).list();
-
-		return (Object[]) sielhaut.toArray();
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Object[].class).list();
 	}
 
 
@@ -1053,7 +1051,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 				query += " ORDER BY s.bezeichnung ASC, s.PSielhaut DESC, s.PFirmenprobe DESC, o.inaktiv ASC" ;
 
 
-		List sielhaut = HibernateSessionFactory.currentSession().createQuery(query).list();
+		List<Object[]> sielhaut = HibernateSessionFactory.currentSession()
+            .createQuery(query, Object[].class).list();
 
 		return (Object[]) sielhaut.toArray();
 	}

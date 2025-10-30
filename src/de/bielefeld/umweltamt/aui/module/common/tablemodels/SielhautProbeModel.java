@@ -18,7 +18,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein TableModel für eine Tabelle mit Probenahmen zu einem Sielhautpunkt.
  * @author David Klotz
  */
-public class SielhautProbeModel extends ListTableModel {
+public class SielhautProbeModel extends ListTableModel<Probenahme> {
     private static final long serialVersionUID = -7308141358160583962L;
     private Messstelle probepkt;
     private Map<Probenahme, List<Analyseposition>> wertMap;
@@ -86,9 +86,8 @@ public class SielhautProbeModel extends ListTableModel {
     }
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Probenahme probe, int columnIndex) {
         Object value;
-        Probenahme probe = (Probenahme) objectAtRow;
 
         if (columnIndex == 0) {
             value = probe.getKennummer();
@@ -109,8 +108,7 @@ public class SielhautProbeModel extends ListTableModel {
     }
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-        Probenahme removedProbe = (Probenahme) objectAtRow;
+    public boolean objectRemoved(Probenahme removedProbe) {
         boolean removed;
 
         if (removedProbe.getKennummer() != null) {

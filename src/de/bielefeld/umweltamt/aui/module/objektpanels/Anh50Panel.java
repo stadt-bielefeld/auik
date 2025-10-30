@@ -83,7 +83,7 @@ public class Anh50Panel extends ObjectPanel {
     private JToolBar entsorBearbToolBar = null;
     private JButton entsorgBearbButton = null;
     private JButton saveAnh50Button = null;
-    private JComboBox entsorgerBox = null;
+    private JComboBox<Entsorger> entsorgerBox;
 
     // Daten
     private Anh50Fachdaten fachdaten = null;
@@ -143,7 +143,8 @@ public class Anh50Panel extends ObjectPanel {
 
     public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
         if (this.entsorg != null) {
-            getEntsorgerBox().setModel(new DefaultComboBoxModel(this.entsorg));
+            getEntsorgerBox().setModel(
+                new DefaultComboBoxModel<>(this.entsorg));
         }
         this.fachdaten = anfallstelle.getAnh50Fachdatens().iterator().next();
 
@@ -249,7 +250,8 @@ public class Anh50Panel extends ObjectPanel {
         // Entsorger auf "unbekannt" setzen
         if (this.entsorg == null || this.entsorg.length == 0) {
             this.entsorg = DatabaseQuery.getEntsorger();
-            getEntsorgerBox().setModel(new DefaultComboBoxModel(this.entsorg));
+            getEntsorgerBox().setModel(
+                new DefaultComboBoxModel<>(this.entsorg));
         }
         Entsorger entsorger = Entsorger.findById(DatabaseConstants.ANH_ENTSORGER_ID_UNBEKANNT);
         this.fachdaten.setEntsorger(entsorger);
@@ -293,9 +295,9 @@ public class Anh50Panel extends ObjectPanel {
         return this.genehmigungDatum;
     }
 
-    private JComboBox getEntsorgerBox() {
+    private JComboBox<Entsorger> getEntsorgerBox() {
         if (this.entsorgerBox == null) {
-            this.entsorgerBox = new JComboBox();
+            this.entsorgerBox = new JComboBox<>();
         }
         return this.entsorgerBox;
     }

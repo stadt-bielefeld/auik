@@ -28,17 +28,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
@@ -50,7 +46,6 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
-import de.bielefeld.umweltamt.aui.mappings.elka.ZAbaVerfahren;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -166,7 +161,7 @@ public class AbaVerfahrenPanel extends ObjectPanel {
 
     }
 
-    private JList getLeftList()
+    private JList<Abaverfahren> getLeftList()
     {
         if (this.leftList == null)
         {
@@ -268,9 +263,7 @@ public class AbaVerfahrenPanel extends ObjectPanel {
         });
         //this.updateLists();
         leftList.clearSelection();
-        Set set = new HashSet(rightData);
-        fachdaten.setAbaverfahrens(null);
-        fachdaten.setAbaverfahrens((Set<Abaverfahren>) set);
+        fachdaten.setAbaverfahrens(new HashSet<>(rightData));
     }
 
     /**
@@ -284,9 +277,7 @@ public class AbaVerfahrenPanel extends ObjectPanel {
         });
         this.updateLists();
         rightList.clearSelection();
-        Set set = new HashSet(rightData);
-        fachdaten.setAbaverfahrens(null);
-        fachdaten.setAbaverfahrens((Set<Abaverfahren>) set);
+        fachdaten.setAbaverfahrens(new HashSet<>(rightData));
     }
 
     /**

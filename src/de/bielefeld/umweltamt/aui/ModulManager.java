@@ -181,11 +181,14 @@ public class ModulManager {
     private void loadModul(String modulName) {
         Modul m = null;
         try {
-            Object mOb = Class.forName("de.bielefeld.umweltamt.aui.module." + modulName).newInstance();
+            Object mOb = Class
+                .forName("de.bielefeld.umweltamt.aui.module." + modulName)
+                .getDeclaredConstructor()
+                .newInstance();
             if (mOb instanceof Modul) {
                 m = (Modul) mOb;
             }
-        } catch (Exception e) {
+        } catch (ReflectiveOperationException e) {
             m = null;
             log.error(String.format("Fehler beim Laden des Moduls \"%s\"", modulName));
             e.printStackTrace();

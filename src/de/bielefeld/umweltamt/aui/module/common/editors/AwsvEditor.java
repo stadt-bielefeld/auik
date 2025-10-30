@@ -62,7 +62,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -74,7 +73,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -146,14 +144,11 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	// Widgets fürs Top-Panel:
 	private JLabel header;
-//    private JLabel subHeader;
-//    private JLabel hnrLabel;
-//    private JButton reportButton;
 	private LimitedTextField hnrFeld;
-	private JComboBox fluessigkeitBox;
-	private JComboBox vbfBox;
-	private JComboBox gefStufeBox;
-	private JComboBox wgkBox;
+	private JComboBox<String> fluessigkeitBox;
+	private JComboBox<String> vbfBox;
+	private JComboBox<String> gefStufeBox;
+	private JComboBox<String> wgkBox;
 
 	// Tabs:
 	// Widgets für alle Daten-Tabs:
@@ -171,8 +166,8 @@ public class AwsvEditor extends AbstractBaseEditor {
 	private JSplitPane tabellenSplit;
 
 	// Benötigt bei Lageranlagen & Rohrleitungen
-	private JComboBox behaelterArtBox;
-	private JComboBox materialBox;
+	private JComboBox<String> behaelterArtBox;
+	private JComboBox<String> materialBox;
 
 	// Beschreibung für die Felder bei VAwS-Abscheider ### START
 	private JPanel datenVAWSAbscheiderTab;
@@ -255,7 +250,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	// Daten (Rohrleitungen)
 	private JPanel datenRohrleitungenTab;
-	private JComboBox ausfuehrungBox;
+	private JComboBox<String> ausfuehrungBox;
 
 	// Daten (Abfüllflächen)
 	private JPanel datenAbfuellflaechenTab;
@@ -277,11 +272,10 @@ public class AwsvEditor extends AbstractBaseEditor {
 	private LimitedTextField tierhaltungFeld;
 	private JCheckBox seitenwandCheck;
 	private DoubleField wandhoeheFeld;
-	private LimitedTextField bodenplatteFeld;
 	private JCheckBox ueberdachungCheck;
-	private JComboBox auffangbehBox;
+	private JComboBox<String> auffangbehBox;
 	private DoubleField volumenAuffangbehFeld;
-	private JComboBox rohrleitungBox;
+	private JComboBox<String> rohrleitungBox;
 	private TextFieldDateChooser dichtheitChooser;
 	private JCheckBox drainageCheck;
 	private JCheckBox fuellanzeigerCheck;
@@ -291,11 +285,11 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	// Ausführung (Abfüllflächen)
 	private JPanel ausfuehrungAbfuellflaechenTab;
-	private JComboBox bodenflaechenAusfBox;
+	private JComboBox<String> bodenflaechenAusfBox;
 	private DoubleField dickeFeld;
 	private LimitedTextField gueteFeld;
 	private LimitedTextField fugenMaterialFeld;
-	private JComboBox niederschlagSchutzBox;
+	private JComboBox<String> niederschlagSchutzBox;
 	private JCheckBox abscheiderVorhandenCheck;
 	private LimitedTextArea beschrBodenflaecheArea;
 	private LimitedTextArea beschrFugenmaterialArea;
@@ -304,20 +298,20 @@ public class AwsvEditor extends AbstractBaseEditor {
 	// Sachverständigenprüfung
 	private JPanel svPruefungTab;
 	private JTable svPruefungTabelle;
-	private JComboBox prueferBox;
-	private JComboBox pruefergebnisBox;
+	private JComboBox<String> prueferBox;
+	private JComboBox<String> pruefergebnisBox;
 	private VawsKontrollenModel svPruefungModel;
 
 	// Verwaltungsverfahren
 	private JPanel verwVerfahrenTab;
 	private JTable verwVerfahrenTabelle;
-	private JComboBox massnahmenBox;
+	private JComboBox<String> massnahmenBox;
 	private VerwVerfahrenModel verwVerfahrenModel;
 
 	// Verwaltungsgebühren
 	private JPanel verwGebuehrenTab;
 	private JTable verwGebuehrenTabelle;
-	private JComboBox gebArtenBox;
+	private JComboBox<Gebuehrenarten> gebArtenBox;
 	private VerwGebuehrenModel verwGebuehrenModel;
 
 	/**
@@ -342,9 +336,8 @@ public class AwsvEditor extends AbstractBaseEditor {
 			tabbedPane.setSelectedComponent(getSvPruefungTab());
 		} else if ("Verwaltungsverfahren".equals(tab)) {
 			tabbedPane.setSelectedComponent(getVerwVerfahrenTab());
-		} else if ("Herstellnummer".equals(tab)) {
+            //} else if ("Herstellnummer".equals(tab)) {
 			// Der Reiter Daten wird aufgerufen
-
 		}
 
 	}
@@ -436,21 +429,21 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 		hnrFeld = new LimitedTextField(100);
 
-		fluessigkeitBox = new JComboBox(DatabaseQuery.getFluessigkeiten());
+		fluessigkeitBox = new JComboBox<>(DatabaseQuery.getFluessigkeiten());
 		fluessigkeitBox.setEditable(true);
 		fluessigkeitBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		// fluessigkeitBox.setPrototypeDisplayValue("Lösungsmittelrückstände");
 
-		vbfBox = new JComboBox(DatabaseQuery.getVawsVbfEinstufungen());
+		vbfBox = new JComboBox<>(DatabaseQuery.getVawsVbfEinstufungen());
 		vbfBox.setEditable(false);
 		// vbfBox.setPrototypeDisplayValue(" A III ");
 
-		gefStufeBox = new JComboBox(DatabaseQuery.getGefaehrdungsstufen());
+		gefStufeBox = new JComboBox<>(DatabaseQuery.getGefaehrdungsstufen());
 		gefStufeBox.setEditable(false);
 		// gefStufeBox.setPrototypeDisplayValue(" A ");
 
 		String[] items = { "1", "2", "3", "awg", "nwg" };
-		wgkBox = new JComboBox(items);
+		wgkBox = new JComboBox<>(items);
 		wgkBox.setEditable(false);
 		// wgkBox.setPrototypeDisplayValue(" 3 ");
 
@@ -466,10 +459,10 @@ public class AwsvEditor extends AbstractBaseEditor {
 		aktenzeichenField = new LimitedTextField(50);
 		pruefTurnusFeld = new DoubleField(0);
 
-		behaelterArtBox = new JComboBox(DatabaseQuery.getBehaelterarten());
+		behaelterArtBox = new JComboBox<>(DatabaseQuery.getBehaelterarten());
 		behaelterArtBox.setEditable(false);
 
-		materialBox = new JComboBox(DatabaseQuery.getMaterialien());
+		materialBox = new JComboBox<>(DatabaseQuery.getMaterialien());
 		materialBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		// TODO: Material-Box editable / Tabelleninhalt?
 		materialBox.setEditable(true);
@@ -505,7 +498,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 		mengeFeld = new DoubleField(0);
 
 		// Daten (Rohrleitungen)
-		ausfuehrungBox = new JComboBox(DatabaseQuery.getAusfuehrungen());
+		ausfuehrungBox = new JComboBox<>(DatabaseQuery.getAusfuehrungen());
 		ausfuehrungBox.setEditable(false);
 		// TODO: Ausführung aus anderer Tabelle / Vorgaben? Welche noch?
 
@@ -545,12 +538,11 @@ public class AwsvEditor extends AbstractBaseEditor {
 		tierhaltungFeld = new LimitedTextField(25);
 		seitenwandCheck = new JCheckBox("Seitenwand");
 		wandhoeheFeld = new DoubleField(0);
-		bodenplatteFeld = new LimitedTextField(25);
 		ueberdachungCheck = new JCheckBox("Überdachung");
-		auffangbehBox = new JComboBox(DatabaseQuery.getBehaelterarten());
+		auffangbehBox = new JComboBox<>(DatabaseQuery.getBehaelterarten());
 		auffangbehBox.setEditable(false);
 		volumenAuffangbehFeld = new DoubleField(0);
-		rohrleitungBox = new JComboBox(DatabaseQuery.getBehaelterarten());
+		rohrleitungBox = new JComboBox<>(DatabaseQuery.getBehaelterarten());
 		rohrleitungBox.setEditable(false);
 		dichtheitChooser = new TextFieldDateChooser();
 		drainageCheck = new JCheckBox("Kontrolldrainage");
@@ -572,12 +564,14 @@ public class AwsvEditor extends AbstractBaseEditor {
 		beschreibungRFeld = new LimitedTextArea(1250);
 
 		// Ausführung (Abfüllflächen)
-		bodenflaechenAusfBox = new JComboBox(DatabaseQuery.getBodenflaechenausf());
+		bodenflaechenAusfBox = new JComboBox<>(
+            DatabaseQuery.getBodenflaechenausf());
 		bodenflaechenAusfBox.setEditable(true);
 		dickeFeld = new DoubleField(0);
 		gueteFeld = new LimitedTextField(50);
 		fugenMaterialFeld = new LimitedTextField(50);
-		niederschlagSchutzBox = new JComboBox(DatabaseQuery.getNiederschlagschutz());
+		niederschlagSchutzBox = new JComboBox<>(
+            DatabaseQuery.getNiederschlagschutz());
 		niederschlagSchutzBox.setEditable(false);
 		abscheiderVorhandenCheck = new JCheckBox("Abscheider vorhanden?");
 		beschrBodenflaecheArea = new LimitedTextArea(255);
@@ -633,7 +627,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 		svPruefungTabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
 
 		// Für die ComboBox bei "Prüfer"
-		prueferBox = new JComboBox(DatabaseQuery.getPruefer());
+		prueferBox = new JComboBox<>(DatabaseQuery.getPruefer());
 		prueferBox.setEditable(false);
 		prueferBox.addFocusListener(new FocusAdapter() {
 			@Override
@@ -645,7 +639,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 		svPruefungTabelle.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(prueferBox));
 
 		// Für die ComboBox bei "Prüfergebnis"
-		pruefergebnisBox = new JComboBox(DatabaseQuery.getPruefergebniss());
+		pruefergebnisBox = new JComboBox<>(DatabaseQuery.getPruefergebniss());
 		pruefergebnisBox.setEditable(false);
 		pruefergebnisBox.addFocusListener(new FocusAdapter() {
 			@Override
@@ -682,7 +676,8 @@ public class AwsvEditor extends AbstractBaseEditor {
 		verwVerfahrenTabelle.getColumnModel().getColumn(3).setPreferredWidth(50);
 
 		// Für die ComboBox bei "Maßnahme"
-		massnahmenBox = new JComboBox(DatabaseQuery.getVerwaltungsMassnahmen());
+		massnahmenBox = new JComboBox<>(
+            DatabaseQuery.getVerwaltungsMassnahmen());
 		massnahmenBox.setEditable(true);
 		massnahmenBox.addFocusListener(new FocusAdapter() {
 			@Override
@@ -721,7 +716,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 		verwGebuehrenTabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
 
 		// Für die ComboBox bei "Gebührenart"
-		gebArtenBox = new JComboBox(DatabaseQuery.getGebuehrenarten());
+		gebArtenBox = new JComboBox<>(DatabaseQuery.getGebuehrenarten());
 		gebArtenBox.setEditable(false);
 		gebArtenBox.addFocusListener(new FocusAdapter() {
 			@Override
@@ -807,7 +802,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 		anlagenChronoModel.setFachdaten(getFachdaten());
 
 		if (getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_VAWS_ABSCHEIDER)) {
-			Abscheider abs = this.getAbscheider();
 			tabbedPane.addTab("Daten", getDatenVAWSAbscheiderTab());
 			tabbedPane.addTab("Ausführung", getAusfuehrungVAWSAbscheiderTab());
 			tabbedPane.addTab("Schutzvorkehrungen", getSchutzvorkehrungenVAWSAbscheiderTab());
@@ -1009,7 +1003,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 			ausfuehrungBox.setSelectedItem(getFachdaten().getAusfuehrung());
 
 		} else if (getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)) {
-			Abfuellflaeche flaeche = this.getAbfuellflaeche();
 			tabbedPane.addTab("Daten", getDatenAbfuellflaechenTab());
 			tabbedPane.addTab("Ausführung", getAusfuehrungAbfuellflaechenTab());
 
@@ -1385,29 +1378,29 @@ public class AwsvEditor extends AbstractBaseEditor {
 					int index = tabbedPane.getSelectedIndex();
 					log.debug("index: " + index);
 					if (index == 0) {
-						removeRowFromTable(anlagenChronoTabelle, anlagenChronoModel);
+						removeRowFromTable(anlagenChronoTabelle);
 					} else if (index == (tabbedPane.getTabCount() - 3)) {
-						removeRowFromTable(svPruefungTabelle, svPruefungModel);
+						removeRowFromTable(svPruefungTabelle);
 					} else if (index == (tabbedPane.getTabCount() - 2)) {
-						removeRowFromTable(verwVerfahrenTabelle, verwVerfahrenModel);
+						removeRowFromTable(verwVerfahrenTabelle);
 					} else if (index == (tabbedPane.getTabCount() - 1)) {
-						removeRowFromTable(verwGebuehrenTabelle, verwGebuehrenModel);
+						removeRowFromTable(verwGebuehrenTabelle);
 					}
 				}
 			};
-			tabellenItemLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
+			tabellenItemLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_L));
 			tabellenItemLoeschAction.putValue(Action.ACCELERATOR_KEY,
 					KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
 		}
 		return tabellenItemLoeschAction;
 	}
 
-	private void removeRowFromTable(JTable table, EditableListTableModel model) {
+	private void removeRowFromTable(JTable table) {
 		int row = table.getSelectedRow();
 
 		// Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
 		if (row != -1) {
-			model.removeRow(row);
+            ((EditableListTableModel<?>) table.getModel()).removeRow(row);
 		}
 	}
 
@@ -1949,7 +1942,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 	 * Ein editierbares TableModel für die Vaws-Anlagenchronologie.
 	 * @author David Klotz
 	 */
-class VawsAnlagenChronoModel extends EditableListTableModel {
+class VawsAnlagenChronoModel extends EditableListTableModel<Anlagenchrono> {
 	private static final long serialVersionUID = -2520120636324926275L;
 	private List<Anlagenchrono> geloeschte;
 	private Fachdaten fachdaten;
@@ -1976,8 +1969,9 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	}
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		Anlagenchrono chrono = (Anlagenchrono) objectAtRow;
+	public void editObject(
+        Anlagenchrono chrono, int columnIndex, Object newValue
+    ) {
 		String tmp = "";
 		if (newValue instanceof String) {
 			tmp = (String) newValue;
@@ -2026,7 +2020,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Anlagenchrono newObject() {
 		Anlagenchrono chr = new Anlagenchrono();
 		chr.setFachdaten(fachdaten);
 		chr.setDatum(new Date());
@@ -2034,8 +2028,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	}
 
 	@Override
-	public boolean objectRemoved(Object objectAtRow) {
-		Anlagenchrono chrono = (Anlagenchrono) objectAtRow;
+	public boolean objectRemoved(Anlagenchrono chrono) {
 		if (chrono.getId() != null) {
 			geloeschte.add(chrono);
 		}
@@ -2053,8 +2046,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	 * (java.lang.Object, int)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Anlagenchrono ac = (Anlagenchrono) objectAtRow;
+	public Object getColumnValue(Anlagenchrono ac, int columnIndex) {
 		Object tmp;
 
 		switch (columnIndex) {
@@ -2116,7 +2108,7 @@ class VawsAnlagenChronoModel extends EditableListTableModel {
 	 * (Sachverständigenprüfung).
 	 * @author David Klotz
 	 */
-class VawsKontrollenModel extends EditableListTableModel {
+class VawsKontrollenModel extends EditableListTableModel<Kontrollen> {
 	private static final long serialVersionUID = 1747805482011126348L;
 	private List<Kontrollen> geloeschte;
 	private Fachdaten fachdaten;
@@ -2144,8 +2136,7 @@ class VawsKontrollenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		Kontrollen ktrl = (Kontrollen) objectAtRow;
+	public void editObject(Kontrollen ktrl, int columnIndex, Object newValue) {
 		String tmp = "";
 		if (newValue instanceof String) {
 			tmp = (String) newValue;
@@ -2193,7 +2184,7 @@ class VawsKontrollenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Kontrollen newObject() {
 		Kontrollen ktr = new Kontrollen();
 		ktr.setFachdaten(fachdaten);
 		ktr.setPruefdatum(new Date());
@@ -2202,8 +2193,7 @@ class VawsKontrollenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public boolean objectRemoved(Object objectAtRow) {
-		Kontrollen ktr = (Kontrollen) objectAtRow;
+	public boolean objectRemoved(Kontrollen ktr) {
 		if (ktr.getId() != null) {
 			geloeschte.add(ktr);
 		}
@@ -2221,8 +2211,7 @@ class VawsKontrollenModel extends EditableListTableModel {
 	 * (java.lang.Object, int)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Kontrollen ac = (Kontrollen) objectAtRow;
+	public Object getColumnValue(Kontrollen ac, int columnIndex) {
 		Object tmp;
 
 		switch (columnIndex) {
@@ -2287,7 +2276,7 @@ class VawsKontrollenModel extends EditableListTableModel {
  * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
  * @author David Klotz
  */
-class VerwVerfahrenModel extends EditableListTableModel {
+class VerwVerfahrenModel extends EditableListTableModel<Verwaltungsverf> {
 	private static final long serialVersionUID = -7932308301889587228L;
 	private List<Verwaltungsverf> geloeschte;
 	private Fachdaten fachdaten;
@@ -2314,8 +2303,9 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		Verwaltungsverf verf = (Verwaltungsverf) objectAtRow;
+	public void editObject(
+        Verwaltungsverf verf, int columnIndex, Object newValue
+    ) {
 		String tmp = "";
 		if (newValue instanceof String) {
 			tmp = (String) newValue;
@@ -2360,7 +2350,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Verwaltungsverf newObject() {
 		Verwaltungsverf verf = new Verwaltungsverf();
 		verf.setFachdaten(fachdaten);
 		verf.setWvverwverf(false);
@@ -2369,8 +2359,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public boolean objectRemoved(Object objectAtRow) {
-		Verwaltungsverf verf = (Verwaltungsverf) objectAtRow;
+	public boolean objectRemoved(Verwaltungsverf verf) {
 		if (verf.getId() != null) {
 			geloeschte.add(verf);
 		}
@@ -2388,8 +2377,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	 * (java.lang.Object, int)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Verwaltungsverf verf = (Verwaltungsverf) objectAtRow;
+	public Object getColumnValue(Verwaltungsverf verf, int columnIndex) {
 		Object tmp;
 
 		switch (columnIndex) {
@@ -2407,7 +2395,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 			break;
 		// Prüfung abgeschlossen?:
 		case 3:
-			tmp = new Boolean(verf.getWvverwverf());
+			tmp = Boolean.valueOf(verf.getWvverwverf());
 			break;
 
 		// Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
@@ -2450,7 +2438,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 	 * Ein editierbares TableModel für die VawsVerwaltungsverfahren.
 	 * @author David Klotz
 	 */
-class VerwGebuehrenModel extends EditableListTableModel {
+class VerwGebuehrenModel extends EditableListTableModel<Verwaltungsgebuehren> {
 	private static final long serialVersionUID = 8662150283828728780L;
 	private List<Verwaltungsgebuehren> geloeschte;
 	private Fachdaten fachdaten;
@@ -2477,8 +2465,9 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-		Verwaltungsgebuehren gebuehr = (Verwaltungsgebuehren) objectAtRow;
+	public void editObject(
+        Verwaltungsgebuehren gebuehr, int columnIndex, Object newValue
+    ) {
 		String tmp = "";
 		if (newValue instanceof String) {
 			tmp = (String) newValue;
@@ -2504,7 +2493,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
 			if (newValue instanceof Float) {
 				tmpWert = (Float) newValue;
 			} else if (newValue instanceof KommaDouble) {
-				tmpWert = new Float(((KommaDouble) newValue).getValue().doubleValue());
+				tmpWert = ((KommaDouble) newValue).getValue().floatValue();
 			}
 			gebuehr.setBetrag(tmpWert);
 			break;
@@ -2521,9 +2510,9 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Verwaltungsgebuehren newObject() {
 		Verwaltungsgebuehren gebuehr = new Verwaltungsgebuehren();
-		gebuehr.setBetrag(new Float(0.0));
+		gebuehr.setBetrag(0.0f);
 		gebuehr.setAbschnitt("360.12 LW");
 		gebuehr.setFachdaten(fachdaten);
 		gebuehr.setDatum(new Date());
@@ -2531,8 +2520,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public boolean objectRemoved(Object objectAtRow) {
-		Verwaltungsgebuehren gebuehr = (Verwaltungsgebuehren) objectAtRow;
+	public boolean objectRemoved(Verwaltungsgebuehren gebuehr) {
 		if (gebuehr.getId() != null) {
 			geloeschte.add(gebuehr);
 		}
@@ -2550,8 +2538,9 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	 * (java.lang.Object, int)
 	 */
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
-		Verwaltungsgebuehren gebuehr = (Verwaltungsgebuehren) objectAtRow;
+	public Object getColumnValue(
+        Verwaltungsgebuehren gebuehr, int columnIndex
+    ) {
 		Object tmp;
 
 		switch (columnIndex) {

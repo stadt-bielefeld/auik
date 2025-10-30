@@ -34,17 +34,10 @@ import javax.swing.JTextField;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 
 public class RKBPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
-
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-
-    private BasisObjektBearbeiten parentModule;
 
     //Boxes
     private JComboBox<CBoxItem> betriebsartBox;
@@ -97,10 +90,8 @@ public class RKBPanel extends AbstractSonderbauwerkTypPanel {
     private JLabel minDrosselabflussLabel;
 
 
-
-public RKBPanel (BasisObjektBearbeiten parentModule) {
+    public RKBPanel() {
         this.name = "RKB";
-        this.parentModule = parentModule;
 
         createFields();
         createMappings();

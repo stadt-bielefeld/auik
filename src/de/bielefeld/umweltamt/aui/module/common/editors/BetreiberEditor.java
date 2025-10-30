@@ -243,8 +243,6 @@ public class BetreiberEditor extends AbstractApplyEditor {
 						if (handzeichenNeuFeld.getText().equals("")) {
 							handzeichenLabel.setForeground(Color.RED);
 							handzeichenNeuFeld.requestFocus();
-						} else {
-							// speichernButton.requestFocus();
 						}
 					}
 				}
@@ -254,8 +252,6 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		// Ermögliche TAB aus dem Bemerkungs-Feld zu springen
 		bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
 		bemerkungsScroller.getHorizontalScrollBar().setFocusable(false);
-		// This was not used:
-		// TabAction tac = new TabAction(bemerkungsArea, handzeichenNeuFeld);
 
 		FormLayout layout = new FormLayout(
 				"right:pref, 3dlu, 20dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 10dlu, right:pref, 5dlu, 100dlu, 40dlu", // Spalten
@@ -426,7 +422,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
                     }
                 }
             };
-            standortLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            standortLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                 KeyEvent.VK_L));
             standortLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
@@ -447,7 +443,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
                     editStandort(neuerStandort);
                 }
             };
-            standortNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            standortNeuAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                 KeyEvent.VK_N));
 
         }

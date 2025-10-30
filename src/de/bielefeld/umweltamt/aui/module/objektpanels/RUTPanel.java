@@ -29,16 +29,8 @@ import javax.swing.JTextField;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-
 public class RUTPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
-
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-
-    private BasisObjektBearbeiten parentModule;
 
     //Fields and labels
     private JTextField behandlungsFlaecheField;
@@ -53,9 +45,8 @@ public class RUTPanel extends AbstractSonderbauwerkTypPanel {
     private JLabel drossabflussTatLabel;
     private JLabel minDrosselabflussLabel;
 
-    public RUTPanel (BasisObjektBearbeiten parentModule) {
+    public RUTPanel() {
         this.name = "RÜT";
-        this.parentModule = parentModule;
 
         createFields();
 

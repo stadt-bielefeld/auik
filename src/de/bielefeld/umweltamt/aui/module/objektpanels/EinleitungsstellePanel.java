@@ -24,32 +24,25 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-import java.awt.Component;
-
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -57,9 +50,7 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -67,18 +58,13 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
-import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
-import de.bielefeld.umweltamt.aui.utils.DoubleField;
-import de.bielefeld.umweltamt.aui.utils.GermanDouble;
-import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
@@ -104,7 +90,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 	// Allgemeine Felder
 	private JTextField bezeichnungFeld = null;
-	private JComboBox einleitungsartBox = null;
+	private JComboBox<String> einleitungsartBox;
 	private TextFieldDateChooser erstellDatDatum = null;
 	private TextFieldDateChooser stillgelegtAmDatum = null;
 	private JTextArea bemerkungenArea = null;
@@ -112,11 +98,11 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	// Indirekteinleitung
 	private Klaeranlage[] klaeranlagen = null;
 	private JComboBox<Klaeranlage> klaeranlageBox = null;
-	private JComboBox kanalArtOptBox = null;
+	private JComboBox<String> kanalArtOptBox;
 
 	// Direkteinleitung
 
-	private JComboBox abgaberelEinlBox = null;
+	private JComboBox<String> abgaberelEinlBox;
 	private JTextField abwAgEinlFeld = null;
 
 
@@ -452,10 +438,10 @@ public class EinleitungsstellePanel extends ObjectPanel {
 		Date stillgelegtAm = this.stillgelegtAmDatum.getDate();
 		this.einleitungsstelle.setStillgelegtAm(stillgelegtAm);
 
-		Integer abgaberelEinl = ((JComboBox) this.abgaberelEinlBox).getSelectedIndex();
+		Integer abgaberelEinl = this.abgaberelEinlBox.getSelectedIndex();
 		this.einleitungsstelle.setAbgaberelEinl(abgaberelEinl);
 
-		Integer einleitungsart = ((JComboBox) this.einleitungsartBox).getSelectedIndex();
+		Integer einleitungsart = this.einleitungsartBox.getSelectedIndex();
 		this.einleitungsstelle.setEinleitungsart(einleitungsart);
 
 		if (this.einleitungsartBox.getSelectedIndex() == 0) {
@@ -495,7 +481,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			this.einleitungsstelle.setTypSonstigeTog(true);
 		}
 
-		Integer kanalArtOpt = ((JComboBox) this.kanalArtOptBox).getSelectedIndex();
+		Integer kanalArtOpt = this.kanalArtOptBox.getSelectedIndex();
 		this.einleitungsstelle.setKanalArtOpt(kanalArtOpt);
 	}
 
@@ -624,10 +610,11 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	 *
 	 * @return {@link JFormattedTextField}
 	 */
-	private JComboBox getAbgaberelEinlBox() {
+	private JComboBox<String> getAbgaberelEinlBox() {
 		if (this.abgaberelEinlBox == null) {
-			this.abgaberelEinlBox = new JComboBox();
-			this.abgaberelEinlBox.setModel(new DefaultComboBoxModel(this.abgabeItems));
+			this.abgaberelEinlBox = new JComboBox<>();
+			this.abgaberelEinlBox.setModel(
+                new DefaultComboBoxModel<>(this.abgabeItems));
 		}
 		return this.abgaberelEinlBox;
 	}
@@ -637,10 +624,11 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	 *
 	 * @return {@link JComboBox}
 	 */
-	private JComboBox getKanalArtOptBox() {
+	private JComboBox<String> getKanalArtOptBox() {
 		if (this.kanalArtOptBox == null) {
-			this.kanalArtOptBox = new JComboBox();
-			this.kanalArtOptBox.setModel(new DefaultComboBoxModel(this.kanalArtItems));
+			this.kanalArtOptBox = new JComboBox<>();
+			this.kanalArtOptBox.setModel(
+                new DefaultComboBoxModel<>(this.kanalArtItems));
 		}
 		return this.kanalArtOptBox;
 	}
@@ -650,10 +638,11 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	 *
 	 * @return {@link JComboBox}
 	 */
-	private JComboBox getEinleitungsartBox() {
+	private JComboBox<String> getEinleitungsartBox() {
 		if (this.einleitungsartBox == null) {
-			this.einleitungsartBox = new JComboBox();
-			this.einleitungsartBox.setModel(new DefaultComboBoxModel(this.einleitungItems));
+			this.einleitungsartBox = new JComboBox<>();
+			this.einleitungsartBox.setModel(
+                new DefaultComboBoxModel<>(this.einleitungItems));
 		}
 		return this.einleitungsartBox;
 	}
@@ -943,7 +932,8 @@ public class EinleitungsstellePanel extends ObjectPanel {
 					}
 				}
 			};
-			this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
+			this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_L));
 			this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
 					KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
 		}

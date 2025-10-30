@@ -21,26 +21,22 @@
 
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.awt.Color;
 import java.util.Set;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
-import de.bielefeld.umweltamt.aui.module.BasisAdresseSuchen;
 
 /**
  * Ein TableModel für die Basis-Objektdaten bei der Betreiber/Standort-Suche.
  * @author David Klotz
  */
-public class BasisObjektModel extends ListTableModel {
+public class BasisObjektModel extends ListTableModel<Objekt> {
     private static final long serialVersionUID = -4928147488267472682L;
     private String secondColumn;
     private String abteilung;
@@ -76,10 +72,9 @@ public class BasisObjektModel extends ListTableModel {
      * @param columnIndex Die Spalte der Tabelle
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Objekt bo, int columnIndex) {
         Object tmp;
 
-        Objekt bo = (Objekt) objectAtRow;
         switch(columnIndex) {
             case 0:
                 tmp = bo.getId();
@@ -109,7 +104,6 @@ public class BasisObjektModel extends ListTableModel {
 						tmp = "Anfallstelle";
 					}
 				} else if (bo.getSonderbauwerks().size() > 0) {
-					Set<Sonderbauwerk> list = bo.getSonderbauwerks();
 					Sonderbauwerk sonderbauwerk = bo.getSonderbauwerks().iterator().next();
 					if (sonderbauwerk.getTypOpt() == 1) {
 						tmp = "Sonderbauwerk (RRB)";
@@ -160,8 +154,7 @@ public class BasisObjektModel extends ListTableModel {
     }
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-        Objekt removedObjekt = (Objekt) objectAtRow;
+    public boolean objectRemoved(Objekt removedObjekt) {
         boolean removed;
 
         if (removedObjekt.getId() != null) {

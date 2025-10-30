@@ -277,7 +277,7 @@ public class Anh52Panel extends ObjectPanel {
         Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
         this.fachdaten = Anh52Fachdaten.findByAnfallstelleId(
                 list.iterator().next().getId());
-        this.log.debug("Anhang 52 Objekt aus DB geholt: " + this.fachdaten);
+        log.debug("Anhang 52 Objekt aus DB geholt: " + this.fachdaten);
     }
 
     @Override

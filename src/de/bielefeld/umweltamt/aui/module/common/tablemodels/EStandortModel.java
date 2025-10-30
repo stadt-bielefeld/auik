@@ -20,11 +20,10 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
-public class EStandortModel extends ListTableModel {
+public class EStandortModel extends ListTableModel<EStandort> {
 
     public EStandortModel() {
         super(new String[]{
@@ -45,10 +44,9 @@ public class EStandortModel extends ListTableModel {
 	}
 
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	public Object getColumnValue(EStandort standort, int columnIndex) {
         Object value;
 
-        EStandort standort = (EStandort) objectAtRow;
         switch(columnIndex) {
             case 0:
                 value = standort.getNr();

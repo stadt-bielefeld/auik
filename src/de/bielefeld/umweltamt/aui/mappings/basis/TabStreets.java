@@ -310,16 +310,4 @@ public class TabStreets  implements java.io.Serializable {
     public static List<TabStreets> getAll() {
         return DatabaseQuery.getAll(new TabStreets());
     }
-
-	public String getStrasse() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-//    /* Custom code goes below here! */
-//	public BasisTabStreets(String strasse){
-//		this.strasse = strasse;
-//		this.enabled = true;
-//		this.deleted = true;
-//	}
 }

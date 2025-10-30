@@ -52,10 +52,7 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,7 +71,6 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -91,12 +87,9 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 	private JTable einstellungenTabelle;
 	private JLabel titel;
 	private EinstellungenModel einstModel;
-	private List settinglist;
+	private List<String[]> settinglist;
 
-	/** Logging */
-	private static final AuikLogger log = AuikLogger.getLogger();
-
-	private class EinstellungenModel extends EditableListTableModel {
+	private class EinstellungenModel extends EditableListTableModel<String[]> {
 		private static final long serialVersionUID = 6042681141925302970L;
 
 		public EinstellungenModel(SettingsManager instance) {
@@ -109,15 +102,13 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 
 		@Override
 		public void updateList() {
-
 			setList(settinglist);
 			fireTableDataChanged();
 		}
 
 		@Override
-		public Object getColumnValue(Object objectAtRow, int columnIndex) {
+		public Object getColumnValue(String[] row, int columnIndex) {
 			Object value;
-			Object[] row = (Object[]) objectAtRow;
 			switch (columnIndex) {
 			// Parameter
 			case 0:
@@ -130,41 +121,33 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 			default:
 				value = null;
 			}
-
 			return value;
 		}
 
 		@Override
-		public void editObject(Object objectAtRow, int columnIndex,
-				Object newValue) {
-			Object[] row = (Object[]) objectAtRow;
-
+		public void editObject(String[] row, int columnIndex, Object newValue) {
 			switch (columnIndex) {
 			case 0:
 				String tmpPara = (String) newValue;
 				row[0] = tmpPara;
 				break;
-
 			case 1:
 				String tmpWert = (String) newValue;
 				row[1] = tmpWert;
 				_instance.setSetting((String)row[0], tmpWert, true);
 				break;
-
 			default:
 				break;
 			}
-
 		}
 
 		@Override
-		public Object newObject() {
-			return _instance;
+		public String[] newObject() {
+			return new String[2];
 		}
 
-		@Override
-		public boolean objectRemoved(Object objectAtRow) {
-
+        @Override
+        public boolean objectRemoved(String[] objectAtRow) {
 			return true;
 		}
 	}
@@ -178,17 +161,6 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 
 	@Override
 	protected JComponent buildContentArea() {
-
-		// Der folgende KeyListener wird benutzt um mit Escape
-		// das Bearbeiten abzubrechen.
-		KeyListener escListener = new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					doCancel();
-				}
-			}
-		};
 		getEinstellungenTabelle().setModel(getEinstellungenModel());
 		JScrollPane tabellenScroller = new JScrollPane(
 				getEinstellungenTabelle(),
@@ -267,7 +239,6 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 	@Override
 	protected void doApply() {
 		// TODO Auto-generated method stub
-
 	}
 
 	private JTable getEinstellungenTabelle() {
@@ -293,17 +264,6 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 
 			this.einstellungenTabelle.addFocusListener(TableFocusListener
 					.getInstance());
-			this.einstellungenTabelle.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(java.awt.event.MouseEvent e) {
-					if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-						// TODO: Check this: Nothing happens here
-						// Point origin = e.getPoint();
-						// int row = ergebnisTabelle.rowAtPoint(origin);
-					}
-				}
-			});
-
 		}
 
 		return this.einstellungenTabelle;

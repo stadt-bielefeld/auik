@@ -55,7 +55,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -94,7 +93,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
-import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
@@ -153,10 +151,10 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JCheckBox ueberschgebCheck;
 	private JTextField flurFeld;
 	private JTextField flurStkFeld;
-	private JComboBox gemarkungBox;
-	private JComboBox entwGebBox;
-	private JComboBox standortGgBox;
-	private JComboBox wEinzugsGebBox;
+	private JComboBox<Gemarkung> gemarkungBox;
+	private JComboBox<String> entwGebBox;
+	private JComboBox<Standortgghwsg> standortGgBox;
+	private JComboBox<Wassereinzugsgebiet> wEinzugsGebBox;
 
 	private Gemarkung[] gemarkungen = null;
 	private String[] entwgebiete = null;
@@ -165,13 +163,11 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	private JTextArea bemerkungsArea;
 
-	private JComboBox strassenBox;
-	private JComboBox wirtschaftszweigBox;
+	private JComboBox<String> strassenBox;
+	private JComboBox<Wirtschaftszweig> wirtschaftszweigBox;
 
-	private Orte[] orte = null;
 	private Wirtschaftszweig[] wirtschaftszweige = null;
 	private String[] tabstreets = null;
-	private String street = null;
 
 	private Action standortLoeschAction;
 	private Action standortNeuAction;
@@ -257,11 +253,11 @@ public class BasisAdresseNeu extends AbstractModul {
 
 			flurFeld = new LimitedTextField(50);
 			flurStkFeld = new LimitedTextField(50);
-			gemarkungBox = new JComboBox();
-			entwGebBox = new JComboBox();
+			gemarkungBox = new JComboBox<>();
+			entwGebBox = new JComboBox<>();
 //			entwGebBox.setEditable(true);
-			standortGgBox = new JComboBox();
-			wEinzugsGebBox = new JComboBox();
+			standortGgBox = new JComboBox<>();
+			wEinzugsGebBox = new JComboBox<>();
 
 			revdatumsFeld = new JTextField();
 			revdatumsFeld.setEditable(false);
@@ -277,7 +273,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			JScrollPane bemerkungsScroller = new JScrollPane(bemerkungsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 					JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-			wirtschaftszweigBox = new JComboBox();
+			wirtschaftszweigBox = new JComboBox<>();
 			wirtschaftszweigBox.setRenderer(new LongNameComboBoxRenderer());
 
 			JComponent buttonBar = ComponentFactory.buildOKBar(getSpeichernButton());
@@ -447,39 +443,10 @@ public class BasisAdresseNeu extends AbstractModul {
 
 	private Component getStrassenBox() {
 
-		strassenBox = new JComboBox();
+		strassenBox = new JComboBox<>();
 		strassenBox.setRenderer(new LongNameComboBoxRenderer());
 
 		return strassenBox;
-	}
-
-	/**
-	 * Methode liefert die eingegebene oder ausgewählte Straße
-	 *
-	 * @return
-	 */
-	private String getStrasse() {
-		String str = "";
-
-		if (strassenBox.getSelectedItem() != null) {
-			if (strassenBox.getSelectedItem().getClass() == TabStreets.class) {
-				TabStreets selstrasse = (TabStreets) strassenBox.getSelectedItem();
-				if (selstrasse != null) {
-					str = selstrasse.getStrasse();
-				}
-			} else if (strassenBox.getSelectedItem().getClass() == String.class) {
-				str = (String) strassenBox.getSelectedItem();
-			}
-		}
-		str = str.trim();
-
-		// Weil ich bis jetzt noch keine LimitedComboBox oder so habe...
-		if (str.length() > 50) {
-			// ... kürze ich hier den String auf 50 Zeichen
-			str = str.substring(0, 50);
-		}
-
-		return str;
 	}
 
 	/**
@@ -567,11 +534,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 					@Override
 					public void mousePressed(MouseEvent e) {
-
-						if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-							Point origin = e.getPoint();
-							int row = getStandorteTabelle().rowAtPoint(origin);
-						}else if ((e.getButton() == 3)){
+						if ((e.getButton() == 3)){
 							showStandortPopup(e);
 						}
 					}
@@ -649,10 +612,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			standort.setE32(bts.getX());
 			standort.setN32(bts.getY());
 			standort.setBezeichnung("Adresse");
-			List std = new ArrayList<Standort>();
-			for (Standort x : standorts)
-				std.add(x);
-			standorteModel.setList(std);
+			standorteModel.setList(new ArrayList<>(standorts));
 
           	this.gemarkungBox.setSelectedIndex(0);
           	this.standortGgBox.setSelectedIndex(0);
@@ -801,10 +761,10 @@ public class BasisAdresseNeu extends AbstractModul {
 				try {
 					hausnrFeld.commitEdit();
 				} catch (ParseException e1) {
-					hausnrFeld.setValue(new Integer(0));
+					hausnrFeld.setValue(Integer.valueOf(0));
 				}
 				if (hausnrFeld.getValue() instanceof Long) {
-					hausnr = new Integer(((Long) hausnrFeld.getValue()).intValue());
+					hausnr = ((Long) hausnrFeld.getValue()).intValue();
 				} else {
 					hausnr = (Integer) hausnrFeld.getValue();
 				}
@@ -989,10 +949,12 @@ public class BasisAdresseNeu extends AbstractModul {
 				standort = new Standort();
 
 				if (wirtschaftszweige != null) {
-					wirtschaftszweigBox.setModel(new DefaultComboBoxModel(wirtschaftszweige));
+					wirtschaftszweigBox.setModel(
+                        new DefaultComboBoxModel<>(wirtschaftszweige));
 				}
 				if (tabstreets != null) {
-					strassenBox.setModel(new DefaultComboBoxModel(tabstreets));
+					strassenBox.setModel(
+                        new DefaultComboBoxModel<>(tabstreets));
 				}
 				if (standorteTabelle != null) {
 
@@ -1001,24 +963,25 @@ public class BasisAdresseNeu extends AbstractModul {
 
 				if (gemarkungen != null)
 				{
-					gemarkungBox
-							.setModel(new DefaultComboBoxModel(gemarkungen));
+					gemarkungBox.setModel(
+                        new DefaultComboBoxModel<>(gemarkungen));
 				}
 				if (standortggs != null)
 				{
-					standortGgBox
-							.setModel(new DefaultComboBoxModel(standortggs));
+					standortGgBox.setModel(
+                        new DefaultComboBoxModel<>(standortggs));
 				}
 
 				if (entwgebiete != null)
 				{
-					entwGebBox.setModel(new DefaultComboBoxModel(entwgebiete));
+					entwGebBox.setModel(
+                        new DefaultComboBoxModel<>(entwgebiete));
 				}
 
 				if (wEinzugsgebiete != null)
 				{
-					wEinzugsGebBox.setModel(new DefaultComboBoxModel(
-							wEinzugsgebiete));
+					wEinzugsGebBox.setModel(
+                        new DefaultComboBoxModel<>(wEinzugsgebiete));
 				}
 
 				ortFeld.setText("Bielefeld");
@@ -1174,8 +1137,8 @@ public class BasisAdresseNeu extends AbstractModul {
                     }
                 }
             };
-            standortLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                KeyEvent.VK_L));
+            standortLoeschAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_L));
             standortLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
@@ -1195,10 +1158,8 @@ public class BasisAdresseNeu extends AbstractModul {
                     editStandort(neuerStandort);
                 }
             };
-            standortNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                KeyEvent.VK_N));
-            // abscheiderNeuAction.putValue(Action.ACCELERATOR_KEY,
-            // KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            standortNeuAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_N));
         }
 
         return standortNeuAction;

@@ -29,16 +29,8 @@ import javax.swing.JTextField;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-
 public class BFPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
-
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-
-    private BasisObjektBearbeiten parentModule;
 
     //Fields and Labels
     private JTextField stauvolumenField;
@@ -59,9 +51,8 @@ public class BFPanel extends AbstractSonderbauwerkTypPanel {
     private JLabel staerkeFiltersubstratLabel;
     private JLabel ueberlaufhaufigkeitLabel;
 
-    public BFPanel (BasisObjektBearbeiten parentModule) {
+    public BFPanel() {
         this.name = "BF";
-        this.parentModule = parentModule;
         createFields();
         createMappings();
 

@@ -79,7 +79,6 @@ import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
@@ -120,7 +119,7 @@ public class SchlammPanel extends JPanel {
     private Action probeEditAction;
     private Action probeLoeschAction;
 
-    private JComboBox anlageBox;
+    private JComboBox<Klaeranlage> anlageBox;
     private JTable probeTabelle;
 
     private JPanel anlegenPanel;
@@ -283,7 +282,7 @@ public class SchlammPanel extends JPanel {
                     }
                 }
             };
-            probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            probeEditAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                     KeyEvent.VK_B));
             probeEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
                     .getKeyStroke(KeyEvent.VK_ENTER, 0, false));
@@ -322,7 +321,7 @@ public class SchlammPanel extends JPanel {
                     }
                 }
             };
-            probeLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            probeLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                     KeyEvent.VK_L));
             probeLoeschAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
                     .getKeyStroke(KeyEvent.VK_DELETE, 0, false));
@@ -351,9 +350,9 @@ public class SchlammPanel extends JPanel {
         }
     }
 
-    private JComboBox getAnlageBox() {
+    private JComboBox<Klaeranlage> getAnlageBox() {
         if (anlageBox == null) {
-            anlageBox = new JComboBox(DatabaseQuery.getKlaeranlage());
+            anlageBox = new JComboBox<>(DatabaseQuery.getKlaeranlage());
 
             anlageBox.addActionListener(new ActionListener() {
                 @Override

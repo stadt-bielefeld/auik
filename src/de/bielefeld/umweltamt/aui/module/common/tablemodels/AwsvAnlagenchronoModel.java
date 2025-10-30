@@ -34,7 +34,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Date;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -42,7 +41,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Vaws Anlagenchronologien.
  * @author Gerd Genuit
  */
-public class AwsvAnlagenchronoModel extends ListTableModel {
+public class AwsvAnlagenchronoModel extends ListTableModel<Anlagenchrono> {
 	private static final long serialVersionUID = 5854006303057335338L;
 
 	public AwsvAnlagenchronoModel() {
@@ -60,8 +59,7 @@ public class AwsvAnlagenchronoModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Anlagenchrono ac = (Anlagenchrono) objectAtRow;
+    public Object getColumnValue(Anlagenchrono ac, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {

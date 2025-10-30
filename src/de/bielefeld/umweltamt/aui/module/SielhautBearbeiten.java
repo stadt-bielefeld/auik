@@ -102,7 +102,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -148,7 +147,6 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
-import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
@@ -160,13 +158,11 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
-import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
-//import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.SielhautProbeModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -265,8 +261,8 @@ public class SielhautBearbeiten extends ObjectModule {
 		super.show();
 
 		if (this.manager.getSettingsManager().getSetting("auik.imc.edit_object") != null) {
-			this.objekt = Objekt
-					.findById(new Integer(this.manager.getSettingsManager().getIntSetting("auik.imc.edit_object")));
+			this.objekt = Objekt.findById(this.manager.getSettingsManager()
+                .getIntSetting("auik.imc.edit_object"));
 			this.manager.getSettingsManager().removeSetting("auik.imc.edit_object");
 			this.sprobePkt = Messstelle.findByObjektId(this.objekt.getId());
 			this.spunkt = Sielhaut.findById(this.objekt.getId());
@@ -664,7 +660,7 @@ public class SielhautBearbeiten extends ObjectModule {
 					}
 				}
 			};
-			probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
+			probeEditAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_B));
 			probeEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
 		}
 
@@ -695,7 +691,7 @@ public class SielhautBearbeiten extends ObjectModule {
 					}
 				}
 			};
-			probeLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
+			probeLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_L));
 			probeLoeschAction.putValue(Action.ACCELERATOR_KEY,
 					KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
 		}
@@ -1287,7 +1283,7 @@ public class SielhautBearbeiten extends ObjectModule {
 					}
 				}
 
-				Collections.sort(this.dateList);
+				this.dateList.sort(null);
 			}
 
 			@Override

@@ -29,8 +29,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -223,8 +221,10 @@ public class EBetrieb implements java.io.Serializable {
             return massnahmes;
         } else {
             massnahmes = new HashSet<Massnahme>(0);
-            List<ZBetriebMassnahme> zBetriebMassnahmes = HibernateSessionFactory.currentSession().createQuery(
-                "from ZBetriebMassnahme where betrieb_nr= " + origId).list();
+            List<ZBetriebMassnahme> zBetriebMassnahmes =
+                HibernateSessionFactory.currentSession().createQuery(
+                    "from ZBetriebMassnahme where betrieb_nr= " + origId,
+                    ZBetriebMassnahme.class).list();
             for (ZBetriebMassnahme zbm : zBetriebMassnahmes) {
                 massnahmes.add(zbm.getMassnahme());
             }

@@ -305,7 +305,7 @@ public class PDFExporter {
 	 * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
 	 */
 	public JasperPrint exportBescheid(Map<String, Object> fields,
-			JRDataSource subdata, String report, String dest, boolean printPDF)
+			JRDataSource subdata, String report, String dest)
 			throws Exception {
 		InputStream inputStream = getResourceAsStream(report);
 
@@ -318,11 +318,6 @@ public class PDFExporter {
 
 		try {
 			JasperPrint jprint = export(fields, inputStream, dest);
-
-			if (printPDF) {
-				// print(jprint);
-			}
-
 			return jprint;
 		} catch (JRException jre) {
 			throw new Exception("Druck des Reports schlug fehl: "
@@ -370,7 +365,6 @@ public class PDFExporter {
 	 * @param show True wenn die erzeugte Datei angezeigt werden soll
 	 * @return ein bef&uuml;lltes {@link JasperPrint} Objekt.
 	 */
-	@SuppressWarnings("deprecation")
 	// See comment below for hibernate4
 	public JasperPrint exportReport(Map<String, Object> fields, String report,
 			String destination, boolean show) throws Exception {
@@ -384,10 +378,6 @@ public class PDFExporter {
 
 		try {
 			JasperPrint jprint = null;
-			//Deprecated
-			//Connection con = HibernateSessionFactory.currentSession()
-			//		.connection();
-			//jprint = export(fields, inputStream, destination, con);
 
 			// With Hibernate 4:
 			HibernateSessionFactory.currentSession().doWork( new Work() {

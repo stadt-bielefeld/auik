@@ -32,9 +32,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -45,10 +43,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -63,18 +59,14 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
-import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
-import de.bielefeld.umweltamt.aui.utils.DoubleField;
-import de.bielefeld.umweltamt.aui.utils.GermanDouble;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
-import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
@@ -97,17 +89,16 @@ public class SonderbauwerkPanel extends ObjectPanel {
     private JTextField kurzbezeichnungFeld = null;
     private JCheckBox stillgelegtCheck = null;
     private TextFieldDateChooser stillegdatDatum = null;
-    private JComboBox verfahrenBox = null;
+    private JComboBox<String> verfahrenBox;
     private JComboBox<String> typBox = null;
     private JFormattedTextField inbetriebnahmeFeld = null;
     private TextFieldDateChooser wiederinebetriebdatDatum = null;
     private JFormattedTextField e32Feld = null;
     private JFormattedTextField n32Feld = null;
-    private JComboBox klaeranlageBox = null;
+    private JComboBox<Klaeranlage> klaeranlageBox;
     private LimitedTextArea bemerkungArea = null;
     // Daten
     private Sonderbauwerk  sonderbauwerk = null;
-    private Referenz referenz = null;
     private JButton saveSonderbauwerkButton = null;
 
     // Objektverknuepfer
@@ -221,9 +212,9 @@ public class SonderbauwerkPanel extends ObjectPanel {
     /**
      * @return the verfahrenBox
      */
-    private JComboBox getVerfahrenBox() {
+    private JComboBox<String> getVerfahrenBox() {
         if (this.verfahrenBox == null) {
-            this.verfahrenBox = new JComboBox();
+            this.verfahrenBox = new JComboBox<>();
         }
         return verfahrenBox;
     }
@@ -231,9 +222,9 @@ public class SonderbauwerkPanel extends ObjectPanel {
     /**
      * @return the typBox
      */
-    private JComboBox getTypBox() {
+    private JComboBox<String> getTypBox() {
         if (this.typBox == null) {
-            this.typBox = new JComboBox();
+            this.typBox = new JComboBox<>();
         }
         return typBox;
     }
@@ -281,9 +272,9 @@ public class SonderbauwerkPanel extends ObjectPanel {
     /**
      * @return the kläranlageBox
      */
-    private JComboBox getKlaeranlageBox() {
+    private JComboBox<Klaeranlage> getKlaeranlageBox() {
         if (this.klaeranlageBox == null) {
-            klaeranlageBox = new JComboBox(DatabaseQuery.getKlaeranlage());
+            klaeranlageBox = new JComboBox<>(DatabaseQuery.getKlaeranlage());
         }
         return klaeranlageBox;
     }
@@ -328,10 +319,10 @@ public class SonderbauwerkPanel extends ObjectPanel {
 
 
             String[] verfahren = {"-", "Trennverfahren", "Mischverfahren"};
-            getVerfahrenBox().setModel(new DefaultComboBoxModel(verfahren));
+            getVerfahrenBox().setModel(new DefaultComboBoxModel<>(verfahren));
 
             String[] typ = {"-", "RRB", "RKB", "RBF", "BF", "RÜT", "RST", "AL"};
-            getTypBox().setModel(new DefaultComboBoxModel(typ));
+            getTypBox().setModel(new DefaultComboBoxModel<>(typ));
 
             if (this.sonderbauwerk.getErstellDat() != null) {
                 getErstellDatDatum().setDate(this.sonderbauwerk.getErstellDat());
@@ -639,7 +630,7 @@ public class SonderbauwerkPanel extends ObjectPanel {
                 }
             };
             this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
-                new Integer(KeyEvent.VK_L));
+                Integer.valueOf(KeyEvent.VK_L));
             this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }

@@ -24,7 +24,6 @@
 package de.bielefeld.umweltamt.aui.mappings.oberflgw;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;

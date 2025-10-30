@@ -69,15 +69,15 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches Auswertungs-Modul für BWK-Datensätze.
  * @author David Klotz
  */
-public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
+public class EinleiterBrennwertAuswertung
+    extends AbstractQueryModul<BwkFachdaten> {
+
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
     // Widgets für die Abfrage
-    private JComboBox jahrBox;
+    private JComboBox<String> jahrBox;
     private JComboBox<String> typBox;
     private JButton submitButton;
-    private JButton bhkwButton;
-    private JButton abaButton;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private AnhBwkModel tmodel;
@@ -107,15 +107,13 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
                 jahrBoxValues[i+1] =
                     (iJahre[i] != null? iJahre[i].toString() : "keine Angabe");
             }
-            jahrBox = new JComboBox(jahrBoxValues);
+            jahrBox = new JComboBox<>(jahrBoxValues);
             jahrBox.setSelectedItem(
                 Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
 //            jahrBox.setEditable(true);
 
             submitButton = new JButton("Suchen");
             typBox = new JComboBox<>(new String[]{"BWK", "BHKW", "ABA"});
-            bhkwButton = new JButton("BHKW");
-            abaButton = new JButton("ABA");
 
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
@@ -152,12 +150,12 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
                                 case "ABA":
                                     result = DatabaseQuery.getABA(fJahr);
                             }
-                            ((AnhBwkModel)getTableModel()).setList(result);
+                            getTableModel().setList(result);
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((AnhBwkModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -183,7 +181,7 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<BwkFachdaten> getTableModel() {
         if (tmodel == null) {
             tmodel = new AnhBwkModel();
         }

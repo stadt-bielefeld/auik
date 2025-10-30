@@ -95,10 +95,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -117,25 +114,17 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
-import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaVerfahrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AfsNwPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AnfallstellePanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.Anh40Panel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AbfuhrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49DetailsPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49Panel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.Anh50Panel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.Anh52Panel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.Anh55Panel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.Anh56Panel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.BWKPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.BasisPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ChronoPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.EinleitungsstellePanel;
@@ -193,7 +182,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
     // Daten
     private Objekt objekt;
     private boolean isNew = true;
-    private Anfallstelle anfallstelle;
 
     public BasisObjektBearbeiten() {
         this.activePanels = new ArrayList<ObjectPanel>();
@@ -479,21 +467,22 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
         if (manager.getSettingsManager().getSetting("auik.imc.edit_object") != null) {
             isNew = false;
-            objekt = Objekt.findById(new Integer(
-                manager.getSettingsManager().getIntSetting("auik.imc.edit_object")));
+            objekt = Objekt.findById(
+                manager.getSettingsManager().getIntSetting("auik.imc.edit_object"));
             manager.getSettingsManager().removeSetting("auik.imc.edit_object");
         } else {
             isNew = true;
             objekt = new Objekt();
             if (manager.getSettingsManager().getSetting("auik.imc.use_standort") != null) {
-                Standort sta = Standort.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
-//                log.debug("Standort: " + sta.getAdresse().getStrasse() + " " + sta.getAdresse().getHausnr() + ", " +sta.getId());
+                Standort sta = Standort.findById(
+                    manager.getSettingsManager().getIntSetting("auik.imc.use_standort"));
                 objekt.setStandortid(sta);
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
                 manager.getSettingsManager().removeSetting("auik.imc.use_lage");
             }
             if (manager.getSettingsManager().getSetting("auik.imc.use_betreiber") != null) {
-                Inhaber betr = Inhaber.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
+                Inhaber betr = Inhaber.findById(
+                    manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber"));
                 objekt.setBetreiberid(betr);
                 manager.getSettingsManager().removeSetting("auik.imc.use_betreiber");
             }
@@ -511,11 +500,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
             @Override
             protected void doNonUILogic() throws RuntimeException {
                 getBasisTab().fetchFormData();
-
-                if (objekt.getAnfallstelles().size() > 0) {
-                    Set<Anfallstelle> list = objekt.getAnfallstelles();
-                    anfallstelle = list.iterator().next();
-                }
 
                 // Daten für verschiedene Objektarten holen
                 if (objekt.getObjektarten() != null) {
@@ -590,8 +574,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
                 }
                 else {
                     log.debug("Bearbeite Objekt: " + objekt);
-                    String betr = objekt.getBetreiberid().toString();
-                    Standort std = objekt.getStandortid();
                     getHeaderLabel().setForeground(UIManager.getColor("Label.foreground"));
                     getHeaderLabel().setText(DatabaseQuery.getStandortString(objekt.getStandortid()) +
                             "; " + objekt.getBetreiberid()+"; "+objekt.getObjektarten().getObjektart());

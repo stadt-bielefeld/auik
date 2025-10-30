@@ -87,7 +87,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
@@ -100,18 +99,16 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Auswertungs-Abfragen.
  * @author David Klotz
  */
-public abstract class AbstractQueryModul extends AbstractModul {
-//    private JSplitPane contentSplit;
+public abstract class AbstractQueryModul<T> extends AbstractModul {
+
     private JScrollPane tableScroller;
     private JTable resultTable;
 
     private Action objektEditAction;
     private Action saveAction;
     private JPopupMenu resultPopup;
-//    private RowSorter<?> sorter;
 
-private String outputPath = "./auswertungen/auik-export.csv";
-
+    private String outputPath = "./auswertungen/auik-export.csv";
 
     /**
      * Liefert die Kategorie des Moduls.
@@ -156,7 +153,7 @@ private String outputPath = "./auswertungen/auik-export.csv";
     /**
      * @return Ein TableModel für die Ergebnis-Tabelle.
      */
-    public abstract ListTableModel getTableModel();
+    public abstract ListTableModel<T> getTableModel();
 
     /**
      * Liefert das BasisObjekt zu einem Fachdaten-Objekt.
@@ -287,7 +284,7 @@ private String outputPath = "./auswertungen/auik-export.csv";
                     editObject(row);
                 }
             };
-            objektEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
+            objektEditAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_B));
             objektEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
         }
 
@@ -307,7 +304,7 @@ private String outputPath = "./auswertungen/auik-export.csv";
                     AuikUtils.saveTabelle(getResultTable(), frame);
                 }
             };
-            saveAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_E));
+            saveAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_E));
             saveAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK, false));
         }
 

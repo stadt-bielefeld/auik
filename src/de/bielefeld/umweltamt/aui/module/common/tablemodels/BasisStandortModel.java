@@ -43,8 +43,6 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.util.List;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
@@ -56,13 +54,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für eine Standortliste einer Adresse.
  * @author Gerd Genuit
  */
-public class BasisStandortModel extends ListTableModel {
-    private String lastSuchWort = null;
-    private String lastProperty = null;
-    private String lastStrasse = null;
-    private Integer lastHausnr = null;
-    private String LastZus = null;
-    private String LastOrt = null;
+public class BasisStandortModel extends ListTableModel<Standort> {
     private AuikLogger log = AuikLogger.getLogger();
     private Adresse adresse = null;
     private Inhaber inhaber = null;
@@ -86,8 +78,7 @@ public class BasisStandortModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Standort std = (Standort) objectAtRow;
+    public Object getColumnValue(Standort std, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -195,25 +186,18 @@ public class BasisStandortModel extends ListTableModel {
     public void filterAllList(String suche) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findStandorteNachBezeichnung(suche));
-        lastSuchWort = suche;
         log.debug("End filterList");
     }
 
     public void filterStandortList(String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
         setList(DatabaseQuery.chooseStandort(strasse, hausnr, ort));
-        lastStrasse = strasse;
-        lastHausnr = hausnr;
-        LastOrt = ort;
         log.debug("End filterList");
     }
 
     public void filterStandortList(String suche, String property) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findStandorte(suche, property));
-        lastSuchWort = suche;
-        lastProperty = property;
         log.debug("End filterList");
     }
-
 }

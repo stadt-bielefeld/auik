@@ -41,7 +41,6 @@ import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.module.ELKASync;
 
@@ -50,7 +49,6 @@ public class CredentialsDialog extends JDialog {
 
     private SettingsManager settings;
     private ELKASync modul;
-    private String selection;
 
     private JLabel textLabel;
     private JTextField benutzerFeld;

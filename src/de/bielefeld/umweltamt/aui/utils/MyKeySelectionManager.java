@@ -51,7 +51,8 @@ public class MyKeySelectionManager implements KeySelectionManager {
      * @param aModel Das Model der ComboBox
      * @return Den Index des ausgewählten Items
      */
-    public int selectionForKey(char aKey, ComboBoxModel aModel) {
+    @Override
+    public int selectionForKey(char aKey, ComboBoxModel<?> aModel) {
         int iCount = aModel.getSize();
         int iPatternLen = 0;
         int iSelected = 0;
@@ -68,9 +69,9 @@ public class MyKeySelectionManager implements KeySelectionManager {
             keys = null;
         } else {
             if (keys != null) {
-                keys = keys + (new Character(aKey)).toString();
+                keys = keys + aKey;
             } else {
-                keys = (new Character(aKey)).toString();
+                keys = String.valueOf(aKey);
             }
 
             if (keys != null) {
@@ -92,7 +93,6 @@ public class MyKeySelectionManager implements KeySelectionManager {
             }
         }
 
-        //log.debug("KEYMANAGER - char: '" + aKey + "', keys: \"" + keys + "\", curSel: " + curSelected + ", timeDif: " + timeDif);
         lastTime = curTime;
         return curSelected;
     }

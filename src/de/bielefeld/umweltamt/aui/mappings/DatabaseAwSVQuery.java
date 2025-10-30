@@ -49,7 +49,6 @@ import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Verwmassnahmen;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * This is a service class for all custom queries from the AWSV package.
@@ -58,10 +57,6 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * @see de.bielefeld.umweltamt.aui.mappings.DatabaseQuery
  */
 abstract class DatabaseAwSVQuery extends DatabaseDirekteinlQuery {
-
-	/** Logging */
-	private static final AuikLogger log = AuikLogger.getLogger();
-
 
 	private static String[] bodenflaechenausf = null;
 	private static String[] niederschlagschutz = null;

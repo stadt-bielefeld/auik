@@ -26,6 +26,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.metamodel.EntityType;
+
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
@@ -412,10 +415,6 @@ public class DatabaseAccess
 		{
 			this.handleDBException(he, false);
 		}
-		finally
-		{
-			// This place is intentionally left blank.
-		}
 	}
 
 	/**
@@ -502,11 +501,12 @@ public class DatabaseAccess
 	 *
 	 * @return <code>Order</code>
 	 */
-	public Order getIdOrder(Class<?> entityClass)
-	{
+	public Order getIdOrder(Class<?> entityClass) {
+        EntityType<?> type =
+            ((EntityManagerFactory) this.getSession().getSessionFactory())
+            .getMetamodel().entity(entityClass);
 		Order idOrder = Order.asc(
-				this.getSession().getSessionFactory()
-						.getClassMetadata(entityClass).getIdentifierPropertyName());
+            type.getId(type.getIdType().getJavaType()).getName());
 		this.closeSession();
 		return idOrder;
 	}
@@ -523,10 +523,6 @@ public class DatabaseAccess
 			catch (HibernateException he)
 			{
 				this.handleDBException(he, true);
-			}
-			finally
-			{
-				// This place is intentionally left blank.
 			}
 		}
 		return this.session;
@@ -561,10 +557,6 @@ public class DatabaseAccess
 		catch (HibernateException he)
 		{
 			this.handleDBException(he, true);
-		}
-		finally
-		{
-			// This place is intentionally left blank.
 		}
 		return success;
 	}

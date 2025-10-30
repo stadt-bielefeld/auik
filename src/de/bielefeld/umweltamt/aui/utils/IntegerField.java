@@ -53,7 +53,7 @@ public class IntegerField extends BasicFormattedField {
         try {
             commitEdit();
             if (getValue() instanceof Long) {
-                nummer = new Integer(((Long) getValue()).intValue());
+                nummer = ((Long) getValue()).intValue();
             } else {
                 nummer = (Integer) getValue();
             }

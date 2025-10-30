@@ -21,7 +21,6 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -103,6 +102,7 @@ public abstract class AbstractSonderbauwerkTypPanel extends JPanel{
             Method getMethod = context.getClass().getMethod(methodName);
             Object field = getMethod.invoke(context);
             if (field.getClass() == JComboBox.class) {
+                @SuppressWarnings("unchecked")
                 JComboBox<CBoxItem> combo = (JComboBox<CBoxItem>) field;
                 returnValue = ((CBoxItem) combo.getSelectedItem()).getId();
             } else if (field.getClass() == JCheckBox.class) {
@@ -172,7 +172,7 @@ public abstract class AbstractSonderbauwerkTypPanel extends JPanel{
                 String methodName = "set"
                         + recordName.substring(0, 1).toUpperCase()
                         + recordName.substring(1);
-                Class setParam = Class.forName(recordType);
+                Class<?> setParam = Class.forName(recordType);
                 Method recordMethod = record.getClass().getMethod(methodName, setParam);
                 recordMethod.invoke(record, getFieldValue(formField));
             } catch (ClassNotFoundException cnf) {

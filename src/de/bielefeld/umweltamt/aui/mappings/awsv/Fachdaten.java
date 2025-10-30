@@ -28,7 +28,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.util.Date;
 import java.util.HashSet;
@@ -180,7 +179,6 @@ public class Fachdaten  implements java.io.Serializable {
         this.jgses = jgses;
         this.kontrollens = kontrollens;
         this.abscheiders = abscheiders;
-        this.abfuellflaeches = abfuellflaeches;
         this.verwaltungsverfs = verwaltungsverfs;
     }
 
