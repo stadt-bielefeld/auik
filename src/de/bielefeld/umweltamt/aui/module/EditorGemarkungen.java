@@ -141,13 +141,13 @@ public class EditorGemarkungen extends AbstractModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((EditorGemarkungModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.getGemarkungenlist());
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((EditorGemarkungModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -175,7 +175,7 @@ public class EditorGemarkungen extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
-    public ListTableModel getTableModel() {
+    public ListTableModel<Gemarkung> getTableModel() {
         if (tmodel == null) {
             tmodel = new EditorGemarkungModel();
         }

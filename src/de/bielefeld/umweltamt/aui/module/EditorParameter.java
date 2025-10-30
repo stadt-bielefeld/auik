@@ -149,13 +149,13 @@ public class EditorParameter extends AbstractModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((EditorParameterModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.getParameterlist());
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((EditorParameterModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -183,7 +183,7 @@ public class EditorParameter extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
-    public ListTableModel getTableModel() {
+    public ListTableModel<Parameter> getTableModel() {
         if (tmodel == null) {
             tmodel = new EditorParameterModel();
         }
