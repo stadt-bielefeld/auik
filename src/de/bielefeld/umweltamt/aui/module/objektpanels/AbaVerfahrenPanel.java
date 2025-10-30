@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.DefaultListModel;
@@ -264,9 +263,7 @@ public class AbaVerfahrenPanel extends ObjectPanel {
         });
         //this.updateLists();
         leftList.clearSelection();
-        Set set = new HashSet(rightData);
-        fachdaten.setAbaverfahrens(null);
-        fachdaten.setAbaverfahrens((Set<Abaverfahren>) set);
+        fachdaten.setAbaverfahrens(new HashSet<>(rightData));
     }
 
     /**
@@ -280,9 +277,7 @@ public class AbaVerfahrenPanel extends ObjectPanel {
         });
         this.updateLists();
         rightList.clearSelection();
-        Set set = new HashSet(rightData);
-        fachdaten.setAbaverfahrens(null);
-        fachdaten.setAbaverfahrens((Set<Abaverfahren>) set);
+        fachdaten.setAbaverfahrens(new HashSet<>(rightData));
     }
 
     /**

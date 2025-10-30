@@ -55,7 +55,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -613,10 +612,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			standort.setE32(bts.getX());
 			standort.setN32(bts.getY());
 			standort.setBezeichnung("Adresse");
-			List std = new ArrayList<Standort>();
-			for (Standort x : standorts)
-				std.add(x);
-			standorteModel.setList(std);
+			standorteModel.setList(new ArrayList<>(standorts));
 
           	this.gemarkungBox.setSelectedIndex(0);
           	this.standortGgBox.setSelectedIndex(0);

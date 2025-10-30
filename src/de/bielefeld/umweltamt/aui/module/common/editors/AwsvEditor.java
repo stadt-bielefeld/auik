@@ -1400,7 +1400,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 		// Natürlich nur, wenn wirklich eine Zeile ausgewählt ist
 		if (row != -1) {
-            ((EditableListTableModel) table.getModel()).removeRow(row);
+            ((EditableListTableModel<?>) table.getModel()).removeRow(row);
 		}
 	}
 

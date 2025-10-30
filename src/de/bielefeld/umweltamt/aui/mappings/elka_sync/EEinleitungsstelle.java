@@ -582,7 +582,10 @@ public class EEinleitungsstelle implements java.io.Serializable {
 		Integer identifier = origNr != null ? origNr : nr;
 		Einleitungsstelle els = Einleitungsstelle.findByObjektId(identifier);
 		List<Referenz> referenzs = HibernateSessionFactory.currentSession()
-				.createQuery("from Referenz where q_els_nr = " + els.getObjekt().getId()).list();
+            .createQuery(
+                "from Referenz where q_els_nr = " + els.getObjekt().getId(),
+                Referenz.class)
+            .list();
 		return referenzs != null ? referenzs : new ArrayList<Referenz>();
 	}
 }

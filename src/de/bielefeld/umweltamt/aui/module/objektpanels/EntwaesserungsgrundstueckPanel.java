@@ -388,7 +388,8 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 				}
 			}
 
-			List list = new ArrayList(entwaesserungsgrundstueck.getAbaverfahrens());
+			List<Abaverfahren> list = new ArrayList<>(
+                entwaesserungsgrundstueck.getAbaverfahrens());
 			abaverfahrens.setListData(list);
 
 			switchEinlBereichItems((String) getEinleitungsbereichBox().getSelectedItem());
@@ -572,7 +573,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 
         List<Abaverfahren> selected = abaverfahrens.getSelected();
         List<Abaverfahren> removed = new ArrayList<>();
-        Set set = new HashSet(selected);
+        Set<Abaverfahren> set = new HashSet<>(selected);
         entwaesserungsgrundstueck.setAbaverfahrens(set);
         Set<Abaverfahren> verfahrens =
         		entwaesserungsgrundstueck.getAbaverfahrens();

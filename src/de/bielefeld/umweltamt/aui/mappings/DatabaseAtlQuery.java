@@ -1051,7 +1051,8 @@ abstract class DatabaseAtlQuery extends DatabaseBasisQuery
 				query += " ORDER BY s.bezeichnung ASC, s.PSielhaut DESC, s.PFirmenprobe DESC, o.inaktiv ASC" ;
 
 
-		List sielhaut = HibernateSessionFactory.currentSession().createQuery(query).list();
+		List<Object[]> sielhaut = HibernateSessionFactory.currentSession()
+            .createQuery(query, Object[].class).list();
 
 		return (Object[]) sielhaut.toArray();
 	}
