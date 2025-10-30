@@ -91,7 +91,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -275,7 +274,7 @@ public class KlaerschlammAuswertung extends AbstractModul
                     }
                 }
 
-				Collections.sort(this.dateList);
+				this.dateList.sort(null);
 			}
 
 			@Override

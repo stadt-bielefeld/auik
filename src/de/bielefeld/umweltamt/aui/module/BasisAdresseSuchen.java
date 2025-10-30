@@ -58,7 +58,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Collections;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -1024,7 +1024,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 	        this.suchFeld.requestFocusInWindow();
 			this.suchFeld.setFocusTraversalKeys(
                 KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-                Collections.EMPTY_SET);
+                Set.of());
 
 	        this.suchFeld.addActionListener(new ActionListener() {
 	            @Override
@@ -1044,7 +1044,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			this.strassenFeld = new JTextField("");
 			this.strassenFeld.setFocusTraversalKeys(
                 KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-                Collections.EMPTY_SET);
+                Set.of());
 
 			this.strassenFeld.addActionListener(new ActionListener()
                 {
@@ -1095,7 +1095,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			this.ortFeld = new JTextField("");
 			this.ortFeld.setFocusTraversalKeys(
                 KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-                Collections.EMPTY_SET);
+                Set.of());
 
 			this.ortFeld.addActionListener(new ActionListener()
                 {

@@ -221,8 +221,10 @@ public class EBetrieb implements java.io.Serializable {
             return massnahmes;
         } else {
             massnahmes = new HashSet<Massnahme>(0);
-            List<ZBetriebMassnahme> zBetriebMassnahmes = HibernateSessionFactory.currentSession().createQuery(
-                "from ZBetriebMassnahme where betrieb_nr= " + origId).list();
+            List<ZBetriebMassnahme> zBetriebMassnahmes =
+                HibernateSessionFactory.currentSession().createQuery(
+                    "from ZBetriebMassnahme where betrieb_nr= " + origId,
+                    ZBetriebMassnahme.class).list();
             for (ZBetriebMassnahme zbm : zBetriebMassnahmes) {
                 massnahmes.add(zbm.getMassnahme());
             }

@@ -69,7 +69,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -484,7 +484,7 @@ public class LaborProbeSuchen extends AbstractModul {
             });
             this.suchFeld.setFocusTraversalKeys(
                 KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-                Collections.EMPTY_SET);
+                Set.of());
 
             this.suchFeld.addKeyListener(new KeyAdapter() {
                 @Override
