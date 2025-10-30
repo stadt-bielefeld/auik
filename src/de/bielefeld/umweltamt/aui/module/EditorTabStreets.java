@@ -161,14 +161,14 @@ public class EditorTabStreets extends AbstractModul
 						@Override
 						protected void doNonUILogic()
 						{
-							((EditorTabStreetsModel) getTableModel()).setList(
+							getTableModel().setList(
 									DatabaseQuery.getTabStreetslist(MatchMode.EXACT));
 						}
 
 						@Override
 						protected void doUIUpdateLogic()
 						{
-							((EditorTabStreetsModel) getTableModel()).fireTableDataChanged();
+							getTableModel().fireTableDataChanged();
 							frame.changeStatus(+getTableModel().getRowCount() + " Objekte gefunden");
 						}
 					};
@@ -200,7 +200,7 @@ public class EditorTabStreets extends AbstractModul
 	 * de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel
 	 * ()
 	 */
-	public ListTableModel getTableModel()
+	public ListTableModel<TabStreets> getTableModel()
 	{
 		if (tmodel == null)
 		{
