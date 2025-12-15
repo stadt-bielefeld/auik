@@ -66,3 +66,13 @@ jobs:
           asset_path: ./target/auik-${{ github.ref_name }}.jar.sha256sum
           asset_name: auik-${{ github.ref_name }}.jar.sha256sum
           asset_content_type: text/plain
+      - name: Upload Release Assets
+        id: upload-release-asset-schema
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./data/db/version1_0_schema.sql
+          asset_name: version1_0_schema.sql
+          asset_content_type: text/plain
