@@ -466,9 +466,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				+ "FROM Adresse a, Inhaber i, Standort s, Objekt o "
 				+ "WHERE a.id = i.adresse AND i.id = s.inhaber AND s.id = o.standortid ";
 		if (bStrasse || bHausnr || bOrt) {
-			query += " AND ";
 			if (bStrasse) {
-				query += "LOWER(a.strasse) like '" + str + "%' ";
+				query += " AND LOWER(a.strasse) like '" + str + "%' ";
 			}
 			if (bHausnr) {
 				if (bStrasse) {
