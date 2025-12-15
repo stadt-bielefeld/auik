@@ -323,7 +323,7 @@ public class LaborProbeSuchen extends AbstractModul {
                     }
                 }
             };
-            this.probeEditAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            this.probeEditAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                 KeyEvent.VK_B));
             this.probeEditAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
@@ -362,7 +362,7 @@ public class LaborProbeSuchen extends AbstractModul {
                     }
                 }
             };
-            this.probeLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            this.probeLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                 KeyEvent.VK_L));
             this.probeLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));

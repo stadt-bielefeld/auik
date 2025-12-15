@@ -765,10 +765,10 @@ public class BasisAdresseNeu extends AbstractModul {
 				try {
 					hausnrFeld.commitEdit();
 				} catch (ParseException e1) {
-					hausnrFeld.setValue(new Integer(0));
+					hausnrFeld.setValue(Integer.valueOf(0));
 				}
 				if (hausnrFeld.getValue() instanceof Long) {
-					hausnr = new Integer(((Long) hausnrFeld.getValue()).intValue());
+					hausnr = ((Long) hausnrFeld.getValue()).intValue();
 				} else {
 					hausnr = (Integer) hausnrFeld.getValue();
 				}
@@ -1138,8 +1138,8 @@ public class BasisAdresseNeu extends AbstractModul {
                     }
                 }
             };
-            standortLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                KeyEvent.VK_L));
+            standortLoeschAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_L));
             standortLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
@@ -1159,10 +1159,8 @@ public class BasisAdresseNeu extends AbstractModul {
                     editStandort(neuerStandort);
                 }
             };
-            standortNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                KeyEvent.VK_N));
-            // abscheiderNeuAction.putValue(Action.ACCELERATOR_KEY,
-            // KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
+            standortNeuAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_N));
         }
 
         return standortNeuAction;

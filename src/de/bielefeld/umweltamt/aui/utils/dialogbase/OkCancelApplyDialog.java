@@ -57,7 +57,7 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
  * "Ok"- und einem "Abbrechen"-Button.
  * @author David Klotz
  */
-public abstract class OkCancelApplyDialog extends SimpleDialog {
+public abstract class OkCancelApplyDialog extends OkCancelDialog {
     private static final long serialVersionUID = 8544344498787710223L;
 
     public OkCancelApplyDialog(HauptFrame frame) {
@@ -66,30 +66,6 @@ public abstract class OkCancelApplyDialog extends SimpleDialog {
 
     public OkCancelApplyDialog(String title, HauptFrame frame) {
         super(title, frame);
-    }
-
-    @Override
-    public Action getFirstButtonAction() {
-        return new AbstractAction(getOkButtonText()) {
-            private static final long serialVersionUID = 5631309928023384305L;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doOk();
-            }
-        };
-    }
-
-    @Override
-    public Action getSecondButtonAction() {
-        return new AbstractAction("Abbrechen") {
-            private static final long serialVersionUID = -4608327257436896003L;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doCancel();
-            }
-        };
     }
 
     @Override
@@ -102,16 +78,6 @@ public abstract class OkCancelApplyDialog extends SimpleDialog {
                 doApply();
             }
         };
-    }
-
-    protected String getOkButtonText() {
-        return "OK";
-    }
-
-    protected abstract void doOk();
-
-    protected void doCancel() {
-        close();
     }
 
     protected abstract void doApply();

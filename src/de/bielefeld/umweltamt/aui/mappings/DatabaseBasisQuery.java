@@ -30,7 +30,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.hibernate.NullPrecedence;
-import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -269,7 +268,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			query += " AND a._deleted = false";
 		}
 		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC NULLS FIRST;";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+		NativeQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("i", Inhaber.class);
 		return q.list();
 	}
@@ -613,9 +612,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>Gemarkung</code>
 	 */
 	public static Integer newGemarkungID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Gemarkung.class).setProjection(Property.forName("id").max()), new Integer(0));
-		return id + 1;
+        return newID(Gemarkung.class);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -662,7 +659,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		}
 		query += " ORDER BY o.inaktiv, o.objektartid";
 
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+		NativeQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 
 		q.addEntity("o", Objekt.class);
 		return q.list();
@@ -698,7 +695,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			}
 		}
 		query += " ORDER BY o.inaktiv, o.objektartid";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+		NativeQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("o", Objekt.class);
 		return q.list();
 	}
@@ -711,7 +708,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				+ " WHERE o.standortid = '" + stdId + "'";
 
 		query += " ORDER BY o.inaktiv, o.objektartid";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
+		NativeQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
 		q.addEntity("o", Objekt.class);
 		return q.list();
 	}
@@ -809,10 +806,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>ObjektartenID</code>
 	 */
 	public static Integer newObjektartenID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Objektarten.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Objektarten.class);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -941,10 +935,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>SachbearbeiterID</code>
 	 */
 	public static Integer newSachbearbeiterID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Sachbearbeiter.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Sachbearbeiter.class);
 	}
 
 	/**
@@ -1092,9 +1083,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>EinheitenID</code>
 	 */
 	public static Integer newEinheitenID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Einheiten.class).setProjection(Property.forName("id").max()), new Integer(0));
-		return id + 1;
+        return newID(Einheiten.class);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1133,10 +1122,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>KlaeranlageID</code>
 	 */
 	public static Integer newKlaeranlageID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Klaeranlage.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Klaeranlage.class);
 	}
 
 	/* ********************************************************************** */
@@ -1166,10 +1152,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>WassereinzugsgebietID</code>
 	 */
 	public static Integer newWSGID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Wassereinzugsgebiet.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Wassereinzugsgebiet.class);
 	}
 
 	/**
@@ -1403,5 +1386,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	    }
 	    return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
 	new Objekt());
+	}
+
+	private static Integer newID(Class<?> clazz) {
+		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(clazz).setProjection(
+                Property.forName("id").max()),
+            0);
+		return id + 1;
 	}
 }

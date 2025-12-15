@@ -286,7 +286,7 @@ private String outputPath = "./auswertungen/auik-export.csv";
                     editObject(row);
                 }
             };
-            objektEditAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
+            objektEditAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_B));
             objektEditAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
         }
 
@@ -306,7 +306,7 @@ private String outputPath = "./auswertungen/auik-export.csv";
                     AuikUtils.saveTabelle(getResultTable(), frame);
                 }
             };
-            saveAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_E));
+            saveAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_E));
             saveAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK, false));
         }
 

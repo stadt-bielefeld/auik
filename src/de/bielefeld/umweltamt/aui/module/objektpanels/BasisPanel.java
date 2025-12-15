@@ -281,7 +281,7 @@ public class BasisPanel extends ObjectPanel {
             // Create a new object
             log.debug("Creating new Objekt");
             //TODO: set new Objekt's elkarelevant-Field to a default value?
-            hauptModul.getObjekt().setElkarelevant(new Boolean(false));
+            hauptModul.getObjekt().setElkarelevant(false);
             // Only load enabled Sachbearbeiter
             getSachbearbeiterBox().setModel(new DefaultComboBoxModel(
                 DatabaseQuery.getEnabledSachbearbeiter()));
@@ -1072,7 +1072,7 @@ public class BasisPanel extends ObjectPanel {
                 }
             };
             this.verknuepfungLoeschAction.putValue(Action.MNEMONIC_KEY,
-                new Integer(KeyEvent.VK_L));
+                Integer.valueOf(KeyEvent.VK_L));
             this.verknuepfungLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }

@@ -168,11 +168,9 @@ public class BasisLageModel extends ListTableModel
 				break;
 			case 6:
 				if (bsta.isUeberschgeb() == true) {
-
-					value = new Boolean(true);
-
+					value = Boolean.TRUE;
 				} else {
-					value = new Boolean(false);
+					value = Boolean.FALSE;
 				}
 				break;
 			case 7:

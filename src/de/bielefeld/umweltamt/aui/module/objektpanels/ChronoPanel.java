@@ -484,7 +484,7 @@ public class ChronoPanel extends ObjectPanel {
                 }
             };
             this.chronoItemLoeschAction.putValue(Action.MNEMONIC_KEY,
-                new Integer(KeyEvent.VK_L));
+                Integer.valueOf(KeyEvent.VK_L));
             this.chronoItemLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }
@@ -505,7 +505,7 @@ public class ChronoPanel extends ObjectPanel {
                     hauptModul.saveAllTabs();
                 }
             };
-            this.chronoSaveAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            this.chronoSaveAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                 KeyEvent.VK_S));
             this.chronoSaveAction.putValue(Action.ACCELERATOR_KEY, KeyStroke
                 .getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK, false));
