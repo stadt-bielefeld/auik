@@ -4,15 +4,11 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Vector;
-import java.util.jar.JarFile;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -232,60 +228,9 @@ public final class GUIManager
 	 *
 	 * @return die Versionsnummer
 	 */
-	public final String getVersion()
-	{
-		/* If we already have the version return it */
-		if (GUIManager.VERSION != null)
-		{
-			return GUIManager.VERSION;
-		}
-
-		String version = "0.3";
-
-		// Get an url to an arbitrary class
-		String urlToClass = this
-				.getClass()
-				.getResource(
-								"/" + this.getClass().getName().replaceAll("\\.", "/")
-										+ ".class").toString();
-		// Get the type of the url (file or jar)
-		String type = urlToClass.substring(0, urlToClass.indexOf(":"));
-
-		if (type.equals("file"))
-		{
-			log.debug("Could not get the version, because AUIK was not run "
-					+ "from the jar file.");
-			version = "unknown";
-		}
-		else if (type.equals("jar"))
-		{
-			try
-			{
-				version = new JarFile(new File(
-						new URL(urlToClass.substring(urlToClass.indexOf(":") + 1,
-														urlToClass.indexOf("!"))).toURI())).getManifest()
-						.getMainAttributes().getValue("Implementation-Version");
-			}
-			catch (URISyntaxException use)
-			{
-				log.debug("This (URISyntaxException) should never happen.");
-			}
-			catch (IOException ioe)
-			{
-				log.debug("This (IOException) should never happen.");
-			}
-			catch (NullPointerException npe)
-			{
-				log.debug("This (NullPointerException) should never happen.");
-			}
-		}
-		else
-		{ // neither file nor jar...
-			log.debug("This should never happen.");
-		}
-
-		return version;
-	}
+	public final String getVersion() {
+        return GUIManager.VERSION;
+    }
 
 	/**
 	 * Diese Methode liefert eine Liste der Autoren des AUIK.
@@ -378,7 +323,6 @@ public final class GUIManager
 
 	public final HauptFrame getRunningFrame()
 	{
-		// TODO Auto-generated method stub
 		return this.runningFrame;
 	}
 }

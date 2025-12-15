@@ -3,7 +3,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import java.util.Arrays;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -24,7 +23,6 @@ public class SielhautModel extends ListTableModel {
     public Object getColumnValue(Object objectAtRow, int columnIndex) {
     	Object[] obj = (Object[]) objectAtRow;
         Object tmp;
-        Boolean b = (Boolean) obj[3];
 
         switch (columnIndex) {
             case 0:

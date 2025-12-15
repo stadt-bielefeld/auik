@@ -62,24 +62,19 @@
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FocusTraversalPolicy;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -105,7 +100,6 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -784,13 +778,13 @@ public class ProbenEditor extends AbstractApplyEditor {
                         .getBescheidDataSource(probe);
 
                     PDFExporter.getInstance().exportBescheid(params, subdata,
-                        PDFExporter.BESCHEID, path.getAbsolutePath(), true);
+                        PDFExporter.BESCHEID, path.getAbsolutePath());
 
                     JRDataSource vSubdata = DatabaseQuery
                         .getBescheidDataSource(probe);
 
                     PDFExporter.getInstance().exportBescheid(params, vSubdata,
-                        PDFExporter.VFG, vPath.getAbsolutePath(), true);
+                        PDFExporter.VFG, vPath.getAbsolutePath());
 
                     if (!(getVorgangsstatus().equals(
                         DatabaseConstants.ATL_STATUS_BESCHEID_GEDRUCKT))) {
@@ -1991,17 +1985,6 @@ class ParameterChooser extends OkCancelApplyDialog {
 
             ergebnisTabelle.addFocusListener(TableFocusListener
                 .getInstance());
-            ergebnisTabelle.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-                        // TODO: Check this: Nothing happens here
-//                        Point origin = e.getPoint();
-//                        int row = ergebnisTabelle.rowAtPoint(origin);
-                    }
-                }
-            });
-
         }
 
         return ergebnisTabelle;

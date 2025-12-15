@@ -32,8 +32,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import java.math.BigDecimal;
 import java.util.Date;

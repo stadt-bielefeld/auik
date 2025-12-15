@@ -31,10 +31,7 @@ import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

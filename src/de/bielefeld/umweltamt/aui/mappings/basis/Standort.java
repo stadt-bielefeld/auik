@@ -33,9 +33,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
-import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
@@ -399,7 +396,6 @@ public class Standort  implements java.io.Serializable {
 
 
 	public static List <Standort> findByAdresse(Inhaber inhaber) {
-		Standort standort = new Standort();
 		Integer id = inhaber.getId();
 		List standorte = HibernateSessionFactory
 				.currentSession()

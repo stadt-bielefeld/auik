@@ -25,10 +25,9 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
-import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.utils.StringUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+
 /**
  * Ein einfaches TableModel für Fettabscheider.
  * @author Sebastian Geller

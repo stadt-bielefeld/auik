@@ -29,13 +29,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -64,7 +62,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
-import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
@@ -123,8 +120,6 @@ public class ELKASync extends AbstractModul {
     private EEntwaesserungsgrundstueckModel entwgrundModel;
     private ESonderbauwerkModel sbModel;
 
-    private List<?> currentTableMappings;
-
     private JTable dbTable;
     private JLabel rowCount;
     private JLabel progressCounter;
@@ -161,8 +156,6 @@ public class ELKASync extends AbstractModul {
             }
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                // TODO Auto-generated method stub
-
                 ELKASync.this.adresseModel.setList(
                         prependIdentifierAdresse(EAdresse.getAll()));
                 ELKASync.this.rowCount.setText(String.valueOf(
@@ -253,7 +246,6 @@ public class ELKASync extends AbstractModul {
                                 ELKASync.this.einleitungsstelleModel.setList(
                                         prependIdentifierEinleitungsstelle(
                                             EEinleitungsstelle.getAll()));
-                                currentTableMappings = EEinleitungsstelle.getAll();
                                 ELKASync.this.einleitungsstelleModel.fireTableDataChanged();
                             } else if (item.equals("Messstellen")) {
                                 ELKASync.this.dbTable

@@ -45,7 +45,6 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -58,18 +57,14 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
-import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.ZuordnungChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.CBoxItem;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -94,7 +89,6 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private JTextField bezeichnungFeld = null;
 	// Daten
 	private Entwaesserungsgrundstueck entwaesserungsgrundstueck = null;
-	private Referenz referenz = null;
 	private JButton saveEntwaesserungsgrundstueckButton = null;
 
 	// Objektverknuepfer
@@ -264,7 +258,6 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 		this.abaverfahrens.setData(Abaverfahren.getNwBehandel());
 		List<Abaverfahren> selected = new ArrayList<Abaverfahren>();
 		if (this.entwaesserungsgrundstueck != null) {
-			Set<Abaverfahren> verfs = this.entwaesserungsgrundstueck.getAbaverfahrens();
 			this.abaverfahrens.applyEntries(selected);
 		}
 		setDirty(false);

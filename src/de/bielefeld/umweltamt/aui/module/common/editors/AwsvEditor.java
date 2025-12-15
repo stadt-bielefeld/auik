@@ -62,7 +62,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -74,7 +73,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -146,9 +144,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 	// Widgets fürs Top-Panel:
 	private JLabel header;
-//    private JLabel subHeader;
-//    private JLabel hnrLabel;
-//    private JButton reportButton;
 	private LimitedTextField hnrFeld;
 	private JComboBox fluessigkeitBox;
 	private JComboBox vbfBox;
@@ -277,7 +272,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 	private LimitedTextField tierhaltungFeld;
 	private JCheckBox seitenwandCheck;
 	private DoubleField wandhoeheFeld;
-	private LimitedTextField bodenplatteFeld;
 	private JCheckBox ueberdachungCheck;
 	private JComboBox auffangbehBox;
 	private DoubleField volumenAuffangbehFeld;
@@ -342,9 +336,8 @@ public class AwsvEditor extends AbstractBaseEditor {
 			tabbedPane.setSelectedComponent(getSvPruefungTab());
 		} else if ("Verwaltungsverfahren".equals(tab)) {
 			tabbedPane.setSelectedComponent(getVerwVerfahrenTab());
-		} else if ("Herstellnummer".equals(tab)) {
+            //} else if ("Herstellnummer".equals(tab)) {
 			// Der Reiter Daten wird aufgerufen
-
 		}
 
 	}
@@ -545,7 +538,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 		tierhaltungFeld = new LimitedTextField(25);
 		seitenwandCheck = new JCheckBox("Seitenwand");
 		wandhoeheFeld = new DoubleField(0);
-		bodenplatteFeld = new LimitedTextField(25);
 		ueberdachungCheck = new JCheckBox("Überdachung");
 		auffangbehBox = new JComboBox(DatabaseQuery.getBehaelterarten());
 		auffangbehBox.setEditable(false);
@@ -807,7 +799,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 		anlagenChronoModel.setFachdaten(getFachdaten());
 
 		if (getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_VAWS_ABSCHEIDER)) {
-			Abscheider abs = this.getAbscheider();
 			tabbedPane.addTab("Daten", getDatenVAWSAbscheiderTab());
 			tabbedPane.addTab("Ausführung", getAusfuehrungVAWSAbscheiderTab());
 			tabbedPane.addTab("Schutzvorkehrungen", getSchutzvorkehrungenVAWSAbscheiderTab());
@@ -1009,7 +1000,6 @@ public class AwsvEditor extends AbstractBaseEditor {
 			ausfuehrungBox.setSelectedItem(getFachdaten().getAusfuehrung());
 
 		} else if (getFachdaten().getAnlagenart().equals(DatabaseConstants.VAWS_ANLAGENART_ABFUELLFLAECHE)) {
-			Abfuellflaeche flaeche = this.getAbfuellflaeche();
 			tabbedPane.addTab("Daten", getDatenAbfuellflaechenTab());
 			tabbedPane.addTab("Ausführung", getAusfuehrungAbfuellflaechenTab());
 

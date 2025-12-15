@@ -94,7 +94,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
-import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
@@ -168,10 +167,8 @@ public class BasisAdresseNeu extends AbstractModul {
 	private JComboBox strassenBox;
 	private JComboBox wirtschaftszweigBox;
 
-	private Orte[] orte = null;
 	private Wirtschaftszweig[] wirtschaftszweige = null;
 	private String[] tabstreets = null;
-	private String street = null;
 
 	private Action standortLoeschAction;
 	private Action standortNeuAction;
@@ -454,35 +451,6 @@ public class BasisAdresseNeu extends AbstractModul {
 	}
 
 	/**
-	 * Methode liefert die eingegebene oder ausgewählte Straße
-	 *
-	 * @return
-	 */
-	private String getStrasse() {
-		String str = "";
-
-		if (strassenBox.getSelectedItem() != null) {
-			if (strassenBox.getSelectedItem().getClass() == TabStreets.class) {
-				TabStreets selstrasse = (TabStreets) strassenBox.getSelectedItem();
-				if (selstrasse != null) {
-					str = selstrasse.getStrasse();
-				}
-			} else if (strassenBox.getSelectedItem().getClass() == String.class) {
-				str = (String) strassenBox.getSelectedItem();
-			}
-		}
-		str = str.trim();
-
-		// Weil ich bis jetzt noch keine LimitedComboBox oder so habe...
-		if (str.length() > 50) {
-			// ... kürze ich hier den String auf 50 Zeichen
-			str = str.substring(0, 50);
-		}
-
-		return str;
-	}
-
-	/**
 	 * öffnet einen Dialog um einen Betreiber-Datensatz zu bearbeiten.
 	 *
 	 * @param betr Der Betreiber
@@ -567,11 +535,7 @@ public class BasisAdresseNeu extends AbstractModul {
 
 					@Override
 					public void mousePressed(MouseEvent e) {
-
-						if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-							Point origin = e.getPoint();
-							int row = getStandorteTabelle().rowAtPoint(origin);
-						}else if ((e.getButton() == 3)){
+						if ((e.getButton() == 3)){
 							showStandortPopup(e);
 						}
 					}

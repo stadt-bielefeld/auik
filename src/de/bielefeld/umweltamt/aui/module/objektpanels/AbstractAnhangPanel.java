@@ -27,7 +27,6 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -107,7 +106,7 @@ public abstract class AbstractAnhangPanel extends ObjectPanel {
     		} else if (component instanceof JTextArea) {
     			((JTextArea) component).setText(null);
     		} else if (component instanceof JButton) {
-    			/* This place is intentionally left blank. */
+                continue;
     		} else {
     			log.warn("Unknown JComponent [" + component.getClass().getSimpleName() + "] used.");
     			return false;

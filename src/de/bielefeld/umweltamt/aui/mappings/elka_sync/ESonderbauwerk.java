@@ -28,7 +28,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
@@ -171,7 +170,6 @@ public class ESonderbauwerk  implements java.io.Serializable {
     private String externalNr;
 
     private Set<ZRbfSchutzgueter> zuordnungRfbSchutguts;
-    private Set<ZSbVerfahren> zuordnungSbVerfahrens;
     private Set <ZSbRegeln> zuordnungSbRegels;
     private Set<SbEntlastung> sbEntlastungs;
     private Sonderbauwerk sonderbauwerk;

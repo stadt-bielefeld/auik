@@ -73,7 +73,6 @@ package de.bielefeld.umweltamt.aui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
@@ -89,12 +88,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -104,7 +101,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
@@ -116,12 +112,8 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
 
 import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.jfree.ui.tabbedui.VerticalLayout;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.Paddings;
@@ -1208,97 +1200,4 @@ public class HauptFrame extends JFrame {
     	JScrollBar vertSB = leftScroller.getVerticalScrollBar();
     	vertSB.setValue(vertSB.getMinimum());
     }
-
-    // This was never used locally.
-//    private void readClipboard() {
-//        String tmp = null;
-//        Clipboard systemClipboard;
-//        systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-//        Transferable transferData = systemClipboard.getContents(null);
-//        for (DataFlavor dataFlavor : transferData.getTransferDataFlavors()) {
-//            Object content = null;
-//            try {
-//                content = transferData.getTransferData(dataFlavor);
-//            } catch (UnsupportedFlavorException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
-//
-//            if (content instanceof String) {
-//
-//                tmp = content.toString();
-//            }
-//
-//                if (tmp != null){
-//                    int index = tmp.indexOf("bezeichnung");
-//
-//                    if (index != -1)
-//                    {
-//                        char leer = 0;
-//                        char ersetzen = '"';
-//                        String tmp2 = tmp.replace(ersetzen, leer);
-//
-//                        int indexBez = tmp2.indexOf("bsb");
-//
-//                        if (indexBez == -1)
-//                        {
-//                            indexBez = tmp2.indexOf("entgeb");
-//                        }
-//
-//                        String bezeichnung = tmp2.substring(tmp2.indexOf("bezeichnung")+ 13, indexBez-1 );
-//
-//
-//
-//                        AtlSielhaut sielhaut = AtlSielhaut.getSielhautByBez(bezeichnung);
-//
-//                        if ( sielhaut != null)
-//                        {
-//                            AtlProbepkt probepunkt = AtlProbepkt.getSielhautProbepunkt(sielhaut);
-//                            manager.getSettingsManager().setSetting("auik.imc.edit_object", probepunkt.getBasisObjekt().getObjektid(), false);
-//
-//
-//                            manager.switchModul("m_sielhaut1");
-//
-//
-//                            changeStatus("Daten aus Zwischenablage ausgelesen",
-//                            HauptFrame.SUCCESS_COLOR);
-//                        }
-//                        else
-//                        {
-//                            changeStatus(
-//                            "Zwischenablage enthält keine verwertbaren Daten",
-//                            HauptFrame.ERROR_COLOR);
-//                        }
-//
-//
-//
-//
-//                }
-//                    else
-//                    {
-//                        changeStatus(
-//                        "Zwischenablage enthält keine verwertbaren Daten",
-//                        HauptFrame.ERROR_COLOR);
-//                    }
-//
-//                break;
-//                }
-//
-//
-//        }
-//
-//        if (tmp == null)
-//        {
-//            changeStatus(
-//            "Zwischenablage enthält keine verwertbaren Daten",
-//            HauptFrame.ERROR_COLOR);
-//        }
-//
-//
-//
-//    }
-
 } // @jve:decl-index=0:visual-constraint="10,10"
