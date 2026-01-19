@@ -29,13 +29,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -64,7 +62,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
-import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
+import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
@@ -79,6 +77,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.EProbenahmeUeberwachungserg
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.ESonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
@@ -387,7 +386,8 @@ public class ELKASync extends AbstractModul {
                                     dbList.add(ELKASync.this.entwgrundModel.getObjectAtRow(rows[i]));
                                 }
                                 url += "/entwaesserungsgrundstueck";
-                            } else if (sel.equals("Sonderbauwerke")) {
+                            }
+                            else if (sel.equals("Sonderbauwerke")) {
                                 for (int i = 0; i< rows.length; i++) {
                                     dbList.add(ELKASync.this.sbModel.getObjectAtRow(rows[i]));
                                 }
@@ -1092,7 +1092,8 @@ public class ELKASync extends AbstractModul {
             prependIdentifierToNr(ref);
             //Fetch Standort and Einleitungsstelle
             ref.setStandort(EStandort.findById(ref.getStandort().getNr()));
-            ref.setEinleitungsstelleByQElsNr(EEinleitungsstelle.findById(ref.getqEl().getId()));
+            ref.setEinleitungsstelleByZElsNr(EEinleitungsstelle.findById(ref.getzEl().getId()));
+            ref.setAfsNiederschlagswasserByQNwAfsNr(EAfsNiederschlagswasser.findById(ref.getqAfsNw().getNr()));
             prependIdentifierToNr(ref.getStandort());
             prependIdentifierToNr(ref.getStandort().getAdresse());
             if (ref.getEinleitungsstelleByQElsNr() != null) {
@@ -1104,7 +1105,12 @@ public class ELKASync extends AbstractModul {
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr());
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort());
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse());
-
+            }
+            if (ref.getAfsNiederschlagswasserByQNwAfsNr() != null) {
+                prependIdentifierToNr(ref.getAfsNiederschlagswasserByQNwAfsNr());
+            }
+            if (ref.getAfsNiederschlagswasserByZNwAfsNr() != null) {
+                prependIdentifierToNr(ref.getAfsNiederschlagswasserByZNwAfsNr());
             }
         }
         return objects;

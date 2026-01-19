@@ -29,12 +29,9 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
-import de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht;
+import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsStoffe;
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -82,6 +79,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     private Set<Abaverfahren> abwasserbehandlungsverfahrens;
     private Set<ZEntwaessgrAbwasbehverf> zEntwaessgrAbwasbehverfs;
     private Set<EAfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<EAfsNiederschlagswasser>(0);
+    private Set<Referenz> refernezs;
 
     /** Default constructor */
     public EEntwaesserungsgrundstueck() {
@@ -475,4 +473,29 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
             return abwasserbehandlungsverfahrens;
         }
     }
+
+	/**
+	 * Gets the connected AfsNiederschlagswasser instance and returns its
+	 * Referenz-Entities
+	 */
+	@JsonIgnore
+	public List<Referenz> getReferenzs() {
+		Integer identifier = origNr != null ? origNr  : nr;
+
+	    String hql =
+	        "select distinct rf " +
+	        "from Referenz rf " +
+	        "join rf.qAfsNw eafsnw " +
+	        "join eafsnw.entwaesserungsgrundstueck entw " +
+	        "where entw.nr = :identifier";
+
+	    var query = HibernateSessionFactory.currentSession()
+	            .createQuery(hql, Referenz.class);
+
+	    query.setParameter("identifier", identifier);
+//	    Referenz result = query.getResultList().iterator().next();
+	    
+	    return query.getResultList();
+	}
+
 }

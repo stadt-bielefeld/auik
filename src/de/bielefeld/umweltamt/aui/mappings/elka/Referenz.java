@@ -29,6 +29,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
@@ -68,8 +69,10 @@ public class Referenz  implements java.io.Serializable {
     private Klaeranlage klaeranlageByZKaNr;
     private Messstelle messstelleByQMsstNr;
     private Messstelle messstelleByZMsstNr;
-    private AfsNiederschlagswasser afsNiederschlagswasserByQNwAfsNr;
-    private AfsNiederschlagswasser afsNiederschlagswasserByZNwAfsNr;
+    private AfsNiederschlagswasser qAfsNw;
+    private AfsNiederschlagswasser zAfsNw;
+    private EAfsNiederschlagswasser afsNiederschlagswasserByQNwAfsNr;
+    private EAfsNiederschlagswasser afsNiederschlagswasserByZNwAfsNr;
     private SbEntlastung sbEntlastungByQEntlNr;
     private SbEntlastung sbEntlastungByZEntlNr;
     private Sonderbauwerk sonderbauwerkByQSbNr;
@@ -109,8 +112,8 @@ public class Referenz  implements java.io.Serializable {
         this.klaeranlageByZKaNr = klaeranlageByZKaNr;
         this.messstelleByQMsstNr = messstelleByQMsstNr;
         this.messstelleByZMsstNr = messstelleByZMsstNr;
-        this.afsNiederschlagswasserByQNwAfsNr = afsNiederschlagswasserByQNwAfsNr;
-        this.afsNiederschlagswasserByZNwAfsNr = afsNiederschlagswasserByZNwAfsNr;
+        this.qAfsNw = afsNiederschlagswasserByQNwAfsNr;
+        this.zAfsNw = afsNiederschlagswasserByZNwAfsNr;
         this.sbEntlastungByQEntlNr = sbEntlastungByQEntlNr;
         this.sbEntlastungByZEntlNr = sbEntlastungByZEntlNr;
         this.sonderbauwerkByQSbNr = sonderbauwerkByQSbNr;
@@ -231,22 +234,22 @@ public class Referenz  implements java.io.Serializable {
         this.messstelleByZMsstNr = messstelleByZMsstNr;
     }
 
-    @JsonInclude(Include.NON_NULL)
-    public AfsNiederschlagswasser getAfsNiederschlagswasserByQNwAfsNr() {
-        return this.afsNiederschlagswasserByQNwAfsNr;
+    @JsonIgnore
+    public AfsNiederschlagswasser getqAfsNw() {
+        return this.qAfsNw;
     }
 
-    public void setAfsNiederschlagswasserByQNwAfsNr(AfsNiederschlagswasser afsNiederschlagswasserByQNwAfsNr) {
-        this.afsNiederschlagswasserByQNwAfsNr = afsNiederschlagswasserByQNwAfsNr;
+    public void setqAfsNw(AfsNiederschlagswasser afsNiederschlagswasserByQAfsNr) {
+        this.qAfsNw = afsNiederschlagswasserByQAfsNr;
     }
 
-    @JsonInclude(Include.NON_NULL)
-    public AfsNiederschlagswasser getAfsNiederschlagswasserByZNwAfsNr() {
-        return this.afsNiederschlagswasserByZNwAfsNr;
+    @JsonIgnore
+    public AfsNiederschlagswasser getzAfsNw() {
+        return this.zAfsNw;
     }
 
-    public void setAfsNiederschlagswasserByZNwAfsNr(AfsNiederschlagswasser afsNiederschlagswasserByZNwAfsNr) {
-        this.afsNiederschlagswasserByZNwAfsNr = afsNiederschlagswasserByZNwAfsNr;
+    public void setzAfsNw(AfsNiederschlagswasser afsNiederschlagswasserByZAfsNr) {
+        this.zAfsNw = afsNiederschlagswasserByZAfsNr;
     }
 
     @JsonInclude(Include.NON_NULL)
@@ -455,8 +458,8 @@ public class Referenz  implements java.io.Serializable {
         this.klaeranlageByZKaNr = copy.getKlaeranlageByZKaNr();
         this.messstelleByQMsstNr = copy.getMessstelleByQMsstNr();
         this.messstelleByZMsstNr = copy.getMessstelleByZMsstNr();
-        this.afsNiederschlagswasserByQNwAfsNr = copy.getAfsNiederschlagswasserByQNwAfsNr();
-        this.afsNiederschlagswasserByZNwAfsNr = copy.getAfsNiederschlagswasserByZNwAfsNr();
+        this.qAfsNw = copy.getqAfsNw();
+        this.zAfsNw = copy.getzAfsNw();
         this.sbEntlastungByQEntlNr = copy.getSbEntlastungByQEntlNr();
         this.sbEntlastungByZEntlNr = copy.getSbEntlastungByZEntlNr();
         this.sonderbauwerkByQSbNr = copy.getSonderbauwerkByQSbNr();
@@ -530,6 +533,24 @@ public class Referenz  implements java.io.Serializable {
     public void setEinleitungsstelleByZElsNr(EEinleitungsstelle els) {
         einleitungsstelleByZElsNr = els;
     }
+
+	@JsonInclude(Include.NON_NULL)
+	public EAfsNiederschlagswasser getAfsNiederschlagswasserByQNwAfsNr() {
+	    return this.afsNiederschlagswasserByQNwAfsNr;
+	}
+
+	public void setAfsNiederschlagswasserByQNwAfsNr(EAfsNiederschlagswasser afsNiederschlagswasserByQNwAfsNr) {
+	    this.afsNiederschlagswasserByQNwAfsNr = afsNiederschlagswasserByQNwAfsNr;
+	}
+
+	@JsonInclude(Include.NON_NULL)
+	public EAfsNiederschlagswasser getAfsNiederschlagswasserByZNwAfsNr() {
+	    return this.afsNiederschlagswasserByZNwAfsNr;
+	}
+
+	public void setAfsNiederschlagswasserByZNwAfsNr(EAfsNiederschlagswasser afsNiederschlagswasserByZNwAfsNr) {
+	    this.afsNiederschlagswasserByZNwAfsNr = afsNiederschlagswasserByZNwAfsNr;
+	}
 
 
 

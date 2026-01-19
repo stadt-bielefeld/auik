@@ -246,12 +246,12 @@ public class EinleitungsstellePanel extends ObjectPanel {
 		List<Referenz> referenzen = Referenz.getAll();
 		this.referenz = null;
 
-		for (Referenz ref : referenzen) {
-			if (ref.getqEl().getId() == this.einleitungsstelle.getId() && ref.getKlaeranlageByZKaNr() != null) {
-				this.referenz = Referenz.findById(ref.getNr());
-				log.debug("Referenz aus DB geholt: " + this.referenz);
-			}
-		}
+//		for (Referenz ref : referenzen) {
+//			if (ref.getqEl().getId() == this.einleitungsstelle.getId() && ref.getKlaeranlageByZKaNr() != null) {
+//				this.referenz = Referenz.findById(ref.getNr());
+//				log.debug("Referenz aus DB geholt: " + this.referenz);
+//			}
+//		}
 
 		if (this.klaeranlagen == null) {
 			this.klaeranlagen = DatabaseQuery.getKlaeranlage();

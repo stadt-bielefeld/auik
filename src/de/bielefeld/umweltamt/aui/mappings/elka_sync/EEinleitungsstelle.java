@@ -26,6 +26,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
@@ -544,10 +547,16 @@ public class EEinleitungsstelle implements java.io.Serializable {
 	 * @return <code>EEinleitungsstelle</code> the requested instance, if one
 	 *         exists, <code>null</code> otherwise
 	 */
+//	public static EEinleitungsstelle findById(java.lang.Integer id) {
+//		return (EEinleitungsstelle) new DatabaseAccess().get(EEinleitungsstelle.class, id);
+//	}
+	
 	public static EEinleitungsstelle findById(java.lang.Integer id) {
-		return (EEinleitungsstelle) new DatabaseAccess().get(EEinleitungsstelle.class, id);
+		return new DatabaseAccess().executeCriteriaToUniqueResult(
+				DetachedCriteria.forClass(EEinleitungsstelle.class)
+						.add(Restrictions.eq("id", id)),
+				new EEinleitungsstelle());
 	}
-
 	/**
 	 * Get a list of all <code>EEinleitungsstelle</code>
 	 * @return <code>List&lt;EEinleitungsstelle&gt;</code> all

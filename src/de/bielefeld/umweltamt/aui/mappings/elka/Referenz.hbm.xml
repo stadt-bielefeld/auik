@@ -37,10 +37,10 @@
         <many-to-one name="messstelleByZMsstNr" class="de.bielefeld.umweltamt.aui.mappings.atl.Messstelle" fetch="select">
             <column name="z_msst_nr" />
         </many-to-one>
-        <many-to-one name="afsNiederschlagswasserByQNwAfsNr" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" fetch="select">
+        <many-to-one name="qAfsNw" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" lazy="false" fetch="select">
             <column name="q_nw_afs_nr" />
         </many-to-one>
-        <many-to-one name="afsNiederschlagswasserByZNwAfsNr" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" fetch="select">
+        <many-to-one name="zAfsNw" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser" lazy="false" fetch="select">
             <column name="z_nw_afs_nr" />
         </many-to-one>
         <many-to-one name="sbEntlastungByQEntlNr" class="de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung" fetch="select">
@@ -58,7 +58,7 @@
         <property name="fsTog" type="java.lang.Boolean">
             <column name="fs_tog" />
         </property>
-        <many-to-one name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">
+        <many-to-one name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" lazy="false" fetch="select">
             <column name="standort_nr" />
         </many-to-one>
         <property name="QKkaNr" type="java.lang.Integer">

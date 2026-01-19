@@ -4,7 +4,7 @@
 <hibernate-mapping>
 	<class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle" schema="elka" table="e_einleitungsstelle">
 		<id name="nr" type="java.lang.Integer">
-			<column name="nr" />
+			<column name="id" />
 			<generator class="assigned" />
 		</id>
 		<property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
