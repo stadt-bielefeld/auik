@@ -833,13 +833,13 @@ public class ELKASync extends AbstractModul {
      * Checks an entity for connected reference entities and sends them to the given Server
      * @param Entity
      */
-    public void sendReferences(Object entity, PrintStream log) {
+    public void sendReferences(Entity<?> entity, PrintStream log) {
         try {
             //Obtain original mapping instance from entity
-            Method getEntity = entity.getClass().getMethod("getEntity");
-            Object mappingInstance = getEntity.invoke(entity);
+            Object mappingInstance = entity.getEntity();
             //Get attached references
             Method getRefrenzs = mappingInstance.getClass().getMethod("getReferenzs");
+            @SuppressWarnings("unchecked")
             List<Referenz> referenzs = (List<Referenz>) getRefrenzs.invoke(mappingInstance);
             if (referenzs.size() > 0) {
                 JerseyClient client = new JerseyClientBuilder().build();
@@ -1118,7 +1118,7 @@ public class ELKASync extends AbstractModul {
                 object.getClass().getMethod("setOrigNr", Integer.class).invoke(object, nr);
             }
             String newNr = IDENTIFIER + nr.toString();
-            Integer newBI = new Integer(newNr);
+            Integer newBI = Integer.valueOf(newNr);
             mSetter.invoke(object, newBI);
         } catch (NoSuchMethodException e){
         } catch (SecurityException e) {

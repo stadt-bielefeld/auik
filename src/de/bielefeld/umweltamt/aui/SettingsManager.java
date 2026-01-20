@@ -86,7 +86,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SortedProperties;
 
@@ -102,13 +101,12 @@ public class SettingsManager {
 	/** GUI Manager */
 	private static final GUIManager guiManager = GUIManager.getInstance();
 
-	private Standort standort;
 	private Properties instanceSettings;
 	private SortedProperties appSettings;
 
 	private static SettingsManager _instance;
 
-	private final Locale locale = new Locale("de", "DE");
+	private final Locale locale = Locale.GERMANY;
 	private static final String DEFAULT_BUNDLE_FILENAME = "auik";
 	private static final String AUIK_PROPERTIES = "auik.properties";
 
@@ -288,21 +286,6 @@ public class SettingsManager {
 	}
 
 	/**
-	 * Setzt eine Einstellung. Wrapper-Methode für setSetting(String,
-	 * Lage, boolean).
-	 *
-	 * @param setting
-	 *            Den Key der Einstellung.
-	 * @param value
-	 *            Den Wert der Einstellung.
-	 * @param persist
-	 *            Soll die Einstellung beim Programm-Ende gespeichert werden.
-	 */
-	public void setStandort(Standort std) {
-		this.standort = std;
-	}
-
-	/**
 	 * Liefert alle Einstellungen.
 	 *
 	 * @return Liste aller Einstellungen.
@@ -310,11 +293,11 @@ public class SettingsManager {
 	public String[][] getSettingList() {
 
 		String[][] result;
-		Enumeration<String> keys = appSettings.keys();
+		Enumeration<Object> keys = appSettings.keys();
 		ArrayList<String> temp = new ArrayList<String>();
 
-		for (Enumeration<String> e = keys; keys.hasMoreElements();) {
-			String key = e.nextElement();
+		while (keys.hasMoreElements()) {
+			String key = (String) keys.nextElement();
 			temp.add(key);
 		}
 		result = new String[temp.size()][2];
@@ -378,20 +361,6 @@ public class SettingsManager {
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Liefert den aktuellen Wert einer Einstellung. Wrapper-Methode.
-	 *
-	 * @param setting
-	 *            Den Key der Einstellung.
-	 * @return Den Wert der Einstellung oder <code>false</code>, falls diese
-	 *         nicht existiert.
-	 */
-	public Standort getStandort() {
-
-		return standort;
-
 	}
 
 	/**

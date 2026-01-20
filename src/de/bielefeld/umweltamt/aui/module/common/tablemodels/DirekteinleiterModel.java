@@ -49,7 +49,6 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -57,7 +56,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Vaws-Fachdaten.
  * @author David Klotz
  */
-public class DirekteinleiterModel extends ListTableModel {
+public class DirekteinleiterModel extends ListTableModel<Wasserrecht> {
     private static final long serialVersionUID = -2723711304275935781L;
 
     /**
@@ -78,8 +77,7 @@ public class DirekteinleiterModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Wasserrecht gen = (Wasserrecht) objectAtRow;
+    public Object getColumnValue(Wasserrecht gen, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -110,15 +108,6 @@ public class DirekteinleiterModel extends ListTableModel {
         }
 
         return tmp;
-    }
-
-    /**
-     * Liefert einen Datensatz in einer bestimmten Zeile.
-     * @param row Die Zeile der Tabelle.
-     * @return Den Datensatz, der in dieser Zeile angezeigt wird.
-     */
-    public Fachdaten getDatenSatz(int row) {
-        return (Fachdaten) getObjectAtRow(row);
     }
 
     /*

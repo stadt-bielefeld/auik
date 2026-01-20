@@ -92,8 +92,7 @@ public class SielhautImporter extends AbstractImporter {
     }
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        String[] tmpArr = (String[]) objectAtRow;
+    public Object getColumnValue(String[] tmpArr, int columnIndex) {
         StringBuilder builder = new StringBuilder();
         String tmp = "";
         builder.append("<html><font color=");

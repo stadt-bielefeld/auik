@@ -141,13 +141,13 @@ public class EditorEinheiten extends AbstractModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((EditorEinheitenModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.getEinheitenlist());
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((EditorEinheitenModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -175,7 +175,7 @@ public class EditorEinheiten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
-    public ListTableModel getTableModel() {
+    public ListTableModel<Einheiten> getTableModel() {
         if (tmodel == null) {
             tmodel = new EditorEinheitenModel();
         }
@@ -304,8 +304,8 @@ public class EditorEinheiten extends AbstractModul {
                     }
                 }
             };
-            this.resultLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
-                KeyEvent.VK_L));
+            this.resultLoeschAction.putValue(Action.MNEMONIC_KEY,
+                Integer.valueOf(KeyEvent.VK_L));
             this.resultLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
         }

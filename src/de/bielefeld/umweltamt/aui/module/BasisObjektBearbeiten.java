@@ -467,21 +467,22 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
         if (manager.getSettingsManager().getSetting("auik.imc.edit_object") != null) {
             isNew = false;
-            objekt = Objekt.findById(new Integer(
-                manager.getSettingsManager().getIntSetting("auik.imc.edit_object")));
+            objekt = Objekt.findById(
+                manager.getSettingsManager().getIntSetting("auik.imc.edit_object"));
             manager.getSettingsManager().removeSetting("auik.imc.edit_object");
         } else {
             isNew = true;
             objekt = new Objekt();
             if (manager.getSettingsManager().getSetting("auik.imc.use_standort") != null) {
-                Standort sta = Standort.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_standort")));
-//                log.debug("Standort: " + sta.getAdresse().getStrasse() + " " + sta.getAdresse().getHausnr() + ", " +sta.getId());
+                Standort sta = Standort.findById(
+                    manager.getSettingsManager().getIntSetting("auik.imc.use_standort"));
                 objekt.setStandortid(sta);
                 manager.getSettingsManager().removeSetting("auik.imc.use_standort");
                 manager.getSettingsManager().removeSetting("auik.imc.use_lage");
             }
             if (manager.getSettingsManager().getSetting("auik.imc.use_betreiber") != null) {
-                Inhaber betr = Inhaber.findById(new Integer(manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber")));
+                Inhaber betr = Inhaber.findById(
+                    manager.getSettingsManager().getIntSetting("auik.imc.use_betreiber"));
                 objekt.setBetreiberid(betr);
                 manager.getSettingsManager().removeSetting("auik.imc.use_betreiber");
             }

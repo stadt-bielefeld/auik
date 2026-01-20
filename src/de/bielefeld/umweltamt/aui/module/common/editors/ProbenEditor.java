@@ -182,7 +182,9 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     private double personalkosten = -1;
 
-    private class ParameterModel extends EditableListTableModel {
+    private class ParameterModel
+        extends EditableListTableModel<Analyseposition> {
+
         private static final long serialVersionUID = 6042681141925302970L;
         private Probenahme probe;
         private boolean isNew;
@@ -225,7 +227,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         params[i] = Parameter.findById(paramIDs[i]);
                     }
                     String analyse_von = "OWL-Umwelt";
-                    setList(new ArrayList<Object>());
+                    setList(new ArrayList<Analyseposition>());
                     for (Parameter param : params) {
                         addParameter(param,
                             DatabaseConstants.ATL_EINHEIT_MG_KG,
@@ -239,7 +241,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                             DatabaseConstants.ATL_PARAMETER_ID_TEMPERATUR)
                     };
                     String analyse_von = "Betriebslabor";
-                    setList(new ArrayList<Object>());
+                    setList(new ArrayList<Analyseposition>());
                     for (Parameter param : params) {
                         addParameter(param,
                             param.getEinheiten(),
@@ -255,7 +257,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                             DatabaseConstants.ATL_PARAMETER_ID_LEITFAEHIGKEIT)
                     };
                     String analyse_von = "360.33";
-                    setList(new ArrayList<Object>());
+                    setList(new ArrayList<Analyseposition>());
                     for (Parameter param : params) {
                         addParameter(param,
                             param.getEinheiten(),
@@ -267,9 +269,8 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         @Override
-        public Object getColumnValue(Object objectAtRow, int columnIndex) {
+        public Object getColumnValue(Analyseposition pos, int columnIndex) {
             Object value;
-            Analyseposition pos = (Analyseposition) objectAtRow;
             switch (columnIndex) {
                 // Parameter
                 case 0:
@@ -309,7 +310,9 @@ public class ProbenEditor extends AbstractApplyEditor {
                         }
                     }
 
-                    if (grenzWert != null && !grenzWert.equals(new Double(0.0))) {
+                    if (grenzWert != null
+                        && !grenzWert.equals(Double.valueOf(0.0))
+                    ) {
                         value = grenzWert;
                     }
                     break;
@@ -322,7 +325,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                         if (DatabaseQuery.isKlaerschlammProbe(this.probe)) {
                             if (pos.getParameter().getKlaerschlammGw() != null) {
                                 if (!pos.getParameter().getKlaerschlammGw()
-                                    .equals(new Double(0.0))) {
+                                    .equals(Double.valueOf(0.0))) {
                                     tmpVal = pos.getWert().doubleValue()
                                         / pos.getParameter()
                                             .getKlaerschlammGw().doubleValue();
@@ -332,7 +335,7 @@ public class ProbenEditor extends AbstractApplyEditor {
                             DatabaseConstants.ATL_PROBEART_ID_SIELHAUT)) {
                             if (pos.getParameter().getSielhautGw() != null) {
                                 if (!pos.getParameter().getSielhautGw()
-                                    .equals(new Double(0.0))) {
+                                    .equals(Double.valueOf(0.0))) {
                                     tmpVal = pos.getWert().doubleValue()
                                         / pos.getParameter().getSielhautGw()
                                             .doubleValue();
@@ -370,10 +373,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         @Override
-        public void editObject(Object objectAtRow, int columnIndex,
-            Object newValue) {
-            Analyseposition tmp = (Analyseposition) objectAtRow;
-
+        public void editObject(
+            Analyseposition tmp, int columnIndex, Object newValue
+        ) {
             switch (columnIndex) {
                 case 0:
                     Parameter tmpPara = (Parameter) newValue;
@@ -436,7 +438,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         @Override
-        public Object newObject() {
+        public Analyseposition newObject() {
             Analyseposition tmp = new Analyseposition();
             tmp.setProbenahme(this.probe);
             if (DatabaseQuery.isKlaerschlammProbe(this.probe)
@@ -448,7 +450,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             }
             tmp.setParameter((Parameter) ProbenEditor.this.parameterBox
                 .getSelectedItem());
-            tmp.setWert(new Float(0));
+            tmp.setWert(0f);
 			if (tmp.getParameter() != null) {
 				tmp.setEinheiten(tmp.getParameter().getEinheiten());
 			}
@@ -472,12 +474,11 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             pos.setProbenahme(this.probe);
             pos.setParameter(parameter);
-            pos.setWert(new Float(0));
+            pos.setWert(0f);
             pos.setEinheiten(parameter
                 .getEinheiten());
             pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
 
-//            getList().add(pos);
             List<Analyseposition> list = (List<Analyseposition>) getList();
             list.add(pos);
 
@@ -501,7 +502,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
             pos.setProbenahme(this.probe);
             pos.setParameter(parameter);
-            pos.setWert(new Float(0));
+            pos.setWert(0f);
             pos.setEinheiten(einheit);
             pos.setAnalyseVon(analysevon);
             pos.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
@@ -539,8 +540,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         }
 
         @Override
-        public boolean objectRemoved(Object objectAtRow) {
-            Analyseposition tmp = (Analyseposition) objectAtRow;
+        public boolean objectRemoved(Analyseposition tmp) {
             tmp.setMapElkaAnalysemethode(MapElkaAnalysemethode.findById(1));
 
             if(tmp.getId() == null) {
@@ -591,7 +591,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
     private Dimension minimumSize;
 
-    private JComboBox vorgangsstatusBox;
+    private JComboBox<Status> vorgangsstatusBox;
     private JButton statusHoch;
     private TextFieldDateChooser datum;
     private JFormattedTextField uhrzeitVon;
@@ -604,7 +604,7 @@ public class ProbenEditor extends AbstractApplyEditor {
     private JLabel rechnungsBetrag;
     private JTextArea bemerkungsArea;
 
-    private JComboBox sachbearbeiterBox;
+    private JComboBox<Sachbearbeiter> sachbearbeiterBox;
     private JButton bescheidDrucken;
     private JButton auftragDrucken;
     private JFileChooser dateiChooser;
@@ -614,10 +614,10 @@ public class ProbenEditor extends AbstractApplyEditor {
     private TextFieldDateChooser icpDatum;
     private JTable parameterTabelle;
 
-    private JComboBox parameterBox;
-    private JComboBox einheitenBox;
-    private JComboBox analysevonBox;
-    private JComboBox methodeBox;
+    private JComboBox<Parameter> parameterBox;
+    private JComboBox<Einheiten> einheitenBox;
+    private JComboBox<String> analysevonBox;
+    private JComboBox<MapElkaAnalysemethode> methodeBox;
 
     private ParameterModel parameterModel;
     private boolean isNew;
@@ -852,9 +852,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         bezug = new JTextField();
         beteiligte = new JTextField();
         probenummer = new JTextField();
-        vorgangsstatusBox = new JComboBox();
+        vorgangsstatusBox = new JComboBox<>();
         statusHoch = new JButton("erhöhen");
-        sachbearbeiterBox = new JComboBox();
+        sachbearbeiterBox = new JComboBox<>();
         icpEinwaageFeld = new DoubleField(0);
         icpDatum = new TextFieldDateChooser();
         bemerkungsArea = new LimitedTextArea(255);
@@ -862,9 +862,9 @@ public class ProbenEditor extends AbstractApplyEditor {
         parameterTabelle = new JTable();
 
         vorgangsstatusBox.setModel(
-            new DefaultComboBoxModel(DatabaseQuery.getStatus()));
+            new DefaultComboBoxModel<>(DatabaseQuery.getStatus()));
 
-        sachbearbeiterBox.setModel(new DefaultComboBoxModel(
+        sachbearbeiterBox.setModel(new DefaultComboBoxModel<>(
             DatabaseQuery.getEnabledSachbearbeiter()));
         sachbearbeiterBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         sachbearbeiterBox.setEditable(true);
@@ -1242,7 +1242,7 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         Parameter[] parameter = DatabaseQuery.getGroupedParameter();
 
-        parameterBox = new JComboBox(parameter);
+        parameterBox = new JComboBox<>(parameter);
         parameterBox.setEditable(false);
 
         parameterBox.addFocusListener(new FocusAdapter() {
@@ -1253,7 +1253,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         });
 
         parameterColumn.setCellEditor(new DefaultCellEditor(parameterBox));
-        parameterColumn.setCellRenderer(new ComboBoxRenderer());
+        parameterColumn.setCellRenderer(new ComboBoxRenderer<>());
 
         //Werte
         TableColumn gkColumn = this.parameterTabelle.getColumnModel()
@@ -1271,7 +1271,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             .getColumn(3);
         einheitenColumn.setPreferredWidth(40);
 
-        einheitenBox = new JComboBox(DatabaseQuery.getEinheiten());
+        einheitenBox = new JComboBox<>(DatabaseQuery.getEinheiten());
         einheitenBox.setEditable(false);
         einheitenBox.addFocusListener(new FocusAdapter() {
             @Override
@@ -1282,14 +1282,14 @@ public class ProbenEditor extends AbstractApplyEditor {
         einheitenBox.setBorder(BorderFactory.createEmptyBorder());
 
         einheitenColumn.setCellEditor(new DefaultCellEditor(einheitenBox));
-        einheitenColumn.setCellRenderer(new ComboBoxRenderer());
+        einheitenColumn.setCellRenderer(new ComboBoxRenderer<>());
 
         // Methode
         TableColumn methodeColumn = this.parameterTabelle.getColumnModel()
             .getColumn(4);
         methodeColumn.setPreferredWidth(200);
 
-        methodeBox = new JComboBox(DatabaseQuery.getMapElkaAnalysemethode());
+        methodeBox = new JComboBox<>(DatabaseQuery.getMapElkaAnalysemethode());
         methodeBox.setEditable(false);
         methodeBox.addFocusListener(new FocusAdapter() {
             @Override
@@ -1300,7 +1300,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         methodeBox.setBorder(BorderFactory.createEmptyBorder());
 
         methodeColumn.setCellEditor(new DefaultCellEditor(methodeBox));
-        methodeColumn.setCellRenderer(new ComboBoxRenderer());
+        methodeColumn.setCellRenderer(new ComboBoxRenderer<>());
 
         // Analyse von
         TableColumn analyseColumn = this.parameterTabelle.getColumnModel()
@@ -1310,7 +1310,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         String[] analyse_von_auswahl = {"700.44", "360.33", "OWL-Umwelt", "Stadtwerke GT", "AGROLAB", "HBICON",
                 "Dr. Kludas", "Fresenius", "E-Satzung"};
 
-        analysevonBox = new JComboBox(analyse_von_auswahl);
+        analysevonBox = new JComboBox<>(analyse_von_auswahl);
         analysevonBox.setEditable(true);
         analysevonBox.addFocusListener(new FocusAdapter() {
             @Override
@@ -1321,7 +1321,7 @@ public class ProbenEditor extends AbstractApplyEditor {
         analysevonBox.setBorder(BorderFactory.createEmptyBorder());
 
         analyseColumn.setCellEditor(new DefaultCellEditor(this.analysevonBox));
-        analyseColumn.setCellRenderer(new ComboBoxRenderer());
+        analyseColumn.setCellRenderer(new ComboBoxRenderer<>());
 
         //Grenzwert
         TableColumn gwColumn = this.parameterTabelle.getColumnModel()
@@ -1361,7 +1361,8 @@ public class ProbenEditor extends AbstractApplyEditor {
     }
 
     protected Sachbearbeiter getSachbearbeiter() {
-        ComboBoxModel model = this.sachbearbeiterBox.getModel();
+        ComboBoxModel<Sachbearbeiter> model
+            = this.sachbearbeiterBox.getModel();
 
         return (Sachbearbeiter) model.getSelectedItem();
     }
@@ -1665,10 +1666,8 @@ public class ProbenEditor extends AbstractApplyEditor {
     /**
      * Diese Funktion liefert die Anzahl der beteiligten Probenehmer.
      */
-    protected Integer getAnzahl() {
-        Integer anzahl = new Integer(this.beteiligte.getText());
-
-        return anzahl;
+    protected int getAnzahl() {
+        return Integer.parseInt(this.beteiligte.getText());
     }
 
     /**
@@ -1992,7 +1991,7 @@ class ParameterChooser extends OkCancelApplyDialog {
 
 }
 
-class ParameterAuswahlModel extends ListTableModel {
+class ParameterAuswahlModel extends ListTableModel<Parameter> {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
     private static final long serialVersionUID = -502436804713980533L;
@@ -2003,7 +2002,7 @@ class ParameterAuswahlModel extends ListTableModel {
     }
 
     @Override
-    public void setList(List<?> newList) {
+    public void setList(List<Parameter> newList) {
         super.setList(newList);
 
         selection = new boolean[newList.size()];
@@ -2032,7 +2031,7 @@ class ParameterAuswahlModel extends ListTableModel {
      * (java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Parameter objectAtRow, int columnIndex) {
         // we don't need this method
         return null;
     }
@@ -2041,10 +2040,9 @@ class ParameterAuswahlModel extends ListTableModel {
     public Object getValueAt(int row, int col) {
         if (rowExists(row)) {
             if (col < this.columns.length) {
-
                 switch (col) {
                     case 0:
-                        return new Boolean(this.selection[row]);
+                        return Boolean.valueOf(this.selection[row]);
                     case 1:
                         Parameter p = (Parameter) getObjectAtRow(row);
                         return p.getBezeichnung();

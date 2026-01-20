@@ -30,14 +30,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.hibernate.NullPrecedence;
-import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.Transformers;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -125,7 +123,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		query += " AND adresse.deleted = false";
 		query += " ORDER BY adresse.betrname ASC, adresse.betrnamezus ASC";
 
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Adresse.class).list();
 	}
 
 	/**
@@ -174,8 +173,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			query += " AND a.deleted = false";
 		}
 		query += " ORDER BY i.name ASC";
-		List list = HibernateSessionFactory.currentSession().createQuery(query).list();
-		return list;
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Inhaber.class).list();
 	}
 
 	/**
@@ -222,7 +221,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 			query += "ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, adresse.betrname ASC";
 		}
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Adresse.class).list();
 	}
 
 	/**
@@ -238,7 +238,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            String
 	 * @return <code>List&lt;Object[]&gt;</code>
 	 */
-	public static List<Object[]> findInhaber(String strasse, Integer hausnr, String ort) {
+	public static List<Inhaber> findInhaber(String strasse, Integer hausnr, String ort) {
 		// Check which parameters are set
 		boolean bStrasse = (strasse != null && strasse.length() > 0);
 		boolean bHausnr = (hausnr != null && hausnr != -1);
@@ -269,9 +269,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			query += " AND a._deleted = false";
 		}
 		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC NULLS FIRST;";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
-		q.addEntity("i", Inhaber.class);
-		return q.list();
+		return HibernateSessionFactory.currentSession()
+            .createNativeQuery(query, Inhaber.class)
+            .getResultList();
 	}
 
 	/**
@@ -300,8 +300,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *            String
 	 * @return <code>List&lt;Adresse[]&gt;</code>
 	 */
-
-	public static List<Adresse> findAdressen(String search, String property) {
+	public static List<Inhaber> findAdressen(String search, String property) {
 
 		String query = "SELECT inh " + "FROM Adresse adresse, Inhaber inh";
 
@@ -310,7 +309,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		query += "LOWER(inh.name) like '" + search.toLowerCase() + "%' AND adresse.deleted = false";
 
 		query += " ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC, inh.name ASC";
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Inhaber.class).list();
 	}
 
 	/**
@@ -364,7 +364,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 			query += "ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC, i.name ASC";
 		}
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Inhaber.class).list();
 	}
 
 	/**
@@ -392,8 +393,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		query += "adresse.plz = '" + plz + "' AND ";
 		query += "adresse.deleted = false ";
 
-		List<Adresse> list = HibernateSessionFactory.currentSession().createQuery(query).list();
-		return list;
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Adresse.class).list();
 	}
 
 	public static List<Adresse> findAdressen(String strasse, Integer hausnr) {
@@ -415,8 +416,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 			query += "ORDER BY adresse.strasse ASC, adresse.hausnr ASC, adresse.hausnrzus ASC ";
 		}
-		List<Adresse> list = HibernateSessionFactory.currentSession().createQuery(query).list();
-		return list;
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Adresse.class).list();
 	}
 
 
@@ -484,7 +485,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			query += " AND o.deleted = false";
 		}
 		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC";
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Adresse.class).list();
 	}
 
 	public static List<Standort> chooseStandort(String strasse, Integer hausnr, String ort) {
@@ -518,7 +520,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			query += " AND a.deleted = false";
 		}
 		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC";
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Standort.class).list();
 	}
 
 	/**
@@ -548,7 +551,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		query += "a.deleted = false";
 
 		query += " ORDER BY a.strasse ASC, a.hausnr ASC, a.hausnrzus ASC, i.name ASC";
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Standort.class).list();
 	}
 
 	public static Standort findStandort(Inhaber inh) {
@@ -613,9 +617,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>Gemarkung</code>
 	 */
 	public static Integer newGemarkungID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Gemarkung.class).setProjection(Property.forName("id").max()), new Integer(0));
-		return id + 1;
+        return newID(Gemarkung.class);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -662,10 +664,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		}
 		query += " ORDER BY o.inaktiv, o.objektartid";
 
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
-
-		q.addEntity("o", Objekt.class);
-		return q.list();
+		return HibernateSessionFactory.currentSession()
+            .createNativeQuery(query, Objekt.class)
+            .getResultList();
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -698,9 +699,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			}
 		}
 		query += " ORDER BY o.inaktiv, o.objektartid";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
-		q.addEntity("o", Objekt.class);
-		return q.list();
+		return HibernateSessionFactory.currentSession()
+            .createNativeQuery(query, Objekt.class)
+            .getResultList();
 	}
 
 	public static List<Objekt> getObjekteByStandort(Objekt obj) {
@@ -711,9 +712,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				+ " WHERE o.standortid = '" + stdId + "'";
 
 		query += " ORDER BY o.inaktiv, o.objektartid";
-		SQLQuery q = HibernateSessionFactory.currentSession().createSQLQuery(query);
-		q.addEntity("o", Objekt.class);
-		return q.list();
+		return HibernateSessionFactory.currentSession()
+            .createNativeQuery(query, Objekt.class)
+            .getResultList();
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -809,10 +810,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>ObjektartenID</code>
 	 */
 	public static Integer newObjektartenID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Objektarten.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Objektarten.class);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -941,10 +939,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>SachbearbeiterID</code>
 	 */
 	public static Integer newSachbearbeiterID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Sachbearbeiter.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Sachbearbeiter.class);
 	}
 
 	/**
@@ -1016,14 +1011,15 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 
 		String query = "SELECT DISTINCT name " + "FROM TabStreets ORDER BY name";
 
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
-
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, String.class).list();
 	}
 
 	/**
-	 * Get all BasisTabStreets and sort them by their name
+	 * Get arbitrary street name that starts with search string.
 	 *
-	 * @return <code>Eine Liste aller Stassen</code>
+     * @param search search string
+	 * @return street name
 	 */
 	public static String getTabStreet(String search) {
 
@@ -1031,16 +1027,14 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 				+ "FROM TabStreets "
 				+ "WHERE LOWER(name) like '" + search.toLowerCase() + "%'";
 
-		List strasse = HibernateSessionFactory.currentSession().createQuery(query).list();
+		List<String> strasse = HibernateSessionFactory.currentSession()
+            .createQuery(query, String.class).list();
 
-		return (strasse.isEmpty() ? null : strasse.get(0).toString());
-
+		return (strasse.isEmpty() ? null : strasse.get(0));
 	}
 
 	/**
-	 * Get all BasisTabStreets and sort them by their name
-	 *
-	 * @return <code>Eine Liste aller Stassen</code>
+	 * Get arbitrary street that matches given parameters.
 	 */
 	public static TabStreets getSingleTabStreet(String name, Integer hausnr, String hausnrzus) {
 
@@ -1060,9 +1054,10 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			}
 		}
 
-		List tabStreet = HibernateSessionFactory.currentSession().createQuery(query).list();
+		List<TabStreets> tabStreet = HibernateSessionFactory.currentSession()
+            .createQuery(query, TabStreets.class).list();
 
-		return (TabStreets) tabStreet.iterator().next();
+		return tabStreet.iterator().next();
 
 	}
 
@@ -1092,9 +1087,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>EinheitenID</code>
 	 */
 	public static Integer newEinheitenID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Einheiten.class).setProjection(Property.forName("id").max()), new Integer(0));
-		return id + 1;
+        return newID(Einheiten.class);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1133,10 +1126,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>KlaeranlageID</code>
 	 */
 	public static Integer newKlaeranlageID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Klaeranlage.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Klaeranlage.class);
 	}
 
 	/* ********************************************************************** */
@@ -1166,10 +1156,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * @return <code>WassereinzugsgebietID</code>
 	 */
 	public static Integer newWSGID() {
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-				DetachedCriteria.forClass(Wassereinzugsgebiet.class).setProjection(Property.forName("id").max()),
-				new Integer(0));
-		return id + 1;
+        return newID(Wassereinzugsgebiet.class);
 	}
 
 	/**
@@ -1183,7 +1170,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String query = "FROM Anhang WHERE anh_gueltig_bis IS NULL " +
 				"ORDER BY CAST (NULLIF(regexp_replace(anhang_id, '\\D', '', 'g'), '') as int) asc";
 
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Anhang.class).list();
 	}
 
 	/**
@@ -1197,7 +1185,8 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 		String query = "FROM Abaverfahren WHERE bezeichnung LIKE '34.%' " +
 				"ORDER BY bezeichnung asc";
 
-		return HibernateSessionFactory.currentSession().createQuery(query).list();
+		return HibernateSessionFactory.currentSession()
+            .createQuery(query, Abaverfahren.class).list();
 	}
 
 	/* ********************************************************************** */
@@ -1259,7 +1248,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *     - BAsisAbfrage.VALUE_WIEDERVORLAGE_ABGELAUFEN
 	 * @return Object array containing results
 	 */
-	public static List executeBaseQuery(
+	public static List<Object[]> executeBaseQuery(
 			Objektarten art, Anhang anhang, String anlagenart,
 			Sachbearbeiter sachbearbeiter, String[] entwGebiet,
 			String prioritaet, String wiedervorlage,
@@ -1354,9 +1343,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			query.append("'" + today + "'");
 		}
 		query.append(";");
-		NativeQuery<Object> q = HibernateSessionFactory.currentSession()
-			.createSQLQuery(query.toString());
-		return q.getResultList();
+		return HibernateSessionFactory.currentSession()
+            .createNativeQuery(query.toString(), Object[].class)
+            .getResultList();
 	}
 
 	/* ********************************************************************** */
@@ -1403,5 +1392,13 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	    }
 	    return new DatabaseAccess().executeCriteriaToList(detachedCriteria,
 	new Objekt());
+	}
+
+	private static Integer newID(Class<?> clazz) {
+		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(clazz).setProjection(
+                Property.forName("id").max()),
+            0);
+		return id + 1;
 	}
 }
