@@ -18,14 +18,6 @@
  *
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
-
-/*
- * Copyright (c) 2010 by Intevation GmbH
- *
- * This program is free software under the TODO LICENSE
- * Read the LICENSE file coming with the software for details
- * or visit http://www.gnu.org/licenses/ if it does not exist.
- */
 package de.bielefeld.umweltamt.aui.utils;
 
 import java.text.ParseException;

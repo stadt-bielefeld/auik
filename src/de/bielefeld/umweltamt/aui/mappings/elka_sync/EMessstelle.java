@@ -30,7 +30,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
@@ -57,10 +56,6 @@ public class EMessstelle implements java.io.Serializable {
     private Set<MsstBerichtspflicht> zuordnBerichtspflichts;
 
     public EMessstelle() {
-    }
-
-    public EMessstelle(Integer standortNr) {
-        this.nr = nr;
     }
 
     public EMessstelle(Integer nr, EStandort standort, Integer origNr, Float e32, Float n32,

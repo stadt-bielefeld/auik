@@ -46,7 +46,6 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
-import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -56,19 +55,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class BasisAdresseModel extends ListTableModel {
     private AuikLogger log = AuikLogger.getLogger();
-    private Integer id = null;
     private String strasse = null;
-    private String lastSuchWort = null;
-    private String lastProperty = null;
-    private String lastStrasse = null;
-    private Integer lastHausnr = null;
-    private String LastZus = null;
-    private String LastOrt = null;
-//    private String secondColumn = null;
-
-    //    private String secondColumn = null;
-
-
 
 	public BasisAdresseModel() {
         super(new String[]{
@@ -174,8 +161,6 @@ public class BasisAdresseModel extends ListTableModel {
     public void filterStandort(String strasse, Integer hausnr) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(strasse, hausnr));
-        lastStrasse = strasse;
-        lastHausnr = hausnr;
         log.debug("End filterList");
     }
 }

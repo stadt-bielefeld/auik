@@ -43,13 +43,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.util.List;
-
-import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -58,7 +52,6 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Gerd Genuit
  */
 public class BasisStdModel extends ListTableModel {
-    private Adresse adresse = null;
     private Inhaber inhaber = null;
 
     public BasisStdModel() {
@@ -96,10 +89,6 @@ public class BasisStdModel extends ListTableModel {
         return tmp;
     }
 
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
-    }
 
     public void setInhaber(Inhaber inhaber) {
         this.inhaber = inhaber;

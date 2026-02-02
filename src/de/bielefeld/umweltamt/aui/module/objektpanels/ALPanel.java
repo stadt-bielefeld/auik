@@ -22,27 +22,15 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.util.HashMap;
-import java.util.List;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
-import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-
 public class ALPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
-
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-
-    private BasisObjektBearbeiten parentModule;
 
     //Fields and labels
     private JTextField drossabflussField;
@@ -55,9 +43,8 @@ public class ALPanel extends AbstractSonderbauwerkTypPanel {
     private JLabel ueberlaufHaeufigkeitLabel;
     private JLabel entleerungsZeitLabel;
 
-    public ALPanel (BasisObjektBearbeiten parentModule) {
+    public ALPanel() {
         this.name = "AL";
-        this.parentModule = parentModule;
 
         createFields();
 

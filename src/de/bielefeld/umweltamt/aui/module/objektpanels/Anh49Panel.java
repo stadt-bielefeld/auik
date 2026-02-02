@@ -203,7 +203,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
             return (Anh49Abscheiderdetails) getObjectAtRow(rowIndex);
         }
     }
-    private Anfallstelle anfallstelle;
+
     /* Note: As these strings are used as keys in the underlying HashMap,     *
      * they should be unique.                                                 */
     /* Widgets - left */
@@ -234,12 +234,6 @@ public class Anh49Panel extends AbstractAnhangPanel {
     private Action abscheiderNeuAction;
     private JPopupMenu abscheiderPopup;
 
-
-
-    public Anh49Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
-        this(hauptModul);
-        this.anfallstelle = anfallstelle;
-    }
 
     @SuppressWarnings("deprecation")
     public Anh49Panel(BasisObjektBearbeiten hauptModul) {
@@ -738,7 +732,6 @@ public class Anh49Panel extends AbstractAnhangPanel {
             this.fachdaten = new Anh49Fachdaten();
 
             // Anfallstelle setzen
-            this.anfallstelle = anfallstelle;
             this.fachdaten.setAnfallstelle(anfallstelle);
             this.fachdaten.merge();
 

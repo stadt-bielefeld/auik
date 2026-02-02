@@ -35,8 +35,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 /**
  * A class that represents a row in the Gemarkung database table.<br>
  * This class is meant to serve as a model and should be copied into the

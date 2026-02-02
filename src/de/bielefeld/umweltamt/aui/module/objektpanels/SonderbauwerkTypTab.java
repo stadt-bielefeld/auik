@@ -23,18 +23,13 @@ package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.FlowLayout;
 
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 public class SonderbauwerkTypTab extends JPanel {
     private static final long serialVersionUID = 4242458251785488488L;
-
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
 
     /**
      * Panel to show as content
@@ -148,7 +143,7 @@ public class SonderbauwerkTypTab extends JPanel {
      */
     public RRBPanel getRRBPanel() {
         if (this.rrbPanel == null) {
-            this.rrbPanel = new RRBPanel(this.parentModule);
+            this.rrbPanel = new RRBPanel();
             this.rrbPanel.setRecord(sonderbauwerk);
         }
         return this.rrbPanel;
@@ -160,7 +155,7 @@ public class SonderbauwerkTypTab extends JPanel {
      */
     public RKBPanel getRKBPanel() {
         if (this.rkbPanel == null) {
-            this.rkbPanel = new RKBPanel(this.parentModule);
+            this.rkbPanel = new RKBPanel();
             this.rkbPanel.setRecord(sonderbauwerk);
         }
         return this.rkbPanel;
@@ -172,7 +167,7 @@ public class SonderbauwerkTypTab extends JPanel {
      */
     public RBFPanel getRBFPanel() {
         if (this.rbfPanel == null) {
-            this.rbfPanel = new RBFPanel(this.parentModule);
+            this.rbfPanel = new RBFPanel();
             this.rbfPanel.setRecord(sonderbauwerk);
         }
         return this.rbfPanel;
@@ -184,7 +179,7 @@ public class SonderbauwerkTypTab extends JPanel {
      */
     public BFPanel getBFPanel() {
         if (this.bfPanel == null) {
-            this.bfPanel = new BFPanel(this.parentModule);
+            this.bfPanel = new BFPanel();
             this.bfPanel.setRecord(sonderbauwerk);
         }
         return this.bfPanel;
@@ -196,7 +191,7 @@ public class SonderbauwerkTypTab extends JPanel {
      */
     public RUTPanel getRUTPanel() {
         if (this.rutPanel == null) {
-            this.rutPanel = new RUTPanel(this.parentModule);
+            this.rutPanel = new RUTPanel();
             this.rutPanel.setRecord(sonderbauwerk);
         }
         return this.rutPanel;
@@ -208,7 +203,7 @@ public class SonderbauwerkTypTab extends JPanel {
      */
     public RSTPanel getRSTPanel() {
         if (this.rstPanel == null) {
-            this.rstPanel = new RSTPanel(this.parentModule);
+            this.rstPanel = new RSTPanel();
             this.rstPanel.setRecord(sonderbauwerk);
         }
         return this.rstPanel;
@@ -220,7 +215,7 @@ public class SonderbauwerkTypTab extends JPanel {
      */
     public ALPanel getALPanel() {
         if (this.alPanel == null) {
-            this.alPanel = new ALPanel(this.parentModule);
+            this.alPanel = new ALPanel();
             this.alPanel.setRecord(sonderbauwerk);
         }
         return this.alPanel;

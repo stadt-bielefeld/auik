@@ -22,7 +22,6 @@
 package de.bielefeld.umweltamt.aui.mappings;
 
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
-import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 
 /**

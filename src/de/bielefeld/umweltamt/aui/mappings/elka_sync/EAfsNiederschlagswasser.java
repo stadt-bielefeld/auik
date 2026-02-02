@@ -20,7 +20,6 @@
  */
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,7 +27,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 

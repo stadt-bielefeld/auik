@@ -48,9 +48,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
@@ -61,7 +59,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -99,8 +96,6 @@ public class AfsNwPanel extends ObjectPanel {
 
 	// Widgets
 	private JTable afsNwTabelle = null;
-	private JButton anlegenButton = null;
-	private JButton saveAfsButton = null;
 
 	// Daten
 	private AfsNwModel afsModel = new AfsNwModel();
@@ -314,7 +309,6 @@ public class AfsNwPanel extends ObjectPanel {
 			this.afsNwTabelle.getCellEditor().stopCellEditing();
 		}
 		List<?> afsListe = this.afsModel.getList();
-		boolean gespeichert = false;
 		for (int i = 0; i < afsListe.size(); i++) {
 
 			AfsNiederschlagswasser afs = (AfsNiederschlagswasser) afsListe.get(i);
@@ -326,7 +320,6 @@ public class AfsNwPanel extends ObjectPanel {
 			}
 			this.hauptModul.getObjekt().merge();
 			afs.merge();
-			gespeichert = afs.merge();
 			this.afsModel.fireTableDataChanged();
 
 		}
@@ -366,28 +359,9 @@ public class AfsNwPanel extends ObjectPanel {
 
 	}
 
-	public void completeObjekt() {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public String getName() {
 		return name;
-	}
-
-	private JButton getSaveAfsNw() {
-		if (saveAfsButton == null) {
-			saveAfsButton = new JButton("Speichern");
-
-			this.saveAfsButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					hauptModul.saveAllTabs();
-				}
-			});
-		}
-		return saveAfsButton;
 	}
 
 	private JTable getAfsNwTabelle() {
@@ -402,7 +376,6 @@ public class AfsNwPanel extends ObjectPanel {
 			this.afsNwTabelle.setRowSelectionAllowed(true);
 
 			// Für die ComboBox bei "Herkunftsbereich"
-
 			herkunftBox = new JComboBox(herkunft);
 			herkunftBox.setEditable(false);
 			herkunftBox.addFocusListener(new FocusAdapter() {
@@ -414,38 +387,10 @@ public class AfsNwPanel extends ObjectPanel {
 			herkunftBox.setBorder(BorderFactory.createEmptyBorder());
 			afsNwTabelle.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(herkunftBox));
 
-			this.afsNwTabelle.addMouseListener(new java.awt.event.MouseAdapter() {
-				@Override
-				public void mouseClicked(java.awt.event.MouseEvent e) {
-					if ((e.getClickCount() == 2) && (e.getButton() == 1)) {
-						Point origin = e.getPoint();
-						int row = AfsNwPanel.this.afsNwTabelle.rowAtPoint(origin);
-
-						AfsNiederschlagswasser afs = AfsNwPanel.this.afsModel.getRow(row);
-					}
-				}
-			});
-
 			// Den KeyStroke holen, der "Enter" repräsentiert
 			KeyStroke enterKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false);
 			// Den "Enter"-KeyStroke in die InputMap der Tabelle einfügen
 			this.afsNwTabelle.getInputMap().put(enterKeyStroke, "ENTER");
-			// Eine neue Action fürs editieren erzeugen
-			Action editAction = new AbstractAction() {
-				private static final long serialVersionUID = -7537228135751378632L;
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					int row = AfsNwPanel.this.afsNwTabelle.getSelectedRow();
-					// Natürlich nur editieren, wenn wirklich eine Zeile
-					// ausgewählt ist
-					if (row != -1) {
-						AfsNiederschlagswasser afsNw = AfsNwPanel.this.afsModel.getRow(row);
-					}
-				}
-			};
-			// Diese Action dem "Enter"-KeyStroke zuweisen
-			this.afsNwTabelle.getActionMap().put("ENTER", editAction);
 
 			KeyStroke deleteKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false);
 			this.afsNwTabelle.getInputMap().put(deleteKeyStroke, "DEL");

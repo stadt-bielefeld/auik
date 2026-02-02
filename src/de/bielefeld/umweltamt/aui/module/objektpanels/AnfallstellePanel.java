@@ -259,14 +259,14 @@ public class AnfallstellePanel extends ObjectPanel {
             String[] betriebsweise = {"-", "Chargenbetrieb", "Durchlaufbetrieb", "Kampagnebetrieb"};
             getBetriebsweiseBox().setModel(new DefaultComboBoxModel(betriebsweise));
 
-            getBetriebsweiseBox().setSelectedItem(anfallstelle.getBetriebsweiseDescriptionFromId(this.anfallstelle.getBetriebsweiseOpt()));
+            getBetriebsweiseBox().setSelectedItem(Anfallstelle.getBetriebsweiseDescriptionFromId(this.anfallstelle.getBetriebsweiseOpt()));
 
             String[] beschaffenheit = {"Produktionsabwasser",  "Kühlwasser", "Sanitärwasser",
                     "Niederschlagswasser mit Sonderbauwerk", "Niederschlagswasser ohne Sonderbauwerk",
                     "Grubenwasser", "Fischteiche", "sonstiges Wasser"};
             getBeschaffenheitBox().setModel(new DefaultComboBoxModel(beschaffenheit));
 
-            getBeschaffenheitBox().setSelectedItem(anfallstelle.getBeschaffenheitDescriptionFromId(this.anfallstelle.getAbwaBeschaffOpt()));
+            getBeschaffenheitBox().setSelectedItem(Anfallstelle.getBeschaffenheitDescriptionFromId(this.anfallstelle.getAbwaBeschaffOpt()));
 
             String[] arten = {"-", "Aufbereitung Medizinprodukte", "Brennwertkessel", "Blockheizkraftwerk",
                     "Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor",
@@ -1126,7 +1126,7 @@ public class AnfallstellePanel extends ObjectPanel {
 
     public Anh40Panel getAnh40Tab() {
         if (anhang40Tab == null) {
-            anhang40Tab = new Anh40Panel(hauptModul, anfallstelle);
+            anhang40Tab = new Anh40Panel(hauptModul);
             anhang40Tab.setBorder(Paddings.DIALOG);
         }
         return anhang40Tab;
@@ -1134,7 +1134,7 @@ public class AnfallstellePanel extends ObjectPanel {
 
     public Anh49Panel getAnh49Tab() {
         if (anhang49Tab == null) {
-            anhang49Tab = new Anh49Panel(hauptModul, anfallstelle);
+            anhang49Tab = new Anh49Panel(hauptModul);
             anhang49Tab.setBorder(Paddings.DIALOG);
         }
         return anhang49Tab;

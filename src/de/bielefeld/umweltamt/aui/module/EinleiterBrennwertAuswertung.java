@@ -76,8 +76,6 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
     private JComboBox jahrBox;
     private JComboBox<String> typBox;
     private JButton submitButton;
-    private JButton bhkwButton;
-    private JButton abaButton;
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private AnhBwkModel tmodel;
@@ -114,8 +112,6 @@ public class EinleiterBrennwertAuswertung extends AbstractQueryModul {
 
             submitButton = new JButton("Suchen");
             typBox = new JComboBox<>(new String[]{"BWK", "BHKW", "ABA"});
-            bhkwButton = new JButton("BHKW");
-            abaButton = new JButton("ABA");
 
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:
