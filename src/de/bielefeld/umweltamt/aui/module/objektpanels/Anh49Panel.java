@@ -134,7 +134,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
          * "Abscheider", "Von", "Lage" und "Bemerkung".
          */
         public Anh49AbscheiderModel() {
-            super(new String[] {"Abscheider", "Von", "Lage", "Nenngröße", "Hersteller", "Bemerkung"},
+            super(new String[] {"Nr", "Lage", "Nenngröße", "Hersteller", "Bemerkung"},
                 false, true);
         }
 
@@ -159,18 +159,15 @@ public class Anh49Panel extends AbstractAnhangPanel {
                     tmp = details.getAbscheidernr();
                     break;
                 case 1:
-                    tmp = details.getVon();
-                    break;
-                case 2:
                     tmp = details.getLage();
                     break;
-                case 3:
+                case 2:
                     tmp = details.getNenngroesse();
                     break;
-                case 4:
+                case 3:
                     tmp = details.getHersteller();
                     break;
-                case 5:
+                case 4:
                     tmp = details.getBemerkung();
                     break;
                 default:
@@ -219,12 +216,13 @@ public class Anh49Panel extends AbstractAnhangPanel {
     private final String AENDERUNGSGENEHMIGUNGSDATUM = "Änderungsgen.-datum:";
     private final String ABGEMELDET = "abgemeldet";
     private final String ABWASSERFREI = "abwasserfrei";
-    private final String E_SATZUNG = "E-Satzung";
+    private final String E_SATZUNG = "Überwachung nach E-Satzung";
     private final String SICHERHEITSABSCHEIDER = "Sicherheitsabscheider";
     private final String WIEDERVORLAGEDATUM = "Wiedervorlagedatum:";
     /* Widgets - bottom */
     private final String SPEICHERN = "Speichern";
 
+    private JButton neuerAbscheider = null;
     private JButton saveAnh49Button = null;
 
     // Daten
@@ -353,7 +351,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
         /* Bottom */
         builder.add(ComponentFactory.buildRightAlignedBar(
-            getSaveAnh49Button()), cc.xyw(labelCol,
+            getNeuerAbscheiderButton(), getSaveAnh49Button()), cc.xyw(labelCol,
             row, cols));
 
         /* Right column */
@@ -537,15 +535,16 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 if (i == 0) {
                     // Die erste Spalte soll zentriert sein...
                     column.setCellRenderer(centeredRenderer);
-
-                    column.setMaxWidth(100);
-                    column.setPreferredWidth(75);
+                    column.setMaxWidth(50);
+                    column.setPreferredWidth(30);
                 } else if (i == 1) {
-                    // ... die zweite auch
-                    column.setCellRenderer(centeredRenderer);
-
-                    column.setMaxWidth(80);
+                    column.setPreferredWidth(100);
+                } else if (i == 2) {
                     column.setPreferredWidth(60);
+                } else if (i == 3) {
+                    column.setPreferredWidth(100);
+                } else if (i == 4) {
+                    column.setPreferredWidth(100);
                 }
             }
 
@@ -746,6 +745,22 @@ public class Anh49Panel extends AbstractAnhangPanel {
 
 
         }
+    }
+
+    private JButton getNeuerAbscheiderButton() {
+        if (this.neuerAbscheider == null) {
+            this.neuerAbscheider = new JButton("Neuer Abscheider");
+
+            this.neuerAbscheider.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Anh49Abscheiderdetails neuerAbscheider = new Anh49Abscheiderdetails();
+                    neuerAbscheider.setAnh49Fachdaten(fachdaten);
+                    editAbscheider(neuerAbscheider);
+                }
+            });
+        }
+        return this.neuerAbscheider;
     }
 
     private JButton getSaveAnh49Button() {

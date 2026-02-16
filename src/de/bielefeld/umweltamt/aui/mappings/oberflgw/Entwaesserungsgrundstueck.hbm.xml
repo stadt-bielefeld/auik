@@ -7,7 +7,7 @@
 		name="de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck"
 		table="entwaesserungsgrundstueck" schema="oberflgw"
 		optimistic-lock="version">
-		<id name="nr" type="long" column="nr" unsaved-value="0">
+		<id name="nr" type="java.lang.Integer" column="nr" unsaved-value="0">
 			<generator class="identity" />
 		</id>
 		<many-to-one name="objekt"

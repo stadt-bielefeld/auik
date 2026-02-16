@@ -28,6 +28,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
+import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZEntwaessgrAbwasbehverf;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -77,6 +78,7 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     private Set<Abaverfahren> abwasserbehandlungsverfahrens;
     private Set<ZEntwaessgrAbwasbehverf> zEntwaessgrAbwasbehverfs;
     private Set<EAfsNiederschlagswasser> afsNiederschlagswassers = new HashSet<EAfsNiederschlagswasser>(0);
+    private Set<Referenz> refernezs;
 
     /** Default constructor */
     public EEntwaesserungsgrundstueck() {
@@ -470,4 +472,29 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
             return abwasserbehandlungsverfahrens;
         }
     }
+
+	/**
+	 * Gets the connected AfsNiederschlagswasser instance and returns its
+	 * Referenz-Entities
+	 */
+	@JsonIgnore
+	public List<Referenz> getReferenzs() {
+		Integer identifier = origNr != null ? origNr  : nr;
+
+	    String hql =
+	        "select distinct rf " +
+	        "from Referenz rf " +
+	        "join rf.qAfsNw eafsnw " +
+	        "join eafsnw.entwaesserungsgrundstueck entw " +
+	        "where entw.nr = :identifier";
+
+	    var query = HibernateSessionFactory.currentSession()
+	            .createQuery(hql, Referenz.class);
+
+	    query.setParameter("identifier", identifier);
+//	    Referenz result = query.getResultList().iterator().next();
+	    
+	    return query.getResultList();
+	}
+
 }

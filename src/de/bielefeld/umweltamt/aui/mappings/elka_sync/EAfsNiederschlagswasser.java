@@ -20,12 +20,15 @@
  */
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
@@ -166,6 +169,20 @@ public class EAfsNiederschlagswasser implements java.io.Serializable {
 
     /* Custom code goes below here! */
 
+
+	/**
+	 * Gets the connected AfsNiederschlagswasser instance and returns its
+	 * Referenz-Entities
+	 */
+	@JsonIgnore
+	public List<Referenz> getReferenzs() {
+		Integer identifier = origNr != null ? origNr : nr;
+
+		List<Referenz> referenzs = HibernateSessionFactory.currentSession()
+				.createQuery("from Referenz where q_nw_afs_nr = " + identifier).list();
+		return referenzs != null ? referenzs : new ArrayList<Referenz>();
+	}
+	
     /**
      * Get the Anfallstelle instance on which this view instance is based on
      * @return The Anfallsstelle instance
