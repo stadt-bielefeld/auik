@@ -9,9 +9,6 @@
     <jersey.version>3.1.1</jersey.version>
     <jasper.version>6.20.4</jasper.version>
     <log4j.version>2.20.0</log4j.version>
-    <hibernate-search.version>5.11.9.Final</hibernate-search.version>
-    <hk2.version>3.0.4</hk2.version>
-    <lucene.version>5.5.5</lucene.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
@@ -38,20 +35,33 @@
       <version>${jersey.version}</version>
     </dependency>
     <dependency>
-      <groupId>javax.ws.rs</groupId>
-      <artifactId>javax.ws.rs-api</artifactId>
-      <version>2.1.1</version>
-    </dependency>
-    <dependency>
       <groupId>jakarta.ws.rs</groupId>
       <artifactId>jakarta.ws.rs-api</artifactId>
       <version>3.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+      <version>${jersey.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-jackson</artifactId>
+      <version>${jersey.version}</version>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports</artifactId>
       <version>${jasper.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-jackson</artifactId>
+      <version>${jersey.version}</version>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- A repacked jasperreports jar file with necessary fonts included, workaround for font problems on Windows systems-->
