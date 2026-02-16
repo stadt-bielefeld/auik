@@ -141,13 +141,13 @@ public class EditorEntsorger extends AbstractModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((EditorEntsorgerModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.getEntsorgerlist());
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((EditorEntsorgerModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -175,7 +175,7 @@ public class EditorEntsorger extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
-    public ListTableModel getTableModel() {
+    public ListTableModel<Entsorger> getTableModel() {
         if (tmodel == null) {
             tmodel = new EditorEntsorgerModel();
         }

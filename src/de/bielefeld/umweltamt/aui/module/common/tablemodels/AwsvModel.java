@@ -58,7 +58,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Vaws-Fachdaten.
  * @author David Klotz
  */
-public class AwsvModel extends ListTableModel {
+public class AwsvModel extends ListTableModel<Fachdaten> {
     private static final long serialVersionUID = -2723711304275935781L;
 
     /**
@@ -79,8 +79,7 @@ public class AwsvModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Fachdaten fd = (Fachdaten) objectAtRow;
+    public Object getColumnValue(Fachdaten fd, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {

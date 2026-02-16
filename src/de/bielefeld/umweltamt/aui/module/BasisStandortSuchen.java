@@ -91,9 +91,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -135,7 +135,6 @@ import de.bielefeld.umweltamt.aui.module.common.editors.AdressEditor;
 import de.bielefeld.umweltamt.aui.module.common.editors.BetreiberEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisObjektModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisLageModel;
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
@@ -180,12 +179,6 @@ public class BasisStandortSuchen extends AbstractModul
 
 	private BasisLageModel standortModel;
 	private BasisObjektModel objektModel;
-
-	/**
-	 * Wird benutzt, um nach dem Bearbeiten etc. wieder den selben Standort in
-	 * der Liste auszuwählen.
-	 */
-	private Standort lastStandort;
 
 	private Timer suchTimer;
 
@@ -332,7 +325,6 @@ public class BasisStandortSuchen extends AbstractModul
 			this.tabellenSplit.setDividerLocation(divloc);
 		}
 
-		this.lastStandort = null;
 		updateStandortListe();
 	}
 
@@ -385,40 +377,16 @@ public class BasisStandortSuchen extends AbstractModul
 			{
 				BasisStandortSuchen.this.standortModel.fireTableDataChanged();
 
-				if (SettingsManager.getInstance().getStandort() != null)
-				{
-					filterStandortListe(getStandortTabelle());
-				}
-				else if (BasisStandortSuchen.this.lastStandort != null)
-				{
-					// Wenn der Standort noch in der Liste ist, wird er
-					// ausgewählt.
-					int row = BasisStandortSuchen.this.standortModel.getList()
-							.indexOf(BasisStandortSuchen.this.lastStandort);
-					if (row != -1)
-					{
-						getStandortTabelle().setRowSelectionInterval(row, row);
-						getStandortTabelle().scrollRectToVisible(
-						getStandortTabelle().getCellRect(row, 0, true));
-						getStandortTabelle().requestFocus();
-					}
-				}
-				else
-				{
-					int standortCount = BasisStandortSuchen.this.standortModel
-							.getRowCount();
-					if (standortCount > 0)
-					{
-						String statusMsg = "Suche: " + standortCount
-								+ " Ergebnis";
-						if (standortCount != 1)
-						{
-							statusMsg += "se";
-						}
-						statusMsg += ".";
-						BasisStandortSuchen.this.frame.changeStatus(statusMsg);
-					}
-				}
+                int standortCount = BasisStandortSuchen.this.standortModel
+                    .getRowCount();
+                if (standortCount > 0) {
+                    String statusMsg = "Suche: " + standortCount + " Ergebnis";
+                    if (standortCount != 1) {
+                        statusMsg += "se";
+                    }
+                    statusMsg += ".";
+                    BasisStandortSuchen.this.frame.changeStatus(statusMsg);
+                }
 
 				updateObjekte();
 			}
@@ -593,25 +561,11 @@ public class BasisStandortSuchen extends AbstractModul
 		{
 
 			@Override
-			protected void doNonUILogic()
-			{
-				if (SettingsManager.getInstance().getStandort() == null)
-				{
-					BasisStandortSuchen.this.standortModel.filterList(
-																		getStrassenFeld().getText(),
-																		fhausnr,
-																		getOrtFeld()
-																				.getText());
-				}
-				else
-				{
-					BasisStandortSuchen.this.standortModel
-							.filterList(Standort.findById(SettingsManager.getInstance()
-									.getStandort().getId()));
-					SettingsManager.getInstance().setStandort(null);
-					getStrassenFeld().setText("");
-					getHausnrFeld().setText("");
-				}
+			protected void doNonUILogic() {
+                BasisStandortSuchen.this.standortModel.filterList(
+                    getStrassenFeld().getText(),
+                    fhausnr,
+                    getOrtFeld().getText());
 			}
 
 			@Override
@@ -750,8 +704,7 @@ public class BasisStandortSuchen extends AbstractModul
 		{
 			this.strassenFeld = new JTextField("");
 			this.strassenFeld.setFocusTraversalKeys(
-													KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-													Collections.EMPTY_SET);
+                KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Set.of());
 
 			this.strassenFeld.addActionListener(new ActionListener()
 			{
@@ -801,8 +754,7 @@ public class BasisStandortSuchen extends AbstractModul
 		{
 			this.ortFeld = new JTextField("");
 			this.ortFeld.setFocusTraversalKeys(
-												KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-												Collections.EMPTY_SET);
+                KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Set.of());
 
 			this.ortFeld.addActionListener(new ActionListener()
 			{

@@ -91,7 +91,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -275,7 +274,7 @@ public class KlaerschlammAuswertung extends AbstractModul
                     }
                 }
 
-				Collections.sort(this.dateList);
+				this.dateList.sort(null);
 			}
 
 			@Override
@@ -681,21 +680,21 @@ public class KlaerschlammAuswertung extends AbstractModul
 		}
 	}
 
-	private JList klaeranlagen;
-	private JComboBox artBox;
+	private JList<Klaeranlage> klaeranlagen;
+	private JComboBox<Probeart> artBox;
 	private JDateChooser vonDateChooser;
 	private JDateChooser bisDateChooser;
 
 	private JPanel parameterPanel;
-	private JList rightList;
-	private JList leftList;
+	private JList<Parameter> rightList;
+	private JList<Parameter> leftList;
 	private JButton submitButton;
 
-	private JComboBox parameterBox;
+	private JComboBox<Parameter> parameterBox;
 	private JButton leftDeleteButton;
 	private JButton rightDeleteButton;
-	private JComboBox leftEinheitenBox;
-	private JComboBox rightEinheitenBox;
+	private JComboBox<Einheiten> leftEinheitenBox;
+	private JComboBox<Einheiten> rightEinheitenBox;
 	private JTextField leftAnalyseFeld;
 	private JTextField rightAnalyseFeld;
 
@@ -878,7 +877,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 		//        int parameterAnzahl;
 		Einheiten einheit;
-		JList paramList;
+		JList<Parameter> paramList;
 		String analyseVon;
 		if (axis.equals(LEFT))
 		{
@@ -922,7 +921,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 	}
 
 	private void createSeries(Probeart art, Klaeranlage ka,
-		Einheiten einheit, JList paramList, String analyseVon,
+		Einheiten einheit, JList<Parameter> paramList, String analyseVon,
 		Date vonDate, Date bisDate, TimeSeriesCollection col)
 	{
 
@@ -932,8 +931,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 		{
 			for (int i = 0; i < paramList.getModel().getSize(); i++)
 			{
-				Parameter param = (Parameter) paramList.getModel()
-						.getElementAt(i);
+				Parameter param = paramList.getModel().getElementAt(i);
 
 				this.frame.changeStatus("Erzeuge Datenreihe für " + param + ", "
 						+ ka);
@@ -969,14 +967,13 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.bisDateChooser;
 	}
 
-	private JList getKlaeranlagen()
+	private JList<Klaeranlage> getKlaeranlagen()
 	{
 		if (this.klaeranlagen == null)
 		{
 			List<Klaeranlage> all = Klaeranlage.getAll();
-			DefaultListModel model = new DefaultListModel();
-			this.klaeranlagen = new JList(model);
-			this.klaeranlagen.setPrototypeCellValue("test");
+			DefaultListModel<Klaeranlage> model = new DefaultListModel<>();
+			this.klaeranlagen = new JList<>(model);
 			this.klaeranlagen.setSelectionMode(
 					ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			for (Klaeranlage element : all)
@@ -987,7 +984,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.klaeranlagen;
 	}
 
-	private JComboBox getArtBox()
+	private JComboBox<Probeart> getArtBox()
 	{
 		if (this.artBox == null)
 		{
@@ -1002,7 +999,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			{
 				arten[i] = Probeart.findById(artIDs[i]);
 			}
-			this.artBox = new JComboBox(arten);
+			this.artBox = new JComboBox<>(arten);
 		}
 
 		return this.artBox;
@@ -1072,8 +1069,8 @@ public class KlaerschlammAuswertung extends AbstractModul
 			builder.add(new JLabel("Erste Y-Achse"), cc.xy(1, 1));
 			builder.add(new JLabel("Zweite Y-Achse"), cc.xy(9, 1));
 
-			JList lList = getLeftList();
-			JList rList = getRightList();
+			JList<Parameter> lList = getLeftList();
+			JList<Parameter> rList = getRightList();
 			builder.add(new JScrollPane(lList),
 						cc.xywh(1, 3, 1, 15, "fill, fill"));
 			builder.add(new JScrollPane(rList),
@@ -1124,14 +1121,12 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.parameterPanel;
 	}
 
-	private JList getRightList()
+	private JList<Parameter> getRightList()
 	{
 		if (this.rightList == null)
 		{
-			DefaultListModel listModel = new DefaultListModel();
-			this.rightList = new JList(listModel);
-			this.rightList.setPrototypeCellValue("Abcdefghij (Ab)");
-
+			DefaultListModel<Parameter> listModel = new DefaultListModel<>();
+			this.rightList = new JList<>(listModel);
 			this.rightList
 					.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		}
@@ -1139,13 +1134,12 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.rightList;
 	}
 
-	private JList getLeftList()
+	private JList<Parameter> getLeftList()
 	{
 		if (this.leftList == null)
 		{
-			DefaultListModel listModel = new DefaultListModel();
-			this.leftList = new JList(listModel);
-			this.leftList.setPrototypeCellValue("Abcdefghij (Ab)");
+			DefaultListModel<Parameter> listModel = new DefaultListModel<>();
+			this.leftList = new JList<>(listModel);
 
 			this.leftList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		}
@@ -1153,11 +1147,11 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.leftList;
 	}
 
-	private JComboBox getParameterBox()
+	private JComboBox<Parameter> getParameterBox()
 	{
 		if (this.parameterBox == null)
 		{
-			this.parameterBox = new SearchBox(
+			this.parameterBox = new SearchBox<>(
 					DatabaseQuery.getKlaerschlammParameter());
 		}
 
@@ -1177,8 +1171,9 @@ public class KlaerschlammAuswertung extends AbstractModul
 				public void actionPerformed(ActionEvent e)
 				{
 					int index = getLeftList().getSelectedIndex();
-					DefaultListModel leftModel = ((DefaultListModel) getLeftList()
-							.getModel());
+					DefaultListModel<Parameter> leftModel
+                        = (DefaultListModel<Parameter>) getLeftList()
+                            .getModel();
 
 					if (index != -1)
 					{
@@ -1222,8 +1217,9 @@ public class KlaerschlammAuswertung extends AbstractModul
 				public void actionPerformed(ActionEvent e)
 				{
 					int index = getRightList().getSelectedIndex();
-					DefaultListModel rightModel = ((DefaultListModel) getRightList()
-							.getModel());
+					DefaultListModel<Parameter> rightModel
+                        = (DefaultListModel<Parameter>) getRightList()
+                            .getModel();
 
 					if (index != -1)
 					{
@@ -1254,11 +1250,11 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.rightDeleteButton;
 	}
 
-	private JComboBox getLeftEinheitenBox()
+	private JComboBox<Einheiten> getLeftEinheitenBox()
 	{
 		if (this.leftEinheitenBox == null)
 		{
-			this.leftEinheitenBox = new SearchBox(this.einheiten);
+			this.leftEinheitenBox = new SearchBox<>(this.einheiten);
 			this.leftEinheitenBox.setSelectedItem(
 					DatabaseConstants.ATL_EINHEIT_MG_KG);
 		}
@@ -1266,11 +1262,11 @@ public class KlaerschlammAuswertung extends AbstractModul
 		return this.leftEinheitenBox;
 	}
 
-	private JComboBox getRightEinheitenBox()
+	private JComboBox<Einheiten> getRightEinheitenBox()
 	{
 		if (this.rightEinheitenBox == null)
 		{
-			this.rightEinheitenBox = new SearchBox(this.einheiten);
+			this.rightEinheitenBox = new SearchBox<>(this.einheiten);
 			this.rightEinheitenBox.setSelectedItem(
 					DatabaseConstants.ATL_EINHEIT_MG_KG);
 		}
@@ -1361,9 +1357,11 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 					if (param != null)
 					{
-						DefaultListModel leftModel = (DefaultListModel) getLeftList()
+						DefaultListModel<Parameter> leftModel
+                            = (DefaultListModel<Parameter>) getLeftList()
 								.getModel();
-						DefaultListModel rightModel = (DefaultListModel) getRightList()
+						DefaultListModel<Parameter> rightModel
+                            = (DefaultListModel<Parameter>) getRightList()
 								.getModel();
 
 						if (direction.equals(LEFT))

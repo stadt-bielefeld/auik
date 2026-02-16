@@ -33,7 +33,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein TableModel für eine Tabelle mit Probenahmen zu einem Probepunkt.
  * @author David Klotz
  */
-public class ProbenahmenModel extends ListTableModel {
+public class ProbenahmenModel extends ListTableModel<Probenahme> {
     private static final long serialVersionUID = 5732041657532396538L;
     private Messstelle probepkt = null;
     private String secondColumn = null;
@@ -82,9 +82,8 @@ public class ProbenahmenModel extends ListTableModel {
     }
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Probenahme probe, int columnIndex) {
         Object value;
-        Probenahme probe = (Probenahme) objectAtRow;
         if (secondColumn == null) {
             switch(columnIndex) {
                 case 0:
@@ -152,8 +151,7 @@ public class ProbenahmenModel extends ListTableModel {
     }
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-        Probenahme removedProbe = (Probenahme) objectAtRow;
+    public boolean objectRemoved(Probenahme removedProbe) {
         boolean removed;
 
         if (removedProbe.getKennummer() != null) {

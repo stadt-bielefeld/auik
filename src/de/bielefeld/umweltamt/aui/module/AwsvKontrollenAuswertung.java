@@ -66,7 +66,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein Modul um noch ausstehende Prüfungen anzeigen zu lassen.
  * @author David Klotz
  */
-public class AwsvKontrollenAuswertung extends AbstractQueryModul {
+public class AwsvKontrollenAuswertung extends AbstractQueryModul<Kontrollen> {
+
     private WiedervorlageSVModel model;
 
     /* (non-Javadoc)
@@ -75,7 +76,7 @@ public class AwsvKontrollenAuswertung extends AbstractQueryModul {
     @Override
     protected void editObject(int row) {
         if (row != -1) {
-            Fachdaten fd = ((Kontrollen)model.getObjectAtRow(row)).getFachdaten();
+            Fachdaten fd = model.getObjectAtRow(row).getFachdaten();
 
             AwsvEditor editor = new AwsvEditor(fd, frame, "Sachverständigenprüfung");
 
@@ -105,7 +106,7 @@ public class AwsvKontrollenAuswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<Kontrollen> getTableModel() {
         if (model == null) {
             model = new WiedervorlageSVModel();
         }
@@ -168,7 +169,7 @@ public class AwsvKontrollenAuswertung extends AbstractQueryModul {
     }
 }
 
-class WiedervorlageSVModel extends ListTableModel {
+class WiedervorlageSVModel extends ListTableModel<Kontrollen> {
     private static final long serialVersionUID = 8869570451383123968L;
 
     public WiedervorlageSVModel() {
@@ -185,9 +186,8 @@ class WiedervorlageSVModel extends ListTableModel {
     }
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Kontrollen vk, int columnIndex) {
         Object tmp;
-        Kontrollen vk = (Kontrollen) objectAtRow;
 
         switch (columnIndex) {
             case 0:

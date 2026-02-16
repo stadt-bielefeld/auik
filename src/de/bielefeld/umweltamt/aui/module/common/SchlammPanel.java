@@ -119,7 +119,7 @@ public class SchlammPanel extends JPanel {
     private Action probeEditAction;
     private Action probeLoeschAction;
 
-    private JComboBox anlageBox;
+    private JComboBox<Klaeranlage> anlageBox;
     private JTable probeTabelle;
 
     private JPanel anlegenPanel;
@@ -350,9 +350,9 @@ public class SchlammPanel extends JPanel {
         }
     }
 
-    private JComboBox getAnlageBox() {
+    private JComboBox<Klaeranlage> getAnlageBox() {
         if (anlageBox == null) {
-            anlageBox = new JComboBox(DatabaseQuery.getKlaeranlage());
+            anlageBox = new JComboBox<>(DatabaseQuery.getKlaeranlage());
 
             anlageBox.addActionListener(new ActionListener() {
                 @Override

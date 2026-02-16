@@ -29,11 +29,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Ein einfaches TableModel für die Objektartentabelle.
  * @author Gerd Genuit
  */
-public class EditorObjektartenModel extends EditableListTableModel {
+public class EditorObjektartenModel
+    extends EditableListTableModel<Objektarten> {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 6481979000280099636L;
 
 	public EditorObjektartenModel() {
@@ -64,8 +62,7 @@ public class EditorObjektartenModel extends EditableListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Objektarten art = (Objektarten) objectAtRow;
+    public Object getColumnValue(Objektarten art, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -92,9 +89,7 @@ public class EditorObjektartenModel extends EditableListTableModel {
     }
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-
-		Objektarten tmp = (Objektarten) objectAtRow;
+	public void editObject(Objektarten tmp, int columnIndex, Object newValue) {
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -119,15 +114,14 @@ public class EditorObjektartenModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Objektarten newObject() {
 		Objektarten tmp = new Objektarten();
 		tmp.setId(DatabaseQuery.newObjektartenID());
 		return tmp;
 	}
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-    	Objektarten removedArt = (Objektarten) objectAtRow;
+    public boolean objectRemoved(Objektarten removedArt) {
         return Objektarten.delete(removedArt);
     }
 

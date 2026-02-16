@@ -34,7 +34,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  *
  * @author Alexander Woestmann<awoestmann@intevation.de>
  */
-public class SelectableSielhautModel extends ListTableModel {
+public class SelectableSielhautModel extends ListTableModel<Object[]> {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,8 +58,7 @@ public class SelectableSielhautModel extends ListTableModel {
     }
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Object[] obj = (Object[]) objectAtRow;
+    public Object getColumnValue(Object[] obj, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -153,7 +152,7 @@ public class SelectableSielhautModel extends ListTableModel {
         //Get Sielhaut objects
         Object[] array = DatabaseQuery.findActiveSielhaut(suche);
         //Prepend selectable boolean
-        List<Object[]> list = new ArrayList();
+        List<Object[]> list = new ArrayList<>();
         for(Object rowObj: array) {
             Object[] row = (Object[]) rowObj;
             Object[] listEntry = new Object[row.length + 1];

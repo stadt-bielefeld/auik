@@ -29,7 +29,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Ein einfaches TableModel für die Einheitentabelle.
  * @author Gerd Genuit
  */
-public class EditorGemarkungModel extends EditableListTableModel {
+public class EditorGemarkungModel extends EditableListTableModel<Gemarkung> {
 
 	/**
 	 *
@@ -62,8 +62,7 @@ public class EditorGemarkungModel extends EditableListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Gemarkung gemarkung = (Gemarkung) objectAtRow;
+    public Object getColumnValue(Gemarkung gemarkung, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -87,9 +86,7 @@ public class EditorGemarkungModel extends EditableListTableModel {
     }
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-
-		Gemarkung tmp = (Gemarkung) objectAtRow;
+	public void editObject(Gemarkung tmp, int columnIndex, Object newValue) {
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -109,15 +106,14 @@ public class EditorGemarkungModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Gemarkung newObject() {
 		Gemarkung tmp = new Gemarkung();
 		tmp.setId(DatabaseQuery.newGemarkungID());
 		return tmp;
 	}
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-    	Gemarkung removedGemarkung = (Gemarkung) objectAtRow;
+    public boolean objectRemoved(Gemarkung removedGemarkung) {
         return Gemarkung.delete(removedGemarkung);
     }
 

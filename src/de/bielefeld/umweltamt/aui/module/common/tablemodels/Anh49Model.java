@@ -54,7 +54,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Anhang 49-Fachdaten.
  * @author David Klotz
  */
-public class Anh49Model extends ListTableModel {
+public class Anh49Model extends ListTableModel<Anh49Fachdaten> {
     private static final long serialVersionUID = 8257489172665257052L;
 
     public Anh49Model() {
@@ -73,8 +73,7 @@ public class Anh49Model extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Anh49Fachdaten fd = (Anh49Fachdaten) objectAtRow;
+    public Object getColumnValue(Anh49Fachdaten fd, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {

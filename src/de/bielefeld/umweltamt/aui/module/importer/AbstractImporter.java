@@ -31,7 +31,7 @@ import javax.swing.JTable;
 
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
-public abstract class AbstractImporter extends ListTableModel {
+public abstract class AbstractImporter extends ListTableModel<String[]> {
 
     private static final long serialVersionUID = 1L;
 

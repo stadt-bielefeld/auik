@@ -23,7 +23,8 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
-public class EAbwasserbehandlungsanlageModel extends ListTableModel {
+public class EAbwasserbehandlungsanlageModel
+    extends ListTableModel<EAbwasserbehandlungsanlage> {
 
     public EAbwasserbehandlungsanlageModel() {
         super(new String[]{
@@ -40,10 +41,11 @@ public class EAbwasserbehandlungsanlageModel extends ListTableModel {
 	}
 
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	public Object getColumnValue(
+        EAbwasserbehandlungsanlage anlage, int columnIndex
+    ) {
         Object value;
 
-        EAbwasserbehandlungsanlage anlage = (EAbwasserbehandlungsanlage) objectAtRow;
         switch(columnIndex) {
             case 0:
           		value = anlage.getStandort().getAdresse().getName1();

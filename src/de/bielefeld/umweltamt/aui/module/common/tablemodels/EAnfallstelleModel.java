@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAnfallstelle;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
-public class EAnfallstelleModel extends ListTableModel {
+public class EAnfallstelleModel extends ListTableModel<EAnfallstelle> {
 
     public EAnfallstelleModel() {
         super(new String[]{
@@ -41,10 +41,9 @@ public class EAnfallstelleModel extends ListTableModel {
 	}
 
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	public Object getColumnValue(EAnfallstelle anlage, int columnIndex) {
         Object value;
 
-        EAnfallstelle anlage = (EAnfallstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
             	if(anlage.getStandort().getAdresse() != null) {
