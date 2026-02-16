@@ -30,7 +30,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -229,7 +228,6 @@ public class EinleitungsstellePanel extends ObjectPanel {
 		this.einleitungsstelle = Einleitungsstelle.findByObjektId(this.hauptModul.getObjekt().getId());
 		log.debug("Einleitungsstelle aus DB geholt: " + this.einleitungsstelle);
 
-		List<Referenz> referenzen = Referenz.getAll();
 		this.referenz = null;
 
 //		for (Referenz ref : referenzen) {
@@ -438,10 +436,10 @@ public class EinleitungsstellePanel extends ObjectPanel {
 		Date stillgelegtAm = this.stillgelegtAmDatum.getDate();
 		this.einleitungsstelle.setStillgelegtAm(stillgelegtAm);
 
-		Integer abgaberelEinl = ((JComboBox) this.abgaberelEinlBox).getSelectedIndex();
+		Integer abgaberelEinl = this.abgaberelEinlBox.getSelectedIndex();
 		this.einleitungsstelle.setAbgaberelEinl(abgaberelEinl);
 
-		Integer einleitungsart = ((JComboBox) this.einleitungsartBox).getSelectedIndex();
+		Integer einleitungsart = this.einleitungsartBox.getSelectedIndex();
 		this.einleitungsstelle.setEinleitungsart(einleitungsart);
 
 		if (this.einleitungsartBox.getSelectedIndex() == 0) {
@@ -481,7 +479,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 			this.einleitungsstelle.setTypSonstigeTog(true);
 		}
 
-		Integer kanalArtOpt = ((JComboBox) this.kanalArtOptBox).getSelectedIndex();
+		Integer kanalArtOpt = this.kanalArtOptBox.getSelectedIndex();
 		this.einleitungsstelle.setKanalArtOpt(kanalArtOpt);
 	}
 
@@ -491,6 +489,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	 *
 	 * @return boolean
 	 */
+	@Override
 	protected boolean doSavePanelData() {
 		boolean success;
 

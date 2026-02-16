@@ -182,7 +182,6 @@ public class EAfsNiederschlagswasser implements java.io.Serializable {
 				.createQuery("from Referenz where q_nw_afs_nr = " + identifier).list();
 		return referenzs != null ? referenzs : new ArrayList<Referenz>();
 	}
-	
     /**
      * Get the Anfallstelle instance on which this view instance is based on
      * @return The Anfallsstelle instance

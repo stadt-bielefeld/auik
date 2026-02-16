@@ -31,11 +31,11 @@ import org.hibernate.criterion.Restrictions;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
@@ -550,7 +550,6 @@ public class EEinleitungsstelle implements java.io.Serializable {
 //	public static EEinleitungsstelle findById(java.lang.Integer id) {
 //		return (EEinleitungsstelle) new DatabaseAccess().get(EEinleitungsstelle.class, id);
 //	}
-	
 	public static EEinleitungsstelle findById(java.lang.Integer id) {
 		return new DatabaseAccess().executeCriteriaToUniqueResult(
 				DetachedCriteria.forClass(EEinleitungsstelle.class)
