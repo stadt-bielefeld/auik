@@ -43,21 +43,13 @@ public class GermanDouble {
         this.value = value;
     }
 
-
-    public GermanDouble(double value) {
-        this.value = new Double(value);
-    }
-
-
     public Double getValue() {
         return value;
     }
 
-
     public void setValue(Double value) {
         this.value = value;
     }
-
 
     public String toString() {
         if (format == null) {

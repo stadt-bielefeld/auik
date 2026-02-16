@@ -422,7 +422,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
                     }
                 }
             };
-            standortLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            standortLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                 KeyEvent.VK_L));
             standortLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
@@ -443,7 +443,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
                     editStandort(neuerStandort);
                 }
             };
-            standortNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            standortNeuAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                 KeyEvent.VK_N));
 
         }

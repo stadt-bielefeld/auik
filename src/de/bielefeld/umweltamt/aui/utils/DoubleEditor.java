@@ -67,7 +67,7 @@ public class DoubleEditor extends DefaultCellEditor {
 
         ftf.setFormatterFactory(
                 new DefaultFormatterFactory(doubleFormatter));
-        ftf.setValue(new Double(0.0));
+        ftf.setValue(0.0);
         ftf.setHorizontalAlignment(JTextField.TRAILING);
         ftf.setFocusLostBehavior(JFormattedTextField.PERSIST);
         setBorderNormal();
@@ -117,7 +117,7 @@ public class DoubleEditor extends DefaultCellEditor {
         if (o instanceof Double) {
             return o;
         } else if (o instanceof Number) {
-            return new Double(((Number)o).doubleValue());
+            return ((Number) o).doubleValue();
         } else {
             log.debug("getCellEditorValue: o isn't a Number");
             try {

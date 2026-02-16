@@ -370,21 +370,9 @@ public class BWKPanel extends ObjectPanel {
 	    Date genehmigung = this.genehmigungDatum.getDate();
 	    this.bwk.setDatumG(genehmigung);
 
-	    Boolean aba;
-	    if (getAbaCheck().isSelected()) {
-	        aba = true;
-	    } else {
-	        aba = false;
-	    }
-	    this.bwk.setAba(new Boolean(aba));
+	    this.bwk.setAba(getAbaCheck().isSelected());
 
-	    Boolean genehmpflicht;
-	    if (getgenehmpflichtCheck().isSelected()) {
-	        genehmpflicht = true;
-	    } else {
-	        genehmpflicht = false;
-	    }
-	    this.bwk.setGenehmigungspflicht(new Boolean(genehmpflicht));
+	    this.bwk.setGenehmigungspflicht(getgenehmpflichtCheck().isSelected());
 
 	    String beschreibung = this.bwkBeschreibungsArea.getText();
 	    if ("".equals(beschreibung)) {

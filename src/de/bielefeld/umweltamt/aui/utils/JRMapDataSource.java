@@ -142,7 +142,7 @@ public class JRMapDataSource implements JRDataSource {
 
         for (String column: columns) {
             if (column.equals(col)) {
-                indexBuffer.put(col, new Integer(idx));
+                indexBuffer.put(col, Integer.valueOf(idx));
                 return idx;
             }
             idx++;

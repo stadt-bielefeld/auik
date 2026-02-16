@@ -1385,7 +1385,7 @@ public class AwsvEditor extends AbstractBaseEditor {
 					}
 				}
 			};
-			tabellenItemLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_L));
+			tabellenItemLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_L));
 			tabellenItemLoeschAction.putValue(Action.ACCELERATOR_KEY,
 					KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
 		}
@@ -2397,7 +2397,7 @@ class VerwVerfahrenModel extends EditableListTableModel {
 			break;
 		// Prüfung abgeschlossen?:
 		case 3:
-			tmp = new Boolean(verf.getWvverwverf());
+			tmp = Boolean.valueOf(verf.getWvverwverf());
 			break;
 
 		// Andere Spalten sollten nicht vorkommen, deshalb "Fehler":
@@ -2494,7 +2494,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
 			if (newValue instanceof Float) {
 				tmpWert = (Float) newValue;
 			} else if (newValue instanceof KommaDouble) {
-				tmpWert = new Float(((KommaDouble) newValue).getValue().doubleValue());
+				tmpWert = ((KommaDouble) newValue).getValue().floatValue();
 			}
 			gebuehr.setBetrag(tmpWert);
 			break;
@@ -2513,7 +2513,7 @@ class VerwGebuehrenModel extends EditableListTableModel {
 	@Override
 	public Object newObject() {
 		Verwaltungsgebuehren gebuehr = new Verwaltungsgebuehren();
-		gebuehr.setBetrag(new Float(0.0));
+		gebuehr.setBetrag(0.0f);
 		gebuehr.setAbschnitt("360.12 LW");
 		gebuehr.setFachdaten(fachdaten);
 		gebuehr.setDatum(new Date());

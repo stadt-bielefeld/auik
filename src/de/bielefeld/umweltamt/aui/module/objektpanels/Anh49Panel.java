@@ -413,7 +413,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                     }
                 }
             };
-            abscheiderLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            abscheiderLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                 KeyEvent.VK_L));
             abscheiderLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
@@ -434,7 +434,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                     editAbscheider(neuerAbscheider);
                 }
             };
-            abscheiderNeuAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            abscheiderNeuAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                 KeyEvent.VK_N));
             // abscheiderNeuAction.putValue(Action.ACCELERATOR_KEY,
             // KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));

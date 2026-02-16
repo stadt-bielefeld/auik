@@ -45,8 +45,11 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+
 import jakarta.ws.rs.ProcessingException;
+import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
@@ -95,9 +98,6 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ESonderbauwerkModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
-
-import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.core.Response;
 
 public class ELKASync extends AbstractModul {
 
@@ -1127,7 +1127,7 @@ public class ELKASync extends AbstractModul {
                 object.getClass().getMethod("setOrigNr", Integer.class).invoke(object, nr);
             }
             String newNr = IDENTIFIER + nr.toString();
-            Integer newBI = new Integer(newNr);
+            Integer newBI = Integer.valueOf(newNr);
             mSetter.invoke(object, newBI);
         } catch (NoSuchMethodException e){
         } catch (SecurityException e) {

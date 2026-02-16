@@ -353,7 +353,7 @@ public class HauptFrame extends JFrame {
             closeAction.putValue(
                     Action.SHORT_DESCRIPTION, "Beendet das Programm");
             closeAction.putValue(
-                    Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_B));
+                    Action.MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_B));
             closeAction.putValue(
                     Action.SMALL_ICON, AuikUtils.getIcon(16, "exit.png"));
         }
@@ -662,7 +662,7 @@ public class HauptFrame extends JFrame {
             passwordChangeMenuItem.setText("Password ändern");
             passwordChangeMenuItem.setMnemonic(KeyEvent.VK_P);
             passwordChangeMenuItem.setEnabled(true);
-            final JFrame owner = this;
+            final HauptFrame owner = this;
             passwordChangeMenuItem.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {

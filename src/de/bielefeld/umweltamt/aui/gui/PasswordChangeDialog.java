@@ -20,157 +20,66 @@
  */
 package de.bielefeld.umweltamt.aui.gui;
 
-import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.KeyboardFocusManager;
-import java.awt.KeyEventDispatcher;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.jfree.ui.tabbedui.VerticalLayout;
+import org.hibernate.query.NativeQuery;
 
+import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
 
 /**
  * Dialog, allowing the user to change the current password
  */
-public class PasswordChangeDialog extends JDialog {
+public class PasswordChangeDialog extends OkCancelDialog {
 
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    private JLabel currentPasswordLabel;
-    private JLabel newPasswordLabel;
-    private JLabel newPasswordConfirmLabel;
-
     private JPasswordField currentPasswordField;
     private JPasswordField newPasswordField;
     private JPasswordField newPasswordConfirmField;
-
-    private JButton okButton;
-    private JButton cancelButton;
-
-    private KeyEventDispatcher keyEventDispatcher;
 
     /**
      * Constructor
      * @param owner Owning frame this dialog will be placed above.
      * @throws HeadlessException
      */
-    public PasswordChangeDialog(JFrame owner){
-        super(owner, "Passwort ändern", true);
-        this.setSize(450, 150);
-        initialize();
+    public PasswordChangeDialog(HauptFrame owner){
+        super("Passwort ändern", owner);
+        this.setSize(450, 200);
     }
 
-    /**
-     * Initialize UI
-     */
-    private void initialize() {
-        currentPasswordLabel = new JLabel("Aktuelles Passwort:");
-        newPasswordLabel = new JLabel("Neues Passwort:");
-        newPasswordConfirmLabel = new JLabel("Passwort bestätigen:");
-        currentPasswordField = new JPasswordField();
-        newPasswordField = new JPasswordField();
-        newPasswordConfirmField = new JPasswordField();
-        okButton = new JButton("OK");
-        cancelButton = new JButton("Abbrechen");
-
-        currentPasswordField.setPreferredSize(new Dimension(150, 22));
-
-        //Button handlers
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                submit();
-            }
-        });
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                close();
-            }
-        });
-
-        //Key handler
-        keyEventDispatcher = new KeyEventDispatcher() {
-            @Override
-            public boolean dispatchKeyEvent(KeyEvent e) {
-                if (e.getID() != KeyEvent.KEY_PRESSED) {
-                    return false;
-                }
-                switch (e.getKeyCode()) {
-                    //Use ESC to cancel
-                    case KeyEvent.VK_ESCAPE:
-                        close();
-                        break;
-                    //Use enter to submit if focus is on new password confirmation field
-                    case KeyEvent.VK_ENTER:
-                        if (newPasswordConfirmField.isFocusOwner()) {
-                            submit();
-                        }
-                        break;
-                }
-                return false;
-            }
-        };
-        KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                .addKeyEventDispatcher(keyEventDispatcher);
+    @Override
+    protected JComponent buildContentArea() {
+        final int nColumns = 24;
+        currentPasswordField = new JPasswordField(nColumns);
+        newPasswordField = new JPasswordField(nColumns);
+        newPasswordConfirmField = new JPasswordField(nColumns);
 
         //Create form
-        FormLayout layout = new FormLayout(
-            "right:pref, 4dlu, pref:grow, 4dlu, pref", // Spalten
-            "pref:grow, 3dlu, pref, 3dlu, pref, 3dlu, p" // Zeilen
-        );
+        Form formPanel = new Form();
+        formPanel.appendField("Aktuelles Passwort:", currentPasswordField);
+        formPanel.appendField("Neues Passwort:", newPasswordField);
+        formPanel.appendField("Passwort bestätigen:", newPasswordConfirmField);
 
-        JPanel contentPanel = new JPanel(new VerticalLayout());
-
-        layout.setRowGroups(new int[][]{{1, 3, 5}});
-
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-        builder.add(currentPasswordLabel, cc.xy(1, 1));
-        builder.add(currentPasswordField, cc.xy(3, 1));
-        builder.add(newPasswordLabel, cc.xy(1, 3));
-        builder.add(newPasswordField, cc.xy(3, 3));
-        builder.add(newPasswordConfirmLabel, cc.xy(1, 5));
-        builder.add(newPasswordConfirmField, cc.xy(3, 5));
-        JPanel formPanel = builder.getPanel();
-        formPanel.setBorder(Paddings.DIALOG);
-        contentPanel.add(formPanel);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(okButton);
-        buttonPanel.add(cancelButton);
-        contentPanel.add(buttonPanel);
-
-        this.setContentPane(contentPanel);
-        this.pack();
+        return formPanel;
     }
 
     /**
      * Check input and submit password change
      */
-    private void submit() {
+    @Override
+    protected void doOk() {
         if (!checkInput()) {
             return;
         }
@@ -181,24 +90,17 @@ public class PasswordChangeDialog extends JDialog {
         }
     }
 
-    /**
-     * Cancel action and dispose this dialog
-     */
-    private void close() {
-        PasswordChangeDialog.this.dispose();
-    }
-
     private boolean checkInput() {
         if (checkPasswordEmpty()) {
-             JOptionPane.showMessageDialog(PasswordChangeDialog.this, "Bitte geben Sie ein neues Passwort ein");
-             return false;
+            JOptionPane.showMessageDialog(this, "Bitte geben Sie ein neues Passwort ein");
+            return false;
         }
         if (!checkPasswordConfirmation()) {
-            JOptionPane.showMessageDialog(PasswordChangeDialog.this, "Die Passwörter stimmen nicht überein");
+            JOptionPane.showMessageDialog(this, "Die Passwörter stimmen nicht überein");
             return false;
         }
         if (!checkCurrentPassword()) {
-            JOptionPane.showMessageDialog(PasswordChangeDialog.this, "Das eingegebene Passwort ist nicht korrekt");
+            JOptionPane.showMessageDialog(this, "Das eingegebene Passwort ist nicht korrekt");
             return false;
         }
         return true;
@@ -209,7 +111,7 @@ public class PasswordChangeDialog extends JDialog {
      * @return True if empty, else false
      */
     private boolean checkPasswordEmpty() {
-        return newPasswordField.getText().isEmpty();
+        return newPasswordField.getPassword().length == 0;
     }
 
     /**
@@ -217,7 +119,8 @@ public class PasswordChangeDialog extends JDialog {
      * @return True if password is confirmed, else false
      */
     private boolean checkPasswordConfirmation() {
-        return newPasswordField.getText().equals(newPasswordConfirmField.getText());
+        return Arrays.equals(newPasswordField.getPassword(),
+            newPasswordConfirmField.getPassword());
     }
 
     /**
@@ -252,10 +155,9 @@ public class PasswordChangeDialog extends JDialog {
                 escapeUserString(user),
                 escapePasswordString(String.valueOf(newPw)));
         boolean success = false;
-        SQLQuery query = session.createSQLQuery(queryString);
+        NativeQuery<?> query = session.createSQLQuery(queryString);
         try {
-			Transaction tx = null;
-		    tx = session.beginTransaction();
+			Transaction tx = session.beginTransaction();
 		    query.executeUpdate();
 		    tx.commit();
         	success = true;

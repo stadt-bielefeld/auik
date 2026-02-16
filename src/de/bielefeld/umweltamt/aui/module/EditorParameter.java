@@ -349,7 +349,7 @@ public class EditorParameter extends AbstractModul {
                     }
                 }
             };
-            this.resultLoeschAction.putValue(Action.MNEMONIC_KEY, new Integer(
+            this.resultLoeschAction.putValue(Action.MNEMONIC_KEY, Integer.valueOf(
                 KeyEvent.VK_L));
             this.resultLoeschAction.putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, false));
