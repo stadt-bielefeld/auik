@@ -45,8 +45,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
-import javax.ws.rs.ProcessingException;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.ProcessingException;
+import jakarta.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
@@ -62,6 +62,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
+import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAbwasserbehandlungsanlage;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
