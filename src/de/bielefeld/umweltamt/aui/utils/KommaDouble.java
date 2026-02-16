@@ -56,12 +56,12 @@ public class KommaDouble {
     }
 
     public KommaDouble(double value) {
-        this.value = new Double(value);
+        this.value = value;
     }
 
     public KommaDouble(String str) throws NumberFormatException {
         String tmp = str.replaceAll(",", ".");
-        value = new Double(tmp);
+        this.value = Double.valueOf(tmp);
     }
 
     public Double getValue() {

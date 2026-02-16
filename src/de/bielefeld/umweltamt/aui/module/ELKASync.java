@@ -1118,7 +1118,7 @@ public class ELKASync extends AbstractModul {
                 object.getClass().getMethod("setOrigNr", Integer.class).invoke(object, nr);
             }
             String newNr = IDENTIFIER + nr.toString();
-            Integer newBI = new Integer(newNr);
+            Integer newBI = Integer.valueOf(newNr);
             mSetter.invoke(object, newBI);
         } catch (NoSuchMethodException e){
         } catch (SecurityException e) {

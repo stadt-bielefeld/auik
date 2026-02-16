@@ -108,7 +108,7 @@ public class SettingsManager {
 
 	private static SettingsManager _instance;
 
-	private final Locale locale = new Locale("de", "DE");
+	private final Locale locale = Locale.GERMANY;
 	private static final String DEFAULT_BUNDLE_FILENAME = "auik";
 	private static final String AUIK_PROPERTIES = "auik.properties";
 

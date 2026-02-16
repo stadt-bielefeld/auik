@@ -506,18 +506,13 @@ abstract class DatabaseIndeinlQuery extends DatabaseAwSVQuery {
 	 *
 	 * @return <code>Entsorger</code>
 	 */
-	public static Integer newEntsorgerID()
-	{
-		Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
-																		DetachedCriteria.forClass(Entsorger.class)
-																				.setProjection(
-																								Property.forName("id")
-																										.max()),
-																		new Integer(0));
-		return id + 1;
+	public static Integer newEntsorgerID() {
+        Integer id = new DatabaseAccess().executeCriteriaToUniqueResult(
+            DetachedCriteria.forClass(Entsorger.class).setProjection(
+                Property.forName("id").max()),
+            0);
+        return id + 1;
 	}
-
-
 
     /**
      * Get all AbaVerfahren

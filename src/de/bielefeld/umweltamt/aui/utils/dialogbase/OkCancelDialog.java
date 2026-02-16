@@ -42,7 +42,10 @@
  */
 package de.bielefeld.umweltamt.aui.utils.dialogbase;
 
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -57,12 +60,32 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 public abstract class OkCancelDialog extends SimpleDialog {
     private static final long serialVersionUID = -1999038310745668506L;
 
+    private KeyEventDispatcher keyEventDispatcher;
+
     public OkCancelDialog(HauptFrame frame) {
         this(null, frame);
     }
 
     public OkCancelDialog(String title, HauptFrame frame) {
         super(title, frame);
+
+        // Use enter to submit
+        this.getRootPane().setDefaultButton(button1);
+
+        // Use ESC to cancel
+        keyEventDispatcher = new KeyEventDispatcher() {
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                if (e.getID() == KeyEvent.KEY_PRESSED
+                    && e.getKeyCode() == KeyEvent.VK_ESCAPE
+                ) {
+                    close();
+                }
+                return false;
+            }
+        };
+        KeyboardFocusManager.getCurrentKeyboardFocusManager()
+            .addKeyEventDispatcher(keyEventDispatcher);
     }
 
     @Override
