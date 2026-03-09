@@ -58,7 +58,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Collections;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -117,7 +117,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private String iconPath = "filefind32.png";
 
-    private JComboBox suchBox;
+    private JComboBox<NamedObject> suchBox;
     private JTextField suchFeld;
 
 	private JTextField strassenFeld;
@@ -316,11 +316,9 @@ public class BasisAdresseSuchen extends AbstractModul {
             getBetreiberTabelle()) {
             @Override
 			protected void doNonUILogic() throws RuntimeException {
-//				if (name != "" || strasse != ""
-//						|| fhausnr != -1 || ort != "") {
-				BasisAdresseSuchen.this.inhaberModel.filterAllList(name, strasse, fhausnr, ort, property);
+				BasisAdresseSuchen.this.inhaberModel.filterAllList(
+                    name, strasse, fhausnr, ort, property);
             }
-//			}
 
 			@Override
 			protected void doUIUpdateLogic() throws RuntimeException {
@@ -361,15 +359,11 @@ public class BasisAdresseSuchen extends AbstractModul {
 
 			@Override
 			protected void doNonUILogic() {
-
-				if(!name.isEmpty() || !str.isEmpty() || !ort.isEmpty()) {
-					BasisAdresseSuchen.this.inhaberModel.filterBetreiber(getSuchFeld().getText(),
+				if (!name.isEmpty() || !str.isEmpty() || !ort.isEmpty()) {
+					BasisAdresseSuchen.this.inhaberModel.filterBetreiber(
+                        getSuchFeld().getText(),
                         getStrassenFeld().getText(), fhausnr, ort);
                 }
-//				getSuchFeld().setText("");
-//				getStrassenFeld().setText("");
-//				getHausnrFeld().setText("");
-//				getOrtFeld().setText("");
             }
 
 			@Override
@@ -1030,7 +1024,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 	        this.suchFeld.requestFocusInWindow();
 			this.suchFeld.setFocusTraversalKeys(
                 KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-                Collections.EMPTY_SET);
+                Set.of());
 
 	        this.suchFeld.addActionListener(new ActionListener() {
 	            @Override
@@ -1050,7 +1044,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			this.strassenFeld = new JTextField("");
 			this.strassenFeld.setFocusTraversalKeys(
                 KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-                Collections.EMPTY_SET);
+                Set.of());
 
 			this.strassenFeld.addActionListener(new ActionListener()
                 {
@@ -1101,7 +1095,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 			this.ortFeld = new JTextField("");
 			this.ortFeld.setFocusTraversalKeys(
                 KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-                Collections.EMPTY_SET);
+                Set.of());
 
 			this.ortFeld.addActionListener(new ActionListener()
                 {
@@ -1377,9 +1371,9 @@ public class BasisAdresseSuchen extends AbstractModul {
 		return this.suchTimer;
         }
 
-	private JComboBox getSuchBox() {
+	private JComboBox<NamedObject> getSuchBox() {
 	    if (this.suchBox == null) {
-	        this.suchBox = new JComboBox(new NamedObject[] {
+	        this.suchBox = new JComboBox<>(new NamedObject[] {
 	                new NamedObject("Anrede:", "anrede"),
 	                new NamedObject("Vorname:", "vorname"),
 	                new NamedObject("Name:", "name"),

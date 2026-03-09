@@ -53,7 +53,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches Such-Modul fÃ¼r Vaws-Anlagen anhand der Herstellnummer.
  * @author Sebastian Geller
  */
-public class AwsvHerstellernummerSuchen extends AbstractQueryModul {
+public class AwsvHerstellernummerSuchen
+    extends AbstractQueryModul<Fachdaten> {
+
 	/** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -89,9 +91,9 @@ public class AwsvHerstellernummerSuchen extends AbstractQueryModul {
     public void SuchStart() {
         String herstellnr = herstellFeld.getText();
         log.debug(" Suche nach Herstellnummer " + herstellnr);
-        ((HerstellNrSuchenModel)getTableModel()).setList(
+        getTableModel().setList(
             DatabaseQuery.findHerstellNr(herstellnr));// Aufruf der Suchfunktion. Startet eine Query in der Datenbank
-        ((HerstellNrSuchenModel)getTableModel()).fireTableDataChanged();
+        getTableModel().fireTableDataChanged();
         frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der gefundenen Objekte
         log.debug(getTableModel().getRowCount()
         		+ " Objekt(e) mit Herstellnummer " + herstellnr + " gefunden");
@@ -153,7 +155,7 @@ public class AwsvHerstellernummerSuchen extends AbstractQueryModul {
     @Override
     protected void editObject(int row) {
         if (row != -1) {
-            Fachdaten fachdaten = ((Fachdaten)ergebnisModel.getObjectAtRow(row));
+            Fachdaten fachdaten = ergebnisModel.getObjectAtRow(row);
 
             AwsvEditor editor = new AwsvEditor(fachdaten, frame, "Herstellnummer");
 
@@ -163,7 +165,7 @@ public class AwsvHerstellernummerSuchen extends AbstractQueryModul {
 
     //Aufruf des Modells fÃ¼r die Ergebnis-Tabelle
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<Fachdaten> getTableModel() {
         if (ergebnisModel == null) {
             ergebnisModel = new HerstellNrSuchenModel();
         }

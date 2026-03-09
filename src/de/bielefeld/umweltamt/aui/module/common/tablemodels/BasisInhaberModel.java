@@ -33,19 +33,13 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
  * Ein TableModel für die Basis-Betreiberdaten.
  * @author David Klotz
  */
-public class BasisInhaberModel extends ListTableModel {
+public class BasisInhaberModel extends ListTableModel<Inhaber> {
     private static final long serialVersionUID = -1943023265274962194L;
-    private String lastSuchWort = null;
-    private String lastProperty = null;
     private AuikLogger log = AuikLogger.getLogger();
     private static final ResourceBundle I18N =
         SettingsManager.getInstance().getI18nBundle();
 
     public BasisInhaberModel() {
-        this(true);
-    }
-
-    public BasisInhaberModel(boolean zeigeAdresse) {
         super(new String[]{
                 I18N.getString("fields.id"),
                 I18N.getString("editor.betreiber.company_name"),
@@ -55,14 +49,9 @@ public class BasisInhaberModel extends ListTableModel {
                 I18N.getString("fields.nr")}, false, true);
     }
 
-    /**
-     * Aktualisiert die aktuell angezeigte Liste in dem die letzte Suche wiederholt wird.
-     */
     @Override
     public void updateList() {
-        if (lastSuchWort != null) {
-            filterList(lastSuchWort, lastProperty);
-        }
+        // Do nothing. Never called.
     }
 
     /**
@@ -72,9 +61,8 @@ public class BasisInhaberModel extends ListTableModel {
      * @return Den Wert der Zelle oder null (falls die Zelle nicht existiert)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Inhaber betr, int columnIndex) {
         Object tmp = null;
-        Inhaber betr = (Inhaber) objectAtRow;
 
         switch (columnIndex) {
         case 0:
@@ -125,51 +113,25 @@ public class BasisInhaberModel extends ListTableModel {
     }
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-        Object obj = objectAtRow;
-        Inhaber removedBetreiber = (Inhaber) obj;
+    public boolean objectRemoved(Inhaber removedBetreiber) {
         return Inhaber.delete(removedBetreiber);
-    }
-
-    /**
-     * Filtert den Tabelleninhalt nach Anrede, Name oder Zusatz.
-     * Zu den möglichen Werten von <code>property</code>, siehe {@link BasisAdresse#findBetreiber(String, String)}.
-     * @param suche Der Such-String
-     * @param property Die Eigenschaft, nach der Gesucht werden soll, oder <code>null</code>.
-     */
-    public void filterList(String suche, String property) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.getAdresse(property, suche));
-        lastSuchWort = suche;
-        lastProperty = property;
-        log.debug("End filterList");
     }
 
     public void filterAllList(String suche, String property) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(suche, property));
-        lastSuchWort = suche;
-        lastProperty = property;
         log.debug("End filterList");
     }
 
     public void filterAllList(String suche, String strasse, Integer hausnr, String ort, String property) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findAdressen(suche, strasse, hausnr, ort, property));
-        lastSuchWort = suche;
-        lastProperty = property;
         log.debug("End filterList");
     }
 
     public void filterStandort(String strasse, Integer hausnr, String ort) {
         log.debug("Start filterList");
         setList(DatabaseQuery.findInhaber(strasse, hausnr, ort));
-        log.debug("End filterList");
-    }
-
-    public void filterStandort(String name, String strasse, Integer hausnr, String ort) {
-        log.debug("Start filterList");
-        setList(DatabaseQuery.findAdressen(name, strasse, hausnr, ort));
         log.debug("End filterList");
     }
 

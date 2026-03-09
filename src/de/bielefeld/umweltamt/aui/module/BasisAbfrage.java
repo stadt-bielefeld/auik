@@ -48,7 +48,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Module providing queries for several base object types.
  * @author Alexander Woestmann
  */
-public class BasisAbfrage extends AbstractQueryModul {
+public class BasisAbfrage extends AbstractQueryModul<Object[]> {
 
     private JPanel queryOptionsPanel;
     private BasisAbfrageModel tableModel;
@@ -108,7 +108,8 @@ public class BasisAbfrage extends AbstractQueryModul {
 
         sachbearbeiterBox = new JComboBox<>();
         List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
-        sachbearbeiterBox.setModel(new DefaultComboBoxModel(sachbearbeiter.toArray()));
+        sachbearbeiterBox.setModel(new DefaultComboBoxModel<>(
+                sachbearbeiter.toArray(Sachbearbeiter[]::new)));
         //Insert dummy Sachbearbeiter used for group filtering
         Sachbearbeiter group = new Sachbearbeiter();
         group.setId(-1);
@@ -203,13 +204,13 @@ public class BasisAbfrage extends AbstractQueryModul {
                 } else {
                     sb = selectedSb;
                 }
-                List<Object> result = DatabaseQuery.executeBaseQuery(
+                List<Object[]> result = DatabaseQuery.executeBaseQuery(
                     art, anhang, anlagenart, sb, einzGeb, prior,wiedervorlage, group);
-                ((BasisAbfrageModel)getTableModel()).setList(result);
+                getTableModel().setList(result);
             }
             @Override
             protected void doUIUpdateLogic(){
-                ((BasisAbfrageModel)getTableModel()).fireTableDataChanged();
+                getTableModel().fireTableDataChanged();
                 frame.changeStatus("" +
                     getTableModel()
                     .getRowCount() + " Objekte gefunden");
@@ -229,7 +230,7 @@ public class BasisAbfrage extends AbstractQueryModul {
     }
 
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<Object[]> getTableModel() {
         if (tableModel == null) {
             tableModel = new BasisAbfrageModel();
         }
@@ -239,7 +240,7 @@ public class BasisAbfrage extends AbstractQueryModul {
     @Override
     protected void editObject(int row) {
         if (row != -1) {
-            Object[] rowObj = (Object[]) getTableModel().getObjectAtRow(row);
+            Object[] rowObj = getTableModel().getObjectAtRow(row);
             Objekt obj = Objekt.findById((Integer) rowObj[11]);
 
             if (obj != null) {

@@ -29,7 +29,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Ein einfaches TableModel für die Kläranlagentabelle.
  * @author Gerd Genuit
  */
-public class EditorKlaeranlageModel extends EditableListTableModel {
+public class EditorKlaeranlageModel
+    extends EditableListTableModel<Klaeranlage> {
 
     /**
      *
@@ -62,8 +63,7 @@ public class EditorKlaeranlageModel extends EditableListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Klaeranlage einheit = (Klaeranlage) objectAtRow;
+    public Object getColumnValue(Klaeranlage einheit, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -87,9 +87,7 @@ public class EditorKlaeranlageModel extends EditableListTableModel {
     }
 
     @Override
-    public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-
-        Klaeranlage tmp = (Klaeranlage) objectAtRow;
+    public void editObject(Klaeranlage tmp, int columnIndex, Object newValue) {
         switch (columnIndex) {
         case 0:
             Integer tmpID = (Integer) newValue;
@@ -109,15 +107,14 @@ public class EditorKlaeranlageModel extends EditableListTableModel {
     }
 
     @Override
-    public Object newObject() {
+    public Klaeranlage newObject() {
         Klaeranlage tmp = new Klaeranlage();
         tmp.setNr(DatabaseQuery.newKlaeranlageID());
         return tmp;
     }
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-        Klaeranlage removedklaeranlage = (Klaeranlage) objectAtRow;
+    public boolean objectRemoved(Klaeranlage removedklaeranlage) {
         return Klaeranlage.delete(removedklaeranlage);
     }
 

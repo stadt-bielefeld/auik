@@ -102,7 +102,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1284,7 +1283,7 @@ public class SielhautBearbeiten extends ObjectModule {
 					}
 				}
 
-				Collections.sort(this.dateList);
+				this.dateList.sort(null);
 			}
 
 			@Override

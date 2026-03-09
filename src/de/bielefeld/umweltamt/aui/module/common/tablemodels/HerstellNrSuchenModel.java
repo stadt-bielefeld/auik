@@ -36,7 +36,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * @author Sebastian Geller
  */
 
-public class HerstellNrSuchenModel extends ListTableModel {
+public class HerstellNrSuchenModel extends ListTableModel<Fachdaten> {
     private static final long serialVersionUID = 6569821882974750867L;
 
     /**
@@ -60,8 +60,7 @@ public class HerstellNrSuchenModel extends ListTableModel {
      */
     // Die einzelnen Spalten werden mit Daten befÃ¼llt
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Fachdaten fachdaten = (Fachdaten) objectAtRow;
+    public Object getColumnValue(Fachdaten fachdaten, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
