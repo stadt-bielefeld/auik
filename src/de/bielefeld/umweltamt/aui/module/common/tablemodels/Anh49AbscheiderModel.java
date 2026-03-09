@@ -32,13 +32,11 @@ public class Anh49AbscheiderModel
     private Anh49Fachdaten fachdaten;
 
     /**
-     * Erzeugt ein neues Abscheider-TableModel. Dieses hat die Spalten
-     * "Abscheider", "Von", "Lage" und "Bemerkung".
+     * Erzeugt ein neues Abscheider-TableModel.
      */
     public Anh49AbscheiderModel() {
         super(new String[] {
-                "Abscheider",
-                "Von",
+                "Nr",
                 "Lage",
                 "Nenngröße",
                 "Hersteller",
@@ -67,18 +65,15 @@ public class Anh49AbscheiderModel
             tmp = details.getAbscheidernr();
             break;
         case 1:
-            tmp = details.getVon();
-            break;
-        case 2:
             tmp = details.getLage();
             break;
-        case 3:
+        case 2:
             tmp = details.getNenngroesse();
             break;
-        case 4:
+        case 3:
             tmp = details.getHersteller();
             break;
-        case 5:
+        case 4:
             tmp = details.getBemerkung();
             break;
         default:
