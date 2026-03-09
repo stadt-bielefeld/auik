@@ -303,7 +303,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                 "3dlu, " + //
                 "pref, " + // Abscheiderdetails
                 "5dlu, " + //
-                "fill:50dlu, " + // Tabelle
+                "fill:100dlu, " + // Tabelle
                 "5dlu, " + //
                 "pref"); // Buttons
 
@@ -688,7 +688,8 @@ public class Anh49Panel extends AbstractAnhangPanel {
         return this.fachdaten;
     }
 
-    protected boolean doSavePanelData() {
+    @Override
+	protected boolean doSavePanelData() {
         boolean success;
 
         this.fachdaten.setAnsprechpartnerIn((String) super

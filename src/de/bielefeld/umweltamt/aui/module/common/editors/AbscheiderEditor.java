@@ -93,7 +93,6 @@ public class AbscheiderEditor extends AbstractBaseEditor{
     private JTextField typFeld;
     private JTextField herstellerFeld;
     private JFormattedTextField nrFeld;
-    private JFormattedTextField vonFeld;
     private JFormattedTextField nenngroesseFeld;
     private JFormattedTextField vsf1Feld;
     private JFormattedTextField vsf2Feld;
@@ -164,9 +163,6 @@ public class AbscheiderEditor extends AbstractBaseEditor{
         builder.addLabel("Nr.:",                	cc.xy(1, 3));
         	builder.add(getNrFeld(),            	cc.xy(3, 3));
 
-        builder.addLabel("Von:",                	cc.xy(5, 3, "right, center"));
-        	builder.add(getVonFeld(),           	cc.xy(7, 3));
-        builder.addLabel("Lage:",              		cc.xy(1, 5));
         	builder.add(getLageFeld(),          	cc.xyw(3, 5, 5));
         builder.addLabel("Hersteller:",        		cc.xy(1, 7));
         	builder.add(getHerstellerFeld(),    	cc.xy(3, 7));
@@ -219,7 +215,6 @@ if (details.getId() != null) {
             getLageFeld().setText(details.getLage());
             getHerstellerFeld().setText(details.getHersteller());
             getNrFeld().setValue(details.getAbscheidernr());
-            getVonFeld().setValue(details.getVon());
             getVsf1Feld().setValue(details.getVsf1());
             getVsf2Feld().setValue(details.getVsf2());
             getNenngroesseFeld().setValue(details.getNenngroesse());
@@ -268,10 +263,6 @@ if (details.getId() != null) {
         // Abscheidernummer:
         Integer nr = ((IntegerField)nrFeld).getIntValue();
         details.setAbscheidernr(nr);
-
-        // Von:
-        Integer von = ((IntegerField)vonFeld).getIntValue();
-        details.setVon(von);
 
         //Volumen vorgeschaltetet Schlammfang:
         Integer vsf1 = ((IntegerField)vsf1Feld).getIntValue();
@@ -426,12 +417,6 @@ if (details.getId() != null) {
             rueckhaltCheck = new JCheckBox("Rückhaltefunktion gemäß AwSV");
         }
         return rueckhaltCheck;
-    }
-    private JFormattedTextField getVonFeld() {
-        if (vonFeld == null) {
-            vonFeld = new IntegerField();
-        }
-        return vonFeld;
     }
     private JCheckBox getProbeCheck() {
     	if (probeCheck == null) {
