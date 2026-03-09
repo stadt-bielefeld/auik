@@ -105,18 +105,17 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.AbscheiderEditor;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49AbscheiderModel;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
-import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Das "Anhang 49"-Tab des BasisObjektBearbeiten-Moduls.
@@ -124,85 +123,6 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  */
 public class Anh49Panel extends AbstractAnhangPanel {
     private static final long serialVersionUID = 2262140075740338093L;
-
-    private class Anh49AbscheiderModel extends ListTableModel {
-        private static final long serialVersionUID = 6154019963876247085L;
-        private Anh49Fachdaten fachdaten;
-
-        /**
-         * Erzeugt ein neues Abscheider-TableModel. Dieses hat die Spalten
-         * "Abscheider", "Von", "Lage" und "Bemerkung".
-         */
-        public Anh49AbscheiderModel() {
-            super(new String[] {"Nr", "Lage", "Nenngröße", "Hersteller", "Bemerkung"},
-                false, true);
-        }
-
-        /**
-         * Setzt das Fachdatenobjekt, nach dessen Abscheider-Details gesucht
-         * werden soll.
-         * @param fachdaten Das Anhang49-Fachdatenobjekt
-         */
-        public void setFachdaten(Anh49Fachdaten fachdaten) {
-            this.fachdaten = fachdaten;
-            updateList();
-        }
-
-        @Override
-        public Object getColumnValue(Object objectAtRow, int columnIndex) {
-            Anh49Abscheiderdetails details = (Anh49Abscheiderdetails) objectAtRow;
-
-            Object tmp;
-
-            switch (columnIndex) {
-                case 0:
-                    tmp = details.getAbscheidernr();
-                    break;
-                case 1:
-                    tmp = details.getLage();
-                    break;
-                case 2:
-                    tmp = details.getNenngroesse();
-                    break;
-                case 3:
-                    tmp = details.getHersteller();
-                    break;
-                case 4:
-                    tmp = details.getBemerkung();
-                    break;
-                default:
-                    tmp = null;
-            }
-
-            return tmp;
-        }
-
-        @Override
-        public boolean objectRemoved(Object objectAtRow) {
-            Anh49Abscheiderdetails removedAbsch = (Anh49Abscheiderdetails) objectAtRow;
-            boolean removed;
-
-            if (removedAbsch.getId() != null) {
-                removed = Anh49Abscheiderdetails.delete(removedAbsch);
-            } else {
-                removed = true;
-            }
-
-            return removed;
-        }
-
-        @Override
-        public void updateList() {
-            if (fachdaten != null) {
-                setList(DatabaseQuery.getAbscheiderDetails(fachdaten));
-            }
-            fireTableDataChanged();
-        }
-
-        public Anh49Abscheiderdetails getRow(int rowIndex) {
-            return (Anh49Abscheiderdetails) getObjectAtRow(rowIndex);
-        }
-    }
 
     /* Note: As these strings are used as keys in the underlying HashMap,     *
      * they should be unique.                                                 */
@@ -394,7 +314,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
                     if (row != -1
                         && getAbscheiderTabelle().getEditingRow() == -1) {
                         Anh49Abscheiderdetails abscheider = abscheiderModel
-                            .getRow(row);
+                            .getObjectAtRow(row);
 
                         if (GUIManager
                             .getInstance()

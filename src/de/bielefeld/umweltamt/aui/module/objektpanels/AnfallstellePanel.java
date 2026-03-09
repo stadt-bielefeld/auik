@@ -87,14 +87,14 @@ public class AnfallstellePanel extends ObjectPanel {
 
     // Widgets
     private TextFieldDateChooser erstellDatDatum = null;
-    private JComboBox betriebsweiseBox = null;
-    private JComboBox beschaffenheitBox = null;
-    private JComboBox anlagenartBox = null;
-    private JComboBox anhangBox = null;
+    private JComboBox<String> betriebsweiseBox;
+    private JComboBox<String> beschaffenheitBox;
+    private JComboBox<String> anlagenartBox;
+    private JComboBox<Anhang> anhangBox;
     private JTextField anhangIdFeld = null;
     private JTextField anwendungsbereichFeld = null;
 
-    private JComboBox herkunftBox = null;
+    private JComboBox<String> herkunftBox;
     private IntegerField befestFlaecheFeld = null;
     private DoubleField lProSFeld = null;
     private DoubleField qmProHFeld = null;
@@ -257,28 +257,31 @@ public class AnfallstellePanel extends ObjectPanel {
             }
 
             String[] betriebsweise = {"-", "Chargenbetrieb", "Durchlaufbetrieb", "Kampagnebetrieb"};
-            getBetriebsweiseBox().setModel(new DefaultComboBoxModel(betriebsweise));
+            getBetriebsweiseBox().setModel(
+                new DefaultComboBoxModel<>(betriebsweise));
 
             getBetriebsweiseBox().setSelectedItem(Anfallstelle.getBetriebsweiseDescriptionFromId(this.anfallstelle.getBetriebsweiseOpt()));
 
             String[] beschaffenheit = {"Produktionsabwasser",  "Kühlwasser", "Sanitärwasser",
                     "Niederschlagswasser mit Sonderbauwerk", "Niederschlagswasser ohne Sonderbauwerk",
                     "Grubenwasser", "Fischteiche", "sonstiges Wasser"};
-            getBeschaffenheitBox().setModel(new DefaultComboBoxModel(beschaffenheit));
+            getBeschaffenheitBox().setModel(
+                new DefaultComboBoxModel<>(beschaffenheit));
 
             getBeschaffenheitBox().setSelectedItem(Anfallstelle.getBeschaffenheitDescriptionFromId(this.anfallstelle.getAbwaBeschaffOpt()));
 
             String[] arten = {"-", "Aufbereitung Medizinprodukte", "Brennwertkessel", "Blockheizkraftwerk",
                     "Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor",
                     "RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
-            getAnlagenartBox().setModel(new DefaultComboBoxModel(arten));
+            getAnlagenartBox().setModel(new DefaultComboBoxModel<>(arten));
 
             if (this.anfallstelle.getAnlagenart() != null) {
                 getAnlagenartBox().setSelectedItem(this.anfallstelle.getAnlagenart());
             }
 
             List<Anhang> anhang = Anhang.getAll();
-            getAnhangBox().setModel(new DefaultComboBoxModel(anhang.toArray()));
+            getAnhangBox().setModel(
+                new DefaultComboBoxModel<>(anhang.toArray(Anhang[]::new)));
 
             if(this.anfallstelle.getAnhangId() != null) {
                 getAnhangBox().setSelectedItem(Anhang.findByAnhangId(this.anfallstelle.getAnhangId()));
@@ -287,7 +290,7 @@ public class AnfallstellePanel extends ObjectPanel {
             String[] herkunft = {"-", "Kategorie I: Unbelastetes NW", "Kategorie IIa: Schwach belastetes NW (nicht behandlungsbedürftig)",
                     "Kategorie IIb: Schwach belastetes NW (behandlungsbedürftig)",
                     "Kategorie III: Stark belastetes NW"};
-            getHerkunftBox().setModel(new DefaultComboBoxModel(herkunft));
+            getHerkunftBox().setModel(new DefaultComboBoxModel<>(herkunft));
 
             if(this.anfallstelle.getAnwendungsbereich() != null) {
                 getAnwendungsbereichFeld().setText(this.anfallstelle.getAnwendungsbereich());
@@ -536,9 +539,9 @@ public class AnfallstellePanel extends ObjectPanel {
     /**
      * @return the betriebsweiseBox
      */
-    private JComboBox getBetriebsweiseBox() {
+    private JComboBox<String> getBetriebsweiseBox() {
         if (this.betriebsweiseBox == null) {
-            this.betriebsweiseBox = new JComboBox();
+            this.betriebsweiseBox = new JComboBox<>();
         }
         return betriebsweiseBox;
     }
@@ -546,9 +549,9 @@ public class AnfallstellePanel extends ObjectPanel {
     /**
      * @return the beschaffenheitBox
      */
-    private JComboBox getBeschaffenheitBox() {
+    private JComboBox<String> getBeschaffenheitBox() {
         if (this.beschaffenheitBox == null) {
-            this.beschaffenheitBox = new JComboBox();
+            this.beschaffenheitBox = new JComboBox<>();
         }
         return beschaffenheitBox;
     }
@@ -556,9 +559,9 @@ public class AnfallstellePanel extends ObjectPanel {
     /**
      * @return the anhangBox
      */
-    private JComboBox getAnhangBox() {
+    private JComboBox<Anhang> getAnhangBox() {
         if (this.anhangBox == null) {
-            this.anhangBox = new JComboBox();
+            this.anhangBox = new JComboBox<>();
         }
         return anhangBox;
     }
@@ -566,9 +569,9 @@ public class AnfallstellePanel extends ObjectPanel {
     /**
      * @return the anlagenartBox
      */
-    private JComboBox getAnlagenartBox() {
+    private JComboBox<String> getAnlagenartBox() {
         if (this.anlagenartBox == null) {
-            this.anlagenartBox = new JComboBox();
+            this.anlagenartBox = new JComboBox<>();
             this.anlagenartBox.setEditable(false);
         }
         return anlagenartBox;
@@ -588,9 +591,9 @@ public class AnfallstellePanel extends ObjectPanel {
     /**
      * @return the herkunftBox
      */
-    private JComboBox getHerkunftBox() {
+    private JComboBox<String> getHerkunftBox() {
         if (this.herkunftBox == null) {
-            this.herkunftBox = new JComboBox();
+            this.herkunftBox = new JComboBox<>();
             this.herkunftBox.setEditable(false);
         }
         return herkunftBox;

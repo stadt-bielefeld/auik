@@ -28,7 +28,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Ein einfaches TableModel für die Straßentabelle.
  * @author Gerd Genuit
  */
-public class EditorTabStreetsModel extends EditableListTableModel {
+public class EditorTabStreetsModel extends EditableListTableModel<TabStreets> {
 
 	private static final long serialVersionUID = -4403670639078583652L;
 
@@ -62,8 +62,7 @@ public class EditorTabStreetsModel extends EditableListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        TabStreets str = (TabStreets) objectAtRow;
+    public Object getColumnValue(TabStreets str, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -93,9 +92,7 @@ public class EditorTabStreetsModel extends EditableListTableModel {
     }
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-
-		TabStreets tmp = (TabStreets) objectAtRow;
+	public void editObject(TabStreets tmp, int columnIndex, Object newValue) {
 		switch (columnIndex) {
         case 0:
         	String tmpStrasse = (String) newValue;
@@ -134,7 +131,7 @@ public class EditorTabStreetsModel extends EditableListTableModel {
     }
 
 	@Override
-	public Object newObject() {
+	public TabStreets newObject() {
 		// TODO Auto-generated method stub
 		return null;
 	}

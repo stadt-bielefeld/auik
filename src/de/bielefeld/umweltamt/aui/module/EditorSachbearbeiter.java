@@ -141,13 +141,13 @@ public class EditorSachbearbeiter extends AbstractModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((EditorSachbearbeiterModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.getSachbearbeiterlist());
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((EditorSachbearbeiterModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -175,7 +175,7 @@ public class EditorSachbearbeiter extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
-    public ListTableModel getTableModel() {
+    public ListTableModel<Sachbearbeiter> getTableModel() {
         if (tmodel == null) {
             tmodel = new EditorSachbearbeiterModel();
         }

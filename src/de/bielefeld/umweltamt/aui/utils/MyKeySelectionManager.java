@@ -51,7 +51,8 @@ public class MyKeySelectionManager implements KeySelectionManager {
      * @param aModel Das Model der ComboBox
      * @return Den Index des ausgewählten Items
      */
-    public int selectionForKey(char aKey, ComboBoxModel aModel) {
+    @Override
+    public int selectionForKey(char aKey, ComboBoxModel<?> aModel) {
         int iCount = aModel.getSize();
         int iPatternLen = 0;
         int iSelected = 0;

@@ -179,7 +179,6 @@ public class Fachdaten  implements java.io.Serializable {
         this.jgses = jgses;
         this.kontrollens = kontrollens;
         this.abscheiders = abscheiders;
-        this.abfuellflaeches = abfuellflaeches;
         this.verwaltungsverfs = verwaltungsverfs;
     }
 

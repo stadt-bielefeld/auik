@@ -121,7 +121,9 @@ public class Anh49AnalysenPanel extends ObjectPanel {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
 
-    private class Anh49AnalysenModel extends EditableListTableModel {
+    private class Anh49AnalysenModel
+        extends EditableListTableModel<Anh49Analysen> {
+
         private static final long serialVersionUID = 7176011901204094377L;
         private Anh49Fachdaten fachdaten;
 
@@ -146,8 +148,7 @@ public class Anh49AnalysenPanel extends ObjectPanel {
         }
 
         @Override
-        public boolean objectRemoved(Object objectAtRow) {
-            Anh49Analysen removedAna = (Anh49Analysen) objectAtRow;
+        public boolean objectRemoved(Anh49Analysen removedAna) {
             boolean removed;
 
             if (removedAna.getId() != null) {
@@ -160,9 +161,7 @@ public class Anh49AnalysenPanel extends ObjectPanel {
         }
 
         @Override
-        public Object getColumnValue(Object objectAtRow, int columnIndex) {
-            Anh49Analysen analysen = (Anh49Analysen) objectAtRow;
-
+        public Object getColumnValue(Anh49Analysen analysen, int columnIndex) {
             Object tmp;
 
             switch (columnIndex) {
@@ -213,10 +212,9 @@ public class Anh49AnalysenPanel extends ObjectPanel {
          * @see de.bielefeld.umweltamt.aui.utils.EditableListTableModel#editObject(java.lang.Object, int, java.lang.Object)
          */
         @Override
-        public void editObject(Object objectAtRow, int columnIndex,
-            Object newValue) {
-            Anh49Analysen analyse = (Anh49Analysen) objectAtRow;
-
+        public void editObject(
+            Anh49Analysen analyse, int columnIndex, Object newValue
+        ) {
             switch (columnIndex) {
                 case 0:
                     DateFormat format = DateFormat
@@ -315,7 +313,7 @@ public class Anh49AnalysenPanel extends ObjectPanel {
          * @see de.bielefeld.umweltamt.aui.utils.EditableListTableModel#newObject()
          */
         @Override
-        public Object newObject() {
+        public Anh49Analysen newObject() {
             Anh49Analysen ana = new Anh49Analysen();
             ana.setAnh49Fachdaten(fachdaten);
             ana.setDatum(new Date());
@@ -332,7 +330,8 @@ public class Anh49AnalysenPanel extends ObjectPanel {
      * Ein TableModel für eine Tabelle mit Abscheider-Kontrollen.
      * @author Gerhard Genuit
      */
-    private class Anh49KontrollenModel extends EditableListTableModel {
+    private class Anh49KontrollenModel
+        extends EditableListTableModel<Anh49Kontrollen> {
         private static final long serialVersionUID = -1286333922211056915L;
         private Anh49Fachdaten fachdaten;
 
@@ -357,9 +356,7 @@ public class Anh49AnalysenPanel extends ObjectPanel {
         }
 
         @Override
-        public Object getColumnValue(Object objectAtRow, int columnIndex) {
-            Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
-
+        public Object getColumnValue(Anh49Kontrollen kt, int columnIndex) {
             Object tmp;
 
             switch (columnIndex) {
@@ -380,8 +377,7 @@ public class Anh49AnalysenPanel extends ObjectPanel {
         }
 
         @Override
-        public boolean objectRemoved(Object objectAtRow) {
-            Anh49Kontrollen removedOt = (Anh49Kontrollen) objectAtRow;
+        public boolean objectRemoved(Anh49Kontrollen removedOt) {
             boolean removed;
 
             if (removedOt.getId() != null) {
@@ -409,10 +405,9 @@ public class Anh49AnalysenPanel extends ObjectPanel {
         }
 
         @Override
-        public void editObject(Object objectAtRow, int columnIndex,
-            Object newValue) {
-            Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
-
+        public void editObject(
+            Anh49Kontrollen kt, int columnIndex, Object newValue
+        ) {
             String tmp = (String) newValue;
 
             switch (columnIndex) {
@@ -460,7 +455,7 @@ public class Anh49AnalysenPanel extends ObjectPanel {
         }
 
         @Override
-        public Object newObject() {
+        public Anh49Kontrollen newObject() {
             Anh49Kontrollen kt = new Anh49Kontrollen();
             kt.setAnh49Fachdaten(fachdaten);
             kt.setPruefdatum(new Date());

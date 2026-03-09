@@ -31,7 +31,7 @@ package de.bielefeld.umweltamt.aui.utils.tablemodelbase;
  * Im EditableListTableModel ist die Liste zusätzlich noch editier- und erweiterbar.
  * @author David Klotz
  */
-public abstract class EditableListTableModel extends ListTableModel {
+public abstract class EditableListTableModel<T> extends ListTableModel<T> {
     private static final long serialVersionUID = 5771782454750103490L;
     private boolean hasChanged;
 
@@ -42,40 +42,6 @@ public abstract class EditableListTableModel extends ListTableModel {
     public EditableListTableModel(String[] columns, boolean updateAtInit, boolean removeAllowed) {
         super(columns, updateAtInit, removeAllowed);
         hasChanged = false;
-    }
-
-    /**
-     * Liefert das Objekt in einer bestimmten Zelle dieser Tabelle.
-     * @param rowIndex Die Tabellen-Zeile
-     * @param columnIndex Die Tabelle-Spalte
-     * @return Das Objekt in der Zelle (rowIndex, columnIndex) der Liste
-     * oder <code>null</code>, falls es die Zeile oder Spalte nicht gibt
-     */
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        Object value = null;
-        if (getList() != null && rowIndex < getList().size()) {
-            if (columnIndex < columns.length) {
-                Object objectAtRow = getObjectAtRow(rowIndex);
-                value = getColumnValue(objectAtRow, columnIndex);
-            }
-        }
-        return value;
-    }
-
-    /**
-     * Liefert das Objekt in einer bestimmten Zeile der Tabelle,
-     * bzw. der Liste.
-     * @param rowIndex Die Zeile
-     * @return Das Objekt in der Zeile rowIndex oder <code>null</code>, falls die Zeile nicht existiert
-     */
-    @Override
-    public Object getObjectAtRow(int rowIndex) {
-        if (rowExists(rowIndex)) {
-            return super.getObjectAtRow(rowIndex);
-        } else {
-            return null;
-        }
     }
 
     /**
@@ -109,7 +75,7 @@ public abstract class EditableListTableModel extends ListTableModel {
             editObject(getObjectAtRow(rowIndex), columnIndex, aValue);
         } else {
             //log.debug("%%% EDIT NEU! %%%");
-            Object tmp = newObject();
+            T tmp = newObject();
             getList().add(tmp);
             editObject(tmp, columnIndex, aValue);
             //log.debug("NEU: " + tmp);
@@ -160,7 +126,7 @@ public abstract class EditableListTableModel extends ListTableModel {
      * @param columnIndex Welche Spalte verändert werden soll
      * @param newValue Der geänderte Wert
      */
-    public abstract void editObject(Object objectAtRow, int columnIndex, Object newValue);
+    public abstract void editObject(T objectAtRow, int columnIndex, Object newValue);
 
     /**
      * Wird aufgerufen um ein neues (mit Standard-Werten initialisiertes)
@@ -168,5 +134,5 @@ public abstract class EditableListTableModel extends ListTableModel {
      * eine neue Zeile anlegt.
      * @return Ein neues Objekt, dass der Liste hinzugefügt wird
      */
-    public abstract Object newObject();
+    public abstract T newObject();
 }

@@ -30,11 +30,12 @@ import java.util.List;
 /**
  * Eine TableModel-Grundlage, basierend auf einer <code>java.util.List</code>e .
  * Jede Zeile der Tabelle ist ein Objekt in der Liste.
+ * @param T Typ der Objekte in der Liste bzw. in den Zeilen
  * @author David Klotz
  */
-public abstract class ListTableModel extends BasicTableModel {
+public abstract class ListTableModel<T> extends BasicTableModel {
     private static final long serialVersionUID = 3184575075422345839L;
-    private List<?> dataList = null;
+    private List<T> dataList = null;
     private boolean removeAllowed;
 
     /**
@@ -56,7 +57,7 @@ public abstract class ListTableModel extends BasicTableModel {
         super(columns);
         this.removeAllowed = removeAllowed;
 
-        dataList = new ArrayList<String[]>();
+        dataList = new ArrayList<>();
 
         if (updateAtInit) {
             try {
@@ -72,7 +73,9 @@ public abstract class ListTableModel extends BasicTableModel {
      * @param columns Ein String-Array mit den Namen der Spalten der Tabelle
      * @param liste Die anfängliche Liste
      */
-    public ListTableModel(String[] columns, List<?> liste, boolean removeAllowed) {
+    public ListTableModel(
+        String[] columns, List<T> liste, boolean removeAllowed
+    ) {
         super(columns);
 
         this.removeAllowed = removeAllowed;
@@ -99,12 +102,11 @@ public abstract class ListTableModel extends BasicTableModel {
      * @param rowIndex Die Tabellen-Zeile
      * @return Das Objekt an Stelle rowIndex der Liste
      */
-    public Object getObjectAtRow(int rowIndex) {
+    public T getObjectAtRow(int rowIndex) {
         if (rowExists(rowIndex)) {
             return dataList.get(rowIndex);
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -119,8 +121,7 @@ public abstract class ListTableModel extends BasicTableModel {
         Object value = null;
         if (getList() != null && rowIndex < getList().size()) {
             if (columnIndex < columns.length) {
-                Object objectAtRow = getObjectAtRow(rowIndex);
-                value = getColumnValue(objectAtRow, columnIndex);
+                value = getColumnValue(getObjectAtRow(rowIndex), columnIndex);
             }
         }
         return value;
@@ -150,8 +151,7 @@ public abstract class ListTableModel extends BasicTableModel {
     public boolean removeRow(int rowIndex) {
         boolean wasRemoved = false;
         if (removeAllowed && rowExists(rowIndex)) {
-            Object removed = getList().get(rowIndex);
-            wasRemoved = objectRemoved(removed);
+            wasRemoved = objectRemoved(getList().get(rowIndex));
             if (wasRemoved) {
                 getList().remove(rowIndex);
                 fireTableRowsDeleted(rowIndex, rowIndex);
@@ -164,7 +164,7 @@ public abstract class ListTableModel extends BasicTableModel {
     /**
      * @return Die Liste mit dem Tabellen-Inhalt.
      */
-    public List getList() {
+    public List<T> getList() {
         return dataList;
     }
 
@@ -172,7 +172,7 @@ public abstract class ListTableModel extends BasicTableModel {
      * Setzt die Liste mit dem Tabellen-Inhalt.
      * @param newList Die neue Liste
      */
-    public void setList(List<?> newList) {
+    public void setList(List<T> newList) {
         this.dataList = newList;
     }
 
@@ -186,7 +186,7 @@ public abstract class ListTableModel extends BasicTableModel {
      * <code>false</code>, falls dabei ein Fehler auftrat oder es aus anderen Gründen
      * nicht möglich war.
      */
-    public boolean objectRemoved(Object objectAtRow) {
+    public boolean objectRemoved(T objectAtRow) {
         return false;
     }
 
@@ -207,5 +207,5 @@ public abstract class ListTableModel extends BasicTableModel {
      * @param columnIndex Die Spalte der Tabelle
      * @return Was soll in der Tabelle an dieser Stelle angezeigt werden?
      */
-    public abstract Object getColumnValue(Object objectAtRow, int columnIndex);
+    public abstract Object getColumnValue(T objectAtRow, int columnIndex);
 }
