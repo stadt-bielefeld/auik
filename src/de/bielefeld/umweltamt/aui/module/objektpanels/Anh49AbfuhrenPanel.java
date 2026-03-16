@@ -128,7 +128,9 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	 * Ein TableModel für eine Tabelle mit Abscheider-Kontrollen.
 	 * @author Gerhard Genuit
 	 */
-	private class Anh49AbfuhrModel extends EditableListTableModel {
+	private class Anh49AbfuhrModel
+        extends EditableListTableModel<Anh49Abfuhr> {
+
 	    private static final long serialVersionUID = -1286333922211056915L;
 	    private Anh49Fachdaten fachdaten;
 
@@ -153,8 +155,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	    }
 
 	    @Override
-	    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-	        Anh49Abfuhr abf = (Anh49Abfuhr) objectAtRow;
+	    public Object getColumnValue(Anh49Abfuhr abf, int columnIndex) {
 	        Double menge = abf.getMenge();
 
 	        Object tmp;
@@ -180,8 +181,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	    }
 
 	    @Override
-	    public boolean objectRemoved(Object objectAtRow) {
-	        Anh49Abfuhr removedOt = (Anh49Abfuhr) objectAtRow;
+	    public boolean objectRemoved(Anh49Abfuhr removedOt) {
 	        boolean removed;
 
 	        if (removedOt.getId() != null) {
@@ -202,10 +202,9 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	    }
 
 	    @Override
-	    public void editObject(Object objectAtRow, int columnIndex,
-	        Object newValue) {
-	    	Anh49Abfuhr abf = (Anh49Abfuhr) objectAtRow;
-
+	    public void editObject(
+            Anh49Abfuhr abf, int columnIndex, Object newValue
+        ) {
 	        String tmp = (String) newValue;
 
 	        switch (columnIndex) {
@@ -256,7 +255,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	    }
 
 	    @Override
-	    public Object newObject() {
+	    public Anh49Abfuhr newObject() {
 	    	Anh49Abfuhr abf = new Anh49Abfuhr();
 	        abf.setAnh49Fachdaten(fachdaten);
 	        abf.setAbfuhrdatum(new Date());
@@ -272,7 +271,9 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	 * Ein TableModel für eine Tabelle mit Abscheider-Kontrollen.
 	 * @author Gerhard Genuit
 	 */
-	private class Anh49KontrollenModel extends EditableListTableModel {
+	private class Anh49KontrollenModel
+        extends EditableListTableModel<Anh49Kontrollen> {
+
 	    private static final long serialVersionUID = -1286333922211056915L;
 	    private Anh49Fachdaten fachdaten;
 
@@ -297,9 +298,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	    }
 
 	    @Override
-	    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-	        Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
-
+	    public Object getColumnValue(Anh49Kontrollen kt, int columnIndex) {
 	        Object tmp;
 
 	        switch (columnIndex) {
@@ -320,8 +319,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	    }
 
 	    @Override
-	    public boolean objectRemoved(Object objectAtRow) {
-	        Anh49Kontrollen removedOt = (Anh49Kontrollen) objectAtRow;
+	    public boolean objectRemoved(Anh49Kontrollen removedOt) {
 	        boolean removed;
 
 	        if (removedOt.getId() != null) {
@@ -342,10 +340,9 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	    }
 
 	    @Override
-	    public void editObject(Object objectAtRow, int columnIndex,
-	        Object newValue) {
-	        Anh49Kontrollen kt = (Anh49Kontrollen) objectAtRow;
-
+	    public void editObject(
+            Anh49Kontrollen kt, int columnIndex, Object newValue
+        ) {
 	        String tmp = (String) newValue;
 
 	        switch (columnIndex) {
@@ -392,7 +389,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 	    }
 
 	    @Override
-	    public Object newObject() {
+	    public Anh49Kontrollen newObject() {
 	        Anh49Kontrollen kt = new Anh49Kontrollen();
 	        kt.setAnh49Fachdaten(fachdaten);
 	        kt.setPruefdatum(new Date());

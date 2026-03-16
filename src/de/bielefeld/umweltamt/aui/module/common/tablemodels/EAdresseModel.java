@@ -23,7 +23,7 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
-public class EAdresseModel extends ListTableModel {
+public class EAdresseModel extends ListTableModel<EAdresse> {
 
     public EAdresseModel() {
         super(new String[]{
@@ -44,10 +44,9 @@ public class EAdresseModel extends ListTableModel {
 	}
 
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	public Object getColumnValue(EAdresse adresse, int columnIndex) {
         Object value;
 
-        EAdresse adresse = (EAdresse) objectAtRow;
         switch(columnIndex) {
             case 0:
                 value = adresse.getAnrede();

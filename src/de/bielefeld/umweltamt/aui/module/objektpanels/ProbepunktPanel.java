@@ -100,9 +100,9 @@ public class ProbepunktPanel extends ObjectPanel {
     private BasisObjektBearbeiten hauptModul;
 
     // Widgets
-    private JComboBox probePktArtBox = null;
-    private JComboBox probeKABox = null;
-    private JComboBox sachbearbeiterBox = null;
+    private JComboBox<Probeart> probePktArtBox;
+    private JComboBox<Klaeranlage> probeKABox;
+    private JComboBox<Sachbearbeiter> sachbearbeiterBox;
     private JTextField brancheFeld = null;
     private JFormattedTextField probePktNrFeld = null;
     private JTextArea probePktBeschreibungsArea = null;
@@ -231,15 +231,15 @@ public class ProbepunktPanel extends ObjectPanel {
     public void updateForm() throws RuntimeException {
         if (this.probearten != null) {
             getProbePktArtBox().setModel(
-                new DefaultComboBoxModel(this.probearten));
+                new DefaultComboBoxModel<>(this.probearten));
         }
         if (this.klaeranlagen != null) {
             getProbeKABox().setModel(
-                new DefaultComboBoxModel(this.klaeranlagen));
+                new DefaultComboBoxModel<>(this.klaeranlagen));
         }
         if (this.sachbearbeiter != null) {
             getSachbearbeiterBox().setModel(
-                new DefaultComboBoxModel(this.sachbearbeiter));
+                new DefaultComboBoxModel<>(this.sachbearbeiter));
             sachbearbeiterBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
             getSachbearbeiterBox().setEditable(true);
         }
@@ -397,23 +397,23 @@ public class ProbepunktPanel extends ObjectPanel {
         }
     }
 
-    private JComboBox getProbePktArtBox() {
+    private JComboBox<Probeart> getProbePktArtBox() {
         if (this.probePktArtBox == null) {
-            this.probePktArtBox = new JComboBox();
+            this.probePktArtBox = new JComboBox<>();
         }
         return this.probePktArtBox;
     }
 
-    private JComboBox getProbeKABox() {
+    private JComboBox<Klaeranlage> getProbeKABox() {
         if (this.probeKABox == null) {
-            this.probeKABox = new JComboBox();
+            this.probeKABox = new JComboBox<>();
         }
         return this.probeKABox;
     }
 
-    private JComboBox getSachbearbeiterBox() {
+    private JComboBox<Sachbearbeiter> getSachbearbeiterBox() {
         if (this.sachbearbeiterBox == null) {
-            this.sachbearbeiterBox = new JComboBox();
+            this.sachbearbeiterBox = new JComboBox<>();
         }
         return this.sachbearbeiterBox;
     }

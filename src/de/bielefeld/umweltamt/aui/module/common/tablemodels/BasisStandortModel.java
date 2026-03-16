@@ -54,7 +54,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für eine Standortliste einer Adresse.
  * @author Gerd Genuit
  */
-public class BasisStandortModel extends ListTableModel {
+public class BasisStandortModel extends ListTableModel<Standort> {
     private AuikLogger log = AuikLogger.getLogger();
     private Adresse adresse = null;
     private Inhaber inhaber = null;
@@ -78,8 +78,7 @@ public class BasisStandortModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Standort std = (Standort) objectAtRow;
+    public Object getColumnValue(Standort std, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {

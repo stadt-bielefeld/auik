@@ -99,18 +99,16 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Auswertungs-Abfragen.
  * @author David Klotz
  */
-public abstract class AbstractQueryModul extends AbstractModul {
-//    private JSplitPane contentSplit;
+public abstract class AbstractQueryModul<T> extends AbstractModul {
+
     private JScrollPane tableScroller;
     private JTable resultTable;
 
     private Action objektEditAction;
     private Action saveAction;
     private JPopupMenu resultPopup;
-//    private RowSorter<?> sorter;
 
-private String outputPath = "./auswertungen/auik-export.csv";
-
+    private String outputPath = "./auswertungen/auik-export.csv";
 
     /**
      * Liefert die Kategorie des Moduls.
@@ -155,7 +153,7 @@ private String outputPath = "./auswertungen/auik-export.csv";
     /**
      * @return Ein TableModel für die Ergebnis-Tabelle.
      */
-    public abstract ListTableModel getTableModel();
+    public abstract ListTableModel<T> getTableModel();
 
     /**
      * Liefert das BasisObjekt zu einem Fachdaten-Objekt.

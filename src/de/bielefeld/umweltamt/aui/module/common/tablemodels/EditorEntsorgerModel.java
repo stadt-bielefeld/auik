@@ -29,7 +29,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Ein einfaches TableModel für die Entsorgertabelle.
  * @author Gerd Genuit
  */
-public class EditorEntsorgerModel extends EditableListTableModel {
+public class EditorEntsorgerModel extends EditableListTableModel<Entsorger> {
 
 	/**
 	 *
@@ -74,8 +74,7 @@ public class EditorEntsorgerModel extends EditableListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Entsorger entsorger = (Entsorger) objectAtRow;
+    public Object getColumnValue(Entsorger entsorger, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -117,9 +116,7 @@ public class EditorEntsorgerModel extends EditableListTableModel {
     }
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-
-		Entsorger tmp = (Entsorger) objectAtRow;
+	public void editObject(Entsorger tmp, int columnIndex, Object newValue) {
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -166,15 +163,14 @@ public class EditorEntsorgerModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Entsorger newObject() {
 		Entsorger tmp = new Entsorger();
 		tmp.setId(DatabaseQuery.newEntsorgerID());
 		return tmp;
 	}
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-    	Entsorger removedEntsorger = (Entsorger) objectAtRow;
+    public boolean objectRemoved(Entsorger removedEntsorger) {
         return Entsorger.delete(removedEntsorger);
     }
 

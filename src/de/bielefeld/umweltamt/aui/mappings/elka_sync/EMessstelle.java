@@ -235,7 +235,8 @@ public class EMessstelle implements java.io.Serializable {
             Integer origId = this.getOrigNr() != null ? this.getOrigNr() : this.getNr();
             zuordnBerichtspflichts = new HashSet<MsstBerichtspflicht>(
                 HibernateSessionFactory.currentSession().createQuery(
-                    "from MsstBerichtspflicht where msst_nr=" + origId
+                    "from MsstBerichtspflicht where msst_nr=" + origId,
+                    MsstBerichtspflicht.class
                 ).list()
             );
         }

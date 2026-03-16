@@ -141,13 +141,13 @@ public class EditorObjektarten extends AbstractModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((EditorObjektartenModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.getObjektartenlist());
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((EditorObjektartenModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -175,7 +175,7 @@ public class EditorObjektarten extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
-    public ListTableModel getTableModel() {
+    public ListTableModel<Objektarten> getTableModel() {
         if (tmodel == null) {
             tmodel = new EditorObjektartenModel();
         }

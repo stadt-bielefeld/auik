@@ -397,12 +397,11 @@ public class Standort  implements java.io.Serializable {
 
 	public static List <Standort> findByAdresse(Inhaber inhaber) {
 		Integer id = inhaber.getId();
-		List standorte = HibernateSessionFactory
+		return HibernateSessionFactory
 				.currentSession()
 				.createQuery(
-						"from Standort where inhaberid= " + id)
+                    "from Standort where inhaberid= " + id,
+                    Standort.class)
 				.list();
-
-		return standorte;
 	}
 }

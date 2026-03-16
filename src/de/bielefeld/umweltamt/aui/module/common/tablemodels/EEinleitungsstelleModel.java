@@ -23,7 +23,8 @@ package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
-public class EEinleitungsstelleModel extends ListTableModel {
+public class EEinleitungsstelleModel
+    extends ListTableModel<EEinleitungsstelle> {
 
 	public EEinleitungsstelleModel() {
         super(new String[]{
@@ -41,10 +42,9 @@ public class EEinleitungsstelleModel extends ListTableModel {
 	}
 
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	public Object getColumnValue(EEinleitungsstelle stelle, int columnIndex) {
         Object value;
 
-        EEinleitungsstelle stelle = (EEinleitungsstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
           		value = stelle.getStandort().getAdresse().getName1();

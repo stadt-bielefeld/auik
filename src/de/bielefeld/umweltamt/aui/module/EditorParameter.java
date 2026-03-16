@@ -72,7 +72,9 @@ import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorParameterModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
@@ -98,10 +100,8 @@ public class EditorParameter extends AbstractModul {
 
     private Action resultLoeschAction;
     private JPopupMenu resultPopup;
-    private JComboBox methodeBox;
-    private JComboBox einheitBox;
-
-
+    private JComboBox<MapElkaAnalysemethode> methodeBox;
+    private JComboBox<Einheiten> einheitBox;
 
     @Override
     public Icon getIcon() {
@@ -149,13 +149,13 @@ public class EditorParameter extends AbstractModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((EditorParameterModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.getParameterlist());
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((EditorParameterModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -183,7 +183,7 @@ public class EditorParameter extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
-    public ListTableModel getTableModel() {
+    public ListTableModel<Parameter> getTableModel() {
         if (tmodel == null) {
             tmodel = new EditorParameterModel();
         }
@@ -230,7 +230,7 @@ public class EditorParameter extends AbstractModul {
 	            .getColumn(2);
 	        methodeColumn.setPreferredWidth(200);
 
-	        methodeBox = new JComboBox(DatabaseQuery.getMapElkaAnalysemethode());
+	        methodeBox = new JComboBox<>(DatabaseQuery.getMapElkaAnalysemethode());
 	        methodeBox.setEditable(false);
 	        methodeBox.addFocusListener(new FocusAdapter() {
 	            @Override
@@ -241,14 +241,14 @@ public class EditorParameter extends AbstractModul {
 	        methodeBox.setBorder(BorderFactory.createEmptyBorder());
 
 	        methodeColumn.setCellEditor(new DefaultCellEditor(methodeBox));
-	        methodeColumn.setCellRenderer(new ComboBoxRenderer());
+	        methodeColumn.setCellRenderer(new ComboBoxRenderer<>());
 
 	        // Einheit
 	        TableColumn einheitColumn = this.resultTable.getColumnModel()
 	            .getColumn(3);
 	        einheitColumn.setPreferredWidth(10);
 
-	        einheitBox = new JComboBox(DatabaseQuery.getEinheiten());
+	        einheitBox = new JComboBox<>(DatabaseQuery.getEinheiten());
 	        einheitBox.setEditable(false);
 	        einheitBox.addFocusListener(new FocusAdapter() {
 	            @Override
@@ -259,7 +259,7 @@ public class EditorParameter extends AbstractModul {
 	        einheitBox.setBorder(BorderFactory.createEmptyBorder());
 
 	        einheitColumn.setCellEditor(new DefaultCellEditor(einheitBox));
-	        einheitColumn.setCellRenderer(new ComboBoxRenderer());
+	        einheitColumn.setCellRenderer(new ComboBoxRenderer<>());
 
 
             resultTable.getInputMap().put(

@@ -141,13 +141,13 @@ public class EditorKlaeranlagen extends AbstractModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((EditorKlaeranlageModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.getKlaeranlagelist());
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((EditorKlaeranlageModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -175,7 +175,7 @@ public class EditorKlaeranlagen extends AbstractModul {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
-    public ListTableModel getTableModel() {
+    public ListTableModel<Klaeranlage> getTableModel() {
         if (tmodel == null) {
             tmodel = new EditorKlaeranlageModel();
         }

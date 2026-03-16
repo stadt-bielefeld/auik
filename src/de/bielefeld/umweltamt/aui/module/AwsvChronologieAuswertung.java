@@ -71,7 +71,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches Auswertungs-Modul für Anhang 50-Datensätze.
  * @author David Klotz
  */
-public class AwsvChronologieAuswertung extends AbstractQueryModul {
+public class AwsvChronologieAuswertung
+    extends AbstractQueryModul<Anlagenchrono> {
+
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
 
@@ -87,7 +89,7 @@ public class AwsvChronologieAuswertung extends AbstractQueryModul {
     @Override
     protected void editObject(int row) {
         if (row != -1) {
-            Fachdaten fd = ((Anlagenchrono)tmodel.getObjectAtRow(row)).getFachdaten();
+            Fachdaten fd = tmodel.getObjectAtRow(row).getFachdaten();
 
             AwsvEditor editor = new AwsvEditor(fd, frame, "Daten");
 
@@ -205,7 +207,7 @@ public class AwsvChronologieAuswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<Anlagenchrono> getTableModel() {
         if (tmodel == null) {
             tmodel = new AwsvAnlagenchronoModel();
         }

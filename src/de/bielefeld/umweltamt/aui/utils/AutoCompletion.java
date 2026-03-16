@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.utils;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -52,10 +53,10 @@ import javax.swing.text.PlainDocument;
  * Kann mit {@link #enable(JComboBox)} auf jede JComboBox angewendet
  * werden.
  */
-public class AutoCompletion extends PlainDocument {
+public class AutoCompletion<E> extends PlainDocument {
 	private static final long serialVersionUID = -3459357175359246741L;
-	SearchBox comboBox;
-    ComboBoxModel model;
+    SearchBox<E> comboBox;
+    ComboBoxModel<E> model;
     JTextComponent editor;
     // flag to indicate if setSelectedItem has been called
     // subsequent calls to remove/insertString should be ignored
@@ -67,20 +68,26 @@ public class AutoCompletion extends PlainDocument {
     KeyListener editorKeyListener;
     FocusListener editorFocusListener;
 
-    public AutoCompletion(final SearchBox comboBox) {
+    private AutoCompletion(final SearchBox<E> comboBox) {
         this.comboBox = comboBox;
         model = comboBox.getModel();
+
         comboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (!selecting) highlightCompletedText(0);
             }
         });
+
         comboBox.addPropertyChangeListener(new PropertyChangeListener() {
+            @SuppressWarnings("unchecked")
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("editor")) configureEditor((ComboBoxEditor) e.getNewValue());
-                if (e.getPropertyName().equals("model")) model = (ComboBoxModel) e.getNewValue();
+                if (e.getPropertyName().equals("model")) {
+                    model = (ComboBoxModel<E>) e.getNewValue();
+                }
             }
         });
+
         editorKeyListener = new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if (comboBox.isDisplayable()) comboBox.setPopupVisible(true);
@@ -121,23 +128,24 @@ public class AutoCompletion extends PlainDocument {
         highlightCompletedText(0);
     }
 
-    public void setPrototypeValue() {
-        JList list = getListBox();
+    private void setPrototypeValue() {
+        JList<E> list = getListBox();
         setPrototypeValue(getPrototypeValue(list), list);
     }
 
-    void setPrototypeValue(Object value, JList list) {
+    private void setPrototypeValue(E value, JList<E> list) {
         comboBox.setPrototypeDisplayValue(value);
         list.setPrototypeCellValue(value);
     }
 
-    Object getPrototypeValue(JList list) {
-        Object prototypeValue=null;
+    private E getPrototypeValue(JList<E> list) {
+        E prototypeValue = null;
         double prototypeWidth=0;
-        ListCellRenderer renderer = comboBox.getRenderer();
+        ListCellRenderer<? super E> renderer = comboBox.getRenderer();
         for (int i=0, n=model.getSize(); i<n; i++) {
-            Object value = model.getElementAt(i);
-            java.awt.Component c = renderer.getListCellRendererComponent(list, value, i, false, false);
+            E value = model.getElementAt(i);
+            Component c = renderer.getListCellRendererComponent(
+                list, value, i, false, false);
             double width = c.getPreferredSize().getWidth();
             if (width>prototypeWidth) {
                 prototypeWidth=width;
@@ -147,15 +155,16 @@ public class AutoCompletion extends PlainDocument {
         return prototypeValue;
     }
 
-    JList getListBox() {
-        JList listBox;
+    @SuppressWarnings("unchecked")
+    private JList<E> getListBox() {
+        JList<E> listBox;
         try {
             Field field = JComponent.class.getDeclaredField("ui");
             field.setAccessible(true);
             BasicComboBoxUI ui = (BasicComboBoxUI) field.get(comboBox);
             field = BasicComboBoxUI.class.getDeclaredField("listBox");
             field.setAccessible(true);
-            listBox = (JList) field.get(ui);
+            listBox = (JList<E>) field.get(ui);
         } catch (NoSuchFieldException nsfe) {
             throw new RuntimeException(nsfe);
         } catch (IllegalAccessException iae) {
@@ -168,14 +177,14 @@ public class AutoCompletion extends PlainDocument {
      * Schaltet die automatische Vervollständigung für eine Combobox an.
      * @param comboBox Die Combobox
      */
-    public static void enable(SearchBox comboBox) {
+    public static <E> void enable(SearchBox<E> comboBox) {
         // has to be editable
         comboBox.setEditable(true);
         // change the editor's document
-        new AutoCompletion(comboBox);
+        new AutoCompletion<>(comboBox);
     }
 
-    void configureEditor(ComboBoxEditor newEditor) {
+    private void configureEditor(ComboBoxEditor newEditor) {
         if (editor != null) {
             editor.removeKeyListener(editorKeyListener);
             editor.removeFocusListener(editorFocusListener);
@@ -189,6 +198,7 @@ public class AutoCompletion extends PlainDocument {
         }
     }
 
+    @Override
     public void remove(int offs, int len) throws BadLocationException {
         // return immediately when selecting an item
         if (selecting) return;
@@ -207,7 +217,9 @@ public class AutoCompletion extends PlainDocument {
         }
     }
 
-    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+    @Override
+    public void insertString(int offs, String str, AttributeSet a)
+        throws BadLocationException {
         // return immediately when selecting an item
         if (selecting) return;
         // insert the string into the document

@@ -44,6 +44,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.DirekteinleiterModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
@@ -54,7 +55,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches Such-Modul für Direkteinleiter anhand des Aktenzeichens.
  * @author Gerhard Genuit
  */
-public class DirekteinleiterSuchen extends AbstractQueryModul {
+public class DirekteinleiterSuchen extends AbstractQueryModul<Wasserrecht> {
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
 
@@ -106,7 +107,7 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
 
 		if (aktenzeichen != null && !aktenzeichen.isEmpty()) {
 			log.debug(" Suche nach Aktenzeichen " + aktenzeichen);
-			((DirekteinleiterModel) getTableModel()).setList(DatabaseQuery.findWasserrechtAktenzeichen(aktenzeichen));// Aufruf
+			getTableModel().setList(DatabaseQuery.findWasserrechtAktenzeichen(aktenzeichen));// Aufruf
 																														// der
 																														// Suchfunktion.
 																														// Startet
@@ -115,13 +116,13 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
 																														// in
 																														// der
 																														// Datenbank
-			((DirekteinleiterModel) getTableModel()).fireTableDataChanged();
+			getTableModel().fireTableDataChanged();
 			frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der
 																							// gefundenen Objekte
 			log.debug(getTableModel().getRowCount() + " Objekt(e) mit Aktenzeichen " + aktenzeichen + " gefunden");
 		} else if (genDate != null) {
 			log.debug(" Suche nach Genehmigungsdatum " + genDate);
-			((DirekteinleiterModel) getTableModel()).setList(DatabaseQuery.findWasserrechtGenDatum(genDate));// Aufruf
+			getTableModel().setList(DatabaseQuery.findWasserrechtGenDatum(genDate));// Aufruf
 																												// der
 																												// Suchfunktion.
 																												// Startet
@@ -130,7 +131,7 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
 																												// in
 																												// der
 																												// Datenbank
-			((DirekteinleiterModel) getTableModel()).fireTableDataChanged();
+			getTableModel().fireTableDataChanged();
 			frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden"); // Anzeige Ã¼ber Anzahl der
 																							// gefundenen Objekte
 			log.debug(getTableModel().getRowCount() + " Objekt(e) mit Genehmigungsdatum " + genDate + " gefunden");
@@ -194,7 +195,7 @@ public class DirekteinleiterSuchen extends AbstractQueryModul {
 
 	// Aufruf des Modells fÃ¼r die Ergebnis-Tabelle
 	@Override
-	public ListTableModel getTableModel() {
+	public ListTableModel<Wasserrecht> getTableModel() {
 		if (ergebnisModel == null) {
 			ergebnisModel = new DirekteinleiterModel();
 		}

@@ -31,7 +31,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * TableModel used in the BasisAbfrage module.
  * @author Alexander Woestmann
  */
-public class BasisAbfrageModel extends ListTableModel {
+public class BasisAbfrageModel extends ListTableModel<Object[]> {
 
     private final int ADRESS_COLUMN_INDEX = 1;
     public BasisAbfrageModel() {
@@ -64,8 +64,7 @@ public class BasisAbfrageModel extends ListTableModel {
     }
 
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Object[] obj = (Object[]) objectAtRow;
+    public Object getColumnValue(Object[] obj, int columnIndex) {
         Object val = obj[columnIndex];
         //If column contains address: format
         if (columnIndex == ADRESS_COLUMN_INDEX) {

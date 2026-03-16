@@ -25,7 +25,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka_sync.EMessstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 
-public class EMessstelleModel extends ListTableModel {
+public class EMessstelleModel extends ListTableModel<EMessstelle> {
 
     AuikLogger log = AuikLogger.getLogger();
 
@@ -45,10 +45,9 @@ public class EMessstelleModel extends ListTableModel {
 	}
 
 	@Override
-	public Object getColumnValue(Object objectAtRow, int columnIndex) {
+	public Object getColumnValue(EMessstelle stelle, int columnIndex) {
         Object value;
 
-        EMessstelle stelle = (EMessstelle) objectAtRow;
         switch(columnIndex) {
             case 0:
           		//value = stelle.getStandortNr().getAdresse().getName1();

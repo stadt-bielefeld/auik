@@ -72,7 +72,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Druck des Gebührenbescheides freigeben sind.
  * @author Gerd Genuit
  */
-public class EinleiterBescheidAuswertung extends AbstractQueryModul {
+public class EinleiterBescheidAuswertung
+    extends AbstractQueryModul<Probenahme> {
+
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
 
@@ -122,14 +124,14 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((BescheidModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.findProbenahme(
                                     DatabaseConstants.ATL_STATUS_FREIGEGEBEN_FUER_BESCHEIDDRUCK));
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((BescheidModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -143,14 +145,14 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((BescheidModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.findProbenahme(
                                     DatabaseConstants.ATL_STATUS_DATEN_EINGETRAGEN));
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((BescheidModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -164,14 +166,14 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((BescheidModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.findProbenahme(
                                     DatabaseConstants.ATL_STATUS_ERGAENZT_UND_FREIGEGEBEN));
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((BescheidModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -185,14 +187,14 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((BescheidModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.findProbenahme(
                                     DatabaseConstants.ATL_STATUS_PROBENAHMEAUFTRAG_GEDRUCKT));
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((BescheidModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus("" + getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -217,7 +219,7 @@ public class EinleiterBescheidAuswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<Probenahme> getTableModel() {
         if (tmodel == null) {
             tmodel = new BescheidModel();
         }

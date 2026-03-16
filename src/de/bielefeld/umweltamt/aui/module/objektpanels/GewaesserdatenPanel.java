@@ -80,13 +80,13 @@ public class GewaesserdatenPanel extends ObjectPanel {
 
 	// Widgets allgemein
 	private JButton saveGewDatenButton;
-	private JComboBox stationierung3OptBox = null; // Typ Gewässer Bezeichnung
+	private JComboBox<String> stationierung3OptBox; // Typ Gewässer Bezeichnung
 
 	// Widgets nicht stationiertes & stat. Gewässer
 
 	private DoubleField einzugsgebietFeld = null; // Einzugsgebiet des Gewässers bis zur Einleitung
 	private JTextField gewnameStatFeld = null; // Gewässername stat Gewässer in welches nstat Gew mündet
-	private JComboBox gewkennzStatBox =null; // Gewässerkennzahl stat Gewässer in welches nstat Gew. mündet
+	private JComboBox<Integer> gewkennzStatBox; // Gewässerkennzahl stat Gewässer in welches nstat Gew. mündet
 	private JTextField gewNameStadtFeld = null; // Gewässername bei der Stadt Bielefeld
 	private JTextField gewKennzStadtFeld = null; // Gewässerkennzahl bei der Stadt Bielefeld
 	private JTextField hwrMassnahmeFeld = null; // HWR Maßnahme
@@ -110,7 +110,7 @@ public class GewaesserdatenPanel extends ObjectPanel {
 	private DoubleField stationierungSt3Feld = null; // Stationierung stat Gewässer
 
 	// Widgets Grundwasser
-	private JComboBox verAnlageOptBox = null; /// AnlagenTyp
+	private JComboBox<String> verAnlageOptBox; /// AnlagenTyp
 	private JTextField sonstigesVersFeld = null; // sonstige Anlage
 	private JTextField bauartzulIdFeld = null;
 	private JCheckBox landesfoerderungTogBox = null;
@@ -1099,10 +1099,11 @@ public class GewaesserdatenPanel extends ObjectPanel {
 
 // Getter
 
-	private JComboBox getStationierung3OptBox() {
+	private JComboBox<String> getStationierung3OptBox() {
 		if (this.stationierung3OptBox == null) {
-			this.stationierung3OptBox = new JComboBox();
-			this.stationierung3OptBox.setModel(new DefaultComboBoxModel(this.typGewBezItems));
+			this.stationierung3OptBox = new JComboBox<>();
+			this.stationierung3OptBox.setModel(
+                new DefaultComboBoxModel<>(this.typGewBezItems));
 		}
 		return this.stationierung3OptBox;
 	}
@@ -1156,10 +1157,9 @@ public class GewaesserdatenPanel extends ObjectPanel {
 		return this.gewnameStatFeld;
 	}
 
-	private JComboBox getGewkennzStatBox() {
+	private JComboBox<Integer> getGewkennzStatBox() {
 		if (this.gewkennzStatBox == null) {
-			this.gewkennzStatBox = new SearchBox();
-			this.gewkennzStatBox.setModel(new DefaultComboBoxModel(this.mapElkaGewkennz));
+			this.gewkennzStatBox = new SearchBox<>(this.mapElkaGewkennz);
 		}
 		return this.gewkennzStatBox;
 	}
@@ -1201,10 +1201,11 @@ public class GewaesserdatenPanel extends ObjectPanel {
 
 
 
-	private JComboBox getVerAnlageOptBox() {
+	private JComboBox<String> getVerAnlageOptBox() {
 		if (this.verAnlageOptBox == null) {
-			this.verAnlageOptBox = new JComboBox();
-			this.verAnlageOptBox.setModel(new DefaultComboBoxModel(this.anlagenItems));
+			this.verAnlageOptBox = new JComboBox<>();
+			this.verAnlageOptBox.setModel(
+                new DefaultComboBoxModel<>(this.anlagenItems));
 		}
 		return this.verAnlageOptBox;
 	}

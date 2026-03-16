@@ -29,11 +29,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Ein einfaches TableModel für die Wasserschutzgebietetabelle.
  * @author Gerd Genuit
  */
-public class EditorWSGModel extends EditableListTableModel {
+public class EditorWSGModel
+    extends EditableListTableModel<Wassereinzugsgebiet> {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 4047430919374378079L;
 
 	public EditorWSGModel() {
@@ -62,8 +60,7 @@ public class EditorWSGModel extends EditableListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        Wassereinzugsgebiet wsg = (Wassereinzugsgebiet) objectAtRow;
+    public Object getColumnValue(Wassereinzugsgebiet wsg, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -87,9 +84,9 @@ public class EditorWSGModel extends EditableListTableModel {
     }
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-
-		Wassereinzugsgebiet tmp = (Wassereinzugsgebiet) objectAtRow;
+	public void editObject(
+        Wassereinzugsgebiet tmp, int columnIndex, Object newValue
+    ) {
 		switch (columnIndex) {
         case 0:
         	Integer tmpID = (Integer) newValue;
@@ -109,15 +106,14 @@ public class EditorWSGModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Wassereinzugsgebiet newObject() {
 		Wassereinzugsgebiet tmp = new Wassereinzugsgebiet();
 		tmp.setId(DatabaseQuery.newWSGID());
 		return tmp;
 	}
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-    	Wassereinzugsgebiet removedWSG = (Wassereinzugsgebiet) objectAtRow;
+    public boolean objectRemoved(Wassereinzugsgebiet removedWSG) {
         return Wassereinzugsgebiet.delete(removedWSG);
     }
 

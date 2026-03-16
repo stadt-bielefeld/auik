@@ -29,7 +29,6 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
-import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
@@ -84,21 +83,22 @@ public class AdresseChooser extends JDialog {
 		this.frame = frame;
 		this.caller = caller;
 
-		List<Object> initialList = new ArrayList<Object>();
-		initialList.add(initial);
-
 		if (initial instanceof Adresse && caller == "adresse") {
             setTitle("Adresse auswählen");
             this.adresse = (Adresse) initial;
             this.adresseModel = new BasisAdresseModel();
             if (this.adresse.getId() != null) {
+                List<Adresse> initialList = new ArrayList<>();
+                initialList.add(this.adresse);
                 this.adresseModel.setList(initialList);
             }
         } else if (initial instanceof Inhaber && caller == "betreiber") {
             setTitle("Inhaber auswählen");
             this.inhaber = (Inhaber) initial;
-            this.inhaberModel = new BasisInhaberModel(true);
+            this.inhaberModel = new BasisInhaberModel();
             if (this.inhaber.getId() != null) {
+                List<Inhaber> initialList = new ArrayList<>();
+                initialList.add(this.inhaber);
                 this.inhaberModel.setList(initialList);
             }
         } else if (initial instanceof Standort && caller == "standort") {
@@ -106,6 +106,8 @@ public class AdresseChooser extends JDialog {
 			this.standort = (Standort) initial;
 			this.standortModel = new BasisStandortModel();
 			if (this.standort.getId() != null) {
+                List<Standort> initialList = new ArrayList<>();
+                initialList.add(this.standort);
 				this.standortModel.setList(initialList);
 			}
 		} else {
@@ -392,9 +394,8 @@ public class AdresseChooser extends JDialog {
 
 			@Override
 			protected void doNonUILogic() {
-				if (SettingsManager.getInstance().getStandort() == null) {
-					AdresseChooser.this.inhaberModel.filterStandort(getStrassenFeld().getText(), fhausnr, null);
-				}
+                AdresseChooser.this.inhaberModel.filterStandort(
+                    getStrassenFeld().getText(), fhausnr, null);
 				getNameFeld().setText("");
 			}
 

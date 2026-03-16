@@ -67,6 +67,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.FettabschModel;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -76,7 +77,9 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches Auswertungs-Modul für Fettabscheider(befinden sich in Anh49Fachdaten).
  * @author Sebastian Geller
  */
-public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
+public class EinleiterFettabscheiderAuswertung
+    extends AbstractQueryModul<Anfallstelle> {
+
     /** Das obere Panel mit den Abfrage-Optionen */
     private JPanel queryPanel;
 
@@ -87,6 +90,7 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
 
     /** Das TableModel für die Ergebnis-Tabelle */
     private FettabschModel tmodel;
+
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
@@ -124,14 +128,14 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
                     SwingWorkerVariant worker = new SwingWorkerVariant(getResultTable()) {
                         @Override
                         protected void doNonUILogic() {
-                            ((FettabschModel)getTableModel()).setList(
+                            getTableModel().setList(
                                 DatabaseQuery.getFettabscheider(
                                     (Sachbearbeiter) sachbearbeiterBox.getSelectedItem()));
                         }
 
                         @Override
                         protected void doUIUpdateLogic(){
-                            ((FettabschModel)getTableModel()).fireTableDataChanged();
+                            getTableModel().fireTableDataChanged();
                             frame.changeStatus(+ getTableModel().getRowCount() + " Objekte gefunden");
                         }
                     };
@@ -158,7 +162,7 @@ public class EinleiterFettabscheiderAuswertung extends AbstractQueryModul {
      * @see de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul#getTableModel()
      */
     @Override
-    public ListTableModel getTableModel() {
+    public ListTableModel<Anfallstelle> getTableModel() {
         if (tmodel == null) {
             tmodel = new FettabschModel();
         }

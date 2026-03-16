@@ -87,9 +87,9 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 	private JTable einstellungenTabelle;
 	private JLabel titel;
 	private EinstellungenModel einstModel;
-	private List settinglist;
+	private List<String[]> settinglist;
 
-	private class EinstellungenModel extends EditableListTableModel {
+	private class EinstellungenModel extends EditableListTableModel<String[]> {
 		private static final long serialVersionUID = 6042681141925302970L;
 
 		public EinstellungenModel(SettingsManager instance) {
@@ -102,15 +102,13 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 
 		@Override
 		public void updateList() {
-
 			setList(settinglist);
 			fireTableDataChanged();
 		}
 
 		@Override
-		public Object getColumnValue(Object objectAtRow, int columnIndex) {
+		public Object getColumnValue(String[] row, int columnIndex) {
 			Object value;
-			Object[] row = (Object[]) objectAtRow;
 			switch (columnIndex) {
 			// Parameter
 			case 0:
@@ -123,41 +121,33 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 			default:
 				value = null;
 			}
-
 			return value;
 		}
 
 		@Override
-		public void editObject(Object objectAtRow, int columnIndex,
-				Object newValue) {
-			Object[] row = (Object[]) objectAtRow;
-
+		public void editObject(String[] row, int columnIndex, Object newValue) {
 			switch (columnIndex) {
 			case 0:
 				String tmpPara = (String) newValue;
 				row[0] = tmpPara;
 				break;
-
 			case 1:
 				String tmpWert = (String) newValue;
 				row[1] = tmpWert;
 				_instance.setSetting((String)row[0], tmpWert, true);
 				break;
-
 			default:
 				break;
 			}
-
 		}
 
 		@Override
-		public Object newObject() {
-			return _instance;
+		public String[] newObject() {
+			return new String[2];
 		}
 
-		@Override
-		public boolean objectRemoved(Object objectAtRow) {
-
+        @Override
+        public boolean objectRemoved(String[] objectAtRow) {
 			return true;
 		}
 	}
@@ -249,7 +239,6 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 	@Override
 	protected void doApply() {
 		// TODO Auto-generated method stub
-
 	}
 
 	private JTable getEinstellungenTabelle() {

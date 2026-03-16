@@ -54,7 +54,7 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
  * Ein einfaches TableModel für Brennwertkessel-Fachdaten.
  * @author David Klotz
  */
-public class AnhBwkModel extends ListTableModel {
+public class AnhBwkModel extends ListTableModel<BwkFachdaten> {
     private static final long serialVersionUID = -1745320863047939661L;
 
     /**
@@ -70,8 +70,7 @@ public class AnhBwkModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-        BwkFachdaten fachdaten = (BwkFachdaten) objectAtRow;
+    public Object getColumnValue(BwkFachdaten fachdaten, int columnIndex) {
         Object result = null;
 
         switch (columnIndex) {

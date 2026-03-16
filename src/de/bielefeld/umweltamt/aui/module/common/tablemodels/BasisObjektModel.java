@@ -36,7 +36,7 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
  * Ein TableModel für die Basis-Objektdaten bei der Betreiber/Standort-Suche.
  * @author David Klotz
  */
-public class BasisObjektModel extends ListTableModel {
+public class BasisObjektModel extends ListTableModel<Objekt> {
     private static final long serialVersionUID = -4928147488267472682L;
     private String secondColumn;
     private String abteilung;
@@ -72,10 +72,9 @@ public class BasisObjektModel extends ListTableModel {
      * @param columnIndex Die Spalte der Tabelle
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
+    public Object getColumnValue(Objekt bo, int columnIndex) {
         Object tmp;
 
-        Objekt bo = (Objekt) objectAtRow;
         switch(columnIndex) {
             case 0:
                 tmp = bo.getId();
@@ -155,8 +154,7 @@ public class BasisObjektModel extends ListTableModel {
     }
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-        Objekt removedObjekt = (Objekt) objectAtRow;
+    public boolean objectRemoved(Objekt removedObjekt) {
         boolean removed;
 
         if (removedObjekt.getId() != null) {

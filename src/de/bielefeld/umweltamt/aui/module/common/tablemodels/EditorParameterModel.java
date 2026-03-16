@@ -30,11 +30,8 @@ import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
  * Ein einfaches TableModel für die Parametertabelle.
  * @author Gerd Genuit
  */
-public class EditorParameterModel extends EditableListTableModel {
+public class EditorParameterModel extends EditableListTableModel<Parameter> {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -5048471149489876415L;
 
 	public EditorParameterModel() {
@@ -53,8 +50,7 @@ public class EditorParameterModel extends EditableListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Parameter para = (Parameter) objectAtRow;
+    public Object getColumnValue(Parameter para, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -88,9 +84,7 @@ public class EditorParameterModel extends EditableListTableModel {
     }
 
 	@Override
-	public void editObject(Object objectAtRow, int columnIndex, Object newValue) {
-
-		Parameter tmp = (Parameter) objectAtRow;
+	public void editObject(Parameter tmp, int columnIndex, Object newValue) {
 		switch (columnIndex) {
         case 0:
         	String tmpID = (String) newValue;
@@ -134,14 +128,13 @@ public class EditorParameterModel extends EditableListTableModel {
 	}
 
 	@Override
-	public Object newObject() {
+	public Parameter newObject() {
 		Parameter tmp = new Parameter();
 		return tmp;
 	}
 
     @Override
-    public boolean objectRemoved(Object objectAtRow) {
-    	Parameter removedPara = (Parameter) objectAtRow;
+    public boolean objectRemoved(Parameter removedPara) {
         return Parameter.delete(removedPara);
     }
 

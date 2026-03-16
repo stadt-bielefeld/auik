@@ -454,8 +454,9 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
         if (zEntwaessgrAbwasbehverfs == null) {
             Integer origId = getOrigNr() != null ? getOrigNr() : getNr();
             zEntwaessgrAbwasbehverfs = new HashSet<ZEntwaessgrAbwasbehverf>(
-                    HibernateSessionFactory.currentSession().createQuery(
-                    "from ZEntwaessgrAbwasbehverf where entw_grund_nr=" + origId).list());
+                HibernateSessionFactory.currentSession().createQuery(
+                    "from ZEntwaessgrAbwasbehverf where entw_grund_nr=" + origId,
+                    ZEntwaessgrAbwasbehverf.class).list());
         }
         return  zEntwaessgrAbwasbehverfs;
 

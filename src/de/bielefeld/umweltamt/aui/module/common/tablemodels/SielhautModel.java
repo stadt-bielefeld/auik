@@ -1,13 +1,11 @@
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import java.util.Arrays;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 
-public class SielhautModel extends ListTableModel {
+public class SielhautModel extends ListTableModel<Object[]> {
     private static final long serialVersionUID = -5313844117284881446L;
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
@@ -20,8 +18,7 @@ public class SielhautModel extends ListTableModel {
      * @see de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(Object objectAtRow, int columnIndex) {
-    	Object[] obj = (Object[]) objectAtRow;
+    public Object getColumnValue(Object[] obj, int columnIndex) {
         Object tmp;
 
         switch (columnIndex) {
@@ -74,8 +71,7 @@ public class SielhautModel extends ListTableModel {
     }
 
     public void filterList(String suche) {
-    	Object[] array = DatabaseQuery.findSielhaut(suche);
-        setList(Arrays.asList(array));
+        setList(DatabaseQuery.findSielhaut(suche));
         log.debug("Suche nach '" + suche + "' (" + getList().size()
             + " Ergebnisse)");
     }
