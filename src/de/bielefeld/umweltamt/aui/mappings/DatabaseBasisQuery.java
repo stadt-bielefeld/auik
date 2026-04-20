@@ -36,6 +36,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.Transformers;
 
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
@@ -1248,7 +1249,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 *     - BAsisAbfrage.VALUE_WIEDERVORLAGE_ABGELAUFEN
 	 * @return Object array containing results
 	 */
-	public static List<Object[]> executeBaseQuery(
+	public static List executeBaseQuery(
 			Objektarten art, Anhang anhang, String anlagenart,
 			Sachbearbeiter sachbearbeiter, String[] entwGebiet,
 			String prioritaet, String wiedervorlage,
@@ -1343,9 +1344,9 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 			query.append("'" + today + "'");
 		}
 		query.append(";");
-		return HibernateSessionFactory.currentSession()
-            .createNativeQuery(query.toString(), Object[].class)
-            .getResultList();
+		NativeQuery<Object> q = HibernateSessionFactory.currentSession()
+			.createSQLQuery(query.toString());
+		return q.getResultList();
 	}
 
 	/* ********************************************************************** */
