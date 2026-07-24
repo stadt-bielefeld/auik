@@ -38,11 +38,14 @@ import javax.swing.SpringLayout;
  */
 public class Form extends JPanel {
 
-    private SpringLayout springLayout = new SpringLayout();
-
     private static final int PAD = 5;
     private static final Spring INIT = Spring.constant(0);
     private static final Spring PAD_SPRING = Spring.constant(PAD);
+
+    private SpringLayout springLayout = new SpringLayout();
+
+    private Spring height = INIT;
+    private Spring labelWidth = INIT;
 
     public Form() {
         super();
@@ -61,13 +64,9 @@ public class Form extends JPanel {
         this.add(field);
 
         // Calculate grid cell dimensions
-        Spring height = INIT, labelWidth = INIT;
-        for (Component c : this.getComponents()) {
-            height = Spring.max(height, Spring.height(c));
-            if (c instanceof JLabel) {
-                labelWidth = Spring.max(labelWidth, Spring.width(c));
-            }
-        }
+        this.height = Spring.max(this.height, Spring.max(
+                Spring.height(jLabel), Spring.height(field)));
+        this.labelWidth = Spring.max(this.labelWidth, Spring.width(jLabel));
 
         // Position label-field pairs in in two-column grid
         Spring fieldX = Spring.sum(PAD_SPRING, labelWidth);
