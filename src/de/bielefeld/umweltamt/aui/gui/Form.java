@@ -20,6 +20,8 @@
  */
 package de.bielefeld.umweltamt.aui.gui;
 
+import static javax.swing.SpringLayout.EAST;
+
 import java.awt.Component;
 
 import javax.swing.JComponent;
@@ -36,10 +38,14 @@ import javax.swing.SpringLayout;
  */
 public class Form extends JPanel {
 
+    private static final int PAD = 5;
+    private static final Spring INIT = Spring.constant(0);
+    private static final Spring PAD_SPRING = Spring.constant(PAD);
+
     private SpringLayout springLayout = new SpringLayout();
 
-    private static final Spring INIT = Spring.constant(0);
-    private static final Spring PAD = Spring.constant(5);
+    private Spring height = INIT;
+    private Spring labelWidth = INIT;
 
     public Form() {
         super();
@@ -58,18 +64,14 @@ public class Form extends JPanel {
         this.add(field);
 
         // Calculate grid cell dimensions
-        Spring height = INIT, labelWidth = INIT;
-        for (Component c : this.getComponents()) {
-            height = Spring.max(height, Spring.height(c));
-            if (c instanceof JLabel) {
-                labelWidth = Spring.max(labelWidth, Spring.width(c));
-            }
-        }
+        this.height = Spring.max(this.height, Spring.max(
+                Spring.height(jLabel), Spring.height(field)));
+        this.labelWidth = Spring.max(this.labelWidth, Spring.width(jLabel));
 
         // Position label-field pairs in in two-column grid
-        Spring fieldX = Spring.sum(PAD, labelWidth);
+        Spring fieldX = Spring.sum(PAD_SPRING, labelWidth);
         Spring y = INIT;
-        Spring yOffset = Spring.sum(height, PAD);
+        Spring yOffset = Spring.sum(height, PAD_SPRING);
         for (Component c : this.getComponents()) {
             SpringLayout.Constraints cons = springLayout.getConstraints(c);
             cons.setHeight(height);
@@ -80,6 +82,7 @@ public class Form extends JPanel {
             } else {
                 // Position field next to label
                 cons.setX(fieldX);
+                springLayout.putConstraint(EAST, c, -PAD, EAST, this);
 
                 // Next row
                 y = Spring.sum(y, yOffset);
