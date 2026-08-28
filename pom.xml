@@ -3,13 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>auik_prod</groupId>
   <artifactId>auik_prod</artifactId>
-  <version>v1.4.1</version>
+  <version>1.4-SNAPSHOT</version>
   <properties>
     <jackson.version>2.15.0</jackson.version>
     <jersey.version>3.1.1</jersey.version>
     <jasper.version>6.20.4</jasper.version>
     <log4j.version>2.20.0</log4j.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>11</maven.compiler.release>
   </properties>
   <dependencies>
     <!-- hibernate tools & dependencies-->
@@ -178,8 +179,6 @@
 	    <artifactId>maven-compiler-plugin</artifactId>
 	    <version>3.10.1</version>
 	    <configuration>
-	      <source>11</source>
-	      <target>11</target>
           <compilerArgs>
             <arg>-Xlint</arg>
             <arg>-Xlint:-deprecation</arg>
