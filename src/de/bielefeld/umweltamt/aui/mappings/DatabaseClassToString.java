@@ -25,15 +25,35 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Gebuehren;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.MetaParameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parametergruppen;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
-import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
 import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.atl.ViewAtlAnalysepositionAll;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Abscheider;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenarten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Behaelterart;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Fluessigkeit;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Gebuehrenarten;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Gefaehrdungsstufen;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Jgs;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Kontrollen;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Material;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Pruefer;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Pruefergebniss;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Vbfeinstufung;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsgebuehren;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsverf;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Verwmassnahmen;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Bezeichnung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
@@ -42,16 +62,14 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.basis.Onlinekartendienst;
-import de.bielefeld.umweltamt.aui.mappings.basis.OnlinekartendienstId;
-import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
+import de.bielefeld.umweltamt.aui.mappings.basis.Prioritaet;
+import de.bielefeld.umweltamt.aui.mappings.basis.PrioritaetId;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.ViewTwoWayObjektverknuepfungId;
-import de.bielefeld.umweltamt.aui.mappings.basis.Prioritaet;
-import de.bielefeld.umweltamt.aui.mappings.basis.PrioritaetId;
+import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
 import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
@@ -98,27 +116,6 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.SbEntlastung;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Versickerungsanlage;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Abscheider;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenarten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Behaelterart;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Fluessigkeit;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Gebuehrenarten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Gefaehrdungsstufen;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Jgs;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Kontrollen;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Material;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Pruefer;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Pruefergebniss;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Vbfeinstufung;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsgebuehren;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsverf;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Verwmassnahmen;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
-import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 
 /**
@@ -626,16 +623,6 @@ public class DatabaseClassToString {
 		return clazz.getStandortId().toString();
 	}
 
-	public static String toStringForClass(Onlinekartendienst onlinekartendienst) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(OnlinekartendienstId onlinekartendienstId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(ViewTwoWayObjektverknuepfung viewTwoWayObjektverknuepfung) {
 		// TODO Auto-generated method stub
 		return null;
@@ -776,11 +763,6 @@ public class DatabaseClassToString {
 	}
 
 	public static String toStringForClass(TabStreets tabStreets) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(Orte orte) {
 		// TODO Auto-generated method stub
 		return null;
 	}
