@@ -37,6 +37,7 @@ public class EWasserrecht implements java.io.Serializable {
 
 	private Integer nr;
 	private Integer origNr;
+	private Integer objektid;
 	private EAdresse adresse;
 	private Integer rechtArtOpt;
 	private Date antragDat;
@@ -56,13 +57,14 @@ public class EWasserrecht implements java.io.Serializable {
 		this.nr = nr;
 	}
 
-	public EWasserrecht(Integer nr, Integer origNr, EAdresse adresse,
+	public EWasserrecht(Integer nr, Integer origNr, Integer objektid, EAdresse adresse,
 			Integer rechtArtOpt, Date antragDat, Date erteilungWrDat,
 			Boolean befristungTog, Date befristungDat, String bemerkung,
 			Date aktualDat, Date erstellDat, String aktenzeichen,
 			String herkunft) {
 		this.nr = nr;
 		this.origNr = origNr;
+		this.objektid = objektid;
 		this.adresse = adresse;
 		this.rechtArtOpt = rechtArtOpt;
 		this.antragDat = antragDat;
@@ -92,6 +94,16 @@ public class EWasserrecht implements java.io.Serializable {
 	@JsonIgnore
 	public void setOrigNr(Integer origNr) {
 		this.origNr = origNr;
+	}
+
+	@JsonIgnore
+	public Integer getObjektid() {
+		return this.objektid;
+	}
+
+	@JsonIgnore
+	public void setObjektid(Integer objektid) {
+		this.objektid = objektid;
 	}
 
 	public EAdresse getAdresse() {

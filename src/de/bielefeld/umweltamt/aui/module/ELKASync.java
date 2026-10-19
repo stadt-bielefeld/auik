@@ -87,7 +87,9 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.EBetriebModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EEinleitungsstelleModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EEntwaesserungsgrundstueckModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EMessstelleModel;
+import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ESonderbauwerkModel;
+
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
@@ -118,6 +120,8 @@ public class ELKASync extends AbstractModul {
     private EStandortModel standortModel;
     private EEntwaesserungsgrundstueckModel entwgrundModel;
     private ESonderbauwerkModel sbModel;
+
+    private List<?> currentTableMappings;
 
     private JTable dbTable;
     private JLabel rowCount;
@@ -155,6 +159,8 @@ public class ELKASync extends AbstractModul {
             }
             @Override
             protected void doNonUILogic() throws RuntimeException {
+                // TODO Auto-generated method stub
+
                 ELKASync.this.adresseModel.setList(
                         prependIdentifierAdresse(EAdresse.getAll()));
                 ELKASync.this.rowCount.setText(String.valueOf(
@@ -198,8 +204,8 @@ public class ELKASync extends AbstractModul {
                     "Betriebe",
                     "Abwasserbehandlungsanlagen",
                     "Anfallstellen",
-                    "Einleitungsstellen",
                     "Entwässerungsgrundstücke",
+                    "Einleitungsstellen",
                     "Messstellen",
                     "Sonderbauwerke"};
             if (entities != null && entities.length > 0) {
@@ -245,6 +251,7 @@ public class ELKASync extends AbstractModul {
                                 ELKASync.this.einleitungsstelleModel.setList(
                                         prependIdentifierEinleitungsstelle(
                                             EEinleitungsstelle.getAll()));
+                                currentTableMappings = EEinleitungsstelle.getAll();
                                 ELKASync.this.einleitungsstelleModel.fireTableDataChanged();
                             } else if (item.equals("Messstellen")) {
                                 ELKASync.this.dbTable
@@ -1087,16 +1094,22 @@ public class ELKASync extends AbstractModul {
             ref.setEinleitungsstelleByZElsNr(EEinleitungsstelle.findById(ref.getzEl().getId()));
             ref.setAfsNiederschlagswasserByQNwAfsNr(EAfsNiederschlagswasser.findById(ref.getqAfsNw().getNr()));
             prependIdentifierToNr(ref.getStandort());
-            prependIdentifierToNr(ref.getStandort().getAdresse());
+            if (ref.getStandort().getAdresse() != null) {
+            	prependIdentifierToNr(ref.getStandort().getAdresse());
+            }
             if (ref.getEinleitungsstelleByQElsNr() != null) {
                 prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr());
                 prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr().getStandort());
                 prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr().getStandort().getAdresse());
             }
-            if (ref.getEinleitungsstelleByZElsNr() != null) {
+            if (ref.getEinleitungsstelleByZElsNr() != null && ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse() != null) {
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr());
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort());
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse());
+            }
+            if (ref.getEinleitungsstelleByZElsNr() != null && ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse() == null) {
+                prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr());
+                prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort());
             }
             if (ref.getAfsNiederschlagswasserByQNwAfsNr() != null) {
                 prependIdentifierToNr(ref.getAfsNiederschlagswasserByQNwAfsNr());
