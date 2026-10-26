@@ -64,9 +64,6 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-// ── ENTFERNT: JGoodies Imports ────────────────────────
-// import com.jgoodies.forms.factories.Paddings;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 

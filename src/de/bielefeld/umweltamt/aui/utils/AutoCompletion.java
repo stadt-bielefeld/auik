@@ -32,16 +32,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.Field;
 
 import javax.swing.ComboBoxEditor;
 import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
-import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
@@ -157,20 +154,14 @@ public class AutoCompletion<E> extends PlainDocument {
 
     @SuppressWarnings("unchecked")
     private JList<E> getListBox() {
-        JList<E> listBox;
-        try {
-            Field field = JComponent.class.getDeclaredField("ui");
-            field.setAccessible(true);
-            BasicComboBoxUI ui = (BasicComboBoxUI) field.get(comboBox);
-            field = BasicComboBoxUI.class.getDeclaredField("listBox");
-            field.setAccessible(true);
-            listBox = (JList<E>) field.get(ui);
-        } catch (NoSuchFieldException nsfe) {
-            throw new RuntimeException(nsfe);
-        } catch (IllegalAccessException iae) {
-            throw new RuntimeException(iae);
+        // Popup-Liste über die offizielle Accessibility-Schnittstelle holen
+        // (ohne Reflection, funktioniert auch ab Java 17)
+        Object child = comboBox.getAccessibleContext().getAccessibleChild(0);
+        if (child instanceof javax.swing.plaf.basic.ComboPopup) {
+            return (JList<E>) ((javax.swing.plaf.basic.ComboPopup) child).getList();
         }
-        return listBox;
+        // Fallback: eigene Liste, reicht zum Ausmessen der Einträge
+        return new JList<E>();
     }
 
     /**
