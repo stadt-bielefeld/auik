@@ -64,13 +64,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 
-// ── ENTFERNT: JGoodies Imports [1] ───────────────────
-// import com.jgoodies.forms.builder.PanelBuilder;
-// import com.jgoodies.forms.factories.Paddings;
-// import com.jgoodies.forms.layout.CellConstraints;
-// import com.jgoodies.forms.layout.FormLayout;
-// import java.awt.Label;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -149,7 +142,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         return super.getIcon(this.iconPath);
     }
 
-    // ── GEÄNDERT: getPanel() (JGoodies → Swing) [1] ───────
     @Override
     public JPanel getPanel() {
         if (this.panel == null) {
@@ -179,9 +171,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             submitToolBar.setRollover(true);
             submitToolBar.add(getSubmitButton());
 
-            // ── GEÄNDERT: ComponentFactory → Swing [1] ────
-            // BorderLayout wie Original [1]
-            // JLabel statt AWT Label [1]
+
             JPanel restrictPanel =
                 new JPanel(new BorderLayout());
             JPanel restrictButtonBar = new JPanel(
@@ -197,7 +187,6 @@ public class BasisAdresseSuchen extends AbstractModul {
             restrictPanel.add(
                 restrictButtonBar, BorderLayout.CENTER);
 
-            // ── Unveränderter TabAction Code [1] ──────────
             TabAction ta = new TabAction();
             ta.addComp(getSuchFeld());
             ta.addComp(getHausnrFeld());
@@ -205,7 +194,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             ta.addComp(getBetreiberTabelle());
             ta.addComp(getObjektTabelle());
 
-            // ── GEÄNDERT: ComponentFactory → JSplitPane [1]
+
             this.tabellenSplit = new JSplitPane(
             	    JSplitPane.VERTICAL_SPLIT,
             	    betreiberScroller,
@@ -216,7 +205,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             	objektScroller.setPreferredSize(
             	    new java.awt.Dimension(0, 150));
 
-            // ── GEÄNDERT: FormLayout → GridBagLayout [1] ──
+
             JPanel mainPanel = new JPanel(
                 new GridBagLayout());
             GridBagConstraints gbc =
@@ -314,7 +303,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             gbc.insets = new Insets(3, 3, 3, 3);
             mainPanel.add(restrictPanel, gbc);
 
-            // ── GEÄNDERT: Paddings.DIALOG → EmptyBorder [1]
+
             mainPanel.setBorder(
                 BorderFactory.createEmptyBorder(
                     7, 7, 7, 7));
@@ -324,7 +313,7 @@ public class BasisAdresseSuchen extends AbstractModul {
         return this.panel;
     }
 
-    // ── Unveränderter show() [1] ───────────────────────────
+
     @Override
     public void show() {
         super.show();
@@ -338,7 +327,7 @@ public class BasisAdresseSuchen extends AbstractModul {
         filterBetreiberListe(suchFeld);
     }
 
-    // ── Unveränderter hide() [1] ───────────────────────────
+
     @Override
     public void hide() {
         super.hide();
@@ -357,7 +346,7 @@ public class BasisAdresseSuchen extends AbstractModul {
         }
     }
 
-    // ── Unveränderter doSearch() [1] ──────────────────────
+
     private void doSearch() {
         final String name = getSuchFeld().getText();
         final String strasse = getStrassenFeld().getText();
@@ -406,7 +395,7 @@ public class BasisAdresseSuchen extends AbstractModul {
         worker.start();
     }
 
-    // ── Unveränderter filterBetreiberListe() [1] ──────────
+
     public void filterBetreiberListe(
         Component focusComp) {
         log.debug("Start filterStandortListe()");
@@ -458,7 +447,7 @@ public class BasisAdresseSuchen extends AbstractModul {
         log.debug("End filterStandortListe()");
     }
 
-    // ── Unveränderter updateObjekte() [1] ─────────────────
+
     public void updateObjekte() {
         log.debug("Start updateObjekte()");
         ListSelectionModel lsm =
@@ -475,7 +464,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         log.debug("End updateObjekte()");
     }
 
-    // ── Unveränderter editBetreiber() [1] ─────────────────
     public void editBetreiber(Inhaber betr) {
         BetreiberEditor editDialog =
             new BetreiberEditor(betr, this.frame);
@@ -488,7 +476,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         filterBetreiberListe(betreiberTabelle);
     }
 
-    // ── Unveränderter searchObjekteByBetreiber() [1] ──────
     public void searchObjekteByBetreiber(
         final Inhaber inh) {
         SwingWorkerVariant worker = new SwingWorkerVariant(
@@ -549,7 +536,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         worker.start();
     }
 
-    // ── Unveränderter Actions [1] ──────────────────────────
     private Action getBetreiberEditAction() {
         if (this.betreiberEditAction == null) {
             this.betreiberEditAction =
@@ -858,7 +844,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         return this.objektLoeschAction;
     }
 
-    // ── Unveränderter Popup Methoden [1] ──────────────────
     private void showBetreiberPopup(MouseEvent e) {
         if (this.betreiberPopup == null) {
             this.betreiberPopup =
@@ -917,7 +902,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         }
     }
 
-    // ── Unveränderter Tabellen [1] ─────────────────────────
     private JTable getBetreiberTabelle() {
         if (this.betreiberTabelle == null) {
             this.betreiberTabelle =
@@ -1122,7 +1106,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         return this.objektTabelle;
     }
 
-    // ── Unveränderter Buttons [1] ──────────────────────────
     private JButton getSubmitButton() {
         if (this.submitButton == null) {
             this.submitButton =
@@ -1288,7 +1271,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         return this.hausnrFeld;
     }
 
-    // ── Unveränderter Filter Buttons [1] ──────────────────
     private JButton getAwsvButton() {
         if (this.awsvButton == null) {
             this.awsvButton = new JButton("AwSV");
@@ -1458,7 +1440,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         return this.genButton;
     }
 
-    // ── Unveränderter Timer [1] ────────────────────────────
     private Timer getSuchTimer() {
         if (this.suchTimer == null) {
             this.suchTimer = new Timer(900,
@@ -1517,7 +1498,6 @@ public class BasisAdresseSuchen extends AbstractModul {
         return this.suchTimer;
     }
 
-    // ── Unveränderter SuchBox [1] ──────────────────────────
     private JComboBox<NamedObject> getSuchBox() {
         if (this.suchBox == null) {
             this.suchBox = new JComboBox<>(

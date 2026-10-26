@@ -83,7 +83,7 @@ public class ComponentFactory {
 
         for (int i = 0; i < buttons.length; i++) {
             if (i > 0) {
-                // Abstand zwischen Buttons (entspricht JGoodies Standard)
+
                 buttonBar.add(Box.createHorizontalStrut(6));
             }
             buttonBar.add(buttons[i]);

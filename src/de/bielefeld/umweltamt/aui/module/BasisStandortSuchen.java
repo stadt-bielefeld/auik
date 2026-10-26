@@ -149,8 +149,6 @@ public class BasisStandortSuchen extends AbstractModul
 {
     /** Logging */
     private static final AuikLogger log = AuikLogger.getLogger();
-
-    // ── Unveränderter Felder [2] ───────────────────────────
     private JTextField strassenFeld;
     private JTextField hausnrFeld;
     private JTextField ortFeld;
@@ -178,7 +176,6 @@ public class BasisStandortSuchen extends AbstractModul
     protected String standort;
     protected int standortID;
 
-    // ── Unveränderter Modul Methoden [2] ──────────────────
     /*
      * @see de.bielefeld.umweltamt.aui.Modul#getName()
      */
@@ -246,7 +243,6 @@ public class BasisStandortSuchen extends AbstractModul
             submitToolBar.setRollover(true);
             submitToolBar.add(getSubmitButton());
 
-            // ── GEÄNDERT: ComponentFactory → FlowLayout ────
             JPanel restrictPanel = new JPanel(
             	    new FlowLayout(FlowLayout.LEFT, 5, 2));
             	restrictPanel.add(
@@ -257,27 +253,22 @@ public class BasisStandortSuchen extends AbstractModul
             	restrictPanel.add(getAnfallButton());
             	restrictPanel.add(getGenButton());
 
-            // ── Unveränderter TabAction Code [2] ──────────
             TabAction ta = new TabAction();
             ta.addComp(getStrassenFeld());
             ta.addComp(getHausnrFeld());
             ta.addComp(getStandortTabelle());
             ta.addComp(getObjektTabelle());
 
-            // ── GEÄNDERT: ComponentFactory → JSplitPane ───
             this.tabellenSplit = new JSplitPane(
             	    JSplitPane.VERTICAL_SPLIT,
             	    standortScroller,
             	    objektScroller);
-            	// GEÄNDERT: resizeWeight anpassen
             	this.tabellenSplit.setResizeWeight(0.6);
             	this.tabellenSplit.setMinimumSize(
             	    new java.awt.Dimension(0, 100));
-            	// GEÄNDERT: Maximale Höhe der unteren Tabelle begrenzen
             	objektScroller.setPreferredSize(
             	    new java.awt.Dimension(0, 150));
 
-            // ── GEÄNDERT: FormLayout → GridBagLayout ───────
             JPanel mainPanel = new JPanel(new GridBagLayout());
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.insets = new Insets(3, 3, 3, 3);
@@ -358,7 +349,6 @@ public class BasisStandortSuchen extends AbstractModul
             gbc.insets = new Insets(3, 3, 3, 3);
             mainPanel.add(restrictPanel, gbc);
 
-            // ── GEÄNDERT: Paddings.DIALOG → EmptyBorder ───
             mainPanel.setBorder(
                 BorderFactory.createEmptyBorder(7, 7, 7, 7));
 
@@ -367,7 +357,7 @@ public class BasisStandortSuchen extends AbstractModul
         return this.panel;
     }
 
-    // ── Unveränderter show() [2] ───────────────────────────
+
     @Override
     public void show()
     {
@@ -382,7 +372,7 @@ public class BasisStandortSuchen extends AbstractModul
         updateStandortListe();
     }
 
-    // ── Unveränderter hide() [2] ───────────────────────────
+
     @Override
     public void hide()
     {
@@ -405,7 +395,6 @@ public class BasisStandortSuchen extends AbstractModul
         }
     }
 
-    // ── Unveränderter updateStandortListe() [2] ───────────
     public void updateStandortListe()
     {
         log.debug("Start updateStandortListe()");
@@ -439,7 +428,6 @@ public class BasisStandortSuchen extends AbstractModul
         log.debug("End updateStandortListe()");
     }
 
-    // ── Unveränderter updateObjekte() [2] ─────────────────
     public void updateObjekte()
     {
         log.debug("Start updateObjekte()");
@@ -454,7 +442,6 @@ public class BasisStandortSuchen extends AbstractModul
         log.debug("End updateObjekte()");
     }
 
-    // ── Unveränderter editStandort() [2] ──────────────────
     public void editStandort(Adresse adr)
     {
         AdressEditor editDialog = null;
@@ -467,7 +454,7 @@ public class BasisStandortSuchen extends AbstractModul
         }
     }
 
-    // ── Unveränderter editBetreiber() [2] ─────────────────
+
     public void editBetreiber(Inhaber inhaber)
     {
         BetreiberEditor editDialog = new BetreiberEditor(inhaber, this.frame);
@@ -475,7 +462,7 @@ public class BasisStandortSuchen extends AbstractModul
         editDialog.setVisible(true);
     }
 
-    // ── Unveränderter searchObjekteByStandort() [2] ───────
+
     public void searchObjekteByStandort(final Adresse adr,
         final String abteilung, final Integer nichtartid)
     {
@@ -534,7 +521,6 @@ public class BasisStandortSuchen extends AbstractModul
         worker.start();
     }
 
-    // ── Unveränderter filterStandortListe() [2] ───────────
     public void filterStandortListe(Component focusComp)
     {
         log.debug("Start filterStandortListe()");
@@ -579,7 +565,6 @@ public class BasisStandortSuchen extends AbstractModul
         log.debug("End filterStandortListe()");
     }
 
-    // ── Unveränderter showReportListe() [2] ───────────────
     public void showReportListe()
     {
         ListSelectionModel lsm = getStandortTabelle().getSelectionModel();
@@ -615,7 +600,6 @@ public class BasisStandortSuchen extends AbstractModul
         }
     }
 
-    // ── Unveränderter Timer [2] ────────────────────────────
     private Timer getSuchTimer()
     {
         if (this.suchTimer == null)
@@ -674,7 +658,6 @@ public class BasisStandortSuchen extends AbstractModul
         return this.suchTimer;
     }
 
-    // ── Unveränderter Textfelder [2] ──────────────────────
     private JTextField getStrassenFeld()
     {
         if (this.strassenFeld == null)
@@ -758,7 +741,6 @@ public class BasisStandortSuchen extends AbstractModul
         return this.hausnrFeld;
     }
 
-    // ── Unveränderter Buttons [2] ──────────────────────────
     private JButton getSubmitButton()
     {
         if (this.submitButton == null)
@@ -924,7 +906,6 @@ public class BasisStandortSuchen extends AbstractModul
         return this.genButton;
     }
 
-    // ── Unveränderter Tabellen [2] ─────────────────────────
     private JTable getStandortTabelle()
     {
         if (this.standortTabelle == null)
@@ -1021,7 +1002,6 @@ public class BasisStandortSuchen extends AbstractModul
         return this.standortTabelle;
     }
 
-    // ── Unveränderter showStandortPopup() [2] ─────────────
     private void showStandortPopup(MouseEvent e)
     {
         if (this.standortPopup == null)
@@ -1045,7 +1025,7 @@ public class BasisStandortSuchen extends AbstractModul
         }
     }
 
-    // ── Unveränderter Actions [2] ──────────────────────────
+
     private Action getObjektEditAction()
     {
         if (this.objektEditAction == null)
@@ -1198,7 +1178,7 @@ public class BasisStandortSuchen extends AbstractModul
         return this.objektLoeschAction;
     }
 
-    // ── Unveränderter StreamGobbler [2] ───────────────────
+
     class StreamGobbler extends Thread
     {
         InputStream is;
@@ -1226,7 +1206,6 @@ public class BasisStandortSuchen extends AbstractModul
         }
     }
 
-    // ── Unveränderter GisAction [2] ───────────────────────
     private Action getGisAction()
     {
         if (this.gisAction == null)
@@ -1276,7 +1255,6 @@ public class BasisStandortSuchen extends AbstractModul
         return this.gisAction;
     }
 
-    // ── Unveränderter showObjektPopup() [2] ───────────────
     private void showObjektPopup(MouseEvent e)
     {
         if (this.objektPopup == null)
@@ -1300,7 +1278,6 @@ public class BasisStandortSuchen extends AbstractModul
         }
     }
 
-    // ── Unveränderter getObjektTabelle() [2] ──────────────
     private JTable getObjektTabelle()
     {
         if (this.objektTabelle == null)
@@ -1412,7 +1389,6 @@ public class BasisStandortSuchen extends AbstractModul
         return this.objektTabelle;
     }
 
-    // ── Unveränderter getStandortEditAction() [2] ─────────
     private Action getStandortEditAction()
     {
         if (this.AdresseEditAction == null)

@@ -91,7 +91,6 @@ public class HauptFrame extends JFrame {
     private static final long serialVersionUID =
         4233252729652695263L;
 
-    // ── Unveränderter Konstanten ───────────────────────────
     public static final Color ERROR_COLOR =
         new Color(200, 0, 0);
     public static final Color SUCCESS_COLOR =
@@ -100,7 +99,6 @@ public class HauptFrame extends JFrame {
     protected static final int FILE_OPEN = 1;
     protected static final int FILE_SAVE = 2;
 
-    // ── Unveränderter Felder ───────────────────────────────
     private JPanel jContentPane = null;
     private ActionListener buttonListener = null;
     private Action closeAction = null;
@@ -134,21 +132,18 @@ public class HauptFrame extends JFrame {
     private SettingsManager settings;
     private Timer clearStatusTimer;
 
-    // ── Unveränderter Konstruktor ──────────────────────────
     public HauptFrame(SettingsManager settings) {
         super();
         this.settings = settings;
         initialize();
     }
 
-    // ── GEÄNDERT: initialize() ────────────────────────────
     private void initialize() {
         try {
 
             UIManager.setLookAndFeel(
                 UIManager.getSystemLookAndFeelClassName());
 
-            // GEÄNDERT: Schriftart explizit setzen
 
             // Options.setUseSystemFonts(true)
             Font defaultFont =
@@ -179,7 +174,6 @@ public class HauptFrame extends JFrame {
             UIManager.put("Tree.font", defaultFont);
             UIManager.put("PasswordField.font", defaultFont);
             UIManager.put("Spinner.font", defaultFont);
-         // GEÄNDERT: Tabellenlinien feiner/heller [1][2]
          // Helle Linienfarbe wie im Original
          UIManager.put("Table.gridColor",
              new Color(220, 220, 220));
@@ -260,7 +254,6 @@ public class HauptFrame extends JFrame {
         }
     }
 
-    // ── Unveränderter askForDBCredentials() ───────────────
     private boolean askForDBCredentials() {
         if (!HibernateSessionFactory
             .doesDialectNeedCredentials()) {
@@ -272,7 +265,6 @@ public class HauptFrame extends JFrame {
         return benutzerDialog.loginSuccessful();
     }
 
-    // ── Unveränderter getCloseAction() ────────────────────
     public Action getCloseAction() {
         if (closeAction == null) {
             closeAction = new AbstractAction("Beenden",
@@ -297,7 +289,6 @@ public class HauptFrame extends JFrame {
         return closeAction;
     }
 
-    // ── Unveränderter getButtonListener() ─────────────────
     protected ActionListener getButtonListener() {
         if (buttonListener == null) {
             buttonListener = new ActionListener() {
@@ -312,7 +303,6 @@ public class HauptFrame extends JFrame {
         return buttonListener;
     }
 
-    // ── Unveränderter getViewMenu() ───────────────────────
     public JPopupMenu getViewMenu() {
         if (viewMenu == null) {
             viewMenu = new JPopupMenu();
@@ -320,7 +310,6 @@ public class HauptFrame extends JFrame {
         return viewMenu;
     }
 
-    // ── Unveränderter getViewMenuBar() ────────────────────
     private JToolBar getViewMenuBar() {
         if (viewMenuBar == null) {
             viewMenuBar = new JToolBar();
@@ -333,7 +322,6 @@ public class HauptFrame extends JFrame {
         return viewMenuBar;
     }
 
-    // ── Unveränderter getViewMenuButton() ─────────────────
     public JButton getViewMenuButton() {
         if (viewMenuButton == null) {
             viewMenuButton = new JButton("",
@@ -361,7 +349,7 @@ public class HauptFrame extends JFrame {
         return viewMenuButton;
     }
 
-    // ── Unveränderter getModulBar() ───────────────────────
+
     private JToolBar getModulBar() {
         if (modulBar == null) {
             modulBar = new JToolBar();
@@ -375,7 +363,6 @@ public class HauptFrame extends JFrame {
         return modulBar;
     }
 
-    // ── Unveränderter getModulBackButton() ────────────────
     protected JButton getModulBackButton() {
         if (modulBackButton == null) {
             String desc = "Zurück";
@@ -396,7 +383,6 @@ public class HauptFrame extends JFrame {
         return modulBackButton;
     }
 
-    // ── Unveränderter getModulFwdButton() ─────────────────
     protected JButton getModulFwdButton() {
         if (modulFwdButton == null) {
             String desc = "Vor";
@@ -417,7 +403,6 @@ public class HauptFrame extends JFrame {
         return modulFwdButton;
     }
 
-    // ── Unveränderter locateOnScreen() ────────────────────
     public void locateOnScreen(Window win) {
         Dimension paneSize = win.getSize();
         Dimension screenSize =
@@ -427,7 +412,6 @@ public class HauptFrame extends JFrame {
             (screenSize.height - paneSize.height) / 2);
     }
 
-    // ── Unveränderter close() ─────────────────────────────
     public void close() {
         this.dispose();
         if (manager != null
@@ -458,7 +442,6 @@ public class HauptFrame extends JFrame {
         System.exit(0);
     }
 
-    // ── Unveränderter getJContentPane() ───────────────────
     private javax.swing.JPanel getJContentPane() {
         if (jContentPane == null) {
             jContentPane = new javax.swing.JPanel();
@@ -485,7 +468,7 @@ public class HauptFrame extends JFrame {
         return hauptMenue;
     }
 
-    // ── Unveränderter Menü Methoden ───────────────────────
+
     private JMenu getFileMenu() {
         if (fileMenu == null) {
             fileMenu = new JMenu();
@@ -688,7 +671,6 @@ public class HauptFrame extends JFrame {
         return DokuItem;
     }
 
-    // ── Unveränderter getTitlePanel() ─────────────────────
     private JPanel getTitlePanel() {
         if (titlePanel == null) {
             titlePanel = new GradientPanel(
@@ -711,7 +693,6 @@ public class HauptFrame extends JFrame {
         return titlePanel;
     }
 
-    // ── Unveränderter getStatusPanel() ────────────────────
     private JPanel getStatusPanel() {
         if (statusPanel == null) {
             statusLabel = new JLabel();
@@ -727,7 +708,7 @@ public class HauptFrame extends JFrame {
         return statusPanel;
     }
 
-    // ── Unveränderter getSplitPane() ──────────────────────
+
     private JSplitPane getSplitPane() {
         if (splitPane == null) {
             splitPane =
@@ -739,7 +720,7 @@ public class HauptFrame extends JFrame {
         return splitPane;
     }
 
-    // ── Unveränderter getLeftFrame() ──────────────────────
+
     protected TitledPanel getLeftFrame() {
         if (leftFrame == null) {
             leftFrame = new TitledPanel(" ");
@@ -753,8 +734,7 @@ public class HauptFrame extends JFrame {
         return leftFrame;
     }
 
-    // ── GEÄNDERT: getRightFrame() ─────────────────────────
-    // Scrollbar durch NEVER verhindert [1][2]
+
     protected TitledPanel getRightFrame() {
         if (rightFrame == null) {
             rightFrame = new TitledPanel(" ");
@@ -766,7 +746,6 @@ public class HauptFrame extends JFrame {
         return rightFrame;
     }
 
-    // ── Unveränderter getRightCardPanel() ─────────────────
     protected JPanel getRightCardPanel() {
         if (rightCardPanel == null) {
             rightCardPanel = new JPanel(new CardLayout());
@@ -774,7 +753,7 @@ public class HauptFrame extends JFrame {
         return rightCardPanel;
     }
 
-    // ── Unveränderter getLeftScroller() ───────────────────
+
     private JScrollPane getLeftScroller() {
         if (leftScroller == null) {
             leftScroller = new JScrollPane(
@@ -788,7 +767,7 @@ public class HauptFrame extends JFrame {
         return leftScroller;
     }
 
-    // ── Unveränderter getLeftCardPanel() ──────────────────
+
     protected JPanel getLeftCardPanel() {
         if (leftCardPanel == null) {
             leftCardPanel = new JPanel(new CardLayout());
@@ -796,12 +775,10 @@ public class HauptFrame extends JFrame {
         return leftCardPanel;
     }
 
-    // ── Unveränderter getManager() ────────────────────────
     public ModulManager getManager() {
         return manager;
     }
 
-    // ── Unveränderter changeStatus() ──────────────────────
     public void changeStatus(String txt) {
         if (txt.equals("")) {
             clearStatus();
@@ -826,7 +803,6 @@ public class HauptFrame extends JFrame {
         clearStatusTimer.stop();
     }
 
-    // ── Unveränderter File Methoden ───────────────────────
     public File openFile() {
         return openOrSaveFile(null, null, FILE_OPEN);
     }
@@ -893,8 +869,7 @@ public class HauptFrame extends JFrame {
         }
     }
 
-    // ── GEÄNDERT: BenutzerDatenDialog ─────────────────────
-    // FormLayout → GridBagLayout [1][2]
+    // FormLayout → GridBagLayout
     private final class BenutzerDatenDialog
         extends JDialog {
         private static final long serialVersionUID =
@@ -1060,7 +1035,7 @@ public class HauptFrame extends JFrame {
                     }
                 });
 
-            // GEÄNDERT: FormLayout → GridBagLayout
+
             JPanel panel = new JPanel(
                 new GridBagLayout());
             GridBagConstraints gbc =
@@ -1107,7 +1082,6 @@ public class HauptFrame extends JFrame {
             gbc.fill = GridBagConstraints.NONE;
             panel.add(loginButton, gbc);
 
-            // GEÄNDERT: Paddings.DIALOG → EmptyBorder
             panel.setBorder(
                 BorderFactory.createEmptyBorder(
                     7, 7, 7, 7));
@@ -1130,7 +1104,6 @@ public class HauptFrame extends JFrame {
         }
     }
 
-    // ── Unveränderter resetLeftScroller() ─────────────────
     public void resetLeftScroller() {
         JScrollBar vertSB =
             leftScroller.getVerticalScrollBar();
