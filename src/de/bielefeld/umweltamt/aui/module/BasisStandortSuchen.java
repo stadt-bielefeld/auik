@@ -77,6 +77,7 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.KeyboardFocusManager;
 import java.awt.Label;
 import java.awt.Point;
@@ -97,9 +98,13 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -112,14 +117,11 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
+import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
@@ -153,6 +155,10 @@ public class BasisStandortSuchen extends AbstractModul
 {
 	/** Logging */
 	private static final AuikLogger log = AuikLogger.getLogger();
+
+	private static final int PAD = 6;
+	private static final Border PAD_BORDER =
+        BorderFactory.createEmptyBorder(PAD, PAD, PAD, PAD);
 
 	private JTextField strassenFeld;
 	private JTextField hausnrFeld;
@@ -266,6 +272,7 @@ public class BasisStandortSuchen extends AbstractModul
 			restrictPanel.add(new Label("Objekte einschränken:"),
 								BorderLayout.WEST);
 			restrictPanel.add(restrictButtonBar, BorderLayout.CENTER);
+			restrictPanel.setBorder(PAD_BORDER);
 
 			// Die Tab-Action ist in eine neue Klasse ausgelagert,
 			// weil man sie evtl. öfters brauchen wird.
@@ -276,29 +283,36 @@ public class BasisStandortSuchen extends AbstractModul
 			ta.addComp(getObjektTabelle());
 
 			this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
-																	JSplitPane.VERTICAL_SPLIT, standortScroller,
-																	objektScroller, 0.6);
+                JSplitPane.VERTICAL_SPLIT,
+                standortScroller,
+                objektScroller,
+                0.6);
+			tabellenSplit.setPreferredSize(new Dimension(590, 260));
+			tabellenSplit.setBorder(PAD_BORDER);
 
-			FormLayout layout = new FormLayout(
-					"l:p, max(4dlu;p), p:g, 10dlu, p, 4dlu, max(30dlu;p), 10dlu, p, 4dlu,  p:g, 3dlu, min(16dlu;p)", // spalten
-					"pref, 3dlu, 150dlu:grow, 3dlu, 30"); // zeilen
-			layout.setColumnGroups(new int[][] { { 1, 5 } });
+			JPanel formPanel = new JPanel();
+			formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.LINE_AXIS));
+			formPanel.add(new JLabel("Straße:"));
+			formPanel.add(Box.createHorizontalStrut(PAD));
+			formPanel.add(getStrassenFeld());
+			formPanel.add(Box.createHorizontalStrut(PAD));
+			formPanel.add(new JLabel("Haus-Nr.:"));
+			formPanel.add(Box.createHorizontalStrut(PAD));
+			formPanel.add(getHausnrFeld());
+			formPanel.add(Box.createHorizontalStrut(PAD));
+			formPanel.add(new JLabel("Ort:"));
+			formPanel.add(Box.createHorizontalStrut(PAD));
+			formPanel.add(getOrtFeld());
+			formPanel.add(Box.createHorizontalStrut(PAD));
+			formPanel.add(submitToolBar);
+			formPanel.setBorder(PAD_BORDER);
 
-			PanelBuilder builder = new PanelBuilder(layout);
-			CellConstraints cc = new CellConstraints();
-
-			builder.addLabel("Straße:", cc.xy(1, 1));
-			builder.add(getStrassenFeld(), cc.xy(3, 1));
-			builder.addLabel("Haus-Nr.:", cc.xy(5, 1));
-			builder.add(getHausnrFeld(), cc.xy(7, 1));
-			builder.addLabel("Ort:", cc.xy(9, 1));
-			builder.add(getOrtFeld(), cc.xy(11, 1));
-			builder.add(submitToolBar, cc.xy(13, 1));
-			builder.add(this.tabellenSplit, cc.xyw(1, 3, 13));
-			builder.add(restrictPanel, cc.xyw(1, 5, 13));
-
-			this.panel = builder.getPanel();
-			this.panel.setBorder(Paddings.DIALOG);
+			this.panel = new JPanel();
+			this.panel.setLayout(new BorderLayout());
+			this.panel.add(formPanel, BorderLayout.NORTH);
+			this.panel.add(this.tabellenSplit, BorderLayout.CENTER);
+			this.panel.add(restrictPanel, BorderLayout.SOUTH);
+			this.panel.setBorder(PAD_BORDER);
 		}
 		return this.panel;
 	}
@@ -773,6 +787,10 @@ public class BasisStandortSuchen extends AbstractModul
 		if (this.hausnrFeld == null)
 		{
 			this.hausnrFeld = new BasicEntryField();
+			final Dimension fixed = new Dimension(55, 30);
+			this.hausnrFeld.setMinimumSize(fixed);
+			this.hausnrFeld.setPreferredSize(fixed);
+			this.hausnrFeld.setMaximumSize(fixed);
 
 			this.hausnrFeld.addActionListener(new ActionListener()
 			{
