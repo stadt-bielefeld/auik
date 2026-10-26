@@ -24,7 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
-
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,15 +43,13 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -64,6 +62,7 @@ import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -113,56 +112,40 @@ public class SonderbauwerkPanel extends ObjectPanel {
         this.hauptModul = hauptModul;
         this.typePanel = typePanel;
 
-        FormLayout layout = new FormLayout(
-                "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.appendSeparator("Stammdaten");
-        builder.append("Bezeichnung:", getBezeichnungFeld());
-        builder.nextLine();
-        builder.append("Kurbezeichnung:", getKurzbezeichnungFeld());
-        builder.nextLine();
-        builder.append("Entwässerungsverfahren:", getVerfahrenBox());
-        builder.nextLine();
-        builder.append("Typ:", getTypBox());
-        builder.nextLine();
-        builder.append("Inbetriebnahme:", getInbetriebnahmeFeld());
-        builder.nextLine();
-        builder.append("Wiederinbetriebnahme:", getWiederinebetriebdatDatum());
-        builder.nextLine();
-        builder.append("", getStillgelegtCheck());
-        builder.append("am:", getStillegdatDatum());
-        builder.nextLine();
-        builder.append("Ostwert:", getE32Feld());
-        builder.nextLine();
-        builder.append("Nordwert:", getN32Feld());
-        builder.nextLine();
-        builder.append("Kläranlage:", getKlaeranlageBox());
-        builder.nextLine();
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        JPanel innerPanel = FormHelper.createFormPanel();
+        FormHelper.addSeparator(innerPanel, 0, "Stammdaten");
+        FormHelper.addLabelField(innerPanel, 1, 0, "Bezeichnung", getBezeichnungFeld());
+        FormHelper.addLabelField(innerPanel, 2, 0, "Kurbezeichnung",
+            getKurzbezeichnungFeld());
+        FormHelper.addLabelField(innerPanel, 3, 0, "Entwässerungsverfahren",
+            getVerfahrenBox());
+        FormHelper.addLabelField(innerPanel, 4, 0, "Typ", getTypBox());
+        FormHelper.addLabelField(innerPanel, 5, 0, "Inbetriebnahme",
+            getInbetriebnahmeFeld());
+        FormHelper.addLabelField(innerPanel, 6, 0, "Wiederinbetriebnahme",
+            getWiederinebetriebdatDatum());
+        FormHelper.addLabelField(innerPanel, 7, 0, null, getStillgelegtCheck());
+        FormHelper.addLabelField(innerPanel, 7, 1, "am", getStillegdatDatum());
+        FormHelper.addLabelField(innerPanel, 8, 0, "Ostwert", getE32Feld());
+        FormHelper.addLabelField(innerPanel, 9, 0, "Nordwert", getN32Feld());
+        FormHelper.addLabelField(innerPanel, 10, 0, "Kläranlage", getKlaeranlageBox());
+        FormHelper.addSeparator(innerPanel, 11, "Bemerkungen");
         JScrollPane bemerkungsScroller = new JScrollPane(
             getBemerkungFeld(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
-
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        FormHelper.addFull(innerPanel, 12, bemerkungsScroller, 60);
+        FormHelper.addSeparator(innerPanel, 13, "Verknüpfte Objekte");
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
-        builder.nextLine();
+        FormHelper.addFull(innerPanel, 14, objektverknuepfungScroller, 160);
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-                getSelectObjektButton(), getSaveSonderbauwerkButton());
-        builder.append(buttonBar, 7);
+            getSelectObjektButton(), getSaveSonderbauwerkButton());
+        FormHelper.addFull(innerPanel, 15, buttonBar);
+        this.setLayout(new BorderLayout());
+        this.add(FormHelper.wrapNorthWest(innerPanel), BorderLayout.NORTH);
 
         this.typBox.addActionListener(new ActionListener() {
             @Override

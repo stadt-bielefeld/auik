@@ -1,8 +1,8 @@
 package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.Dimension;
-import java.awt.KeyboardFocusManager;
 import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -15,13 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.mappings.atl.Gebuehren;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 
 /**
  * Panel allowing to view, edit and save fee values.
@@ -109,24 +105,14 @@ public class GebuehrenEditor extends JDialog {
      * Init content components
      */
     private void initContent() {
-        FormLayout layout = new FormLayout(
-            "right:pref, 4dlu, pref:grow, 4dlu, pref", // Spalten
-            "pref:grow, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref:grow" // Zeilen
-        );
-
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
 
-        builder.add(personnelFeeLabel, cc.xy(1, 1));
-        builder.add(personnelFeeField, cc.xy(3, 1));
-        builder.add(buttonPanel, cc.xy(1, 3));
-
-        this.content = builder.build();
-        this.content.setBorder(Paddings.DIALOG);
+        this.content = FormHelper.createDialogPanel();
+        FormHelper.addLabelField(this.content, 0, 0,
+            personnelFeeLabel, personnelFeeField);
+        FormHelper.add(this.content, buttonPanel, 0, 1, 2);
     }
 
     /**

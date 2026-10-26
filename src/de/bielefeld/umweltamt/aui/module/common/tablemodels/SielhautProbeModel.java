@@ -8,9 +8,9 @@ import java.util.Map;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
-import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 

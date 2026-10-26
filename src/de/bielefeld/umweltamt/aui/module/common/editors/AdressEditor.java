@@ -31,18 +31,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
-import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Standortgghwsg;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
+import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
+import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -133,56 +129,46 @@ public class AdressEditor extends AbstractBaseEditor
 		JScrollPane bemerkungsScroller = new JScrollPane(bemerkungsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-		FormLayout layout = new FormLayout(
-				"right:pref, 3dlu, 20dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu", // Spalten
-						"pref, 3dlu, " +
-						"pref, 3dlu, " + // 3
-						"pref, 3dlu, " + // 5
-						"pref, 3dlu, " + // 7
-						"pref, 3dlu, " + // 9
-						"pref, 3dlu, " + // 11
-						"pref, 3dlu, " + // 13
-						"pref, 3dlu, " + // 15
-						"pref, 3dlu, " + // 17
-						"pref, 3dlu, " + // 19
-						"50dlu, 3dlu, " + // 21
-						"pref, 3dlu, "); // 23
-
-		layout.setRowGroups(new int[][] {
-				{ 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 } });
-
-		PanelBuilder builder = new PanelBuilder(layout);
-		CellConstraints cc = new CellConstraints();
-
-		builder.addSeparator("Adresse", cc.xyw(1, 1, 8));
-		builder.addLabel("Stadt", cc.xy(1, 3));
-		builder.add(plzZsFeld, cc.xy(3, 3)); // PLZ-Zusatz
-		builder.add(plzFeld, cc.xy(4, 3)); // PLZ
-		builder.add(ortFeld, cc.xyw(6, 3, 3)); // Stadt
-		builder.addLabel("Straße", cc.xy(1, 5)); // Straße
-		builder.add(strasseFeld, cc.xyw(3, 5, 2));
-		builder.add(hausnrFeld, cc.xy(6, 5)); // Hausnr
-		builder.add(hausnrZusFeld, cc.xy(8, 5)); // HausnrZusatz
-		builder.addLabel("Standortgegebenheit", cc.xy(1, 7));
-		builder.add(standortGgBox, cc.xyw(3, 7, 6));
-		builder.addLabel("W.-Einzugsgebiet", cc.xy(1, 9));
-		builder.add(wEinzugsGebBox, cc.xyw(3, 9, 6));
-		builder.addLabel("Entwässerungsgebiet", cc.xy(1, 11));
-		builder.add(entwGebBox, cc.xyw(3, 11, 2));
-		builder.add(ueberschgebCheck, cc.xyw(6, 11, 3)); // Ueberschgeb Check
-		builder.addLabel("Gemarkung", cc.xy(1, 13));
-		builder.add(gemarkungBox, cc.xyw(3, 13, 6));
-		builder.addLabel("Flur/Flurstücke", cc.xy(1, 15));
-		builder.add(flurFeld, cc.xy(3, 15));
-		builder.add(flurStkFeld, cc.xyw(4, 15, 5));
-		builder.addLabel("Standorteigentümer", cc.xy(1, 17));
-		builder.add(strasseeigentFeld, cc.xyw(3, 17, 6));
-
-		builder.addSeparator("Bemerkungen", cc.xyw(1, 19, 8)); // Bemerkungen ---
-		builder.add(bemerkungsScroller, cc.xywh(1, 21, 8, 2)); // Bemerkungen Scroller
-
-		JPanel panel = builder.getPanel();
-		panel.setBorder(Paddings.DIALOG);
+		JPanel panel = FormHelper.createFormPanel();
+		FormHelper.addSeparator(panel, 0, 0, 5, "Adresse");
+		FormHelper.addLabel(panel, 0, 1, "Stadt");
+		FormHelper.fixWidth(plzZsFeld, 35);
+		FormHelper.addField(panel, 1, 1, 1, plzZsFeld);
+		FormHelper.fixWidth(plzFeld, 70);
+		FormHelper.addField(panel, 2, 1, 1, plzFeld);
+		FormHelper.fixWidth(ortFeld, 145);
+		FormHelper.addField(panel, 3, 1, 2, ortFeld);
+		FormHelper.addLabel(panel, 0, 2, "Straße");
+		FormHelper.fixWidth(strasseFeld, 105);
+		FormHelper.addField(panel, 1, 2, 2, strasseFeld);
+		FormHelper.fixWidth(hausnrFeld, 70);
+		FormHelper.addField(panel, 3, 2, 1, hausnrFeld);
+		FormHelper.fixWidth(hausnrZusFeld, 70);
+		FormHelper.addField(panel, 4, 2, 1, hausnrZusFeld);
+		FormHelper.addLabel(panel, 0, 3, "Standortgegebenheit");
+		FormHelper.fixWidth(standortGgBox, 256);
+		FormHelper.addField(panel, 1, 3, 4, standortGgBox);
+		FormHelper.addLabel(panel, 0, 4, "W.-Einzugsgebiet");
+		FormHelper.fixWidth(wEinzugsGebBox, 256);
+		FormHelper.addField(panel, 1, 4, 4, wEinzugsGebBox);
+		FormHelper.addLabel(panel, 0, 5, "Entwässerungsgebiet");
+		FormHelper.fixWidth(entwGebBox, 105);
+		FormHelper.addField(panel, 1, 5, 2, entwGebBox);
+		FormHelper.addField(panel, 3, 5, 2, ueberschgebCheck);
+		FormHelper.addLabel(panel, 0, 6, "Gemarkung");
+		FormHelper.fixWidth(gemarkungBox, 256);
+		FormHelper.addField(panel, 1, 6, 4, gemarkungBox);
+		FormHelper.addLabel(panel, 0, 7, "Flur/Flurstücke");
+		FormHelper.fixWidth(flurFeld, 35);
+		FormHelper.addField(panel, 1, 7, 1, flurFeld);
+		FormHelper.fixWidth(flurStkFeld, 220);
+		FormHelper.addField(panel, 2, 7, 3, flurStkFeld);
+		FormHelper.addLabel(panel, 0, 8, "Standorteigentümer");
+		FormHelper.fixWidth(strasseeigentFeld, 256);
+		FormHelper.addField(panel, 1, 8, 4, strasseeigentFeld);
+		FormHelper.addSeparator(panel, 0, 9, 5, "Bemerkungen");
+		FormHelper.addFull(panel, 10, bemerkungsScroller, 80);
+		FormHelper.setDialogBorder(panel);
 		return panel;
 	}
 

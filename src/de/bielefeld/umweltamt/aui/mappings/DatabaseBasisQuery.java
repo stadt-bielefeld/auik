@@ -44,22 +44,22 @@ import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
+import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.mappings.basis.TabStreets;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
 import de.bielefeld.umweltamt.aui.mappings.elka.Wasserrecht;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abfuhr;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
-import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
@@ -296,7 +296,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * Output format is List<[Adresse]>
 	 *
 	 * @param search
-	 *            String Betreibername
+	 *            String Betriebsname
 	 * @param property
 	 *            String
 	 * @return <code>List&lt;Adresse[]&gt;</code>
@@ -320,7 +320,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * Output format is List<[Adresse]>
 	 *
 	 * @param search
-	 *            String Betreibername
+	 *            String Betriebsname
 	 * @param property
 	 *            String
 	 * @return <code>List&lt;Adresse[]&gt;</code>
@@ -531,7 +531,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * Output format is List<[Standort]>
 	 *
 	 * @param search
-	 *            String Betreibername
+	 *            String Betriebsname
 	 * @param property
 	 *            String
 	 * @return <code>List&lt;Standort[]&gt;</code>

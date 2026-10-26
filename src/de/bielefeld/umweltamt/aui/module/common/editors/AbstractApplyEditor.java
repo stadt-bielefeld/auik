@@ -79,7 +79,7 @@ public abstract class AbstractApplyEditor extends OkCancelApplyDialog {
 
     /**
      * Erzeugt einen neuen Editor zum Bearbeiten von Objekten.
-     * @param objektName Welche Art von Objekt wird bearbeitet (bspw. "Betreiber")
+     * @param objektName Welche Art von Objekt wird bearbeitet (bspw. "Betreiber:in")
      * @param editedObject Das zu bearbeitende Objekt.
      * @param frame Das Hauptfenster.
      */

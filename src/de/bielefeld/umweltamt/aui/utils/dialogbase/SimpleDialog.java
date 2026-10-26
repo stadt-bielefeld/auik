@@ -18,7 +18,6 @@
  *
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
-
 /*
  * Datei:
  * $Id: SimpleDialog.java,v 1.2.2.1 2010-11-23 10:25:59 u633d Exp $
@@ -46,33 +45,39 @@
  * - Neuer Basisklasse für Editoren
  *
  * Revision 1.1  2005/06/06 15:30:13  u633z
- * - Neue Basis-Klassen für einfache Dialoge (werden mal die Grundlage für einfachere Editoren sein)
+ * - Neue Basis-Klassen für einfache Dialoge (werden mal die Grundlage
+ *   für einfachere Editoren sein)
  *
  */
 package de.bielefeld.umweltamt.aui.utils.dialogbase;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
-import com.jgoodies.forms.factories.Paddings;
+// ── ENTFERNT: JGoodies Imports ────────────────────────
+// import com.jgoodies.forms.factories.Paddings;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 
 /**
- * Eine Grundlage für einen einfachen Dialog mit einem, zwei oder drei Buttons.
+ * Eine Grundlage für einen einfachen Dialog mit einem,
+ * zwei oder drei Buttons.
  * @author David Klotz
  */
 public abstract class SimpleDialog extends JDialog {
     private static final long serialVersionUID = 3545077484554473729L;
+
     private class SimpleDialogListener extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e) {
@@ -81,10 +86,8 @@ public abstract class SimpleDialog extends JDialog {
     }
 
     protected HauptFrame frame;
-
     protected boolean twoButtons = false;
     protected boolean threeButtons = false;
-
     protected JComponent buttonBar;
     protected JButton button1, button2, button3;
 
@@ -106,60 +109,78 @@ public abstract class SimpleDialog extends JDialog {
             threeButtons = true;
         }
 
+        // ── GEÄNDERT: Paddings.DIALOG → EmptyBorder ───────
         JPanel tmp = new JPanel(new BorderLayout());
-        tmp.setBorder(Paddings.DIALOG);
+        tmp.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
 
         buttonBar = createButtonBar();
-        buttonBar.setBorder(Paddings.BUTTON_BAR_PAD);
+
+        // ── GEÄNDERT: Paddings.BUTTON_BAR_PAD → EmptyBorder
+        buttonBar.setBorder(
+            BorderFactory.createEmptyBorder(4, 0, 0, 0));
 
         JComponent content = buildContentArea();
         tmp.add(content, BorderLayout.CENTER);
-
         tmp.add(buttonBar, BorderLayout.SOUTH);
 
         this.addWindowListener(new SimpleDialogListener());
-        JScrollPane scroller = new JScrollPane(tmp);
-        this.setContentPane(scroller);
+
+        // ── GEÄNDERT: JScrollPane entfernt ────────────────
+        // Vorher: JScrollPane scroller = new JScrollPane(tmp);
+        // this.setContentPane(scroller);
+        // Jetzt: Content direkt setzen → kein Scrollen mehr!
+        this.setContentPane(tmp);
+
+        // ── GEÄNDERT: pack() + Größe begrenzen ────────────
+        // pack() berechnet die ideale Größe
         this.pack();
+
+        // Bildschirmgröße holen
+        Dimension screenSize = Toolkit.getDefaultToolkit()
+            .getScreenSize();
+
+        // Maximale Größe: 95% des Bildschirms
+        int maxWidth = (int) (screenSize.width * 0.95);
+        int maxHeight = (int) (screenSize.height * 0.90);
+
+        // Aktuelle Größe nach pack()
+        int currentWidth = this.getWidth();
+        int currentHeight = this.getHeight();
+
+        // Auf Bildschirmgröße begrenzen falls nötig
+        int finalWidth = Math.min(currentWidth, maxWidth);
+        int finalHeight = Math.min(currentHeight, maxHeight);
+
+        this.setSize(finalWidth, finalHeight);
         this.setLocationRelativeTo(frame);
     }
 
-
-    /**
-     * Diese Methode wird vom Construktor aufgerufen. Sie erstellt das Panel,
-     * das s&auml;mtliche Kn&ouml;pfe der Oberfl&auml;che enth&auml;lt.
-     *
-     * @return ein {@link javax.swing.JPanel} mit {@link javax.swing.JButton}s.
-     */
+    // ── Unveränderter createButtonBar() ───────────────────
     protected JComponent createButtonBar() {
         if (threeButtons) {
-            return ComponentFactory.buildOKCancelApplyBar(button1, button2, button3);
-        }
-        else if (twoButtons) {
-            return ComponentFactory.buildOKCancelBar(button1, button2);
-        }
-        else {
-           return ComponentFactory.buildOKBar(button1);
+            return ComponentFactory.buildOKCancelApplyBar(
+                button1, button2, button3);
+        } else if (twoButtons) {
+            return ComponentFactory.buildOKCancelBar(
+                button1, button2);
+        } else {
+            return ComponentFactory.buildOKBar(button1);
         }
     }
 
-
-    // super.close() aufrufen, falls diese Methode überschrieben wird!
+    // ── Unveränderter close() ─────────────────────────────
     public void close() {
         dispose();
     }
 
-    /**
-     * Erzeugt den Bereich des Dialogs, in dem die eigentlichen Daten
-     * angezeigt werden.
-     * @return Eine JComponent (bswp. ein JPanel).
-     */
+    // ── Unveränderter abstrakte Methoden ──────────────────
     protected abstract JComponent buildContentArea();
-
     protected abstract Action getFirstButtonAction();
+
     protected Action getSecondButtonAction() {
         return null;
     }
+
     protected Action getThirdButtonAction() {
         return null;
     }

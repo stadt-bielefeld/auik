@@ -24,6 +24,9 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -35,12 +38,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -48,6 +48,7 @@ import de.bielefeld.umweltamt.aui.mappings.elka.Aba;
 import de.bielefeld.umweltamt.aui.mappings.elka.Abaverfahren;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 
 /**
  * Das "Abwasserbehandlungsverfahren"-Tab des ObjektBearbeiten-Moduls
@@ -95,20 +96,28 @@ public class AbaVerfahrenPanel extends ObjectPanel {
         this.saveAbaverfButton = getSaveAbaverfButton();
         this.rightList = new JList<Abaverfahren>(rightListModel);
 
-        FormLayout verfahrenLayout = new FormLayout("150dlu, 5dlu, 90dlu, 5dlu, 150dlu", // Spalten
-                "20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 300dlu, 3dlu, 20dlu"); // zeilen
+        this.setLayout(new BorderLayout());
+        JPanel verfahrenPanel = FormHelper.createFormPanel();
 
-        @SuppressWarnings("deprecation")
-        DefaultFormBuilder builder = new DefaultFormBuilder(verfahrenLayout, this);
+        JScrollPane leftScroller = new JScrollPane(getLeftList());
+        JScrollPane rightScroller = new JScrollPane(rightList);
+        leftScroller.setPreferredSize(new Dimension(260, 300));
+        rightScroller.setPreferredSize(new Dimension(260, 300));
 
-        CellConstraints cc = new CellConstraints();
+        // linke Liste | Buttons | rechte Liste
+        FormHelper.addSpan(verfahrenPanel, leftScroller, 0, 0, 1, 4);
+        FormHelper.addSpan(verfahrenPanel, rightScroller, 2, 0, 1, 4);
+        FormHelper.add(verfahrenPanel, uebernehmenButton, 1, 0, 1,
+            GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTH);
+        FormHelper.add(verfahrenPanel, entfernenButton, 1, 1, 1,
+            GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTH);
+        GridBagConstraints gbc = FormHelper.constraints(1, 2, 1);
+        gbc.weighty = 1.0;
+        verfahrenPanel.add(new JPanel(), gbc);
+        FormHelper.add(verfahrenPanel, saveAbaverfButton, 1, 3, 1,
+            GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH);
 
-        builder.add(new JScrollPane(getLeftList()), cc.xywh(1, 3, 1,9));
-        builder.add(new JScrollPane(rightList), cc.xywh(5, 3, 1, 9));
-        builder.add(uebernehmenButton, cc.xy(3, 5));
-        builder.add(entfernenButton, cc.xy(3, 7));
-        builder.add(saveAbaverfButton, cc.xy(3, 13));
-        builder.nextLine();
+        this.add(FormHelper.wrapNorthWest(verfahrenPanel), BorderLayout.NORTH);
 
         //Add button action listeners
         uebernehmenButton.addActionListener(new ActionListener() {

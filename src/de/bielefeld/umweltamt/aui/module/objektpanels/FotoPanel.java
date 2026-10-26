@@ -30,6 +30,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
@@ -39,11 +40,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.ModulManager;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 
 /**
  * Das "Foto"-Panel des Objekt-Bearbeiten-Moduls.
@@ -70,11 +69,8 @@ public class FotoPanel extends JPanel {
         this.name = "Foto";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "pref");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.append(getImagePanel());
+        this.setLayout(new BorderLayout());
+        this.add(FormHelper.wrapNorthWest(getImagePanel()), BorderLayout.NORTH);
     }
 
     // Foto

@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -32,14 +33,11 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
@@ -47,6 +45,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -93,80 +92,60 @@ public class BWKPanel extends ObjectPanel {
         this.hauptModul = hauptModul;
         this.anfallstelle = anfallstelle;
 
-        FormLayout layout = new FormLayout(
-            "r:50dlu, 5dlu, 90dlu, 10dlu, r:50dlu, 5dlu, 70dlu, 5dlu, 70dlu, 70dlu", // Spalten
-            "pref, " + // 1
-                "3dlu, " + // 2
-                "pref, " + // 3
-                "3dlu, " + // 4
-                "pref, " + // 5
-                "3dlu, " + // 6
-                "pref, " + // 7
-                "3dlu, " + // 8
-                "pref, " + // 9
-                "3dlu, " + // 10
-                "pref, " + // 11
-                "3dlu, " + // 12
-                "pref, " + // 13
-                "3dlu, " + // 14
-                "pref, " + // 15
-                "3dlu, " + // 16
-                "pref, " + // 17
-                "3dlu, " + // 18
-                "pref, " + // 19
-                "3dlu, " + // 20
-                "pref, " + // 21
-                "3dlu, " + // 22
-                "pref, " + // 23
-                "3dlu, " + // 24
-                "pref"); // 25
-
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        CellConstraints cc = new CellConstraints();
-
+        JPanel innerPanel = FormHelper.createFormPanel();
         // linke Seite
-        builder.addSeparator("Kessel", cc.xyw(1, 1, 3));
-        builder.addLabel("Hersteller:", cc.xy(1, 3));
-        builder.add(getHerstellerFeld(), cc.xy(3, 3));
-        builder.addLabel("Typ:", cc.xy(1, 5));
-        builder.add(getTypFeld(), cc.xy(3, 5));
-        builder.addLabel("Brennmittel:", cc.xy(1, 7));
-        builder.add(getBrennmittelFeld(), cc.xy(3, 7));
-        builder.addLabel("Leistung:", cc.xy(1, 9));
-        builder.add(getLeistungFeld(), cc.xy(3, 9));
-        builder.addSeparator("Werkstoffe", cc.xyw(1, 15, 3));
-        builder.addLabel("Brenner:", cc.xy(1, 17));
-        builder.add(getBrennerFeld(), cc.xy(3, 17));
-        builder.addLabel("Tauscher:", cc.xy(1, 19));
-        builder.add(getWaermetauscherFeld(), cc.xy(3, 19));
-        builder.addLabel("Abgasleitung:", cc.xy(1, 21));
-        builder.add(getAbgasleitungFeld(), cc.xy(3, 21));
-        builder.addLabel("Kondensatabl.:", cc.xy(1, 23));
-        builder.add(getKondensatltgFeld(), cc.xy(3, 23));
-
-
+        FormHelper.addSeparator(innerPanel, 0, 0, 2, "Kessel");
+        FormHelper.addLabel(innerPanel, 0, 1, "Hersteller");
+        FormHelper.fixWidth(getHerstellerFeld(), 158);
+        FormHelper.addField(innerPanel, 1, 1, 1, getHerstellerFeld());
+        FormHelper.addLabel(innerPanel, 0, 2, "Typ");
+        FormHelper.fixWidth(getTypFeld(), 158);
+        FormHelper.addField(innerPanel, 1, 2, 1, getTypFeld());
+        FormHelper.addLabel(innerPanel, 0, 3, "Brennmittel");
+        FormHelper.fixWidth(getBrennmittelFeld(), 158);
+        FormHelper.addField(innerPanel, 1, 3, 1, getBrennmittelFeld());
+        FormHelper.addLabel(innerPanel, 0, 4, "Leistung");
+        FormHelper.fixWidth(getLeistungFeld(), 158);
+        FormHelper.addField(innerPanel, 1, 4, 1, getLeistungFeld());
+        FormHelper.addSeparator(innerPanel, 0, 7, 2, "Werkstoffe");
+        FormHelper.addLabel(innerPanel, 0, 8, "Brenner");
+        FormHelper.fixWidth(getBrennerFeld(), 158);
+        FormHelper.addField(innerPanel, 1, 8, 1, getBrennerFeld());
+        FormHelper.addLabel(innerPanel, 0, 9, "Tauscher");
+        FormHelper.fixWidth(getWaermetauscherFeld(), 158);
+        FormHelper.addField(innerPanel, 1, 9, 1, getWaermetauscherFeld());
+        FormHelper.addLabel(innerPanel, 0, 10, "Abgasleitung");
+        FormHelper.fixWidth(getAbgasleitungFeld(), 158);
+        FormHelper.addField(innerPanel, 1, 10, 1, getAbgasleitungFeld());
+        FormHelper.addLabel(innerPanel, 0, 11, "Kondensatabl.");
+        FormHelper.fixWidth(getKondensatltgFeld(), 158);
+        FormHelper.addField(innerPanel, 1, 11, 1, getKondensatltgFeld());
         // rechte Seite
-        builder.addSeparator("Erfassung", cc.xyw(5, 1, 3));
-        builder.addLabel("Jahrgang:", cc.xy(5, 3));
-        builder.add(getJahrgangFeld(), cc.xy(7, 3));
-        builder.addLabel("Abnahme:", cc.xy(5, 5));
-        builder.add(getAbnahmeFeld(), cc.xy(7, 5));
-        builder.addLabel("Anschreiben:", cc.xy(5, 7));
-        builder.add(getAnschreibenFeld(), cc.xy(7, 7));
-        builder.addLabel("Genehmigung:", cc.xy(5, 9));
-        builder.add(getGenehmigungDatum(), cc.xy(7, 9));
-        // builder.addLabel("ABA:", cc.xy( 5, 11));
-        builder.add(getgenehmpflichtCheck(), cc.xyw(5, 11, 3));
-        builder.add(getAbaCheck(), cc.xyw(5, 13, 3));
-        builder.addSeparator("Bemerkungen", cc.xyw(5, 15, 3));
-        builder.add(new JScrollPane(getBwkBeschreibungsArea(),
+        FormHelper.addSeparator(innerPanel, 2, 0, 2, "Erfassung");
+        FormHelper.addLabel(innerPanel, 2, 1, "Jahrgang");
+        FormHelper.fixWidth(getJahrgangFeld(), 122);
+        FormHelper.addField(innerPanel, 3, 1, 1, getJahrgangFeld());
+        FormHelper.addLabel(innerPanel, 2, 2, "Abnahme");
+        FormHelper.fixWidth(getAbnahmeFeld(), 122);
+        FormHelper.addField(innerPanel, 3, 2, 1, getAbnahmeFeld());
+        FormHelper.addLabel(innerPanel, 2, 3, "Anschreiben");
+        FormHelper.fixWidth(getAnschreibenFeld(), 122);
+        FormHelper.addField(innerPanel, 3, 3, 1, getAnschreibenFeld());
+        FormHelper.addLabel(innerPanel, 2, 4, "Genehmigung");
+        FormHelper.fixWidth(getGenehmigungDatum(), 122);
+        FormHelper.addField(innerPanel, 3, 4, 1, getGenehmigungDatum());
+        // builder.addLabel("ABA", cc.xy( 5, 11));
+        FormHelper.addField(innerPanel, 2, 5, 2, getgenehmpflichtCheck());
+        FormHelper.addField(innerPanel, 2, 6, 2, getAbaCheck());
+        FormHelper.addSeparator(innerPanel, 2, 7, 2, "Bemerkungen");
+        FormHelper.addSpan(innerPanel, new JScrollPane(getBwkBeschreibungsArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh(5, 17, 3,
-            7));
-
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), 2, 8, 2, 4);
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSaveBwkButton());
-        builder.add(buttonBar, cc.xyw(1, 25, 7));
+        FormHelper.addField(innerPanel, 0, 12, 4, buttonBar);
+        this.setLayout(new BorderLayout());
+        this.add(FormHelper.wrapNorthWest(innerPanel), BorderLayout.NORTH);
         addChangeListeners(getHerstellerFeld(), getTypFeld(),
             getBrennmittelFeld(), getLeistungFeld(), getBrennerFeld(),
             getWaermetauscherFeld(), getAbgasleitungFeld(), getKondensatltgFeld(),

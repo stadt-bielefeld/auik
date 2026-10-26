@@ -70,6 +70,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -89,11 +90,6 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.TableColumn;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -103,7 +99,9 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Kontrollen;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DoubleRenderer;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.SelectTable;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -279,7 +277,7 @@ public class Anh49AbfuhrenPanel extends JPanel {
 
 	    /**
 	     * Erzeugt ein neues Ortstermin-TableModel. Dieses hat die Spalten
-	     * "Datum", "SachbearbeiterIn" und "Bemerkung".
+	     * "Datum", "Sachbearbeiter:in" und "Bemerkung".
 	     */
 	    public Anh49KontrollenModel() {
 	        super(
@@ -434,14 +432,10 @@ public class Anh49AbfuhrenPanel extends JPanel {
             JSplitPane.VERTICAL_SPLIT, abfuhrScroller, kontrollenScroller,
             0.5);
 
-        FormLayout layout = new FormLayout("150dlu:grow, 150dlu", // Spalten
-            "f:100dlu:grow, 3dlu, pref"); // Zeilen
-
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        CellConstraints cc = new CellConstraints();
-
-        builder.add(tabellenSplit, cc.xyw(1, 1, 2));
-        builder.add(getSpeichernButton(), cc.xy(2, 3));
+        this.setLayout(new BorderLayout(0, 5));
+        this.add(tabellenSplit, BorderLayout.CENTER);
+        this.add(FormHelper.buttonBarRight(getSpeichernButton()),
+            BorderLayout.SOUTH);
     }
 
     private JTable getAbfuhrTabelle() {

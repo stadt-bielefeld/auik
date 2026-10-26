@@ -57,7 +57,6 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     private EStandort standort;
     private EAdresse adresse;
     private Integer origNr;
-    private Integer objektid;
     private Boolean erlFreiElTog;
     private BigDecimal regenspende;
     private BigDecimal regenhaeufigkeit;
@@ -91,12 +90,11 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
     /** Full constructor */
     public EEntwaesserungsgrundstueck(
-        Integer nr, EStandort standort, EAdresse adresse, Set<EAfsNiederschlagswasser> afsNiederschlagswassers, Integer objektid, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String bemerkung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
+        Integer nr, EStandort standort, EAdresse adresse, Set<EAfsNiederschlagswasser> afsNiederschlagswassers, Boolean erlFreiElTog, BigDecimal regenspende, BigDecimal regenhaeufigkeit, String bemerkung, Integer regendauer, Integer grEntwGebiet, BigDecimal dtvWert, Integer wasserableitungsstreckeOpt, String nameEtwGebiet, Date erstellDat, Integer einlBereichOpt, String abwbeskonNr, Integer einbauartOpt, Date aktualDat, EWasserrecht wasserecht, String herkunft, String externalNr) {
         this.nr = nr;
         this.standort = standort;
         this.adresse = adresse;
         this.afsNiederschlagswassers = afsNiederschlagswassers;
-        this.objektid = objektid;
         this.erlFreiElTog = erlFreiElTog;
         this.regenspende = regenspende;
         this.regenhaeufigkeit = regenhaeufigkeit;
@@ -158,16 +156,6 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
     public void setAfsNiederschlagswassers(Set<EAfsNiederschlagswasser> afsNiederschlagswassers) {
         this.afsNiederschlagswassers = afsNiederschlagswassers;
     }
-
-	@JsonIgnore
-	public Integer getObjektid() {
-		return this.objektid;
-	}
-
-	@JsonIgnore
-	public void setObjektid(Integer objektid) {
-		this.objektid = objektid;
-	}
 
     public Boolean getErlFreiElTog() {
         return this.erlFreiElTog;
@@ -494,32 +482,15 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 	public List<Referenz> getReferenzs() {
 		Integer identifier = origNr != null ? origNr  : nr;
 
-		String sql =
-			    "SELECT DISTINCT rf.* " +
-			    "FROM elka.referenz rf " +
-			    "JOIN oberflgw.afs_niederschlagswasser afsnw " +
-			    "    ON afsnw.nr = rf.q_afs_nr " +
-			    "JOIN oberflgw.entwaesserungsgrundstueck entw " +
-			    "    ON entw.objekt_id = afsnw.entw_grund_nr " +
-			    "WHERE entw.nr = :identifier";
+	    String hql =
+	        "select distinct rf " +
+	        "from Referenz rf " +
+	        "join rf.qAfsNw eafsnw " +
+	        "join eafsnw.entwaesserungsgrundstueck entw " +
+	        "where entw.nr = :identifier";
 
-			var query = HibernateSessionFactory.currentSession()
-			    .createNativeQuery(sql, Referenz.class);
-
-			query.setParameter("identifier", identifier);
-
-			List<Referenz> result = query.getResultList();
-
-
-//	    String hql =
-//	        "select distinct rf " +
-//	        "from Referenz rf " +
-//	        "join rf.qAfsNw eafsnw " +
-//	        "join eafsnw.entwaesserungsgrundstueck entw " +
-//	        "where entw.nr = :identifier";
-
-//	    var query = HibernateSessionFactory.currentSession()
-//	            .createQuery(hql, Referenz.class);
+	    var query = HibernateSessionFactory.currentSession()
+	            .createQuery(hql, Referenz.class);
 
 	    query.setParameter("identifier", identifier);
 //	    Referenz result = query.getResultList().iterator().next();

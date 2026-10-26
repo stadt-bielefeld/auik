@@ -15,9 +15,6 @@
   <many-to-one lazy="false" name="adresse" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
    <column name="adresse"/>
   </many-to-one>
-  <property generated="never" lazy="false" name="objektid" type="java.lang.Integer">
-	<column name="objektid" />
-  </property>
   <property generated="never" lazy="false" name="rechtArtOpt" type="java.lang.Integer">
    <column name="recht_art_opt"/>
   </property>

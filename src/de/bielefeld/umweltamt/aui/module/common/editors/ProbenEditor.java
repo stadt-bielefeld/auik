@@ -61,8 +61,10 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -100,6 +102,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -109,12 +112,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-
-import net.sf.jasperreports.engine.JRDataSource;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -132,8 +129,8 @@ import de.bielefeld.umweltamt.aui.mappings.atl.Status;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
-import de.bielefeld.umweltamt.aui.module.GebuehrenEditor;
 import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaAnalysemethode;
+import de.bielefeld.umweltamt.aui.module.GebuehrenEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComboBoxRenderer;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
@@ -141,6 +138,7 @@ import de.bielefeld.umweltamt.aui.utils.CurrencyDouble;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.DoubleRenderer;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -152,6 +150,7 @@ import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelApplyDialog;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Ein Dialog um eine Probenahme mit ihren Analysepositionen zu bearbeiten.
@@ -915,85 +914,91 @@ public class ProbenEditor extends AbstractApplyEditor {
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        FormLayout layout = new FormLayout(
-            "70dlu, 60dlu, 40dlu, 5dlu, 30dlu, 5dlu, 60dlu, 5dlu, 30dlu, 50dlu, 5dlu, 50dlu, 5dlu, 250dlu",
-            "pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu, pref, 8dlu,"
-                + "pref, 8dlu, pref, 8dlu, pref, 8dlu, "
-                + "pref, 16dlu,pref, 16dlu, pref, 16dlu, pref");
+        // Spalten (gridx): 0 Label | 1 Feld | 2 | 3 von | 4 Feld | 5 bis |
+        // 6 Feld | 7 Fahrtzeit | 8 Feld | 9 Bemerkung
+        JPanel panel = FormHelper.createFormPanel();
 
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
+        // Feste Breiten wie im alten Layout
+        FormHelper.fixWidth(probenummer, 240);
+        FormHelper.fixWidth(vorgangsstatusBox, 240);
+        FormHelper.fixWidth(sachbearbeiterBox, 240);
+        FormHelper.fixWidth(betrieb, 420);
+        FormHelper.fixWidth(entnahmepunkt, 420);
+        FormHelper.fixWidth(datum, 105);
+        FormHelper.fixWidth(uhrzeitVon, 55);
+        FormHelper.fixWidth(uhrzeitBis, 55);
+        FormHelper.fixWidth(fahrtzeit, 90);
+        FormHelper.fixWidth(bezug, 240);
+        FormHelper.fixWidth(beteiligte, 55);
+        FormHelper.fixWidth(rechnungsDatum, 105);
+        FormHelper.fixWidth(rechnungsBetrag, 90);
 
-        int row = 1;
-        builder.addSeparator("Probe", cc.xyw(1, row, 12));
-        builder.addSeparator("Bemerkung", cc.xy(14, row));
+        int row = 0;
+        FormHelper.addSeparator(panel, 0, row, 9, "Probe");
+        FormHelper.addSeparator(panel, 9, row, 1, "Bemerkung");
 
-        row += 2;
-        builder.addLabel("Probenummer:", cc.xyw(1, row, 1));
-        builder.add(probenummer, cc.xyw(2, row, 4));
-        builder.add(bemerkungsScroller, cc.xywh(14, row, 1, 6));
+        row++;
+        FormHelper.addLabel(panel, 0, row, "Probenummer");
+        FormHelper.addField(panel, 1, row, 3, probenummer);
+        bemerkungsScroller.setPreferredSize(new Dimension(400, 90));
+        FormHelper.addSpan(panel, bemerkungsScroller, 9, row, 1, 3);
 
-        row += 2;
-        builder.add(new JLabel("Vorgangsstatus:"), cc.xyw(1, row, 1));
-        builder.add(vorgangsstatusBox, cc.xyw(2, row, 4));
-        builder.addLabel("", cc.xyw(1, row, 1));
-        builder.add(statusHoch, cc.xyw(7, row, 1));
+        row++;
+        FormHelper.addLabel(panel, 0, row, "Vorgangsstatus");
+        FormHelper.addField(panel, 1, row, 3, vorgangsstatusBox);
+        FormHelper.add(panel, statusHoch, 4, row, 2);
 
-        row += 2;
-        builder.addLabel("Sachbearbeiter:", cc.xyw(1, row, 1));
-        builder.add(sachbearbeiterBox, cc.xyw(2, row, 4));
+        row++;
+        FormHelper.addLabel(panel, 0, row, "Sachbearbeiter:in");
+        FormHelper.addField(panel, 1, row, 3, sachbearbeiterBox);
 
-        row += 2;
-        builder.addLabel("Name des Betriebs:", cc.xyw(1, row, 1));
-        builder.add(betrieb, cc.xyw(2, row, 8));
+        row++;
+        FormHelper.addLabel(panel, 0, row, "Name des Betriebs");
+        FormHelper.addField(panel, 1, row, 6, betrieb);
 
-        row += 2;
-        builder.addLabel("Entnahmepunkt:", cc.xyw(1, row, 1));
-        builder.add(entnahmepunkt, cc.xyw(2, row, 8));
+        row++;
+        FormHelper.addLabel(panel, 0, row, "Entnahmepunkt");
+        FormHelper.addField(panel, 1, row, 6, entnahmepunkt);
 
-        row += 2;
-        builder.add(new JLabel("Datum:"), cc.xyw(1, row, 1));
-        builder.add(datum, cc.xyw(2, row, 1));
-        builder.addLabel("von:",
-            cc.xyw(3, row, 1, CellConstraints.RIGHT, CellConstraints.CENTER));
-        builder.addLabel("", cc.xyw(4, row, 1)); // just to create a small gap
-        builder.add(uhrzeitVon, cc.xyw(5, row, 1));
-        builder.addLabel("", cc.xyw(6, row, 1));
-        builder.addLabel("bis:",
-            cc.xyw(7, row, 1, CellConstraints.RIGHT, CellConstraints.CENTER));
-        builder.addLabel("", cc.xyw(8, row, 1)); // just to create a small gap
-        builder.add(uhrzeitBis, cc.xyw(9, row, 1));
-        builder.addLabel("Fahrtzeit:",
-            cc.xyw(10, row, 1, CellConstraints.RIGHT, CellConstraints.CENTER));
-        builder.addLabel("", cc.xyw(11, row, 1)); // just to create a small gap
-        builder.add(fahrtzeit, cc.xyw(12, row, 1));
+        row++;
+        FormHelper.addLabel(panel, 0, row, "Datum");
+        FormHelper.addField(panel, 1, row, 1, datum);
+        FormHelper.addLabel(panel, 2, row, "von");
+        FormHelper.addField(panel, 3, row, 1, uhrzeitVon);
+        FormHelper.addLabel(panel, 4, row, "bis");
+        FormHelper.addField(panel, 5, row, 1, uhrzeitBis);
+        FormHelper.addLabel(panel, 6, row, "Fahrtzeit");
+        FormHelper.addField(panel, 7, row, 1, fahrtzeit);
 
-        row += 2;
-        builder.addLabel("Bezug:", cc.xyw(1, row, 1));
-        builder.add(bezug, cc.xyw(2, row, 4));
-        builder.addLabel("", cc.xyw(6, row, 1));
-        builder.addLabel("Beteiligte:",
-            cc.xyw(7, row, 1, CellConstraints.RIGHT, CellConstraints.CENTER));
-        builder.addLabel("", cc.xyw(8, row, 1)); // just to create a small gap
-        builder.add(beteiligte, cc.xyw(9, row, 1));
+        row++;
+        FormHelper.addLabel(panel, 0, row, "Bezug");
+        FormHelper.addField(panel, 1, row, 3, bezug);
+        FormHelper.addLabel(panel, 4, row, "Beteiligte");
+        FormHelper.addField(panel, 5, row, 1, beteiligte);
 
-        row += 2;
-        builder.addLabel("Rechnungsdatum:", cc.xyw(1, row, 1));
-        builder.add(rechnungsDatum, cc.xyw(2, row, 2));
-        builder.addLabel("Rechnungsbetrag:",
-            cc.xyw(4, row, 4, CellConstraints.RIGHT, CellConstraints.CENTER));
-        builder.addLabel("", cc.xyw(8, row, 1)); // just to create a small gap
-        builder.add(rechnungsBetrag, cc.xyw(9, row, 1));
+        row++;
+        FormHelper.addLabel(panel, 0, row, "Rechnungsdatum");
+        FormHelper.addField(panel, 1, row, 1, rechnungsDatum);
+        FormHelper.add(panel, new JLabel("Rechnungsbetrag"), 2, row, 3,
+            GridBagConstraints.NONE, GridBagConstraints.EAST);
+        FormHelper.addField(panel, 5, row, 1, rechnungsBetrag);
 
-        row += 2;
-        builder.addSeparator("Parameter", cc.xyw(1, row, 14));
+        row++;
+        FormHelper.addSeparator(panel, 0, row, GridBagConstraints.REMAINDER,
+            "Parameter");
 
-        row += 2;
-        builder.add(parameterScroller, cc.xyw(1, row, 14));
+        row++;
+        GridBagConstraints gbc = FormHelper.constraints(0, row,
+            GridBagConstraints.REMAINDER);
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        parameterScroller.setPreferredSize(new Dimension(800, 300));
+        panel.add(parameterScroller, gbc);
 
-        builder.getPanel().setFocusCycleRoot(true);
+        panel.setFocusCycleRoot(true);
 
-        return builder.getPanel();
+        return panel;
     }
 
     /**
@@ -1951,14 +1956,11 @@ class ParameterChooser extends OkCancelApplyDialog {
         TabAction ta = new TabAction();
         ta.addComp(this.ergebnisTabelle);
 
-        FormLayout layout = new FormLayout("180dlu:g, 3dlu, min(16dlu;p)", // spalten
-            "20dlu, 3dlu, 300dlu:g"); // zeilen
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
+        tabellenScroller.setPreferredSize(new Dimension(320, 500));
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.add(tabellenScroller, BorderLayout.CENTER);
 
-        builder.add(tabellenScroller, cc.xyw(1, 3, 3));
-
-        return builder.getPanel();
+        return contentPanel;
     }
 
     private JTable getErgebnisTabelle() {

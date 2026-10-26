@@ -103,11 +103,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.looks.Options;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -121,10 +116,11 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.AbaPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AbaVerfahrenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AfsNwPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.AnfallstellePanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AbfuhrenPanel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49AnalysenPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49DetailsPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.Anh49Panel;
+import de.bielefeld.umweltamt.aui.module.objektpanels.AwsvPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.BasisPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.ChronoPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.EinleitungsstellePanel;
@@ -137,8 +133,8 @@ import de.bielefeld.umweltamt.aui.module.objektpanels.ProbepunktPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SonderbauwerkPanel;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SonderbauwerkTypTab;
 import de.bielefeld.umweltamt.aui.module.objektpanels.SuevPanel;
-import de.bielefeld.umweltamt.aui.module.objektpanels.AwsvPanel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 
 /**
@@ -262,13 +258,9 @@ public class BasisObjektBearbeiten extends AbstractModul {
 
     private JPanel getTopPanel() {
         if (topPanel == null) {
-            FormLayout layout = new FormLayout("100dlu:g");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append(getHeaderLabel());
-
-            topPanel = builder.getPanel();
-            topPanel.setBorder(Paddings.DIALOG);
+            topPanel = new JPanel(new BorderLayout());
+            topPanel.add(getHeaderLabel(), BorderLayout.CENTER);
+            FormHelper.setDialogBorder(topPanel);
         }
 
         return topPanel;
@@ -286,7 +278,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
         if (basisTab == null) {
             basisTab = new BasisPanel(this);
             basisTab.setOpaque(false);
-            basisTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(basisTab);
             basisTab.setBackground(new JPanel().getBackground());
         }
         return basisTab;
@@ -295,7 +287,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public ProbepunktPanel getProbepunktTab() {
         if (probepunktTab == null) {
             probepunktTab = new ProbepunktPanel(this);
-            probepunktTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(probepunktTab);
         }
         return probepunktTab;
     }
@@ -303,7 +295,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public ProbepktAuswPanel getProbepktAuswTab() {
         if (probeauswTab == null) {
             probeauswTab = new ProbepktAuswPanel(this);
-            probeauswTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(probeauswTab);
         }
         return probeauswTab;
     }
@@ -311,7 +303,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh49Panel getAnh49Tab() {
         if (anhang49Tab == null) {
             anhang49Tab = new Anh49Panel(this);
-            anhang49Tab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(anhang49Tab);
         }
         return anhang49Tab;
     }
@@ -319,7 +311,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh49AnalysenPanel getAnh49AnalyseTab() {
         if (anh49analyseTab == null) {
             anh49analyseTab = new Anh49AnalysenPanel(this);
-            anh49analyseTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(anh49analyseTab);
         }
         return anh49analyseTab;
     }
@@ -327,7 +319,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh49DetailsPanel getAnh49DetailTab() {
         if (anh49detailTab == null) {
             anh49detailTab = new Anh49DetailsPanel(this);
-            anh49detailTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(anh49detailTab);
         }
         return anh49detailTab;
     }
@@ -335,7 +327,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public Anh49AbfuhrenPanel getAnh49AbfuhrTab() {
         if (anh49abfuhrTab == null) {
             anh49abfuhrTab = new Anh49AbfuhrenPanel(this);
-            anh49abfuhrTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(anh49abfuhrTab);
         }
         return anh49abfuhrTab;
     }
@@ -343,7 +335,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public SuevPanel getSuevTab() {
         if (suevTab == null) {
             suevTab = new SuevPanel(this);
-            suevTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(suevTab);
         }
         return suevTab;
     }
@@ -351,7 +343,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public AbaPanel getAbaTab() {
         if (abaTab == null) {
             abaTab = new AbaPanel(this);
-            abaTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(abaTab);
         }
         return abaTab;
     }
@@ -359,7 +351,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public AbaVerfahrenPanel getAbaVerfahrenTab() {
         if (abaVerfahrenTab == null) {
             abaVerfahrenTab = new AbaVerfahrenPanel(this);
-            abaVerfahrenTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(abaVerfahrenTab);
         }
         return abaVerfahrenTab;
     }
@@ -367,14 +359,14 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public ChronoPanel getChronoTab() {
         if (chronoTab == null) {
             chronoTab = new ChronoPanel(this);
-            chronoTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(chronoTab);
         }
         return chronoTab;
     }
 
     public FotoPanel getFotoTab(){
         fotoTab = new FotoPanel(this);
-        fotoTab.setBorder(Paddings.DIALOG);
+        FormHelper.setDialogBorder(fotoTab);
 
         return fotoTab;
     }
@@ -382,7 +374,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public GenehmigungPanel getGenehmigungTab() {
         if (genehmigungTab == null) {
             genehmigungTab = new GenehmigungPanel(this);
-            genehmigungTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(genehmigungTab);
         }
         return genehmigungTab;
     }
@@ -390,7 +382,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public AwsvPanel getVawsTab() {
         if (vawsTab == null) {
             vawsTab = new AwsvPanel(this);
-            vawsTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(vawsTab);
         }
         return vawsTab;
     }
@@ -398,7 +390,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public EinleitungsstellePanel getEinleitungsstelleTab() {
         if (einleitungsstelleTab == null) {
             einleitungsstelleTab = new EinleitungsstellePanel(this);
-            einleitungsstelleTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(einleitungsstelleTab);
         }
         return einleitungsstelleTab;
     }
@@ -406,7 +398,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public AnfallstellePanel getAnfallstelleTab() {
         if (anfallstelleTab == null) {
             anfallstelleTab = new AnfallstellePanel(this);
-            anfallstelleTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(anfallstelleTab);
         }
         return anfallstelleTab;
     }
@@ -414,7 +406,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public AfsNwPanel getAfsNwTab() {
         if (afsNwTab == null) {
         	afsNwTab = new AfsNwPanel(this);
-        	afsNwTab.setBorder(Paddings.DIALOG);
+        	FormHelper.setDialogBorder(afsNwTab);
         }
         return afsNwTab;
     }
@@ -422,7 +414,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public SonderbauwerkPanel getSonderbauwerkTab() {
         if (sonderbauwerkTab == null) {
             sonderbauwerkTab = new SonderbauwerkPanel(this, this.getSonderbauwerkTypTab());
-            sonderbauwerkTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(sonderbauwerkTab);
             sonderbauwerkTab.setBackground(new JPanel().getBackground());
             sonderbauwerkTab.setOpaque(false);
         }
@@ -432,7 +424,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public SonderbauwerkTypTab getSonderbauwerkTypTab() {
         if (sonderbauwerkTypTab == null) {
             this.sonderbauwerkTypTab = new SonderbauwerkTypTab(this);
-            sonderbauwerkTypTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(sonderbauwerkTypTab);
         }
         return this.sonderbauwerkTypTab;
     }
@@ -440,7 +432,7 @@ public class BasisObjektBearbeiten extends AbstractModul {
     public EntwaesserungsgrundstueckPanel getEntwaesserungsgrundstueckTab() {
         if (entwaesserungsgrundstueckTab == null) {
             entwaesserungsgrundstueckTab = new EntwaesserungsgrundstueckPanel(this);
-            entwaesserungsgrundstueckTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(entwaesserungsgrundstueckTab);
         }
         return entwaesserungsgrundstueckTab;
     }
@@ -452,7 +444,6 @@ public class BasisObjektBearbeiten extends AbstractModul {
             tabbedPane = new JTabbedPane();
 
             tabbedPane.setOpaque(false);
-            tabbedPane.putClientProperty(Options.NO_CONTENT_BORDER_KEY, Boolean.TRUE);
             tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
             tabbedPane.addTab(getBasisTab().getName(), getBasisTab());

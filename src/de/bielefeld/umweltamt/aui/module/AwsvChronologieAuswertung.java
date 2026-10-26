@@ -46,6 +46,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -54,9 +55,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
@@ -191,13 +189,11 @@ public class AwsvChronologieAuswertung
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append(wiedervorlageCheck, abgeschlossenCheck);
-            builder.append(submitButton, createExportButton());
-
-            queryPanel = builder.getPanel();
+            queryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+            queryPanel.add(wiedervorlageCheck);
+            queryPanel.add(abgeschlossenCheck);
+            queryPanel.add(submitButton);
+            queryPanel.add(createExportButton());
         }
 
         return queryPanel;

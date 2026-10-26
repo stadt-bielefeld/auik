@@ -11,15 +11,12 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.atl.Sielhaut;
@@ -108,30 +105,42 @@ class SielhautChooser extends OkCancelDialog {
     /* (non-Javadoc)
      * @see de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog#buildContentArea()
      */
+ // NEU:
     @Override
     protected JComponent buildContentArea() {
-        JScrollPane tabellenScroller = new JScrollPane(getErgebnisTabelle(),
+        JScrollPane tabellenScroller = new JScrollPane(
+            getErgebnisTabelle(),
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
         TabAction ta = new TabAction();
         ta.addComp(this.ergebnisTabelle);
         ta.addComp(this.button1);
-        // ta.addComp(button2);
+
         JToolBar submitToolBar = new JToolBar();
         submitToolBar.setFloatable(false);
         submitToolBar.setRollover(true);
         submitToolBar.add(getSubmitButton());
 
-        FormLayout layout = new FormLayout("180dlu:g, 3dlu, min(16dlu;p)", // spalten
-            "20dlu, 3dlu, 300dlu:g"); // zeilen
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
+        // Suchzeile
+        JPanel searchPanel = new JPanel(
+            new java.awt.BorderLayout(3, 0));
+        searchPanel.add(getSuchFeld(),
+            java.awt.BorderLayout.CENTER);
+        searchPanel.add(submitToolBar,
+            java.awt.BorderLayout.EAST);
 
-        builder.add(getSuchFeld(), cc.xy(1, 1));
-        builder.add(submitToolBar, cc.xy(3, 1));
-        builder.add(tabellenScroller, cc.xyw(1, 3, 3));
+        // Gesamt
+        JPanel panel = new JPanel(
+            new java.awt.BorderLayout(0, 3));
+        panel.add(searchPanel,
+            java.awt.BorderLayout.NORTH);
+        panel.add(tabellenScroller,
+            java.awt.BorderLayout.CENTER);
+        panel.setPreferredSize(
+            new java.awt.Dimension(500, 400));
 
-        return builder.getPanel();
+        return panel;
     }
 
     private JTextField getSuchFeld() {

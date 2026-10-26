@@ -13,9 +13,6 @@
 		<many-to-one lazy="false" name="adresse" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EAdresse" fetch="select">
 			<column name="betreiberid" />
 		</many-to-one>
-		<property generated="never" lazy="false" name="objektid" type="java.lang.Integer">
-			<column name="objektid" />
-		</property>
 		<property name="erlFreiElTog" type="java.lang.Boolean">
 			<column name="erl_frei_el_tog" />
 		</property>

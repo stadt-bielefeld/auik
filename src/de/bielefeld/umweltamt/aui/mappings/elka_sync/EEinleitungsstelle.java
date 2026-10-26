@@ -47,7 +47,6 @@ public class EEinleitungsstelle implements java.io.Serializable {
 	private EStandort standort;
 	private Integer nr;
 	private Integer origNr;
-	private Integer objektid;
 	private Boolean typIndirekteinleitungTog;
 	private boolean typIndusGewerbDirekteinleitungTog;
 	private boolean typKommNwMischTog;
@@ -101,7 +100,7 @@ public class EEinleitungsstelle implements java.io.Serializable {
 		this.nr = nr;
 	}
 
-	public EEinleitungsstelle(Integer nr, EStandort standort, Integer origNr, Integer objektid, Boolean typIndirekteinleitungTog,
+	public EEinleitungsstelle(Integer nr, EStandort standort, Integer origNr, Boolean typIndirekteinleitungTog,
 			boolean typIndusGewerbDirekteinleitungTog, boolean typKommNwMischTog, boolean typKommNwTrennTog,
 			boolean typNwPrivatTrennTog, boolean typIndusGewerbNwMischTog, boolean typIndusGewerbNwTrennTog,
 			boolean typGrubenwasserTog, boolean typKleinklaeranlageTog, boolean typKommKaTog,
@@ -117,7 +116,6 @@ public class EEinleitungsstelle implements java.io.Serializable {
 		this.standort = standort;
 		this.nr = nr;
 		this.origNr = origNr;
-		this.objektid = objektid;
 		this.typIndirekteinleitungTog = typIndirekteinleitungTog;
 		this.typIndusGewerbDirekteinleitungTog = typIndusGewerbDirekteinleitungTog;
 		this.typKommNwMischTog = typKommNwMischTog;
@@ -186,16 +184,6 @@ public class EEinleitungsstelle implements java.io.Serializable {
 	@JsonIgnore
 	public void setOrigNr(Integer origNr) {
 		this.origNr = origNr;
-	}
-
-	@JsonIgnore
-	public Integer getObjektid() {
-		return this.objektid;
-	}
-
-	@JsonIgnore
-	public void setObjektid(Integer objektid) {
-		this.objektid = objektid;
 	}
 
 	public Boolean getTypIndirekteinleitungTog() {
@@ -565,7 +553,7 @@ public class EEinleitungsstelle implements java.io.Serializable {
 	public static EEinleitungsstelle findById(java.lang.Integer id) {
 		return new DatabaseAccess().executeCriteriaToUniqueResult(
 				DetachedCriteria.forClass(EEinleitungsstelle.class)
-						.add(Restrictions.eq("nr", id)),
+						.add(Restrictions.eq("id", id)),
 				new EEinleitungsstelle());
 	}
 	/**
@@ -592,10 +580,10 @@ public class EEinleitungsstelle implements java.io.Serializable {
 	@JsonIgnore
 	public List<Referenz> getReferenzs() {
 		Integer identifier = origNr != null ? origNr : nr;
-		Einleitungsstelle els = Einleitungsstelle.findById(identifier);
+		Einleitungsstelle els = Einleitungsstelle.findByObjektId(identifier);
 		List<Referenz> referenzs = HibernateSessionFactory.currentSession()
             .createQuery(
-                "from Referenz where z_els_nr = " + els.getId(),
+                "from Referenz where q_els_nr = " + els.getObjekt().getId(),
                 Referenz.class)
             .list();
 		return referenzs != null ? referenzs : new ArrayList<Referenz>();

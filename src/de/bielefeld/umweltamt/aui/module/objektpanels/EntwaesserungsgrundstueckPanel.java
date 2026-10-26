@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,15 +46,13 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -66,6 +65,7 @@ import de.bielefeld.umweltamt.aui.module.common.ZuordnungChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
@@ -157,75 +157,44 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 		this.name = "Entwässerungsgrundstück";
 		this.hauptModul = hauptModul;
 
-		FormLayout layout = new FormLayout("r:pref, 5dlu, 80dlu, 5dlu, 80dlu, 5dlu, 80dlu, 5dlu, 80dlu, 5dlu, 80dlu", // Spalten
-				"");
-
+		JPanel innerPanel = FormHelper.createFormPanel();
 		createFields();
-
-		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-
-		builder.appendSeparator("ELKA");
-		builder.append("Bezeichnung:", getBezeichnungFeld(), 4);
-		builder.nextLine();
-		builder.append("Erstellung:", getErstellDatDatum());
-		builder.nextLine();
-		builder.append(einleitungsbereichLabel);
-		builder.append(getEinleitungsbereichBox(), 4);
-		builder.nextLine();
-		builder.append(gebNameLabel);
-		builder.append(getGebNameFeld(), 3);
-		builder.nextLine();
-		builder.append(konzeptNrLabel);
-		builder.append(getKonzeptNrFeld());
-		builder.nextLine();
-		builder.append(dtvWertLabel);
-		builder.append(getDtvWertFeld());
-		builder.nextLine();
-		builder.append(wasserableitungsstreckeOptLabel);
-		builder.append(getWasserableitungsstreckeOptBox(), 4);
-		builder.nextLine();
-		builder.append(gebGroesseLabel);
-		builder.append(getGebGroesseFeld());
-		builder.nextLine();
-		builder.append(regenspendeLabel);
-		builder.append(getRegenspendeFeld());
-		builder.append(regenhaufigkeitLabel);
-		builder.append(getRegenhaufigkeitFeld());
-		builder.append(regendauerLabel);
-		builder.append(getRegendauerFeld());
-		builder.nextLine();
-		builder.append(erlaubnisfreiLabel);
-		builder.append(getErlaubnisfreiBox());
-		builder.nextLine();
-		builder.append(einbauartLabel);
-		builder.append(getEinbauartBox(), 3);
-		builder.nextLine();
-		builder.appendSeparator("Gebietsart");
-		builder.nextLine();
-		builder.append("");
-		builder.append(getWoTog());
-		builder.append(getMiTog());
-		builder.append(getGeTog());
-		builder.append(getParkplatzTog());
-		builder.nextLine();
-		builder.append("");
-		builder.append(getGiTog());
-		builder.append(getGemTog());
-		builder.append(getStrTog());
-		builder.nextLine();
-		builder.appendSeparator(abaverfahrensLabel.getText());
-		builder.nextLine();
-		builder.append(abaverfahrens, 11);
-
-		builder.nextLine();
+		FormHelper.addSeparator(innerPanel, 0, "ELKA");
+		FormHelper.addLabelField(innerPanel, 1, 0, "Bezeichnung", getBezeichnungFeld(), 2);
+		FormHelper.addLabelField(innerPanel, 2, 0, "Erstellung", getErstellDatDatum());
+		FormHelper.addLabelField(innerPanel, 3, 0, einleitungsbereichLabel,
+		    getEinleitungsbereichBox(), 2);
+		FormHelper.addLabelField(innerPanel, 4, 0, gebNameLabel, getGebNameFeld(), 2);
+		FormHelper.addLabelField(innerPanel, 5, 0, konzeptNrLabel, getKonzeptNrFeld());
+		FormHelper.addLabelField(innerPanel, 6, 0, dtvWertLabel, getDtvWertFeld());
+		FormHelper.addLabelField(innerPanel, 7, 0, wasserableitungsstreckeOptLabel,
+		    getWasserableitungsstreckeOptBox(), 2);
+		FormHelper.addLabelField(innerPanel, 8, 0, gebGroesseLabel, getGebGroesseFeld());
+		FormHelper.addLabelField(innerPanel, 9, 0, regenspendeLabel, getRegenspendeFeld());
+		FormHelper.addLabelField(innerPanel, 9, 1, regenhaufigkeitLabel,
+		    getRegenhaufigkeitFeld());
+		FormHelper.addLabelField(innerPanel, 9, 2, regendauerLabel, getRegendauerFeld());
+		FormHelper.addLabelField(innerPanel, 10, 0, erlaubnisfreiLabel, getErlaubnisfreiBox());
+		FormHelper.addLabelField(innerPanel, 11, 0, einbauartLabel, getEinbauartBox(), 2);
+		FormHelper.addSeparator(innerPanel, 12, "Gebietsart");
+		FormHelper.addLabelField(innerPanel, 13, 0, null, getWoTog());
+		FormHelper.addField(innerPanel, 2, 13, 1, getMiTog());
+		FormHelper.addLabelField(innerPanel, 13, 1, null, getGeTog());
+		FormHelper.addField(innerPanel, 4, 13, 1, getParkplatzTog());
+		FormHelper.addLabelField(innerPanel, 14, 0, null, getGiTog());
+		FormHelper.addField(innerPanel, 2, 14, 1, getGemTog());
+		FormHelper.addLabelField(innerPanel, 14, 1, null, getStrTog());
+		FormHelper.addSeparator(innerPanel, 15, abaverfahrensLabel.getText());
+		FormHelper.addFull(innerPanel, 16, abaverfahrens);
 		JScrollPane objektverknuepfungScroller = new JScrollPane(getObjektverknuepungTabelle(),
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		builder.appendRow("fill:100dlu");
-		builder.append(objektverknuepfungScroller, 11);
-		builder.nextLine();
+		    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+		    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		FormHelper.addFull(innerPanel, 17, objektverknuepfungScroller, 160);
 		JComponent buttonBar = ComponentFactory.buildRightAlignedBar(getSelectObjektButton(),
-				getSaveEntwaesserungsgrundstueckButton());
-		builder.append(buttonBar, 11);
+		    getSaveEntwaesserungsgrundstueckButton());
+		FormHelper.addFull(innerPanel, 18, buttonBar);
+		this.setLayout(new BorderLayout());
+		this.add(FormHelper.wrapNorthWest(innerPanel), BorderLayout.NORTH);
 
 		// Action Listener Einleitungsbereich
 		this.einleitungsbereichBox.addActionListener(new ActionListener() {

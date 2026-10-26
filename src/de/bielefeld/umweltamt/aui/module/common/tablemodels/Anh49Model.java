@@ -59,12 +59,12 @@ public class Anh49Model extends ListTableModel<Anh49Fachdaten> {
 
     public Anh49Model() {
         super(new String[]{
-            "Betreiber",
+            "Betreiber:in",
             "Standort",
             "Letzte Analyse",
             "Nächste Prüfung",
             "Sonstiges Technik",
-            "SachbearbeiterIn"
+            "Sachbearbeiter:in"
         },
         false);
     }

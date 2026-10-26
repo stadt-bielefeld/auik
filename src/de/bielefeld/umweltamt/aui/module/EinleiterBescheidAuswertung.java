@@ -49,14 +49,12 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -203,13 +201,12 @@ public class EinleiterBescheidAuswertung
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append(bescheidButton, eingetragenButton);
-            builder.append(ergaenztButton, angelegtButton);
-            builder.append(createExportButton());
-            queryPanel = builder.getPanel();
+            queryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+            queryPanel.add(bescheidButton);
+            queryPanel.add(eingetragenButton);
+            queryPanel.add(ergaenztButton);
+            queryPanel.add(angelegtButton);
+            queryPanel.add(createExportButton());
         }
 
         return queryPanel;

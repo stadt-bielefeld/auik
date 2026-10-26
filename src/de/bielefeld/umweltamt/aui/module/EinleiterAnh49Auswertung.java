@@ -65,9 +65,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -77,6 +74,7 @@ import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49Model;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -170,23 +168,17 @@ public class EinleiterAnh49Auswertung
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout(
-                "pref, 20dlu, pref, 20dlu, pref, 3dlu, pref, 20dlu, pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append("SachbearbeiterIn:", sachbBox);
-            builder.append(auswahlButton);
-            builder.append(abgemeldetCheck);
-            builder.append(aktivCheck);
-            builder.nextLine();
-            builder.append("");
-            builder.append("");
-//            builder.append("TÜV/DEKRA Termin:", dekraTuevBox);
-            builder.append(getTabelleExportButton());
-//            builder.append(wiedervorlageCheck);
-            builder.append(abwasserfreiCheck);
-
-            queryPanel = builder.getPanel();
+            queryPanel = FormHelper.createFormPanel();
+            // Zeile 1
+            FormHelper.addLabelField(queryPanel, 0, 0, "Sachbearbeiter:in", sachbBox);
+            FormHelper.add(queryPanel, auswahlButton, 2, 0, 1);
+            FormHelper.add(queryPanel, abgemeldetCheck, 3, 0, 1);
+            FormHelper.add(queryPanel, aktivCheck, 4, 0, 1);
+            // Zeile 2
+//            FormHelper.addLabelField(queryPanel, 1, 0, "TÜV/DEKRA Termin", dekraTuevBox);
+            FormHelper.add(queryPanel, getTabelleExportButton(), 2, 1, 1);
+//            FormHelper.add(queryPanel, wiedervorlageCheck, 3, 1, 1);
+            FormHelper.add(queryPanel, abwasserfreiCheck, 3, 1, 1);
         }
 
         return queryPanel;

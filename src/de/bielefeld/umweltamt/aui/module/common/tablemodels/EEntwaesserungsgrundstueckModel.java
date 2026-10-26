@@ -30,7 +30,7 @@ public class EEntwaesserungsgrundstueckModel
         super(new String[]{
                 "Nr",
                 "Standort",
-                "Betreiber",
+                "Betreiber:in",
                 "Wasserrecht",
                 "Beschreibung",
                 "Entwässerungsgebiet",

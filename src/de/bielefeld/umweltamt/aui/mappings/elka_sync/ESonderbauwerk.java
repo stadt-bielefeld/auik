@@ -23,6 +23,14 @@
 
 package de.bielefeld.umweltamt.aui.mappings.elka_sync;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -33,16 +41,7 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbRegeln;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZSbVerfahren;
-
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A class that represents a row in the ESonderbauwerk database table.<br>
