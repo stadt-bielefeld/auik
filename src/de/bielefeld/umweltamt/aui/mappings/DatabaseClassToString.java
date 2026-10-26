@@ -62,9 +62,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektchrono;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektverknuepfung;
-import de.bielefeld.umweltamt.aui.mappings.basis.Onlinekartendienst;
-import de.bielefeld.umweltamt.aui.mappings.basis.OnlinekartendienstId;
-import de.bielefeld.umweltamt.aui.mappings.basis.Orte;
 import de.bielefeld.umweltamt.aui.mappings.basis.Prioritaet;
 import de.bielefeld.umweltamt.aui.mappings.basis.PrioritaetId;
 import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
@@ -626,16 +623,6 @@ public class DatabaseClassToString {
 		return clazz.getStandortId().toString();
 	}
 
-	public static String toStringForClass(Onlinekartendienst onlinekartendienst) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(OnlinekartendienstId onlinekartendienstId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String toStringForClass(ViewTwoWayObjektverknuepfung viewTwoWayObjektverknuepfung) {
 		// TODO Auto-generated method stub
 		return null;
@@ -776,11 +763,6 @@ public class DatabaseClassToString {
 	}
 
 	public static String toStringForClass(TabStreets tabStreets) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String toStringForClass(Orte orte) {
 		// TODO Auto-generated method stub
 		return null;
 	}

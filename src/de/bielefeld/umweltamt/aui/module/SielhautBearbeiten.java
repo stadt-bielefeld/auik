@@ -151,8 +151,6 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import com.jgoodies.forms.factories.DefaultComponentFactory;
-import com.jgoodies.forms.factories.Paddings;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -177,6 +175,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
@@ -769,8 +768,7 @@ public class SielhautBearbeiten extends ObjectModule {
 
             RetractablePanel datenRP =
                 new RetractablePanel(
-                DefaultComponentFactory.getInstance()
-                    .createSeparator("Stammdaten"),
+                FormHelper.createSeparator("Stammdaten"),
                 getDatenPanel(), true, null);
 
             // Haupt-Panel mit GridBagLayout
@@ -1273,8 +1271,7 @@ public class SielhautBearbeiten extends ObjectModule {
                 getAuswertungPanel(), gbc);
 
             this.probenRtPanel = new RetractablePanel(
-                DefaultComponentFactory.getInstance()
-                    .createSeparator("Probenahmen"),
+                FormHelper.createSeparator("Probenahmen"),
                 probenPanel, false, null) {
                 private static final long
                     serialVersionUID =
@@ -1682,7 +1679,7 @@ public class SielhautBearbeiten extends ObjectModule {
                 this.speichernButton,
                 this.abbrechenButton);
             tmp.add(buttonBar, BorderLayout.SOUTH);
-            tmp.setBorder(Paddings.TABBED_DIALOG);
+            tmp.setBorder(BorderFactory.createEmptyBorder(6, 6, 4, 6));
             this.setContentPane(tmp);
             this.pack();
             this.setLocationRelativeTo(
@@ -2117,8 +2114,7 @@ public class SielhautBearbeiten extends ObjectModule {
                 BorderFactory.createLineBorder(
                     Color.BLACK));
             fotoRtPanel = new RetractablePanel(
-                DefaultComponentFactory.getInstance()
-                    .createSeparator("Foto"),
+                FormHelper.createSeparator("Foto"),
                 fotoPanel, false, null) {
                 private static final long
                     serialVersionUID =
@@ -2193,8 +2189,7 @@ public class SielhautBearbeiten extends ObjectModule {
                 BorderFactory.createLineBorder(
                     Color.BLACK));
             this.kartenRtPanel = new RetractablePanel(
-                DefaultComponentFactory.getInstance()
-                    .createSeparator(
+                FormHelper.createSeparator(
                     "Kartenausschnitt"),
                 kartenPanel, false, null) {
                 private static final long
@@ -2332,5 +2327,3 @@ public class SielhautBearbeiten extends ObjectModule {
         return ausAblageButton;
     }
 }
-
-

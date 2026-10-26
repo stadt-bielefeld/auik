@@ -57,7 +57,6 @@
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Objektarten.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Objektchrono.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Objektverknuepfung.hbm.xml" />
-        <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Onlinekartendienst.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Prioritaet.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/Sachbearbeiter.hbm.xml" />
         <mapping resource="de/bielefeld/umweltamt/aui/mappings/basis/TabStreets.hbm.xml" />

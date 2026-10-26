@@ -4,7 +4,7 @@
 <hibernate-mapping>
 	<class name="de.bielefeld.umweltamt.aui.mappings.elka_sync.EEinleitungsstelle" schema="elka" table="e_einleitungsstelle">
 		<id name="nr" type="java.lang.Integer">
-			<column name="id" />
+			<column name="nr" />
 			<generator class="assigned" />
 		</id>
 		<property generated="never" lazy="false" name="origNr" type="java.lang.Integer" insert="false" update="false">
@@ -13,6 +13,9 @@
 		<many-to-one lazy="false" name="standort" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EStandort" fetch="select">
 			<column name="standort_nr" />
 		</many-to-one>
+		<property generated="never" lazy="false" name="objektid" type="java.lang.Integer">
+			<column name="objektid" />
+		</property>
 		<property generated="never" lazy="false" name="typIndirekteinleitungTog" type="java.lang.Boolean">
 			<column name="typ_indirekteinleitung_tog" />
 		</property>
@@ -139,11 +142,17 @@
 		<property name="externalNr" type="java.lang.String">
 			<column name="external_nr" length="50" />
 		</property>
-		<set name="wasserrechts" table="elka.e_z_els_wasserrecht" lazy="false" fetch="select">
-			<key>
-				<column name="els_nr" not-null="true" />
-			</key>
-			<many-to-many column="wasserrecht_nr" class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht" />
+		<set name="wasserrechts"
+     		table="elka.e_z_els_wasserrecht"
+     		lazy="false"
+     		fetch="select">
+    		<key column="els_nr"
+         		property-ref="objektid"
+         		not-null="true"/>
+    		<many-to-many
+        		class="de.bielefeld.umweltamt.aui.mappings.elka_sync.EWasserrecht"
+       		 	column="wasserrecht_nr"
+        		property-ref="objektid"/>
 		</set>
 	</class>
 </hibernate-mapping>
