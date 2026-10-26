@@ -156,12 +156,8 @@ public class CredentialsDialog extends JDialog {
             }
         });
 
-        // -------------------------------------------------------
-        // Layout mit GridBagLayout (Ersatz für JGoodies FormLayout)
-        // -------------------------------------------------------
         JPanel panel = new JPanel(new GridBagLayout());
 
-        // Ersatz für Paddings.DIALOG (11px oben/unten, 12px links/rechts)
         panel.setBorder(BorderFactory.createEmptyBorder(11, 12, 11, 12));
 
         GridBagConstraints gbc = new GridBagConstraints();

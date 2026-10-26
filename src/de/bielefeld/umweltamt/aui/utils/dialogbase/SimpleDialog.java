@@ -106,13 +106,12 @@ public abstract class SimpleDialog extends JDialog {
             threeButtons = true;
         }
 
-        // ── GEÄNDERT: Paddings.DIALOG → EmptyBorder ───────
         JPanel tmp = new JPanel(new BorderLayout());
         tmp.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
 
         buttonBar = createButtonBar();
 
-        // ── GEÄNDERT: Paddings.BUTTON_BAR_PAD → EmptyBorder
+
         buttonBar.setBorder(
             BorderFactory.createEmptyBorder(4, 0, 0, 0));
 
@@ -122,14 +121,8 @@ public abstract class SimpleDialog extends JDialog {
 
         this.addWindowListener(new SimpleDialogListener());
 
-        // ── GEÄNDERT: JScrollPane entfernt ────────────────
-        // Vorher: JScrollPane scroller = new JScrollPane(tmp);
-        // this.setContentPane(scroller);
-        // Jetzt: Content direkt setzen → kein Scrollen mehr!
         this.setContentPane(tmp);
 
-        // ── GEÄNDERT: pack() + Größe begrenzen ────────────
-        // pack() berechnet die ideale Größe
         this.pack();
 
         // Bildschirmgröße holen
@@ -152,7 +145,7 @@ public abstract class SimpleDialog extends JDialog {
         this.setLocationRelativeTo(frame);
     }
 
-    // ── Unveränderter createButtonBar() ───────────────────
+
     protected JComponent createButtonBar() {
         if (threeButtons) {
             return ComponentFactory.buildOKCancelApplyBar(
@@ -165,12 +158,12 @@ public abstract class SimpleDialog extends JDialog {
         }
     }
 
-    // ── Unveränderter close() ─────────────────────────────
+
     public void close() {
         dispose();
     }
 
-    // ── Unveränderter abstrakte Methoden ──────────────────
+
     protected abstract JComponent buildContentArea();
     protected abstract Action getFirstButtonAction();
 

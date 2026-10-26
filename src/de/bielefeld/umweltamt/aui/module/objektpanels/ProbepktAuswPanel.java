@@ -372,7 +372,6 @@ public class ProbepktAuswPanel extends JPanel {
         return sepPanel;
     }
 
-    // ── AuswertungsDialog (unverändert) ───────────────────
     private class AuswertungsDialog extends JDialog {
         private static final long serialVersionUID =
             -4652005913711822389L;
