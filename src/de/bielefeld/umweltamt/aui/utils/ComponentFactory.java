@@ -28,9 +28,6 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-// ── ENTFERNT: JGoodies Import ─────────────────────────
-// import com.jgoodies.forms.factories.Forms;
-
 /**
  * Factory class containing some convenience functions to build
  * frequently used UI components
