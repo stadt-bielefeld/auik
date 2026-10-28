@@ -63,14 +63,23 @@ package de.bielefeld.umweltamt.aui.module.common.editors;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -81,10 +90,11 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -93,24 +103,33 @@ import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -121,6 +140,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Gebuehren;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parametergruppen;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
@@ -143,13 +163,9 @@ import de.bielefeld.umweltamt.aui.utils.JRMapDataSource;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
-import de.bielefeld.umweltamt.aui.utils.SelectTable;
-import de.bielefeld.umweltamt.aui.utils.TabAction;
-import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
-import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelApplyDialog;
+import de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
-import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import net.sf.jasperreports.engine.JRDataSource;
 
 /**
@@ -362,9 +378,20 @@ public class ProbenEditor extends AbstractApplyEditor {
             return value;
         }
 
+        /**
+         * Keine Leerzeile am Ende: Parameter werden nur noch über
+         * "Parameter zusammenstellen" hinzugefügt.
+         */
+        @Override
+        public int getRowCount() {
+            return getList() == null ? 0 : getList().size();
+        }
+
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            if (columnIndex == 6 || columnIndex == 7) {
+            // Parameter (0) nur über den Dialog, Grenzwert/Normwert (6, 7)
+            // werden berechnet
+            if (columnIndex == 0 || columnIndex == 6 || columnIndex == 7) {
                 return false;
             } else {
                 return true;
@@ -447,8 +474,7 @@ public class ProbenEditor extends AbstractApplyEditor {
             } else {
                 tmp.setEinheiten(DatabaseConstants.ATL_EINHEIT_MG_L);
             }
-            tmp.setParameter((Parameter) ProbenEditor.this.parameterBox
-                .getSelectedItem());
+            tmp.setParameter(null);
             tmp.setWert(0f);
 			if (tmp.getParameter() != null) {
 				tmp.setEinheiten(tmp.getParameter().getEinheiten());
@@ -511,6 +537,36 @@ public class ProbenEditor extends AbstractApplyEditor {
             list.add(pos);
 
             fireTableDataChanged();
+        }
+
+        /**
+         * Übernimmt den Parameter einer Analyseposition aus einer anderen
+         * Probenahme (mit Einheit, Analysemethode und "Analyse von", aber
+         * ohne Messwert). Bereits vorhandene Parameter werden übersprungen.
+         * @param vorlage Analyseposition der früheren Probenahme
+         * @return true, wenn der Parameter neu hinzugefügt wurde
+         */
+        public boolean uebernehmeParameter(Analyseposition vorlage) {
+            Parameter parameter = vorlage.getParameter();
+            if (parameter == null || isParameterAlreadyThere(parameter)) {
+                return false;
+            }
+
+            Analyseposition pos = new Analyseposition();
+            pos.setProbenahme(this.probe);
+            pos.setParameter(parameter);
+            pos.setWert(0f);
+            pos.setEinheiten(vorlage.getEinheiten() != null
+                ? vorlage.getEinheiten() : parameter.getEinheiten());
+            pos.setAnalyseVon(vorlage.getAnalyseVon());
+            pos.setMapElkaAnalysemethode(
+                vorlage.getMapElkaAnalysemethode() != null
+                    ? vorlage.getMapElkaAnalysemethode()
+                    : MapElkaAnalysemethode.findById(1));
+
+            List<Analyseposition> list = (List<Analyseposition>) getList();
+            list.add(pos);
+            return true;
         }
 
         /**
@@ -613,7 +669,6 @@ public class ProbenEditor extends AbstractApplyEditor {
     private TextFieldDateChooser icpDatum;
     private JTable parameterTabelle;
 
-    private JComboBox<Parameter> parameterBox;
     private JComboBox<Einheiten> einheitenBox;
     private JComboBox<String> analysevonBox;
     private JComboBox<MapElkaAnalysemethode> methodeBox;
@@ -962,13 +1017,21 @@ public class ProbenEditor extends AbstractApplyEditor {
 
         row++;
         FormHelper.addLabel(panel, 0, row, "Datum");
-        FormHelper.addField(panel, 1, row, 1, datum);
-        FormHelper.addLabel(panel, 2, row, "von");
-        FormHelper.addField(panel, 3, row, 1, uhrzeitVon);
-        FormHelper.addLabel(panel, 4, row, "bis");
-        FormHelper.addField(panel, 5, row, 1, uhrzeitBis);
-        FormHelper.addLabel(panel, 6, row, "Fahrtzeit");
-        FormHelper.addField(panel, 7, row, 1, fahrtzeit);
+        JPanel zeitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        zeitPanel.add(datum);
+        zeitPanel.add(Box.createHorizontalStrut(10));
+        zeitPanel.add(new JLabel("von"));
+        zeitPanel.add(Box.createHorizontalStrut(5));
+        zeitPanel.add(uhrzeitVon);
+        zeitPanel.add(Box.createHorizontalStrut(10));
+        zeitPanel.add(new JLabel("bis"));
+        zeitPanel.add(Box.createHorizontalStrut(5));
+        zeitPanel.add(uhrzeitBis);
+        zeitPanel.add(Box.createHorizontalStrut(15));
+        zeitPanel.add(new JLabel("Fahrtzeit"));
+        zeitPanel.add(Box.createHorizontalStrut(5));
+        zeitPanel.add(fahrtzeit);
+        FormHelper.add(panel, zeitPanel, 1, row, 8);
 
         row++;
         FormHelper.addLabel(panel, 0, row, "Bezug");
@@ -986,6 +1049,16 @@ public class ProbenEditor extends AbstractApplyEditor {
         row++;
         FormHelper.addSeparator(panel, 0, row, GridBagConstraints.REMAINDER,
             "Parameter");
+
+        row++;
+        JButton zusammenstellenButton = new JButton(
+            "Parameter zusammenstellen…");
+        zusammenstellenButton.setToolTipText("Parameter aus Suche, "
+            + "Parametergruppen oder früheren Probenahmen hinzufügen");
+        zusammenstellenButton.addActionListener(
+            e -> parameterZusammenstellen());
+        FormHelper.add(panel, zusammenstellenButton, 0, row,
+            GridBagConstraints.REMAINDER);
 
         row++;
         GridBagConstraints gbc = FormHelper.constraints(0, row,
@@ -1245,20 +1318,8 @@ public class ProbenEditor extends AbstractApplyEditor {
             .getColumn(0);
         parameterColumn.setPreferredWidth(150);
 
-        Parameter[] parameter = DatabaseQuery.getGroupedParameter();
-
-        parameterBox = new JComboBox<>(parameter);
-        parameterBox.setEditable(false);
-
-        parameterBox.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                ProbenEditor.this.parameterBox.showPopup();
-            }
-        });
-
-        parameterColumn.setCellEditor(new DefaultCellEditor(parameterBox));
-        parameterColumn.setCellRenderer(new ComboBoxRenderer<>());
+        // Parameter werden nur über "Parameter zusammenstellen"
+        // hinzugefügt, die Spalte ist deshalb nicht editierbar
 
         //Werte
         TableColumn gkColumn = this.parameterTabelle.getColumnModel()
@@ -1826,21 +1887,44 @@ public class ProbenEditor extends AbstractApplyEditor {
             .format(now, DateUtils.FORMAT_DATE));
     }
 
+    /**
+     * Öffnet den Dialog "Parameter zusammenstellen" und fügt die dort
+     * gewählten Parameter in die Probenahme ein.
+     */
+    private void parameterZusammenstellen() {
+        if (parameterTabelle.isEditing()) {
+            parameterTabelle.getCellEditor().stopCellEditing();
+        }
+        List<Parameter> vorhanden = new ArrayList<>();
+        for (Object o : parameterModel.getList()) {
+            Parameter p = ((Analyseposition) o).getParameter();
+            if (p != null) {
+                vorhanden.add(p);
+            }
+        }
+
+        ParameterZusammenstellungDialog dialog =
+            new ParameterZusammenstellungDialog(this.frame,
+                getProbe().getMessstelle(), getProbe().getId(), vorhanden);
+        dialog.setVisible(true);
+
+        List<Analyseposition> auswahl = dialog.getErgebnis();
+        if (auswahl == null || auswahl.isEmpty()) {
+            return;
+        }
+        int neu = 0;
+        for (Analyseposition pos : auswahl) {
+            if (parameterModel.uebernehmeParameter(pos)) {
+                neu++;
+            }
+        }
+        parameterModel.fireTableDataChanged();
+        this.frame.changeStatus(neu + " Parameter hinzugefügt.");
+    }
+
     @Override
     protected void doApply() {
-        ParameterChooser chooser = new ParameterChooser(this.frame);
-        if (parameterTabelle.isEditing()) {
-        	parameterTabelle.getCellEditor().stopCellEditing();
-        }
-        chooser.addOKListener(new OKListener() {
-            @Override
-            public void onOK(Parameter[] params) {
-                for (Parameter param : params) {
-                    ProbenEditor.this.parameterModel.addParameter(param);
-                }
-            }
-        });
-        chooser.setVisible(true);
+        parameterZusammenstellen();
     }
 
     public Probenahme getProbe() {
@@ -1853,258 +1937,537 @@ public class ProbenEditor extends AbstractApplyEditor {
 
 }
 
-class ParameterChooser extends OkCancelApplyDialog {
-    private static final long serialVersionUID = -5057778595979307787L;
+/**
+ * Dialog "Parameter zusammenstellen". Links die Quellen:
+ * <ul>
+ * <li>Reiter "Suche und Gruppen": Parameter nach Parametergruppe
+ * (labor.parametergruppen) und/oder Suchtext eingrenzen</li>
+ * <li>Reiter "Frühere Probenahme": Parameter einer früheren Probenahme
+ * desselben Probenahmepunkts</li>
+ * </ul>
+ * Rechts die Zusammenstellung, die mit "Übernehmen" in die Probenahme
+ * eingefügt wird. Parameter, die schon in der Probenahme sind, werden
+ * nicht doppelt aufgenommen.
+ */
+class ParameterZusammenstellungDialog extends OkCancelDialog {
+    private static final long serialVersionUID = 1L;
 
-    private JTable ergebnisTabelle;
+    // Ohne Initialisierer: werden in buildContentArea() angelegt, das
+    // schon im Konstruktor der Oberklasse aufgerufen wird
+    private JComboBox<Object> gruppenBox;
+    private JTextField suchFeld;
+    private JList<Parameter> parameterListe;
+    private DefaultListModel<Parameter> parameterListModel;
+    private JLabel parameterLabel;
 
-    private ParameterAuswahlModel parameterAuswahlModel;
-    private Parameter chosenParameter = null;
-    private ProbenEditor.OKListener oklistener;
+    private JTable probenTabelle;
+    private DefaultTableModel probenModel;
+    private JList<Analyseposition> vorlageListe;
+    private DefaultListModel<Analyseposition> vorlageModel;
+    private JLabel vorlageLabel;
 
-    public ParameterChooser(HauptFrame owner) {
-        super("Parameter auswählen", owner);
+    private JList<Analyseposition> auswahlListe;
+    private DefaultListModel<Analyseposition> auswahlModel;
+    private JLabel auswahlLabel;
+    private JLabel hinweisLabel;
 
-        this.parameterAuswahlModel = new ParameterAuswahlModel();
-        getErgebnisTabelle().setModel(this.parameterAuswahlModel);
-        this.ergebnisTabelle.setColumnSelectionInterval(0, 0);
+    private List<Parameter> gruppierteParameter;
+    private List<Parameter> alleParameter;
+    private List<Probenahme> proben;
+    private Map<Integer, List<Analyseposition>> vorlagen;
+    private Set<Parameter> schonInProbe;
+    private List<Analyseposition> ergebnis;
 
-        this.ergebnisTabelle.getColumnModel().getColumn(0)
-            .setPreferredWidth(20);
-        this.ergebnisTabelle.getColumnModel().getColumn(1)
-            .setPreferredWidth(230);
+    ParameterZusammenstellungDialog(HauptFrame owner, Messstelle messstelle,
+        Integer aktuelleProbeId, List<Parameter> vorhanden) {
+        super("Parameter zusammenstellen", owner);
 
-        setResizable(true);
+        schonInProbe = new LinkedHashSet<>(vorhanden);
+        vorlagen = new HashMap<>();
 
-        this.parameterAuswahlModel.filterList();
-        this.parameterAuswahlModel.fireTableDataChanged();
+        // Frühere Probenahmen desselben Probenahmepunkts, neueste zuerst
+        proben = new ArrayList<>();
+        if (messstelle != null) {
+            for (Probenahme p : DatabaseQuery.findProbenahme(messstelle)) {
+                if (aktuelleProbeId == null
+                    || !aktuelleProbeId.equals(p.getId())) {
+                    proben.add(p);
+                }
+            }
+        }
+        for (Probenahme p : proben) {
+            probenModel.addRow(new Object[] {
+                p.getDatumDerEntnahme() != null
+                    ? DateUtils.format(p.getDatumDerEntnahme(),
+                        DateUtils.FORMAT_DATE)
+                    : "",
+                p.getKennummer()});
+        }
+        if (proben.isEmpty()) {
+            vorlageLabel.setText("Keine früheren Probenahmen vorhanden.");
+        } else {
+            probenTabelle.setRowSelectionInterval(0, 0);
+        }
+
+        filtern();
+        aktualisiereAuswahl();
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                suchFeld.requestFocusInWindow();
+            }
+        });
     }
 
     @Override
-    public Action getSecondButtonAction() {
-        return new AbstractAction("Alle Parameter zeigen") {
-            private static final long serialVersionUID = 5342325510907705899L;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doApply();
-            }
-        };
+    protected String getOkButtonText() {
+        return "Übernehmen";
     }
 
-    @Override
-    public Action getThirdButtonAction() {
-        return new AbstractAction("Abbrechen") {
-            private static final long serialVersionUID = -5702077878210981297L;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doCancel();
-            }
-        };
+    /** @return die zusammengestellten Positionen oder null bei Abbruch */
+    public List<Analyseposition> getErgebnis() {
+        return ergebnis;
     }
 
-    public void addOKListener(ProbenEditor.OKListener listener) {
-        this.oklistener = listener;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.bielefeld.umweltamt.aui.utils.dialogbase.OkCancelDialog#doOk()
-     */
     @Override
     protected void doOk() {
-        Parameter[] selected = this.parameterAuswahlModel
-            .getSelectedParameter();
-        fireOKEvent(selected);
-
-        dispose();
-    }
-
-    @Override
-    protected void doApply() {
-
-        parameterAuswahlModel.AlleParameter();
-        parameterAuswahlModel.fireTableDataChanged();
-    }
-
-    protected void fireOKEvent(Parameter[] parameter) {
-        if (oklistener == null) {
-            return;
+        ergebnis = new ArrayList<>();
+        for (int i = 0; i < auswahlModel.size(); i++) {
+            ergebnis.add(auswahlModel.get(i));
         }
-
-        oklistener.onOK(parameter);
+        close();
     }
 
-    public Parameter getChosenParameter() {
-        return this.chosenParameter;
-    }
+    // ── Oberfläche ────────────────────────────────────────────
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.bielefeld.umweltamt.aui.utils.dialogbase.SimpleDialog#buildContentArea
-     * ()
-     */
     @Override
     protected JComponent buildContentArea() {
-        JScrollPane tabellenScroller = new JScrollPane(getErgebnisTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        TabAction ta = new TabAction();
-        ta.addComp(this.ergebnisTabelle);
+        JTabbedPane quellen = new JTabbedPane();
+        quellen.addTab("Suche und Gruppen", baueSuchReiter());
+        quellen.addTab("Frühere Probenahme", baueVorlageReiter());
 
-        tabellenScroller.setPreferredSize(new Dimension(320, 500));
-        JPanel contentPanel = new JPanel(new BorderLayout());
-        contentPanel.add(tabellenScroller, BorderLayout.CENTER);
-
-        return contentPanel;
+        JPanel inhalt = new JPanel(new GridLayout(1, 2, 10, 0));
+        inhalt.add(quellen);
+        inhalt.add(baueAuswahlSeite());
+        inhalt.setPreferredSize(new Dimension(820, 480));
+        return inhalt;
     }
 
-    private JTable getErgebnisTabelle() {
-        if (ergebnisTabelle == null) {
-            ergebnisTabelle = new SelectTable();
-
-            Action submitAction = new AbstractAction("Auswählen") {
-                private static final long serialVersionUID = -6645922378885851686L;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    doOk();
-                }
-            };
-            submitAction.putValue(Action.ACCELERATOR_KEY,
-                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false));
-
-            ergebnisTabelle.getInputMap().put(
-                (KeyStroke) submitAction.getValue(Action.ACCELERATOR_KEY),
-                submitAction.getValue(Action.NAME));
-            ergebnisTabelle.getActionMap().put(
-                submitAction.getValue(Action.NAME), submitAction);
-
-            ergebnisTabelle.addFocusListener(TableFocusListener
-                .getInstance());
-        }
-
-        return ergebnisTabelle;
-    }
-
-}
-
-class ParameterAuswahlModel extends ListTableModel<Parameter> {
-    /** Logging */
-    private static final AuikLogger log = AuikLogger.getLogger();
-    private static final long serialVersionUID = -502436804713980533L;
-    protected boolean[] selection;
-
-    public ParameterAuswahlModel() {
-        super(new String[] {"wählen", "Parameter"}, false);
-    }
-
-    @Override
-    public void setList(List<Parameter> newList) {
-        super.setList(newList);
-
-        selection = new boolean[newList.size()];
-        Arrays.fill(this.selection, false);
-    }
-
-    public Parameter[] getSelectedParameter() {
-        List<Parameter> params = new ArrayList<Parameter>();
-        List<?> data = getList();
-        int rows = getRowCount();
-
-        for (int idx = 0; idx < rows; idx++) {
-            if (this.selection[idx]) {
-                params.add((Parameter) data.get(idx));
+    private JPanel baueSuchReiter() {
+        gruppenBox = new JComboBox<>();
+        gruppenBox.addItem("Alle Gruppen");
+        List<Parametergruppen> gruppen = new ArrayList<>();
+        for (Parametergruppen g : Parametergruppen.getAll()) {
+            if (!g.isDeleted() && g.getName() != null) {
+                gruppen.add(g);
             }
         }
+        gruppen.sort(Comparator.comparing(Parametergruppen::getName,
+            String.CASE_INSENSITIVE_ORDER));
+        for (Parametergruppen g : gruppen) {
+            gruppenBox.addItem(g);
+        }
+        gruppenBox.setRenderer(new DefaultListCellRenderer() {
+            private static final long serialVersionUID = 1L;
 
-        return params.toArray(new Parameter[params.size()]);
+            @Override
+            public Component getListCellRendererComponent(JList<?> list,
+                Object value, int index, boolean isSelected,
+                boolean cellHasFocus) {
+                Object text = value instanceof Parametergruppen
+                    ? ((Parametergruppen) value).getName() : value;
+                return super.getListCellRendererComponent(list, text,
+                    index, isSelected, cellHasFocus);
+            }
+        });
+        gruppenBox.addActionListener(e -> filtern());
+
+        suchFeld = new JTextField();
+        suchFeld.setToolTipText(
+            "Wortteile genügen, Groß-/Kleinschreibung egal");
+        suchFeld.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filtern();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filtern();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filtern();
+            }
+        });
+        // Pfeil runter / Enter: in die Liste wechseln
+        binde(suchFeld, KeyEvent.VK_DOWN, "zurListe", this::zurListe);
+        binde(suchFeld, KeyEvent.VK_ENTER, "zurListe", this::zurListe);
+
+        parameterListModel = new DefaultListModel<>();
+        parameterListe = new JList<>(parameterListModel);
+        parameterListe.setSelectionMode(
+            ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        parameterListe.setCellRenderer(parameterRenderer());
+        parameterListe.addMouseListener(doppelklick(
+            () -> hinzufuegen(vorlagenFuer(
+                parameterListe.getSelectedValuesList()))));
+        binde(parameterListe, KeyEvent.VK_ENTER, "hinzufuegen",
+            () -> hinzufuegen(vorlagenFuer(
+                parameterListe.getSelectedValuesList())));
+        parameterLabel = new JLabel(" ");
+
+        JButton markierte = new JButton("Markierte hinzufügen");
+        markierte.addActionListener(e -> hinzufuegen(vorlagenFuer(
+            parameterListe.getSelectedValuesList())));
+        JButton alle = new JButton("Alle angezeigten hinzufügen");
+        alle.addActionListener(e -> {
+            List<Parameter> angezeigt = new ArrayList<>();
+            for (int i = 0; i < parameterListModel.size(); i++) {
+                angezeigt.add(parameterListModel.get(i));
+            }
+            hinzufuegen(vorlagenFuer(angezeigt));
+        });
+
+        JPanel kopf = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(0, 0, 3, 5);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        kopf.add(new JLabel("Gruppe"), gbc);
+        gbc.gridy = 1;
+        kopf.add(new JLabel("Suche"), gbc);
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 0, 3, 0);
+        gbc.gridy = 0;
+        kopf.add(gruppenBox, gbc);
+        gbc.gridy = 1;
+        kopf.add(suchFeld, gbc);
+
+        return quellPanel(kopf, new JScrollPane(parameterListe),
+            parameterLabel, markierte, alle);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#getColumnValue
-     * (java.lang.Object, int)
+    private JPanel baueVorlageReiter() {
+        probenModel = new DefaultTableModel(
+            new Object[] {"Entnahme", "Kennnummer"}, 0) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        probenTabelle = new JTable(probenModel);
+        probenTabelle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        probenTabelle.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                zeigeVorlage();
+            }
+        });
+        // Doppelklick auf eine Probenahme: alle ihre Parameter hinzufügen
+        probenTabelle.addMouseListener(doppelklick(
+            () -> hinzufuegen(vorlageDerAuswahl())));
+
+        vorlageModel = new DefaultListModel<>();
+        vorlageListe = new JList<>(vorlageModel);
+        vorlageListe.setSelectionMode(
+            ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        vorlageListe.setCellRenderer(parameterRenderer());
+        vorlageListe.addMouseListener(doppelklick(
+            () -> hinzufuegen(vorlageListe.getSelectedValuesList())));
+        vorlageLabel = new JLabel(" ");
+
+        JButton markierte = new JButton("Markierte hinzufügen");
+        markierte.addActionListener(
+            e -> hinzufuegen(vorlageListe.getSelectedValuesList()));
+        JButton alle = new JButton("Alle hinzufügen");
+        alle.addActionListener(e -> hinzufuegen(vorlageDerAuswahl()));
+
+        JScrollPane probenScroller = new JScrollPane(probenTabelle);
+        probenScroller.setPreferredSize(new Dimension(300, 150));
+
+        JPanel kopf = new JPanel(new BorderLayout(0, 3));
+        kopf.add(probenScroller, BorderLayout.CENTER);
+
+        return quellPanel(kopf, new JScrollPane(vorlageListe),
+            vorlageLabel, markierte, alle);
+    }
+
+    private JPanel baueAuswahlSeite() {
+        auswahlModel = new DefaultListModel<>();
+        auswahlListe = new JList<>(auswahlModel);
+        auswahlListe.setSelectionMode(
+            ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        auswahlListe.setCellRenderer(parameterRenderer());
+        binde(auswahlListe, KeyEvent.VK_DELETE, "entfernen",
+            this::entferneMarkierte);
+        auswahlLabel = new JLabel(" ");
+        hinweisLabel = new JLabel(" ");
+
+        JButton entfernen = new JButton("Entfernen");
+        entfernen.setToolTipText(
+            "Markierte Parameter entfernen (auch mit der Entf-Taste)");
+        entfernen.addActionListener(e -> entferneMarkierte());
+        JButton leeren = new JButton("Alle entfernen");
+        leeren.addActionListener(e -> {
+            auswahlModel.clear();
+            aktualisiereAuswahl();
+        });
+
+        JPanel kopf = new JPanel(new BorderLayout());
+        kopf.add(auswahlLabel, BorderLayout.WEST);
+
+        JPanel knoepfe = new JPanel(new GridLayout(1, 2, 5, 0));
+        knoepfe.add(entfernen);
+        knoepfe.add(leeren);
+        JPanel fuss = new JPanel(new BorderLayout(0, 3));
+        fuss.add(hinweisLabel, BorderLayout.NORTH);
+        fuss.add(knoepfe, BorderLayout.WEST);
+
+        JPanel seite = new JPanel(new BorderLayout(0, 5));
+        seite.add(kopf, BorderLayout.NORTH);
+        seite.add(new JScrollPane(auswahlListe), BorderLayout.CENTER);
+        seite.add(fuss, BorderLayout.SOUTH);
+        return seite;
+    }
+
+    /** Gemeinsamer Aufbau der beiden Reiter. */
+    private static JPanel quellPanel(JComponent kopf, JScrollPane liste,
+        JLabel info, JButton markierte, JButton alle) {
+        JPanel knoepfe = new JPanel(new GridLayout(1, 2, 5, 0));
+        knoepfe.add(markierte);
+        knoepfe.add(alle);
+        JPanel fuss = new JPanel(new BorderLayout(0, 3));
+        fuss.add(info, BorderLayout.NORTH);
+        fuss.add(knoepfe, BorderLayout.WEST);
+
+        JPanel panel = new JPanel(new BorderLayout(0, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panel.add(kopf, BorderLayout.NORTH);
+        panel.add(liste, BorderLayout.CENTER);
+        panel.add(fuss, BorderLayout.SOUTH);
+        return panel;
+    }
+
+    /** Zeigt bei Parametern und Analysepositionen den Parameternamen. */
+    private static DefaultListCellRenderer parameterRenderer() {
+        return new DefaultListCellRenderer() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Component getListCellRendererComponent(JList<?> list,
+                Object value, int index, boolean isSelected,
+                boolean cellHasFocus) {
+                Object text = value instanceof Analyseposition
+                    ? ((Analyseposition) value).getParameter() : value;
+                return super.getListCellRendererComponent(list,
+                    String.valueOf(text), index, isSelected, cellHasFocus);
+            }
+        };
+    }
+
+    private static MouseAdapter doppelklick(Runnable aktion) {
+        return new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    aktion.run();
+                }
+            }
+        };
+    }
+
+    private static void binde(JComponent komponente, int taste, String name,
+        Runnable aktion) {
+        komponente.getInputMap().put(KeyStroke.getKeyStroke(taste, 0), name);
+        komponente.getActionMap().put(name, new AbstractAction() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aktion.run();
+            }
+        });
+    }
+
+    // ── Reiter "Suche und Gruppen" ────────────────────────────
+
+    /**
+     * Füllt die Parameterliste: ohne Suchtext und Gruppe die
+     * Probenahme-Parameter, sonst alle Parameter, eingegrenzt auf die
+     * Gruppe und auf Namen, die alle eingegebenen Wortteile enthalten.
      */
-    @Override
-    public Object getColumnValue(Parameter objectAtRow, int columnIndex) {
-        // we don't need this method
-        return null;
-    }
-
-    @Override
-    public Object getValueAt(int row, int col) {
-        if (rowExists(row)) {
-            if (col < this.columns.length) {
-                switch (col) {
-                    case 0:
-                        return Boolean.valueOf(this.selection[row]);
-                    case 1:
-                        Parameter p = (Parameter) getObjectAtRow(row);
-                        return p.getBezeichnung();
-                    default:
-                        return "FEHLER!";
-                }
-            }
+    private void filtern() {
+        if (parameterListModel == null || suchFeld == null) {
+            return;
         }
+        String text = suchFeld.getText().trim().toLowerCase(Locale.GERMAN);
+        Object auswahl = gruppenBox.getSelectedItem();
+        Integer gruppenId = auswahl instanceof Parametergruppen
+            ? ((Parametergruppen) auswahl).getId() : null;
 
-        return null;
-    }
-
-    @Override
-    public void setValueAt(Object value, int row, int col) {
-        log.debug("ParameterAuswahlModel - setValueAt(" + row + ", " + col
-            + ")");
-
-        if (rowExists(row)) {
-            if (col < this.columns.length) {
-                switch (col) {
-                    case 0:
-                        boolean cur = this.selection[row];
-                        this.selection[row] = cur ? false : true;
-                }
+        List<Parameter> quelle;
+        if (text.isEmpty() && gruppenId == null) {
+            if (gruppierteParameter == null) {
+                gruppierteParameter =
+                    DatabaseQuery.getGroupedParameterAsList();
             }
-        }
-    }
-
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        if (columnIndex == 0) {
-            return Boolean.class;
+            quelle = gruppierteParameter;
         } else {
-            return super.getColumnClass(columnIndex);
+            if (alleParameter == null) {
+                alleParameter = DatabaseQuery.getAllParameterAsList();
+            }
+            quelle = alleParameter;
+        }
+
+        String[] woerter = text.isEmpty()
+            ? new String[0] : text.split("\\s+");
+        List<Parameter> vorne = new ArrayList<>();
+        List<Parameter> rest = new ArrayList<>();
+        for (Parameter p : quelle) {
+            if (gruppenId != null && (p.getParametergruppen() == null
+                || !gruppenId.equals(p.getParametergruppen().getId()))) {
+                continue;
+            }
+            String name = String.valueOf(p).toLowerCase(Locale.GERMAN);
+            boolean passt = true;
+            for (String wort : woerter) {
+                if (!name.contains(wort)) {
+                    passt = false;
+                    break;
+                }
+            }
+            if (passt) {
+                // Treffer, die mit dem Suchtext beginnen, zuerst
+                if (woerter.length > 0 && name.startsWith(woerter[0])) {
+                    vorne.add(p);
+                } else {
+                    rest.add(p);
+                }
+            }
+        }
+        vorne.addAll(rest);
+
+        parameterListModel.clear();
+        parameterListModel.addAll(vorne);
+        parameterLabel.setText(vorne.size() + " Parameter angezeigt");
+    }
+
+    private void zurListe() {
+        if (!parameterListModel.isEmpty()) {
+            if (parameterListe.isSelectionEmpty()) {
+                parameterListe.setSelectedIndex(0);
+            }
+            parameterListe.requestFocusInWindow();
         }
     }
 
-    @Override
-    public boolean isCellEditable(int row, int col) {
-        return col == 0 ? true : false;
+    /** Macht aus Parametern Vorlagen mit der Standard-Einheit. */
+    private static List<Analyseposition> vorlagenFuer(
+        List<Parameter> parameter) {
+        List<Analyseposition> liste = new ArrayList<>();
+        for (Parameter p : parameter) {
+            Analyseposition pos = new Analyseposition();
+            pos.setParameter(p);
+            pos.setEinheiten(p.getEinheiten());
+            liste.add(pos);
+        }
+        return liste;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel#updateList
-     * ()
-     */
-    @Override
-    public void updateList() {
+    // ── Reiter "Frühere Probenahme" ───────────────────────────
+
+    /** Parameter der markierten Probenahme (einmal je Probe geladen). */
+    private List<Analyseposition> vorlageDerAuswahl() {
+        int row = probenTabelle.getSelectedRow();
+        if (proben == null || row < 0 || row >= proben.size()) {
+            return new ArrayList<>();
+        }
+        Probenahme probe = proben.get(row);
+        return vorlagen.computeIfAbsent(probe.getId(),
+            id -> DatabaseQuery.getSortedAnalysepositionen(probe));
     }
 
-    public void filterList() {
-        setList(DatabaseQuery.getGroupedParameterAsList());
-        log.debug("Suche nach '" + getList().size() + " Ergebnisse)");
+    private void zeigeVorlage() {
+        vorlageModel.clear();
+        List<Analyseposition> positionen = vorlageDerAuswahl();
+        vorlageModel.addAll(positionen);
+        vorlageLabel.setText(positionen.size()
+            + " Parameter in dieser Probenahme");
     }
 
-    public void AlleParameter() {
-        setList(DatabaseQuery.getAllParameterAsList());
-        log.debug("Suche nach '" + getList().size() + " Ergebnisse)");
+    // ── Zusammenstellung ──────────────────────────────────────
+
+    private void hinzufuegen(List<Analyseposition> neue) {
+        if (neue == null || neue.isEmpty()) {
+            return;
+        }
+        Set<Parameter> drin = new LinkedHashSet<>();
+        for (int i = 0; i < auswahlModel.size(); i++) {
+            drin.add(auswahlModel.get(i).getParameter());
+        }
+
+        int hinzu = 0;
+        int inProbe = 0;
+        int doppelt = 0;
+        for (Analyseposition pos : neue) {
+            Parameter p = pos.getParameter();
+            if (p == null) {
+                continue;
+            }
+            if (schonInProbe.contains(p)) {
+                inProbe++;
+            } else if (!drin.add(p)) {
+                doppelt++;
+            } else {
+                auswahlModel.addElement(pos);
+                hinzu++;
+            }
+        }
+
+        StringBuilder hinweis = new StringBuilder(hinzu + " hinzugefügt");
+        if (inProbe > 0) {
+            hinweis.append(", ").append(inProbe)
+                .append(" schon in der Probenahme");
+        }
+        if (doppelt > 0) {
+            hinweis.append(", ").append(doppelt)
+                .append(" schon in der Liste");
+        }
+        hinweisLabel.setText(hinweis.toString());
+        aktualisiereAuswahl();
+        if (!auswahlModel.isEmpty()) {
+            auswahlListe.ensureIndexIsVisible(auswahlModel.size() - 1);
+        }
+    }
+
+    private void entferneMarkierte() {
+        int[] indizes = auswahlListe.getSelectedIndices();
+        if (indizes.length == 0) {
+            return;
+        }
+        for (int i = indizes.length - 1; i >= 0; i--) {
+            auswahlModel.remove(indizes[i]);
+        }
+        // Nächsten Eintrag markieren, damit man weiter entfernen kann
+        if (!auswahlModel.isEmpty()) {
+            int index = Math.min(indizes[0], auswahlModel.size() - 1);
+            auswahlListe.setSelectedIndex(index);
+            auswahlListe.ensureIndexIsVisible(index);
+        }
+        hinweisLabel.setText(indizes.length + " entfernt");
+        aktualisiereAuswahl();
+        auswahlListe.requestFocusInWindow();
+    }
+
+    private void aktualisiereAuswahl() {
+        auswahlLabel.setText("Zusammenstellung (" + auswahlModel.size()
+            + " Parameter)");
     }
 }
