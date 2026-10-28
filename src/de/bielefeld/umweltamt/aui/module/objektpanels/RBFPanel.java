@@ -29,15 +29,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueter;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZRbfSchutzgueterId;
 import de.bielefeld.umweltamt.aui.module.common.ZuordnungChooser;
 import de.bielefeld.umweltamt.aui.utils.CBoxItem;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 
 public class RBFPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
@@ -75,33 +74,19 @@ public class RBFPanel extends AbstractSonderbauwerkTypPanel {
 
         createFields();
 
-        FormLayout layout = new FormLayout(
-                "r:180dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
-            "");
+        JPanel inner = FormHelper.createFormPanel();
+        FormHelper.addLabelField(inner, 0, 0, stauvolumenLabel, stauvolumenField);
+        FormHelper.addLabelField(inner, 1, 0, volumenLabel, volumenField);
+        FormHelper.addLabelField(inner, 2, 0, filterLabel, filterField);
+        FormHelper.addLabelField(inner, 3, 0, drossLabel, drossField);
+        FormHelper.addLabelField(inner, 4, 0, filterGeschLabel, filterGeschField);
+        FormHelper.addLabelField(inner, 5, 0, beschickungsHoheLabel, beschickungsHoheField);
+        FormHelper.addLabelField(inner, 6, 0, hydWirkungsgradLabel, hydWirkungsgradField);
+        FormHelper.addLabelField(inner, 7, 0, filterStaerkeLabel, filterStaerkeField);
+        FormHelper.addLabelField(inner, 8, 0, ueberlaufHaeufLabel, ueberlaufHaeufField);
+        FormHelper.addLabelField(inner, 9, 0, filterVolumenLabel, filterVolumenField);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-        builder.append(stauvolumenLabel, stauvolumenField);
-        builder.nextLine();
-        builder.append(volumenLabel, volumenField);
-        builder.nextLine();
-        builder.append(filterLabel, filterField);
-        builder.nextLine();
-        builder.append(drossLabel, drossField);
-        builder.nextLine();
-        builder.append(filterGeschLabel, filterGeschField);
-        builder.nextLine();
-        builder.append(beschickungsHoheLabel, beschickungsHoheField);
-        builder.nextLine();
-        builder.append(hydWirkungsgradLabel, hydWirkungsgradField);
-        builder.nextLine();
-        builder.append(filterStaerkeLabel, filterStaerkeField);
-        builder.nextLine();
-        builder.append(ueberlaufHaeufLabel, ueberlaufHaeufField);
-        builder.nextLine();
-        builder.append(filterVolumenLabel, filterVolumenField);
-        builder.nextLine();
-
-        this.add(builder.getPanel());
+        this.add(FormHelper.wrapNorthWest(inner));
         this.add(schutzgueterChooser);
     }
 

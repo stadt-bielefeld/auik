@@ -18,8 +18,15 @@
  *
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
+
+
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -45,10 +52,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableColumn;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.SettingsManager;
@@ -61,13 +64,10 @@ public class SielhautPrinter extends AbstractModul {
 
     private JPanel contentPanel;
     private JScrollPane tableScrollPane;
-
     private JTable sielhautTable;
     private SelectableSielhautModel sielhautModel;
     private TableColumn checkBoxColumn;
-
     private JButton printButton;
-
     private String outputPath = "./reports";
 
     @Override
@@ -87,57 +87,70 @@ public class SielhautPrinter extends AbstractModul {
 
     @SuppressWarnings("deprecation")
     public SielhautPrinter() {
-        //Create components
-        //Result table
+        // ── Tabelle ───────────────────────────────────────
         this.sielhautTable = new JTable();
         this.sielhautModel = new SelectableSielhautModel();
         this.sielhautTable.setModel(this.sielhautModel);
-        this.tableScrollPane = new JScrollPane(this.sielhautTable,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        this.checkBoxColumn
-            = this.sielhautTable.getColumnModel().getColumn(0);
+        this.tableScrollPane = new JScrollPane(
+            this.sielhautTable,
+            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        this.checkBoxColumn = this.sielhautTable
+            .getColumnModel().getColumn(0);
         this.checkBoxColumn.setCellEditor(
-            this.sielhautTable.getDefaultEditor(Boolean.class));
+            this.sielhautTable.getDefaultEditor(
+                Boolean.class));
         this.checkBoxColumn.setCellRenderer(
-            this.sielhautTable.getDefaultRenderer(Boolean.class));
+            this.sielhautTable.getDefaultRenderer(
+                Boolean.class));
         this.checkBoxColumn.setHeaderRenderer(
-            new CheckBoxTableHeader(new CheckBoxHeaderClickListener()));
+            new CheckBoxTableHeader(
+                new CheckBoxHeaderClickListener()));
         this.checkBoxColumn.setMaxWidth(25);
         this.checkBoxColumn.setResizable(false);
-        //Checkbox column click listener
-        this.sielhautTable.addMouseListener(new CheckboxColumnClickListener());
 
-        //Toolbar
+        this.sielhautTable.addMouseListener(
+            new CheckboxColumnClickListener());
+
+        // ── Drucken Button ────────────────────────────────
         this.printButton = new JButton("Drucken");
-        this.printButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                if (sielhautModel.getSelected().length > 0) {
-                    createPrintDialog().setVisible(true);
-                } else {
-                    GUIManager.getInstance()
-                        .setInfoStatus("Bitte wählen sie einen Sielhautpunkt aus");
+        this.printButton.addActionListener(
+            new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
+                    if (sielhautModel.getSelected().length > 0) {
+                        createPrintDialog().setVisible(true);
+                    } else {
+                        GUIManager.getInstance()
+                            .setInfoStatus(
+                            "Bitte wählen sie einen"
+                            + " Sielhautpunkt aus");
+                    }
                 }
-            }
-        });
+            });
 
-        //Content panel
-        FormLayout layout = new FormLayout(
-            "3dlu, 180dlu:g, 3dlu, min(36dlu;p), 3dlu",
-            "3dlu, 400dlu:g, 3dlu, 20dlu,");
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
+        // ── Content Panel ─────────────────────────────────
+        this.contentPanel = new JPanel(
+            new BorderLayout(3, 3));
 
-        builder.add(printButton, cc.xy(4, 4));
-        builder.add(tableScrollPane, cc.xyw(2, 2, 3));
-        this.contentPanel = builder.build();
+        this.contentPanel.add(
+            this.tableScrollPane,
+            BorderLayout.CENTER);
+
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 2));
+        buttonBar.add(this.printButton);
+        this.contentPanel.add(
+            buttonBar, BorderLayout.SOUTH);
 
         this.loadTableData();
 
-        //Get output path
-        SettingsManager sm = SettingsManager.getInstance();
-        this.outputPath = sm.getSetting("auik.system.spath_steckbriefe");
+        // ── Output Path ───────────────────────────────────
+        SettingsManager sm =
+            SettingsManager.getInstance();
+        this.outputPath = sm.getSetting(
+            "auik.system.spath_steckbriefe");
     }
 
     private void loadTableData() {
@@ -147,246 +160,352 @@ public class SielhautPrinter extends AbstractModul {
     @SuppressWarnings("deprecation")
     private JDialog createPrintDialog() {
         JDialog dialog = new JDialog();
-
-        JLabel countLabel = new JLabel("Sielhautpunkte ausgewählt:");
-        JLabel count = new JLabel(
-            String.valueOf(sielhautModel.getSelectedCount()));
-        JLabel pathLabel = new JLabel("Dateipfad:");
-        JTextArea path = new JTextArea(this.outputPath);
-        JButton pathButton = new JButton("Pfad wählen");
-        pathButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                JFileChooser f = new JFileChooser();
-                f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                f.showSaveDialog(null);
-                path.setText(f.getSelectedFile().getAbsolutePath());
-            }
-        });
-
-        JButton cancelButton = new JButton("abbrechen");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                dialog.setVisible(false);
-            }
-        });
-        JButton okButton = new JButton("OK");
-        okButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                //Check if target dir exists. If not, try to create it
-                String targetDir = path.getText();
-                Path path = Paths.get(targetDir);
-                if (!Files.exists(path)) {
-                    boolean created = new File(targetDir).mkdirs();
-                    if (!created) {
-                        GUIManager.getInstance().showErrorMessage(
-                            String.format("Das Zielverzeichnis '%s' konnte nicht erstellt werden", targetDir),
-                            "Erstellen der Sielhautsteckbriefe fehlgeschlagen");
-                        GUIManager.getInstance().setErrorStatus(
-                            "Erstellen der Sielhautsteckbriefe fehlgeschlagen");
-                        return;
-                    }
-                }
-
-                Map<String, String> exportResult = createReports(targetDir);
-                JDialog resultDialog = createResultDialog(
-                    createResultHtml(exportResult, targetDir),
-                    targetDir, count.getText());
-                dialog.setVisible(false);
-                resultDialog.setVisible(true);
-                GUIManager.getInstance().setInfoStatus(
-                    String.format("%s Sielhautsteckbrief(e) erstellt", count.getText()));
-            }
-        });
-
-        FormLayout layout = new FormLayout(
-            "5dlu, 100dlu, 75dlu:g, 25dlu, 5dlu, 25dlu, 3dlu, 25dlu, 5dlu",
-            "5dlu, 35dlu, 35dlu, 3dlu:g, 35dlu, 5dlu");
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-        builder.add(countLabel, cc.xy(2, 2));
-        builder.add(count, cc.xyw(3, 2, 5));
-        builder.add(pathLabel, cc.xy(2, 3));
-        builder.add(path, cc.xyw(3, 3, 2));
-        builder.add(pathButton, cc.xyw(6, 3, 3));
-        builder.add(cancelButton, cc.xyw(4, 5, 3));
-        builder.add(okButton, cc.xy(8, 5));
-
-        JPanel dialogContent = builder.build();
-
         dialog.setTitle("Steckbriefe erstellen");
         dialog.setModal(true);
         dialog.setSize(600, 250);
 
-        dialog.add(dialogContent);
+        JLabel countLabel =
+            new JLabel("Sielhautpunkte ausgewählt");
+        JLabel count = new JLabel(
+            String.valueOf(
+                sielhautModel.getSelectedCount()));
+        JLabel pathLabel = new JLabel("Dateipfad");
+        JTextArea path =
+            new JTextArea(this.outputPath);
+
+        JButton pathButton =
+            new JButton("Pfad wählen");
+        pathButton.addActionListener(
+            new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(
+                    ActionEvent arg0) {
+                    JFileChooser f =
+                        new JFileChooser();
+                    f.setFileSelectionMode(
+                        JFileChooser
+                            .DIRECTORIES_ONLY);
+                    f.showSaveDialog(null);
+                    path.setText(f.getSelectedFile()
+                        .getAbsolutePath());
+                }
+            });
+
+        JButton cancelButton =
+            new JButton("abbrechen");
+        cancelButton.addActionListener(
+            new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(
+                    ActionEvent arg0) {
+                    dialog.setVisible(false);
+                }
+            });
+
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(
+            new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(
+                    ActionEvent arg0) {
+                    String targetDir = path.getText();
+                    Path p = Paths.get(targetDir);
+                    if (!Files.exists(p)) {
+                        boolean created =
+                            new File(targetDir)
+                                .mkdirs();
+                        if (!created) {
+                            GUIManager.getInstance()
+                                .showErrorMessage(
+                                String.format(
+                                "Das Zielverzeichnis"
+                                + " '%s' konnte nicht"
+                                + " erstellt werden",
+                                targetDir),
+                                "Erstellen der"
+                                + " Sielhautsteckbriefe"
+                                + " fehlgeschlagen");
+                            GUIManager.getInstance()
+                                .setErrorStatus(
+                                "Erstellen der"
+                                + " Sielhautsteckbriefe"
+                                + " fehlgeschlagen");
+                            return;
+                        }
+                    }
+                    Map<String, String> exportResult =
+                        createReports(targetDir);
+                    JDialog resultDialog =
+                        createResultDialog(
+                        createResultHtml(
+                            exportResult, targetDir),
+                        targetDir, count.getText());
+                    dialog.setVisible(false);
+                    resultDialog.setVisible(true);
+                    GUIManager.getInstance()
+                        .setInfoStatus(String.format(
+                        "%s Sielhautsteckbrief(e)"
+                        + " erstellt",
+                        count.getText()));
+                }
+            });
+
+        // ── Dialog Layout ─────────────────────────────────
+        JPanel dialogPanel = new JPanel(
+            new GridBagLayout());
+        GridBagConstraints gbc =
+            new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        // Zeile 1: Anzahl
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0; gbc.fill =
+            GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        dialogPanel.add(countLabel, gbc);
+        gbc.gridx = 1; gbc.gridwidth = 3;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        dialogPanel.add(count, gbc);
+
+        // Zeile 2: Pfad
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        dialogPanel.add(pathLabel, gbc);
+        gbc.gridx = 1; gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        dialogPanel.add(path, gbc);
+        gbc.gridx = 3; gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        dialogPanel.add(pathButton, gbc);
+
+        // Zeile 3: Buttons
+        JPanel btnPanel = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        btnPanel.add(cancelButton);
+        btnPanel.add(okButton);
+        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridwidth = 4; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        dialogPanel.add(btnPanel, gbc);
+
+        dialog.add(dialogPanel);
         return dialog;
     }
 
-    private Map<String, String> createReports(String path) {
-        Map<String, String> result = new HashMap<String, String>();
+    // ── createReports() ───────────────────────────────────
+    private Map<String, String> createReports(
+        String path) {
+        Map<String, String> result =
+            new HashMap<String, String>();
+        SettingsManager sm =
+            SettingsManager.getInstance();
+        String fotoPath = sm.getSetting(
+            "auik.system.spath_fotos");
+        String mapPath = sm.getSetting(
+            "auik.system.spath_karten");
 
-        SettingsManager sm = SettingsManager.getInstance();
-        String fotoPath = sm.getSetting("auik.system.spath_fotos");
-        String mapPath = sm.getSetting("auik.system.spath_karten");
-
-        for (Object rowObj: sielhautModel.getSelected()) {
+        for (Object rowObj :
+            sielhautModel.getSelected()) {
             Object[] row = (Object[]) rowObj;
-            Sielhaut spunkt = sielhautModel.getModelFromRow(row);
-
-            Map<String, Object> params = new HashMap<String, Object>();
+            Sielhaut spunkt =
+                sielhautModel.getModelFromRow(row);
+            Map<String, Object> params =
+                new HashMap<String, Object>();
             params.put("id", spunkt.getId());
-            String bezeichnung = spunkt.getBezeichnung();
-            if (bezeichnung != null && new File(fotoPath + bezeichnung + ".jpg").canRead()) {
-                params.put("foto", new String(fotoPath + bezeichnung + ".jpg"));
-            } else {
-                params.put("foto", new String(fotoPath + "kein_foto.jpg"));
-            }
+            String bezeichnung =
+                spunkt.getBezeichnung();
 
-            if (bezeichnung != null && new File(mapPath + bezeichnung + ".jpg").canRead()) {
-                params.put("karte", new String(mapPath + bezeichnung + ".jpg"));
-            } else {
-                params.put("karte", new String(mapPath + "keine_karte.jpg"));
-            }
-            String fileSeparator = FileSystems.getDefault().getSeparator();
-            StringBuilder pathBuilder = new StringBuilder(path);
-            if (!path.endsWith(fileSeparator)) {
+            if (bezeichnung != null
+                && new File(fotoPath + bezeichnung
+                    + ".jpg").canRead())
+                params.put("foto",
+                    fotoPath + bezeichnung + ".jpg");
+            else
+                params.put("foto",
+                    fotoPath + "kein_foto.jpg");
+
+            if (bezeichnung != null
+                && new File(mapPath + bezeichnung
+                    + ".jpg").canRead())
+                params.put("karte",
+                    mapPath + bezeichnung + ".jpg");
+            else
+                params.put("karte",
+                    mapPath + "keine_karte.jpg");
+
+            String fileSeparator = FileSystems
+                .getDefault().getSeparator();
+            StringBuilder pathBuilder =
+                new StringBuilder(path);
+            if (!path.endsWith(fileSeparator))
                 pathBuilder.append(fileSeparator);
-            }
-            if (spunkt.getBezeichnung() != null && !spunkt.getBezeichnung().isEmpty()) {
+
+            if (spunkt.getBezeichnung() != null
+                && !spunkt.getBezeichnung().isEmpty())
                 pathBuilder
                     .append(spunkt.getBezeichnung())
                     .append(".pdf");
-            } else {
+            else
                 pathBuilder
                     .append("Sielhautsteckbrief-")
                     .append(spunkt.getId())
                     .append(".pdf");
-            }
 
             try {
-                File export = new File(pathBuilder.toString());
-                PDFExporter.getInstance().exportReport(params, PDFExporter.SIELHAUT_BEARBEITEN,
+                File export = new File(
+                    pathBuilder.toString());
+                PDFExporter.getInstance()
+                    .exportReport(params,
+                    PDFExporter.SIELHAUT_BEARBEITEN,
                     export.getAbsolutePath(), false);
-                result.put(spunkt.getBezeichnung().toString(), "erfolgreich erstellt");
+                result.put(
+                    spunkt.getBezeichnung()
+                        .toString(),
+                    "erfolgreich erstellt");
             } catch (Exception ex) {
-                result.put(spunkt.getBezeichnung().toString(), ex.getLocalizedMessage());
+                result.put(
+                    spunkt.getBezeichnung()
+                        .toString(),
+                    ex.getLocalizedMessage());
             }
         }
         return result;
     }
 
+    // ── createResultDialog() ──────────────────────────────
     @SuppressWarnings("deprecation")
-    private JDialog createResultDialog(String resultString, String targetDir, String count) {
+    private JDialog createResultDialog(
+        String resultString, String targetDir,
+        String count) {
         JDialog dialog = new JDialog();
         dialog.setModal(true);
-        dialog.setTitle(String.format("%s Sielhautsteckbrief(e) erstellt", count));
+        dialog.setTitle(String.format(
+            "%s Sielhautsteckbrief(e) erstellt",
+            count));
         dialog.setSize(400, 600);
 
         JLabel resultText = new JLabel(resultString);
-        JButton okButton = new JButton("OK");
-        okButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                dialog.setVisible(false);
-            }
-        });
-        JButton openButton = new JButton("Ordner öffnen");
-        openButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    java.awt.Desktop.getDesktop().open(new File(targetDir));
-                } catch (IOException e) {
-                    GUIManager.getInstance().setErrorStatus(
-                        "Zielpfad konnte nicht geöffnet werden");
-                    e.printStackTrace();
-                }
-            }
-        });
 
-        JScrollPane scroller = new JScrollPane(resultText,
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(
+            new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(
+                    ActionEvent arg0) {
+                    dialog.setVisible(false);
+                }
+            });
+
+        JButton openButton =
+            new JButton("Ordner öffnen");
+        openButton.addActionListener(
+            new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(
+                    ActionEvent arg0) {
+                    try {
+                        java.awt.Desktop.getDesktop()
+                            .open(new File(targetDir));
+                    } catch (IOException e) {
+                        GUIManager.getInstance()
+                            .setErrorStatus(
+                            "Zielpfad konnte nicht"
+                            + " geöffnet werden");
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        JScrollPane scroller = new JScrollPane(
+            resultText,
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        FormLayout layout = new FormLayout(
-            "5dlu, 100dlu:g, 65dlu, 2dlu, 35dlu, 5dlu",
-            "5dlu, 100dlu:g, 2dlu, 35dlu, 5dlu");
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
+        JPanel btnPanel = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        btnPanel.add(openButton);
+        btnPanel.add(okButton);
 
-        builder.add(scroller, cc.xyw(2,2, 4));
-        builder.add(openButton, cc.xy(3, 4));
-        builder.add(okButton, cc.xy(5, 4));
+        JPanel resultPanel = new JPanel(
+            new BorderLayout(3, 3));
+        resultPanel.add(scroller,
+            BorderLayout.CENTER);
+        resultPanel.add(btnPanel,
+            BorderLayout.SOUTH);
 
-        dialog.add(builder.build());
+        dialog.add(resultPanel);
         return dialog;
     }
 
-    private String createResultHtml(Map<String, String> result, String path) {
-        StringBuilder resultBuilder = new StringBuilder("<html>");
-        resultBuilder.append(String.format("<b>Pfad:</b> %s <br>", path))
-        .append("<ul>");
-
+    // ── createResultHtml() ────────────────────────────────
+    private String createResultHtml(
+        Map<String, String> result, String path) {
+        StringBuilder resultBuilder =
+            new StringBuilder("<html>");
+        resultBuilder.append(String.format(
+            "<b>Pfad:</b> %s <br>", path))
+            .append("<ul>");
         result.forEach((bezeichnung, resultString) -> {
             resultBuilder
                 .append("<li>")
-                .append(
-                    String.format("<b>Sielhautpunkt %s</b>: %s <br>", bezeichnung, resultString))
+                .append(String.format(
+                "<b>Sielhautpunkt %s</b>: %s <br>",
+                bezeichnung, resultString))
                 .append("</li>");
-
         });
         resultBuilder.append("</html>");
         return resultBuilder.toString();
     }
 
-    /**
-     * Listener handling clicks on the header checkbox
-     */
-    class CheckBoxHeaderClickListener implements ItemListener {
+    // ── CheckBoxHeaderClickListener ───────────────────────
+    class CheckBoxHeaderClickListener
+        implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent e) {
             Object source = e.getSource();
-            if (source instanceof AbstractButton == false) {
+            if (!(source instanceof AbstractButton))
                 return;
-            }
-            boolean checked = e.getStateChange() == ItemEvent.SELECTED;
-            for(int x = 0, y = sielhautTable.getRowCount(); x < y; x++) {
-                sielhautTable.setValueAt(Boolean.valueOf(checked),x,0);
+            boolean checked =
+                e.getStateChange()
+                    == ItemEvent.SELECTED;
+            for (int x = 0,
+                y = sielhautTable.getRowCount();
+                x < y; x++) {
+                sielhautTable.setValueAt(
+                    Boolean.valueOf(checked), x, 0);
             }
         }
     }
 
-    /**
-     * Handler for clicks on the checkbox column
-     */
-    class CheckboxColumnClickListener implements MouseListener {
-
+    // ── CheckboxColumnClickListener ───────────────────────
+    class CheckboxColumnClickListener
+        implements MouseListener {
         @Override
         public void mouseClicked(MouseEvent evt) {
-            int row = sielhautTable.rowAtPoint(evt.getPoint());
-            int column = sielhautTable.columnAtPoint(evt.getPoint());
+            int row = sielhautTable
+                .rowAtPoint(evt.getPoint());
+            int column = sielhautTable
+                .columnAtPoint(evt.getPoint());
             if (column == 0) {
-                Boolean curVal = (Boolean) sielhautTable.getValueAt(row, column);
-                sielhautTable.setValueAt(!curVal, row, column);
+                Boolean curVal = (Boolean)
+                    sielhautTable.getValueAt(
+                        row, column);
+                sielhautTable.setValueAt(
+                    !curVal, row, column);
             }
         }
-
         @Override
-        public void mouseEntered(MouseEvent arg0) {
-        }
-
+        public void mouseEntered(MouseEvent arg0) {}
         @Override
-        public void mouseExited(MouseEvent arg0) {
-        }
-
+        public void mouseExited(MouseEvent arg0) {}
         @Override
-        public void mousePressed(MouseEvent arg0) {
-        }
-
+        public void mousePressed(MouseEvent arg0) {}
         @Override
-        public void mouseReleased(MouseEvent arg0) {
-        }
+        public void mouseReleased(MouseEvent arg0) {}
     }
 }

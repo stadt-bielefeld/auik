@@ -21,6 +21,9 @@
 
 package de.bielefeld.umweltamt.aui.module.common;
 
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -33,9 +36,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 
 /**
  * Widget containing a list of items to choose and a list of chosen items.
@@ -82,20 +83,41 @@ public class ZuordnungChooser<T> extends JPanel{
         addButton = new JButton("Hinzufügen >");
         removeButton = new JButton("< Entfernen");
 
-        FormLayout chooserLayout = new FormLayout("150dlu, 5dlu, 65dlu, 5dlu, 150dlu", // Spalten
-                "20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 20dlu, 3dlu, 50dlu, 3dlu, 20dlu"); // zeilen
+        this.setLayout(new GridBagLayout());
 
-        @SuppressWarnings("deprecation")
-        DefaultFormBuilder builder = new DefaultFormBuilder(chooserLayout, this);
-
-        CellConstraints cc = new CellConstraints();
+        int row = 0;
         if (this.title != null) {
-            builder.appendSeparator(title);
+            FormHelper.addSeparator(this, row++, title);
         }
-        builder.add(new JScrollPane(leftList), cc.xywh(1, 3, 1,9));
-        builder.add(new JScrollPane(rightList), cc.xywh(5, 3, 1, 9));
-        builder.add(addButton, cc.xy(3, 3));
-        builder.add(removeButton, cc.xy(3, 5));
+
+        JScrollPane leftScroller = new JScrollPane(leftList);
+        JScrollPane rightScroller = new JScrollPane(rightList);
+        leftScroller.setPreferredSize(new Dimension(250, 200));
+        rightScroller.setPreferredSize(new Dimension(250, 200));
+
+        // linke Liste | Buttons | rechte Liste
+        GridBagConstraints gbc = FormHelper.constraints(0, row, 1);
+        gbc.gridheight = 3;
+        gbc.fill = GridBagConstraints.BOTH;
+        this.add(leftScroller, gbc);
+
+        gbc = FormHelper.constraints(2, row, 1);
+        gbc.gridheight = 3;
+        gbc.fill = GridBagConstraints.BOTH;
+        this.add(rightScroller, gbc);
+
+        gbc = FormHelper.constraints(1, row, 1);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(addButton, gbc);
+
+        gbc = FormHelper.constraints(1, row + 1, 1);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(removeButton, gbc);
+
+        // Platzhalter unter den Buttons
+        gbc = FormHelper.constraints(1, row + 2, 1);
+        gbc.weighty = 1.0;
+        this.add(new JPanel(), gbc);
 
 
         addButton.addActionListener(new ActionListener(){

@@ -35,7 +35,7 @@ public class Anh55Model extends ListTableModel<Anh55Fachdaten> {
 
     public Anh55Model() {
         super(new String[]{
-                "Betreiber",
+                "Betreiber:in",
                 "Standort",
                 "Bemerkungen"
         },

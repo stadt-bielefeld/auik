@@ -23,6 +23,10 @@
 
 package de.bielefeld.umweltamt.aui.mappings.oberflgw;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -32,9 +36,6 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * A class that represents a row in the SbEntlastung database table.<br>

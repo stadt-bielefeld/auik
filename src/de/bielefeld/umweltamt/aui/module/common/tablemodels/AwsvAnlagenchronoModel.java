@@ -46,7 +46,7 @@ public class AwsvAnlagenchronoModel extends ListTableModel<Anlagenchrono> {
 
 	public AwsvAnlagenchronoModel() {
         super(new String[]{
-                "Betreiber",
+                "Betreiber:in",
                 "Standort",
                 "Wiedervorl.",
                 "Sachverhalt",

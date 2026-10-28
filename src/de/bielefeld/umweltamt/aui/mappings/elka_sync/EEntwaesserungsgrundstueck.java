@@ -508,7 +508,6 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 
 			query.setParameter("identifier", identifier);
 
-			List<Referenz> result = query.getResultList();
 
 
 //	    String hql =

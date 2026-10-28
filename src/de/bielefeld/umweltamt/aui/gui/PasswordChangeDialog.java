@@ -68,9 +68,9 @@ public class PasswordChangeDialog extends OkCancelDialog {
 
         //Create form
         Form formPanel = new Form();
-        formPanel.appendField("Aktuelles Passwort:", currentPasswordField);
-        formPanel.appendField("Neues Passwort:", newPasswordField);
-        formPanel.appendField("Passwort bestätigen:", newPasswordConfirmField);
+        formPanel.appendField("Aktuelles Passwort", currentPasswordField);
+        formPanel.appendField("Neues Passwort", newPasswordField);
+        formPanel.appendField("Passwort bestätigen", newPasswordConfirmField);
 
         return formPanel;
     }

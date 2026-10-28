@@ -23,6 +23,12 @@
 
 package de.bielefeld.umweltamt.aui.mappings.atl;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseClassToString;
@@ -33,12 +39,6 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.elka.Referenz;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.MsstBerichtspflicht;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * A class that represents a row in the Messstelle database table.<br>

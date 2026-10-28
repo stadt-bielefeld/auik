@@ -18,19 +18,19 @@
  *
  * AUIK has been developed by Stadt Bielefeld and Intevation GmbH.
  */
-
 package de.bielefeld.umweltamt.aui.utils;
 
 import java.awt.FlowLayout;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import com.jgoodies.forms.factories.Forms;
-
 /**
- * Factory class containing some convenience functions to build frequently used
- * UI components
+ * Factory class containing some convenience functions to build
+ * frequently used UI components
  */
 public class ComponentFactory {
 
@@ -49,7 +49,9 @@ public class ComponentFactory {
      * @param cancelButton Button to use a cancel button
      * @return Button bar containing the two buttons
      */
-    public static JComponent buildOKCancelBar(JComponent okButton, JComponent cancelButton) {
+    public static JComponent buildOKCancelBar(
+            JComponent okButton,
+            JComponent cancelButton) {
         return buildButtonBar(okButton, cancelButton);
     }
 
@@ -61,61 +63,98 @@ public class ComponentFactory {
      * @return Button bar containing the three buttons
      */
     public static JComponent buildOKCancelApplyBar(
-            JComponent okButton, JComponent cancelButton, JComponent applyButton) {
+            JComponent okButton,
+            JComponent cancelButton,
+            JComponent applyButton) {
         return buildButtonBar(okButton, cancelButton, applyButton);
     }
 
     /**
      * Builds a button bar containing a variable number of buttons
+     * GEÄNDERT: Forms.buttonBar() → JPanel mit FlowLayout
      * @param buttons Button list
      * @return Button bar
      */
     public static JComponent buildButtonBar(JComponent... buttons) {
-        return Forms.buttonBar(buttons);
+        // GEÄNDERT: Forms.buttonBar() → BoxLayout mit Buttons
+        JPanel buttonBar = new JPanel();
+        buttonBar.setLayout(
+            new BoxLayout(buttonBar, BoxLayout.X_AXIS));
+
+        for (int i = 0; i < buttons.length; i++) {
+            if (i > 0) {
+
+                buttonBar.add(Box.createHorizontalStrut(6));
+            }
+            buttonBar.add(buttons[i]);
+        }
+        return buttonBar;
     }
 
     /**
      * Builds a left aligned button bar
+     * GEÄNDERT: Forms.buttonBar() → FlowLayout(LEFT)
      * @param buttons Buttons to include into the button bar
      * @return Button bar
      */
-    public static JComponent buildLeftAlignedBar(JComponent... buttons) {
-        JComponent result = Forms.buttonBar(buttons);
-        result.setLayout(new FlowLayout(FlowLayout.LEFT));
+    public static JComponent buildLeftAlignedBar(
+            JComponent... buttons) {
+        // GEÄNDERT: Forms.buttonBar() → JPanel mit FlowLayout
+        JPanel result = new JPanel(
+            new FlowLayout(FlowLayout.LEFT, 5, 0));
+        for (JComponent button : buttons) {
+            result.add(button);
+        }
         return result;
     }
 
     /**
      * Builds a right aligned button bar
+     * GEÄNDERT: Forms.buttonBar() → FlowLayout(RIGHT)
      * @param buttons Buttons to include into the button bar
      * @return Button bar
      */
-    public static JComponent buildRightAlignedBar(JComponent... buttons) {
-        JComponent result = Forms.buttonBar(buttons);
-        result.setLayout(new FlowLayout(FlowLayout.RIGHT));
+    public static JComponent buildRightAlignedBar(
+            JComponent... buttons) {
+        // GEÄNDERT: Forms.buttonBar() → JPanel mit FlowLayout
+        JPanel result = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        for (JComponent button : buttons) {
+            result.add(button);
+        }
         return result;
     }
 
     /**
      * Creates a borderless JSplitPane with the given config.
-     * @param orientation JSplitPane.HORIZONTAL_SPLIT or JSplitPane.VERTICAL_SPLIT
-     * @param leftComponent Component that will be shown left of a horizontally split plane or
-     *                      at the top of a vertically split pane
-     * @param rightComponent Component that will be shown right of horizontally split pane or
-     *                       at the bottom of a vertically split pane
+     * UNVERÄNDERTER CODE [1][2]
+     * @param orientation JSplitPane.HORIZONTAL_SPLIT or
+     *                    JSplitPane.VERTICAL_SPLIT
+     * @param leftComponent Component that will be shown left of a
+     *                      horizontally split plane or at the top of
+     *                      a vertically split pane
+     * @param rightComponent Component that will be shown right of
+     *                       horizontally split pane or at the bottom
+     *                       of a vertically split pane
      * @param resizeWeight The resize weight of the resulting JSplitPane.
      * @return Created split pane
      */
-    public static JSplitPane createStrippedSplitPane (
-            int orientation, JComponent leftComponent, JComponent rightComponent, double resizeWeight){
-        if (orientation != JSplitPane.HORIZONTAL_SPLIT && orientation != JSplitPane.VERTICAL_SPLIT) {
-            throw new IllegalArgumentException("Invalid orientation value");
+    public static JSplitPane createStrippedSplitPane(
+            int orientation,
+            JComponent leftComponent,
+            JComponent rightComponent,
+            double resizeWeight) {
+        if (orientation != JSplitPane.HORIZONTAL_SPLIT
+            && orientation != JSplitPane.VERTICAL_SPLIT) {
+            throw new IllegalArgumentException(
+                "Invalid orientation value");
         }
         if (resizeWeight < 0 || resizeWeight > 1) {
-            throw new IllegalArgumentException("Resize weight must be between 0 and 1");
+            throw new IllegalArgumentException(
+                "Resize weight must be between 0 and 1");
         }
-
-        JSplitPane pane = new JSplitPane(orientation, leftComponent, rightComponent);
+        JSplitPane pane = new JSplitPane(
+            orientation, leftComponent, rightComponent);
         pane.setBorder(null);
         pane.setResizeWeight(resizeWeight);
         return pane;

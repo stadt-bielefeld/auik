@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -36,27 +37,25 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.elka.Einleitungsstelle;
+import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Versickerungsanlage;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
-import de.bielefeld.umweltamt.aui.mappings.elka.MapElkaGewkennz;
 /**
  * DAs "GewaesserdatenTab" des Einleitungsstelle-Panels
  * d
@@ -160,139 +159,60 @@ public class GewaesserdatenPanel extends ObjectPanel {
 
 
 
-	@SuppressWarnings("deprecation")
 	public GewaesserdatenPanel(BasisObjektBearbeiten hauptModul, Einleitungsstelle einleitungsstelle) {
 
 		this.name = "Gewaesserdaten";
 		this.hauptModul = hauptModul;
 		this.einleitungsstelle = einleitungsstelle;
 
-		FormLayout layout = new FormLayout("r:pref, 5dlu, 100dlu, 200dlu", // Spalten
-				"");
-
-		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-		builder.nextLine();
-		builder.appendRow("fill:5dlu");
-		builder.appendSeparator("Gewässerdaten");
-
-		builder.nextLine();
-		builder.append(stationierung3OptLb);
-		builder.append(getStationierung3OptBox());
-
-		builder.nextLine();
-		builder.append(gewkennzStat1Lb);
-		builder.append(getGewkennzStatBox());
-
-		builder.nextLine();
-		builder.append(gewnameStat1Lb);
-		builder.append(getGewnameStatFeld());
-
-		builder.nextLine();
-		builder.append(einzugsgebietLb);
-		builder.append(getEinzugsgebietFeld());
-
-		builder.nextLine();
-		builder.append(gewNameStadtLb);
-		builder.append(getGewNameStadtFeld());
-
-		builder.nextLine();
-		builder.append(gewKennzStadtLb);
-		builder.append(getGewKennzStadtFeld());
-
-		builder.nextLine();
-		builder.append(hwrMassnahmeLb);
-		builder.append(getHwrMassnahmeFeld());
-
-		builder.nextLine();
-		builder.append(gewaessernameNs3Lb);
-		builder.append(getGewaessernameNs3Feld());
-
-		builder.nextLine();
-		builder.append(stationierungNs3Lb);
-		builder.append(getStationierungsNs3Feld());
-
-		builder.nextLine();
-		builder.append(gewaessernameAlias3Lb);
-		builder.append(getGewaessernameAlias3Feld());
-
-		builder.nextLine();
-		builder.append(stationierungSt3Lb);
-		builder.append(getStationierungSt3Feld());
-
-		builder.nextLine();
-		builder.append(entfLb);
-		builder.append(getEntfEinlStatGewFeld());
-
-		builder.nextLine();
-		builder.append(mwqLb);
-		builder.append(getMwqFeld());
-
-		builder.nextLine();
-		builder.append(hq1Lb);
-		builder.append(getHq1Feld());
-
-		builder.nextLine();
-		builder.append(verAnlageOptLb);
-		builder.append(getVerAnlageOptBox());
-
-		builder.nextLine();
-		builder.append(sonstigesVersLb);
-		builder.append(getSonstigesVersFeld());
-
-		builder.nextLine();
-		builder.append(bauartzulIdLb);
-		builder.append(getBauartzulIdFeld());
-
-		builder.nextLine();
-		builder.append(landesfoerderungTogLb);
-		builder.append(isLandesfoerderungTogBox());
-
-		builder.nextLine();
-		builder.append(notueberlaufTogLb);
-		builder.append(isNotueberlaufTogBox());
-
-		builder.nextLine();
-		builder.append(notueberlaufZielLb);
-		builder.append(getNotueberlaufZielFeld());
-
-		builder.nextLine();
-		builder.append(durchlaessigkeitLb);
-		builder.append(getDurchlaessigkeitFeld());
-
-		builder.nextLine();
-		builder.append(untergrundartLb);
-		builder.append(getUntergrundartFeld());
-
-				builder.nextLine();
-		builder.append(flurabstandLb);
-		builder.append(getFlurabstandFeld());
-
-		builder.nextLine();
-		builder.append(gelaendeVerAnlageLb);
-		builder.append(getGelaendeVerAnlageFeld());
-
-		builder.nextLine();
-		builder.append(abstGrGrenzeLb);
-		builder.append(getAbstGrGrenzeFeld());
-
-		builder.nextLine();
-		builder.append(abstUnterkGebaeudeLb);
-		builder.append(getAbstUnterkGebaeudeFeld());
-
-		builder.nextLine();
-		builder.append(abstVerAnlageLb);
-		builder.append(getAbstVerAnlageFeld());
-
-		builder.appendSeparator("Bemerkungen");
-		builder.appendRow("3dlu");
-		builder.nextLine(2);
+		JPanel innerPanel = FormHelper.createFormPanel();
+		FormHelper.addSeparator(innerPanel, 0, "Gewässerdaten");
+		FormHelper.addLabelField(innerPanel, 1, 0, stationierung3OptLb,
+		    getStationierung3OptBox());
+		FormHelper.addLabelField(innerPanel, 2, 0, gewkennzStat1Lb, getGewkennzStatBox());
+		FormHelper.addLabelField(innerPanel, 3, 0, gewnameStat1Lb, getGewnameStatFeld());
+		FormHelper.addLabelField(innerPanel, 4, 0, einzugsgebietLb, getEinzugsgebietFeld());
+		FormHelper.addLabelField(innerPanel, 5, 0, gewNameStadtLb, getGewNameStadtFeld());
+		FormHelper.addLabelField(innerPanel, 6, 0, gewKennzStadtLb, getGewKennzStadtFeld());
+		FormHelper.addLabelField(innerPanel, 7, 0, hwrMassnahmeLb, getHwrMassnahmeFeld());
+		FormHelper.addLabelField(innerPanel, 8, 0, gewaessernameNs3Lb,
+		    getGewaessernameNs3Feld());
+		FormHelper.addLabelField(innerPanel, 9, 0, stationierungNs3Lb,
+		    getStationierungsNs3Feld());
+		FormHelper.addLabelField(innerPanel, 10, 0, gewaessernameAlias3Lb,
+		    getGewaessernameAlias3Feld());
+		FormHelper.addLabelField(innerPanel, 11, 0, stationierungSt3Lb,
+		    getStationierungSt3Feld());
+		FormHelper.addLabelField(innerPanel, 12, 0, entfLb, getEntfEinlStatGewFeld());
+		FormHelper.addLabelField(innerPanel, 13, 0, mwqLb, getMwqFeld());
+		FormHelper.addLabelField(innerPanel, 14, 0, hq1Lb, getHq1Feld());
+		FormHelper.addLabelField(innerPanel, 15, 0, verAnlageOptLb, getVerAnlageOptBox());
+		FormHelper.addLabelField(innerPanel, 16, 0, sonstigesVersLb, getSonstigesVersFeld());
+		FormHelper.addLabelField(innerPanel, 17, 0, bauartzulIdLb, getBauartzulIdFeld());
+		FormHelper.addLabelField(innerPanel, 18, 0, landesfoerderungTogLb,
+		    isLandesfoerderungTogBox());
+		FormHelper.addLabelField(innerPanel, 19, 0, notueberlaufTogLb, isNotueberlaufTogBox());
+		FormHelper.addLabelField(innerPanel, 20, 0, notueberlaufZielLb,
+		    getNotueberlaufZielFeld());
+		FormHelper.addLabelField(innerPanel, 21, 0, durchlaessigkeitLb,
+		    getDurchlaessigkeitFeld());
+		FormHelper.addLabelField(innerPanel, 22, 0, untergrundartLb, getUntergrundartFeld());
+		FormHelper.addLabelField(innerPanel, 23, 0, flurabstandLb, getFlurabstandFeld());
+		FormHelper.addLabelField(innerPanel, 24, 0, gelaendeVerAnlageLb,
+		    getGelaendeVerAnlageFeld());
+		FormHelper.addLabelField(innerPanel, 25, 0, abstGrGrenzeLb, getAbstGrGrenzeFeld());
+		FormHelper.addLabelField(innerPanel, 26, 0, abstUnterkGebaeudeLb,
+		    getAbstUnterkGebaeudeFeld());
+		FormHelper.addLabelField(innerPanel, 27, 0, abstVerAnlageLb, getAbstVerAnlageFeld());
+		FormHelper.addSeparator(innerPanel, 28, "Bemerkungen");
 		JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungGewDatenArea(),
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		builder.appendRow("fill:30dlu");
-		builder.append(bemerkungsScroller, 3);
-		builder.nextLine();
+		    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+		    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		FormHelper.addFull(innerPanel, 29, bemerkungsScroller, 60);
 		JComponent buttonBar = ComponentFactory.buildRightAlignedBar(getSaveGewDatenButton());
-		builder.append(buttonBar, 2);
+		FormHelper.addFull(innerPanel, 30, buttonBar);
+		this.setLayout(new BorderLayout());
+		this.add(FormHelper.wrapNorthWest(innerPanel), BorderLayout.NORTH);
 
 		// SaveButton!
 
@@ -1303,7 +1223,7 @@ public class GewaesserdatenPanel extends ObjectPanel {
 	public EinleitungsstellePanel getEinleitungsstelleTab() {
         if (einleitungsstelleTab == null) {
             einleitungsstelleTab = new EinleitungsstellePanel(this.hauptModul);
-            einleitungsstelleTab.setBorder(Paddings.DIALOG);
+            FormHelper.setDialogBorder(einleitungsstelleTab);
         }
         return einleitungsstelleTab;
     }

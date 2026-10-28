@@ -36,17 +36,13 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 
 /**
  * Ein Dialog zum Bearbeiten eines Standorts.
@@ -88,42 +84,21 @@ public class StandortEditor extends AbstractBaseEditor
 		n32Feld = new DoubleField(1);
 
 
-
-		String linkeSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g, 5dlu, 20dlu:g(0.2), 3dlu, 15dlu:g(0.2)";
-		String rechteSpalten = "r:p, 3dlu, 50dlu:g, 3dlu, 50dlu:g";
-
-		FormLayout layout = new FormLayout(
-				linkeSpalten + ", 10dlu, " + rechteSpalten, // Spalten
-				"pref, " + //1
-						"3dlu, " + //2
-						"pref, " + //3
-						"3dlu, " + //4
-						"pref, " + //5
-						"3dlu, " + //6
-						"pref, " + //7
-						"3dlu, " + //8
-
-						"bottom:pref:grow"); //9
-
-		PanelBuilder builder = new PanelBuilder(layout);
-		CellConstraints cc = new CellConstraints();
-
-		builder.addSeparator("Standort", cc.xyw(1, 1, 9));
-
-		builder.addLabel("Bezeichnung:", cc.xy(1, 3));
-		builder.add(bezeichnungFeld, cc.xyw(3, 3, 3));
-
+		JPanel panel = FormHelper.createFormPanel();
+		FormHelper.addSeparator(panel, 0, 0, 3, "Standort");
+		FormHelper.addLabel(panel, 0, 1, "Bezeichnung");
+		FormHelper.addField(panel, 1, 1, 2, bezeichnungFeld);
 		// Koordinaten
-		builder.addLabel("E32:", cc.xy(1, 5));
-		builder.add(e32Feld, cc.xy(3, 5));
-		builder.addLabel("N32:", cc.xy(1, 7));
-		builder.add(n32Feld, cc.xy(3, 7));
-		builder.add(getAusAblageButton(), cc.xywh(5, 5, 1, 3));
+		FormHelper.addLabel(panel, 0, 2, "E32");
+		FormHelper.fixWidth(e32Feld, 88);
+		FormHelper.addField(panel, 1, 2, 1, e32Feld);
+		FormHelper.addLabel(panel, 0, 3, "N32");
+		FormHelper.fixWidth(n32Feld, 88);
+		FormHelper.addField(panel, 1, 3, 1, n32Feld);
+		FormHelper.addSpan(panel, getAusAblageButton(), 2, 2, 1, 2);
 
 
-
-		JPanel panel = builder.getPanel();
-		panel.setBorder(Paddings.DIALOG);
+		FormHelper.setDialogBorder(panel);
 		return panel;
 	}
 

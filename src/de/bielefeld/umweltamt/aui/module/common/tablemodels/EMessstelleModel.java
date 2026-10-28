@@ -20,9 +20,9 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.tablemodels;
 
-import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.mappings.elka_sync.EMessstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 
 public class EMessstelleModel extends ListTableModel<EMessstelle> {

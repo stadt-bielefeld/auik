@@ -20,6 +20,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -52,11 +53,6 @@ import org.glassfish.jersey.client.JerseyInvocation;
 import org.glassfish.jersey.client.JerseyWebTarget;
 import org.glassfish.jersey.logging.LoggingFeature;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.SettingsManager;
 import de.bielefeld.umweltamt.aui.gui.CredentialsDialog;
@@ -87,11 +83,10 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.EBetriebModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EEinleitungsstelleModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EEntwaesserungsgrundstueckModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EMessstelleModel;
-import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ESonderbauwerkModel;
-
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EStandortModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.client.Entity;
@@ -120,9 +115,7 @@ public class ELKASync extends AbstractModul {
     private EStandortModel standortModel;
     private EEntwaesserungsgrundstueckModel entwgrundModel;
     private ESonderbauwerkModel sbModel;
-
     private List<?> currentTableMappings;
-
     private JTable dbTable;
     private JLabel rowCount;
     private JLabel progressCounter;
@@ -159,8 +152,6 @@ public class ELKASync extends AbstractModul {
             }
             @Override
             protected void doNonUILogic() throws RuntimeException {
-                // TODO Auto-generated method stub
-
                 ELKASync.this.adresseModel.setList(
                         prependIdentifierAdresse(EAdresse.getAll()));
                 ELKASync.this.rowCount.setText(String.valueOf(
@@ -665,27 +656,24 @@ public class ELKASync extends AbstractModul {
                     worker.start();
                 }
             });
-            FormLayout layout = new FormLayout(
-                "pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu:grow(1.0)",
-                "pref, 3dlu, 150dlu:grow(2.0), 3dlu, pref");
-            PanelBuilder builder = new PanelBuilder(layout);
-            CellConstraints cc = new CellConstraints();
             JScrollPane dbScroller = new JScrollPane(this.dbTable,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            builder.addLabel("Tabelle", cc.xy(1, 1));
-            builder.add(selection, cc.xy(3, 1));
-            builder.add(commitTable, cc.xy(5, 1));
-            builder.add(commitEntries, cc.xy(7, 1));
-            builder.add(deleteEntries, cc.xy(9, 1));
-            builder.add(dbScroller, cc.xyw(1, 3, 10));
-            builder.addLabel("Anzahl der Elemente: ", cc.xy(1, 5));
-            builder.add(this.rowCount, cc.xy(3, 5));
-            builder.add(new JLabel("Fortschritt: "), cc.xy(5, 5, CellConstraints.RIGHT, CellConstraints.CENTER));
-            builder.add(progress, cc.xy(7, 5));
-            builder.add(this.progressCounter, cc.xy(9, 5));
-            this.panel = builder.getPanel();
-            this.panel.setBorder(Paddings.DIALOG);
+
+            // Oben: Tabellenauswahl + Aktionen
+            JPanel topBar = FormHelper.buttonBarLeft(new JLabel("Tabelle"),
+                selection, commitTable, commitEntries, deleteEntries);
+
+            // Unten: Anzahl + Fortschritt
+            JPanel bottomBar = FormHelper.buttonBarLeft(
+                new JLabel("Anzahl der Elemente: "), this.rowCount,
+                new JLabel("Fortschritt: "), progress, this.progressCounter);
+
+            this.panel = new JPanel(new BorderLayout(0, 5));
+            FormHelper.setDialogBorder(this.panel);
+            this.panel.add(topBar, BorderLayout.NORTH);
+            this.panel.add(dbScroller, BorderLayout.CENTER);
+            this.panel.add(bottomBar, BorderLayout.SOUTH);
         }
         return this.panel;
     }
@@ -1094,20 +1082,23 @@ public class ELKASync extends AbstractModul {
             ref.setEinleitungsstelleByZElsNr(EEinleitungsstelle.findById(ref.getzEl().getId()));
             ref.setAfsNiederschlagswasserByQNwAfsNr(EAfsNiederschlagswasser.findById(ref.getqAfsNw().getNr()));
             prependIdentifierToNr(ref.getStandort());
+            prependIdentifierToNr(ref.getStandort().getAdresse());
             if (ref.getStandort().getAdresse() != null) {
-            	prependIdentifierToNr(ref.getStandort().getAdresse());
+                prependIdentifierToNr(ref.getStandort().getAdresse());
             }
             if (ref.getEinleitungsstelleByQElsNr() != null) {
                 prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr());
                 prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr().getStandort());
                 prependIdentifierToNr(ref.getEinleitungsstelleByQElsNr().getStandort().getAdresse());
             }
-            if (ref.getEinleitungsstelleByZElsNr() != null && ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse() != null) {
+            if (ref.getEinleitungsstelleByZElsNr() != null
+                    && ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse() != null) {
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr());
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort());
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse());
             }
-            if (ref.getEinleitungsstelleByZElsNr() != null && ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse() == null) {
+            if (ref.getEinleitungsstelleByZElsNr() != null
+                    && ref.getEinleitungsstelleByZElsNr().getStandort().getAdresse() == null) {
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr());
                 prependIdentifierToNr(ref.getEinleitungsstelleByZElsNr().getStandort());
             }

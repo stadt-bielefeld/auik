@@ -21,13 +21,14 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.util.HashMap;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 
 public class RUTPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
@@ -50,20 +51,14 @@ public class RUTPanel extends AbstractSonderbauwerkTypPanel {
 
         createFields();
 
-        FormLayout layout = new FormLayout(
-                "r:80dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.append(behandlungsFlaecheLabel, behandlungsFlaecheField);
-        builder.nextLine();
-        builder.append(nichtBehandlungsFlaecheLabel, nichtBehandlungsFlaecheField);
-        builder.nextLine();
-        builder.append(kritRegenspendeLabel, kritRegenspendeField);
-        builder.nextLine();
-        builder.append(drossabflussTatLabel, drossabflussTatField);
-        builder.nextLine();
-        builder.append(minDrosselabflussLabel, minDrosselabflussField);
+        JPanel inner = FormHelper.createFormPanel();
+        FormHelper.addLabelField(inner, 0, 0, behandlungsFlaecheLabel, behandlungsFlaecheField);
+        FormHelper.addLabelField(inner, 1, 0, nichtBehandlungsFlaecheLabel, nichtBehandlungsFlaecheField);
+        FormHelper.addLabelField(inner, 2, 0, kritRegenspendeLabel, kritRegenspendeField);
+        FormHelper.addLabelField(inner, 3, 0, drossabflussTatLabel, drossabflussTatField);
+        FormHelper.addLabelField(inner, 4, 0, minDrosselabflussLabel, minDrosselabflussField);
+        this.setLayout(new BorderLayout());
+        this.add(FormHelper.wrapNorthWest(inner), BorderLayout.NORTH);
     }
 
     private void createFields() {

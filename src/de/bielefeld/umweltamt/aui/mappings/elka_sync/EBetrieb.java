@@ -27,11 +27,11 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Massnahme;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.ZBetriebMassnahme;
-import de.bielefeld.umweltamt.aui.HibernateSessionFactory;
 
 // Generated 22.10.2015 16:17:13 by Hibernate Tools 3.4.0.CR1
 
