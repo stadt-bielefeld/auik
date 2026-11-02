@@ -37,7 +37,7 @@ public class FettabschModel extends ListTableModel<Anfallstelle> {
 
     public FettabschModel() {
         super(new String[]{
-                "Betreiber",
+                "Betreiber:in",
                 "Standort",
                 "Entwässerungsgebiet",
                 "Sachbearbeiter:in",

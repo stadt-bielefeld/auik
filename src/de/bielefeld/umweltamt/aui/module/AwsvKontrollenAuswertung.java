@@ -178,7 +178,7 @@ class WiedervorlageSVModel extends ListTableModel<Kontrollen> {
                         "Behälter",
                         "Nächste Prüfung",
                         "Anlagenart",
-                        "Betreiber",
+                        "Betreiber:in",
                         "Standort"
                 },
                 false

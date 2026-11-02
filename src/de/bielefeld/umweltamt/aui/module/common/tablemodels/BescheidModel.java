@@ -63,7 +63,7 @@ public class BescheidModel extends ListTableModel<Probenahme> {
                 "Kennummer",
                 "Entnahmedatum",
                 "Standort",
-                "Betreiber",
+                "Betreiber:in",
                 "Bemerkungen"
         },
         false);

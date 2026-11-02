@@ -177,7 +177,7 @@ class WiedervorlageVVModel extends ListTableModel<Verwaltungsverf> {
         super(
                 new String[]{
                         "Behälter",
-                        "Betreiber",
+                        "Betreiber:in",
                         "Standort",
                         "Wiedervorlage",
                         "Maßnahmen der Verwaltung"

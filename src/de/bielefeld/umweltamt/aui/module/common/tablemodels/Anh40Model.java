@@ -60,9 +60,9 @@ public class Anh40Model extends ListTableModel<Anh40Fachdaten> {
 
     public Anh40Model() {
         super(new String[]{
-                "Betreiber",
+                "Betreiber:in",
                 "Standort",
-                "Sachbearbeiter",
+                "Sachbearbeiter:in",
                 "Bemerkungen"
         },
         false);

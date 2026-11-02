@@ -64,7 +64,7 @@ public class ProbepunkteModel extends ListTableModel<Messstelle> {
         super(new String[]{
                 "Standort",
                 "Entgeb",
-                "Betreiber",
+                "Betreiber:in",
                 "Kassenzeichen",
                 "Branche",
                 "Beschreibung",

@@ -62,7 +62,7 @@ public class ProbepunktModel extends ListTableModel<Messstelle> {
         super(new String[]{
                 "ObjektID",
                 "Standort",
-                "Betreiber",
+                "Betreiber:in",
                 "Bemerkungen"
         },
         false);
