@@ -1082,7 +1082,6 @@ public class ELKASync extends AbstractModul {
             ref.setEinleitungsstelleByZElsNr(EEinleitungsstelle.findById(ref.getzEl().getId()));
             ref.setAfsNiederschlagswasserByQNwAfsNr(EAfsNiederschlagswasser.findById(ref.getqAfsNw().getNr()));
             prependIdentifierToNr(ref.getStandort());
-            prependIdentifierToNr(ref.getStandort().getAdresse());
             if (ref.getStandort().getAdresse() != null) {
                 prependIdentifierToNr(ref.getStandort().getAdresse());
             }
