@@ -27,8 +27,6 @@ package de.bielefeld.umweltamt.aui;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 
-
-
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.MD5Password;

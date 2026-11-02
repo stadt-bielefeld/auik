@@ -29,7 +29,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Abfuellflaeche;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenarten;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Anlagenchrono;
@@ -48,6 +47,7 @@ import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Verwmassnahmen;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Wassereinzugsgebiet;
+import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Wirtschaftszweig;
 
 /**

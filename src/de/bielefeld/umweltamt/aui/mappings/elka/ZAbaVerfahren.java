@@ -23,15 +23,15 @@
 
 package de.bielefeld.umweltamt.aui.mappings.elka;
 
-import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
-import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
-import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.List;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
+import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
+import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 
 /**
  * A class that represents a row in the ZAbaVerfahren database table.<br>

@@ -23,14 +23,15 @@
 
 package de.bielefeld.umweltamt.aui.mappings.oberflgw;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import de.bielefeld.umweltamt.aui.mappings.DatabaseAccess;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseSerialVersionUID;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * A class that represents a row in the ZBetriebMassnahme database table.<br>

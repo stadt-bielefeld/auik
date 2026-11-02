@@ -21,8 +21,8 @@
 package de.bielefeld.umweltamt.aui.utils;
 
 import java.awt.Component;
-import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
