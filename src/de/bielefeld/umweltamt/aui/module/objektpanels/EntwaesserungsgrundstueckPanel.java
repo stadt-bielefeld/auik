@@ -144,7 +144,8 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	private JLabel wasserableitungsstreckeOptLabel = new JLabel("Wasserableitungsstrecke");
 
 	private String[] einlBereichItems = { "Einleitung aus nicht öffentlichem Bereich",
-			"Einleitung aus öffentlichem Bereich", "Einleitung aus außerörtlichen Straßen" };
+			"Einleitung aus öffentlichem Bereich", "Einleitung aus außerörtlichen Straßen",
+			"Einleitung aus innerörtlichen Straßen"};
 
 	private String[] einbauartItems = { "nicht zugeordnet", "Einbau im bestehenden Straßenablauf",
 			"baulicher Ersatz des Straßenablaufs", "separates Schachtbauwerk" };
@@ -464,6 +465,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 	 *
 	 * @return boolean
 	 */
+	@Override
 	protected boolean doSavePanelData() {
 		boolean success;
 		if (this.entwaesserungsgrundstueck == null) {
@@ -509,7 +511,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 			this.entwaesserungsgrundstueck.setEinlBereichOpt(null);
 		} else {
 			String type = getEinleitungsbereichBox().getSelectedItem().toString();
-			switch ((String) type) {
+			switch (type) {
 			case "Einleitung aus nicht öffentlichem Bereich":
 				this.entwaesserungsgrundstueck.setEinlBereichOpt(0);
 				break;
@@ -526,7 +528,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 			this.entwaesserungsgrundstueck.setEinbauartOpt(null);
 		} else {
 			String type = getEinbauartBox().getSelectedItem().toString();
-			switch ((String) type) {
+			switch (type) {
 			case "nicht zugeordnet":
 				this.entwaesserungsgrundstueck.setEinbauartOpt(null);
 				break;
@@ -546,7 +548,7 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 			this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(null);
 		} else {
 			String type = getWasserableitungsstreckeOptBox().getSelectedItem().toString();
-			switch ((String) type) {
+			switch (type) {
 			case "nicht definiert":
 				this.entwaesserungsgrundstueck.setWasserableitungsstreckeOpt(null);
 				break;

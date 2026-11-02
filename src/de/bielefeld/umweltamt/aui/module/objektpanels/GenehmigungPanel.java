@@ -33,8 +33,10 @@ import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
@@ -86,10 +88,12 @@ public class GenehmigungPanel extends ObjectPanel{
     private TextFieldDateChooser befristetbisDatum = null;
     private JFormattedTextField anhangFeld = null;
     private JFormattedTextField genMengeFeld = null;
+    private JFormattedTextField genMengeFeld2 = null;
     private JCheckBox befristetCheck = null;
     private JCheckBox gen58Check = null;
     private JCheckBox gen59Check = null;
     private JCheckBox gen8Check = null;
+    private JComboBox<String>  wasserrechtBox;
     private JCheckBox selbstueberwCheck = null;
     private JCheckBox eSatzungCheck = null;
 
@@ -107,34 +111,35 @@ public class GenehmigungPanel extends ObjectPanel{
     private JPopupMenu verknuepfungPopup;
 
     public GenehmigungPanel(BasisObjektBearbeiten hauptModul) {
-        this.name = "Genehmigung";
+        this.name = "Wasserrecht";
         this.hauptModul = hauptModul;
 
         FormLayout layout = new FormLayout(
-            "r:80dlu, 5dlu, 90dlu, 5dlu, r:20dlu, 5dlu, 120dlu", // Spalten
+            "r:80dlu, 5dlu, 90dlu, 5dlu, r:25dlu, 5dlu, 120dlu", // Spalten
             "");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
 
         builder.appendSeparator("Fachdaten");
         builder.append("Aktenzeichen:", getAktenzeichenFeld());
-        builder.append("", getGen58CheckBox());
+        builder.nextLine();
+        builder.append("Rechtsgrundlage", getWasserrechtBox());
         builder.nextLine();
         builder.append("Antragsdatum:", getAntragsDatum());
-        builder.append("", getGen59CheckBox());
         builder.nextLine();
-        builder.append("Genehmigungsdatum:", getGenehmigungsDatum());
-        builder.append("", getGen8CheckBox());
+        builder.append("Recht erteilt am:", getGenehmigungsDatum());
         builder.nextLine();
         builder.append("Änderungsdatum:", getAenderungsDatum());
-        builder.nextLine();
-        builder.append("Anhang:", getAnhangFeld());
         builder.append("", getSelbCheckBox());
         builder.nextLine();
-        builder.append("Genehmigte Menge [m³]:", getGenMengeFeld());
+        builder.append("Anhang:", getAnhangFeld());
         builder.append("", getEsaCheckBox());
         builder.nextLine();
-        builder.append("Genehmigung befristet:", getBefCheckBox());
+        builder.append("Erlaubte Menge [l/s]:", getGenMengeFeld());
+        builder.append("[m³/2h]", getGenMengeFeld2());
+        builder.nextLine();
+        builder.append("Befristet", getBefCheckBox());
+        builder.nextLine();
         builder.append("bis:", getBefristetDatum());
 
         builder.nextLine();
@@ -183,6 +188,10 @@ public class GenehmigungPanel extends ObjectPanel{
             this.hauptModul.getObjekt());
         log.debug("Genehmigung Objekt aus DB geholt: ID" + this.fachdaten);
     }
+
+	private String[] wasserrechtItems = { "-", "§ 8 WHG i.V.m. §57 WHG", "§§ 58, 59 WHG",
+			"sonstige Genehmigung",  "§ 7a WHG (<01.03.2010",
+			"§ 59 LWG (<06.07.2016)", "§ 100 Abs. 1 WHG" };
 
     public void updateForm() throws RuntimeException {
 
@@ -304,7 +313,8 @@ public class GenehmigungPanel extends ObjectPanel{
         getEsaCheckBox().setEnabled(enabled);
     }
 
-    protected boolean doSavePanelData() {
+    @Override
+	protected boolean doSavePanelData() {
         boolean success;
 
         String aktenzeichen = this.aktenzeichenFeld.getText();
@@ -491,6 +501,13 @@ public class GenehmigungPanel extends ObjectPanel{
         return this.genMengeFeld;
     }
 
+    private JFormattedTextField getGenMengeFeld2() {
+        if (this.genMengeFeld2 == null) {
+            this.genMengeFeld2 = new IntegerField();
+        }
+        return this.genMengeFeld2;
+    }
+
     private JCheckBox getBefCheckBox() {
         if (this.befristetCheck == null) {
             this.befristetCheck = new JCheckBox();
@@ -517,6 +534,17 @@ public class GenehmigungPanel extends ObjectPanel{
             this.gen8Check = new JCheckBox("Direkteinleitung");
         }
         return this.gen8Check;
+    }
+
+    private JComboBox<String> getWasserrechtBox() {
+        if (this.wasserrechtBox == null) {
+
+            this.wasserrechtBox = new JComboBox<>();
+			this.wasserrechtBox.setModel(
+	                new DefaultComboBoxModel<>(this.wasserrechtItems));
+
+        }
+        return this.wasserrechtBox;
     }
 
     private JCheckBox getSelbCheckBox() {

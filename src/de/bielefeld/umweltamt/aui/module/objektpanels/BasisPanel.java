@@ -225,7 +225,7 @@ public class BasisPanel extends ObjectPanel {
         builder.nextLine();
 
 
-        builder.appendSeparator("Beschreibung");
+        builder.appendSeparator("Bemerkungen");
         builder.appendRow("3dlu");
         builder.nextLine(2);
 
@@ -555,9 +555,9 @@ public class BasisPanel extends ObjectPanel {
 
                     Inhaber betreiber = BasisPanel.this.hauptModul
                         .getObjekt().getBetreiberid();
-                    Standort standort = (Standort) BasisPanel.this.hauptModul
+                    Standort standort = BasisPanel.this.hauptModul
                             .getObjekt().getStandortid();
-                    Inhaber inhaber = (Inhaber) BasisPanel.this.hauptModul
+                    Inhaber inhaber = BasisPanel.this.hauptModul
                             .getObjekt().getStandortid().getInhaber();
 
                     if ("betreiber_edit".equals(action) && betreiber != null) {

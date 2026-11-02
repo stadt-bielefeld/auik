@@ -64,6 +64,7 @@ import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
+import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
@@ -92,6 +93,8 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	private JComboBox<String> einleitungsartBox;
 	private TextFieldDateChooser erstellDatDatum = null;
 	private TextFieldDateChooser stillgelegtAmDatum = null;
+	private JFormattedTextField e32Feld;
+	private JFormattedTextField n32Feld;
 	private JTextArea bemerkungenArea = null;
 
 	// Indirekteinleitung
@@ -136,7 +139,10 @@ public class EinleitungsstellePanel extends ObjectPanel {
 		this.name = "Einleitungsstelle";
 		this.hauptModul = hauptModul;
 
-		FormLayout layout = new FormLayout("r:80dlu, 5dlu, 80dlu, 100dlu, 40dlu", // Spalten
+		e32Feld = new DoubleField(1);
+		n32Feld = new DoubleField(1);
+
+		FormLayout layout = new FormLayout("r:80dlu, 5dlu, 80dlu, 5dlu, 15dlu, 5dlu, 100dlu", // Spalten
 				"");
 
 		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
@@ -146,19 +152,19 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 		builder.nextLine();
 		builder.append(bezeichnungLb);
-		builder.append(getBezeichnungFeld(), 2);
+		builder.append(getBezeichnungFeld(), 5);
 
 		builder.nextLine();
 		builder.append(einlArtLb);
-		builder.append(getEinleitungsartBox(), 2);
+		builder.append(getEinleitungsartBox(), 5);
 
 		builder.nextLine();
-		builder.append(erstellDatLb);
-		builder.append(getErstellDatDatum());
+		builder.append(erstellDatLb, getErstellDatDatum());
+		builder.append("e32", e32Feld);
 
 		builder.nextLine();
-		builder.append(stillDatLb);
-		builder.append(getStillgelegtAmDatum());
+		builder.append(stillDatLb, getStillgelegtAmDatum());
+		builder.append("n32", n32Feld);
 
 		builder.nextLine();
 		builder.appendSeparator("Details");
@@ -178,6 +184,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 		builder.nextLine();
 		builder.append(abwAgLb);
 		builder.append(getAbwAgEinlFeld(), 2);
+		builder.nextLine();
 
 		builder.appendSeparator("Bemerkungen");
 		builder.appendRow("3dlu");
@@ -185,7 +192,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 		JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		builder.appendRow("fill:30dlu");
-		builder.append(bemerkungsScroller, 5);
+		builder.append(bemerkungsScroller, 7);
 		builder.nextLine();
 
 		builder.nextLine();
@@ -196,7 +203,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 		JScrollPane objektverknuepfungScroller = new JScrollPane(getObjektverknuepungTabelle(),
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		builder.appendRow("fill:100dlu");
-		builder.append(objektverknuepfungScroller, 5);
+		builder.append(objektverknuepfungScroller, 7);
 		builder.nextLine();
 		JComponent buttonBar = ComponentFactory.buildRightAlignedBar(getSelectObjektButton(),
 				getSaveElkaEinleitungsstelleButton());
