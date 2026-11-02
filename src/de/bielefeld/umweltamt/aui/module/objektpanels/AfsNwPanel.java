@@ -48,6 +48,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -66,10 +67,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -78,6 +75,7 @@ import de.bielefeld.umweltamt.aui.mappings.oberflgw.AfsNiederschlagswasser;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Entwaesserungsgrundstueck;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.EditableListTableModel;
 
 /**
@@ -108,20 +106,12 @@ public class AfsNwPanel extends ObjectPanel {
 		name = "Afs Niederschlagswasser";
 		this.hauptModul = hauptModul;
 
-		FormLayout layout = new FormLayout("r:150dlu, 5dlu, 150dlu", // Spalten
-				"pref, " + // 1
-						"3dlu, " + // 2
-						"pref, " + // 3
-						"3dlu, " + // 4
-						"pref");
-
-		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-		CellConstraints cc = new CellConstraints();
-
-		builder.addSeparator("Anfallstelle Niederschlagswasser", cc.xyw(1, 1, 3));
+		this.setLayout(new BorderLayout(0, 5));
+		this.add(FormHelper.createSeparator("Anfallstelle Niederschlagswasser"),
+				BorderLayout.NORTH);
 		JScrollPane tabellenScroller = new JScrollPane(getAfsNwTabelle(),
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		builder.add(tabellenScroller, cc.xyw(1, 3, 3));
+		this.add(tabellenScroller, BorderLayout.CENTER);
 
 	}
 

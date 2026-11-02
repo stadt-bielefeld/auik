@@ -37,8 +37,18 @@
  * - Anhang 56 erstellt
  *
  */
+/**
+ * Copyright 2005-2011, Stadt Bielefeld
+ * [License header unchanged...]
+ */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -46,21 +56,20 @@ import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.SwingConstants;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -89,101 +98,190 @@ public class Anh56Panel extends ObjectPanel {
     private JCheckBox genpflichtCheck = null;
     private JCheckBox abwasseranfallCheck = null;
     private JTextArea BemerkungenArea = null;
-
     private JButton saveAnh56Button = null;
 
     // Daten
     private Anh56Fachdaten fachdaten = null;
 
     @SuppressWarnings("deprecation")
-    public Anh56Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
+    public Anh56Panel(BasisObjektBearbeiten hauptModul,
+        Anfallstelle anfallstelle) {
         this.name = "Druckerei";
         this.hauptModul = hauptModul;
         this.anfallstelle = anfallstelle;
 
-        FormLayout layout = new FormLayout(
-            "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
-            "");
+        // ── InnerPanel ────────────────────────────────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        // ── SEPARATOR: Fachdaten ──────────────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 3; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Fachdaten"), gbc);
 
-        builder.appendSeparator("Fachdaten");
-        builder.append("Druckverfahren:", getDruckverfahrenFeld());
-        builder.append("", getAbwasseranfallCheck());
-        builder.nextLine();
-        builder.append("Wasserverbrauch:", getVerbrauchFeld());
-        builder.append("", getAbaCheck());
-        builder.nextLine();
-        builder.append("Entsorgung:", getEntsorgungFeld());
-        builder.append("", getGenpflichtCheck());
-        builder.nextLine();
-        builder.append("Datum 58er Genehmigung:", getGen58Datum());
-        builder.nextLine();
-        builder.append("Datum 59er Genehmigung:", getGen59Datum());
-        builder.nextLine();
+        // Zeile 1: Druckverfahren | Abwasseranfall
+        addRow(innerPanel, gbc, 1,
+            "Druckverfahren", getDruckverfahrenFeld(),
+            getAbwasseranfallCheck());
 
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
+        // Zeile 2: Wasserverbrauch | ABA
+        addRow(innerPanel, gbc, 2,
+            "Wasserverbrauch", getVerbrauchFeld(),
+            getAbaCheck());
+
+        // Zeile 3: Entsorgung | Genehmigungspflicht
+        addRow(innerPanel, gbc, 3,
+            "Entsorgung", getEntsorgungFeld(),
+            getGenpflichtCheck());
+
+        // Zeile 4: Datum 58er Genehmigung
+        gbc.gridx = 0; gbc.gridy = 4;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(
+            new JLabel("Datum 58er Genehmigung"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getGen58Datum().setPreferredSize(
+            new java.awt.Dimension(200,
+                getGen58Datum().getPreferredSize().height));
+        innerPanel.add(getGen58Datum(), gbc);
+
+        // Zeile 5: Datum 59er Genehmigung
+        gbc.gridx = 0; gbc.gridy = 5;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(
+            new JLabel("Datum 59er Genehmigung"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getGen59Datum().setPreferredSize(
+            new java.awt.Dimension(200,
+                getGen59Datum().getPreferredSize().height));
+        innerPanel.add(getGen59Datum(), gbc);
+
+        // ── SEPARATOR: Bemerkungen ────────────────────────
+        gbc.gridx = 0; gbc.gridy = 6;
+        gbc.gridwidth = 3; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Bemerkungen"), gbc);
+
+        // BemerkungsArea
+        JScrollPane bemerkungsScroller = new JScrollPane(
+            getBemerkungenArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
+        bemerkungsScroller.setPreferredSize(
+            new java.awt.Dimension(0, 80));
+        bemerkungsScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 80));
+        gbc.gridy = 7; gbc.gridwidth = 3;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(bemerkungsScroller, gbc);
 
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getSaveAnh56Button());
+        gbc.gridy = 8; gbc.gridwidth = 3;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
 
-        JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-            getSaveAnh56Button());
+        // ── Wrapper ───────────────────────────────────────
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(innerPanel, BorderLayout.WEST);
+        this.setLayout(new BorderLayout());
+        this.add(wrapperPanel, BorderLayout.NORTH);
 
-        // JComponent buttonBar = ComponentFactory.buildOKBar(getSaveAnh56Button());
-        builder.append(buttonBar, 7);
-        addChangeListeners(getBemerkungenArea(), getDruckverfahrenFeld(),
-            getVerbrauchFeld(), getEntsorgungFeld(), getGen58Datum(), getGen59Datum(),
-            getAbaCheck(), getGenpflichtCheck(), getAbwasseranfallCheck());
+        addChangeListeners(
+            getBemerkungenArea(),
+            getDruckverfahrenFeld(),
+            getVerbrauchFeld(),
+            getEntsorgungFeld(),
+            getGen58Datum(),
+            getGen59Datum(),
+            getAbaCheck(),
+            getGenpflichtCheck(),
+            getAbwasseranfallCheck());
     }
 
+    // ── Hilfsmethode: Label + Feld + Checkbox ─────────────
+    private void addRow(JPanel panel, GridBagConstraints gbc,
+        int row, String label,
+        JTextField field, JCheckBox check) {
+        gbc.gridy = row; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        panel.add(new JLabel(label), gbc);
+
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        field.setPreferredSize(new java.awt.Dimension(200,
+            field.getPreferredSize().height));
+        panel.add(field, gbc);
+
+        gbc.gridx = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel.add(check, gbc);
+    }
+
+    // ── createSeparator() ─────────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(
+            new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
+    }
+
+    // ── completeObjekt() ───────────────────────────────────
     public void completeObjekt(Anfallstelle anfallstelle) {
-        if (this.fachdaten == null) {
-            // Neues Anhang 56 Objekt erzeugen
+        if (this.fachdaten == null)
             this.fachdaten = new Anh56Fachdaten();
-        }
-        // Anfallstelle setzen
-            this.anfallstelle = anfallstelle;
-            this.fachdaten.setAnfallstelle(this.anfallstelle);
+        this.anfallstelle = anfallstelle;
+        this.fachdaten.setAnfallstelle(this.anfallstelle);
     }
 
+    // ── doSavePanelData() ──────────────────────────────────
     protected boolean doSavePanelData() {
         boolean success;
 
         String bemerkungen = this.BemerkungenArea.getText();
-        if ("".equals(bemerkungen)) {
-            this.fachdaten.setBemerkungen(null);
-        } else {
-            this.fachdaten.setBemerkungen(bemerkungen);
-        }
+        this.fachdaten.setBemerkungen(
+            "".equals(bemerkungen) ? null : bemerkungen);
 
         String druckverf = this.druckverfahrenFeld.getText();
-        if ("".equals(druckverf)) {
-            this.fachdaten.setDruckverfahren(null);
-        } else {
-            this.fachdaten.setDruckverfahren(druckverf);
-        }
+        this.fachdaten.setDruckverfahren(
+            "".equals(druckverf) ? null : druckverf);
 
         String verbrauch = this.verbrauchFeld.getText();
-        if ("".equals(verbrauch)) {
-            this.fachdaten.setVerbrauch(null);
-        } else {
-            this.fachdaten.setVerbrauch(verbrauch);
-        }
+        this.fachdaten.setVerbrauch(
+            "".equals(verbrauch) ? null : verbrauch);
 
         String entsorgung = this.entsorgungFeld.getText();
-        if ("".equals(entsorgung)) {
-            this.fachdaten.setEntsorgung(null);
-        } else {
-            this.fachdaten.setEntsorgung(entsorgung);
-        }
+        this.fachdaten.setEntsorgung(
+            "".equals(entsorgung) ? null : entsorgung);
 
         Date gen58 = this.gen58Datum.getDate();
         this.fachdaten.setGen58(gen58);
@@ -191,28 +289,16 @@ public class Anh56Panel extends ObjectPanel {
         Date gen59 = this.gen59Datum.getDate();
         this.fachdaten.setGen59(gen59);
 
-        if (getAbaCheck().isSelected()) {
-            this.fachdaten.setAba(true);
-        } else {
-            this.fachdaten.setAba(false);
-        }
-
-        if (getGenpflichtCheck().isSelected()) {
-            this.fachdaten.setGenpflicht(true);
-        } else {
-            this.fachdaten.setGenpflicht(false);
-        }
-
-        if (getAbwasseranfallCheck().isSelected()) {
-            this.fachdaten.setAbwasseranfall(true);
-        } else {
-            this.fachdaten.setAbwasseranfall(false);
-        }
+        this.fachdaten.setAba(getAbaCheck().isSelected());
+        this.fachdaten.setGenpflicht(
+            getGenpflichtCheck().isSelected());
+        this.fachdaten.setAbwasseranfall(
+            getAbwasseranfallCheck().isSelected());
 
         success = fachdaten.merge();
         if (success) {
-            log.debug("Anh 56 Objekt " + this.fachdaten.getId()
-                + " gespeichert.");
+            log.debug("Anh 56 Objekt "
+                + this.fachdaten.getId() + " gespeichert.");
         } else {
             log.debug("Anh 56 Objekt " + this.fachdaten
                 + " konnte nicht gespeichert werden!");
@@ -220,167 +306,160 @@ public class Anh56Panel extends ObjectPanel {
         return success;
     }
 
+    // ── enableAll() ────────────────────────────────────────
     public void enableAll(boolean enabled) {
-        // This is intentionally left blank
+        // intentionally left blank
     }
 
+    // ── clearForm() ────────────────────────────────────────
     public void clearForm() {
         getBemerkungenArea().setText(null);
         getDruckverfahrenFeld().setText(null);
         getVerbrauchFeld().setText(null);
         getEntsorgungFeld().setText(null);
-
         getGen58Datum().setDate(null);
         getGen59Datum().setDate(null);
-
         getAbaCheck().setSelected(false);
         getGenpflichtCheck().setSelected(false);
         getAbwasseranfallCheck().setSelected(false);
     }
 
-    public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
-
-        this.fachdaten = anfallstelle.getAnh56Fachdatens().iterator().next();
-
+    // ── updateForm(Anfallstelle) ───────────────────────────
+    public void updateForm(Anfallstelle anfallstelle)
+        throws RuntimeException {
+        this.fachdaten =
+            anfallstelle.getAnh56Fachdatens()
+                .iterator().next();
         if (this.fachdaten != null) {
-            if (this.fachdaten.getBemerkungen() != null) {
-                getBemerkungenArea().setText(this.fachdaten.getBemerkungen());
-            }
-            if (this.fachdaten.getDruckverfahren() != null) {
+            if (this.fachdaten.getBemerkungen() != null)
+                getBemerkungenArea().setText(
+                    this.fachdaten.getBemerkungen());
+            if (this.fachdaten.getDruckverfahren() != null)
                 getDruckverfahrenFeld().setText(
                     this.fachdaten.getDruckverfahren());
-            }
-            if (this.fachdaten.getVerbrauch() != null) {
-                getVerbrauchFeld().setText(this.fachdaten.getVerbrauch());
-            }
-            if (this.fachdaten.getEntsorgung() != null) {
-                getEntsorgungFeld().setText(this.fachdaten.getEntsorgung());
-            }
-
-            if (this.fachdaten.getGen58() != null) {
-                getGen58Datum().setDate(this.fachdaten.getGen58());
-            }
-            if (this.fachdaten.getGen59() != null) {
-                getGen59Datum().setDate(this.fachdaten.getGen59());
-            }
-
-            if (this.fachdaten.getAba() != null) {
-                if (this.fachdaten.getAba() == true) {
-                    getAbaCheck().setSelected(true);
-                } else {
-                    getAbaCheck().setSelected(false);
-                }
-            }
-            if (this.fachdaten.getGenpflicht() != null) {
-                if (this.fachdaten.getGenpflicht() == true) {
-                    getGenpflichtCheck().setSelected(true);
-                } else {
-                    getGenpflichtCheck().setSelected(false);
-                }
-            }
-            if (this.fachdaten.getAbwasseranfall() != null) {
-                if (this.fachdaten.getAbwasseranfall() == true) {
-                    getAbwasseranfallCheck().setSelected(true);
-                } else {
-                    getAbwasseranfallCheck().setSelected(false);
-                }
-            }
+            if (this.fachdaten.getVerbrauch() != null)
+                getVerbrauchFeld().setText(
+                    this.fachdaten.getVerbrauch());
+            if (this.fachdaten.getEntsorgung() != null)
+                getEntsorgungFeld().setText(
+                    this.fachdaten.getEntsorgung());
+            if (this.fachdaten.getGen58() != null)
+                getGen58Datum().setDate(
+                    this.fachdaten.getGen58());
+            if (this.fachdaten.getGen59() != null)
+                getGen59Datum().setDate(
+                    this.fachdaten.getGen59());
+            if (this.fachdaten.getAba() != null)
+                getAbaCheck().setSelected(
+                    this.fachdaten.getAba());
+            if (this.fachdaten.getGenpflicht() != null)
+                getGenpflichtCheck().setSelected(
+                    this.fachdaten.getGenpflicht());
+            if (this.fachdaten.getAbwasseranfall() != null)
+                getAbwasseranfallCheck().setSelected(
+                    this.fachdaten.getAbwasseranfall());
         }
         setDirty(false);
     }
 
+    // ── fetchFormData() ────────────────────────────────────
     public void fetchFormData() throws RuntimeException {
-        Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+        Set<Anfallstelle> list =
+            this.hauptModul.getObjekt().getAnfallstelles();
         this.fachdaten = Anh56Fachdaten.findByAnfallstelleId(
-                list.iterator().next().getId());
-        log.debug("Anhang 56 Objekt aus DB geholt: ID" + this.fachdaten);
+            list.iterator().next().getId());
+        log.debug("Anhang 56 Objekt aus DB geholt: ID"
+            + this.fachdaten);
     }
 
-    private JButton getSaveAnh56Button() {
-        if (this.saveAnh56Button == null) {
-            this.saveAnh56Button = new JButton("Speichern");
-
-            this.saveAnh56Button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    enableAll(false);
-                    if (hauptModul.saveAllTabs()) {
-                        Anh56Panel.this.hauptModul.getFrame().changeStatus(
-                            "Anh 56 Objekt "
-                                + Anh56Panel.this.fachdaten.getId()
-                                + " erfolgreich gespeichert.",
-                            HauptFrame.SUCCESS_COLOR);
-                    } else {
-                        Anh56Panel.this.hauptModul.getFrame().changeStatus(
-                            "Fehler beim Speichern des Anh 56 Objekt!",
-                            HauptFrame.ERROR_COLOR);
-                    }
-
-                    Anh56Panel.this.hauptModul.fillForm();
-                }
-            });
-        }
-        return this.saveAnh56Button;
-    }
-
+    // ── getName() ──────────────────────────────────────────
     @Override
     public String getName() {
         return this.name;
     }
 
-    private JCheckBox getAbaCheck() {
-        if (this.abaCheck == null) {
-            this.abaCheck = new JCheckBox("Abwasserbehandlung");
+    // ── getSaveAnh56Button() ───────────────────────────────
+    private JButton getSaveAnh56Button() {
+        if (this.saveAnh56Button == null) {
+            this.saveAnh56Button = new JButton("Speichern");
+            this.saveAnh56Button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        enableAll(false);
+                        if (hauptModul.saveAllTabs()) {
+                            Anh56Panel.this.hauptModul
+                                .getFrame().changeStatus(
+                                "Anh 56 Objekt "
+                                + Anh56Panel.this.fachdaten
+                                    .getId()
+                                + " erfolgreich"
+                                + " gespeichert.",
+                                HauptFrame.SUCCESS_COLOR);
+                        } else {
+                            Anh56Panel.this.hauptModul
+                                .getFrame().changeStatus(
+                                "Fehler beim Speichern"
+                                + " des Anh 56 Objekt!",
+                                HauptFrame.ERROR_COLOR);
+                        }
+                        Anh56Panel.this.hauptModul.fillForm();
+                    }
+                });
         }
+        return this.saveAnh56Button;
+    }
+
+    // ── Getter Methoden ────────────────────────────────────
+    private JCheckBox getAbaCheck() {
+        if (this.abaCheck == null)
+            this.abaCheck =
+                new JCheckBox("Abwasserbehandlung");
         return this.abaCheck;
     }
 
     private JCheckBox getAbwasseranfallCheck() {
-        if (this.abwasseranfallCheck == null) {
-            this.abwasseranfallCheck = new JCheckBox("Abwasseranfall");
-        }
+        if (this.abwasseranfallCheck == null)
+            this.abwasseranfallCheck =
+                new JCheckBox("Abwasseranfall");
         return this.abwasseranfallCheck;
     }
 
     private JTextField getDruckverfahrenFeld() {
-        if (this.druckverfahrenFeld == null) {
-            this.druckverfahrenFeld = new LimitedTextField(150);
-        }
+        if (this.druckverfahrenFeld == null)
+            this.druckverfahrenFeld =
+                new LimitedTextField(150);
         return this.druckverfahrenFeld;
     }
 
     private JTextField getEntsorgungFeld() {
-        if (this.entsorgungFeld == null) {
+        if (this.entsorgungFeld == null)
             this.entsorgungFeld = new LimitedTextField(150);
-        }
         return this.entsorgungFeld;
     }
 
     private TextFieldDateChooser getGen58Datum() {
-        if (this.gen58Datum == null) {
+        if (this.gen58Datum == null)
             this.gen58Datum = new TextFieldDateChooser();
-        }
         return this.gen58Datum;
     }
 
     private TextFieldDateChooser getGen59Datum() {
-        if (this.gen59Datum == null) {
+        if (this.gen59Datum == null)
             this.gen59Datum = new TextFieldDateChooser();
-        }
         return this.gen59Datum;
     }
 
     private JCheckBox getGenpflichtCheck() {
-        if (this.genpflichtCheck == null) {
-            this.genpflichtCheck = new JCheckBox("Genehmigungspflicht");
-        }
+        if (this.genpflichtCheck == null)
+            this.genpflichtCheck =
+                new JCheckBox("Genehmigungspflicht");
         return this.genpflichtCheck;
     }
 
     private JTextField getVerbrauchFeld() {
-        if (this.verbrauchFeld == null) {
+        if (this.verbrauchFeld == null)
             this.verbrauchFeld = new LimitedTextField(150);
-        }
         return this.verbrauchFeld;
     }
 
@@ -393,3 +472,4 @@ public class Anh56Panel extends ObjectPanel {
         return this.BemerkungenArea;
     }
 }
+

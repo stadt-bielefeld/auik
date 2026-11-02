@@ -21,6 +21,7 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -29,12 +30,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.utils.CBoxItem;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 
 public class RKBPanel extends AbstractSonderbauwerkTypPanel {
     private static final long serialVersionUID = 4242458251785488488L;
@@ -96,53 +96,40 @@ public class RKBPanel extends AbstractSonderbauwerkTypPanel {
         createFields();
         createMappings();
 
-        FormLayout layout = new FormLayout(
-                "r:pref, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.appendSeparator("Beckenart");
-        builder.nextLine();
-        builder.append("Betriebsart", betriebsartBox);
-        builder.nextLine();
-        builder.append("Beckenart", beckenartBox);
-        builder.nextLine();
-        builder.append("Art der Entlastung des Stauraumkanals", entlastungsartBox);
-        builder.nextLine();
-        builder.append("Anordnung des Regenklärbeckens", anordnungBox);
-        builder.nextLine();
-        builder.append("Drosselabfluss zur Behandlung", drosselabflussBox);
-        builder.nextLine();
-        builder.append("Drosselschluss bei Überschreiten des Füllstandes oder eines Maximalzuflusses",
-        		drosselschlussCheck);
-        builder.nextLine();
-
-        builder.appendSeparator("Art und Kenndaten des Sonderbauwerks");
-        builder.append("Behandlungsbedürftige Fläche", behandFlaeche);
-        builder.nextLine();
-        builder.append("Nicht behandlungsbedürftige Fläche", nBehandFlaeche);
-        builder.nextLine();
-        builder.append("Kritische Regenspende", kritRegenspende);
-        builder.nextLine();
-        builder.append("Vorhandenes Speichervolumen", vorhandVolumen);
-        builder.nextLine();
-
-        builder.append(spezVolumenLabel, spezVolumen);
-        builder.nextLine();
-        builder.append(minVolumenLabel, minVolumen);
-        builder.nextLine();
-
-        builder.append(beckentiefeLabel, beckentiefe);
-        builder.nextLine();
-        builder.append(beckenoberflLabel, beckenoberfl);
-        builder.nextLine();
-        builder.append(drosselabflussTatLabel, drosselabflussTat);
-        builder.nextLine();
-        builder.append(beckenvolumenLabel, beckenvolumen);
-        builder.nextLine();
-        builder.append(flaechenbeschickungLabel, flaechenbeschickung);
-        builder.nextLine();
-        builder.append(minDrosselabflussLabel, minDrosselabfluss);
+        JPanel innerPanel = FormHelper.createFormPanel();
+        FormHelper.addSeparator(innerPanel, 0, "Beckenart");
+        FormHelper.addLabelField(innerPanel, 1, 0, "Betriebsart", betriebsartBox);
+        FormHelper.addLabelField(innerPanel, 2, 0, "Beckenart", beckenartBox);
+        FormHelper.addLabelField(innerPanel, 3, 0,
+            "Art der Entlastung des Stauraumkanals", entlastungsartBox);
+        FormHelper.addLabelField(innerPanel, 4, 0, "Anordnung des Regenklärbeckens",
+            anordnungBox);
+        FormHelper.addLabelField(innerPanel, 5, 0, "Drosselabfluss zur Behandlung",
+            drosselabflussBox);
+        FormHelper.addLabelField(innerPanel, 6, 0,
+            "Drosselschluss bei Überschreiten des Füllstandes oder eines Maximalzuflusses", drosselschlussCheck);
+        FormHelper.addSeparator(innerPanel, 7, "Art und Kenndaten des Sonderbauwerks");
+        FormHelper.addLabelField(innerPanel, 8, 0, "Behandlungsbedürftige Fläche",
+            behandFlaeche);
+        FormHelper.addLabelField(innerPanel, 9, 0, "Nicht behandlungsbedürftige Fläche",
+            nBehandFlaeche);
+        FormHelper.addLabelField(innerPanel, 10, 0, "Kritische Regenspende",
+            kritRegenspende);
+        FormHelper.addLabelField(innerPanel, 11, 0, "Vorhandenes Speichervolumen",
+            vorhandVolumen);
+        FormHelper.addLabelField(innerPanel, 12, 0, spezVolumenLabel, spezVolumen);
+        FormHelper.addLabelField(innerPanel, 13, 0, minVolumenLabel, minVolumen);
+        FormHelper.addLabelField(innerPanel, 14, 0, beckentiefeLabel, beckentiefe);
+        FormHelper.addLabelField(innerPanel, 15, 0, beckenoberflLabel, beckenoberfl);
+        FormHelper.addLabelField(innerPanel, 16, 0, drosselabflussTatLabel,
+            drosselabflussTat);
+        FormHelper.addLabelField(innerPanel, 17, 0, beckenvolumenLabel, beckenvolumen);
+        FormHelper.addLabelField(innerPanel, 18, 0, flaechenbeschickungLabel,
+            flaechenbeschickung);
+        FormHelper.addLabelField(innerPanel, 19, 0, minDrosselabflussLabel,
+            minDrosselabfluss);
+        this.setLayout(new BorderLayout());
+        this.add(FormHelper.wrapNorthWest(innerPanel), BorderLayout.NORTH);
 
         setBetriebsArt("-");
     }

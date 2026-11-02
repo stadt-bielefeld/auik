@@ -61,6 +61,7 @@ package de.bielefeld.umweltamt.aui.module.common.editors;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
@@ -94,11 +95,6 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.FormLayout;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -113,7 +109,9 @@ import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsgebuehren;
 import de.bielefeld.umweltamt.aui.mappings.awsv.Verwaltungsverf;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.KommaDouble;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -746,22 +744,24 @@ public class AwsvEditor extends AbstractBaseEditor {
 				getTabellenItemLoeschAction());
 
 		// Layout topPanel:
-		FormLayout topLayout = new FormLayout("p:g, 3dlu:g, p:g, 3dlu:g, p:g, 3dlu:g, p:g, 3dlu:g, p:g");
-		DefaultFormBuilder topBuilder = new DefaultFormBuilder(topLayout);
+		// Kopfzeile, darunter 5 Spalten: Label oben, Feld darunter
+		topPanel = FormHelper.createFormPanel();
+		FormHelper.addFull(topPanel, 0, header);
+//        FormHelper.addFull(topPanel, 0, ComponentFactory.buildRightAlignedBar(reportButton));
+//        FormHelper.addFull(topPanel, 0, subHeader);
 
-		topBuilder.append(header, 9);
-//        topBuilder.append(ComponentFactory.buildRightAlignedBar(reportButton), 7);
-//        topBuilder.append(subHeader, 9);
-		/* hnrLabel = */ topBuilder.append("Bezeichnung / Zuordnung:");
-		topBuilder.append("Flüssigkeit:");
-		topBuilder.append("VbF:");
-		topBuilder.append("Gefährdungsstufe:");
-		topBuilder.append("WGK:");
-		topBuilder.append(hnrFeld, fluessigkeitBox, vbfBox);
-		topBuilder.append(gefStufeBox, wgkBox);
+		String[] topLabels = { "Bezeichnung / Zuordnung", "Flüssigkeit", "VbF",
+				"Gefährdungsstufe", "WGK" };
+		JComponent[] topFields = { hnrFeld, fluessigkeitBox, vbfBox, gefStufeBox,
+				wgkBox };
+		for (int i = 0; i < topLabels.length; i++) {
+			FormHelper.add(topPanel, new JLabel(topLabels[i]), i, 1, 1,
+					GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
+			FormHelper.add(topPanel, topFields[i], i, 2, 1,
+					GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
+		}
 
-		topPanel = topBuilder.getPanel();
-        topPanel.setBorder(Paddings.DLU2);
+        topPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		// Panel bauen:
 		JPanel panel = new JPanel(new BorderLayout());
 
@@ -1419,127 +1419,92 @@ public class AwsvEditor extends AbstractBaseEditor {
 					chronoScroller, 0.8);
 			this.tabellenSplit.setDividerLocation(0.8);
 
-			FormLayout layout = new FormLayout("r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g");
-			layout.setColumnGroups(new int[][] { { 1, 5 }, { 3, 7 } });
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-			builder.appendSeparator("Stammdaten");
-			builder.append("Baujahr:", baujahrFeld);
-			builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-			builder.nextLine();
-
-			builder.append("Erfassung:", erfassungChooser);
-			builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
-			builder.nextLine();
-
-			builder.append("Stilllegung:", stilllegungChooser);
-			builder.nextLine();
-
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
+			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr", baujahrFeld);
+			FormHelper.addLabelField(formPanel, 1, 1, "Inbetriebnahme", inbetriebnahmeChooser);
+			FormHelper.addLabelField(formPanel, 2, 0, "Erfassung", erfassungChooser);
+			FormHelper.addLabelField(formPanel, 2, 1, "Prüfturnus [Jahre]:", pruefTurnusFeld);
+			FormHelper.addLabelField(formPanel, 3, 0, "Stilllegung", stilllegungChooser);
 			/*
 			 * builder.appendRow("fill:30dlu"); builder.append("Flüssigkeit/Medium",
 			 * flüssigkField); builder.nextLine();
 			 */
-			builder.appendSeparator("Komponenten");
-//            builder.appendRow("3dlu");
+			FormHelper.addSeparator(formPanel, 4, "Komponenten");
+			//            builder.appendRow("3dlu");
 			// builder.appendColumn("r:p, 3dlu, f:p:g, 10dlu, r:p, r:p, r:p, r:p, 0:g");
-//            builder.append("Flüssigkeit/Medium", flüssigkField);
-			builder.append("", kompaktCheck);
-			builder.nextLine();
-			builder.append("", kompSFCheck);
-			builder.append("", kompPSCheck);
-			builder.nextLine();
-			builder.append("", kompKCheck);
-			builder.append("", kompLFCheck);
-			builder.nextLine();
+			//            builder.append("Flüssigkeit/Medium", flüssigkField);
+			FormHelper.addLabelField(formPanel, 5, 0, null, kompaktCheck);
+			FormHelper.addLabelField(formPanel, 6, 0, null, kompSFCheck);
+			FormHelper.addLabelField(formPanel, 6, 1, null, kompPSCheck);
+			FormHelper.addLabelField(formPanel, 7, 0, null, kompKCheck);
+			FormHelper.addLabelField(formPanel, 7, 1, null, kompLFCheck);
+			FormHelper.addSeparator(formPanel, 8, "Bemerkungen und Anlagenchronologie");
 
-			builder.appendSeparator("Bemerkungen und Anlagenchronologie");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:30dlu:grow");
-			builder.nextLine(2);
-
-			builder.append(this.tabellenSplit, 8);
-
-			datenVAWSAbscheiderTab = builder.getPanel();
-			datenVAWSAbscheiderTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			tabPanel.add(this.tabellenSplit, BorderLayout.CENTER);
+			datenVAWSAbscheiderTab = tabPanel;
+			FormHelper.setDialogBorder(datenVAWSAbscheiderTab);
 		}
 		return datenVAWSAbscheiderTab;
 	}
 
 	private JPanel getAusfuehrungVAWSAbscheiderTab() {
 		if (ausfuehrungVAWSAbscheiderTab == null) {
-			FormLayout layout = new FormLayout("r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g");
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.addSeparator(formPanel, 0, "Schlammfang");
+			FormHelper.addLabelField(formPanel, 1, 0, "Hersteller", schlammHerstField);
+			FormHelper.addLabelField(formPanel, 1, 1, "Typ", schlammTypField);
+			FormHelper.addLabelField(formPanel, 1, 2, "SF-Volumen [Liter]:", schlammSFVField);
+			FormHelper.addLabelField(formPanel, 2, 0, "Material", schlammMatField);
+			FormHelper.addLabelField(formPanel, 2, 1, "Beschichtung", schlammBeschField);
+			FormHelper.addSeparator(formPanel, 3, "Abscheider");
+			FormHelper.addLabelField(formPanel, 4, 0, "Hersteller", abscheiderHerstField);
+			FormHelper.addLabelField(formPanel, 4, 1, "Typ", abscheiderTypField);
+			FormHelper.addLabelField(formPanel, 4, 2, "Prüfzeichen", abscheiderPruefField);
+			FormHelper.addLabelField(formPanel, 5, 0, "Material", abscheiderMatField);
+			FormHelper.addLabelField(formPanel, 5, 1, "Beschichtung", abscheiderBeschField);
+			FormHelper.addLabelField(formPanel, 5, 2, "Nenngröße (NS)", abscheiderNSField);
+			FormHelper.addLabelField(formPanel, 6, 0, "Ölspeichervolumen [Liter]:",
+			    abscheideroelField);
+			FormHelper.addSeparator(formPanel, 7, "Rohrleitungen: Zuleitungen");
+			FormHelper.addLabelField(formPanel, 8, 0, "DN", zulDNField);
+			FormHelper.addLabelField(formPanel, 8, 1, "Material", zulMatField);
+			FormHelper.addLabelField(formPanel, 8, 2, "Länge [m]:", zulLField);
+			FormHelper.addSeparator(formPanel, 9, "Rohrleitungen: Verbindungsleitungen");
+			FormHelper.addLabelField(formPanel, 10, 0, "DN", verbDNField);
+			FormHelper.addLabelField(formPanel, 10, 1, "Material", verbMatField);
+			FormHelper.addLabelField(formPanel, 10, 2, "Länge [m]:", verbLField);
+			FormHelper.addSeparator(formPanel, 11, "Rohrleitungen: Sonstige");
+			FormHelper.addLabelField(formPanel, 12, 0, "DN", sonsDNField);
+			FormHelper.addLabelField(formPanel, 12, 1, "Material", sonsMatField);
+			FormHelper.addLabelField(formPanel, 12, 2, "Länge [m]:", sonsLField);
 
-			builder.appendSeparator("Schlammfang");
-			builder.append("Hersteller:", schlammHerstField);
-			builder.append("Typ:", schlammTypField);
-			builder.append("SF-Volumen [Liter]:", schlammSFVField);
-			builder.nextLine();
-			builder.append("Material:", schlammMatField);
-			builder.append("Beschichtung:", schlammBeschField);
-			builder.nextLine();
-
-			builder.appendSeparator("Abscheider");
-			builder.append("Hersteller:", abscheiderHerstField);
-			builder.append("Typ:", abscheiderTypField);
-			builder.append("Prüfzeichen:", abscheiderPruefField);
-			builder.nextLine();
-			builder.append("Material:", abscheiderMatField);
-			builder.append("Beschichtung:", abscheiderBeschField);
-			builder.append("Nenngröße (NS):", abscheiderNSField);
-			builder.nextLine();
-			builder.append("Ölspeichervolumen [Liter]:", abscheideroelField);
-			builder.nextLine();
-
-			builder.appendSeparator("Rohrleitungen: Zuleitungen");
-			builder.append("DN:", zulDNField);
-			builder.append("Material:", zulMatField);
-			builder.append("Länge [m]:", zulLField);
-			builder.nextLine();
-
-			builder.appendSeparator("Rohrleitungen: Verbindungsleitungen");
-			builder.append("DN:", verbDNField);
-			builder.append("Material:", verbMatField);
-			builder.append("Länge [m]:", verbLField);
-			builder.nextLine();
-
-			builder.appendSeparator("Rohrleitungen: Sonstige");
-			builder.append("DN:", sonsDNField);
-			builder.append("Material:", sonsMatField);
-			builder.append("Länge [m]:", sonsLField);
-			builder.nextLine();
-
-			ausfuehrungVAWSAbscheiderTab = builder.getPanel();
-			ausfuehrungVAWSAbscheiderTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			ausfuehrungVAWSAbscheiderTab = tabPanel;
+			FormHelper.setDialogBorder(ausfuehrungVAWSAbscheiderTab);
 		}
 		return ausfuehrungVAWSAbscheiderTab;
 	}
 
 	private JPanel getSchutzvorkehrungenVAWSAbscheiderTab() {
 		if (schutzvorkehrungenVAWSAbscheiderTab == null) {
-			FormLayout layout = new FormLayout("p:g");
-			// layout.setColumnGroups(new int[][]{{1}});
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
+			FormHelper.addFull(formPanel, 1, ueberCheck);
+			FormHelper.addFull(formPanel, 2, waschCheck);
+			FormHelper.addSeparator(formPanel, 3, "Rückhaltevermögen");
+			FormHelper.addFull(formPanel, 4, abgabeCheck);
+			FormHelper.addFull(formPanel, 5, hochCheck);
+			FormHelper.addFull(formPanel, 6, belueftCheck);
+			FormHelper.addFull(formPanel, 7, rueckCheck);
 
-			builder.appendSeparator("Stammdaten");
-			builder.append(ueberCheck);
-			builder.nextLine();
-
-			builder.append(waschCheck);
-			builder.nextLine();
-
-			builder.appendSeparator("Rückhaltevermögen");
-			builder.append(abgabeCheck);
-			builder.nextLine();
-			builder.append(hochCheck);
-			builder.nextLine();
-			builder.append(belueftCheck);
-			builder.nextLine();
-			builder.append(rueckCheck);
-			builder.nextLine();
-
-			schutzvorkehrungenVAWSAbscheiderTab = builder.getPanel();
-			schutzvorkehrungenVAWSAbscheiderTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			schutzvorkehrungenVAWSAbscheiderTab = tabPanel;
+			FormHelper.setDialogBorder(schutzvorkehrungenVAWSAbscheiderTab);
 		}
 		return schutzvorkehrungenVAWSAbscheiderTab;
 	}
@@ -1557,96 +1522,76 @@ public class AwsvEditor extends AbstractBaseEditor {
 					chronoScroller, 0.8);
 			this.tabellenSplit.setDividerLocation(0.8);
 
-			FormLayout layout = new FormLayout("r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g, 0:g");
-			layout.setColumnGroups(new int[][] { { 1, 5 }, { 3, 7 } });
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
+			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr", baujahrFeld);
+			FormHelper.addLabelField(formPanel, 1, 1, "Menge [m³]:", mengeFeld);
+			FormHelper.addLabelField(formPanel, 2, 0, "Inbetriebnahme", inbetriebnahmeChooser);
+			FormHelper.addLabelField(formPanel, 2, 1, "Prüfturnus [Jahre]:", pruefTurnusFeld);
+			FormHelper.addLabelField(formPanel, 3, 0, "Genehmigung", genehmigungChooser);
+			FormHelper.addLabelField(formPanel, 3, 1, "Behälterart", behaelterArtBox);
+			FormHelper.addLabelField(formPanel, 4, 0, "Aktenzeichen", aktenzeichenField);
+			FormHelper.addLabelField(formPanel, 4, 1, "Material", materialBox);
+			FormHelper.addLabelField(formPanel, 5, 0, "Erfassung", erfassungChooser);
+			FormHelper.addLabelField(formPanel, 5, 1, "Stilllegung", stilllegungChooser);
+			FormHelper.addSeparator(formPanel, 6, "Bemerkungen und Anlagenchronologie");
 
-			builder.appendSeparator("Stammdaten");
-			builder.append("Baujahr:", baujahrFeld);
-			builder.append("Menge [m³]:", mengeFeld);
-			builder.nextLine();
-
-			builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-			builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
-			builder.nextLine();
-
-			builder.append("Genehmigung:", genehmigungChooser);
-			builder.append("Behälterart:", behaelterArtBox);
-			builder.nextLine();
-
-			builder.append("Aktenzeichen:", aktenzeichenField);
-			builder.append("Material:", materialBox);
-			builder.nextLine();
-
-			builder.append("Erfassung:", erfassungChooser);
-			builder.append("Stilllegung:", stilllegungChooser);
-			builder.nextLine();
-
-			builder.appendSeparator("Bemerkungen und Anlagenchronologie");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:30dlu:grow");
-			builder.nextLine(2);
-
-			builder.append(this.tabellenSplit, 8);
-
-			datenLageranlagenTab = builder.getPanel();
-			datenLageranlagenTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			tabPanel.add(this.tabellenSplit, BorderLayout.CENTER);
+			datenLageranlagenTab = tabPanel;
+			FormHelper.setDialogBorder(datenLageranlagenTab);
 		}
 		return datenLageranlagenTab;
 	}
 
 	private JPanel getSchutzLageranlagenTab() {
 		if (schutzLageranlagenTab == null) {
-			FormLayout layout = new FormLayout("p, 3dlu:g, p, 3dlu:g, p, 3dlu:g, p");
-			layout.setColumnGroups(new int[][] { { 1, 3, 5, 7 } });
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			// Checkboxen im Raster (Spalte, Zeile)
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.add(formPanel, doppelWandigCheck, 0, 0, 1);
+			FormHelper.add(formPanel, leckAnzeigeCheck, 1, 0, 1);
+			FormHelper.add(formPanel, leckSchutzAuskleidungCheck, 2, 0, 1);
+			FormHelper.add(formPanel, schutzSensorCheck, 3, 0, 1);
+			FormHelper.add(formPanel, auffangRaumCheck, 0, 1, 1);
+			FormHelper.add(formPanel, kellerLagerungCheck, 1, 1, 1);
+			FormHelper.add(formPanel, innenBeschichtungCheck, 2, 1, 1);
+			FormHelper.add(formPanel, schutzFolieCheck, 3, 1, 1);
+			FormHelper.add(formPanel, grenzWertGeberCheck, 0, 2, 1);
+			FormHelper.add(formPanel, schutzAntiheberCheck, 1, 2, 1);
+			FormHelper.addSeparator(formPanel, 3, "Beschreibung: Schutzvorkehrungen");
+			FormHelper.addFull(formPanel, 4, new JScrollPane(beschreibungSFeld), 80);
+			FormHelper.addSeparator(formPanel, 5, "Beschreibung: Auffangraum");
+			FormHelper.addFull(formPanel, 6, new JScrollPane(beschreibungAFeld), 60);
 
-			builder.append(doppelWandigCheck, leckAnzeigeCheck);
-			builder.append(leckSchutzAuskleidungCheck, schutzSensorCheck);
-			builder.nextLine();
-			builder.append(auffangRaumCheck, kellerLagerungCheck);
-			builder.append(innenBeschichtungCheck, schutzFolieCheck);
-			builder.nextLine();
-			builder.append(grenzWertGeberCheck, schutzAntiheberCheck);
-			builder.nextLine();
-
-			builder.appendSeparator("Beschreibung: Schutzvorkehrungen");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:25dlu:grow");
-			builder.nextLine(2);
-			builder.append(new JScrollPane(beschreibungSFeld), 7);
-
-			builder.appendSeparator("Beschreibung: Auffangraum");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:25dlu");
-			builder.nextLine(2);
-			builder.append(new JScrollPane(beschreibungAFeld), 7);
-
-			schutzLageranlagenTab = builder.getPanel();
-			schutzLageranlagenTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			schutzLageranlagenTab = tabPanel;
+			FormHelper.setDialogBorder(schutzLageranlagenTab);
 		}
 		return schutzLageranlagenTab;
 	}
 
 	private JPanel getLeitungenLageranlagenTab() {
 		if (leitungenLageranlagenTab == null) {
-			FormLayout layout = new FormLayout("p, 3dlu:g, p, 3dlu:g, p");
-			layout.setColumnGroups(new int[][] { { 1, 3, 5 } });
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			// Checkboxen im Raster (Spalte, Zeile)
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.add(formPanel, oberIrdischCheck, 0, 0, 1);
+			FormHelper.add(formPanel, ausKupferCheck, 1, 0, 1);
+			FormHelper.add(formPanel, saugLeitungCheck, 2, 0, 1);
+			FormHelper.add(formPanel, unterIrdischCheck, 0, 1, 1);
+			FormHelper.add(formPanel, ausStahlCheck, 1, 1, 1);
+			FormHelper.add(formPanel, rohrKathSchCheck, 2, 1, 1);
+			FormHelper.add(formPanel, schutzrohrCheck, 0, 2, 1);
+			FormHelper.add(formPanel, ausHdpeCheck, 1, 2, 1);
+			FormHelper.add(formPanel, druckleitungCheck, 2, 2, 1);
+			FormHelper.addSeparator(formPanel, 3, "Beschreibung: Rohrleitung");
 
-			builder.append(oberIrdischCheck, ausKupferCheck, saugLeitungCheck);
-			builder.append(unterIrdischCheck, ausStahlCheck, rohrKathSchCheck);
-			builder.append(schutzrohrCheck, ausHdpeCheck, druckleitungCheck);
-			builder.nextLine();
-
-			builder.appendSeparator("Beschreibung: Rohrleitung");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:25dlu:grow");
-			builder.nextLine(2);
-			builder.append(new JScrollPane(beschreibungRFeld), 5);
-
-			leitungenLageranlagenTab = builder.getPanel();
-			leitungenLageranlagenTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			tabPanel.add(new JScrollPane(beschreibungRFeld), BorderLayout.CENTER);
+			leitungenLageranlagenTab = tabPanel;
+			FormHelper.setDialogBorder(leitungenLageranlagenTab);
 		}
 		return leitungenLageranlagenTab;
 	}
@@ -1664,39 +1609,25 @@ public class AwsvEditor extends AbstractBaseEditor {
 					chronoScroller, 0.8);
 			this.tabellenSplit.setDividerLocation(0.8);
 
-			FormLayout layout = new FormLayout("r:p, 3dlu, p, 10dlu, r:p, 3dlu, p, 0:g");
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
+			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr", baujahrFeld);
+			FormHelper.addLabelField(formPanel, 1, 1, "Ausführung", ausfuehrungBox);
+			FormHelper.addLabelField(formPanel, 2, 0, "Inbetriebnahme", inbetriebnahmeChooser);
+			FormHelper.addLabelField(formPanel, 2, 1, "Prüfturnus [Jahre]:", pruefTurnusFeld);
+			FormHelper.addLabelField(formPanel, 3, 0, "Genehmigung", genehmigungChooser);
+			FormHelper.addLabelField(formPanel, 3, 1, "Bauart", behaelterArtBox);
+			FormHelper.addLabelField(formPanel, 4, 0, "Aktenzeichen", aktenzeichenField);
+			FormHelper.addLabelField(formPanel, 4, 1, "Material", materialBox);
+			FormHelper.addLabelField(formPanel, 5, 0, "Erfassung", erfassungChooser);
+			FormHelper.addLabelField(formPanel, 5, 1, "Stilllegung", stilllegungChooser);
+			FormHelper.addSeparator(formPanel, 6, "Bemerkungen und Anlagenchronologie");
 
-			builder.appendSeparator("Stammdaten");
-			builder.append("Baujahr:", baujahrFeld);
-			builder.append("Ausführung:", ausfuehrungBox);
-			builder.nextLine();
-
-			builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-			builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
-			builder.nextLine();
-
-			builder.append("Genehmigung:", genehmigungChooser);
-			builder.append("Bauart:", behaelterArtBox);
-			builder.nextLine();
-
-			builder.append("Aktenzeichen:", aktenzeichenField);
-			builder.append("Material:", materialBox);
-			builder.nextLine();
-
-			builder.append("Erfassung:", erfassungChooser);
-			builder.append("Stilllegung:", stilllegungChooser);
-			builder.nextLine();
-
-			builder.appendSeparator("Bemerkungen und Anlagenchronologie");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:30dlu:grow");
-			builder.nextLine(2);
-
-			builder.append(this.tabellenSplit, 8);
-
-			datenRohrleitungenTab = builder.getPanel();
-			datenRohrleitungenTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			tabPanel.add(this.tabellenSplit, BorderLayout.CENTER);
+			datenRohrleitungenTab = tabPanel;
+			FormHelper.setDialogBorder(datenRohrleitungenTab);
 		}
 		return datenRohrleitungenTab;
 	}
@@ -1714,43 +1645,30 @@ public class AwsvEditor extends AbstractBaseEditor {
 					chronoScroller, 0.8);
 			this.tabellenSplit.setDividerLocation(0.8);
 
-			FormLayout layout = new FormLayout("r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"// , 10dlu, l:p:g"
-			);
-			layout.setColumnGroups(new int[][] { { 1, 5 }, { 3, 7 } });
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
+			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr", baujahrFeld);
+			FormHelper.addLabelField(formPanel, 1, 1, "Prüfturnus [Jahre]:", pruefTurnusFeld);
+			FormHelper.addLabelField(formPanel, 2, 0, "Inbetriebnahme", inbetriebnahmeChooser);
+			FormHelper.addLabelField(formPanel, 2, 1, "Erfassung", erfassungChooser);
+			FormHelper.addLabelField(formPanel, 3, 0, "Genehmigung", genehmigungChooser);
+			FormHelper.addLabelField(formPanel, 3, 1, "Stilllegung", stilllegungChooser);
+			FormHelper.addLabelField(formPanel, 4, 0, "Aktenzeichen", aktenzeichenField);
+			FormHelper.addLabelField(formPanel, 4, 1, "Größe [m²]:", groesseField);
+			FormHelper.addSeparator(formPanel, 5, "Abfüllfläche");
+			FormHelper.addLabelField(formPanel, 6, 0, null, neuErstelltCheck);
+			FormHelper.addLabelField(formPanel, 6, 1, null, eohCheck);
+			FormHelper.addLabelField(formPanel, 7, 0, null, saniertCheck);
+			FormHelper.addLabelField(formPanel, 7, 1, null, efCheck);
+			FormHelper.addLabelField(formPanel, 8, 0, null, unbktCheck);
+			FormHelper.addLabelField(formPanel, 8, 1, null, svbCheck);
+			FormHelper.addSeparator(formPanel, 9, "Bemerkungen und Anlagenchronologie");
 
-			builder.appendSeparator("Stammdaten");
-			builder.append("Baujahr:", baujahrFeld);
-			builder.append("Prüfturnus [Jahre]:", pruefTurnusFeld);
-
-			builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-			builder.append("Erfassung:", erfassungChooser);
-
-			builder.append("Genehmigung:", genehmigungChooser);
-			builder.append("Stilllegung:", stilllegungChooser);
-
-			builder.append("Aktenzeichen:", aktenzeichenField);
-			builder.append("Größe [m²]:", groesseField);
-			builder.nextLine();
-
-			builder.appendSeparator("Abfüllfläche");
-
-			builder.append("", neuErstelltCheck);
-			builder.append("", eohCheck);
-			builder.append("", saniertCheck);
-			builder.append("", efCheck);
-			builder.append("", unbktCheck);
-			builder.append("", svbCheck);
-
-			builder.appendSeparator("Bemerkungen und Anlagenchronologie");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:30dlu:grow");
-			builder.nextLine(2);
-
-			builder.append(this.tabellenSplit, 7);
-
-			datenAbfuellflaechenTab = builder.getPanel();
-			datenAbfuellflaechenTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			tabPanel.add(this.tabellenSplit, BorderLayout.CENTER);
+			datenAbfuellflaechenTab = tabPanel;
+			FormHelper.setDialogBorder(datenAbfuellflaechenTab);
 		}
 		return datenAbfuellflaechenTab;
 	}
@@ -1761,47 +1679,28 @@ public class AwsvEditor extends AbstractBaseEditor {
 			JScrollPane bemerkungScroller = new JScrollPane(bemerkungArea,
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-			FormLayout layout = new FormLayout("r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"// , 10dlu, l:p:g"
-			);
-			layout.setColumnGroups(new int[][] { { 1, 5 }, { 3, 7 } });
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.addSeparator(formPanel, 0, "Ausführung");
+			FormHelper.addLabelField(formPanel, 1, 0, "Bodenplatte", bodenflaechenAusfBox);
+			FormHelper.addLabelField(formPanel, 2, 0, null, seitenwandCheck);
+			FormHelper.addLabelField(formPanel, 2, 1, null, drainageCheck);
+			FormHelper.addLabelField(formPanel, 3, 0, null, fuellanzeigerCheck);
+			FormHelper.addLabelField(formPanel, 3, 1, null, schieberCheck);
+			FormHelper.addLabelField(formPanel, 4, 0, null, abdeckungCheck);
+			FormHelper.addLabelField(formPanel, 4, 1, null, leitung_geprueftCheck);
+			FormHelper.addSeparator(formPanel, 5, "Auffangvorrichtung");
+			FormHelper.addLabelField(formPanel, 6, 0, "Auffangbehälter", auffangbehBox);
+			FormHelper.addLabelField(formPanel, 6, 1, "Behältervolumen [m³]",
+			    volumenAuffangbehFeld);
+			FormHelper.addLabelField(formPanel, 7, 0, "Rohrleitung", rohrleitungBox);
+			FormHelper.addLabelField(formPanel, 7, 1, "Wandhöhe [m]", wandhoeheFeld);
+			FormHelper.addSeparator(formPanel, 8, "Bemerkungen");
 
-			builder.appendSeparator("Ausführung");
-
-			builder.append("Bodenplatte", bodenflaechenAusfBox);
-
-			builder.nextLine();
-
-			builder.append("", seitenwandCheck);
-			builder.append("", drainageCheck);
-
-			builder.append("", fuellanzeigerCheck);
-			builder.append("", schieberCheck);
-
-			builder.append("", abdeckungCheck);
-			builder.append("", leitung_geprueftCheck);
-
-			builder.nextLine();
-
-			builder.appendSeparator("Auffangvorrichtung");
-
-			builder.append("Auffangbehälter", auffangbehBox);
-			builder.append("Behältervolumen [m³]", volumenAuffangbehFeld);
-
-			builder.append("Rohrleitung", rohrleitungBox);
-			builder.append("Wandhöhe [m]", wandhoeheFeld);
-
-			builder.nextLine();
-
-			builder.appendSeparator("Bemerkungen");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:30dlu:grow");
-			builder.nextLine(2);
-
-			builder.append(bemerkungScroller, 7);
-
-			datenAbfuellflaechenJgsTab = builder.getPanel();
-			datenAbfuellflaechenJgsTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			tabPanel.add(bemerkungScroller, BorderLayout.CENTER);
+			datenAbfuellflaechenJgsTab = tabPanel;
+			FormHelper.setDialogBorder(datenAbfuellflaechenJgsTab);
 		}
 		return datenAbfuellflaechenJgsTab;
 	}
@@ -1812,127 +1711,82 @@ public class AwsvEditor extends AbstractBaseEditor {
 			JScrollPane chronoScroller = new JScrollPane(anlagenChronoTabelle,
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-			FormLayout layout = new FormLayout("r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g"// , 10dlu, l:p:g"
-			);
-			layout.setColumnGroups(new int[][] { { 1, 5 }, { 3, 7 } });
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
+			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr", baujahrFeld);
+			FormHelper.addLabelField(formPanel, 1, 1, "Aktenzeichen", aktenzeichenField);
+			FormHelper.addLabelField(formPanel, 2, 0, "Lagerfläche [m²]:", lagerflaecheFeld);
+			FormHelper.addLabelField(formPanel, 2, 1, "Lagervolumen [m³]:", mengeFeld);
+			FormHelper.addLabelField(formPanel, 3, 0, "Abstand zu Gewässer [m]:", abstandGewFeld);
+			FormHelper.addLabelField(formPanel, 3, 1, "Gewässername", gewNameFeld);
+			FormHelper.addLabelField(formPanel, 4, 0, "Abstand zu Brunnen [m]:",
+			    abstandBrunnenFeld);
+			FormHelper.addLabelField(formPanel, 4, 1, "Tierhaltung", tierhaltungFeld);
+			FormHelper.addLabelField(formPanel, 5, 0, "Inbetriebnahme", inbetriebnahmeChooser);
+			FormHelper.addLabelField(formPanel, 5, 1, "Erfassung", erfassungChooser);
+			FormHelper.addLabelField(formPanel, 6, 0, "Genehmigung", genehmigungChooser);
+			FormHelper.addLabelField(formPanel, 6, 1, "Stilllegung", stilllegungChooser);
+			FormHelper.addSeparator(formPanel, 7, "Anlagenchronologie");
 
-			builder.appendSeparator("Stammdaten");
-			builder.append("Baujahr:", baujahrFeld);
-			builder.append("Aktenzeichen:", aktenzeichenField);
-
-			builder.append("Lagerfläche [m²]:", lagerflaecheFeld);
-			builder.append("Lagervolumen [m³]:", mengeFeld);
-
-			builder.append("Abstand zu Gewässer [m]:", abstandGewFeld);
-			builder.append("Gewässername:", gewNameFeld);
-
-			builder.append("Abstand zu Brunnen [m]:", abstandBrunnenFeld);
-			builder.append("Tierhaltung:", tierhaltungFeld);
-
-			builder.nextLine();
-
-			builder.append("Inbetriebnahme:", inbetriebnahmeChooser);
-			builder.append("Erfassung:", erfassungChooser);
-
-			builder.append("Genehmigung:", genehmigungChooser);
-			builder.append("Stilllegung:", stilllegungChooser);
-
-			builder.nextLine();
-
-			builder.appendSeparator("Anlagenchronologie");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:30dlu:grow");
-			builder.nextLine(2);
-
-			builder.append(chronoScroller, 7);
-
-			datenJgsTab = builder.getPanel();
-			datenJgsTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			tabPanel.add(chronoScroller, BorderLayout.CENTER);
+			datenJgsTab = tabPanel;
+			FormHelper.setDialogBorder(datenJgsTab);
 		}
 		return datenJgsTab;
 	}
 
 	private JPanel getAusfuehrungAbfuellflaechenTab() {
 		if (ausfuehrungAbfuellflaechenTab == null) {
-			FormLayout layout = new FormLayout("r:p, 3dlu, f:p:g, 10dlu, r:p, 3dlu, f:p:g");
-			layout.setColumnGroups(new int[][] { { 1, 5 }, { 3, 7 } });
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+			JPanel formPanel = FormHelper.createFormPanel();
+			FormHelper.addSeparator(formPanel, 0, "Daten");
+			FormHelper.addLabelField(formPanel, 1, 0, "Bodenflächenausführung",
+			    bodenflaechenAusfBox);
+			FormHelper.addLabelField(formPanel, 1, 1, "Fugenmaterial", fugenMaterialFeld);
+			FormHelper.addLabelField(formPanel, 2, 0, "Dicke [cm]:", dickeFeld);
+			FormHelper.addLabelField(formPanel, 2, 1, "Niederschlagsschutz",
+			    niederschlagSchutzBox);
+			FormHelper.addLabelField(formPanel, 3, 0, "Güte", gueteFeld);
+			FormHelper.addLabelField(formPanel, 3, 1, null, abscheiderVorhandenCheck);
+			FormHelper.addSeparator(formPanel, 4, "Beschreibung Bodenfläche");
+			FormHelper.addFull(formPanel, 5, new JScrollPane(beschrBodenflaecheArea), 80);
+			FormHelper.addSeparator(formPanel, 6, "Beschreibung Fugenmaterial");
+			FormHelper.addFull(formPanel, 7, new JScrollPane(beschrFugenmaterialArea), 80);
+			FormHelper.addSeparator(formPanel, 8, "Beschreibung Ableitung / Niederschlagswasser");
 
-			builder.appendSeparator("Daten");
-			builder.append("Bodenflächenausführung:", bodenflaechenAusfBox);
-			builder.append("Fugenmaterial:", fugenMaterialFeld);
-
-			builder.append("Dicke [cm]:", dickeFeld);
-			builder.append("Niederschlagsschutz:", niederschlagSchutzBox);
-
-			builder.append("Güte:", gueteFeld);
-			builder.append("", abscheiderVorhandenCheck);
-
-			builder.appendSeparator("Beschreibung Bodenfläche");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:25dlu:grow");
-			builder.nextLine(2);
-			builder.append(new JScrollPane(beschrBodenflaecheArea), 7);
-			builder.nextLine();
-
-			builder.appendSeparator("Beschreibung Fugenmaterial");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:25dlu:grow");
-			builder.nextLine(2);
-			builder.append(new JScrollPane(beschrFugenmaterialArea), 7);
-			builder.nextLine();
-
-			builder.appendSeparator("Beschreibung Ableitung / Niederschlagswasser");
-			builder.appendRow("3dlu");
-			builder.appendRow("fill:25dlu:grow");
-			builder.nextLine(2);
-			builder.append(new JScrollPane(beschrAblNiederschlArea), 7);
-
-			ausfuehrungAbfuellflaechenTab = builder.getPanel();
-			ausfuehrungAbfuellflaechenTab.setBorder(Paddings.DIALOG);
+			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
+			tabPanel.add(FormHelper.wrapNorthWest(formPanel), BorderLayout.NORTH);
+			tabPanel.add(new JScrollPane(beschrAblNiederschlArea), BorderLayout.CENTER);
+			ausfuehrungAbfuellflaechenTab = tabPanel;
+			FormHelper.setDialogBorder(ausfuehrungAbfuellflaechenTab);
 		}
 		return ausfuehrungAbfuellflaechenTab;
 	}
 
 	private JPanel getSvPruefungTab() {
 		if (svPruefungTab == null) {
-			FormLayout layout = new FormLayout("f:p:g");
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-			builder.appendRow("fill:25dlu:grow");
-			builder.append(new JScrollPane(svPruefungTabelle));// ,7);
-
-			svPruefungTab = builder.getPanel();
-			svPruefungTab.setBorder(Paddings.DIALOG);
+			svPruefungTab = new JPanel(new BorderLayout());
+			svPruefungTab.add(new JScrollPane(svPruefungTabelle), BorderLayout.CENTER);
+			FormHelper.setDialogBorder(svPruefungTab);
 		}
 		return svPruefungTab;
 	}
 
 	private JPanel getVerwVerfahrenTab() {
 		if (verwVerfahrenTab == null) {
-			FormLayout layout = new FormLayout("f:p:g");
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-			builder.appendRow("fill:25dlu:grow");
-			builder.append(new JScrollPane(verwVerfahrenTabelle));// ,7);
-
-			verwVerfahrenTab = builder.getPanel();
-			verwVerfahrenTab.setBorder(Paddings.DIALOG);
+			verwVerfahrenTab = new JPanel(new BorderLayout());
+			verwVerfahrenTab.add(new JScrollPane(verwVerfahrenTabelle), BorderLayout.CENTER);
+			FormHelper.setDialogBorder(verwVerfahrenTab);
 		}
 		return verwVerfahrenTab;
 	}
 
 	private JPanel getVerwGebuehrenTab() {
 		if (verwGebuehrenTab == null) {
-			FormLayout layout = new FormLayout("f:p:g");
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-			builder.appendRow("fill:25dlu:grow");
-			builder.append(new JScrollPane(verwGebuehrenTabelle));// ,7);
-
-			verwGebuehrenTab = builder.getPanel();
-			verwGebuehrenTab.setBorder(Paddings.DIALOG);
+			verwGebuehrenTab = new JPanel(new BorderLayout());
+			verwGebuehrenTab.add(new JScrollPane(verwGebuehrenTabelle), BorderLayout.CENTER);
+			FormHelper.setDialogBorder(verwGebuehrenTab);
 		}
 		return verwGebuehrenTab;
 	}

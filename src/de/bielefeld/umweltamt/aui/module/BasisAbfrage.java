@@ -31,9 +31,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
@@ -41,6 +38,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAbfrageModel;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -87,7 +85,7 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
         typeBox = new JComboBox<>(typeModel);
         typeBox.insertItemAt(null, 0);
         typeBox.setSelectedIndex(0);
-        typeLabel = new JLabel("Objektart:");
+        typeLabel = new JLabel("Objektart");
 
         List<Anhang> anhangs = Anhang.getAll();
         DefaultComboBoxModel<Anhang> anhangModel = new DefaultComboBoxModel<>(
@@ -97,14 +95,14 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
         anhangBox.insertItemAt(null, 0);
         anhangBox.setSelectedIndex(0);
         anhangBox.setEnabled(false);
-        anhangLabel = new JLabel("Anhang:");
+        anhangLabel = new JLabel("Anhang");
 
         String[] arten = {null, "Aufbereitung Medizinprodukte", "Blockheizkraftwerk",
             "Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor",
             "RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
         anlagenartBox = new JComboBox<>(new DefaultComboBoxModel<>(arten));
         anlagenartBox.setEnabled(false);
-        anlagenartenLabel = new JLabel("Anlagenart:");
+        anlagenartenLabel = new JLabel("Anlagenart");
 
         sachbearbeiterBox = new JComboBox<>();
         List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
@@ -118,13 +116,13 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
         sachbearbeiterBox.insertItemAt(group, 0);
         sachbearbeiterBox.insertItemAt(null, 0);
         sachbearbeiterBox.setSelectedIndex(0);
-        sachbearbeiterLabel = new JLabel("Sachbearbeiter:");
+        sachbearbeiterLabel = new JLabel("Sachbearbeiter:in");
 
         einzGebietBox = new JComboBox<EinzGebBoxModel>(
             new DefaultComboBoxModel<>(createEinzGebBoxModels()));
         einzGebietBox.insertItemAt(null, 0);
         einzGebietBox.setSelectedIndex(0);
-        entwGebieteLabel = new JLabel("Entwässerungsgebiet:");
+        entwGebieteLabel = new JLabel("Entwässerungsgebiet");
 
         String[] prios = {null, "1", "2", "3", "4"};
         prioritaetBox = new JComboBox<>(
@@ -135,7 +133,7 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
         wiedervorlageBox = new JComboBox<>(
             new DefaultComboBoxModel<>(wiedervorlageValues)
         );
-        wiedervorlagenLabel = new JLabel("Wiedervorlage:");
+        wiedervorlagenLabel = new JLabel("Wiedervorlage");
 
         searchButton = new JButton("Suchen");
 
@@ -166,23 +164,25 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
         });
 
         //Layout
-        FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu");
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+        JPanel optionsPanel = FormHelper.createFormPanel();
 
-        builder.append(typeLabel, typeBox);
-        builder.append(sachbearbeiterLabel, sachbearbeiterBox);
-        builder.append(wiedervorlagenLabel, wiedervorlageBox);
-        builder.nextRow();
+        // Zeile 1
+        FormHelper.addLabelField(optionsPanel, 0, 0, typeLabel, typeBox);
+        FormHelper.addLabelField(optionsPanel, 0, 1, sachbearbeiterLabel, sachbearbeiterBox);
+        FormHelper.addLabelField(optionsPanel, 0, 2, wiedervorlagenLabel, wiedervorlageBox);
 
-        builder.append(anhangLabel, anhangBox);
-        builder.append(entwGebieteLabel, einzGebietBox);
-        builder.nextRow();
+        // Zeile 2
+        FormHelper.addLabelField(optionsPanel, 1, 0, anhangLabel, anhangBox);
+        FormHelper.addLabelField(optionsPanel, 1, 1, entwGebieteLabel, einzGebietBox);
 
-        builder.append(anlagenartenLabel, anlagenartBox);
-        builder.append(prioritaetLabel, prioritaetBox);
-        builder.append(new JPanel(), searchButton, createExportButton());
+        // Zeile 3
+        FormHelper.addLabelField(optionsPanel, 2, 0, anlagenartenLabel, anlagenartBox);
+        FormHelper.addLabelField(optionsPanel, 2, 1, prioritaetLabel, prioritaetBox);
+        FormHelper.add(optionsPanel,
+            FormHelper.buttonBarLeft(searchButton, createExportButton()),
+            4, 2, 2);
 
-        queryOptionsPanel = builder.build();
+        queryOptionsPanel = optionsPanel;
     }
 
     private void executeQuery() {

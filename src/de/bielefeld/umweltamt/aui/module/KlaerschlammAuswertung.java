@@ -80,6 +80,9 @@
 package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -123,10 +126,6 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
@@ -137,13 +136,14 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Einheiten;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Parameter;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
-import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.SearchBox;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.charts.APosDataItem;
@@ -451,7 +451,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			JComponent buttonBar = ComponentFactory.buildOKCancelBar(
 					this.speichernButton, this.abbrechenButton);
 			tmp.add(buttonBar, BorderLayout.SOUTH);
-			tmp.setBorder(Paddings.TABBED_DIALOG);
+			tmp.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 
 			this.setContentPane(tmp);
 			this.pack();
@@ -483,7 +483,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			}
 
 			this.chartPanel = new ChartPanel(chart, false);
-			this.chartPanel.setBorder(Paddings.DIALOG);
+			FormHelper.setDialogBorder(this.chartPanel);
 
 			return this.chartPanel;
 		}
@@ -540,21 +540,7 @@ public class KlaerschlammAuswertung extends AbstractModul
 			JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
 					JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 					JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-			tabellenScroller.setBorder(Paddings.DIALOG);
-			/*
-			 * FormLayout layout = new FormLayout(
-			 * "pref:grow",
-			 * "pref:grow"
-			 * );
-			 *
-			 * PanelBuilder builder = new PanelBuilder(layout);
-			 *
-			 * CellConstraints cc = new CellConstraints();
-			 *
-			 * builder.add(tabellenScroller, cc.xy( 1, 1));
-			 */
-
-			// return builder.getPanel();
+			FormHelper.setDialogBorder(tabellenScroller);
 			return tabellenScroller;
 		}
 
@@ -755,42 +741,37 @@ public class KlaerschlammAuswertung extends AbstractModul
 		{
 			this.einheiten = DatabaseQuery.getEinheiten();
 
-			String spaltenTeil = "pref, 5dlu, pref:g";
-			String zeileLuecke = "pref, 3dlu";
+			JPanel mainPanel = FormHelper.createDialogPanel();
 
-			FormLayout gesamtLayout = new FormLayout("pref, 5dlu, "
-					+ spaltenTeil + ", 10dlu:g(0.2), " + spaltenTeil, zeileLuecke
-					+ ", " + // 1,2 Kläranlagen---- Zeitraum----
-					zeileLuecke + ", " + // 3,4
-					zeileLuecke + ", " + // 5,6
-					zeileLuecke + ", " + // 7,8
-					zeileLuecke + ", " + // 9,10 Parameter -------------------
-					"pref, 10dlu, " + // 11,12
-					"pref"); // 13
+			// ── Kläranlagen / Art (links) ─────────────────────
+			FormHelper.addSeparator(mainPanel, 0, 0, 3, "Kläranlagen / Art");
+			JScrollPane klaeranlagenScroller = new JScrollPane(getKlaeranlagen());
+			klaeranlagenScroller.setPreferredSize(new Dimension(250, 90));
+			FormHelper.addSpan(mainPanel, klaeranlagenScroller, 0, 1, 2, 3);
+			FormHelper.add(mainPanel, getArtBox(), 2, 3, 1);
 
-			gesamtLayout.setColumnGroups(new int[][] { { 1, 3, 5, 9 } });
-			gesamtLayout.setRowGroups(new int[][] { { 3, 5 } });
+			// ── Zeitraum (rechts) ─────────────────────────────
+			FormHelper.addSeparator(mainPanel, 3, 0, 2, "Zeitraum");
+			FormHelper.addLabel(mainPanel, 3, 1, "Von");
+			FormHelper.add(mainPanel, getVonDateChooser(), 4, 1, 1);
+			FormHelper.addLabel(mainPanel, 3, 2, "Bis");
+			FormHelper.add(mainPanel, getBisDateChooser(), 4, 2, 1);
 
-			PanelBuilder builder = new PanelBuilder(gesamtLayout);
-			CellConstraints cc = new CellConstraints();
-			CellConstraints cc2 = (CellConstraints) cc.clone();
-			builder.addSeparator("Kläranlagen / Art", cc.xyw(1, 1, 5));
-			builder.add(new JScrollPane(getKlaeranlagen()), cc.xywh(1, 3, 3, 5));
-			builder.add(getArtBox(), cc.xy(5, 7, "l,d"));
+			// ── Parameter ─────────────────────────────────────
+			FormHelper.addSeparator(mainPanel, 0, 4, GridBagConstraints.REMAINDER,
+					"Parameter");
+			FormHelper.add(mainPanel, getParameterPanel(), 0, 5,
+					GridBagConstraints.REMAINDER);
 
-			builder.addSeparator("Zeitraum", cc.xyw(7, 1, 3));
-			builder.add(new JLabel("Von:"), cc.xy(7, 3, "r,d"),
-						getVonDateChooser(), cc2.xy(9, 3, "l,d"));
-			builder.add(new JLabel("Bis:"), cc.xy(7, 5, "r,d"),
-						getBisDateChooser(), cc2.xy(9, 5, "l,d"));
+			// ── Button direkt darunter ────────────────────────
+			GridBagConstraints gbc = FormHelper.constraints(0, 6,
+					GridBagConstraints.REMAINDER);
+			gbc.insets = new Insets(10, 5, 3, 5);
+			mainPanel.add(getSubmitButton(), gbc);
 
-			builder.addSeparator("Parameter", cc.xyw(1, 9, 9));
-			builder.add(getParameterPanel(), cc.xyw(1, 11, 9, "fill, fill"));
-			JComponent buttonPanel = ComponentFactory.buildOKBar(getSubmitButton());
-			builder.add(buttonPanel, cc.xyw(1, 13, 9, "fill, fill"));
-
-			this.panel = builder.getPanel();
-			this.panel.setBorder(Paddings.DIALOG);
+			// alles oben links, kein Strecken über die volle Breite
+			this.panel = new JPanel(new BorderLayout());
+			this.panel.add(FormHelper.wrapNorthWest(mainPanel), BorderLayout.NORTH);
 		}
 		return this.panel;
 	}
@@ -1040,41 +1021,20 @@ public class KlaerschlammAuswertung extends AbstractModul
 		if (this.parameterPanel == null)
 		{
 
-			String zeileLuecke = "pref, 3dlu";
+			// Liste < Params > Liste – kompakt, alles linksbündig
+			JPanel paramPanel = FormHelper.createFormPanel();
 
-			FormLayout parameterLayout = new FormLayout(
-					/* Liste < Params > Liste */
-					/* 1 2 3 4 5 6 7 8 9 */
-					"l:p:g, 10dlu:g(0.3), r:16px, 5dlu, c:70dlu:g(0.1), 5dlu, l:16px, 10dlu:g(0.3), r:p:g",
-
-					zeileLuecke + ", " + // 1,2 Linke Achse Rechte Achse
-							zeileLuecke + ", " + // 3,4 | | Par1 | |
-							zeileLuecke + ", " + // 5,6 | | Par2 | |
-							zeileLuecke + ", " + // 7,8 | | Par3 | |
-							zeileLuecke + ", " + // 9,10 | | Par4 | |
-							zeileLuecke + ", " + // 11,12 | | Par5 | |
-							zeileLuecke + ", " + // 13,14 | | Par6 | |
-							zeileLuecke + ", " + // 15,16 | | Par7 | |
-							zeileLuecke + ", " + // 17,18 | | [Par] | |
-							zeileLuecke + ", " + // 19,20 ( Löschen ) ( Löschen )
-							zeileLuecke + ", " + // 21,22 [ Einheit ] [ Einheit ]
-							"pref"); // 23 [ AnalyVo ] [ AnalyVo ]
-
-			parameterLayout.setColumnGroups(new int[][] { { 1, 9 }, { 3, 7 } });
-			parameterLayout.setRowGroups(new int[][] { { 3, 5 } });
-
-			PanelBuilder builder = new PanelBuilder(parameterLayout);
-			CellConstraints cc = new CellConstraints();
-
-			builder.add(new JLabel("Erste Y-Achse"), cc.xy(1, 1));
-			builder.add(new JLabel("Zweite Y-Achse"), cc.xy(9, 1));
+			FormHelper.add(paramPanel, new JLabel("Erste Y-Achse"), 0, 0, 1);
+			FormHelper.add(paramPanel, new JLabel("Zweite Y-Achse"), 4, 0, 1);
 
 			JList<Parameter> lList = getLeftList();
 			JList<Parameter> rList = getRightList();
-			builder.add(new JScrollPane(lList),
-						cc.xywh(1, 3, 1, 15, "fill, fill"));
-			builder.add(new JScrollPane(rList),
-						cc.xywh(9, 3, 1, 15, "fill, fill"));
+			JScrollPane lScroller = new JScrollPane(lList);
+			JScrollPane rScroller = new JScrollPane(rList);
+			lScroller.setPreferredSize(new Dimension(180, 220));
+			rScroller.setPreferredSize(new Dimension(180, 220));
+			FormHelper.addSpan(paramPanel, lScroller, 0, 1, 1, 8);
+			FormHelper.addSpan(paramPanel, rScroller, 4, 1, 1, 8);
 
 			String[] paramIDs = {
 					DatabaseConstants.ATL_PARAMETER_ID_CADMIUM,
@@ -1085,40 +1045,53 @@ public class KlaerschlammAuswertung extends AbstractModul
 					DatabaseConstants.ATL_PARAMETER_ID_BLEI,
 					DatabaseConstants.ATL_PARAMETER_ID_ZINK
 			};
-			int y = 3;
+			int y = 1;
 			for (String paramID : paramIDs)
 			{
-				builder.add(createRLButton(true, paramID), cc.xy(3, y));
-				builder.add(
-							new JLabel(
-									Parameter.findById(paramID).getBezeichnung(),
-									JLabel.CENTER),
-							cc.xy(5, y, "f,d"));
-				builder.add(createRLButton(false, paramID), cc.xy(7, y));
-				y += 2;
+				FormHelper.add(paramPanel, createRLButton(true, paramID), 1, y, 1);
+				addCentered(paramPanel,
+						new JLabel(Parameter.findById(paramID).getBezeichnung()),
+						2, y);
+				FormHelper.add(paramPanel, createRLButton(false, paramID), 3, y, 1);
+				y++;
 			}
 
-			builder.add(createRLButton(true, "box"), cc.xy(3, 17));
-			builder.add(getParameterBox(), cc.xy(5, 17, "f,d"));
-			builder.add(createRLButton(false, "box"), cc.xy(7, 17));
+			// Zeile 8: freie Parameterauswahl (feste Breite = Breite der Mittelspalte)
+			FormHelper.fixWidth(getParameterBox(), 180);
+			FormHelper.add(paramPanel, createRLButton(true, "box"), 1, 8, 1);
+			addCentered(paramPanel, getParameterBox(), 2, 8);
+			FormHelper.add(paramPanel, createRLButton(false, "box"), 3, 8, 1);
 
-			builder.add(getLeftDeleteButton(), cc.xy(1, 19, "c,d"));
-			builder.add(getRightDeleteButton(), cc.xy(9, 19, "c,d"));
+			// Zeile 9: Löschen
+			addCentered(paramPanel, getLeftDeleteButton(), 0, 9);
+			addCentered(paramPanel, getRightDeleteButton(), 4, 9);
 
-			builder.add(getLeftEinheitenBox(), cc.xy(1, 21, "c,d"));
-			builder.add(new JLabel("<  Einheit  >", JLabel.CENTER),
-						cc.xy(5, 21, "f,d"));
-			builder.add(getRightEinheitenBox(), cc.xy(9, 21, "c,d"));
+			// Zeile 10: Einheit
+			FormHelper.fixWidth(getLeftEinheitenBox(), 140);
+			FormHelper.fixWidth(getRightEinheitenBox(), 140);
+			addCentered(paramPanel, getLeftEinheitenBox(), 0, 10);
+			addCentered(paramPanel, new JLabel("<  Einheit  >"), 2, 10);
+			addCentered(paramPanel, getRightEinheitenBox(), 4, 10);
 
-			builder.add(getLeftAnalyseFeld(), cc.xy(1, 23, "c,d"));
-			builder.add(new JLabel("<  Analyse von  >", JLabel.CENTER),
-						cc.xy(5, 23, "f,d"));
-			builder.add(getRightAnalyseFeld(), cc.xy(9, 23, "c,d"));
+			// Zeile 11: Analyse von
+			FormHelper.fixWidth(getLeftAnalyseFeld(), 140);
+			FormHelper.fixWidth(getRightAnalyseFeld(), 140);
+			addCentered(paramPanel, getLeftAnalyseFeld(), 0, 11);
+			addCentered(paramPanel, new JLabel("<  Analyse von  >"), 2, 11);
+			addCentered(paramPanel, getRightAnalyseFeld(), 4, 11);
 
-			this.parameterPanel = builder.getPanel();
+			this.parameterPanel = paramPanel;
 		}
 
 		return this.parameterPanel;
+	}
+
+	/** Komponente in der Zelle zentriert, ohne Strecken. */
+	private void addCentered(JPanel p, java.awt.Component comp, int x, int y)
+	{
+		GridBagConstraints gbc = FormHelper.constraints(x, y, 1);
+		gbc.anchor = GridBagConstraints.CENTER;
+		p.add(comp, gbc);
 	}
 
 	private JList<Parameter> getRightList()

@@ -46,6 +46,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -53,10 +54,8 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
@@ -164,14 +163,13 @@ public class EinleiterBrennwertAuswertung
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append("Erfassungsjahr:", jahrBox);
-            builder.append("Typ:", typBox);
-            builder.append(submitButton, createExportButton());
-
-            queryPanel = builder.getPanel();
+            queryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+            queryPanel.add(new JLabel("Erfassungsjahr"));
+            queryPanel.add(jahrBox);
+            queryPanel.add(new JLabel("Typ"));
+            queryPanel.add(typBox);
+            queryPanel.add(submitButton);
+            queryPanel.add(createExportButton());
         }
 
         return queryPanel;

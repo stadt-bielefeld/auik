@@ -57,15 +57,13 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Entsorger;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 /**
@@ -120,48 +118,25 @@ public class EntsorgerEditor extends AbstractBaseEditor {
         telefonFeld.addKeyListener(escListener);
 
 
-        String columnString = "r:p, 3dlu, 30dlu, 40dlu:g, 5dlu, r:p, 3dlu, 27dlu";//, 3dlu, 30dlu";
-        FormLayout layout = new FormLayout(
-                // Spalten
-                columnString,
-
-                // Zeilen:
-                "pref, 3dlu, " +    //1    Stammdaten --------
-                "pref, 3dlu, " +    //3    Name
-                "pref, 3dlu, " +    //5    Straße Hausnr
-                "pref, 3dlu, " +    //7 Plz Ort
-                "pref");            //9 Telefon
-                /*, 3dlu, " +    //9
-
-                "pref, 3dlu, " +    //11 Adresse    - Alte Revision
-                "pref, 3dlu, " +    //13
-                "pref, 3dlu, " +    //15
-                "pref, 3dlu, " +    //17            - Neue Revision
-                "pref, 3dlu, " +    //19
-                "pref, 10dlu, " +    //21
-
-        "bottom:pref:grow");//23 Buttons*/
-        layout.setRowGroups(new int[][]{{1,3,5,7,9}});
-
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-
+        JPanel panel = FormHelper.createFormPanel();
         // Stamdaten ------------------------------------
-        builder.addSeparator("Stammdaten",    cc.xyw(1, 1, 8));
-        builder.addLabel("Name:",            cc.xy( 1, 3));
-        builder.add(namenFeld,                cc.xyw(3, 3, 6));
-        builder.addLabel("Straße:",            cc.xy( 1, 5));
-        builder.add(strassenFeld,             cc.xyw(3, 5, 4));
-        builder.add(hausnrFeld,             cc.xy( 8, 5));
+        FormHelper.addSeparator(panel, 0, 0, 4, "Stammdaten");
+        FormHelper.addLabel(panel, 0, 1, "Name");
+        FormHelper.addField(panel, 1, 1, 3, namenFeld);
+        FormHelper.addLabel(panel, 0, 2, "Straße");
+        FormHelper.addField(panel, 1, 2, 2, strassenFeld);
+        FormHelper.fixWidth(hausnrFeld, 47);
+        FormHelper.addField(panel, 3, 2, 1, hausnrFeld);
         // Ort
-        builder.addLabel("Ort:",             cc.xy( 1, 7));
-        builder.add(plzFeld,                 cc.xy( 3, 7));
-        builder.add(ortsFeld,                 cc.xyw(4, 7, 5));
+        FormHelper.addLabel(panel, 0, 3, "Ort");
+        FormHelper.fixWidth(plzFeld, 52);
+        FormHelper.addField(panel, 1, 3, 1, plzFeld);
+        FormHelper.addField(panel, 2, 3, 2, ortsFeld);
         // Telefon
-        builder.addLabel("Telefon:",        cc.xy( 1, 9));
-        builder.add(telefonFeld,            cc.xyw(3, 9, 4));
+        FormHelper.addLabel(panel, 0, 4, "Telefon");
+        FormHelper.addField(panel, 1, 4, 2, telefonFeld);
 
-        return builder.getPanel();
+        return panel;
     }
 
 

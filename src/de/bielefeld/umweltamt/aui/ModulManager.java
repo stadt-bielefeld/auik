@@ -60,13 +60,9 @@ import java.util.TreeMap;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
-
-
-import com.jgoodies.forms.factories.Paddings;
 import com.l2fprod.common.swing.JButtonBar;
 
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -93,7 +89,7 @@ public class ModulManager {
             this.module = new ArrayList<Modul>();
             this.buttonBar = new JButtonBar(JButtonBar.VERTICAL);
 
-            buttonBar.setBorder(Paddings.EMPTY);
+            BorderFactory.createEmptyBorder();
             buttonBar.setBackground(frame.getLeftFrame().getBackground());
         }
 
@@ -153,7 +149,7 @@ public class ModulManager {
 
     /**
      * Lädt alle Module. Diese Methode wird dazu verwendet, die Module der
-     * Anwemdung zu laden. Der {@link SettingsManager} liefert die Beschreibung
+     * Anwendung zu laden. Der {@link SettingsManager} liefert die Beschreibung
      * aller Module als String. Diese werden dann mittels Aufruf von {@link
      * loadModul(String)} instanziert und dieser Instanz bekannt gemacht.
      */
@@ -268,21 +264,53 @@ public class ModulManager {
     }
 
     private void rebuildMenu() {
-        frame.getViewMenu().removeAll();
+        final javax.swing.JPopupMenu menu = frame.getViewMenu();
+        menu.removeAll();
         Iterator<String> it = categories.keySet().iterator();
         while (it.hasNext()) {
-            String title = it.next();
-            JMenuItem catItem = new JMenuItem(title);
-            catItem.setActionCommand(title);
-            catItem.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    switchCategory(e.getActionCommand(), true);
+            final String title = it.next();
+
+            // Einfacher Eintrag ohne Windows-Icon-Spalte: Text sitzt links
+            final javax.swing.JLabel item = new javax.swing.JLabel(title);
+            item.setOpaque(true);
+            item.setBorder(
+                javax.swing.BorderFactory.createEmptyBorder(4, 10, 4, 25));
+            item.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+            item.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE,
+                item.getPreferredSize().height));
+
+            final java.awt.Color bg =
+                javax.swing.UIManager.getColor("MenuItem.background");
+            final java.awt.Color fg =
+                javax.swing.UIManager.getColor("MenuItem.foreground");
+            item.setBackground(bg);
+            item.setForeground(fg);
+
+            item.addMouseListener(new java.awt.event.MouseAdapter() {
+            	@Override
+            	public void mouseEntered(java.awt.event.MouseEvent e) {
+            	    item.setBackground(new java.awt.Color(204, 232, 255)); // hellblau
+            	    item.setForeground(java.awt.Color.BLACK);
+            	}
+
+                @Override
+                public void mouseExited(java.awt.event.MouseEvent e) {
+                    item.setBackground(bg);
+                    item.setForeground(fg);
+                }
+
+                @Override
+                public void mouseReleased(java.awt.event.MouseEvent e) {
+                    item.setBackground(bg);
+                    item.setForeground(fg);
+                    menu.setVisible(false);
+                    switchCategory(title, true);
                 }
             });
-            frame.getViewMenu().add(catItem);
+
+            menu.add(item);
         }
     }
-
     /**
      * Liefert eine bestimmte Kategorie.
      * @param title Der Name der Kategorie

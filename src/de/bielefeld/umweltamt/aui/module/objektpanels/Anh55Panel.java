@@ -73,37 +73,47 @@
  * - Anhang 55 erstellt
  *
  */
+
+/**
+ * Copyright 2005-2011, Stadt Bielefeld
+ * [License header unchanged...]
+ */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.SwingConstants;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 
 /**
- * Das Panel zum Bearbeiten von Druckereien
+ * Das Panel zum Bearbeiten von Wäschereien
  * @author u633d
  */
 public class Anh55Panel extends ObjectPanel {
@@ -118,25 +128,21 @@ public class Anh55Panel extends ObjectPanel {
 
     // Widgets
     private JTextField sachbearbeiterFeld = null;
-    private JTextField entgebIdFeld = null;//
-    private JTextField mengewaescheFeld = null;//
-    private JTextField sonsttexFeld = null;//
-    private DoubleField monatwasserverbFeld = null;//
-
+    private JTextField entgebIdFeld = null;
+    private JTextField mengewaescheFeld = null;
+    private JTextField sonsttexFeld = null;
+    private DoubleField monatwasserverbFeld = null;
     private JTextArea waschsituationArea = null;
-
-    private JTextField ansprechpartnerFeld = null;//
-    private JTextField brancheFeld = null;//
-
-    private JTextArea BemerkungenArea = null;//
-
-    private JCheckBox abgemeldetCheck = null;//
-    private JCheckBox putztuecherCheck = null;//
-    private JCheckBox teppichCheck = null;//
-    private JCheckBox mattenCheck = null;//
-    private JCheckBox haushaltstexCheck = null;//
-    private JCheckBox berufsklCheck = null;//
-    private JCheckBox gasthotelCheck = null;//
+    private JTextField ansprechpartnerFeld = null;
+    private JTextField brancheFeld = null;
+    private JTextArea BemerkungenArea = null;
+    private JCheckBox abgemeldetCheck = null;
+    private JCheckBox putztuecherCheck = null;
+    private JCheckBox teppichCheck = null;
+    private JCheckBox mattenCheck = null;
+    private JCheckBox haushaltstexCheck = null;
+    private JCheckBox berufsklCheck = null;
+    private JCheckBox gasthotelCheck = null;
     private JCheckBox krankenhausCheck = null;
     private JCheckBox heimwaescheCheck = null;
     private JFormattedTextField anteilwaschgutFeld = null;
@@ -153,268 +159,339 @@ public class Anh55Panel extends ObjectPanel {
     private Anh55Fachdaten fachdaten = null;
 
     @SuppressWarnings("deprecation")
-    public Anh55Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
+    public Anh55Panel(BasisObjektBearbeiten hauptModul,
+        Anfallstelle anfallstelle) {
         this.name = "Wäscherei";
         this.hauptModul = hauptModul;
         this.anfallstelle = anfallstelle;
 
-        FormLayout layout = new FormLayout(
-            "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
-            "");
+        // ── InnerPanel ────────────────────────────────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(2, 5, 2, 5);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        // ── SEPARATOR: Fachdaten ──────────────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 4; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Fachdaten"), gbc);
 
-        builder.appendSeparator("Fachdaten");
-        builder.append("Entwässerungsgebiet:", getEntgebIdFeld());
-        builder.append("", getAbgemeldetCheck());
-        builder.nextLine();
-        builder.append("Branche:", getBrancheFeld());
-        builder.append("", getPutztuecherCheck());
-        builder.nextLine();
-        builder.append("Ansprechpartner:", getAnsprechpartnerFeld());
-        builder.append("", getMattenCheck());
-        builder.nextLine();
-        builder.append("Menge:", getMengeFeld());
-        builder.append("", getTeppichCheck());
-        builder.nextLine();
-        builder.append("Sonstige Textilien:", getSonsttexFeld());
-        builder.append("", getBerufsklCheck());
-        builder.nextLine();
-        builder.append("Monatl. Wasserverbrauch:", getMonatwasserverbFeld());
-        builder.append("", getHaushaltstexCheck());
-        builder.nextLine();
-        builder.append("Anteil am Waschgut:", getAnteilwaschgutFeld());
-        builder.append("", getGasthotelCheck());
-        builder.nextLine();
-        builder.append("Anteil am Gesamtwaschgut:", getGesamtwaschgutFeld());
-        builder.append("", getKrankenhausCheck());
-        builder.nextLine();
-        builder.append("Sachbearbeiter/in:", getSachbearbeiterFeld());
-        builder.append("", getHeimwaescheCheck());
-        builder.nextLine();
-        builder.append("", getVliesCheck());
-        builder.append("", getFischCheck());
-        builder.nextLine();
-        builder.append("", getLoesungsmittelCheck());
-        builder.append("", getBetrwasseraufberCheck());
-        builder.nextLine();
-        builder.append("", getChlorCheck());
-        builder.append("", getAktivchlorCheck());
-        builder.nextLine();
+        // ── Hilfsmethode für Zeile: Label + Feld + Checkbox
+        // Zeile 1: Entwässerungsgebiet | Abgemeldet
+        addRow(innerPanel, gbc, 1,
+            "Entwässerungsgebiet", getEntgebIdFeld(),
+            getAbgemeldetCheck());
 
-        builder.appendSeparator("Wasch-Situation");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // Zeile 2: Branche | Putztücher
+        addRow(innerPanel, gbc, 2,
+            "Branche", getBrancheFeld(),
+            getPutztuecherCheck());
+
+        // Zeile 3: Ansprechpartner | Matten
+        addRow(innerPanel, gbc, 3,
+            "Ansprechpartner", getAnsprechpartnerFeld(),
+            getMattenCheck());
+
+        // Zeile 4: Menge | Teppiche
+        addRow(innerPanel, gbc, 4,
+            "Menge", getMengeFeld(),
+            getTeppichCheck());
+
+        // Zeile 5: Sonstige Textilien | Berufskleidung
+        addRow(innerPanel, gbc, 5,
+            "Sonstige Textilien", getSonsttexFeld(),
+            getBerufsklCheck());
+
+        // Zeile 6: Monatl. Wasserverbrauch | Haushaltstextilien
+        addRow(innerPanel, gbc, 6,
+            "Monatl. Wasserverbrauch",
+            getMonatwasserverbFeld(),
+            getHaushaltstexCheck());
+
+        // Zeile 7: Anteil am Waschgut | Gaststätten
+        addRow(innerPanel, gbc, 7,
+            "Anteil am Waschgut",
+            getAnteilwaschgutFeld(),
+            getGasthotelCheck());
+
+        // Zeile 8: Anteil am Gesamtwaschgut | Krankenhaus
+        addRow(innerPanel, gbc, 8,
+            "Anteil am Gesamtwaschgut",
+            getGesamtwaschgutFeld(),
+            getKrankenhausCheck());
+
+        // Zeile 9: Sachbearbeiter | Heimwäsche
+        addRow(innerPanel, gbc, 9,
+            "Sachbearbeiter:in", getSachbearbeiterFeld(),
+            getHeimwaescheCheck());
+
+        // Zeile 10: Vlies | Fisch
+        addRowTwoChecks(innerPanel, gbc, 10,
+            getVliesCheck(), getFischCheck());
+
+        // Zeile 11: Lösungsmittel | Betriebswasseraufbereitung
+        addRowTwoChecks(innerPanel, gbc, 11,
+            getLoesungsmittelCheck(),
+            getBetrwasseraufberCheck());
+
+        // Zeile 12: Chlor | Aktiv-Chlor
+        addRowTwoChecks(innerPanel, gbc, 12,
+            getChlorCheck(), getAktivchlorCheck());
+
+        // ── SEPARATOR: Wasch-Situation ────────────────────
+        gbc.gridx = 0; gbc.gridy = 13;
+        gbc.gridwidth = 4; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Wasch-Situation"), gbc);
+
         JScrollPane waschsituationScroller = new JScrollPane(
             getWaschsituationArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(waschsituationScroller, 7);
+        waschsituationScroller.setPreferredSize(
+            new java.awt.Dimension(0, 60));
+        waschsituationScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 60));
+        gbc.gridy = 14; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(waschsituationScroller, gbc);
 
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
+        // ── SEPARATOR: Bemerkungen ────────────────────────
+        gbc.gridy = 15; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Bemerkungen"), gbc);
+
+        JScrollPane bemerkungsScroller = new JScrollPane(
+            getBemerkungenArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
+        bemerkungsScroller.setPreferredSize(
+            new java.awt.Dimension(0, 60));
+        bemerkungsScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 60));
+        gbc.gridy = 16; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(bemerkungsScroller, gbc);
 
-        JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-            getSaveAnh55Button());
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getSaveAnh55Button());
+        gbc.gridy = 17; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
 
-        // JComponent buttonBar = ComponentFactory.buildOKBar(getSaveAnh55Button());
-        builder.append(buttonBar, 7);
-        addChangeListeners(getAbgemeldetCheck(), getSachbearbeiterFeld(),
-            getEntgebIdFeld(), getMengeFeld(), getSonsttexFeld(),
-            getMonatwasserverbFeld(), getWaschsituationArea(), getAnsprechpartnerFeld(),
-            getBrancheFeld(), getPutztuecherCheck(), getTeppichCheck(), getMattenCheck(),
-            getHaushaltstexCheck(), getBerufsklCheck(), getGasthotelCheck(), getKrankenhausCheck(),
-            getHeimwaescheCheck(), getAnteilwaschgutFeld(), getGesamtwaschgutFeld(), getBetrwasseraufberCheck(),
-            getChlorCheck(), getAktivchlorCheck(), getVliesCheck(), getFischCheck(), getBemerkungenArea(),
-            getAbgemeldetCheck());
+        // ── Wrapper ───────────────────────────────────────
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(innerPanel, BorderLayout.WEST);
+        this.setLayout(new BorderLayout());
+        this.add(wrapperPanel, BorderLayout.NORTH);
 
+        addChangeListeners(
+            getAbgemeldetCheck(),
+            getSachbearbeiterFeld(),
+            getEntgebIdFeld(),
+            getMengeFeld(),
+            getSonsttexFeld(),
+            getMonatwasserverbFeld(),
+            getWaschsituationArea(),
+            getAnsprechpartnerFeld(),
+            getBrancheFeld(),
+            getPutztuecherCheck(),
+            getTeppichCheck(),
+            getMattenCheck(),
+            getHaushaltstexCheck(),
+            getBerufsklCheck(),
+            getGasthotelCheck(),
+            getKrankenhausCheck(),
+            getHeimwaescheCheck(),
+            getAnteilwaschgutFeld(),
+            getGesamtwaschgutFeld(),
+            getBetrwasseraufberCheck(),
+            getChlorCheck(),
+            getAktivchlorCheck(),
+            getVliesCheck(),
+            getFischCheck(),
+            getBemerkungenArea());
     }
 
-    public void completeObjekt(Anfallstelle anfallstelle) {
-        if (this.fachdaten == null) {
-            // Neues Anhang 55 Objekt erzeugen
-            this.fachdaten = new Anh55Fachdaten();
+    // ── Hilfsmethoden für Zeilen ───────────────────────────
+
+    /** Label + Textfeld links, Checkbox rechts */
+    private void addRow(JPanel panel, GridBagConstraints gbc,
+        int row, String label,
+        java.awt.Component field,
+        JCheckBox check) {
+        gbc.gridy = row; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        panel.add(new JLabel(label), gbc);
+
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        if (field instanceof JTextField) {
+            ((JTextField) field).setPreferredSize(
+                new java.awt.Dimension(200,
+                    field.getPreferredSize().height));
+        } else if (field instanceof JFormattedTextField) {
+            ((JFormattedTextField) field).setPreferredSize(
+                new java.awt.Dimension(200,
+                    field.getPreferredSize().height));
+        } else if (field instanceof DoubleField) {
+            field.setPreferredSize(
+                new java.awt.Dimension(200,
+                    field.getPreferredSize().height));
         }
-        // Anfallstelle setzen
-            this.anfallstelle = anfallstelle;
-            this.fachdaten.setAnfallstelle(this.anfallstelle);
+        panel.add(field, gbc);
+
+        gbc.gridx = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel.add(check, gbc);
     }
 
+    /** Zwei Checkboxen nebeneinander (ohne Label/Feld) */
+    private void addRowTwoChecks(JPanel panel,
+        GridBagConstraints gbc,
+        int row,
+        JCheckBox check1, JCheckBox check2) {
+        gbc.gridy = row; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 1;
+        panel.add(check1, gbc);
+        gbc.gridx = 2;
+        panel.add(check2, gbc);
+    }
+
+    // ── createSeparator() ─────────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(
+            new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
+    }
+
+    // ── completeObjekt() ───────────────────────────────────
+    public void completeObjekt(Anfallstelle anfallstelle) {
+        if (this.fachdaten == null)
+            this.fachdaten = new Anh55Fachdaten();
+        this.anfallstelle = anfallstelle;
+        this.fachdaten.setAnfallstelle(this.anfallstelle);
+    }
+
+    // ── doSavePanelData() ──────────────────────────────────
     protected boolean doSavePanelData() {
         boolean success;
 
         String bemerkungen = this.BemerkungenArea.getText();
-        if ("".equals(bemerkungen)) {
-            this.fachdaten.setBemerkungen(null);
-        } else {
-            this.fachdaten.setBemerkungen(bemerkungen);
-        }
+        this.fachdaten.setBemerkungen(
+            "".equals(bemerkungen) ? null : bemerkungen);
 
         String mengewaescheString = this.mengewaescheFeld.getText();
-        if ("".equals(mengewaescheString)) {
-            this.fachdaten.setMengewaesche(null);
-        } else {
-            this.fachdaten.setMengewaesche(mengewaescheString);
-        }
+        this.fachdaten.setMengewaesche(
+            "".equals(mengewaescheString)
+                ? null : mengewaescheString);
 
-        String sachbearbeiterString = this.sachbearbeiterFeld.getText();
-        if ("".equals(sachbearbeiterString)) {
-            this.fachdaten.setSachbearbeiter(null);
-        } else {
-            this.fachdaten.setSachbearbeiter(sachbearbeiterString);
-        }
+        String sachbearbeiterString =
+            this.sachbearbeiterFeld.getText();
+        this.fachdaten.setSachbearbeiter(
+            "".equals(sachbearbeiterString)
+                ? null : sachbearbeiterString);
 
         String entgebIdString = this.entgebIdFeld.getText();
-        if ("".equals(entgebIdString)) {
-            this.fachdaten.setEntgebId(null);
-        } else {
-            this.fachdaten.setEntgebId(entgebIdString);
-        }
+        this.fachdaten.setEntgebId(
+            "".equals(entgebIdString) ? null : entgebIdString);
 
-        String monatwasserverbString = this.monatwasserverbFeld.getText();
-        if ("".equals(monatwasserverbString)) {
-            this.fachdaten.setMonatwasserverb(null);
-        } else {
-            this.fachdaten.setMonatwasserverb(monatwasserverbString);
-        }
+        String monatwasserverbString =
+            this.monatwasserverbFeld.getText();
+        this.fachdaten.setMonatwasserverb(
+            "".equals(monatwasserverbString)
+                ? null : monatwasserverbString);
 
         String sonsttextString = this.sonsttexFeld.getText();
-        if ("".equals(sonsttextString)) {
-            this.fachdaten.setSonsttex(null);
-        } else {
-            this.fachdaten.setSonsttex(sonsttextString);
-        }
+        this.fachdaten.setSonsttex(
+            "".equals(sonsttextString)
+                ? null : sonsttextString);
 
-        String waschsituationString = this.waschsituationArea.getText();
-        if ("".equals(waschsituationString)) {
-            this.fachdaten.setWaschsituation(null);
-        } else {
-            this.fachdaten.setWaschsituation(waschsituationString);
-        }
+        String waschsituationString =
+            this.waschsituationArea.getText();
+        this.fachdaten.setWaschsituation(
+            "".equals(waschsituationString)
+                ? null : waschsituationString);
 
-        String ansprechpartnerString = this.ansprechpartnerFeld.getText();
-        if ("".equals(ansprechpartnerString)) {
-            this.fachdaten.setAnsprechpartner(null);
-        } else {
-            this.fachdaten.setAnsprechpartner(ansprechpartnerString);
-        }
+        String ansprechpartnerString =
+            this.ansprechpartnerFeld.getText();
+        this.fachdaten.setAnsprechpartner(
+            "".equals(ansprechpartnerString)
+                ? null : ansprechpartnerString);
 
         String brancheString = this.brancheFeld.getText();
-        if ("".equals(brancheString)) {
-            this.fachdaten.setBranche(null);
-        } else {
-            this.fachdaten.setBranche(brancheString);
-        }
+        this.fachdaten.setBranche(
+            "".equals(brancheString) ? null : brancheString);
 
-        Integer anteilwaschgut = ((IntegerField) this.anteilwaschgutFeld)
-            .getIntValue();
+        Integer anteilwaschgut =
+            ((IntegerField) this.anteilwaschgutFeld)
+                .getIntValue();
         this.fachdaten.setAnteilwaschgut(anteilwaschgut);
 
-        Integer anteilgesamtwg = ((IntegerField) this.anteilgesamtwaschgutFeld)
-            .getIntValue();
+        Integer anteilgesamtwg =
+            ((IntegerField) this.anteilgesamtwaschgutFeld)
+                .getIntValue();
         this.fachdaten.setAnteilgesamtgut(anteilgesamtwg);
 
-        if (getAbgemeldetCheck().isSelected()) {
-            this.fachdaten.setAbgemeldet(true);
-        } else {
-            this.fachdaten.setAbgemeldet(false);
-        }
-
-        if (getPutztuecherCheck().isSelected()) {
-            this.fachdaten.setPutztuecher(true);
-        } else {
-            this.fachdaten.setPutztuecher(false);
-        }
-
-        if (getTeppichCheck().isSelected()) {
-            this.fachdaten.setTeppich(true);
-        } else {
-            this.fachdaten.setTeppich(false);
-        }
-
-        if (getMattenCheck().isSelected()) {
-            this.fachdaten.setMatten(true);
-        } else {
-            this.fachdaten.setMatten(false);
-        }
-
-        if (getHaushaltstexCheck().isSelected()) {
-            this.fachdaten.setHaushaltstex(true);
-        } else {
-            this.fachdaten.setHaushaltstex(false);
-        }
-
-        if (getBerufsklCheck().isSelected()) {
-            this.fachdaten.setBerufskl(true);
-        } else {
-            this.fachdaten.setBerufskl(false);
-        }
-
-        if (getGasthotelCheck().isSelected()) {
-            this.fachdaten.setGaststhotel(true);
-        } else {
-            this.fachdaten.setGaststhotel(false);
-        }
-
-        if (getKrankenhausCheck().isSelected()) {
-            this.fachdaten.setKrankenhaus(true);
-        } else {
-            this.fachdaten.setKrankenhaus(false);
-        }
-
-        if (getHeimwaescheCheck().isSelected()) {
-            this.fachdaten.setHeimwaesche(true);
-        } else {
-            this.fachdaten.setHeimwaesche(false);
-        }
-
-        if (getBetrwasseraufberCheck().isSelected()) {
-            this.fachdaten.setBetrwasseraufber(true);
-        } else {
-            this.fachdaten.setBetrwasseraufber(false);
-        }
-
-        if (getChlorCheck().isSelected()) {
-            this.fachdaten.setChlor(true);
-        } else {
-            this.fachdaten.setChlor(false);
-        }
-
-        if (getAktivchlorCheck().isSelected()) {
-            this.fachdaten.setAktivchlor(true);
-        } else {
-            this.fachdaten.setAktivchlor(false);
-        }
-
-        if (getVliesCheck().isSelected()) {
-            this.fachdaten.setVlies(true);
-        } else {
-            this.fachdaten.setVlies(true);
-        }
-
-        if (getFischCheck().isSelected()) {
-            this.fachdaten.setFischfleisch(true);
-        } else {
-            this.fachdaten.setFischfleisch(false);
-        }
-
-        if (getLoesungsmittelCheck().isSelected()) {
-            this.fachdaten.setLoesungsmittel(true);
-        } else {
-            this.fachdaten.setLoesungsmittel(false);
-        }
+        this.fachdaten.setAbgemeldet(
+            getAbgemeldetCheck().isSelected());
+        this.fachdaten.setPutztuecher(
+            getPutztuecherCheck().isSelected());
+        this.fachdaten.setTeppich(
+            getTeppichCheck().isSelected());
+        this.fachdaten.setMatten(
+            getMattenCheck().isSelected());
+        this.fachdaten.setHaushaltstex(
+            getHaushaltstexCheck().isSelected());
+        this.fachdaten.setBerufskl(
+            getBerufsklCheck().isSelected());
+        this.fachdaten.setGaststhotel(
+            getGasthotelCheck().isSelected());
+        this.fachdaten.setKrankenhaus(
+            getKrankenhausCheck().isSelected());
+        this.fachdaten.setHeimwaesche(
+            getHeimwaescheCheck().isSelected());
+        this.fachdaten.setBetrwasseraufber(
+            getBetrwasseraufberCheck().isSelected());
+        this.fachdaten.setChlor(
+            getChlorCheck().isSelected());
+        this.fachdaten.setAktivchlor(
+            getAktivchlorCheck().isSelected());
+        this.fachdaten.setVlies(
+            getVliesCheck().isSelected());
+        this.fachdaten.setFischfleisch(
+            getFischCheck().isSelected());
+        this.fachdaten.setLoesungsmittel(
+            getLoesungsmittelCheck().isSelected());
 
         success = fachdaten.merge();
         if (success) {
-            log.debug("Anh 55 Objekt " + this.fachdaten.getId()
-                + " gespeichert.");
+            log.debug("Anh 55 Objekt "
+                + this.fachdaten.getId() + " gespeichert.");
         } else {
             log.debug("Anh 55 Objekt " + this.fachdaten
                 + " konnte nicht gespeichert werden!");
@@ -422,8 +499,8 @@ public class Anh55Panel extends ObjectPanel {
         return success;
     }
 
+    // ── enableAll() ────────────────────────────────────────
     public void enableAll(boolean enabled) {
-
         getBemerkungenArea().setEnabled(enabled);
         getAbgemeldetCheck().setEnabled(enabled);
         getSachbearbeiterFeld().setEnabled(enabled);
@@ -452,6 +529,7 @@ public class Anh55Panel extends ObjectPanel {
         getLoesungsmittelCheck().setEnabled(enabled);
     }
 
+    // ── clearForm() ────────────────────────────────────────
     public void clearForm() {
         getAbgemeldetCheck().setSelected(false);
         getSachbearbeiterFeld().setText(null);
@@ -479,392 +557,302 @@ public class Anh55Panel extends ObjectPanel {
         getFischCheck().setSelected(false);
         getLoesungsmittelCheck().setSelected(false);
         getBemerkungenArea().setText(null);
-        getAbgemeldetCheck().setSelected(false);
     }
 
-    public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
-
-        this.fachdaten = anfallstelle.getAnh55Fachdatens().iterator().next();
-
+    // ── updateForm(Anfallstelle) ───────────────────────────
+    public void updateForm(Anfallstelle anfallstelle)
+        throws RuntimeException {
+        this.fachdaten =
+            anfallstelle.getAnh55Fachdatens()
+                .iterator().next();
         if (this.fachdaten != null) {
-            if (this.fachdaten.getBemerkungen() != null) {
-                getBemerkungenArea().setText(this.fachdaten.getBemerkungen());
-            }
-
-            if (this.fachdaten.getSachbearbeiter() != null) {
+            if (this.fachdaten.getBemerkungen() != null)
+                getBemerkungenArea().setText(
+                    this.fachdaten.getBemerkungen());
+            if (this.fachdaten.getSachbearbeiter() != null)
                 getSachbearbeiterFeld().setText(
                     this.fachdaten.getSachbearbeiter());
-            }
-
-            if (this.fachdaten.getEntgebId() != null) {
-                getEntgebIdFeld().setText(this.fachdaten.getEntgebId());
-            }
-
-            if (this.fachdaten.getMengewaesche() != null) {
-                getMengeFeld().setText(this.fachdaten.getMengewaesche());
-            }
-
-            if (this.fachdaten.getSonsttex() != null) {
-                getSonsttexFeld().setText(this.fachdaten.getSonsttex());
-            }
-
-            if (this.fachdaten.getMonatwasserverb() != null) {
+            if (this.fachdaten.getEntgebId() != null)
+                getEntgebIdFeld().setText(
+                    this.fachdaten.getEntgebId());
+            if (this.fachdaten.getMengewaesche() != null)
+                getMengeFeld().setText(
+                    this.fachdaten.getMengewaesche());
+            if (this.fachdaten.getSonsttex() != null)
+                getSonsttexFeld().setText(
+                    this.fachdaten.getSonsttex());
+            if (this.fachdaten.getMonatwasserverb() != null)
                 getMonatwasserverbFeld().setText(
                     this.fachdaten.getMonatwasserverb());
-            }
-
-            if (this.fachdaten.getWaschsituation() != null) {
+            if (this.fachdaten.getWaschsituation() != null)
                 getWaschsituationArea().setText(
                     this.fachdaten.getWaschsituation());
-            }
-
-            if (this.fachdaten.getAnsprechpartner() != null) {
+            if (this.fachdaten.getAnsprechpartner() != null)
                 getAnsprechpartnerFeld().setText(
                     this.fachdaten.getAnsprechpartner());
-            }
-
-            if (this.fachdaten.getBranche() != null) {
-                getBrancheFeld().setText(this.fachdaten.getBranche());
-            }
-
-            if (this.fachdaten.getAnteilwaschgut() != null) {
+            if (this.fachdaten.getBranche() != null)
+                getBrancheFeld().setText(
+                    this.fachdaten.getBranche());
+            if (this.fachdaten.getAnteilwaschgut() != null)
                 getAnteilwaschgutFeld().setText(
-                    this.fachdaten.getAnteilwaschgut().toString());
-            }
-
-            if (this.fachdaten.getAnteilgesamtgut() != null) {
+                    this.fachdaten.getAnteilwaschgut()
+                        .toString());
+            if (this.fachdaten.getAnteilgesamtgut() != null)
                 getGesamtwaschgutFeld().setText(
-                    this.fachdaten.getAnteilgesamtgut().toString());
-            }
-
-            if (this.fachdaten.getAbgemeldet() != null) {
-                if (this.fachdaten.getAbgemeldet() == true) {
-                    getAbgemeldetCheck().setSelected(true);
-                } else {
-                    getAbgemeldetCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getPutztuecher() != null) {
-                if (this.fachdaten.getPutztuecher() == true) {
-                    getPutztuecherCheck().setSelected(true);
-                } else {
-                    getPutztuecherCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getTeppich() != null) {
-                if (this.fachdaten.getTeppich() == true) {
-                    getTeppichCheck().setSelected(true);
-                } else {
-                    getTeppichCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getMatten() != null) {
-                if (this.fachdaten.getMatten() == true) {
-                    getMattenCheck().setSelected(true);
-                } else {
-                    getMattenCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getHaushaltstex() != null) {
-                if (this.fachdaten.getHaushaltstex() == true) {
-                    getHaushaltstexCheck().setSelected(true);
-                } else {
-                    getHaushaltstexCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getBerufskl() != null) {
-                if (this.fachdaten.getBerufskl() == true) {
-                    getBerufsklCheck().setSelected(true);
-                } else {
-                    getBerufsklCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getGaststhotel() != null) {
-                if (this.fachdaten.getGaststhotel() == true) {
-                    getGasthotelCheck().setSelected(true);
-                } else {
-                    getGasthotelCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getKrankenhaus() != null) {
-                if (this.fachdaten.getKrankenhaus() == true) {
-                    getKrankenhausCheck().setSelected(true);
-                } else {
-                    getKrankenhausCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getHeimwaesche() != null) {
-                if (this.fachdaten.getHeimwaesche() == true) {
-                    getHeimwaescheCheck().setSelected(true);
-                } else {
-                    getHeimwaescheCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getBetrwasseraufber() != null) {
-                if (this.fachdaten.getBetrwasseraufber() == true) {
-                    getBetrwasseraufberCheck().setSelected(true);
-                } else {
-                    getBetrwasseraufberCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getChlor() != null) {
-                if (this.fachdaten.getChlor() == true) {
-                    getChlorCheck().setSelected(true);
-                } else {
-                    getChlorCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getAktivchlor() != null) {
-                if (this.fachdaten.getAktivchlor() == true) {
-                    getAktivchlorCheck().setSelected(true);
-                } else {
-                    getAktivchlorCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getVlies() != null) {
-                if (this.fachdaten.getVlies() == true) {
-                    getVliesCheck().setSelected(true);
-                } else {
-                    getVliesCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getFischfleisch() != null) {
-                if (this.fachdaten.getFischfleisch() == true) {
-                    getFischCheck().setSelected(true);
-                } else {
-                    getFischCheck().setSelected(false);
-                }
-            }
-
-            if (this.fachdaten.getLoesungsmittel() != null) {
-                if (this.fachdaten.getLoesungsmittel() == true) {
-                    getLoesungsmittelCheck().setSelected(true);
-                } else {
-                    getLoesungsmittelCheck().setSelected(false);
-                }
-            }
+                    this.fachdaten.getAnteilgesamtgut()
+                        .toString());
+            if (this.fachdaten.getAbgemeldet() != null)
+                getAbgemeldetCheck().setSelected(
+                    this.fachdaten.getAbgemeldet());
+            if (this.fachdaten.getPutztuecher() != null)
+                getPutztuecherCheck().setSelected(
+                    this.fachdaten.getPutztuecher());
+            if (this.fachdaten.getTeppich() != null)
+                getTeppichCheck().setSelected(
+                    this.fachdaten.getTeppich());
+            if (this.fachdaten.getMatten() != null)
+                getMattenCheck().setSelected(
+                    this.fachdaten.getMatten());
+            if (this.fachdaten.getHaushaltstex() != null)
+                getHaushaltstexCheck().setSelected(
+                    this.fachdaten.getHaushaltstex());
+            if (this.fachdaten.getBerufskl() != null)
+                getBerufsklCheck().setSelected(
+                    this.fachdaten.getBerufskl());
+            if (this.fachdaten.getGaststhotel() != null)
+                getGasthotelCheck().setSelected(
+                    this.fachdaten.getGaststhotel());
+            if (this.fachdaten.getKrankenhaus() != null)
+                getKrankenhausCheck().setSelected(
+                    this.fachdaten.getKrankenhaus());
+            if (this.fachdaten.getHeimwaesche() != null)
+                getHeimwaescheCheck().setSelected(
+                    this.fachdaten.getHeimwaesche());
+            if (this.fachdaten.getBetrwasseraufber() != null)
+                getBetrwasseraufberCheck().setSelected(
+                    this.fachdaten.getBetrwasseraufber());
+            if (this.fachdaten.getChlor() != null)
+                getChlorCheck().setSelected(
+                    this.fachdaten.getChlor());
+            if (this.fachdaten.getAktivchlor() != null)
+                getAktivchlorCheck().setSelected(
+                    this.fachdaten.getAktivchlor());
+            if (this.fachdaten.getVlies() != null)
+                getVliesCheck().setSelected(
+                    this.fachdaten.getVlies());
+            if (this.fachdaten.getFischfleisch() != null)
+                getFischCheck().setSelected(
+                    this.fachdaten.getFischfleisch());
+            if (this.fachdaten.getLoesungsmittel() != null)
+                getLoesungsmittelCheck().setSelected(
+                    this.fachdaten.getLoesungsmittel());
         }
         setDirty(false);
     }
 
+    // ── fetchFormData() ────────────────────────────────────
     public void fetchFormData() throws RuntimeException {
-        Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+        Set<Anfallstelle> list =
+            this.hauptModul.getObjekt().getAnfallstelles();
         this.fachdaten = Anh55Fachdaten.findByAnfallstelleId(
-                list.iterator().next().getId());
-        log.debug("Anhang 55 Objekt aus DB geholt: ID" + this.fachdaten);
+            list.iterator().next().getId());
+        log.debug("Anhang 55 Objekt aus DB geholt: ID"
+            + this.fachdaten);
     }
 
-    private JButton getSaveAnh55Button() {
-        if (this.saveAnh55Button == null) {
-            this.saveAnh55Button = new JButton("Speichern");
-
-            this.saveAnh55Button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    enableAll(false);
-                    if (hauptModul.saveAllTabs()) {
-                        Anh55Panel.this.hauptModul.getFrame().changeStatus(
-                            "Anh 55 Objekt "
-                                + Anh55Panel.this.fachdaten.getId()
-                                + " erfolgreich gespeichert.",
-                            HauptFrame.SUCCESS_COLOR);
-                    } else {
-                        Anh55Panel.this.hauptModul.getFrame().changeStatus(
-                            "Fehler beim Speichern des Anh 55 Objekt!",
-                            HauptFrame.ERROR_COLOR);
-                    }
-
-                    Anh55Panel.this.hauptModul.fillForm();
-                }
-            });
-        }
-        return this.saveAnh55Button;
-    }
-
+    // ── getName() ──────────────────────────────────────────
     @Override
     public String getName() {
         return this.name;
     }
 
-    private JCheckBox getAbgemeldetCheck() {
-        if (this.abgemeldetCheck == null) {
-            this.abgemeldetCheck = new JCheckBox("Abgemeldet?");
+    // ── getSaveAnh55Button() ───────────────────────────────
+    private JButton getSaveAnh55Button() {
+        if (this.saveAnh55Button == null) {
+            this.saveAnh55Button = new JButton("Speichern");
+            this.saveAnh55Button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        enableAll(false);
+                        if (hauptModul.saveAllTabs()) {
+                            Anh55Panel.this.hauptModul
+                                .getFrame().changeStatus(
+                                "Anh 55 Objekt "
+                                + Anh55Panel.this.fachdaten
+                                    .getId()
+                                + " erfolgreich"
+                                + " gespeichert.",
+                                HauptFrame.SUCCESS_COLOR);
+                        } else {
+                            Anh55Panel.this.hauptModul
+                                .getFrame().changeStatus(
+                                "Fehler beim Speichern"
+                                + " des Anh 55 Objekt!",
+                                HauptFrame.ERROR_COLOR);
+                        }
+                        Anh55Panel.this.hauptModul.fillForm();
+                    }
+                });
         }
+        return this.saveAnh55Button;
+    }
+
+    // ── Getter Methoden ────────────────────────────────────
+    private JCheckBox getAbgemeldetCheck() {
+        if (this.abgemeldetCheck == null)
+            this.abgemeldetCheck = new JCheckBox("Abgemeldet?");
         return this.abgemeldetCheck;
     }
 
     private JTextField getEntgebIdFeld() {
-        if (this.entgebIdFeld == null) {
+        if (this.entgebIdFeld == null)
             this.entgebIdFeld = new LimitedTextField(50);
-        }
         return this.entgebIdFeld;
     }
 
     private JTextField getBrancheFeld() {
-        if (this.brancheFeld == null) {
+        if (this.brancheFeld == null)
             this.brancheFeld = new LimitedTextField(50);
-        }
         return this.brancheFeld;
     }
 
     private JCheckBox getPutztuecherCheck() {
-        if (this.putztuecherCheck == null) {
-            this.putztuecherCheck = new JCheckBox("Putztücher?");
-        }
+        if (this.putztuecherCheck == null)
+            this.putztuecherCheck =
+                new JCheckBox("Putztücher?");
         return this.putztuecherCheck;
     }
 
     private JTextField getAnsprechpartnerFeld() {
-        if (this.ansprechpartnerFeld == null) {
-            this.ansprechpartnerFeld = new LimitedTextField(50);
-        }
+        if (this.ansprechpartnerFeld == null)
+            this.ansprechpartnerFeld =
+                new LimitedTextField(50);
         return this.ansprechpartnerFeld;
     }
 
     private JCheckBox getMattenCheck() {
-        if (this.mattenCheck == null) {
+        if (this.mattenCheck == null)
             this.mattenCheck = new JCheckBox("Matten?");
-        }
         return this.mattenCheck;
     }
 
     private JTextField getMengeFeld() {
-        if (this.mengewaescheFeld == null) {
+        if (this.mengewaescheFeld == null)
             this.mengewaescheFeld = new LimitedTextField(50);
-        }
         return this.mengewaescheFeld;
     }
 
     private JCheckBox getTeppichCheck() {
-        if (this.teppichCheck == null) {
+        if (this.teppichCheck == null)
             this.teppichCheck = new JCheckBox("Teppiche?");
-        }
         return this.teppichCheck;
     }
 
     private JTextField getSonsttexFeld() {
-        if (this.sonsttexFeld == null) {
+        if (this.sonsttexFeld == null)
             this.sonsttexFeld = new LimitedTextField(50);
-        }
         return this.sonsttexFeld;
     }
 
     private JCheckBox getBerufsklCheck() {
-        if (this.berufsklCheck == null) {
-            this.berufsklCheck = new JCheckBox("Berufskleidung?");
-        }
+        if (this.berufsklCheck == null)
+            this.berufsklCheck =
+                new JCheckBox("Berufskleidung?");
         return this.berufsklCheck;
     }
 
     private DoubleField getMonatwasserverbFeld() {
-        if (this.monatwasserverbFeld == null) {
+        if (this.monatwasserverbFeld == null)
             this.monatwasserverbFeld = new DoubleField(50);
-        }
         return this.monatwasserverbFeld;
     }
 
     private JCheckBox getHaushaltstexCheck() {
-        if (this.haushaltstexCheck == null) {
-            this.haushaltstexCheck = new JCheckBox("Haushaltstextilien?");
-        }
+        if (this.haushaltstexCheck == null)
+            this.haushaltstexCheck =
+                new JCheckBox("Haushaltstextilien?");
         return this.haushaltstexCheck;
     }
 
     private JCheckBox getGasthotelCheck() {
-        if (this.gasthotelCheck == null) {
-            this.gasthotelCheck = new JCheckBox("Gaststätten-/Hoteltextilien?");
-        }
+        if (this.gasthotelCheck == null)
+            this.gasthotelCheck =
+                new JCheckBox(
+                    "Gaststätten-/Hoteltextilien?");
         return this.gasthotelCheck;
     }
 
     private JCheckBox getKrankenhausCheck() {
-        if (this.krankenhausCheck == null) {
-            this.krankenhausCheck = new JCheckBox("Krankenhaus?");
-        }
+        if (this.krankenhausCheck == null)
+            this.krankenhausCheck =
+                new JCheckBox("Krankenhaus?");
         return this.krankenhausCheck;
     }
 
     private JCheckBox getHeimwaescheCheck() {
-        if (this.heimwaescheCheck == null) {
-            this.heimwaescheCheck = new JCheckBox("Heimwäsche?");
-        }
+        if (this.heimwaescheCheck == null)
+            this.heimwaescheCheck =
+                new JCheckBox("Heimwäsche?");
         return this.heimwaescheCheck;
     }
 
     private JCheckBox getVliesCheck() {
-        if (this.vliesCheck == null) {
+        if (this.vliesCheck == null)
             this.vliesCheck = new JCheckBox("Vlies?");
-        }
         return this.vliesCheck;
     }
 
     private JCheckBox getFischCheck() {
-        if (this.fischCheck == null) {
+        if (this.fischCheck == null)
             this.fischCheck = new JCheckBox("Fisch/Fleisch?");
-        }
         return this.fischCheck;
     }
 
     private JCheckBox getLoesungsmittelCheck() {
-        if (this.loesungsmittelCheck == null) {
-            this.loesungsmittelCheck = new JCheckBox("Lösungsmittel?");
-        }
+        if (this.loesungsmittelCheck == null)
+            this.loesungsmittelCheck =
+                new JCheckBox("Lösungsmittel?");
         return this.loesungsmittelCheck;
     }
 
     private JFormattedTextField getAnteilwaschgutFeld() {
-        if (this.anteilwaschgutFeld == null) {
+        if (this.anteilwaschgutFeld == null)
             this.anteilwaschgutFeld = new IntegerField();
-        }
         return this.anteilwaschgutFeld;
     }
 
     private JFormattedTextField getGesamtwaschgutFeld() {
-        if (this.anteilgesamtwaschgutFeld == null) {
+        if (this.anteilgesamtwaschgutFeld == null)
             this.anteilgesamtwaschgutFeld = new IntegerField();
-        }
         return this.anteilgesamtwaschgutFeld;
     }
 
     private JTextField getSachbearbeiterFeld() {
-        if (this.sachbearbeiterFeld == null) {
-            this.sachbearbeiterFeld = new LimitedTextField(50);
-        }
+        if (this.sachbearbeiterFeld == null)
+            this.sachbearbeiterFeld =
+                new LimitedTextField(50);
         return this.sachbearbeiterFeld;
     }
 
     private JCheckBox getBetrwasseraufberCheck() {
-        if (this.betrwasseraufberCheck == null) {
-            this.betrwasseraufberCheck = new JCheckBox(
-                "Betriebswasseraufbereitung?");
-        }
+        if (this.betrwasseraufberCheck == null)
+            this.betrwasseraufberCheck =
+                new JCheckBox(
+                    "Betriebswasseraufbereitung?");
         return this.betrwasseraufberCheck;
     }
 
     private JCheckBox getChlorCheck() {
-        if (this.chlorCheck == null) {
+        if (this.chlorCheck == null)
             this.chlorCheck = new JCheckBox("Chlor?");
-        }
         return this.chlorCheck;
     }
 
     private JCheckBox getAktivchlorCheck() {
-        if (this.aktivchlorCheck == null) {
-            this.aktivchlorCheck = new JCheckBox("Aktiv-Chlor?");
-        }
+        if (this.aktivchlorCheck == null)
+            this.aktivchlorCheck =
+                new JCheckBox("Aktiv-Chlor?");
         return this.aktivchlorCheck;
     }
 

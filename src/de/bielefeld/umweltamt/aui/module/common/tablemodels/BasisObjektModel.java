@@ -27,10 +27,10 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
 import de.bielefeld.umweltamt.aui.mappings.basis.Inhaber;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
-import de.bielefeld.umweltamt.aui.utils.StringUtils;
-import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.oberflgw.Sonderbauwerk;
+import de.bielefeld.umweltamt.aui.utils.StringUtils;
+import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
  * Ein TableModel für die Basis-Objektdaten bei der Betreiber/Standort-Suche.
@@ -45,7 +45,7 @@ public class BasisObjektModel extends ListTableModel<Objekt> {
      * Erzeugt ein TableModel für BasisObjekte. Der Parameter
      * secondColumn entscheidet, was in der zweiten Tabellen-Spalte
      * angezeigt wird.
-     * @param secondColumn Entweder "Standort" oder "Betreiber"
+     * @param secondColumn Entweder "Standort" oder "Betreiber:in"
      * @param abteilung Die Abteilung ("360.33" oder "360.34"), wenn die Objekte
      * nach ihr gefiltert werden sollen, sonst <code>null</code>.
      */
@@ -82,7 +82,7 @@ public class BasisObjektModel extends ListTableModel<Objekt> {
             case 1:
                 if ("Standort".equals(secondColumn)) {
                     tmp = DatabaseQuery.getStandortString(bo.getStandortid());
-                } else if ("Betreiber".equals(secondColumn)) {
+                } else if ("Betreiber:in".equals(secondColumn)) {
                     tmp = bo.getBetreiberid();
                 } else {
                     tmp = secondColumn;

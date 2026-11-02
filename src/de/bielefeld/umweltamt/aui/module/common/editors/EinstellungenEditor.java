@@ -51,6 +51,8 @@
  */
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -60,14 +62,11 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.SettingsManager;
@@ -197,17 +196,14 @@ public class EinstellungenEditor extends AbstractApplyEditor {
 		titel = new JLabel("<html><body>An dieser Stelle können die Einstellungen des AUIK verändert werden.<br>"
 				+"Einige Einstellungen werden erst nach einem Neustart des AUIK wirksam.</body></html>");
 
-		FormLayout layout = new FormLayout("180dlu:g", // spalten
-				"20dlu, 3dlu, 300dlu:g"); // zeilen
-		PanelBuilder builder = new PanelBuilder(layout);
-		CellConstraints cc = new CellConstraints();
-
-		builder.add(titel, cc.xy(1, 1));
-		builder.add(tabellenScroller, cc.xy(1, 3));
+		JPanel contentPanel = new JPanel(new BorderLayout(0, 5));
+		tabellenScroller.setPreferredSize(new Dimension(320, 500));
+		contentPanel.add(titel, BorderLayout.NORTH);
+		contentPanel.add(tabellenScroller, BorderLayout.CENTER);
 
 		button3.setVisible(false);
 
-		return builder.getPanel();
+		return contentPanel;
 	}
 
 	@Override

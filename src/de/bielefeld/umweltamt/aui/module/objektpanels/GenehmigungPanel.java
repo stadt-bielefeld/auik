@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,6 +39,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -45,9 +47,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -58,6 +57,7 @@ import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -110,67 +110,46 @@ public class GenehmigungPanel extends ObjectPanel{
         this.name = "Genehmigung";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:80dlu, 5dlu, 90dlu, 5dlu, r:20dlu, 5dlu, 120dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-
-        builder.appendSeparator("Fachdaten");
-        builder.append("Aktenzeichen:", getAktenzeichenFeld());
-        builder.append("", getGen58CheckBox());
-        builder.nextLine();
-        builder.append("Antragsdatum:", getAntragsDatum());
-        builder.append("", getGen59CheckBox());
-        builder.nextLine();
-        builder.append("Genehmigungsdatum:", getGenehmigungsDatum());
-        builder.append("", getGen8CheckBox());
-        builder.nextLine();
-        builder.append("Änderungsdatum:", getAenderungsDatum());
-        builder.nextLine();
-        builder.append("Anhang:", getAnhangFeld());
-        builder.append("", getSelbCheckBox());
-        builder.nextLine();
-        builder.append("Genehmigte Menge [m³]:", getGenMengeFeld());
-        builder.append("", getEsaCheckBox());
-        builder.nextLine();
-        builder.append("Genehmigung befristet:", getBefCheckBox());
-        builder.append("bis:", getBefristetDatum());
-
-        builder.nextLine();
-        builder.appendSeparator("Nebenbestimmungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        JPanel innerPanel = FormHelper.createFormPanel();
+        FormHelper.addSeparator(innerPanel, 0, "Fachdaten");
+        FormHelper.addLabelField(innerPanel, 1, 0, "Aktenzeichen",
+            getAktenzeichenFeld());
+        FormHelper.addLabelField(innerPanel, 1, 1, null, getGen58CheckBox());
+        FormHelper.addLabelField(innerPanel, 2, 0, "Antragsdatum", getAntragsDatum());
+        FormHelper.addLabelField(innerPanel, 2, 1, null, getGen59CheckBox());
+        FormHelper.addLabelField(innerPanel, 3, 0, "Genehmigungsdatum",
+            getGenehmigungsDatum());
+        FormHelper.addLabelField(innerPanel, 3, 1, null, getGen8CheckBox());
+        FormHelper.addLabelField(innerPanel, 4, 0, "Änderungsdatum",
+            getAenderungsDatum());
+        FormHelper.addLabelField(innerPanel, 5, 0, "Anhang", getAnhangFeld());
+        FormHelper.addLabelField(innerPanel, 5, 1, null, getSelbCheckBox());
+        FormHelper.addLabelField(innerPanel, 6, 0, "Genehmigte Menge [m³]:",
+            getGenMengeFeld());
+        FormHelper.addLabelField(innerPanel, 6, 1, null, getEsaCheckBox());
+        FormHelper.addLabelField(innerPanel, 7, 0, "Genehmigung befristet",
+            getBefCheckBox());
+        FormHelper.addLabelField(innerPanel, 7, 1, "bis", getBefristetDatum());
+        FormHelper.addSeparator(innerPanel, 8, "Nebenbestimmungen");
         JScrollPane nebenbestScroller = new JScrollPane(getNebenbestArea(),
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(nebenbestScroller, 7);
-
-        builder.nextLine();
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        FormHelper.addFull(innerPanel, 9, nebenbestScroller, 60);
+        FormHelper.addSeparator(innerPanel, 10, "Bemerkungen");
         JScrollPane bemerkungsScroller = new JScrollPane(getGenBemerkungArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
-
-        builder.nextLine();
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-		JScrollPane objektverknuepfungScroller = new JScrollPane(getObjektverknuepungTabelle(),
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		builder.appendRow("fill:100dlu");
-		builder.append(objektverknuepfungScroller, 7);
-		builder.nextLine();
-
+        FormHelper.addFull(innerPanel, 11, bemerkungsScroller, 60);
+        FormHelper.addSeparator(innerPanel, 12, "Verknüpfte Objekte");
+        JScrollPane objektverknuepfungScroller = new JScrollPane(getObjektverknuepungTabelle(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        FormHelper.addFull(innerPanel, 13, objektverknuepfungScroller, 160);
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSelectObjektButton(), getsaveGenehmigungButton());
-
-        builder.append(buttonBar, 7);
+        FormHelper.addFull(innerPanel, 14, buttonBar);
+        this.setLayout(new BorderLayout());
+        this.add(FormHelper.wrapNorthWest(innerPanel), BorderLayout.NORTH);
         addChangeListeners(getAktenzeichenFeld(), getGenBemerkungArea(),
             getNebenbestArea(), getAnhangFeld(), getGenMengeFeld(), getAntragsDatum(),
             getAenderungsDatum(), getGenehmigungsDatum(), getBefristetDatum(), getBefCheckBox(),

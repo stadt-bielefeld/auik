@@ -63,17 +63,15 @@ package de.bielefeld.umweltamt.aui.module.common.editors;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -129,76 +127,52 @@ public class AbscheiderEditor extends AbstractBaseEditor{
 	@Override
     protected JComponent buildContentArea() {
 
-        String columnString = "right:pref, 3dlu, 40dlu, 3dlu, 30dlu, 3dlu, 40dlu, 3dlu, 30dlu";
-        FormLayout layout = new FormLayout(
-                // Spalten
-                columnString,
-                // Zeilen:
-                "pref, 3dlu, " +    //1 Stammdaten    - Abscheider
-                "pref, 3dlu, " +    //3
-                "pref, 3dlu, " +    //5
-                "pref, 3dlu, " +    //7
-                "pref, 3dlu, " +    //9
-                "pref, 3dlu, " +    //11
-                "pref, 3dlu, " +    //13
-                "pref, 3dlu, " +    //15
-                "pref, 3dlu, " +    //17
-                "pref, 3dlu, " +    //19
-                "pref, 3dlu, " +    //21
-                "pref, 3dlu, " +    //23
-                "pref, 3dlu, " +    //25
-                "pref, 3dlu, " +    //27
-                "pref, 3dlu, " +    //29
-                "pref, 3dlu, " +    //31
-                "pref, 3dlu, " +    //33
-                "40dlu:g");         //35
-        //layout.setRowGroups(new int[][]{{1,3,5,7,9,}});
-
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-
-    // Stamdaten -------------------------- ----------
-        builder.addSeparator("Stammdaten",     		cc.xyw(1, 1, 7));
-
-        builder.addLabel("Nr.:",                	cc.xy(1, 3));
-        	builder.add(getNrFeld(),            	cc.xy(3, 3));
-
-        	builder.add(getLageFeld(),          	cc.xyw(3, 5, 5));
-        builder.addLabel("Hersteller:",        		cc.xy(1, 7));
-        	builder.add(getHerstellerFeld(),    	cc.xy(3, 7));
-        builder.addLabel("Typ:", 			    	cc.xy(5, 7, "right, center"));
-       	builder.add(getTypFeld(), 					cc.xy(7, 7));
-    // Komponenten
-       	builder.addSeparator("Komponenten",     	cc.xyw(1, 9, 7));
-
-        builder.add(getKompaktCheck(),       		cc.xyw(1, 11, 3));
-        builder.add(getVorschlammCheck(),   		cc.xyw(1, 13, 3));
-        builder.addLabel("Volumen:",				cc.xy(5, 13, "right, center"));
-        builder.add(getVsf1Feld(), 					cc.xy(7, 13));
-        builder.addLabel("L",						cc.xy(9, 13));
-        builder.add(getSchlammfangCheck(), 			cc.xy(1, 15));
-        builder.addLabel("Volumen:",				cc.xy(5, 15, "right, center"));
-        builder.add(getVsf2Feld(), 					cc.xy(7, 15));
-        builder.addLabel("L",						cc.xy(9, 15));
-        builder.addLabel("Abscheider:", 			cc.xy( 1, 17, "left, center"));
-        builder.add(getBenzinabscheiderCheck(),    	cc.xy(1, 19, "left, center"));
-        builder.add(getKoaabscheiderCheck(), 		cc.xy( 3 , 19));
-        builder.addLabel("NG:",            			cc.xy( 5, 19, "right, center"));
-        builder.add(getNenngroesseFeld(),           cc.xy( 7, 19));
-        builder.add(getProbeCheck(), 				cc.xyw( 1, 21, 7));
-        builder.add(getWarnanlageCheck(),			cc.xyw( 1, 23, 3));
-        builder.add(getKreisCheck(),		 		cc.xyw( 1, 25, 3));
-        builder.add(getEmulsionCheck(),             cc.xyw( 1, 27, 3));
-        builder.add(getSchwimmerCheck(),    		cc.xyw( 1, 29, 3));
-        builder.add(getRueckhaltCheck(),			cc.xyw( 1, 31, 5));
-
-    // Bemerkungen:
-        builder.addSeparator("Bemerkungen",    cc.xyw(1, 33, 7));
+        JPanel panel = FormHelper.createFormPanel();
+        // Stamdaten -------------------------- ----------
+        FormHelper.addSeparator(panel, 0, 0, 4, "Stammdaten");
+        FormHelper.addLabel(panel, 0, 1, "Nr.");
+        FormHelper.fixWidth(getNrFeld(), 70);
+        FormHelper.addField(panel, 1, 1, 1, getNrFeld());
+        FormHelper.fixWidth(getLageFeld(), 203);
+        FormHelper.addField(panel, 1, 2, 3, getLageFeld());
+        FormHelper.addLabel(panel, 0, 3, "Hersteller");
+        FormHelper.fixWidth(getHerstellerFeld(), 70);
+        FormHelper.addField(panel, 1, 3, 1, getHerstellerFeld());
+        FormHelper.addLabel(panel, 2, 3, "Typ");
+        FormHelper.fixWidth(getTypFeld(), 70);
+        FormHelper.addField(panel, 3, 3, 1, getTypFeld());
+        // Komponenten
+        FormHelper.addSeparator(panel, 0, 4, 4, "Komponenten");
+        FormHelper.addField(panel, 0, 5, 2, getKompaktCheck());
+        FormHelper.addField(panel, 0, 6, 2, getVorschlammCheck());
+        FormHelper.addLabel(panel, 2, 6, "Volumen");
+        FormHelper.fixWidth(getVsf1Feld(), 70);
+        FormHelper.addField(panel, 3, 6, 1, getVsf1Feld());
+        FormHelper.addLabel(panel, 4, 6, "L");
+        FormHelper.addField(panel, 0, 7, 1, getSchlammfangCheck());
+        FormHelper.addLabel(panel, 2, 7, "Volumen");
+        FormHelper.fixWidth(getVsf2Feld(), 70);
+        FormHelper.addField(panel, 3, 7, 1, getVsf2Feld());
+        FormHelper.addLabel(panel, 4, 7, "L");
+        FormHelper.addLabel(panel, 0, 8, "Abscheider");
+        FormHelper.addField(panel, 0, 9, 1, getBenzinabscheiderCheck());
+        FormHelper.addField(panel, 1, 9, 1, getKoaabscheiderCheck());
+        FormHelper.addLabel(panel, 2, 9, "NG");
+        FormHelper.fixWidth(getNenngroesseFeld(), 70);
+        FormHelper.addField(panel, 3, 9, 1, getNenngroesseFeld());
+        FormHelper.addField(panel, 0, 10, 4, getProbeCheck());
+        FormHelper.addField(panel, 0, 11, 2, getWarnanlageCheck());
+        FormHelper.addField(panel, 0, 12, 2, getKreisCheck());
+        FormHelper.addField(panel, 0, 13, 2, getEmulsionCheck());
+        FormHelper.addField(panel, 0, 14, 2, getSchwimmerCheck());
+        FormHelper.addField(panel, 0, 15, 3, getRueckhaltCheck());
+        // Bemerkungen:
+        FormHelper.addSeparator(panel, 0, 16, 4, "Bemerkungen");
         JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungsArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(bemerkungsScroller,        cc.xyw(1, 35, 7, "fill, fill"));
+        FormHelper.addFull(panel, 17, bemerkungsScroller, 80);
 
 
-        return builder.getPanel();
+        return panel;
 
     }
 

@@ -21,16 +21,16 @@
 
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.util.HashMap;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.utils.CBoxItem;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 
 /**
  * Panel containing a form to edit RRB infos.
@@ -52,20 +52,14 @@ public class RRBPanel extends AbstractSonderbauwerkTypPanel {
         createFields();
         createMappings();
 
-        FormLayout layout = new FormLayout(
-                "r:130dlu, 5dlu, 180dlu, 5dlu, r:35dlu, 5dlu, 80dlu", // Spalten
-            "");
-
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.append("Funktion des Regenrückhaltebeckens", funktionenBox);
-        builder.nextLine();
-        builder.append("Drosselabfluss tatsächlich", drosselabflussField);
-        builder.nextLine();
-        builder.append("Becken- bzw. Speichervolumen", volumenField);
-        builder.nextLine();
-        builder.append("Jährlicher Überlaufhäufigkeit", ueberlaufhaeufigkeitField);
-        builder.nextLine();
-        builder.append("Entleerungszeit", entleerungszeit);
+        JPanel inner = FormHelper.createFormPanel();
+        FormHelper.addLabelField(inner, 0, 0, "Funktion des Regenrückhaltebeckens", funktionenBox);
+        FormHelper.addLabelField(inner, 1, 0, "Drosselabfluss tatsächlich", drosselabflussField);
+        FormHelper.addLabelField(inner, 2, 0, "Becken- bzw. Speichervolumen", volumenField);
+        FormHelper.addLabelField(inner, 3, 0, "Jährlicher Überlaufhäufigkeit", ueberlaufhaeufigkeitField);
+        FormHelper.addLabelField(inner, 4, 0, "Entleerungszeit", entleerungszeit);
+        this.setLayout(new BorderLayout());
+        this.add(FormHelper.wrapNorthWest(inner), BorderLayout.NORTH);
     }
 
     /**

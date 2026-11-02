@@ -61,6 +61,8 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -87,11 +89,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -100,6 +97,7 @@ import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.NamedObject;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
@@ -188,20 +186,17 @@ public class LaborProbeSuchen extends AbstractModul {
             ta.addComp(getSuchFeld());
             ta.addComp(getProbeTabelle());
 
-            FormLayout layout = new FormLayout(
-                "65dlu, 4dlu, pref:grow, 3dlu, min(16dlu;p)", // spalten
-                "pref, 3dlu, f:150dlu:grow"); // zeilen
+            // Suchzeile: Suchart | Suchfeld | Suchen-Button
+            JPanel suchPanel = FormHelper.createFormPanel();
+            FormHelper.add(suchPanel, getSuchBox(), 0, 0, 1);
+            FormHelper.add(suchPanel, getSuchFeld(), 1, 0, 1,
+                GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
+            FormHelper.add(suchPanel, submitToolBar, 2, 0, 1);
 
-            PanelBuilder builder = new PanelBuilder(layout);
-            CellConstraints cc = new CellConstraints();
-
-            builder.add(getSuchBox(), cc.xy(1, 1));
-            builder.add(getSuchFeld(), cc.xy(3, 1));
-            builder.add(submitToolBar, cc.xy(5, 1));// , "r, d"));
-            builder.add(probeScroller, cc.xyw(1, 3, 5));
-
-            this.panel = builder.getPanel();
-            this.panel.setBorder(Paddings.DIALOG);
+            this.panel = new JPanel(new BorderLayout(0, 5));
+            FormHelper.setDialogBorder(this.panel);
+            this.panel.add(suchPanel, BorderLayout.NORTH);
+            this.panel.add(probeScroller, BorderLayout.CENTER);
         }
         return this.panel;
     }
@@ -462,8 +457,8 @@ public class LaborProbeSuchen extends AbstractModul {
     private JComboBox<NamedObject> getSuchBox() {
         if (this.suchBox == null) {
             this.suchBox = new JComboBox<>(new NamedObject[] {
-                    new NamedObject("Kennnummer:", "kennummer"),
-                    new NamedObject("Bemerkung:", "bemerkung")});
+                    new NamedObject("Kennnummer", "kennummer"),
+                    new NamedObject("Bemerkung", "bemerkung")});
         }
         return this.suchBox;
     }

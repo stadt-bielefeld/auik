@@ -46,37 +46,44 @@
  * Anhang 52 (Chemische Wäschereien) haben nun einen eigenen Tab.
  *
  */
+
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Set;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
 /**
- * Das Panel zum Bearbeiten von Druckereien
- * @author u633d
+ * Das Panel zum Bearbeiten von Chemischen Wäschereien
+ * @author BI018711
  */
 public class Anh52Panel extends ObjectPanel {
     private static final long serialVersionUID = -1240254202213465142L;
@@ -96,126 +103,234 @@ public class Anh52Panel extends ObjectPanel {
     private JTextField ansprechpartnerFeld = null;
     private TextFieldDateChooser datumGenChooser = null;
     private JTextArea BemerkungenArea = null;
-
     private JButton saveAnh52Button = null;
 
     // Daten
     private Anh52Fachdaten fachdaten = null;
 
     @SuppressWarnings("deprecation")
-    public Anh52Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
-        name = "Chemische Wäscherei";
+    public Anh52Panel(BasisObjektBearbeiten hauptModul,
+        Anfallstelle anfallstelle) {
+        this.name = "Chemische Wäscherei";
         this.hauptModul = hauptModul;
         this.anfallstelle = anfallstelle;
 
-        FormLayout layout = new FormLayout (
-                "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
-                "");
+        // ── InnerPanel ────────────────────────────────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        // ── SEPARATOR: Fachdaten ──────────────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 2; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Fachdaten"), gbc);
 
-        builder.appendSeparator("Fachdaten");
-        builder.append("Nr. der Betriebsstätte:", getNrBetriebsstaette());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Firmenname:", getFirmennameFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Ansprechpartner:",  getAnsprechpartnerFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Telefon:", getTelefonFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Telefax:", getTelefaxFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Genehmigung:", getGenehmigungDatum());
-        builder.append("");
-        builder.nextLine();
+        // Nr. der Betriebsstätte
+        gbc.gridy = 1; gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(
+            new JLabel("Nr. der Betriebsstätte"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getNrBetriebsstaette().setPreferredSize(
+            new java.awt.Dimension(200,
+                getNrBetriebsstaette()
+                    .getPreferredSize().height));
+        innerPanel.add(getNrBetriebsstaette(), gbc);
 
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
+        // Firmenname
+        gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Firmenname"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getFirmennameFeld().setPreferredSize(
+            new java.awt.Dimension(200,
+                getFirmennameFeld()
+                    .getPreferredSize().height));
+        innerPanel.add(getFirmennameFeld(), gbc);
 
-        JComponent buttonBar = ComponentFactory.buildOKBar(getSaveAnh52Button());
-        builder.append(buttonBar, 7);
-        addChangeListeners(getNrBetriebsstaette(), getFirmennameFeld(),
-            getTelefonFeld(), getTelefaxFeld(), getAnsprechpartnerFeld(),
-            getGenehmigungDatum(), getBemerkungenArea());
+        // Ansprechpartner
+        gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Ansprechpartner"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getAnsprechpartnerFeld().setPreferredSize(
+            new java.awt.Dimension(200,
+                getAnsprechpartnerFeld()
+                    .getPreferredSize().height));
+        innerPanel.add(getAnsprechpartnerFeld(), gbc);
+
+        // Telefon
+        gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Telefon"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getTelefonFeld().setPreferredSize(
+            new java.awt.Dimension(200,
+                getTelefonFeld()
+                    .getPreferredSize().height));
+        innerPanel.add(getTelefonFeld(), gbc);
+
+        // Telefax
+        gbc.gridx = 0; gbc.gridy = 5; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Telefax"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getTelefaxFeld().setPreferredSize(
+            new java.awt.Dimension(200,
+                getTelefaxFeld()
+                    .getPreferredSize().height));
+        innerPanel.add(getTelefaxFeld(), gbc);
+
+        // Genehmigung
+        gbc.gridx = 0; gbc.gridy = 6; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Genehmigung"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getGenehmigungDatum().setPreferredSize(
+            new java.awt.Dimension(200,
+                getGenehmigungDatum()
+                    .getPreferredSize().height));
+        innerPanel.add(getGenehmigungDatum(), gbc);
+
+        // ── SEPARATOR: Bemerkungen ────────────────────────
+        gbc.gridx = 0; gbc.gridy = 7;
+        gbc.gridwidth = 2; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Bemerkungen"), gbc);
+
+        // BemerkungsArea
+        JScrollPane bemerkungsScroller = new JScrollPane(
+            getBemerkungenArea(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        bemerkungsScroller.setPreferredSize(
+            new java.awt.Dimension(0, 80));
+        bemerkungsScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 80));
+        gbc.gridy = 8; gbc.gridwidth = 2;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(bemerkungsScroller, gbc);
+
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getSaveAnh52Button());
+        gbc.gridy = 9; gbc.gridwidth = 2;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
+
+        // ── Wrapper ───────────────────────────────────────
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(innerPanel, BorderLayout.WEST);
+        this.setLayout(new BorderLayout());
+        this.add(wrapperPanel, BorderLayout.NORTH);
+
+        addChangeListeners(
+            getNrBetriebsstaette(),
+            getFirmennameFeld(),
+            getTelefonFeld(),
+            getTelefaxFeld(),
+            getAnsprechpartnerFeld(),
+            getGenehmigungDatum(),
+            getBemerkungenArea());
     }
 
+    // ── createSeparator() ─────────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(
+            new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
+    }
+
+    // ── completeObjekt() ───────────────────────────────────
     public void completeObjekt(Anfallstelle anfallstelle) {
-        if (fachdaten == null) {
-            // Neues Anhang 52 Objekt erzeugen
+        if (fachdaten == null)
             this.fachdaten = new Anh52Fachdaten();
-        }
-            // Anfallstelle setzen
         this.anfallstelle = anfallstelle;
         this.fachdaten.setAnfallstelle(this.anfallstelle);
-
     }
 
+    // ── doSavePanelData() ──────────────────────────────────
     protected boolean doSavePanelData() {
         boolean success;
 
         String bemerkungen = BemerkungenArea.getText();
-        if ("".equals(bemerkungen)) {
-            fachdaten.setBemerkungen(null);
-        } else {
-            fachdaten.setBemerkungen(bemerkungen);
-        }
+        fachdaten.setBemerkungen(
+            "".equals(bemerkungen) ? null : bemerkungen);
 
-        Integer nrbetriebst = ((IntegerField)nrbetriebsstaetteFeld).getIntValue();
+        Integer nrbetriebst =
+            ((IntegerField) nrbetriebsstaetteFeld)
+                .getIntValue();
         fachdaten.setNrbetriebsstaette(nrbetriebst);
 
         Date genehmigung = datumGenChooser.getDate();
         fachdaten.setDatumgenehmigung(genehmigung);
 
-        String ansprechpartnerString = ansprechpartnerFeld.getText();
-        if ("".equals(ansprechpartnerString)) {
-            fachdaten.setAnsprechpartner(null);
-        } else {
-            fachdaten.setAnsprechpartner(ansprechpartnerString);
-        }
+        String ansprechpartnerString =
+            ansprechpartnerFeld.getText();
+        fachdaten.setAnsprechpartner(
+            "".equals(ansprechpartnerString)
+                ? null : ansprechpartnerString);
 
         String telefonString = telefonFeld.getText();
-        if ("".equals(telefonString)) {
-            fachdaten.setTelefon(null);
-        } else {
-            fachdaten.setTelefon(telefonString);
-        }
+        fachdaten.setTelefon(
+            "".equals(telefonString) ? null : telefonString);
 
         String telefaxString = telefaxFeld.getText();
-        if ("".equals(telefaxString)) {
-            fachdaten.setTelefax(null);
-        } else {
-            fachdaten.setTelefax(telefaxString);
-        }
+        fachdaten.setTelefax(
+            "".equals(telefaxString) ? null : telefaxString);
 
         String firmennameString = firmennameFeld.getText();
-        if ("".equals(firmennameString)) {
-            fachdaten.setFirmenname(null);
-        } else {
-            fachdaten.setFirmenname(firmennameString);
-        }
+        fachdaten.setFirmenname(
+            "".equals(firmennameString)
+                ? null : firmennameString);
 
         success = this.fachdaten.merge();
         if (success) {
-            log.debug("Anh 52 Objekt " + fachdaten.getId()
-                    + " gespeichert.");
+            log.debug("Anh 52 Objekt "
+                + fachdaten.getId() + " gespeichert.");
         } else {
             log.debug("Anh 52 Objekt " + fachdaten
-                    + " konnte nicht gespeichert werden!");
+                + " konnte nicht gespeichert werden!");
         }
         return success;
     }
 
+    // ── enableAll() ────────────────────────────────────────
     public void enableAll(boolean enabled) {
-
         getBemerkungenArea().setEnabled(enabled);
         getNrBetriebsstaette().setEnabled(enabled);
         getFirmennameFeld().setEnabled(enabled);
@@ -225,6 +340,7 @@ public class Anh52Panel extends ObjectPanel {
         getGenehmigungDatum().setEnabled(enabled);
     }
 
+    // ── clearForm() ────────────────────────────────────────
     public void clearForm() {
         getNrBetriebsstaette().setText(null);
         getFirmennameFeld().setText(null);
@@ -235,120 +351,128 @@ public class Anh52Panel extends ObjectPanel {
         getBemerkungenArea().setText(null);
     }
 
-    public void updateForm(Anfallstelle anfallstelle) throws RuntimeException {
-
-        this.fachdaten = anfallstelle.getAnh52Fachdatens().iterator().next();
-
+    // ── updateForm(Anfallstelle) ───────────────────────────
+    public void updateForm(Anfallstelle anfallstelle)
+        throws RuntimeException {
+        this.fachdaten =
+            anfallstelle.getAnh52Fachdatens()
+                .iterator().next();
         if (fachdaten != null) {
-            if (fachdaten.getBemerkungen() != null) {
-                getBemerkungenArea().setText(fachdaten.getBemerkungen());
-            }
-
-            if (fachdaten.getNrbetriebsstaette() != null) {
-                getNrBetriebsstaette().setText(fachdaten.getNrbetriebsstaette().toString());
-            }
-
-            if (fachdaten.getFirmenname() != null) {
-                getFirmennameFeld().setText(fachdaten.getFirmenname());
-            }
-
-            if (fachdaten.getTelefon() != null) {
-                getTelefonFeld().setText(fachdaten.getTelefon());
-            }
-
-            if (fachdaten.getTelefax() != null) {
-                getTelefaxFeld().setText(fachdaten.getTelefax());
-            }
-
-            if (fachdaten.getAnsprechpartner() != null) {
-                getAnsprechpartnerFeld().setText(fachdaten.getAnsprechpartner());
-            }
-
-            if (fachdaten.getDatumgenehmigung() != null) {
-                getGenehmigungDatum().setDate(fachdaten.getDatumgenehmigung());
-            }
+            if (fachdaten.getBemerkungen() != null)
+                getBemerkungenArea().setText(
+                    fachdaten.getBemerkungen());
+            if (fachdaten.getNrbetriebsstaette() != null)
+                getNrBetriebsstaette().setText(
+                    fachdaten.getNrbetriebsstaette()
+                        .toString());
+            if (fachdaten.getFirmenname() != null)
+                getFirmennameFeld().setText(
+                    fachdaten.getFirmenname());
+            if (fachdaten.getTelefon() != null)
+                getTelefonFeld().setText(
+                    fachdaten.getTelefon());
+            if (fachdaten.getTelefax() != null)
+                getTelefaxFeld().setText(
+                    fachdaten.getTelefax());
+            if (fachdaten.getAnsprechpartner() != null)
+                getAnsprechpartnerFeld().setText(
+                    fachdaten.getAnsprechpartner());
+            if (fachdaten.getDatumgenehmigung() != null)
+                getGenehmigungDatum().setDate(
+                    fachdaten.getDatumgenehmigung());
         }
         setDirty(false);
     }
 
-
-
+    // ── fetchFormData() ────────────────────────────────────
     public void fetchFormData() throws RuntimeException {
-        Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
+        Set<Anfallstelle> list =
+            this.hauptModul.getObjekt().getAnfallstelles();
         this.fachdaten = Anh52Fachdaten.findByAnfallstelleId(
-                list.iterator().next().getId());
-        log.debug("Anhang 52 Objekt aus DB geholt: " + this.fachdaten);
+            list.iterator().next().getId());
+        log.debug("Anhang 52 Objekt aus DB geholt: "
+            + this.fachdaten);
     }
 
+    // ── getName() ──────────────────────────────────────────
     @Override
     public String getName() {
         return name;
     }
 
+    // ── getSaveAnh52Button() ───────────────────────────────
     private JButton getSaveAnh52Button() {
         if (saveAnh52Button == null) {
             saveAnh52Button = new JButton("Speichern");
-
-            saveAnh52Button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-//                    enableAll(false);
-                    if (hauptModul.saveAllTabs()) {
-                        hauptModul.getFrame().changeStatus("Anh 52 Objekt "+fachdaten.getId()+" erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
-                    } else {
-                        hauptModul.getFrame().changeStatus("Fehler beim Speichern des Anh 40 Objekt!", HauptFrame.ERROR_COLOR);
+            saveAnh52Button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (hauptModul.saveAllTabs()) {
+                            hauptModul.getFrame()
+                                .changeStatus(
+                                "Anh 52 Objekt "
+                                + fachdaten.getId()
+                                + " erfolgreich"
+                                + " gespeichert.",
+                                HauptFrame.SUCCESS_COLOR);
+                        } else {
+                            hauptModul.getFrame()
+                                .changeStatus(
+                                "Fehler beim Speichern"
+                                + " des Anh 52 Objekt!",
+                                HauptFrame.ERROR_COLOR);
+                        }
+                        hauptModul.fillForm();
                     }
-
-                    hauptModul.fillForm();
-                }
-            });
+                });
         }
         return saveAnh52Button;
     }
 
+    // ── getNrBetriebsstaette() ─────────────────────────────
     private JFormattedTextField getNrBetriebsstaette() {
-        if (nrbetriebsstaetteFeld == null) {
+        if (nrbetriebsstaetteFeld == null)
             nrbetriebsstaetteFeld = new IntegerField();
-        }
         return nrbetriebsstaetteFeld;
     }
 
+    // ── getFirmennameFeld() ────────────────────────────────
     private JTextField getFirmennameFeld() {
-        if (firmennameFeld == null) {
+        if (firmennameFeld == null)
             firmennameFeld = new LimitedTextField(50);
-        }
         return firmennameFeld;
     }
 
+    // ── getTelefonFeld() ───────────────────────────────────
     private JTextField getTelefonFeld() {
-        if (telefonFeld == null) {
+        if (telefonFeld == null)
             telefonFeld = new LimitedTextField(50);
-        }
         return telefonFeld;
     }
 
+    // ── getTelefaxFeld() ───────────────────────────────────
     private JTextField getTelefaxFeld() {
-        if (telefaxFeld == null) {
+        if (telefaxFeld == null)
             telefaxFeld = new LimitedTextField(50);
-        }
         return telefaxFeld;
     }
 
+    // ── getAnsprechpartnerFeld() ───────────────────────────
     private JTextField getAnsprechpartnerFeld() {
-        if (ansprechpartnerFeld == null) {
+        if (ansprechpartnerFeld == null)
             ansprechpartnerFeld = new LimitedTextField(50);
-        }
         return ansprechpartnerFeld;
     }
 
-
+    // ── getGenehmigungDatum() ──────────────────────────────
     private TextFieldDateChooser getGenehmigungDatum() {
-        if (datumGenChooser == null) {
+        if (datumGenChooser == null)
             datumGenChooser = new TextFieldDateChooser();
-        }
         return datumGenChooser;
     }
 
+    // ── getBemerkungenArea() ───────────────────────────────
     private JTextArea getBemerkungenArea() {
         if (BemerkungenArea == null) {
             BemerkungenArea = new LimitedTextArea(252);

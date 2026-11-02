@@ -49,6 +49,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.common;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -71,10 +72,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -82,13 +79,14 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Analyseposition;
 import de.bielefeld.umweltamt.aui.mappings.atl.Klaeranlage;
+import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probeart;
 import de.bielefeld.umweltamt.aui.mappings.atl.Probenahme;
-import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
 import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -130,13 +128,12 @@ public class SchlammPanel extends JPanel {
     private JPopupMenu probePopup;
 
     public SchlammPanel(Probeart art, HauptFrame frame) {
-        super(new FormLayout("pref, 4dlu, pref:grow", // spalten
-                "pref, 3dlu, 140dlu:grow, 3dlu, pref"));// zeilen
+        super(new BorderLayout(0, 5));
 
         this.art = art;
         this.frame = frame;
 
-        setBorder(Paddings.DIALOG);
+        FormHelper.setDialogBorder(this);
 
         probeModel = new ProbenahmenModel();
 
@@ -144,29 +141,22 @@ public class SchlammPanel extends JPanel {
         getProbeTabelle().addFocusListener(tfl);
 
         JScrollPane probeScroller = new JScrollPane(getProbeTabelle());
-        JLabel anlageLabel = new JLabel("Kläranlage:");
+        JLabel anlageLabel = new JLabel("Kläranlage");
 
-        FormLayout anlegenLayout = new FormLayout(
-                "pref, 4dlu, max(60dlu;pref), 7dlu, pref, 4dlu, max(60dlu;pref), 7dlu, max(60dlu;pref)", // spalten
-                ""); // zeilen werden automatisch erzeugt
+        // Unten: Neue Probenahme
+        anlegenPanel = FormHelper.createFormPanel();
+        FormHelper.addSeparator(anlegenPanel, 0, "Neue Probenahme");
+        FormHelper.addLabelField(anlegenPanel, 1, 0, "Kennummer", getKennummerFeld());
+        FormHelper.addLabelField(anlegenPanel, 1, 1, "Datum", getDatumsChooser());
+        FormHelper.add(anlegenPanel, getAnlegenButton(), 4, 1, 1);
 
-        DefaultFormBuilder anlPanelBuilder = new DefaultFormBuilder(
-                anlegenLayout);
+        // Oben: Kläranlage
+        JPanel anlagePanel = FormHelper.createFormPanel();
+        FormHelper.addLabelField(anlagePanel, 0, 0, anlageLabel, getAnlageBox());
 
-        anlPanelBuilder.appendSeparator("Neue Probenahme");
-
-        anlPanelBuilder.append("Kennummer:", getKennummerFeld());
-        anlPanelBuilder.append("Datum:", getDatumsChooser());
-        anlPanelBuilder.append(getAnlegenButton());
-
-        anlegenPanel = anlPanelBuilder.getPanel();
-
-        CellConstraints cc = new CellConstraints();
-
-        this.add(anlageLabel, cc.xy(1, 1));
-        this.add(getAnlageBox(), cc.xy(3, 1));
-        this.add(probeScroller, cc.xyw(1, 3, 3, "f, f"));
-        this.add(anlegenPanel, cc.xyw(1, 5, 3));
+        this.add(FormHelper.wrapNorthWest(anlagePanel), BorderLayout.NORTH);
+        this.add(probeScroller, BorderLayout.CENTER);
+        this.add(anlegenPanel, BorderLayout.SOUTH);
     }
 
     public void updateProbeListe() {

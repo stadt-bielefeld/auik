@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,15 +38,13 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -58,6 +57,7 @@ import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
@@ -100,48 +100,41 @@ private static final long serialVersionUID = -4030805403749508467L;
         this.name = "Abwasserbehandlungsanlage";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:70dlu, 5dlu, 90dlu, r:90dlu, 5dlu, 20dlu", // Spalten
-            "");
+        JPanel innerPanel = FormHelper.createFormPanel();
+        int row = 0;
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        // ── Fachdaten ─────────────────────────────────────
+        FormHelper.addSeparator(innerPanel, row++, "Fachdaten");
+        FormHelper.addLabelField(innerPanel, row++, 0, "Erstellt am", getErstellDat());
+        FormHelper.addLabelField(innerPanel, row++, 0, "Aktualisiert am", getAktualDat());
+        FormHelper.addLabelField(innerPanel, row++, 0, null, getGenehmigungdpflichtCheck());
+        FormHelper.addLabelField(innerPanel, row++, 0, null, getWartungsvertragCheck());
+        FormHelper.addLabelField(innerPanel, row++, 0, null, getEinzelabnahmeCheck());
 
-        builder.appendSeparator("Fachdaten");
-        builder.append("Erstellt am:", getErstellDat());
-        builder.nextLine();
-        builder.append("Aktualisiert am:", getAktualDat());
-        builder.nextLine();
-        builder.append("", getGenehmigungdpflichtCheck());
-        builder.nextLine();
-        builder.append("", getWartungsvertragCheck());
-        builder.nextLine();
-        builder.append("", getEinzelabnahmeCheck());
-        builder.nextLine();
-
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // ── Bemerkungen ───────────────────────────────────
+        FormHelper.addSeparator(innerPanel, row++, "Bemerkungen");
         JScrollPane bemerkungsScroller = new JScrollPane(
             getBezeichnungArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 6);
+        FormHelper.addFull(innerPanel, row++, bemerkungsScroller, 60);
 
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // ── Verknüpfte Objekte ────────────────────────────
+        FormHelper.addSeparator(innerPanel, row++, "Verknüpfte Objekte");
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 6);
-        builder.nextLine();
+        FormHelper.addFull(innerPanel, row++, objektverknuepfungScroller, 150);
 
+        // ── ButtonBar ─────────────────────────────────────
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSelectObjektButton(), getSaveAbaButton());
-        builder.append(buttonBar, 6);
+        FormHelper.addFull(innerPanel, row++, buttonBar);
+
+        // ── Wrapper ───────────────────────────────────────
+        this.setLayout(new BorderLayout());
+        this.add(FormHelper.wrapNorthWest(innerPanel), BorderLayout.NORTH);
         addChangeListeners(
             getErstellDat(), getAktualDat(), getGenehmigungdpflichtCheck(),
             getWartungsvertragCheck(), getEinzelabnahmeCheck());

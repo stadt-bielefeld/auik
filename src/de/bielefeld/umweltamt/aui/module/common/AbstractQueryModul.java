@@ -52,7 +52,10 @@
  */
 package de.bielefeld.umweltamt.aui.module.common;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,11 +82,6 @@ import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
@@ -92,6 +90,7 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh50Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh56Fachdaten;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.BwkFachdaten;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
 /**
@@ -128,18 +127,13 @@ public abstract class AbstractQueryModul<T> extends AbstractModul {
     @Override
     public JPanel getPanel() {
         if (panel == null) {
-            FormLayout layout = new FormLayout(
-                    "100dlu:g",
-                    "pref, 3dlu, f:150dlu:grow"
-            );
-            PanelBuilder builder = new PanelBuilder(layout);
-            CellConstraints cc = new CellConstraints();
+            panel = new JPanel(new BorderLayout(0, 5));
+            FormHelper.setDialogBorder(panel);
 
-            builder.add(getQueryOptionsPanel(),    cc.xy(1,1));
-            builder.add(getTableScroller(),        cc.xy(1,3));
-
-            panel = builder.getPanel();
-            panel.setBorder(Paddings.DIALOG);
+            // Suchoptionen oben links, Tabelle füllt den Rest
+            panel.add(FormHelper.wrapNorthWest(getQueryOptionsPanel()),
+                BorderLayout.NORTH);
+            panel.add(getTableScroller(), BorderLayout.CENTER);
         }
 
         return panel;
@@ -375,7 +369,7 @@ public abstract class AbstractQueryModul<T> extends AbstractModul {
         dialog.setSize(600, 150);
 
 
-        JLabel pathLabel = new JLabel("Dateipfad:");
+        JLabel pathLabel = new JLabel("Dateipfad");
         JTextArea path = new JTextArea(this.outputPath);
         JButton pathButton = new JButton("Pfad wählen");
         pathButton.addActionListener(new java.awt.event.ActionListener() {
@@ -412,18 +406,19 @@ public abstract class AbstractQueryModul<T> extends AbstractModul {
         });
 
 
-        FormLayout layout = new FormLayout(
-            "5dlu, 100dlu, 75dlu:g, 25dlu, 5dlu, 25dlu, 3dlu, 25dlu, 5dlu",
-            "5dlu, 35dlu, 3dlu:g, 35dlu, 5dlu");
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-        builder.add(pathLabel, cc.xy(2, 2));
-        builder.add(path, cc.xyw(3, 2, 2));
-        builder.add(pathButton, cc.xyw(6, 2, 3));
-        builder.add(cancelButton, cc.xyw(4, 4, 3));
-        builder.add(okButton, cc.xy(8, 4));
-
-        JPanel dialogContent = builder.build();
+        JPanel dialogContent = FormHelper.createDialogPanel();
+        // Zeile 1: Label | Pfad | Pfad wählen
+        FormHelper.addLabel(dialogContent, 0, 0, pathLabel);
+        FormHelper.add(dialogContent, path, 1, 0, 1,
+            GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
+        FormHelper.add(dialogContent, pathButton, 2, 0, 1);
+        // Zeile 2: Buttons rechts
+        GridBagConstraints gbc = FormHelper.constraints(0, 1,
+            GridBagConstraints.REMAINDER);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(15, 5, 3, 5);
+        dialogContent.add(
+            FormHelper.buttonBarRight(cancelButton, okButton), gbc);
         dialog.add(dialogContent);
 
         return dialog;
