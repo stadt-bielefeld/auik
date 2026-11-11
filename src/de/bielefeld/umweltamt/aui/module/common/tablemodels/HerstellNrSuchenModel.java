@@ -45,7 +45,7 @@ public class HerstellNrSuchenModel extends ListTableModel<Fachdaten> {
     public HerstellNrSuchenModel() {
         super(new String[]{
                 "Herstellnr.",
-                "Betreiber",
+                "Betreiber:in",
                 "Standort",
                 "Anlagenart",
                 "FlÃ¼ssigkeit",

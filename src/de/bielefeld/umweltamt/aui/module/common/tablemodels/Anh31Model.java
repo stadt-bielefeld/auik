@@ -35,7 +35,7 @@ public class Anh31Model extends ListTableModel<Objekt> {
 
     public Anh31Model() {
         super(new String[]{
-                "Betreiber",
+                "Betreiber:in",
                 "Standort",
                 "Bemerkungen"
         },
