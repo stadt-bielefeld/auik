@@ -1186,7 +1186,6 @@ CREATE VIEW elka.e_anfallstelle AS
     elka.anfallstelle
   WHERE ((objekt.standortid = e_standort.nr) AND (objekt.betreiberid = e_adresse.nr) AND (anfallstelle.objektid = objekt.id) AND (objekt._deleted = false) AND (objekt.inaktiv = false) AND (objekt.elkarelevant = true));
 
-ALTER TABLE elka.e_anfallstelle OWNER TO "BI005380";
 
 CREATE VIEW elka.e_betrieb AS
  SELECT DISTINCT e_standort.nr,
@@ -1332,7 +1331,6 @@ CREATE VIEW elka.e_einleitungsstelle AS
     elka.einleitungsstelle
   WHERE ((objekt.standortid = e_standort.nr) AND (objekt.betreiberid = e_adresse.nr) AND (einleitungsstelle.objektid = objekt.id) AND (objekt._deleted = false) AND (objekt.inaktiv = false) AND (objekt.elkarelevant = true));
 
-ALTER TABLE elka.e_einleitungsstelle OWNER TO "BI005380";
 
 CREATE TABLE oberflgw.entwaesserungsgrundstueck (
     nr integer NOT NULL,
@@ -1832,7 +1830,6 @@ CREATE VIEW elka.e_wasserrecht AS
     elka.wasserrecht
   WHERE ((objekt.standortid = e_standort.nr) AND (objekt.betreiberid = e_adresse.nr) AND (wasserrecht.objektid = objekt.id) AND (objekt._deleted = false) AND (wasserrecht.aktenzeichen IS NOT NULL));
 
-ALTER TABLE elka.e_wasserrecht OWNER TO "BI005380";
 
 CREATE TABLE elka.z_aba_verfahren (
     id integer NOT NULL,
@@ -1858,7 +1855,6 @@ CREATE VIEW elka.e_z_aba_wasserrecht AS
      JOIN elka._q_z ON ((e_abwasserbehandlungsanlage.nr = _q_z.quelle)))
      JOIN elka.e_wasserrecht ON ((_q_z.ziel = e_wasserrecht.nr)));
 
-ALTER TABLE elka.e_z_aba_wasserrecht OWNER TO "BI005380";
 
 CREATE VIEW elka.e_z_els_wasserrecht AS
  SELECT e_einleitungsstelle.nr AS els_nr,
@@ -1867,7 +1863,6 @@ CREATE VIEW elka.e_z_els_wasserrecht AS
      JOIN elka._q_z ON ((e_einleitungsstelle.nr = _q_z.quelle)))
      JOIN elka.e_wasserrecht ON ((_q_z.ziel = e_wasserrecht.nr)));
 
-ALTER TABLE elka.e_z_els_wasserrecht OWNER TO "BI005380";
 
 CREATE SEQUENCE elka.elka_aba_id_seq
     START WITH 1
@@ -4626,7 +4621,6 @@ CREATE VIEW oberflgw.view_einleitstellen AS
      JOIN oberflgw.entwaesserungsgrundstueck ON ((twoway.objekt = entwaesserungsgrundstueck.objekt_id)))
      JOIN oberflgw.afs_niederschlagswasser ON ((entwaesserungsgrundstueck.nr = afs_niederschlagswasser.entw_grund_nr))) ON ((standort.id = objekt.standortid)));
 
-ALTER TABLE oberflgw.view_einleitstellen OWNER TO "BI005380";
 
 CREATE TABLE oberflgw.z_betrieb_massnahme (
     id integer NOT NULL,
@@ -4775,7 +4769,6 @@ CREATE TABLE public.street (
     schluessel character varying(5) NOT NULL
 );
 
-ALTER TABLE public.street OWNER TO "BI005380";
 
 COMMENT ON TABLE public.street IS 'Die Daten wurden am 2025-01-22 um 06:21:41 Uhr aktualisiert.';
 

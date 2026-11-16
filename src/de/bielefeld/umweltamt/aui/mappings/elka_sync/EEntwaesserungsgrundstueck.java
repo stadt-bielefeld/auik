@@ -492,37 +492,20 @@ public class EEntwaesserungsgrundstueck  implements java.io.Serializable {
 	 */
 	@JsonIgnore
 	public List<Referenz> getReferenzs() {
-		Integer identifier = origNr != null ? origNr  : nr;
+	    Integer identifier = origNr != null ? origNr  : nr;
 
-		String sql =
-			    "SELECT DISTINCT rf.* " +
-			    "FROM elka.referenz rf " +
-			    "JOIN oberflgw.afs_niederschlagswasser afsnw " +
-			    "    ON afsnw.nr = rf.q_afs_nr " +
-			    "JOIN oberflgw.entwaesserungsgrundstueck entw " +
-			    "    ON entw.objekt_id = afsnw.entw_grund_nr " +
-			    "WHERE entw.nr = :identifier";
+	    String sql =
+		"SELECT DISTINCT rf.* " +
+		"FROM elka.referenz rf " +
+		"JOIN oberflgw.afs_niederschlagswasser afsnw " +
+		"    ON afsnw.nr = rf.q_afs_nr " +
+		"JOIN oberflgw.entwaesserungsgrundstueck entw " +
+		"    ON entw.objekt_id = afsnw.entw_grund_nr " +
+		"WHERE entw.nr = :identifier";
 
-			var query = HibernateSessionFactory.currentSession()
-			    .createNativeQuery(sql, Referenz.class);
-
-			query.setParameter("identifier", identifier);
-
-			List<Referenz> result = query.getResultList();
-
-
-//	    String hql =
-//	        "select distinct rf " +
-//	        "from Referenz rf " +
-//	        "join rf.qAfsNw eafsnw " +
-//	        "join eafsnw.entwaesserungsgrundstueck entw " +
-//	        "where entw.nr = :identifier";
-
-//	    var query = HibernateSessionFactory.currentSession()
-//	            .createQuery(hql, Referenz.class);
-
+	    var query = HibernateSessionFactory.currentSession()
+		.createNativeQuery(sql, Referenz.class);
 	    query.setParameter("identifier", identifier);
-//	    Referenz result = query.getResultList().iterator().next();
 	    return query.getResultList();
 	}
 
