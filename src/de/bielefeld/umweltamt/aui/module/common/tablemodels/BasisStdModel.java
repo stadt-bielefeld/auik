@@ -58,7 +58,9 @@ public class BasisStdModel extends ListTableModel<Standort> {
         super(new String[]{
                 "Bezeichnung",
                 "E32",
-                "N32"
+                "N32",
+                "Industrieabwasser",
+                "Niederschlagswasser"
         },
         false, true);
     }
@@ -80,12 +82,27 @@ public class BasisStdModel extends ListTableModel<Standort> {
         case 2:
             tmp = std.getN32();
             break;
+        case 3:
+            tmp = std.isIndustrieabwasserTog();
+            break;
+        case 4:
+            tmp = std.isNiederschlagswasserTog();
+            break;
 
         default:
             tmp = "ERROR";
             break;
         }
         return tmp;
+    }
+
+    @Override
+	public Class<?> getColumnClass(int columnIndex) {
+        switch(columnIndex) {
+            case 3: return Boolean.class;
+            case 4: return Boolean.class;
+            default: return String.class;
+        }
     }
 
 
@@ -111,14 +128,15 @@ public class BasisStdModel extends ListTableModel<Standort> {
      * @return Das Objekt bei rowIndex
      */
     public Standort getRow(int rowIndex) {
-        return (Standort) super.getObjectAtRow(rowIndex);
+        return super.getObjectAtRow(rowIndex);
     }
 
     /**
      * Remove Standort from the model
      * @param standort
      */
-    public boolean objectRemoved(Standort removedObjekt) {
+    @Override
+	public boolean objectRemoved(Standort removedObjekt) {
         return Standort.delete(removedObjekt);
     }
 

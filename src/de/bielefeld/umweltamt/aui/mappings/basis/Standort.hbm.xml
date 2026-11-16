@@ -16,6 +16,12 @@
         <property name="n32" type="java.lang.Float">
             <column name="n32" precision="8" scale="8" />
         </property>
+        <property name="industrieabwasserTog" type="java.lang.Boolean">
+            <column name="industrieabwasser_tog" />
+        </property>
+        <property name="niederschlagswasserTog" type="java.lang.Boolean">
+            <column name="niederschlagswasser_tog" />
+        </property>
         <property name="revidatum" type="java.util.Date">
             <column name="revidatum" length="29" />
         </property>

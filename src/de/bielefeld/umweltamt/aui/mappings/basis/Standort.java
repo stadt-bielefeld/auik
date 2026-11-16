@@ -52,6 +52,8 @@ public class Standort  implements java.io.Serializable {
     private Inhaber inhaber;
     private Float e32;
     private Float n32;
+    private boolean industrieabwasserTog;
+    private boolean niederschlagswasserTog;
     private Date revidatum;
     private String revihandz;
     private String bezeichnung;
@@ -72,10 +74,12 @@ public class Standort  implements java.io.Serializable {
 
     /** Full constructor */
     public Standort(
-    		Inhaber inhaber, Float e32, Float n32, Date revidatum, String revihandz, String bezeichnung, boolean enabled, boolean deleted, Set<Objekt> objektsForStandortid, Set<ZBetriebMassnahme> zBetriebMassnahmes) {
+    		Inhaber inhaber, Float e32, Float n32, boolean industrieabwasserTog, boolean niederschlagswasserTog, Date revidatum, String revihandz, String bezeichnung, boolean enabled, boolean deleted, Set<Objekt> objektsForStandortid, Set<ZBetriebMassnahme> zBetriebMassnahmes) {
     	this.inhaber = inhaber;
     	this.e32 = e32;
     	this.n32 = n32;
+    	this.industrieabwasserTog = industrieabwasserTog;
+    	this.niederschlagswasserTog = niederschlagswasserTog;
     	this.revihandz = revihandz;
     	this.bezeichnung = bezeichnung;
         this.enabled = enabled;
@@ -146,6 +150,22 @@ public class Standort  implements java.io.Serializable {
 
 	public void setN32(Float n32){
 	    this.n32 = n32;
+	}
+
+	public Boolean isIndustrieabwasserTog() {
+	    return this.industrieabwasserTog;
+	}
+
+	public void setIndustrieabwasserTog(boolean industrieabwasserTog) {
+	    this.industrieabwasserTog = industrieabwasserTog;
+	}
+
+	public Boolean isNiederschlagswasserTog() {
+	    return this.niederschlagswasserTog;
+	}
+
+	public void setNiederschlagswasserTog(boolean niederschlagswasserTog) {
+	    this.niederschlagswasserTog = niederschlagswasserTog;
 	}
 
 	public String getRevihandz(){
@@ -322,6 +342,8 @@ public class Standort  implements java.io.Serializable {
         this.inhaber = copy.getInhaber();
         this.e32 = copy.getE32();
         this.n32 = copy.getN32();
+        this.industrieabwasserTog = copy.isIndustrieabwasserTog();
+        this.niederschlagswasserTog = copy.isNiederschlagswasserTog();
         this.revidatum = copy.getRevidatum();
         this.revihandz = copy.getRevihandz();
         this.bezeichnung = copy.getBezeichnung();

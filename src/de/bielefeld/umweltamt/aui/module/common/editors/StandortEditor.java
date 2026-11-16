@@ -29,8 +29,10 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
@@ -42,11 +44,12 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
+import de.bielefeld.umweltamt.aui.SettingsManager;
+import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
-import de.bielefeld.umweltamt.aui.mappings.basis.Standort;
 
 /**
  * Ein Dialog zum Bearbeiten eines Standorts.
@@ -66,6 +69,8 @@ public class StandortEditor extends AbstractBaseEditor
 	private JTextField bezeichnungFeld;
 	private JFormattedTextField e32Feld;
 	private JFormattedTextField n32Feld;
+	private JCheckBox industrieabwasserCheck;
+	private JCheckBox niederschlagswasserCheck;
 	private JButton ausAblageButton;
 	private Standort bsta;
 
@@ -82,10 +87,13 @@ public class StandortEditor extends AbstractBaseEditor
 	@Override
 	protected JComponent buildContentArea()
 	{
+		ResourceBundle i18n = SettingsManager.getInstance().getI18nBundle();
 
 		bezeichnungFeld = new LimitedTextField(50);
 		e32Feld = new DoubleField(1);
 		n32Feld = new DoubleField(1);
+		industrieabwasserCheck = new JCheckBox(i18n.getString("editor.betreiber.industrieabwaserToc"));
+		niederschlagswasserCheck = new JCheckBox(i18n.getString("editor.betreiber.niderschlagswasserToc"));
 
 
 
@@ -102,8 +110,12 @@ public class StandortEditor extends AbstractBaseEditor
 						"3dlu, " + //6
 						"pref, " + //7
 						"3dlu, " + //8
+						"pref, " + //9
+						"3dlu, " + //10
+						"pref, " + //11
+						"3dlu, " + //12
 
-						"bottom:pref:grow"); //9
+						"bottom:pref:grow"); //13
 
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
@@ -119,7 +131,8 @@ public class StandortEditor extends AbstractBaseEditor
 		builder.addLabel("N32:", cc.xy(1, 7));
 		builder.add(n32Feld, cc.xy(3, 7));
 		builder.add(getAusAblageButton(), cc.xywh(5, 5, 1, 3));
-
+		builder.add(industrieabwasserCheck, cc.xyw(3, 9, 3));
+		builder.add(niederschlagswasserCheck, cc.xyw(3, 11, 3));
 
 
 		JPanel panel = builder.getPanel();
@@ -150,6 +163,16 @@ public class StandortEditor extends AbstractBaseEditor
 				bezeichnungFeld.setText(getStandort().getBezeichnung());
 				e32Feld.setValue(getStandort().getE32());
 				n32Feld.setValue(getStandort().getN32());
+
+				if (getStandort().isIndustrieabwasserTog() != null)
+					industrieabwasserCheck.setSelected(getStandort().isIndustrieabwasserTog());
+				else
+					industrieabwasserCheck.setSelected(false);
+
+				if (getStandort().isNiederschlagswasserTog() != null)
+					niederschlagswasserCheck.setSelected(getStandort().isNiederschlagswasserTog());
+				else
+					niederschlagswasserCheck.setSelected(false);
 
 				frame.clearStatus();
 			}
@@ -194,6 +217,9 @@ public class StandortEditor extends AbstractBaseEditor
 		// N32
 		Float n32Wert = ((DoubleField) n32Feld).getFloatValue();
 		getStandort().setN32(n32Wert);
+
+		getStandort().setIndustrieabwasserTog(industrieabwasserCheck.isSelected());
+		getStandort().setNiederschlagswasserTog(niederschlagswasserCheck.isSelected());
 
 		if (bsta != null)
 		{
