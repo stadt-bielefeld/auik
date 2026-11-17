@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,6 +41,7 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -47,10 +49,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -65,6 +63,7 @@ import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungMo
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
@@ -141,73 +140,35 @@ public class EinleitungsstellePanel extends ObjectPanel {
 
 		e32Feld = new DoubleField(1);
 		n32Feld = new DoubleField(1);
+		FormHelper.fixWidth(e32Feld, 80);
+		FormHelper.fixWidth(n32Feld, 80);
 
-		FormLayout layout = new FormLayout("r:80dlu, 5dlu, 80dlu, 5dlu, 15dlu, 5dlu, 100dlu", // Spalten
-				"");
-
-		DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-		builder.nextLine();
-		builder.appendRow("fill:5dlu");
-		builder.appendSeparator("Einleitungsstelle");
-
-		builder.nextLine();
-		builder.append(bezeichnungLb);
-		builder.append(getBezeichnungFeld(), 5);
-
-		builder.nextLine();
-		builder.append(einlArtLb);
-		builder.append(getEinleitungsartBox(), 5);
-
-		builder.nextLine();
-		builder.append(erstellDatLb, getErstellDatDatum());
-		builder.append("e32", e32Feld);
-
-		builder.nextLine();
-		builder.append(stillDatLb, getStillgelegtAmDatum());
-		builder.append("n32", n32Feld);
-
-		builder.nextLine();
-		builder.appendSeparator("Details");
-
-		builder.nextLine();
-		builder.append(klaeranlageLb);
-		builder.append(getKlaeranlageBox());
-
-		builder.nextLine();
-		builder.append(kanalArtLb);
-		builder.append(getKanalArtOptBox());
-
-		builder.nextLine();
-		builder.append(abgabeLb);
-		builder.append(getAbgaberelEinlBox(), 2);
-
-		builder.nextLine();
-		builder.append(abwAgLb);
-		builder.append(getAbwAgEinlFeld(), 2);
-		builder.nextLine();
-
-		builder.appendSeparator("Bemerkungen");
-		builder.appendRow("3dlu");
-		builder.nextLine(2);
+		JPanel innerPanel = FormHelper.createFormPanel();
+		FormHelper.addSeparator(innerPanel, 0, "Einleitungsstelle");
+		FormHelper.addLabelField(innerPanel, 1, 0, bezeichnungLb, getBezeichnungFeld(), 3);
+		FormHelper.addLabelField(innerPanel, 2, 0, einlArtLb, getEinleitungsartBox(), 3);
+		FormHelper.addLabelField(innerPanel, 3, 0, erstellDatLb, getErstellDatDatum());
+		FormHelper.addLabelField(innerPanel, 3, 1, "e32", e32Feld);
+		FormHelper.addLabelField(innerPanel, 4, 0, stillDatLb, getStillgelegtAmDatum());
+		FormHelper.addLabelField(innerPanel, 4, 1, "n32", n32Feld);
+		FormHelper.addSeparator(innerPanel, 5, "Details");
+		FormHelper.addLabelField(innerPanel, 6, 0, klaeranlageLb, getKlaeranlageBox());
+		FormHelper.addLabelField(innerPanel, 7, 0, kanalArtLb, getKanalArtOptBox());
+		FormHelper.addLabelField(innerPanel, 8, 0, abgabeLb, getAbgaberelEinlBox());
+		FormHelper.addLabelField(innerPanel, 9, 0, abwAgLb, getAbwAgEinlFeld());
+		FormHelper.addSeparator(innerPanel, 10, "Bemerkungen");
 		JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		builder.appendRow("fill:30dlu");
-		builder.append(bemerkungsScroller, 7);
-		builder.nextLine();
-
-		builder.nextLine();
-		builder.appendRow("fill:15dlu");
-		builder.appendSeparator("Verknüpfungen");
-
-		builder.nextLine();
+		FormHelper.addFull(innerPanel, 11, bemerkungsScroller, 60);
+		FormHelper.addSeparator(innerPanel, 12, "Verknüpfungen");
 		JScrollPane objektverknuepfungScroller = new JScrollPane(getObjektverknuepungTabelle(),
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		builder.appendRow("fill:100dlu");
-		builder.append(objektverknuepfungScroller, 7);
-		builder.nextLine();
+		FormHelper.addFull(innerPanel, 13, objektverknuepfungScroller, 160);
 		JComponent buttonBar = ComponentFactory.buildRightAlignedBar(getSelectObjektButton(),
 				getSaveElkaEinleitungsstelleButton());
-		builder.append(buttonBar, 4);
+		FormHelper.addFull(innerPanel, 14, buttonBar);
+		this.setLayout(new BorderLayout());
+		this.add(FormHelper.wrapNorthWest(innerPanel), BorderLayout.NORTH);
 
 		// Action Listener
 		this.einleitungsartBox.addActionListener(new ActionListener() {
@@ -868,7 +829,7 @@ public class EinleitungsstellePanel extends ObjectPanel {
 	public GewaesserdatenPanel getGewaesserTab() {
 		if (gewaesserTab == null) {
 			gewaesserTab = new GewaesserdatenPanel(hauptModul, einleitungsstelle);
-			gewaesserTab.setBorder(Paddings.DIALOG);
+			FormHelper.setDialogBorder(gewaesserTab);
 		}
 		return gewaesserTab;
 	}

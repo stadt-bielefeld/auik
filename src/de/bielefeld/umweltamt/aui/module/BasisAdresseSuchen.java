@@ -50,8 +50,11 @@ package de.bielefeld.umweltamt.aui.module;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.KeyboardFocusManager;
-import java.awt.Label;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,10 +65,11 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -81,12 +85,6 @@ import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -212,12 +210,17 @@ public class BasisAdresseSuchen extends AbstractModul {
             submitToolBar.setRollover(true);
             submitToolBar.add(getSubmitButton());
 
+
 			JPanel restrictPanel = new JPanel(new BorderLayout());
-
-			JComponent restrictButtonBar = ComponentFactory.buildLeftAlignedBar(
-                getAwsvButton(), getIndirektButton(), getProbepktButton(), getAnfallButton(), getGenButton());
-
-			restrictPanel.add(new Label("Objekte einschränken:"),
+            JPanel restrictButtonBar = new JPanel(
+                new FlowLayout(FlowLayout.LEFT, 3, 0));
+            restrictButtonBar.add(getAwsvButton());
+            restrictButtonBar.add(getIndirektButton());
+            restrictButtonBar.add(getProbepktButton());
+            restrictButtonBar.add(getAnfallButton());
+            restrictButtonBar.add(getGenButton());
+            restrictPanel.add(
+                new JLabel("Objekte einschränken:"),
                 BorderLayout.WEST);
 			restrictPanel.add(restrictButtonBar, BorderLayout.CENTER);
 
@@ -230,33 +233,121 @@ public class BasisAdresseSuchen extends AbstractModul {
             ta.addComp(getBetreiberTabelle());
             ta.addComp(getObjektTabelle());
 
-            this.tabellenSplit = ComponentFactory.createStrippedSplitPane(
-                JSplitPane.VERTICAL_SPLIT, betreiberScroller, objektScroller,
-                0.7);
 
-            FormLayout layout = new FormLayout(
-                "l:p, max(4dlu;p), p:g, 3dlu, p, 3dlu, 40dlu, 3dlu, p, 3dlu,  p:g, 3dlu, 70dlu, 3dlu, 70dlu", // spalten
-                "pref, 3dlu, pref, 3dlu, 150dlu:grow, 3dlu, 30"); // zeilen
+            this.tabellenSplit = new JSplitPane(
+            	    JSplitPane.VERTICAL_SPLIT,
+            	    betreiberScroller,
+            	    objektScroller);
+            	this.tabellenSplit.setResizeWeight(0.6);
+            	this.tabellenSplit.setMinimumSize(
+            	    new java.awt.Dimension(0, 100));
+            	objektScroller.setPreferredSize(
+            	    new java.awt.Dimension(0, 150));
 
-            PanelBuilder builder = new PanelBuilder(layout);
-            CellConstraints cc = new CellConstraints();
 
-            builder.add(getSuchBox(), cc.xy(1, 1));
-            builder.add(getSuchFeld(), cc.xy(3, 1));
-            builder.add(getSubmitButtonBetreiber(), cc.xyw(13, 1, 3));
-			builder.addLabel("Straße:", cc.xy(1, 3));
-			builder.add(getStrassenFeld(), cc.xy(3, 3));
-			builder.addLabel("Haus-Nr.:", cc.xy(5, 3));
-			builder.add(getHausnrFeld(), cc.xy(7, 3));
-			builder.addLabel("Ort:", cc.xy(9, 3));
-			builder.add(getOrtFeld(), cc.xy(11, 3));
-            builder.add(getSubmitButton(), cc.xyw(13, 3, 3));
-//            builder.add(getSubmitButtonStandort(), cc.xy(15, 3));
-            builder.add(this.tabellenSplit, cc.xyw(1, 5, 15));
-			builder.add(restrictPanel, cc.xyw(1, 7, 15));
+            JPanel mainPanel = new JPanel(
+                new GridBagLayout());
+            GridBagConstraints gbc =
+                new GridBagConstraints();
+            gbc.insets = new Insets(3, 3, 3, 3);
 
-            this.panel = builder.getPanel();
-            this.panel.setBorder(Paddings.DIALOG);
+            // ── ZEILE 1: Suche ────────────────────────────
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.WEST;
+            mainPanel.add(getSuchBox(), gbc);
+
+            gbc.gridx = 1;
+            gbc.weightx = 1.0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            mainPanel.add(getSuchFeld(), gbc);
+
+         // SubmitButtonBetreiber rechts ausgerichtet
+         // wie Original cc.xyw(13, 1, 3) [1]
+         gbc.gridx = 2;
+         gbc.weightx = 0;
+         gbc.gridwidth = GridBagConstraints.REMAINDER;
+         gbc.fill = GridBagConstraints.NONE;
+         gbc.anchor = GridBagConstraints.EAST;
+         mainPanel.add(getSubmitButtonBetreiber(), gbc);
+         gbc.gridwidth = 1;
+         gbc.anchor = GridBagConstraints.WEST;
+
+            // ── ZEILE 2: Adresse ──────────────────────────
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.EAST;
+            mainPanel.add(new JLabel("Straße:"), gbc);
+
+            gbc.gridx = 1;
+            gbc.weightx = 1.0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            mainPanel.add(getStrassenFeld(), gbc);
+
+            gbc.gridx = 2;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.EAST;
+            mainPanel.add(new JLabel("Haus-Nr.:"), gbc);
+
+            gbc.gridx = 3;
+            gbc.weightx = 0;
+            gbc.ipadx = 40;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            mainPanel.add(getHausnrFeld(), gbc);
+            gbc.ipadx = 0;
+
+            gbc.gridx = 4;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.EAST;
+            mainPanel.add(new JLabel("Ort:"), gbc);
+
+            gbc.gridx = 5;
+            gbc.weightx = 1.0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            mainPanel.add(getOrtFeld(), gbc);
+
+            gbc.gridx = 6;
+            gbc.weightx = 0;
+            gbc.gridwidth = 2;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            mainPanel.add(getSubmitButton(), gbc);
+            gbc.gridwidth = 1;
+
+            // ── ZEILE 3: TabellenSplit (wächst) ───────────
+            // Entspricht "150dlu:grow" aus Original [1]
+            gbc.gridx = 0;
+            gbc.gridy = 2;
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.weightx = 1.0;
+            gbc.weighty = 1.0;
+            gbc.fill = GridBagConstraints.BOTH;
+            mainPanel.add(this.tabellenSplit, gbc);
+
+            // ── ZURÜCKSETZEN nach tabellenSplit ───────────
+            gbc.weighty = 0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.gridx = 0;
+
+            // ── ZEILE 4: RestrictPanel ────────────────────
+            // Entspricht "30" aus Original [1]
+            gbc.gridy = 3;
+            gbc.weightx = 1.0;
+            gbc.insets = new Insets(3, 3, 3, 3);
+            mainPanel.add(restrictPanel, gbc);
+
+
+            mainPanel.setBorder(
+                BorderFactory.createEmptyBorder(
+                    7, 7, 7, 7));
+
+            this.panel = mainPanel;
         }
         return this.panel;
     }

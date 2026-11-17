@@ -49,6 +49,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -60,9 +61,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.atl.Messstelle;
@@ -120,18 +118,23 @@ public class ProbepunkteAuswertung extends AbstractQueryModul<Messstelle> {
     @Override
     public JPanel getQueryOptionsPanel() {
         if (queryPanel == null) {
+
+            // ── Widgets initialisieren ────────────────────
             // Die Widgets initialisieren
             searchButton = new JButton("Suchen");
             sachbearbeiterLabel = new JLabel("Sachbearbeiter (Heepen):");
             List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
             DefaultComboBoxModel<Sachbearbeiter> sachbearbeiterModel = new DefaultComboBoxModel<>(
                     sachbearbeiter.toArray(new Sachbearbeiter[sachbearbeiter.size()]));
-            probepunktArtLabel = new JLabel("Probepunktart:");
-            sachbearbeiterBox = new JComboBox<Sachbearbeiter>(sachbearbeiterModel);
+            sachbearbeiterBox =
+                new JComboBox<>(sachbearbeiterModel);
             sachbearbeiterBox.insertItemAt(null, 0);
             sachbearbeiterBox.setSelectedIndex(0);
 
-            probepunktArtBox = new JComboBox<String>(new String[]{LABEL_NONE,
+            probepunktArtLabel = new JLabel("Probepunktart:");
+            probepunktArtBox = new JComboBox<>(
+                new String[]{
+                    LABEL_NONE,
                 LABEL_PROBENHEMEREINSAETZE, LABEL_INAKTIVE_PROBEPUNKTE,
                 LABEL_UWB_PUNKTE, LABEL_SELBSTUEBERWACHUNGSPUNTKE,
                 LABEL_E_SATZUNGSPUNKTE
@@ -180,15 +183,15 @@ public class ProbepunkteAuswertung extends AbstractQueryModul<Messstelle> {
                 }
             });
 
-            // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            builder.append(probepunktArtLabel, probepunktArtBox);
-            builder.append(sachbearbeiterLabel, sachbearbeiterBox);
-            builder.append(searchButton, createExportButton());
-
-            queryPanel = builder.getPanel();
+            // ── Layout: FlowLayout statt FormLayout ───────
+            queryPanel = new JPanel(
+                new FlowLayout(FlowLayout.LEFT, 5, 5));
+            queryPanel.add(probepunktArtLabel);
+            queryPanel.add(probepunktArtBox);
+            queryPanel.add(sachbearbeiterLabel);
+            queryPanel.add(sachbearbeiterBox);
+            queryPanel.add(searchButton);
+            queryPanel.add(createExportButton());
         }
 
         return queryPanel;

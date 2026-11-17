@@ -25,6 +25,11 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,23 +48,21 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -80,7 +83,6 @@ import de.bielefeld.umweltamt.aui.module.common.editors.ProbenEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ProbenahmenModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DateUtils;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -135,81 +137,218 @@ public class ProbepunktPanel extends ObjectPanel {
         this.hauptModul = hauptModul;
         this.probenahmenModel = new ProbenahmenModel();
 
-        FormLayout layout = new FormLayout(
-            "r:50dlu, 5dlu, 250dlu, r:45dlu, 5dlu, 25dlu", // Spalten
-            "pref, " + // 1
-                "3dlu, " + // 2
-                "pref, " + // 3
-                "3dlu, " + // 4
-                "pref, " + // 5
-                "3dlu, " + // 6
-                "pref, " + // 7
-                "5dlu, " + // 8
-                "pref, " + // 9
-                "3dlu, " + // 10
-                "pref, " + // 11
-                "3dlu, " + // 12
-                "pref, " + // 13
-                "3dlu, " + // 14
-                "pref, " + // 15
-                "3dlu, " + // 16
-                "pref, " + // 17
-                "3dlu, " + // 18
-                "fill:40dlu:g, " + // 19
-                "3dlu, " + // 20
-                "pref, " + // 21
-                "3dlu, " + // 22
-                "pref, " + // 23
-                "3dlu, " + // 24
-                "fill:40dlu:g, " + // 25
-                "3dlu, " + // 26
-                "pref"); // 27
+        // ── Inneres Panel mit dem ganzen Inhalt ───────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
 
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        CellConstraints cc = new CellConstraints();
+        // ── SEPARATOR: Eigenschaften ──────────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Eigenschaften"), gbc);
 
-        builder.addSeparator("Eigenschaften", cc.xyw(1, 1, 6));
-        builder.addLabel("Art:", cc.xy(1, 3));
-        builder.add(getProbePktArtBox(), cc.xy(3, 3));
-        builder.addLabel("Nr:", cc.xy(4, 3));
-        builder.add(getProbePktNrFeld(), cc.xy(6, 3));
-        builder.addLabel("Kläranlage:", cc.xy(1, 5));
-        builder.add(getProbeKABox(), cc.xy(3, 5));
-        builder.addLabel("Sachbearbeiter:", cc.xy(1, 7));
-        builder.add(getSachbearbeiterBox(), cc.xy(3, 7));
-        builder.addLabel("Branche:", cc.xy(1, 9));
-        builder.add(getBrancheFeld(), cc.xy(3, 9));
+        // ── ZEILE 1: Art + Nr ─────────────────────────────
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Art:"), gbc);
 
-        builder.addSeparator("Beschreibung", cc.xyw(1, 13, 6));
+        gbc.gridx = 1; gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getProbePktArtBox().setPreferredSize(
+            new java.awt.Dimension(300,
+                getProbePktArtBox().getPreferredSize().height));
+        innerPanel.add(getProbePktArtBox(), gbc);
+
+        gbc.gridx = 2; gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Nr:"), gbc);
+
+        gbc.gridx = 3; gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.ipadx = 30;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        innerPanel.add(getProbePktNrFeld(), gbc);
+        gbc.ipadx = 0;
+
+        // ── ZEILE 2: Kläranlage ───────────────────────────
+        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Kläranlage:"), gbc);
+
+        gbc.gridx = 1; gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getProbeKABox().setPreferredSize(
+            new java.awt.Dimension(300,
+                getProbeKABox().getPreferredSize().height));
+        innerPanel.add(getProbeKABox(), gbc);
+
+        // ── ZEILE 3: Sachbearbeiter ───────────────────────
+        gbc.gridx = 0; gbc.gridy = 3;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Sachbearbeiter:"), gbc);
+
+        gbc.gridx = 1; gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getSachbearbeiterBox().setPreferredSize(
+            new java.awt.Dimension(300,
+                getSachbearbeiterBox().getPreferredSize().height));
+        innerPanel.add(getSachbearbeiterBox(), gbc);
+
+        // ── ZEILE 4: Branche ──────────────────────────────
+        gbc.gridx = 0; gbc.gridy = 4;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Branche:"), gbc);
+
+        gbc.gridx = 1; gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getBrancheFeld().setPreferredSize(
+            new java.awt.Dimension(300,
+                getBrancheFeld().getPreferredSize().height));
+        innerPanel.add(getBrancheFeld(), gbc);
+
+        // ── SEPARATOR: Beschreibung ───────────────────────
+        gbc.gridx = 0; gbc.gridy = 5;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Beschreibung"), gbc);
+
+        // ── BeschreibungsArea ─────────────────────────────
         JScrollPane beschScroller = new JScrollPane(
             getProbePktBeschreibungsArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         beschScroller.setBorder(null);
-        builder.add(beschScroller, cc.xyw(1, 15, 6));
+        gbc.gridy = 6;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        innerPanel.add(beschScroller, gbc);
+        gbc.weighty = 0;
 
-        builder.addSeparator("Probenahmen", cc.xyw(1, 17, 6));
+        // ── SEPARATOR: Probenahmen ────────────────────────
+        gbc.gridy = 7;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Probenahmen"), gbc);
+
+        // ── ProbenahmeTabelle ─────────────────────────────
         JScrollPane tabellenScroller = new JScrollPane(getProbenahmeTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(tabellenScroller, cc.xyw(1, 19, 6));
-        builder.add(getNeueProbePanel(), cc.xyw(1, 21, 6));
+        tabellenScroller.setPreferredSize(
+            new java.awt.Dimension(0, 80));
+        tabellenScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 80));
+        gbc.gridy = 8;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        innerPanel.add(tabellenScroller, gbc);
+        gbc.weighty = 0;
 
-        builder.addSeparator("Verknüpfte Objekte", cc.xyw(1, 23, 6));
+        // ── NeueProbePanel ────────────────────────────────
+        gbc.gridy = 9;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(getNeueProbePanel(), gbc);
+
+        // ── SEPARATOR: Verknüpfte Objekte ─────────────────
+        gbc.gridy = 10;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Verknüpfte Objekte"), gbc);
+
+        // ── ObjektverknuepfungTabelle ─────────────────────
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.add(objektverknuepfungScroller, cc.xyw(1, 25, 6));
+        objektverknuepfungScroller.setPreferredSize(
+            new java.awt.Dimension(0, 60));
+        objektverknuepfungScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 60));
+        gbc.gridy = 11;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        innerPanel.add(objektverknuepfungScroller, gbc);
+        gbc.weighty = 0;
 
-        JComponent buttonBarOv = ComponentFactory
-            .buildRightAlignedBar(getPrintDeckblattButton(), getSelectObjektButton(), getSavePktButton());
+        // ── ButtonBar rechts ──────────────────────────────
+        gbc.gridy = 12;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buildButtonBar(), gbc);
 
-        builder.add(buttonBarOv, cc.xyw(1, 27, 6));
+     // NEU:
+        JPanel wrapperPanel = new JPanel(new java.awt.BorderLayout());
+        wrapperPanel.add(innerPanel, java.awt.BorderLayout.WEST);
+        this.setLayout(new java.awt.BorderLayout());
+        this.add(wrapperPanel, java.awt.BorderLayout.NORTH);
+
         addChangeListeners(getProbePktNrFeld(), getProbePktBeschreibungsArea(),
             getKennummerFeld(), getBrancheFeld(),
             getProbeKABox(), getProbePktArtBox(), getSachbearbeiterBox());
+    }
 
+    // ── Separator Hilfsmethode ─────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
+    }
+
+    // ── ButtonBar ──────────────────────────────────────────
+    private JPanel buildButtonBar() {
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getPrintDeckblattButton());
+        buttonBar.add(getSelectObjektButton());
+        buttonBar.add(getSavePktButton());
+        return buttonBar;
     }
 
     public void fetchFormData() throws RuntimeException {
@@ -541,19 +680,56 @@ public class ProbepunktPanel extends ObjectPanel {
 
     private JPanel getNeueProbePanel() {
         if (this.neueProbePanel == null) {
-            // neueProbePanel = new JPanel();
+            this.neueProbePanel = new JPanel(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets = new Insets(2, 4, 2, 4);
 
-            FormLayout anlegenLayout = new FormLayout(
-                "pref, 4dlu, max(60dlu;pref), 7dlu, pref, 4dlu, max(60dlu;pref), 7dlu, max(60dlu;pref)");
-            // spalten, nur eine zeile
+            // Label "Kennummer:"
+            gbc.gridx = 0; gbc.gridy = 0;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.WEST;
+            this.neueProbePanel.add(new JLabel("Kennummer:"), gbc);
 
-            DefaultFormBuilder builder = new DefaultFormBuilder(anlegenLayout);
+            // KennummerFeld feste Breite
+            gbc.gridx = 1;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.WEST;
+            getKennummerFeld().setPreferredSize(
+                new java.awt.Dimension(100,
+                    getKennummerFeld().getPreferredSize().height));
+            this.neueProbePanel.add(getKennummerFeld(), gbc);
 
-            // builder.appendSeparator("Neue Probenahme");
-            builder.append("Kennummer:", getKennummerFeld());
-            builder.append("Datum:", getDatumsChooser());
-            builder.append(getAnlegenButton());
-            this.neueProbePanel = builder.getPanel();
+            // Label "Datum:"
+            gbc.gridx = 2;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.WEST;
+            this.neueProbePanel.add(new JLabel("Datum:"), gbc);
+
+            // DatumsChooser feste Breite
+            gbc.gridx = 3;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.WEST;
+            getDatumsChooser().setPreferredSize(
+                new java.awt.Dimension(120,
+                    getDatumsChooser().getPreferredSize().height));
+            this.neueProbePanel.add(getDatumsChooser(), gbc);
+
+            // AnlegenButton
+            gbc.gridx = 4;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.WEST;
+            this.neueProbePanel.add(getAnlegenButton(), gbc);
+
+            // Füller
+            gbc.gridx = 5;
+            gbc.weightx = 1.0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            this.neueProbePanel.add(new JPanel(), gbc);
         }
         return this.neueProbePanel;
     }

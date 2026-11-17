@@ -23,10 +23,12 @@ package de.bielefeld.umweltamt.aui.utils;
 
 import java.awt.FlowLayout;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import com.jgoodies.forms.factories.Forms;
 
 /**
  * Factory class containing some convenience functions to build frequently used
@@ -71,7 +73,19 @@ public class ComponentFactory {
      * @return Button bar
      */
     public static JComponent buildButtonBar(JComponent... buttons) {
-        return Forms.buttonBar(buttons);
+        // GEÄNDERT: Forms.buttonBar() → BoxLayout mit Buttons
+        JPanel buttonBar = new JPanel();
+        buttonBar.setLayout(
+            new BoxLayout(buttonBar, BoxLayout.X_AXIS));
+
+        for (int i = 0; i < buttons.length; i++) {
+            if (i > 0) {
+
+                buttonBar.add(Box.createHorizontalStrut(6));
+            }
+            buttonBar.add(buttons[i]);
+        }
+        return buttonBar;
     }
 
     /**
@@ -80,8 +94,12 @@ public class ComponentFactory {
      * @return Button bar
      */
     public static JComponent buildLeftAlignedBar(JComponent... buttons) {
-        JComponent result = Forms.buttonBar(buttons);
-        result.setLayout(new FlowLayout(FlowLayout.LEFT));
+        // GEÄNDERT: Forms.buttonBar() → JPanel mit FlowLayout
+        JPanel result = new JPanel(
+            new FlowLayout(FlowLayout.LEFT, 5, 0));
+        for (JComponent button : buttons) {
+            result.add(button);
+        }
         return result;
     }
 
@@ -91,8 +109,12 @@ public class ComponentFactory {
      * @return Button bar
      */
     public static JComponent buildRightAlignedBar(JComponent... buttons) {
-        JComponent result = Forms.buttonBar(buttons);
-        result.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        // GEÄNDERT: Forms.buttonBar() → JPanel mit FlowLayout
+        JPanel result = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        for (JComponent button : buttons) {
+            result.add(button);
+        }
         return result;
     }
 

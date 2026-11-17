@@ -68,6 +68,11 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -92,14 +97,13 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.ScrollPaneConstants;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -160,15 +164,44 @@ public class ChronoPanel extends ObjectPanel {
             }
         });
 
-        JScrollPane chronoScroller = new JScrollPane(getChronoTable());
+        // ── Tabelle ───────────────────────────────────────
+        JScrollPane chronoScroller = new JScrollPane(
+            getChronoTable(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        chronoScroller.setPreferredSize(
+            new java.awt.Dimension(0, 200));
+        chronoScroller.setMaximumSize(
+        	    new java.awt.Dimension(Integer.MAX_VALUE, 400));
 
-        FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref:g",
-            "f:80dlu:g, 3dlu, pref");
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
 
-        builder.append(chronoScroller, 7);
-        builder.nextLine(2);
-        builder.append(this.reportListeButton, getAllButton(), getSaveButton());
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(this.reportListeButton);
+        buttonBar.add(getAllButton());
+        buttonBar.add(getSaveButton());
+
+        // ── InnerPanel ────────────────────────────────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
+
+        // Tabelle
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 1; gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        innerPanel.add(chronoScroller, gbc);
+
+        // ButtonBar
+        gbc.gridy = 1; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
+
+        // ── Layout ────────────────────────────────────────
+        this.setLayout(new BorderLayout());
+        this.add(innerPanel, BorderLayout.NORTH);
     }
 
     public class ChronoModel extends EditableListTableModel<Objektchrono> {

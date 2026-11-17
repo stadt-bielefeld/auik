@@ -52,17 +52,17 @@
 package de.bielefeld.umweltamt.aui.utils.dialogbase;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-import com.jgoodies.forms.factories.Paddings;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
@@ -107,10 +107,13 @@ public abstract class SimpleDialog extends JDialog {
         }
 
         JPanel tmp = new JPanel(new BorderLayout());
-        tmp.setBorder(Paddings.DIALOG);
+        tmp.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
 
         buttonBar = createButtonBar();
-        buttonBar.setBorder(Paddings.BUTTON_BAR_PAD);
+
+
+        buttonBar.setBorder(
+            BorderFactory.createEmptyBorder(4, 0, 0, 0));
 
         JComponent content = buildContentArea();
         tmp.add(content, BorderLayout.CENTER);
@@ -118,9 +121,28 @@ public abstract class SimpleDialog extends JDialog {
         tmp.add(buttonBar, BorderLayout.SOUTH);
 
         this.addWindowListener(new SimpleDialogListener());
-        JScrollPane scroller = new JScrollPane(tmp);
-        this.setContentPane(scroller);
+
+        this.setContentPane(tmp);
+
         this.pack();
+
+        // Bildschirmgröße holen
+        Dimension screenSize = Toolkit.getDefaultToolkit()
+            .getScreenSize();
+
+        // Maximale Größe: 95% des Bildschirms
+        int maxWidth = (int) (screenSize.width * 0.95);
+        int maxHeight = (int) (screenSize.height * 0.90);
+
+        // Aktuelle Größe nach pack()
+        int currentWidth = this.getWidth();
+        int currentHeight = this.getHeight();
+
+        // Auf Bildschirmgröße begrenzen falls nötig
+        int finalWidth = Math.min(currentWidth, maxWidth);
+        int finalHeight = Math.min(currentHeight, maxHeight);
+
+        this.setSize(finalWidth, finalHeight);
         this.setLocationRelativeTo(frame);
     }
 

@@ -24,6 +24,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -33,16 +39,15 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseConstants;
@@ -54,7 +59,6 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.EntsorgerEditor;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -98,37 +102,139 @@ public class Anh50Panel extends ObjectPanel {
         this.hauptModul = hauptModul;
         this.anfallstelle = anfallstelle;
 
-        FormLayout layout = new FormLayout("r:70dlu, 5dlu, 90dlu, r:90dlu, 5dlu, 20dlu", // Spalten
-                "");
+        // ── InnerPanel ────────────────────────────────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        // ── SEPARATOR: Fachdaten ──────────────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 2; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Fachdaten"), gbc);
 
-        builder.appendSeparator("Fachdaten");
-        builder.append("Antrag:", getAntragDatum());
-        builder.nextLine();
-        builder.append("Genehmigung:", getGenehmigungDatum());
-        builder.nextLine();
-        builder.append("Gefährdungsklasse:", getGefaehrdungsklasseFeld());
-        builder.nextLine();
-        builder.append("", getErloschenCheck());
-        builder.nextLine();
+        // Antrag
+        gbc.gridy = 1; gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Antrag:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getAntragDatum().setPreferredSize(
+            new java.awt.Dimension(200,
+                getAntragDatum().getPreferredSize().height));
+        innerPanel.add(getAntragDatum(), gbc);
 
-        builder.appendSeparator("Entsorger");
-        builder.append("Entsorger:", getEntsorgerBox(), 2);
-        builder.append(getEntsorBearbToolBar());
+        // Genehmigung
+        gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Genehmigung:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getGenehmigungDatum().setPreferredSize(
+            new java.awt.Dimension(200,
+                getGenehmigungDatum().getPreferredSize().height));
+        innerPanel.add(getGenehmigungDatum(), gbc);
 
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // Gefährdungsklasse
+        gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Gefährdungsklasse:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getGefaehrdungsklasseFeld().setPreferredSize(
+            new java.awt.Dimension(200,
+                getGefaehrdungsklasseFeld().getPreferredSize().height));
+        innerPanel.add(getGefaehrdungsklasseFeld(), gbc);
+
+        // Erloschen Checkbox
+        gbc.gridx = 1; gbc.gridy = 4; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        innerPanel.add(getErloschenCheck(), gbc);
+
+        // ── SEPARATOR: Entsorger ──────────────────────────
+        gbc.gridx = 0; gbc.gridy = 5;
+        gbc.gridwidth = 2; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Entsorger"), gbc);
+
+        // EntsorgerBox + BearbToolBar
+        gbc.gridy = 6; gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Entsorger"), gbc);
+
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getEntsorgerBox().setPreferredSize(
+            new java.awt.Dimension(200,
+                getEntsorgerBox().getPreferredSize().height));
+        innerPanel.add(getEntsorgerBox(), gbc);
+
+        gbc.gridx = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        innerPanel.add(getEntsorBearbToolBar(), gbc);
+
+        // ── SEPARATOR: Bemerkungen ────────────────────────
+        gbc.gridx = 0; gbc.gridy = 7;
+        gbc.gridwidth = 3; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Bemerkungen"), gbc);
+
+        // BemerkungsArea
         JScrollPane bemerkungsScroller = new JScrollPane(getAnh50BemerkungArea(),
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 6);
+        bemerkungsScroller.setPreferredSize(
+            new java.awt.Dimension(0, 80));
+        bemerkungsScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 80));
+        gbc.gridy = 8; gbc.gridwidth = 3;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(bemerkungsScroller, gbc);
 
-        JComponent buttonBar = ComponentFactory.buildRightAlignedBar(getSaveAnh50Button());
-        builder.append(buttonBar, 6);
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getSaveAnh50Button());
+        gbc.gridy = 9; gbc.gridwidth = 3;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
+
+        // ── Wrapper ───────────────────────────────────────
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(innerPanel, BorderLayout.WEST);
+        this.setLayout(new BorderLayout());
+        this.add(wrapperPanel, BorderLayout.NORTH);
         addChangeListeners(getGefaehrdungsklasseFeld(), getAnh50BemerkungArea(),
         getAntragDatum(), getGenehmigungDatum(), getErloschenCheck());
+    }
+
+    // ── createSeparator() ─────────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
     }
 
     public void fetchFormData() throws RuntimeException {

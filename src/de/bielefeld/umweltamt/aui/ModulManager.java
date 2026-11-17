@@ -64,9 +64,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
-
-
-import com.jgoodies.forms.factories.Paddings;
 import com.l2fprod.common.swing.JButtonBar;
 
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
@@ -93,7 +90,7 @@ public class ModulManager {
             this.module = new ArrayList<Modul>();
             this.buttonBar = new JButtonBar(JButtonBar.VERTICAL);
 
-            buttonBar.setBorder(Paddings.EMPTY);
+            buttonBar.setBorder(BorderFactory.createEmptyBorder());
             buttonBar.setBackground(frame.getLeftFrame().getBackground());
         }
 

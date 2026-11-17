@@ -24,6 +24,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,21 +43,19 @@ import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.SwingConstants;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -62,7 +66,6 @@ import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -145,76 +148,155 @@ public class AnfallstellePanel extends ObjectPanel {
         this.name = "Anfallstelle";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:90dlu, 5dlu, 50dlu, 5dlu, 30dlu, 5dlu, 50dlu, 5dlu, 30dlu, 5dlu, 50dlu, 5dlu, 30dlu", // Spalten
-            "");
+        // ── InnerPanel ────────────────────────────────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.appendSeparator("Anfallstelle");
-        builder.append("Bezeichnung:");
-        builder.append(getBezeichnungFeld(), 11);
-        builder.nextLine();
-        builder.append("Betriebsweise:");
-        builder.append(getBetriebsweiseBox(), 11);
-        builder.nextLine();
-        builder.append("Abwasserbeschaffenheit:");
-        builder.append(getBeschaffenheitBox(), 11);
-        builder.nextLine();
-        builder.append(anhangLb);
-        builder.append(getAnhangBox(), 11);
-        builder.nextLine();
-        builder.append(herkunftsbereichLb);
-        builder.append(getHerkunftBox(), 11);
-        builder.nextLine();
-        builder.append(anlagenartLb);
-        builder.append(getAnlagenartBox(), 11);
-        builder.nextLine();
-        builder.append(befestFlaecheLb);
-        builder.append(getBefestFlaecheFeld(), 11);
-        builder.nextLine();
-        builder.append(anwendungsbereichLb);
-        builder.append(getAnwendungsbereichFeld(), 11);
-        builder.nextLine();
-        builder.append(maxAbflussmengeLb);
-        builder.append(getLProSFeld());
-        builder.append(lProSLb);
-        builder.append(getQmProHFeld());
-        builder.append(qmProHLb);
-        builder.append(getQmProDFeld());
-        builder.append(qmProDLb);
-        builder.nextLine();
-        builder.append(abwasserProALb);
-        builder.append(getQmProAFeld());
-        builder.nextLine();
-        builder.append("Erstelldatum:", getErstellDatDatum());
-        builder.nextLine();
-        builder.append("Stilllegedatum:", getStillgelegtAmDatum());
-        builder.nextLine();
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // ── SEPARATOR: Anfallstelle ───────────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 4; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Anfallstelle"), gbc);
+
+        // Bezeichnung
+        addRowFull(innerPanel, gbc, 1,
+            "Bezeichnung:", getBezeichnungFeld());
+
+        // Betriebsweise
+        addRowFull(innerPanel, gbc, 2,
+            "Betriebsweise:", getBetriebsweiseBox());
+
+        // Abwasserbeschaffenheit
+        addRowFull(innerPanel, gbc, 3,
+            "Abwasserbeschaffenheit:", getBeschaffenheitBox());
+
+        // Anhang AbwV
+        addRowFull(innerPanel, gbc, 4,
+            anhangLb, getAnhangBox());
+
+        // Herkunftsbereich
+        addRowFull(innerPanel, gbc, 5,
+            herkunftsbereichLb, getHerkunftBox());
+
+        // Anlagenart
+        addRowFull(innerPanel, gbc, 6,
+            anlagenartLb, getAnlagenartBox());
+
+        // Befestigte Fläche
+        addRowFull(innerPanel, gbc, 7,
+            befestFlaecheLb, getBefestFlaecheFeld());
+
+        // Anwendungsbereich
+        addRowFull(innerPanel, gbc, 8,
+            anwendungsbereichLb, getAnwendungsbereichFeld());
+
+        // Maximale Abflussmenge: l/s + m³/h + m³/d
+        gbc.gridy = 9; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        innerPanel.add(maxAbflussmengeLb, gbc);
+
+        JPanel abflussPanel = new JPanel(
+            new FlowLayout(FlowLayout.LEFT, 3, 0));
+        getLProSFeld().setPreferredSize(
+            new java.awt.Dimension(60,
+                getLProSFeld().getPreferredSize().height));
+        abflussPanel.add(getLProSFeld());
+        abflussPanel.add(lProSLb);
+        getQmProHFeld().setPreferredSize(
+            new java.awt.Dimension(60,
+                getQmProHFeld().getPreferredSize().height));
+        abflussPanel.add(getQmProHFeld());
+        abflussPanel.add(qmProHLb);
+        getQmProDFeld().setPreferredSize(
+            new java.awt.Dimension(60,
+                getQmProDFeld().getPreferredSize().height));
+        abflussPanel.add(getQmProDFeld());
+        abflussPanel.add(qmProDLb);
+        gbc.gridx = 1; gbc.gridwidth = 3;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        innerPanel.add(abflussPanel, gbc);
+
+        // Abwasseranfall/Jahr
+        gbc.gridy = 10; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        innerPanel.add(abwasserProALb, gbc);
+        gbc.gridx = 1; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getQmProAFeld().setPreferredSize(
+            new java.awt.Dimension(100,
+                getQmProAFeld().getPreferredSize().height));
+        innerPanel.add(getQmProAFeld(), gbc);
+
+        // Erstelldatum
+        addRowFull(innerPanel, gbc, 11,
+            "Erstelldatum:", getErstellDatDatum());
+
+        // Stilllegedatum
+        addRowFull(innerPanel, gbc, 12,
+            "Stilllegedatum:", getStillgelegtAmDatum());
+
+        // ── SEPARATOR: Bemerkungen ────────────────────────
+        gbc.gridx = 0; gbc.gridy = 13;
+        gbc.gridwidth = 4; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Bemerkungen"), gbc);
         JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 13);
-        builder.nextLine();
+        bemerkungsScroller.setPreferredSize(
+            new java.awt.Dimension(0, 60));
+        bemerkungsScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 60));
+        gbc.gridy = 14; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(bemerkungsScroller, gbc);
 
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // ── SEPARATOR: Verknüpfte Objekte ─────────────────
+        gbc.gridy = 15; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(
+            createSeparator("Verknüpfte Objekte"), gbc);
+
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 13);
-        builder.nextLine();
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        objektverknuepfungScroller.setPreferredSize(
+            new java.awt.Dimension(0, 100));
+        objektverknuepfungScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 100));
+        gbc.gridy = 16; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(objektverknuepfungScroller, gbc);
 
-        JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-                getSelectObjektButton(), getSaveAnfallstelleButton());
-        builder.append(buttonBar,6);
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getSelectObjektButton());
+        buttonBar.add(getSaveAnfallstelleButton());
+        gbc.gridy = 17; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
 
+        // ── Wrapper ───────────────────────────────────────
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+
+        wrapperPanel.add(innerPanel, BorderLayout.WEST);
+        this.setLayout(new BorderLayout());
+        this.add(wrapperPanel, BorderLayout.NORTH);
+
+        // ── Listener ──────────────────────────────────────
         this.beschaffenheitBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -231,6 +313,63 @@ public class AnfallstellePanel extends ObjectPanel {
                 switchAnhangPanel(anh.getAnhangId(), anlagenart);
             }
         });
+    }
+
+    // ── Hilfsmethode: Label + Feld (volle Breite) ─────────
+    private void addRowFull(JPanel panel,
+        GridBagConstraints gbc,
+        int row, String label,
+        java.awt.Component field) {
+        gbc.gridy = row; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        panel.add(new JLabel(label), gbc);
+
+        gbc.gridx = 1; gbc.gridwidth = 3;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        field.setPreferredSize(new java.awt.Dimension(400,
+            field.getPreferredSize().height));
+        panel.add(field, gbc);
+    }
+
+    // ── Hilfsmethode: JLabel + Feld ───────────────────────
+    private void addRowFull(JPanel panel,
+        GridBagConstraints gbc,
+        int row, JLabel label,
+        java.awt.Component field) {
+        gbc.gridy = row; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        panel.add(label, gbc);
+
+        gbc.gridx = 1; gbc.gridwidth = 3;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        field.setPreferredSize(new java.awt.Dimension(300,
+            field.getPreferredSize().height));
+        panel.add(field, gbc);
+    }
+
+    // ── createSeparator() ─────────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(
+            new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
     }
 
     /**
@@ -1128,74 +1267,56 @@ public class AnfallstellePanel extends ObjectPanel {
 
 
     public Anh40Panel getAnh40Tab() {
-        if (anhang40Tab == null) {
+        if (anhang40Tab == null)
             anhang40Tab = new Anh40Panel(hauptModul);
-            anhang40Tab.setBorder(Paddings.DIALOG);
-        }
         return anhang40Tab;
     }
 
     public Anh49Panel getAnh49Tab() {
-        if (anhang49Tab == null) {
+        if (anhang49Tab == null)
             anhang49Tab = new Anh49Panel(hauptModul);
-            anhang49Tab.setBorder(Paddings.DIALOG);
-        }
         return anhang49Tab;
     }
 
     public Anh49AnalysenPanel getAnh49AnalyseTab() {
-        if (anh49analyseTab == null) {
+        if (anh49analyseTab == null)
             anh49analyseTab = new Anh49AnalysenPanel(hauptModul);
-            anh49analyseTab.setBorder(Paddings.DIALOG);
-        }
         return anh49analyseTab;
     }
 
     public Anh49AbfuhrenPanel getAnh49AbfuhrTab() {
-        if (anh49abfuhrTab == null) {
+        if (anh49abfuhrTab == null)
             anh49abfuhrTab = new Anh49AbfuhrenPanel(hauptModul);
-            anh49abfuhrTab.setBorder(Paddings.DIALOG);
-        }
         return anh49abfuhrTab;
     }
 
     public Anh50Panel getAnh50Tab() {
-        if (anhang50Tab == null) {
+        if (anhang50Tab == null)
             anhang50Tab = new Anh50Panel(hauptModul, anfallstelle);
-            anhang50Tab.setBorder(Paddings.DIALOG);
-        }
         return anhang50Tab;
     }
 
     public Anh52Panel getAnh52Tab() {
-        if (anhang52Tab == null) {
+        if (anhang52Tab == null)
             anhang52Tab = new Anh52Panel(hauptModul, anfallstelle);
-            anhang52Tab.setBorder(Paddings.DIALOG);
-        }
         return anhang52Tab;
     }
 
     public Anh55Panel getAnh55Tab() {
-        if (anhang55Tab == null) {
+        if (anhang55Tab == null)
             anhang55Tab = new Anh55Panel(hauptModul, anfallstelle);
-            anhang55Tab.setBorder(Paddings.DIALOG);
-        }
         return anhang55Tab;
     }
 
     public Anh56Panel getAnh56Tab() {
-        if (anhang56Tab == null) {
+        if (anhang56Tab == null)
             anhang56Tab = new Anh56Panel(hauptModul, anfallstelle);
-            anhang56Tab.setBorder(Paddings.DIALOG);
-        }
         return anhang56Tab;
     }
 
     public BWKPanel getBWKTab() {
-        if (bwkTab == null) {
+        if (bwkTab == null)
             bwkTab = new BWKPanel(hauptModul, anfallstelle);
-            bwkTab.setBorder(Paddings.DIALOG);
-        }
         return bwkTab;
     }
 

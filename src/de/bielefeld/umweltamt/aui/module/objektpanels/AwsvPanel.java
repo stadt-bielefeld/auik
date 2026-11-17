@@ -72,6 +72,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
@@ -86,6 +87,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -93,9 +95,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -105,6 +104,7 @@ import de.bielefeld.umweltamt.aui.mappings.awsv.Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.AwsvEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.AwsvModel;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 
 import de.bielefeld.umweltamt.aui.utils.PDFExporter;
 /**
@@ -171,15 +171,15 @@ public class AwsvPanel extends JPanel {
             }
         });
 
-        FormLayout layout = new FormLayout(
-                "pref, 3dlu, pref, 3dlu, pref, 10dlu:g, pref, 3dlu, pref",
-                "f:100dlu:g, 3dlu, pref"
-        );
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.append(awsvScroller,9);
-        builder.nextLine(2);
-        builder.append("Neue(n)", anlagenartBox, anlegenButton);
-        builder.append(reportListeButton, reportAnlageButton);
+        this.setLayout(new BorderLayout(0, 5));
+        this.add(awsvScroller, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.add(FormHelper.buttonBarLeft(new JLabel("Neue(n)"),
+            anlagenartBox, anlegenButton), BorderLayout.WEST);
+        buttonPanel.add(FormHelper.buttonBarRight(reportListeButton,
+            reportAnlageButton), BorderLayout.EAST);
+        this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
     /**

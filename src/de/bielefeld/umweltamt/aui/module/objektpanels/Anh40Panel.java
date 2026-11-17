@@ -24,6 +24,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -31,22 +37,21 @@ import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.SwingConstants;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh40Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -92,52 +97,99 @@ public class Anh40Panel extends ObjectPanel {
         this.name = "Anhang 40";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:120dlu, 5dlu, 80dlu, 5dlu, r:65dlu, 5dlu, 100dlu", // Spalten
-            "");
+        // ── InnerPanel ────────────────────────────────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        // ── SEPARATOR: Fachdaten ──────────────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 3; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Fachdaten"), gbc);
 
-        builder.appendSeparator("Fachdaten");
-        builder.append("SachbearbeiterIn ABS:",
-            getSachbearbeiterravFeld());
-        builder.append("", getWsgCheck());
-        builder.nextLine();
-        builder.append("SachbearbeiterIn ATL.:",
-            getSachbearbeiterheepenFeld());
-        builder.append("", getGenehmigungspflichtCheck());
-        builder.nextLine();
-        builder.append("AnsprechpartnerIn:", getAnsprechpartnerFeld());
-        builder.append("Genehmigung §58:", getGen58Datum());
-        builder.nextLine();
-        builder.append("Herkunftsbereich:", getHerkunftsbereichFeld());
-        builder.append("Genehmigung §59:", getGen59Datum());
-        builder.nextLine();
-        builder.append("Kläranlage:", getKlaeranlageFeld());
-        builder.append("", getNachtragCheck());
-        builder.nextLine();
-        builder.append("Abwassermenge genehmigt [m³/a]:", getAbwmengegenehmigtFeld());
-        builder.append("", getBimschCheck());
-        builder.nextLine();
-        builder.append("Abwassermenge prod.-spez. [m³/a]:",
+        // Zeile 1: SachbearbeiterIn ABS | Wasserschutzgebiet
+        addRow(innerPanel, gbc, 1,
+            "Sachbearbeiter:in ABS",
+            getSachbearbeiterravFeld(),
+            getWsgCheck());
+
+        // Zeile 2: SachbearbeiterIn ATL | Genehmigungspflicht
+        addRow(innerPanel, gbc, 2,
+            "Sachbearbeiter:in ATL.",
+            getSachbearbeiterheepenFeld(),
+            getGenehmigungspflichtCheck());
+
+        // Zeile 3: AnsprechpartnerIn | Genehmigung §58
+        addRowFieldAndDateChooser(innerPanel, gbc, 3,
+            "Ansprechpartner:in",
+            getAnsprechpartnerFeld(),
+            "Genehmigung §58:",
+            getGen58Datum());
+
+        // Zeile 4: Herkunftsbereich | Genehmigung §59
+        addRowFieldAndDateChooser(innerPanel, gbc, 4,
+            "Herkunftsbereich:",
+            getHerkunftsbereichFeld(),
+            "Genehmigung §59:",
+            getGen59Datum());
+
+        // Zeile 5: Kläranlage | Nachtrag
+        addRow(innerPanel, gbc, 5,
+            "Kläranlage:",
+            getKlaeranlageFeld(),
+            getNachtragCheck());
+
+        // Zeile 6: Abwassermenge genehmigt | BImSch
+        addRow(innerPanel, gbc, 6,
+            "Abwassermenge genehmigt [m³/a]:",
+            getAbwmengegenehmigtFeld(),
+            getBimschCheck());
+
+        // Zeile 7: Abwassermenge prod.-spez.
+        addRowFieldOnly(innerPanel, gbc, 7,
+            "Abwassermenge prod.-spez. [m³/a]:",
             getAbwmengeprodspezFeld());
-        builder.nextLine();
-        builder.append("Abwassermenge gesamt [m³/a]:", getAbwmengegesamtFeld());
-        builder.nextLine();
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+
+        // Zeile 8: Abwassermenge gesamt
+        addRowFieldOnly(innerPanel, gbc, 8,
+            "Abwassermenge gesamt [m³/a]:",
+            getAbwmengegesamtFeld());
+
+        // ── SEPARATOR: Bemerkungen ────────────────────────
+        gbc.gridx = 0; gbc.gridy = 9;
+        gbc.gridwidth = 3; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Bemerkungen"), gbc);
+
+        // BemerkungsArea
         JScrollPane bemerkungsScroller = new JScrollPane(
             getAnh40BemerkungArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
-        builder.nextLine();
+        bemerkungsScroller.setPreferredSize(
+            new java.awt.Dimension(0, 80));
+        bemerkungsScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 80));
+        gbc.gridy = 10; gbc.gridwidth = 3;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(bemerkungsScroller, gbc);
 
-        JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-                getSaveAnh40Button());
-        builder.append(buttonBar,7);
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getSaveAnh40Button());
+        gbc.gridy = 11; gbc.gridwidth = 3;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
+
+        // ── Wrapper ───────────────────────────────────────
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(innerPanel, BorderLayout.WEST);
+        this.setLayout(new BorderLayout());
+        this.add(wrapperPanel, BorderLayout.NORTH);
         addChangeListeners(getAnh40BemerkungArea(),
             getAnsprechpartnerFeld(), getSachbearbeiterravFeld(),
             getSachbearbeiterheepenFeld(), getKlaeranlageFeld(),
@@ -146,6 +198,98 @@ public class Anh40Panel extends ObjectPanel {
             getBimschCheck(), getAbwmengegenehmigtFeld(),
             getAbwmengeprodspezFeld(), getAbwmengegesamtFeld(),
             getGen58Datum(), getGen59Datum());
+    }
+
+    // ── Hilfsmethode: Label + Feld + Checkbox ─────────────
+    private void addRow(JPanel panel, GridBagConstraints gbc,
+        int row, String label,
+        java.awt.Component field, JCheckBox check) {
+        gbc.gridy = row; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        panel.add(new JLabel(label), gbc);
+
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        field.setPreferredSize(new java.awt.Dimension(200,
+            field.getPreferredSize().height));
+        panel.add(field, gbc);
+
+        gbc.gridx = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel.add(check, gbc);
+    }
+
+    // ── Hilfsmethode: Label + Feld (ohne Checkbox) ────────
+    private void addRowFieldOnly(JPanel panel,
+        GridBagConstraints gbc,
+        int row, String label,
+        java.awt.Component field) {
+        gbc.gridy = row; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        panel.add(new JLabel(label), gbc);
+
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        field.setPreferredSize(new java.awt.Dimension(200,
+            field.getPreferredSize().height));
+        panel.add(field, gbc);
+    }
+
+    // ── Hilfsmethode: Feld links + Label+DateChooser rechts
+    private void addRowFieldAndDateChooser(JPanel panel,
+        GridBagConstraints gbc, int row,
+        String label1, java.awt.Component field1,
+        String label2, TextFieldDateChooser chooser) {
+        gbc.gridy = row; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        panel.add(new JLabel(label1), gbc);
+
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        field1.setPreferredSize(new java.awt.Dimension(200,
+            field1.getPreferredSize().height));
+        panel.add(field1, gbc);
+
+        // Label2 + Chooser rechts
+        JPanel rightPart = new JPanel(
+            new FlowLayout(FlowLayout.LEFT, 3, 0));
+        rightPart.add(new JLabel(label2));
+        chooser.setPreferredSize(new java.awt.Dimension(120,
+            chooser.getPreferredSize().height));
+        rightPart.add(chooser);
+        gbc.gridx = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel.add(rightPart, gbc);
+    }
+
+    // ── createSeparator() ─────────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(
+            new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
     }
 
     public void fetchFormData() throws RuntimeException {

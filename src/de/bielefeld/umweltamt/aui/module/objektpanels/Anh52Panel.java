@@ -48,27 +48,33 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Set;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh52Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
@@ -104,48 +110,162 @@ public class Anh52Panel extends ObjectPanel {
 
     @SuppressWarnings("deprecation")
     public Anh52Panel(BasisObjektBearbeiten hauptModul, Anfallstelle anfallstelle) {
-        name = "Chemische Wäscherei";
+        this.name = "Chemische Wäscherei";
         this.hauptModul = hauptModul;
         this.anfallstelle = anfallstelle;
 
-        FormLayout layout = new FormLayout (
-                "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
-                "");
+        // ── InnerPanel ────────────────────────────────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        // ── SEPARATOR: Fachdaten ──────────────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 2; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Fachdaten"), gbc);
 
-        builder.appendSeparator("Fachdaten");
-        builder.append("Nr. der Betriebsstätte:", getNrBetriebsstaette());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Firmenname:", getFirmennameFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Ansprechpartner:",  getAnsprechpartnerFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Telefon:", getTelefonFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Telefax:", getTelefaxFeld());
-        builder.append("");
-        builder.nextLine();
-        builder.append("Genehmigung:", getGenehmigungDatum());
-        builder.append("");
-        builder.nextLine();
+        // Nr. der Betriebsstätte
+        gbc.gridy = 1; gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(
+            new JLabel("Nr. der Betriebsstätte:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getNrBetriebsstaette().setPreferredSize(
+            new java.awt.Dimension(200,
+                getNrBetriebsstaette()
+                    .getPreferredSize().height));
+        innerPanel.add(getNrBetriebsstaette(), gbc);
 
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
-        JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
+        // Firmenname
+        gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Firmenname:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getFirmennameFeld().setPreferredSize(
+            new java.awt.Dimension(200,
+                getFirmennameFeld()
+                    .getPreferredSize().height));
+        innerPanel.add(getFirmennameFeld(), gbc);
 
-        JComponent buttonBar = ComponentFactory.buildOKBar(getSaveAnh52Button());
-        builder.append(buttonBar, 7);
+        // Ansprechpartner
+        gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Ansprechpartner:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getAnsprechpartnerFeld().setPreferredSize(
+            new java.awt.Dimension(200,
+                getAnsprechpartnerFeld()
+                    .getPreferredSize().height));
+        innerPanel.add(getAnsprechpartnerFeld(), gbc);
+
+        // Telefon
+        gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Telefon:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getTelefonFeld().setPreferredSize(
+            new java.awt.Dimension(200,
+                getTelefonFeld()
+                    .getPreferredSize().height));
+        innerPanel.add(getTelefonFeld(), gbc);
+
+        // Telefax
+        gbc.gridx = 0; gbc.gridy = 5; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Telefax:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getTelefaxFeld().setPreferredSize(
+            new java.awt.Dimension(200,
+                getTelefaxFeld()
+                    .getPreferredSize().height));
+        innerPanel.add(getTelefaxFeld(), gbc);
+
+        // Genehmigung
+        gbc.gridx = 0; gbc.gridy = 6; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Genehmigung:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getGenehmigungDatum().setPreferredSize(
+            new java.awt.Dimension(200,
+                getGenehmigungDatum()
+                    .getPreferredSize().height));
+        innerPanel.add(getGenehmigungDatum(), gbc);
+
+        // ── SEPARATOR: Bemerkungen ────────────────────────
+        gbc.gridx = 0; gbc.gridy = 7;
+        gbc.gridwidth = 2; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Bemerkungen"), gbc);
+
+        // BemerkungsArea
+        JScrollPane bemerkungsScroller = new JScrollPane(
+            getBemerkungenArea(),
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        bemerkungsScroller.setPreferredSize(
+            new java.awt.Dimension(0, 80));
+        bemerkungsScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 80));
+        gbc.gridy = 8; gbc.gridwidth = 2;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(bemerkungsScroller, gbc);
+
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getSaveAnh52Button());
+        gbc.gridy = 9; gbc.gridwidth = 2;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
+
+        // ── Wrapper ───────────────────────────────────────
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(innerPanel, BorderLayout.WEST);
+        this.setLayout(new BorderLayout());
+        this.add(wrapperPanel, BorderLayout.NORTH);
         addChangeListeners(getNrBetriebsstaette(), getFirmennameFeld(),
             getTelefonFeld(), getTelefaxFeld(), getAnsprechpartnerFeld(),
             getGenehmigungDatum(), getBemerkungenArea());
+    }
+
+    // ── createSeparator() ─────────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(
+            new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
     }
 
     public void completeObjekt(Anfallstelle anfallstelle) {

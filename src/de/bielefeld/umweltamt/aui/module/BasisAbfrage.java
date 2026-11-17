@@ -31,9 +31,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objektarten;
@@ -41,6 +38,7 @@ import de.bielefeld.umweltamt.aui.mappings.basis.Sachbearbeiter;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anhang;
 import de.bielefeld.umweltamt.aui.module.common.AbstractQueryModul;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.BasisAbfrageModel;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -166,23 +164,25 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
         });
 
         //Layout
-        FormLayout layout = new FormLayout("pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu");
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+        JPanel optionsPanel = FormHelper.createFormPanel();
 
-        builder.append(typeLabel, typeBox);
-        builder.append(sachbearbeiterLabel, sachbearbeiterBox);
-        builder.append(wiedervorlagenLabel, wiedervorlageBox);
-        builder.nextRow();
+        // Zeile 1
+        FormHelper.addLabelField(optionsPanel, 0, 0, typeLabel, typeBox);
+        FormHelper.addLabelField(optionsPanel, 0, 1, sachbearbeiterLabel, sachbearbeiterBox);
+        FormHelper.addLabelField(optionsPanel, 0, 2, wiedervorlagenLabel, wiedervorlageBox);
 
-        builder.append(anhangLabel, anhangBox);
-        builder.append(entwGebieteLabel, einzGebietBox);
-        builder.nextRow();
+        // Zeile 2
+        FormHelper.addLabelField(optionsPanel, 1, 0, anhangLabel, anhangBox);
+        FormHelper.addLabelField(optionsPanel, 1, 1, entwGebieteLabel, einzGebietBox);
 
-        builder.append(anlagenartenLabel, anlagenartBox);
-        builder.append(prioritaetLabel, prioritaetBox);
-        builder.append(new JPanel(), searchButton, createExportButton());
+        // Zeile 3
+        FormHelper.addLabelField(optionsPanel, 2, 0, anlagenartenLabel, anlagenartBox);
+        FormHelper.addLabelField(optionsPanel, 2, 1, prioritaetLabel, prioritaetBox);
+        FormHelper.add(optionsPanel,
+            FormHelper.buttonBarLeft(searchButton, createExportButton()),
+            4, 2, 2);
 
-        queryOptionsPanel = builder.build();
+        queryOptionsPanel = optionsPanel;
     }
 
     private void executeQuery() {
