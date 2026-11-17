@@ -234,6 +234,26 @@ public class HauptFrame extends JFrame {
             // Look & Feel umschalten
             UIManager
                     .setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+            // Einheitliche Schrift, da JGoodies-Looks die Systemschrift
+            // nicht mehr setzt
+            Font defaultFont = new Font("SansSerif", Font.PLAIN, 12);
+            for (String key : new String[] {"Button", "Label", "TextField",
+                "FormattedTextField", "PasswordField", "ComboBox", "Table",
+                "TableHeader", "TextArea", "CheckBox", "RadioButton",
+                "ToggleButton", "TitledBorder", "Menu", "MenuItem",
+                "PopupMenu", "ToolTip", "List", "Panel", "ScrollPane",
+                "Viewport", "TabbedPane", "ToolBar", "Tree", "Spinner"}) {
+                UIManager.put(key + ".font", defaultFont);
+            }
+
+            // Tabellen: helle Linien, hellblaue Auswahl
+            UIManager.put("Table.gridColor", new Color(220, 220, 220));
+            UIManager.put("Table.background", new Color(255, 255, 255));
+            UIManager.put("Table.alternateRowColor", new Color(245, 245, 245));
+            UIManager.put("Table.selectionBackground", new Color(173, 216, 230));
+            UIManager.put("Table.selectionForeground", new Color(0, 0, 0));
+            UIManager.put("Table.rowHeight", 18);
         } catch (Exception e) {
             log.debug("Konnte Look & Feel nicht ändern!");
         }
