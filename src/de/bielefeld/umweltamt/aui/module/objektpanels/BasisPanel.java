@@ -549,20 +549,7 @@ public class BasisPanel extends ObjectPanel {
                 }
             }
 
-            if (!neu) {
-                if (!this.hauptModul.getObjekt().getObjektarten()
-                        .getAbteilung().equals("AwSV")) {
-                    getPrioritaetFeld().setVisible(true);
-                    getPrioritaetLabel().setVisible(true);
-                    getElkarelevantBox().setVisible(true);
-                    getElkarelevantLabel().setVisible(true);
-                } else {
-                    getPrioritaetFeld().setVisible(false);
-                    getPrioritaetLabel().setVisible(false);
-                    getElkarelevantBox().setVisible(false);
-                    getElkarelevantLabel().setVisible(false);
-                }
-            }
+            updateElkaPrioritaetSichtbarkeit();
 
             if (this.hauptModul.getObjekt().getBeschreibung() != null) {
                 getBeschreibungsArea().setText(
@@ -944,6 +931,9 @@ public class BasisPanel extends ObjectPanel {
 
             this.artBox = new JComboBox<>();
             this.artBox.setKeySelectionManager(new MyKeySelectionManager());
+            // bei Wechsel der Art ELKA/Priorität ein-/ausblenden
+            this.artBox.addActionListener(
+                e -> updateElkaPrioritaetSichtbarkeit());
 
         }
         return this.artBox;
@@ -1014,6 +1004,26 @@ public class BasisPanel extends ObjectPanel {
             this.elkarelevantLabel.setVisible(false);
         }
         return this.elkarelevantLabel;
+    }
+
+    /**
+     * Blendet "ELKA relevant" und "Priorität" ein, außer bei
+     * Objektarten der Abteilung AwSV. Wird beim Laden des Formulars
+     * und bei jedem Wechsel der Art aufgerufen.
+     */
+    private void updateElkaPrioritaetSichtbarkeit() {
+        boolean sichtbar = true;
+        Object art = getArtBox().getSelectedItem();
+        if (art instanceof Objektarten) {
+            sichtbar = !"AwSV".equals(
+                ((Objektarten) art).getAbteilung());
+        }
+        getElkarelevantLabel().setVisible(sichtbar);
+        getElkarelevantBox().setVisible(sichtbar);
+        getPrioritaetLabel().setVisible(sichtbar);
+        getPrioritaetFeld().setVisible(sichtbar);
+        revalidate();
+        repaint();
     }
 
     public JTextArea getBeschreibungsArea() {
