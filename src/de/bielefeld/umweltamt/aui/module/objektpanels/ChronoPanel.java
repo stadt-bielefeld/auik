@@ -213,7 +213,7 @@ public class ChronoPanel extends ObjectPanel {
          * @param obj
          */
         public ChronoModel() {
-            super(new String[] {"Datum", "Sachbearbeiter", "Sachverhalt", "Pfad"
+            super(new String[] {"Datum", "Sachbearbeiter:in", "Sachverhalt", "Pfad"
 
             }, false, true);
         }
@@ -435,8 +435,8 @@ public class ChronoPanel extends ObjectPanel {
 
         if (!sachbear && gespeichert) {
             GUIManager.getInstance().showErrorMessage(
-                "Es muss ein Sachbearbeiter angegeben werden!",
-                "Sachbearbeiter fehlt");
+                "Es muss ein Sachbearbeiter angegeben",
+                "Sachbearbeiter:in fehlt");
             return false;
         } else if (sachbear && gespeichert) {
             this.setDirty(false);
@@ -445,7 +445,7 @@ public class ChronoPanel extends ObjectPanel {
             return true;
         } else if (!gespeichert) {
             this.hauptModul.getFrame().changeStatus(
-                "Chronologie konnte nicht gespeichert werden",
+                "Chronologie konnte nicht gespeichert",
                 HauptFrame.ERROR_COLOR);
             return false;
         }
@@ -686,7 +686,7 @@ public class ChronoPanel extends ObjectPanel {
 				  public void actionPerformed(ActionEvent e) {
 
 					JFileChooser f = new JFileChooser();
-					f.setCurrentDirectory(new File("X:\\Orga\\360\\360-3\\360-3-3\\Alle\\Standorte"));
+					f.setCurrentDirectory(new File("X:\\Orga\\360\\360-3\\360-3-3"));
 			        f.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			        f.showOpenDialog(null);
 

@@ -107,11 +107,11 @@ public class SuevPanel extends ObjectPanel {
         // ── Fachdaten ─────────────────────────────────────
         // linke Spalte: Label + Feld | rechte Spalte: Checkboxen
         FormHelper.addSeparator(innerPanel, row++, "Fachdaten");
-        FormHelper.addLabelField(innerPanel, row, 0, "Datum Anschreiben:", getDatAnschreibenDatum());
+        FormHelper.addLabelField(innerPanel, row, 0, "Datum Anschreiben", getDatAnschreibenDatum());
         FormHelper.addLabelField(innerPanel, row++, 1, null, getSanierungskonzeptCheck());
-        FormHelper.addLabelField(innerPanel, row, 0, "Datum Anzeige:", getDatAnzeige58Datum());
+        FormHelper.addLabelField(innerPanel, row, 0, "Datum Anzeige", getDatAnzeige58Datum());
         FormHelper.addLabelField(innerPanel, row++, 1, null, getSanierungErfolgtCheck());
-        FormHelper.addLabelField(innerPanel, row, 0, "versiegelte Fläche:", getVersFlaecheFeld());
+        FormHelper.addLabelField(innerPanel, row, 0, "versiegelte Fläche", getVersFlaecheFeld());
         FormHelper.addLabelField(innerPanel, row++, 1, null, getDirektrwCheck());
         FormHelper.addLabelField(innerPanel, row, 0, null, getGroesser3haCheck());
         FormHelper.addLabelField(innerPanel, row++, 1, null, getDirektswCheck());

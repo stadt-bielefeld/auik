@@ -154,7 +154,7 @@ public class BasisAdresseSuchen extends AbstractModul {
      */
     @Override
     public String getName() {
-        return "Betreiber/Inhaber suchen";
+        return "Betrieb suchen";
     }
 
     /*
@@ -220,7 +220,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             restrictButtonBar.add(getAnfallButton());
             restrictButtonBar.add(getGenButton());
             restrictPanel.add(
-                new JLabel("Objekte einschränken:"),
+                new JLabel("Objekte einschränken"),
                 BorderLayout.WEST);
 			restrictPanel.add(restrictButtonBar, BorderLayout.CENTER);
 
@@ -281,7 +281,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            mainPanel.add(new JLabel("Straße:"), gbc);
+            mainPanel.add(new JLabel("Straße"), gbc);
 
             gbc.gridx = 1;
             gbc.weightx = 1.0;
@@ -292,7 +292,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            mainPanel.add(new JLabel("Haus-Nr.:"), gbc);
+            mainPanel.add(new JLabel("Haus-Nr."), gbc);
 
             gbc.gridx = 3;
             gbc.weightx = 0;
@@ -305,7 +305,7 @@ public class BasisAdresseSuchen extends AbstractModul {
             gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            mainPanel.add(new JLabel("Ort:"), gbc);
+            mainPanel.add(new JLabel("Ort"), gbc);
 
             gbc.gridx = 5;
             gbc.weightx = 1.0;
@@ -635,13 +635,13 @@ public class BasisAdresseSuchen extends AbstractModul {
                                 .getRow(row);
 
                             if (GUIManager.getInstance().showQuestion(
-                                    "Soll der Betreiber '" + betr
-                                    + "' wirklich gelöscht werden?",
+                                    "Soll der/die Betreiber:in '" + betr
+                                    + "' wirklich gelöscht",
                                     "Löschen bestätigen")) {
                                 if (BasisAdresseSuchen.this.inhaberModel
                                     .removeRow(row)) {
                                     BasisAdresseSuchen.this.frame
-                                        .changeStatus("Betreiber gelöscht.",
+                                        .changeStatus("Betreiber:in gelöscht.",
                                             HauptFrame.SUCCESS_COLOR);
                                     log.debug("Betreiber "
                                         + betr.getId()
@@ -740,7 +740,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private Action getObjektBetreiberEditAction() {
         if (this.objektBetreiberEditAction == null) {
-            this.objektBetreiberEditAction = new AbstractAction("Betreiber") {
+            this.objektBetreiberEditAction = new AbstractAction("Betreiber:in") {
 
 				private static final long serialVersionUID = 9162213813094661474L;
 
@@ -839,7 +839,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private void showBetreiberPopup(MouseEvent e) {
         if (this.betreiberPopup == null) {
-            this.betreiberPopup = new JPopupMenu("Betreiber");
+            this.betreiberPopup = new JPopupMenu("Betreiber:in");
             JMenuItem bearbItem = new JMenuItem(getBetreiberEditAction());
             JMenuItem loeschItem = new JMenuItem(getBetreiberLoeschAction());
             JMenuItem neuItem = new JMenuItem(getObjektNeuAction());
@@ -1094,7 +1094,7 @@ public class BasisAdresseSuchen extends AbstractModul {
 
     private JButton getSubmitButtonBetreiber() {
         if (this.submitButtonBetreiber == null) {
-            this.submitButtonBetreiber = new JButton("Betreiber", AuikUtils.getIcon(16,
+            this.submitButtonBetreiber = new JButton("Betreiber:in", AuikUtils.getIcon(16,
                     "key_enter.png"));
             this.submitButtonBetreiber.setToolTipText("Suche starten");
             this.submitButtonBetreiber.addActionListener(new ActionListener() {
@@ -1465,10 +1465,10 @@ public class BasisAdresseSuchen extends AbstractModul {
 	private JComboBox<NamedObject> getSuchBox() {
 	    if (this.suchBox == null) {
 	        this.suchBox = new JComboBox<>(new NamedObject[] {
-	                new NamedObject("Anrede:", "anrede"),
-	                new NamedObject("Vorname:", "vorname"),
-	                new NamedObject("Name:", "name"),
-	                new NamedObject("Zusatz:", "zusatz"),
+	                new NamedObject("Anrede", "anrede"),
+	                new NamedObject("Vorname", "vorname"),
+	                new NamedObject("Name", "name"),
+	                new NamedObject("Zusatz", "zusatz"),
 	                new NamedObject("Irgendwo", null)});
 	        this.suchBox.setSelectedIndex(2);
         }

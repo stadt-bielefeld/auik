@@ -165,12 +165,12 @@ public class ProbepktAuswPanel extends JPanel {
      // ── ZEILE 1: Von + Bis + AnalyseVonBox ───────────
      JPanel vonBisPanel = new JPanel(
          new FlowLayout(FlowLayout.LEFT, 5, 0));
-     vonBisPanel.add(new JLabel("Von:"));
+     vonBisPanel.add(new JLabel("Von"));
      getVonDateChooser().setPreferredSize(
          new java.awt.Dimension(110,
              getVonDateChooser().getPreferredSize().height));
      vonBisPanel.add(getVonDateChooser());
-     vonBisPanel.add(new JLabel("Bis:"));
+     vonBisPanel.add(new JLabel("Bis"));
      getBisDateChooser().setPreferredSize(
          new java.awt.Dimension(110,
              getBisDateChooser().getPreferredSize().height));
@@ -697,7 +697,7 @@ public class ProbepktAuswPanel extends JPanel {
                 if (exportDatei.exists()) {
                     boolean answer = GUIManager.getInstance().showQuestion(
                         "Soll die vorhandene Datei " + exportDatei.getName()
-                            + " wirklich überschrieben werden?",
+                            + " wirklich überschrieben",
                         "Datei bereits vorhanden!");
                     if (answer && exportDatei.canWrite()) {
                         doIt = true;
@@ -713,7 +713,7 @@ public class ProbepktAuswPanel extends JPanel {
                     if (AuikUtils.exportTableDataToCVS(this.exportTable,
                         exportDatei)) {
                         GUIManager.getInstance().showInfoMessage(
-                            "Speichern der CSV-Datei erfolgreich!",
+                            "Speichern der CSV-Datei",
                             "Speichern erfolgreich");
                     } else {
                         log.debug("Beim Speichern der Datei '" + exportDatei
@@ -782,7 +782,7 @@ public class ProbepktAuswPanel extends JPanel {
                 try {
                     this.chartPanel.doSaveAs();
                 } catch (IOException e) {
-                    log.debug("Konnte Datei nicht speichern!");
+                    log.debug("Konnte Datei nicht");
                 }
             } else if (this.tabbedPane.getSelectedIndex() == 1) {
                 saveTabelle();

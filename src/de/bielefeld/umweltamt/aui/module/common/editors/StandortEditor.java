@@ -94,13 +94,13 @@ public class StandortEditor extends AbstractBaseEditor
 
 		JPanel panel = FormHelper.createFormPanel();
 		FormHelper.addSeparator(panel, 0, 0, 3, "Standort");
-		FormHelper.addLabel(panel, 0, 1, "Bezeichnung:");
+		FormHelper.addLabel(panel, 0, 1, "Bezeichnung");
 		FormHelper.addField(panel, 1, 1, 2, bezeichnungFeld);
 		// Koordinaten
-		FormHelper.addLabel(panel, 0, 2, "E32:");
+		FormHelper.addLabel(panel, 0, 2, "E32");
 		FormHelper.fixWidth(e32Feld, 88);
 		FormHelper.addField(panel, 1, 2, 1, e32Feld);
-		FormHelper.addLabel(panel, 0, 3, "N32:");
+		FormHelper.addLabel(panel, 0, 3, "N32");
 		FormHelper.fixWidth(n32Feld, 88);
 		FormHelper.addField(panel, 1, 3, 1, n32Feld);
 		FormHelper.addSpan(panel, getAusAblageButton(), 2, 2, 1, 2);

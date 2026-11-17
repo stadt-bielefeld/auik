@@ -706,7 +706,7 @@ public class HauptFrame extends JFrame {
                                     "<html><table valign='top'>"
                                     + "<tr><th align='left'>Version:</th><td>"
                                     + guiManager.getVersion() + "</td>"
-                                    + "<tr><th align='left'>Copyright:</th>"
+                                    + "<tr><th align='left'>"
                                     + "<td>2005 - 2011 Umweltamt Bielefeld</td></tr>"
                                     + "<tr><th align='left'>Projekthomepage:</th>"
 // TODO: Get the URL (and other stuff) from the Manifest
@@ -1172,7 +1172,7 @@ public class HauptFrame extends JFrame {
             gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            panel.add(new JLabel("Passwort:"), gbc);
+            panel.add(new JLabel("Passwort"), gbc);
 
             // PasswortFeld
             gbc.gridx = 1;

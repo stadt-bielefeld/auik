@@ -141,13 +141,13 @@ public class SchlammPanel extends JPanel {
         getProbeTabelle().addFocusListener(tfl);
 
         JScrollPane probeScroller = new JScrollPane(getProbeTabelle());
-        JLabel anlageLabel = new JLabel("Kläranlage:");
+        JLabel anlageLabel = new JLabel("Kläranlage");
 
         // Unten: Neue Probenahme
         anlegenPanel = FormHelper.createFormPanel();
         FormHelper.addSeparator(anlegenPanel, 0, "Neue Probenahme");
-        FormHelper.addLabelField(anlegenPanel, 1, 0, "Kennummer:", getKennummerFeld());
-        FormHelper.addLabelField(anlegenPanel, 1, 1, "Datum:", getDatumsChooser());
+        FormHelper.addLabelField(anlegenPanel, 1, 0, "Kennummer", getKennummerFeld());
+        FormHelper.addLabelField(anlegenPanel, 1, 1, "Datum", getDatumsChooser());
         FormHelper.add(anlegenPanel, getAnlegenButton(), 4, 1, 1);
 
         // Oben: Kläranlage

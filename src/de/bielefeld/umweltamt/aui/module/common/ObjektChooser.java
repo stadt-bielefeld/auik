@@ -61,7 +61,7 @@ public class ObjektChooser extends OkCancelDialog {
     public ObjektChooser(HauptFrame owner, Objekt objekt, ObjektVerknuepfungModel objektVerknuepfungModel) {
         super("Objekt auswählen", owner);
 
-        objektModel = new BasisObjektModel("Betreiber", null);
+        objektModel = new BasisObjektModel("Betreiber:in", null);
         this.objekt = objekt;
         this.objektVerknuepfungModel = objektVerknuepfungModel;
         getErgebnisTabelle().setModel(objektModel);

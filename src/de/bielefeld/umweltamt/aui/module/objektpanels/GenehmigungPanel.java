@@ -116,23 +116,23 @@ public class GenehmigungPanel extends ObjectPanel{
 
         JPanel innerPanel = FormHelper.createFormPanel();
         FormHelper.addSeparator(innerPanel, 0, "Fachdaten");
-        FormHelper.addLabelField(innerPanel, 1, 0, "Aktenzeichen:",
+        FormHelper.addLabelField(innerPanel, 1, 0, "Aktenzeichen",
             getAktenzeichenFeld());
         FormHelper.addLabelField(innerPanel, 2, 0, "Rechtsgrundlage",
             getWasserrechtBox());
-        FormHelper.addLabelField(innerPanel, 3, 0, "Antragsdatum:", getAntragsDatum());
-        FormHelper.addLabelField(innerPanel, 4, 0, "Recht erteilt am:",
+        FormHelper.addLabelField(innerPanel, 3, 0, "Antragsdatum", getAntragsDatum());
+        FormHelper.addLabelField(innerPanel, 4, 0, "Recht erteilt am",
             getGenehmigungsDatum());
-        FormHelper.addLabelField(innerPanel, 5, 0, "Änderungsdatum:",
+        FormHelper.addLabelField(innerPanel, 5, 0, "Änderungsdatum",
             getAenderungsDatum());
         FormHelper.addLabelField(innerPanel, 5, 1, null, getSelbCheckBox());
-        FormHelper.addLabelField(innerPanel, 6, 0, "Anhang:", getAnhangFeld());
+        FormHelper.addLabelField(innerPanel, 6, 0, "Anhang", getAnhangFeld());
         FormHelper.addLabelField(innerPanel, 6, 1, null, getEsaCheckBox());
-        FormHelper.addLabelField(innerPanel, 7, 0, "Erlaubte Menge [l/s]:",
+        FormHelper.addLabelField(innerPanel, 7, 0, "Erlaubte Menge [l/s]",
             getGenMengeFeld());
         FormHelper.addLabelField(innerPanel, 7, 1, "[m³/2h]", getGenMengeFeld2());
         FormHelper.addLabelField(innerPanel, 8, 0, "Befristet", getBefCheckBox());
-        FormHelper.addLabelField(innerPanel, 9, 0, "bis:", getBefristetDatum());
+        FormHelper.addLabelField(innerPanel, 9, 0, "bis", getBefristetDatum());
         FormHelper.addSeparator(innerPanel, 10, "Nebenbestimmungen");
         JScrollPane nebenbestScroller = new JScrollPane(getNebenbestArea(),
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,

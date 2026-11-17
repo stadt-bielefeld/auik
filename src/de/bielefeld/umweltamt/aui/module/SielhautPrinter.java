@@ -157,10 +157,10 @@ public class SielhautPrinter extends AbstractModul {
         dialog.setModal(true);
         dialog.setSize(600, 250);
 
-        JLabel countLabel = new JLabel("Sielhautpunkte ausgewählt:");
+        JLabel countLabel = new JLabel("Sielhautpunkte ausgewählt");
         JLabel count = new JLabel(
             String.valueOf(sielhautModel.getSelectedCount()));
-        JLabel pathLabel = new JLabel("Dateipfad:");
+        JLabel pathLabel = new JLabel("Dateipfad");
         JTextArea path = new JTextArea(this.outputPath);
         JButton pathButton = new JButton("Pfad wählen");
         pathButton.addActionListener(new java.awt.event.ActionListener() {
@@ -206,7 +206,7 @@ public class SielhautPrinter extends AbstractModul {
                 dialog.setVisible(false);
                 resultDialog.setVisible(true);
                 GUIManager.getInstance().setInfoStatus(
-                    String.format("%s Sielhautsteckbrief(e) erstellt", count.getText()));
+                    String.format("%s Sielhautsteckbrief(e)", count.getText()));
             }
         });
 

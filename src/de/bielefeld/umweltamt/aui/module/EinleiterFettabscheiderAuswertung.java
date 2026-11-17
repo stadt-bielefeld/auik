@@ -110,7 +110,7 @@ public class EinleiterFettabscheiderAuswertung
         if (queryPanel == null) {
             // Die Widgets initialisieren
             submitButton = new JButton("Alle Objekte anzeigen");
-            sachbearbeiterLabel = new JLabel("Sachbearbeiter:");
+            sachbearbeiterLabel = new JLabel("Sachbearbeiter:in");
             List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
             DefaultComboBoxModel<Sachbearbeiter> sachbearbeiterModel = new DefaultComboBoxModel<>(
                     sachbearbeiter.toArray(new Sachbearbeiter[sachbearbeiter.size()]));

@@ -134,7 +134,7 @@ public class AwsvHerstellernummerSuchen
 
             // Noch etwas Layout...
             queryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-            queryPanel.add(new JLabel("Herstellnr.:"));
+            queryPanel.add(new JLabel("Herstellnr."));
             queryPanel.add(herstellFeld);
             queryPanel.add(suchenButton);
             queryPanel.add(createExportButton());

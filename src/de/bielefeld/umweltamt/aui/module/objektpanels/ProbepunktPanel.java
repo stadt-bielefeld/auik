@@ -154,7 +154,7 @@ public class ProbepunktPanel extends ObjectPanel {
         gbc.gridwidth = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Art:"), gbc);
+        innerPanel.add(new JLabel("Art"), gbc);
 
         gbc.gridx = 1; gbc.gridwidth = 1;
         gbc.weightx = 0;
@@ -169,7 +169,7 @@ public class ProbepunktPanel extends ObjectPanel {
         gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Nr:"), gbc);
+        innerPanel.add(new JLabel("Nr"), gbc);
 
         gbc.gridx = 3; gbc.gridwidth = 1;
         gbc.weightx = 0;
@@ -184,7 +184,7 @@ public class ProbepunktPanel extends ObjectPanel {
         gbc.gridwidth = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Kläranlage:"), gbc);
+        innerPanel.add(new JLabel("Kläranlage"), gbc);
 
         gbc.gridx = 1; gbc.gridwidth = 1;
         gbc.weightx = 0;
@@ -200,7 +200,7 @@ public class ProbepunktPanel extends ObjectPanel {
         gbc.gridwidth = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Sachbearbeiter:"), gbc);
+        innerPanel.add(new JLabel("Sachbearbeiter:in"), gbc);
 
         gbc.gridx = 1; gbc.gridwidth = 1;
         gbc.weightx = 0;
@@ -216,7 +216,7 @@ public class ProbepunktPanel extends ObjectPanel {
         gbc.gridwidth = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Branche:"), gbc);
+        innerPanel.add(new JLabel("Branche"), gbc);
 
         gbc.gridx = 1; gbc.gridwidth = 1;
         gbc.weightx = 0;
@@ -689,7 +689,7 @@ public class ProbepunktPanel extends ObjectPanel {
             gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.WEST;
-            this.neueProbePanel.add(new JLabel("Kennummer:"), gbc);
+            this.neueProbePanel.add(new JLabel("Kennummer"), gbc);
 
             // KennummerFeld feste Breite
             gbc.gridx = 1;
@@ -706,7 +706,7 @@ public class ProbepunktPanel extends ObjectPanel {
             gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.WEST;
-            this.neueProbePanel.add(new JLabel("Datum:"), gbc);
+            this.neueProbePanel.add(new JLabel("Datum"), gbc);
 
             // DatumsChooser feste Breite
             gbc.gridx = 3;

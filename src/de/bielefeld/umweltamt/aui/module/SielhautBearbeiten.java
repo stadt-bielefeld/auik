@@ -491,7 +491,7 @@ public class SielhautBearbeiten extends ObjectModule {
 			if (spunkt != null) {
 				spunkt = Sielhaut.findById(spunkt.getId());
 
-				frame.changeStatus("Sielhaut-Messpunkt erfolgreich gespeichert.", HauptFrame.SUCCESS_COLOR);
+				frame.changeStatus("Sielhaut-Messpunkt erfolgreich", HauptFrame.SUCCESS_COLOR);
 				setSielhautPunkt(spunkt);
 			}
 		}
@@ -606,7 +606,7 @@ public class SielhautBearbeiten extends ObjectModule {
 			boolean doIt = false;
 			if (exportDatei.exists()) {
 				boolean answer = GUIManager.getInstance().showQuestion(
-						"Soll die vorhandene Datei " + exportDatei.getName() + " wirklich überschrieben werden?",
+						"Soll die vorhandene Datei " + exportDatei.getName() + " wirklich überschrieben",
 						"Datei bereits vorhanden!");
 				if (answer && exportDatei.canWrite()) {
 					doIt = true;
@@ -684,7 +684,7 @@ public class SielhautBearbeiten extends ObjectModule {
 							if (SielhautBearbeiten.this.probeModel.removeRow(row)) {
 								SielhautBearbeiten.this.frame.changeStatus("Probenahme gelöscht!",
 										HauptFrame.SUCCESS_COLOR);
-								log.debug("Probe " + probe.getKennummer() + " wurde gelöscht!");
+								log.debug("Probe " + probe.getKennummer() + " gelöscht!");
 							} else {
 								SielhautBearbeiten.this.frame.changeStatus("Konnte Probenahme nicht löschen!",
 										HauptFrame.ERROR_COLOR);
@@ -782,7 +782,7 @@ public class SielhautBearbeiten extends ObjectModule {
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
             mainPanel.add(
-                new JLabel("Messstelle:"), gbc);
+                new JLabel("Messstelle"), gbc);
 
             gbc.gridx = 1; gbc.weightx = 1.0;
             gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -975,7 +975,7 @@ public class SielhautBearbeiten extends ObjectModule {
                 GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
             panel.add(new JLabel(
-                "Entwässerungsgebiet:"), gbc);
+                "Entwässerungsgebiet"), gbc);
             gbc.gridx = 1; gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.WEST;
@@ -990,7 +990,7 @@ public class SielhautBearbeiten extends ObjectModule {
             gbc.weightx = 0; gbc.fill =
                 GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            panel.add(new JLabel("Lage:"), gbc);
+            panel.add(new JLabel("Lage"), gbc);
             gbc.gridx = 1; gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.WEST;
@@ -1005,7 +1005,7 @@ public class SielhautBearbeiten extends ObjectModule {
             gbc.weightx = 0; gbc.fill =
                 GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.NORTHEAST;
-            panel.add(new JLabel("Bemerkungen:"),
+            panel.add(new JLabel("Bemerkungen"),
                 gbc);
             JScrollPane bemScroller = new JScrollPane(
                 getSpBemerkungsArea(),
@@ -1024,7 +1024,7 @@ public class SielhautBearbeiten extends ObjectModule {
             gbc.weightx = 0; gbc.fill =
                 GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            panel.add(new JLabel("E32:"), gbc);
+            panel.add(new JLabel("E32"), gbc);
             gbc.gridx = 1; gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.WEST;
@@ -1054,7 +1054,7 @@ public class SielhautBearbeiten extends ObjectModule {
             gbc.weightx = 0; gbc.fill =
                 GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            panel.add(new JLabel("N32:"), gbc);
+            panel.add(new JLabel("N32"), gbc);
             gbc.gridx = 1; gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.WEST;
@@ -1076,7 +1076,7 @@ public class SielhautBearbeiten extends ObjectModule {
             gbc.weightx = 0; gbc.fill =
                 GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            panel.add(new JLabel("Schacht-Nr.:"),
+            panel.add(new JLabel("Schacht-Nr."),
                 gbc);
             gbc.gridx = 1; gbc.gridwidth = 2;
             gbc.weightx = 0; gbc.fill =
@@ -1101,7 +1101,7 @@ public class SielhautBearbeiten extends ObjectModule {
             gbc.weightx = 0; gbc.fill =
                 GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            panel.add(new JLabel("Alarmplan-Nr.:"),
+            panel.add(new JLabel("Alarmplan-Nr."),
                 gbc);
             gbc.gridx = 1; gbc.gridwidth = 2;
             gbc.weightx = 0; gbc.fill =
@@ -1300,14 +1300,14 @@ public class SielhautBearbeiten extends ObjectModule {
             this.neuProbPanel = new JPanel(
                 new FlowLayout(FlowLayout.LEFT, 5, 2));
             this.neuProbPanel.add(
-                new JLabel("Kennummer:"));
+                new JLabel("Kennummer"));
             getPrNummerFeld().setPreferredSize(
                 new java.awt.Dimension(120,
                 getPrNummerFeld()
                     .getPreferredSize().height));
             this.neuProbPanel.add(getPrNummerFeld());
             this.neuProbPanel.add(
-                new JLabel("Datum:"));
+                new JLabel("Datum"));
             getPrDateChooser().setPreferredSize(
                 new java.awt.Dimension(110,
                 getPrDateChooser()
@@ -1326,7 +1326,7 @@ public class SielhautBearbeiten extends ObjectModule {
             this.auswertungPanel = new JPanel(
                 new FlowLayout(FlowLayout.LEFT, 5, 2));
             this.auswertungPanel.add(
-                new JLabel("Von:"));
+                new JLabel("Von"));
             getVonDateChooser().setPreferredSize(
                 new java.awt.Dimension(110,
                 getVonDateChooser()
@@ -1334,7 +1334,7 @@ public class SielhautBearbeiten extends ObjectModule {
             this.auswertungPanel.add(
                 getVonDateChooser());
             this.auswertungPanel.add(
-                new JLabel("Bis:"));
+                new JLabel("Bis"));
             getBisDateChooser().setPreferredSize(
                 new java.awt.Dimension(110,
                 getBisDateChooser()
@@ -1707,7 +1707,7 @@ public class SielhautBearbeiten extends ObjectModule {
 				boolean doIt = false;
 				if (exportDatei.exists()) {
 					boolean answer = GUIManager.getInstance().showQuestion(
-							"Soll die vorhandene Datei " + exportDatei.getName() + " wirklich überschrieben werden?",
+							"Soll die vorhandene Datei " + exportDatei.getName() + " wirklich überschrieben",
 							"Datei bereits vorhanden!");
 					if (answer && exportDatei.canWrite()) {
 						doIt = true;
@@ -1720,7 +1720,7 @@ public class SielhautBearbeiten extends ObjectModule {
 					log.debug("Speichere nach '" + exportDatei.getName() + "' (Ext: '" + ext + "') in '"
 							+ exportDatei.getParent() + "' !");
 					if (AuikUtils.exportTableDataToCVS(this.exportTable, exportDatei)) {
-						GUIManager.getInstance().showInfoMessage("Speichern der CSV-Datei erfolgreich!",
+						GUIManager.getInstance().showInfoMessage("Speichern der CSV-Datei",
 								"Speichern erfolgreich");
 					} else {
 						log.debug("Beim Speichern der Datei '" + exportDatei + "' trat ein Fehler auf!");
@@ -1769,7 +1769,7 @@ public class SielhautBearbeiten extends ObjectModule {
 				try {
 					chartPanel.doSaveAs();
 				} catch (IOException e) {
-					log.debug("Konnte Datei nicht speichern!");
+					log.debug("Konnte Datei nicht");
 				}
 			} else if (tabbedPane.getSelectedIndex() == 1) {
 				saveTabelle();
@@ -2099,14 +2099,14 @@ public class SielhautBearbeiten extends ObjectModule {
 					String n32AusZeile = tmp[3];
 					spE32Feld.setText(e32AusZeile.substring(0, 7));
 					spN32Feld.setText(n32AusZeile.substring(0, 7));
-					this.frame.changeStatus("Rechts- und Hochwert eingetragen", HauptFrame.SUCCESS_COLOR);
+					this.frame.changeStatus("Rechts- und Hochwert", HauptFrame.SUCCESS_COLOR);
 				} else
 					if (tmp.length == 2) {
 						String e32AusZeile = tmp[0];
 						String n32AusZeile = tmp[1];
 						spE32Feld.setText(e32AusZeile.substring(0, 7));
 						spN32Feld.setText(n32AusZeile.substring(0, 7));
-						this.frame.changeStatus("Rechts- und Hochwert eingetragen", HauptFrame.SUCCESS_COLOR);
+						this.frame.changeStatus("Rechts- und Hochwert", HauptFrame.SUCCESS_COLOR);
 				}else
 				{
 					this.frame.changeStatus("Zwischenablage enthält keine verwertbaren Daten", HauptFrame.ERROR_COLOR);

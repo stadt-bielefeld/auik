@@ -1240,16 +1240,16 @@ public class BasisAdresseNeu extends AbstractModul {
 						HauptFrame.SUCCESS_COLOR);
 
 				// Wenn wir vom Objekt anlegen kommen,
-				if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_betreiber")) {
+				if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt")) {
 					manager.getSettingsManager().setSetting("auik.imc.use_betreiber",
 							standort.getInhaber().getId().intValue(), false);
-					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_betreiber");
+					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt");
 					// ... kehren wir direkt dorthin zurück:
 					manager.switchModul("m_objekt_bearbeiten");
-				} else if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_standort")) {
+				} else if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt")) {
 					manager.getSettingsManager().setSetting("auik.imc.use_standort", standort.getId().intValue(),
 							false);
-					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_standort");
+					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt");
 					// ... kehren wir direkt dorthin zurück:
 					manager.switchModul("m_objekt_bearbeiten");
 				} else {
@@ -1259,18 +1259,18 @@ public class BasisAdresseNeu extends AbstractModul {
 			}
 
 			if (inh != null) {
-				frame.changeStatus("Neuer Inhaber " + inh.getId() + " erfolgreich gespeichert.",
+				frame.changeStatus("Neue:r Inhaber:in " + inh.getId() + " erfolgreich gespeichert.",
 						HauptFrame.SUCCESS_COLOR);
 
 				// Wenn wir vom Objekt anlegen kommen,
-				if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_betreiber")) {
+				if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt")) {
 					manager.getSettingsManager().setSetting("auik.imc.use_betreiber", inh.getId().intValue(), false);
-					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_betreiber");
+					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt");
 					// ... kehren wir direkt dorthin zurück:
 					manager.switchModul("m_objekt_bearbeiten");
-				} else if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt_standort")) {
+				} else if (manager.getSettingsManager().getBoolSetting("auik.imc.return_to_objekt")) {
 					manager.getSettingsManager().setSetting("auik.imc.use_standort", standort.getId().intValue(), false);
-					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt_standort");
+					manager.getSettingsManager().removeSetting("auik.imc.return_to_objekt");
 					// ... kehren wir direkt dorthin zurück:
 					manager.switchModul("m_objekt_bearbeiten");
 				} else {
@@ -1280,7 +1280,7 @@ public class BasisAdresseNeu extends AbstractModul {
 			}
 
 			else {
-				frame.changeStatus("Konnte Betreiber nicht speichern!", Color.RED);
+				frame.changeStatus("Konnte Betreiber nicht", Color.RED);
 				log.debug("Konnte nicht speichern");
 			}
 

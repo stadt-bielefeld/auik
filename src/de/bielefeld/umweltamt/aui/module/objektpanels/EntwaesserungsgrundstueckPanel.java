@@ -161,8 +161,8 @@ public class EntwaesserungsgrundstueckPanel extends ObjectPanel {
 		JPanel innerPanel = FormHelper.createFormPanel();
 		createFields();
 		FormHelper.addSeparator(innerPanel, 0, "ELKA");
-		FormHelper.addLabelField(innerPanel, 1, 0, "Bezeichnung:", getBezeichnungFeld(), 2);
-		FormHelper.addLabelField(innerPanel, 2, 0, "Erstellung:", getErstellDatDatum());
+		FormHelper.addLabelField(innerPanel, 1, 0, "Bezeichnung", getBezeichnungFeld(), 2);
+		FormHelper.addLabelField(innerPanel, 2, 0, "Erstellung", getErstellDatDatum());
 		FormHelper.addLabelField(innerPanel, 3, 0, einleitungsbereichLabel,
 		    getEinleitungsbereichBox(), 2);
 		FormHelper.addLabelField(innerPanel, 4, 0, gebNameLabel, getGebNameFeld(), 2);

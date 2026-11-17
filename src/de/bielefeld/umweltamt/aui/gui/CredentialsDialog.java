@@ -186,7 +186,7 @@ public class CredentialsDialog extends JDialog {
         gbc.anchor    = GridBagConstraints.EAST;
         gbc.gridx     = 0;
         gbc.gridy     = 1;
-        panel.add(new JLabel("Url:"), gbc);
+        panel.add(new JLabel("Url"), gbc);
 
         gbc.gridx   = 1;
         gbc.fill    = GridBagConstraints.HORIZONTAL;
@@ -204,7 +204,7 @@ public class CredentialsDialog extends JDialog {
         gbc.weightx = 0;
         gbc.insets  = new Insets(3, 0, 3, 4);
         gbc.anchor  = GridBagConstraints.EAST;
-        panel.add(new JLabel("Benutzer:"), gbc);
+        panel.add(new JLabel("Benutzer"), gbc);
 
         gbc.gridx   = 1;
         gbc.fill    = GridBagConstraints.HORIZONTAL;
@@ -222,7 +222,7 @@ public class CredentialsDialog extends JDialog {
         gbc.weightx = 0;
         gbc.insets  = new Insets(3, 0, 3, 4);
         gbc.anchor  = GridBagConstraints.EAST;
-        panel.add(new JLabel("Passwort:"), gbc);
+        panel.add(new JLabel("Passwort"), gbc);
 
         gbc.gridx   = 1;
         gbc.fill    = GridBagConstraints.HORIZONTAL;

@@ -164,9 +164,9 @@ public class EinleiterBrennwertAuswertung
 
             // Noch etwas Layout...
             queryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-            queryPanel.add(new JLabel("Erfassungsjahr:"));
+            queryPanel.add(new JLabel("Erfassungsjahr"));
             queryPanel.add(jahrBox);
-            queryPanel.add(new JLabel("Typ:"));
+            queryPanel.add(new JLabel("Typ"));
             queryPanel.add(typBox);
             queryPanel.add(submitButton);
             queryPanel.add(createExportButton());

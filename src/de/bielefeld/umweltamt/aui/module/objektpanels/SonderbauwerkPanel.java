@@ -114,21 +114,21 @@ public class SonderbauwerkPanel extends ObjectPanel {
 
         JPanel innerPanel = FormHelper.createFormPanel();
         FormHelper.addSeparator(innerPanel, 0, "Stammdaten");
-        FormHelper.addLabelField(innerPanel, 1, 0, "Bezeichnung:", getBezeichnungFeld());
-        FormHelper.addLabelField(innerPanel, 2, 0, "Kurbezeichnung:",
+        FormHelper.addLabelField(innerPanel, 1, 0, "Bezeichnung", getBezeichnungFeld());
+        FormHelper.addLabelField(innerPanel, 2, 0, "Kurbezeichnung",
             getKurzbezeichnungFeld());
-        FormHelper.addLabelField(innerPanel, 3, 0, "Entwässerungsverfahren:",
+        FormHelper.addLabelField(innerPanel, 3, 0, "Entwässerungsverfahren",
             getVerfahrenBox());
-        FormHelper.addLabelField(innerPanel, 4, 0, "Typ:", getTypBox());
-        FormHelper.addLabelField(innerPanel, 5, 0, "Inbetriebnahme:",
+        FormHelper.addLabelField(innerPanel, 4, 0, "Typ", getTypBox());
+        FormHelper.addLabelField(innerPanel, 5, 0, "Inbetriebnahme",
             getInbetriebnahmeFeld());
-        FormHelper.addLabelField(innerPanel, 6, 0, "Wiederinbetriebnahme:",
+        FormHelper.addLabelField(innerPanel, 6, 0, "Wiederinbetriebnahme",
             getWiederinebetriebdatDatum());
         FormHelper.addLabelField(innerPanel, 7, 0, null, getStillgelegtCheck());
-        FormHelper.addLabelField(innerPanel, 7, 1, "am:", getStillegdatDatum());
-        FormHelper.addLabelField(innerPanel, 8, 0, "Ostwert:", getE32Feld());
-        FormHelper.addLabelField(innerPanel, 9, 0, "Nordwert:", getN32Feld());
-        FormHelper.addLabelField(innerPanel, 10, 0, "Kläranlage:", getKlaeranlageBox());
+        FormHelper.addLabelField(innerPanel, 7, 1, "am", getStillegdatDatum());
+        FormHelper.addLabelField(innerPanel, 8, 0, "Ostwert", getE32Feld());
+        FormHelper.addLabelField(innerPanel, 9, 0, "Nordwert", getN32Feld());
+        FormHelper.addLabelField(innerPanel, 10, 0, "Kläranlage", getKlaeranlageBox());
         FormHelper.addSeparator(innerPanel, 11, "Bemerkungen");
         JScrollPane bemerkungsScroller = new JScrollPane(
             getBemerkungFeld(),

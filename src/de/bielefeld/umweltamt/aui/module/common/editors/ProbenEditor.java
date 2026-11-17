@@ -939,48 +939,48 @@ public class ProbenEditor extends AbstractApplyEditor {
         FormHelper.addSeparator(panel, 9, row, 1, "Bemerkung");
 
         row++;
-        FormHelper.addLabel(panel, 0, row, "Probenummer:");
+        FormHelper.addLabel(panel, 0, row, "Probenummer");
         FormHelper.addField(panel, 1, row, 3, probenummer);
         bemerkungsScroller.setPreferredSize(new Dimension(400, 90));
         FormHelper.addSpan(panel, bemerkungsScroller, 9, row, 1, 3);
 
         row++;
-        FormHelper.addLabel(panel, 0, row, "Vorgangsstatus:");
+        FormHelper.addLabel(panel, 0, row, "Vorgangsstatus");
         FormHelper.addField(panel, 1, row, 3, vorgangsstatusBox);
         FormHelper.add(panel, statusHoch, 4, row, 2);
 
         row++;
-        FormHelper.addLabel(panel, 0, row, "Sachbearbeiter:");
+        FormHelper.addLabel(panel, 0, row, "Sachbearbeiter:in");
         FormHelper.addField(panel, 1, row, 3, sachbearbeiterBox);
 
         row++;
-        FormHelper.addLabel(panel, 0, row, "Name des Betriebs:");
+        FormHelper.addLabel(panel, 0, row, "Name des Betriebs");
         FormHelper.addField(panel, 1, row, 6, betrieb);
 
         row++;
-        FormHelper.addLabel(panel, 0, row, "Entnahmepunkt:");
+        FormHelper.addLabel(panel, 0, row, "Entnahmepunkt");
         FormHelper.addField(panel, 1, row, 6, entnahmepunkt);
 
         row++;
-        FormHelper.addLabel(panel, 0, row, "Datum:");
+        FormHelper.addLabel(panel, 0, row, "Datum");
         FormHelper.addField(panel, 1, row, 1, datum);
-        FormHelper.addLabel(panel, 2, row, "von:");
+        FormHelper.addLabel(panel, 2, row, "von");
         FormHelper.addField(panel, 3, row, 1, uhrzeitVon);
-        FormHelper.addLabel(panel, 4, row, "bis:");
+        FormHelper.addLabel(panel, 4, row, "bis");
         FormHelper.addField(panel, 5, row, 1, uhrzeitBis);
-        FormHelper.addLabel(panel, 6, row, "Fahrtzeit:");
+        FormHelper.addLabel(panel, 6, row, "Fahrtzeit");
         FormHelper.addField(panel, 7, row, 1, fahrtzeit);
 
         row++;
-        FormHelper.addLabel(panel, 0, row, "Bezug:");
+        FormHelper.addLabel(panel, 0, row, "Bezug");
         FormHelper.addField(panel, 1, row, 3, bezug);
-        FormHelper.addLabel(panel, 4, row, "Beteiligte:");
+        FormHelper.addLabel(panel, 4, row, "Beteiligte");
         FormHelper.addField(panel, 5, row, 1, beteiligte);
 
         row++;
-        FormHelper.addLabel(panel, 0, row, "Rechnungsdatum:");
+        FormHelper.addLabel(panel, 0, row, "Rechnungsdatum");
         FormHelper.addField(panel, 1, row, 1, rechnungsDatum);
-        FormHelper.add(panel, new JLabel("Rechnungsbetrag:"), 2, row, 3,
+        FormHelper.add(panel, new JLabel("Rechnungsbetrag"), 2, row, 3,
             GridBagConstraints.NONE, GridBagConstraints.EAST);
         FormHelper.addField(panel, 5, row, 1, rechnungsBetrag);
 

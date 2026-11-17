@@ -130,7 +130,7 @@ public class Anh52Panel extends ObjectPanel {
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
         innerPanel.add(
-            new JLabel("Nr. der Betriebsstätte:"), gbc);
+            new JLabel("Nr. der Betriebsstätte"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -144,7 +144,7 @@ public class Anh52Panel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Firmenname:"), gbc);
+        innerPanel.add(new JLabel("Firmenname"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -158,7 +158,7 @@ public class Anh52Panel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Ansprechpartner:"), gbc);
+        innerPanel.add(new JLabel("Ansprechpartner"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -172,7 +172,7 @@ public class Anh52Panel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Telefon:"), gbc);
+        innerPanel.add(new JLabel("Telefon"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -186,7 +186,7 @@ public class Anh52Panel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 5; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Telefax:"), gbc);
+        innerPanel.add(new JLabel("Telefax"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -200,7 +200,7 @@ public class Anh52Panel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 6; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Genehmigung:"), gbc);
+        innerPanel.add(new JLabel("Genehmigung"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;

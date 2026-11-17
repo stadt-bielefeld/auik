@@ -124,13 +124,13 @@ public class AnfallstellePanel extends ObjectPanel {
     private BWKPanel bwkTab;
 
     //Label
-    private JLabel anhangLb = new JLabel("Anhang AbwV:");
-    private JLabel anlagenartLb = new JLabel("Anlagenart:");
-    private JLabel anwendungsbereichLb = new JLabel("Anwendungssbereich:");
+    private JLabel anhangLb = new JLabel("Anhang AbwV");
+    private JLabel anlagenartLb = new JLabel("Anlagenart");
+    private JLabel anwendungsbereichLb = new JLabel("Anwendungsbereich");
 
-    private JLabel herkunftsbereichLb = new JLabel("Herkunftsbereich:");
+    private JLabel herkunftsbereichLb = new JLabel("Herkunftsbereich");
     private JLabel befestFlaecheLb = new JLabel("befestigte Fläche [m²]:");
-    private JLabel maxAbflussmengeLb = new JLabel("maximale Abflussmenge:");
+    private JLabel maxAbflussmengeLb = new JLabel("maximale Abflussmenge");
     private JLabel lProSLb = new JLabel("l/s");
     private JLabel qmProHLb = new JLabel("m³/h");
     private JLabel qmProDLb = new JLabel("m³/d");
@@ -161,15 +161,15 @@ public class AnfallstellePanel extends ObjectPanel {
 
         // Bezeichnung
         addRowFull(innerPanel, gbc, 1,
-            "Bezeichnung:", getBezeichnungFeld());
+            "Bezeichnung", getBezeichnungFeld());
 
         // Betriebsweise
         addRowFull(innerPanel, gbc, 2,
-            "Betriebsweise:", getBetriebsweiseBox());
+            "Betriebsweise", getBetriebsweiseBox());
 
         // Abwasserbeschaffenheit
         addRowFull(innerPanel, gbc, 3,
-            "Abwasserbeschaffenheit:", getBeschaffenheitBox());
+            "Abwasserbeschaffenheit", getBeschaffenheitBox());
 
         // Anhang AbwV
         addRowFull(innerPanel, gbc, 4,
@@ -236,11 +236,11 @@ public class AnfallstellePanel extends ObjectPanel {
 
         // Erstelldatum
         addRowFull(innerPanel, gbc, 11,
-            "Erstelldatum:", getErstellDatDatum());
+            "Erstelldatum", getErstellDatDatum());
 
         // Stilllegedatum
         addRowFull(innerPanel, gbc, 12,
-            "Stilllegedatum:", getStillgelegtAmDatum());
+            "Stilllegedatum", getStillgelegtAmDatum());
 
         // ── SEPARATOR: Bemerkungen ────────────────────────
         gbc.gridx = 0; gbc.gridy = 13;

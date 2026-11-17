@@ -132,18 +132,18 @@ public class Anh49Panel extends AbstractAnhangPanel {
     /* Note: As these strings are used as keys in the underlying HashMap,     *
      * they should be unique.                                                 */
     /* Widgets - left */
-    private final String ANSPRECHPARTNER = "Ansprechpartner:";
-    private final String SACHKUNDE_LFA = "Sachkunde LFA:";
-    private final String ANALYSEMONAT = "Analysemonat:";
+    private final String ANSPRECHPARTNER = "Ansprechpartner:in";
+    private final String SACHKUNDE_LFA = "Sachkunde LFA";
+    private final String ANALYSEMONAT = "Analysemonat";
     private final String BEMERKUNGEN = "Bemerkungen";
     /* Widgets - right */
-    private final String GENEHMIGUNGSDATUM = "Genehmigungsdatum:";
-    private final String AENDERUNGSGENEHMIGUNGSDATUM = "Änderungsgen.-datum:";
+    private final String GENEHMIGUNGSDATUM = "Genehmigungsdatum";
+    private final String AENDERUNGSGENEHMIGUNGSDATUM = "Änderungsgen.-datum";
     private final String ABGEMELDET = "abgemeldet";
     private final String ABWASSERFREI = "abwasserfrei";
     private final String E_SATZUNG = "Überwachung nach E-Satzung";
     private final String SICHERHEITSABSCHEIDER = "Sicherheitsabscheider";
-    private final String WIEDERVORLAGEDATUM = "Wiedervorlagedatum:";
+    private final String WIEDERVORLAGEDATUM = "Wiedervorlagedatum";
     /* Widgets - bottom */
     private final String SPEICHERN = "Speichern";
 
@@ -587,7 +587,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
         this.fachdaten = Anh49Fachdaten.findByAnfallstelleId(
                 list.iterator().next().getId());
-        log.debug("Anhang 40 Objekt aus DB geholt: ID" + this.fachdaten);
+        log.debug("Anhang 49 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
     public void updateForm() {

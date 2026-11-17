@@ -369,7 +369,7 @@ public abstract class AbstractQueryModul<T> extends AbstractModul {
         dialog.setSize(600, 150);
 
 
-        JLabel pathLabel = new JLabel("Dateipfad:");
+        JLabel pathLabel = new JLabel("Dateipfad");
         JTextArea path = new JTextArea(this.outputPath);
         JButton pathButton = new JButton("Pfad wählen");
         pathButton.addActionListener(new java.awt.event.ActionListener() {

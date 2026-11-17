@@ -121,19 +121,19 @@ public class EntsorgerEditor extends AbstractBaseEditor {
         JPanel panel = FormHelper.createFormPanel();
         // Stamdaten ------------------------------------
         FormHelper.addSeparator(panel, 0, 0, 4, "Stammdaten");
-        FormHelper.addLabel(panel, 0, 1, "Name:");
+        FormHelper.addLabel(panel, 0, 1, "Name");
         FormHelper.addField(panel, 1, 1, 3, namenFeld);
-        FormHelper.addLabel(panel, 0, 2, "Straße:");
+        FormHelper.addLabel(panel, 0, 2, "Straße");
         FormHelper.addField(panel, 1, 2, 2, strassenFeld);
         FormHelper.fixWidth(hausnrFeld, 47);
         FormHelper.addField(panel, 3, 2, 1, hausnrFeld);
         // Ort
-        FormHelper.addLabel(panel, 0, 3, "Ort:");
+        FormHelper.addLabel(panel, 0, 3, "Ort");
         FormHelper.fixWidth(plzFeld, 52);
         FormHelper.addField(panel, 1, 3, 1, plzFeld);
         FormHelper.addField(panel, 2, 3, 2, ortsFeld);
         // Telefon
-        FormHelper.addLabel(panel, 0, 4, "Telefon:");
+        FormHelper.addLabel(panel, 0, 4, "Telefon");
         FormHelper.addField(panel, 1, 4, 2, telefonFeld);
 
         return panel;

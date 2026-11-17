@@ -752,8 +752,8 @@ public class AwsvEditor extends AbstractBaseEditor {
 //        FormHelper.addFull(topPanel, 0, ComponentFactory.buildRightAlignedBar(reportButton));
 //        FormHelper.addFull(topPanel, 0, subHeader);
 
-		String[] topLabels = { "Bezeichnung / Zuordnung:", "Flüssigkeit:", "VbF:",
-				"Gefährdungsstufe:", "WGK:" };
+		String[] topLabels = { "Bezeichnung / Zuordnung", "Flüssigkeit", "VbF",
+				"Gefährdungsstufe", "WGK" };
 		JComponent[] topFields = { hnrFeld, fluessigkeitBox, vbfBox, gefStufeBox,
 				wgkBox };
 		for (int i = 0; i < topLabels.length; i++) {
@@ -1423,11 +1423,11 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 			JPanel formPanel = FormHelper.createFormPanel();
 			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
-			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr:", baujahrFeld);
-			FormHelper.addLabelField(formPanel, 1, 1, "Inbetriebnahme:", inbetriebnahmeChooser);
-			FormHelper.addLabelField(formPanel, 2, 0, "Erfassung:", erfassungChooser);
+			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr", baujahrFeld);
+			FormHelper.addLabelField(formPanel, 1, 1, "Inbetriebnahme", inbetriebnahmeChooser);
+			FormHelper.addLabelField(formPanel, 2, 0, "Erfassung", erfassungChooser);
 			FormHelper.addLabelField(formPanel, 2, 1, "Prüfturnus [Jahre]:", pruefTurnusFeld);
-			FormHelper.addLabelField(formPanel, 3, 0, "Stilllegung:", stilllegungChooser);
+			FormHelper.addLabelField(formPanel, 3, 0, "Stilllegung", stilllegungChooser);
 			/*
 			 * builder.appendRow("fill:30dlu"); builder.append("Flüssigkeit/Medium",
 			 * flüssigkField); builder.nextLine();
@@ -1456,31 +1456,31 @@ public class AwsvEditor extends AbstractBaseEditor {
 		if (ausfuehrungVAWSAbscheiderTab == null) {
 			JPanel formPanel = FormHelper.createFormPanel();
 			FormHelper.addSeparator(formPanel, 0, "Schlammfang");
-			FormHelper.addLabelField(formPanel, 1, 0, "Hersteller:", schlammHerstField);
-			FormHelper.addLabelField(formPanel, 1, 1, "Typ:", schlammTypField);
+			FormHelper.addLabelField(formPanel, 1, 0, "Hersteller", schlammHerstField);
+			FormHelper.addLabelField(formPanel, 1, 1, "Typ", schlammTypField);
 			FormHelper.addLabelField(formPanel, 1, 2, "SF-Volumen [Liter]:", schlammSFVField);
-			FormHelper.addLabelField(formPanel, 2, 0, "Material:", schlammMatField);
-			FormHelper.addLabelField(formPanel, 2, 1, "Beschichtung:", schlammBeschField);
+			FormHelper.addLabelField(formPanel, 2, 0, "Material", schlammMatField);
+			FormHelper.addLabelField(formPanel, 2, 1, "Beschichtung", schlammBeschField);
 			FormHelper.addSeparator(formPanel, 3, "Abscheider");
-			FormHelper.addLabelField(formPanel, 4, 0, "Hersteller:", abscheiderHerstField);
-			FormHelper.addLabelField(formPanel, 4, 1, "Typ:", abscheiderTypField);
-			FormHelper.addLabelField(formPanel, 4, 2, "Prüfzeichen:", abscheiderPruefField);
-			FormHelper.addLabelField(formPanel, 5, 0, "Material:", abscheiderMatField);
-			FormHelper.addLabelField(formPanel, 5, 1, "Beschichtung:", abscheiderBeschField);
-			FormHelper.addLabelField(formPanel, 5, 2, "Nenngröße (NS):", abscheiderNSField);
+			FormHelper.addLabelField(formPanel, 4, 0, "Hersteller", abscheiderHerstField);
+			FormHelper.addLabelField(formPanel, 4, 1, "Typ", abscheiderTypField);
+			FormHelper.addLabelField(formPanel, 4, 2, "Prüfzeichen", abscheiderPruefField);
+			FormHelper.addLabelField(formPanel, 5, 0, "Material", abscheiderMatField);
+			FormHelper.addLabelField(formPanel, 5, 1, "Beschichtung", abscheiderBeschField);
+			FormHelper.addLabelField(formPanel, 5, 2, "Nenngröße (NS)", abscheiderNSField);
 			FormHelper.addLabelField(formPanel, 6, 0, "Ölspeichervolumen [Liter]:",
 			    abscheideroelField);
 			FormHelper.addSeparator(formPanel, 7, "Rohrleitungen: Zuleitungen");
-			FormHelper.addLabelField(formPanel, 8, 0, "DN:", zulDNField);
-			FormHelper.addLabelField(formPanel, 8, 1, "Material:", zulMatField);
+			FormHelper.addLabelField(formPanel, 8, 0, "DN", zulDNField);
+			FormHelper.addLabelField(formPanel, 8, 1, "Material", zulMatField);
 			FormHelper.addLabelField(formPanel, 8, 2, "Länge [m]:", zulLField);
 			FormHelper.addSeparator(formPanel, 9, "Rohrleitungen: Verbindungsleitungen");
-			FormHelper.addLabelField(formPanel, 10, 0, "DN:", verbDNField);
-			FormHelper.addLabelField(formPanel, 10, 1, "Material:", verbMatField);
+			FormHelper.addLabelField(formPanel, 10, 0, "DN", verbDNField);
+			FormHelper.addLabelField(formPanel, 10, 1, "Material", verbMatField);
 			FormHelper.addLabelField(formPanel, 10, 2, "Länge [m]:", verbLField);
 			FormHelper.addSeparator(formPanel, 11, "Rohrleitungen: Sonstige");
-			FormHelper.addLabelField(formPanel, 12, 0, "DN:", sonsDNField);
-			FormHelper.addLabelField(formPanel, 12, 1, "Material:", sonsMatField);
+			FormHelper.addLabelField(formPanel, 12, 0, "DN", sonsDNField);
+			FormHelper.addLabelField(formPanel, 12, 1, "Material", sonsMatField);
 			FormHelper.addLabelField(formPanel, 12, 2, "Länge [m]:", sonsLField);
 
 			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
@@ -1526,16 +1526,16 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 			JPanel formPanel = FormHelper.createFormPanel();
 			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
-			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr:", baujahrFeld);
+			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr", baujahrFeld);
 			FormHelper.addLabelField(formPanel, 1, 1, "Menge [m³]:", mengeFeld);
-			FormHelper.addLabelField(formPanel, 2, 0, "Inbetriebnahme:", inbetriebnahmeChooser);
+			FormHelper.addLabelField(formPanel, 2, 0, "Inbetriebnahme", inbetriebnahmeChooser);
 			FormHelper.addLabelField(formPanel, 2, 1, "Prüfturnus [Jahre]:", pruefTurnusFeld);
-			FormHelper.addLabelField(formPanel, 3, 0, "Genehmigung:", genehmigungChooser);
-			FormHelper.addLabelField(formPanel, 3, 1, "Behälterart:", behaelterArtBox);
-			FormHelper.addLabelField(formPanel, 4, 0, "Aktenzeichen:", aktenzeichenField);
-			FormHelper.addLabelField(formPanel, 4, 1, "Material:", materialBox);
-			FormHelper.addLabelField(formPanel, 5, 0, "Erfassung:", erfassungChooser);
-			FormHelper.addLabelField(formPanel, 5, 1, "Stilllegung:", stilllegungChooser);
+			FormHelper.addLabelField(formPanel, 3, 0, "Genehmigung", genehmigungChooser);
+			FormHelper.addLabelField(formPanel, 3, 1, "Behälterart", behaelterArtBox);
+			FormHelper.addLabelField(formPanel, 4, 0, "Aktenzeichen", aktenzeichenField);
+			FormHelper.addLabelField(formPanel, 4, 1, "Material", materialBox);
+			FormHelper.addLabelField(formPanel, 5, 0, "Erfassung", erfassungChooser);
+			FormHelper.addLabelField(formPanel, 5, 1, "Stilllegung", stilllegungChooser);
 			FormHelper.addSeparator(formPanel, 6, "Bemerkungen und Anlagenchronologie");
 
 			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
@@ -1613,16 +1613,16 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 			JPanel formPanel = FormHelper.createFormPanel();
 			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
-			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr:", baujahrFeld);
-			FormHelper.addLabelField(formPanel, 1, 1, "Ausführung:", ausfuehrungBox);
-			FormHelper.addLabelField(formPanel, 2, 0, "Inbetriebnahme:", inbetriebnahmeChooser);
+			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr", baujahrFeld);
+			FormHelper.addLabelField(formPanel, 1, 1, "Ausführung", ausfuehrungBox);
+			FormHelper.addLabelField(formPanel, 2, 0, "Inbetriebnahme", inbetriebnahmeChooser);
 			FormHelper.addLabelField(formPanel, 2, 1, "Prüfturnus [Jahre]:", pruefTurnusFeld);
-			FormHelper.addLabelField(formPanel, 3, 0, "Genehmigung:", genehmigungChooser);
-			FormHelper.addLabelField(formPanel, 3, 1, "Bauart:", behaelterArtBox);
-			FormHelper.addLabelField(formPanel, 4, 0, "Aktenzeichen:", aktenzeichenField);
-			FormHelper.addLabelField(formPanel, 4, 1, "Material:", materialBox);
-			FormHelper.addLabelField(formPanel, 5, 0, "Erfassung:", erfassungChooser);
-			FormHelper.addLabelField(formPanel, 5, 1, "Stilllegung:", stilllegungChooser);
+			FormHelper.addLabelField(formPanel, 3, 0, "Genehmigung", genehmigungChooser);
+			FormHelper.addLabelField(formPanel, 3, 1, "Bauart", behaelterArtBox);
+			FormHelper.addLabelField(formPanel, 4, 0, "Aktenzeichen", aktenzeichenField);
+			FormHelper.addLabelField(formPanel, 4, 1, "Material", materialBox);
+			FormHelper.addLabelField(formPanel, 5, 0, "Erfassung", erfassungChooser);
+			FormHelper.addLabelField(formPanel, 5, 1, "Stilllegung", stilllegungChooser);
 			FormHelper.addSeparator(formPanel, 6, "Bemerkungen und Anlagenchronologie");
 
 			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
@@ -1649,13 +1649,13 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 			JPanel formPanel = FormHelper.createFormPanel();
 			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
-			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr:", baujahrFeld);
+			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr", baujahrFeld);
 			FormHelper.addLabelField(formPanel, 1, 1, "Prüfturnus [Jahre]:", pruefTurnusFeld);
-			FormHelper.addLabelField(formPanel, 2, 0, "Inbetriebnahme:", inbetriebnahmeChooser);
-			FormHelper.addLabelField(formPanel, 2, 1, "Erfassung:", erfassungChooser);
-			FormHelper.addLabelField(formPanel, 3, 0, "Genehmigung:", genehmigungChooser);
-			FormHelper.addLabelField(formPanel, 3, 1, "Stilllegung:", stilllegungChooser);
-			FormHelper.addLabelField(formPanel, 4, 0, "Aktenzeichen:", aktenzeichenField);
+			FormHelper.addLabelField(formPanel, 2, 0, "Inbetriebnahme", inbetriebnahmeChooser);
+			FormHelper.addLabelField(formPanel, 2, 1, "Erfassung", erfassungChooser);
+			FormHelper.addLabelField(formPanel, 3, 0, "Genehmigung", genehmigungChooser);
+			FormHelper.addLabelField(formPanel, 3, 1, "Stilllegung", stilllegungChooser);
+			FormHelper.addLabelField(formPanel, 4, 0, "Aktenzeichen", aktenzeichenField);
 			FormHelper.addLabelField(formPanel, 4, 1, "Größe [m²]:", groesseField);
 			FormHelper.addSeparator(formPanel, 5, "Abfüllfläche");
 			FormHelper.addLabelField(formPanel, 6, 0, null, neuErstelltCheck);
@@ -1715,19 +1715,19 @@ public class AwsvEditor extends AbstractBaseEditor {
 
 			JPanel formPanel = FormHelper.createFormPanel();
 			FormHelper.addSeparator(formPanel, 0, "Stammdaten");
-			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr:", baujahrFeld);
-			FormHelper.addLabelField(formPanel, 1, 1, "Aktenzeichen:", aktenzeichenField);
+			FormHelper.addLabelField(formPanel, 1, 0, "Baujahr", baujahrFeld);
+			FormHelper.addLabelField(formPanel, 1, 1, "Aktenzeichen", aktenzeichenField);
 			FormHelper.addLabelField(formPanel, 2, 0, "Lagerfläche [m²]:", lagerflaecheFeld);
 			FormHelper.addLabelField(formPanel, 2, 1, "Lagervolumen [m³]:", mengeFeld);
 			FormHelper.addLabelField(formPanel, 3, 0, "Abstand zu Gewässer [m]:", abstandGewFeld);
-			FormHelper.addLabelField(formPanel, 3, 1, "Gewässername:", gewNameFeld);
+			FormHelper.addLabelField(formPanel, 3, 1, "Gewässername", gewNameFeld);
 			FormHelper.addLabelField(formPanel, 4, 0, "Abstand zu Brunnen [m]:",
 			    abstandBrunnenFeld);
-			FormHelper.addLabelField(formPanel, 4, 1, "Tierhaltung:", tierhaltungFeld);
-			FormHelper.addLabelField(formPanel, 5, 0, "Inbetriebnahme:", inbetriebnahmeChooser);
-			FormHelper.addLabelField(formPanel, 5, 1, "Erfassung:", erfassungChooser);
-			FormHelper.addLabelField(formPanel, 6, 0, "Genehmigung:", genehmigungChooser);
-			FormHelper.addLabelField(formPanel, 6, 1, "Stilllegung:", stilllegungChooser);
+			FormHelper.addLabelField(formPanel, 4, 1, "Tierhaltung", tierhaltungFeld);
+			FormHelper.addLabelField(formPanel, 5, 0, "Inbetriebnahme", inbetriebnahmeChooser);
+			FormHelper.addLabelField(formPanel, 5, 1, "Erfassung", erfassungChooser);
+			FormHelper.addLabelField(formPanel, 6, 0, "Genehmigung", genehmigungChooser);
+			FormHelper.addLabelField(formPanel, 6, 1, "Stilllegung", stilllegungChooser);
 			FormHelper.addSeparator(formPanel, 7, "Anlagenchronologie");
 
 			JPanel tabPanel = new JPanel(new BorderLayout(0, 5));
@@ -1743,13 +1743,13 @@ public class AwsvEditor extends AbstractBaseEditor {
 		if (ausfuehrungAbfuellflaechenTab == null) {
 			JPanel formPanel = FormHelper.createFormPanel();
 			FormHelper.addSeparator(formPanel, 0, "Daten");
-			FormHelper.addLabelField(formPanel, 1, 0, "Bodenflächenausführung:",
+			FormHelper.addLabelField(formPanel, 1, 0, "Bodenflächenausführung",
 			    bodenflaechenAusfBox);
-			FormHelper.addLabelField(formPanel, 1, 1, "Fugenmaterial:", fugenMaterialFeld);
+			FormHelper.addLabelField(formPanel, 1, 1, "Fugenmaterial", fugenMaterialFeld);
 			FormHelper.addLabelField(formPanel, 2, 0, "Dicke [cm]:", dickeFeld);
-			FormHelper.addLabelField(formPanel, 2, 1, "Niederschlagsschutz:",
+			FormHelper.addLabelField(formPanel, 2, 1, "Niederschlagsschutz",
 			    niederschlagSchutzBox);
-			FormHelper.addLabelField(formPanel, 3, 0, "Güte:", gueteFeld);
+			FormHelper.addLabelField(formPanel, 3, 0, "Güte", gueteFeld);
 			FormHelper.addLabelField(formPanel, 3, 1, null, abscheiderVorhandenCheck);
 			FormHelper.addSeparator(formPanel, 4, "Beschreibung Bodenfläche");
 			FormHelper.addFull(formPanel, 5, new JScrollPane(beschrBodenflaecheArea), 80);

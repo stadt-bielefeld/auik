@@ -91,7 +91,7 @@ public class AdresseChooser extends JDialog {
                 this.adresseModel.setList(initialList);
             }
         } else if (initial instanceof Inhaber && caller == "betreiber") {
-            setTitle("Inhaber auswählen");
+            setTitle("Inhaber:in auswählen");
             this.inhaber = (Inhaber) initial;
             this.inhaberModel = new BasisInhaberModel();
             if (this.inhaber.getId() != null) {
@@ -165,17 +165,17 @@ public class AdresseChooser extends JDialog {
 
 		//nach Namen kann nur bei Inhabern und Standorten gesucht werden
 		if (caller.equals("standort") || caller.equals("betreiber")) {
-			FormHelper.addLabel(panel, 0, 0, "Name:");
+			FormHelper.addLabel(panel, 0, 0, "Name");
 			FormHelper.add(panel, getNameFeld(), 1, 0, 3,
 					GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
 			FormHelper.add(panel, getSubmitButton(), 4, 0, 1);
 		}
 
 		//nach Strasse und Hausnummer kann in jedem Fall gesucht werden
-		FormHelper.addLabel(panel, 0, 1, "Straße:");
+		FormHelper.addLabel(panel, 0, 1, "Straße");
 		FormHelper.add(panel, getStrassenFeld(), 1, 1, 1,
 				GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
-		FormHelper.addLabel(panel, 2, 1, "Hausnr.:");
+		FormHelper.addLabel(panel, 2, 1, "Hausnr.");
 		FormHelper.fixWidth(getHausnrFeld(), 60);
 		FormHelper.add(panel, getHausnrFeld(), 3, 1, 1,
 				GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
@@ -183,7 +183,7 @@ public class AdresseChooser extends JDialog {
 
 		//eine Standortbezeichnung kann natürlich nur ein Standort haben
 		if (caller.equals("standort")) {
-			FormHelper.addLabel(panel, 0, 2, "standort");
+			FormHelper.addLabel(panel, 0, 2, "Standort");
 			FormHelper.add(panel, getStandortFeld(), 1, 2, 3,
 					GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
 			FormHelper.add(panel, getSubmitButtonStandort(), 4, 2, 1);

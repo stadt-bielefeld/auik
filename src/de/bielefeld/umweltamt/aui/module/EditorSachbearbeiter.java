@@ -102,7 +102,7 @@ public class EditorSachbearbeiter extends AbstractModul {
      */
     @Override
     public String getName() {
-        return "Sachbearbeiter";
+        return "Sachbearbeiter:in";
     }
 
     /* (non-Javadoc)
@@ -128,7 +128,7 @@ public class EditorSachbearbeiter extends AbstractModul {
     public JPanel getPanel() {
         if (panel == null) {
             // Die Widgets initialisieren
-            submitButton = new JButton("Alle Sachbearbeiter anzeigen");
+            submitButton = new JButton("Alle Sachbearbeiter:innen anzeigen");
 
             // Ein ActionListener für den Button,
             // der die eigentliche Suche auslöst:

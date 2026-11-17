@@ -217,7 +217,7 @@ public class BasisPanel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Standort / Lage:"), gbc);
+        innerPanel.add(new JLabel("Standort / Lage"), gbc);
         gbc.gridx = 1; gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         innerPanel.add(getStandortFeld(), gbc);
@@ -229,7 +229,7 @@ public class BasisPanel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Art:"), gbc);
+        innerPanel.add(new JLabel("Art"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -242,7 +242,7 @@ public class BasisPanel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Sachbearbeiter:"), gbc);
+        innerPanel.add(new JLabel("Sachbearbeiter:in"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -255,7 +255,7 @@ public class BasisPanel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 5; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Wiedervorlage:"), gbc);
+        innerPanel.add(new JLabel("Wiedervorlage"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -268,7 +268,7 @@ public class BasisPanel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 6; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Inaktiv:"), gbc);
+        innerPanel.add(new JLabel("Inaktiv"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -278,7 +278,7 @@ public class BasisPanel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 7; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Abwasserfrei:"), gbc);
+        innerPanel.add(new JLabel("Abwasserfrei"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -622,7 +622,7 @@ public class BasisPanel extends ObjectPanel {
             getBeschreibungsArea().setEnabled(enabled);
         }
         else
-            log.debug("Objekt oder Sachbearbeiter null - Objekt: " + this.hauptModul.getObjekt() + ", Sachbearbeiter: " + this.hauptModul.getObjekt().getSachbearbeiter());
+            log.debug("Objekt oder Sachbearbeiter null" + this.hauptModul.getObjekt() + ", Sachbearbeiter: " + this.hauptModul.getObjekt().getSachbearbeiter());
     }
 
     @Override
@@ -811,7 +811,7 @@ public class BasisPanel extends ObjectPanel {
                 "edit.png", ""));
             this.betreiberEditButton
                 .setHorizontalAlignment(SwingConstants.CENTER);
-            this.betreiberEditButton.setToolTipText("Betreiber bearbeiten");
+            this.betreiberEditButton.setToolTipText("Betreiber:in bearbeiten");
             this.betreiberEditButton.setActionCommand("betreiber_edit");
 
             this.betreiberEditButton.addActionListener(getEditButtonListener());
@@ -1002,7 +1002,7 @@ public class BasisPanel extends ObjectPanel {
 
     private JLabel getPrioritaetLabel() {
         if (this.prioritaetLabel == null) {
-            this.prioritaetLabel = new JLabel("Priorität:");
+            this.prioritaetLabel = new JLabel("Priorität");
             this.prioritaetLabel.setVisible(false);
         }
         return this.prioritaetLabel;
@@ -1010,7 +1010,7 @@ public class BasisPanel extends ObjectPanel {
 
     private JLabel getElkarelevantLabel() {
         if (this.elkarelevantLabel == null) {
-            this.elkarelevantLabel = new JLabel("ELKA relevant:");
+            this.elkarelevantLabel = new JLabel("ELKA relevant");
             this.elkarelevantLabel.setVisible(false);
         }
         return this.elkarelevantLabel;
@@ -1046,14 +1046,14 @@ public class BasisPanel extends ObjectPanel {
                             BasisPanel.this.hauptModul.setNew(false);
                         } else {
                             BasisPanel.this.hauptModul.getFrame().changeStatus(
-                                "Konnte Objekt nicht speichern!",
+                                "Konnte Objekt nicht",
                                 HauptFrame.ERROR_COLOR);
                         }
 
                         BasisPanel.this.hauptModul.fillForm();
                     } else {
                         BasisPanel.this.hauptModul.getFrame().changeStatus(
-                            "Kein Betreiber/Standort ausgewählt!",
+                            "Kein:e Betreiber:in/Standort ausgewählt!",
                             HauptFrame.ERROR_COLOR);
                     }
                 }
@@ -1303,7 +1303,7 @@ public class BasisPanel extends ObjectPanel {
             this.betreiberDeleteButton = new JButton(AuikUtils.getIcon(16,"exit.png",""));
             this.betreiberDeleteButton
                 .setHorizontalAlignment(SwingConstants.CENTER);
-            this.betreiberDeleteButton.setToolTipText("Betreiber löschen");
+            this.betreiberDeleteButton.setToolTipText("Betreiber:in löschen");
             this.betreiberDeleteButton.setActionCommand("betreiber_delete");
 
             this.betreiberDeleteButton.addActionListener(getDeleteButtonListener());
@@ -1333,10 +1333,10 @@ public class BasisPanel extends ObjectPanel {
     private boolean delCheck(boolean betr){
 
         if(betr == true){
-            JOptionPane dcp = new JOptionPane ("Betreiber löschen");
+            JOptionPane dcp = new JOptionPane ("Betreiber:in löschen");
             Object[] options = new String[]{"Ja", "Nein"};
             JDialog dia = dcp.createDialog("Wirklich löschen?");
-            int a = JOptionPane.showOptionDialog(dia, "Soll der Betreiber gelöscht werden?",
+            int a = JOptionPane.showOptionDialog(dia, "Soll der/die Betreiber:in gelöscht werden?",
                     "Wirklich löschen?", JOptionPane.YES_NO_OPTION,
                     JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
             if (a == JOptionPane.YES_OPTION) return true;

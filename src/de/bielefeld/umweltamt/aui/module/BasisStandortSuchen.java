@@ -233,7 +233,7 @@ public class BasisStandortSuchen extends AbstractModul
 		if (this.panel == null)
 		{
 			this.standortModel = new BasisLageModel();
-			this.objektModel = new BasisObjektModel("Betreiber", this.manager
+			this.objektModel = new BasisObjektModel("Betreiber:in", this.manager
 					.getSettingsManager().getSetting(
 														"auik.prefs.abteilungsfilter"));
 
@@ -258,7 +258,7 @@ public class BasisStandortSuchen extends AbstractModul
             JPanel restrictPanel = new JPanel(
             	    new FlowLayout(FlowLayout.LEFT, 5, 2));
             	restrictPanel.add(
-            	    new JLabel("Objekte einschränken:"));
+            	    new JLabel("Objekte einschränken"));
             	restrictPanel.add(getAwsvButton());
             	restrictPanel.add(getIndirektButton());
             	restrictPanel.add(getProbepktButton());
@@ -294,7 +294,7 @@ public class BasisStandortSuchen extends AbstractModul
             gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            mainPanel.add(new JLabel("Straße:"), gbc);
+            mainPanel.add(new JLabel("Straße"), gbc);
 
             // StrassenFeld (wächst mit Fenster)
             gbc.gridx = 1;
@@ -309,7 +309,7 @@ public class BasisStandortSuchen extends AbstractModul
             gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            mainPanel.add(new JLabel("Haus-Nr.:"), gbc);
+            mainPanel.add(new JLabel("Haus-Nr."), gbc);
 
             // HausnrFeld (min 30dlu → feste Mindestbreite)
             gbc.gridx = 3;
@@ -324,7 +324,7 @@ public class BasisStandortSuchen extends AbstractModul
             gbc.weightx = 0;
             gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.EAST;
-            mainPanel.add(new JLabel("Ort:"), gbc);
+            mainPanel.add(new JLabel("Ort"), gbc);
 
             // OrtFeld (wächst mit Fenster)
             gbc.gridx = 5;
@@ -1216,7 +1216,7 @@ public class BasisStandortSuchen extends AbstractModul
 
 	private Action getObjektBetreiberEditAction() {
 	    if (this.objektBetreiberEditAction == null) {
-	        this.objektBetreiberEditAction = new AbstractAction("Betreiber") {
+	        this.objektBetreiberEditAction = new AbstractAction("Betreiber:in") {
 
 				private static final long serialVersionUID = 9162213813094661474L;
 

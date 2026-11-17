@@ -105,8 +105,8 @@ private static final long serialVersionUID = -4030805403749508467L;
 
         // ── Fachdaten ─────────────────────────────────────
         FormHelper.addSeparator(innerPanel, row++, "Fachdaten");
-        FormHelper.addLabelField(innerPanel, row++, 0, "Erstellt am:", getErstellDat());
-        FormHelper.addLabelField(innerPanel, row++, 0, "Aktualisiert am:", getAktualDat());
+        FormHelper.addLabelField(innerPanel, row++, 0, "Erstellt am", getErstellDat());
+        FormHelper.addLabelField(innerPanel, row++, 0, "Aktualisiert am", getAktualDat());
         FormHelper.addLabelField(innerPanel, row++, 0, null, getGenehmigungdpflichtCheck());
         FormHelper.addLabelField(innerPanel, row++, 0, null, getWartungsvertragCheck());
         FormHelper.addLabelField(innerPanel, row++, 0, null, getEinzelabnahmeCheck());

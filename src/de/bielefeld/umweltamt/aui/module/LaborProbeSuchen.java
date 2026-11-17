@@ -457,8 +457,8 @@ public class LaborProbeSuchen extends AbstractModul {
     private JComboBox<NamedObject> getSuchBox() {
         if (this.suchBox == null) {
             this.suchBox = new JComboBox<>(new NamedObject[] {
-                    new NamedObject("Kennnummer:", "kennummer"),
-                    new NamedObject("Bemerkung:", "bemerkung")});
+                    new NamedObject("Kennnummer", "kennummer"),
+                    new NamedObject("Bemerkung", "bemerkung")});
         }
         return this.suchBox;
     }

@@ -119,17 +119,17 @@ public class Anh56Panel extends ObjectPanel {
 
         // Zeile 1: Druckverfahren | Abwasseranfall
         addRow(innerPanel, gbc, 1,
-            "Druckverfahren:", getDruckverfahrenFeld(),
+            "Druckverfahren", getDruckverfahrenFeld(),
             getAbwasseranfallCheck());
 
         // Zeile 2: Wasserverbrauch | ABA
         addRow(innerPanel, gbc, 2,
-            "Wasserverbrauch:", getVerbrauchFeld(),
+            "Wasserverbrauch", getVerbrauchFeld(),
             getAbaCheck());
 
         // Zeile 3: Entsorgung | Genehmigungspflicht
         addRow(innerPanel, gbc, 3,
-            "Entsorgung:", getEntsorgungFeld(),
+            "Entsorgung", getEntsorgungFeld(),
             getGenpflichtCheck());
 
         // Zeile 4: Datum 58er Genehmigung
@@ -138,7 +138,7 @@ public class Anh56Panel extends ObjectPanel {
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
         innerPanel.add(
-            new JLabel("Datum 58er Genehmigung:"), gbc);
+            new JLabel("Datum 58er Genehmigung"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -153,7 +153,7 @@ public class Anh56Panel extends ObjectPanel {
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
         innerPanel.add(
-            new JLabel("Datum 59er Genehmigung:"), gbc);
+            new JLabel("Datum 59er Genehmigung"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;

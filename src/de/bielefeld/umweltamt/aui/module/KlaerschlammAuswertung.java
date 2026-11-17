@@ -752,9 +752,9 @@ public class KlaerschlammAuswertung extends AbstractModul
 
 			// ── Zeitraum (rechts) ─────────────────────────────
 			FormHelper.addSeparator(mainPanel, 3, 0, 2, "Zeitraum");
-			FormHelper.addLabel(mainPanel, 3, 1, "Von:");
+			FormHelper.addLabel(mainPanel, 3, 1, "Von");
 			FormHelper.add(mainPanel, getVonDateChooser(), 4, 1, 1);
-			FormHelper.addLabel(mainPanel, 3, 2, "Bis:");
+			FormHelper.addLabel(mainPanel, 3, 2, "Bis");
 			FormHelper.add(mainPanel, getBisDateChooser(), 4, 2, 1);
 
 			// ── Parameter ─────────────────────────────────────

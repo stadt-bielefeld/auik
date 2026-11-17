@@ -85,7 +85,7 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
         typeBox = new JComboBox<>(typeModel);
         typeBox.insertItemAt(null, 0);
         typeBox.setSelectedIndex(0);
-        typeLabel = new JLabel("Objektart:");
+        typeLabel = new JLabel("Objektart");
 
         List<Anhang> anhangs = Anhang.getAll();
         DefaultComboBoxModel<Anhang> anhangModel = new DefaultComboBoxModel<>(
@@ -95,14 +95,14 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
         anhangBox.insertItemAt(null, 0);
         anhangBox.setSelectedIndex(0);
         anhangBox.setEnabled(false);
-        anhangLabel = new JLabel("Anhang:");
+        anhangLabel = new JLabel("Anhang");
 
         String[] arten = {null, "Aufbereitung Medizinprodukte", "Blockheizkraftwerk",
             "Fettabscheider", "Gentechnikanlage", "Kompressorenanlage", "KWK Anlage", "Labor",
             "RLT Anlagen", "Schrottplatz", "Wärmetauscher"};
         anlagenartBox = new JComboBox<>(new DefaultComboBoxModel<>(arten));
         anlagenartBox.setEnabled(false);
-        anlagenartenLabel = new JLabel("Anlagenart:");
+        anlagenartenLabel = new JLabel("Anlagenart");
 
         sachbearbeiterBox = new JComboBox<>();
         List<Sachbearbeiter> sachbearbeiter = Sachbearbeiter.getOrderedAll();
@@ -116,13 +116,13 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
         sachbearbeiterBox.insertItemAt(group, 0);
         sachbearbeiterBox.insertItemAt(null, 0);
         sachbearbeiterBox.setSelectedIndex(0);
-        sachbearbeiterLabel = new JLabel("Sachbearbeiter:");
+        sachbearbeiterLabel = new JLabel("Sachbearbeiter:in");
 
         einzGebietBox = new JComboBox<EinzGebBoxModel>(
             new DefaultComboBoxModel<>(createEinzGebBoxModels()));
         einzGebietBox.insertItemAt(null, 0);
         einzGebietBox.setSelectedIndex(0);
-        entwGebieteLabel = new JLabel("Entwässerungsgebiet:");
+        entwGebieteLabel = new JLabel("Entwässerungsgebiet");
 
         String[] prios = {null, "1", "2", "3", "4"};
         prioritaetBox = new JComboBox<>(
@@ -133,7 +133,7 @@ public class BasisAbfrage extends AbstractQueryModul<Object[]> {
         wiedervorlageBox = new JComboBox<>(
             new DefaultComboBoxModel<>(wiedervorlageValues)
         );
-        wiedervorlagenLabel = new JLabel("Wiedervorlage:");
+        wiedervorlagenLabel = new JLabel("Wiedervorlage");
 
         searchButton = new JButton("Suchen");
 

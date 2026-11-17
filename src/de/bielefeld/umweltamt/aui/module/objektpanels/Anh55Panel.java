@@ -177,44 +177,44 @@ public class Anh55Panel extends ObjectPanel {
         // ── Hilfsmethode für Zeile: Label + Feld + Checkbox
         // Zeile 1: Entwässerungsgebiet | Abgemeldet
         addRow(innerPanel, gbc, 1,
-            "Entwässerungsgebiet:", getEntgebIdFeld(),
+            "Entwässerungsgebiet", getEntgebIdFeld(),
             getAbgemeldetCheck());
 
         // Zeile 2: Branche | Putztücher
         addRow(innerPanel, gbc, 2,
-            "Branche:", getBrancheFeld(),
+            "Branche", getBrancheFeld(),
             getPutztuecherCheck());
 
         // Zeile 3: Ansprechpartner | Matten
         addRow(innerPanel, gbc, 3,
-            "Ansprechpartner:", getAnsprechpartnerFeld(),
+            "Ansprechpartner", getAnsprechpartnerFeld(),
             getMattenCheck());
 
         // Zeile 4: Menge | Teppiche
         addRow(innerPanel, gbc, 4,
-            "Menge:", getMengeFeld(),
+            "Menge", getMengeFeld(),
             getTeppichCheck());
 
         // Zeile 5: Sonstige Textilien | Berufskleidung
         addRow(innerPanel, gbc, 5,
-            "Sonstige Textilien:", getSonsttexFeld(),
+            "Sonstige Textilien", getSonsttexFeld(),
             getBerufsklCheck());
 
         // Zeile 6: Monatl. Wasserverbrauch | Haushaltstextilien
         addRow(innerPanel, gbc, 6,
-            "Monatl. Wasserverbrauch:",
+            "Monatl. Wasserverbrauch",
             getMonatwasserverbFeld(),
             getHaushaltstexCheck());
 
         // Zeile 7: Anteil am Waschgut | Gaststätten
         addRow(innerPanel, gbc, 7,
-            "Anteil am Waschgut:",
+            "Anteil am Waschgut",
             getAnteilwaschgutFeld(),
             getGasthotelCheck());
 
         // Zeile 8: Anteil am Gesamtwaschgut | Krankenhaus
         addRow(innerPanel, gbc, 8,
-            "Anteil am Gesamtwaschgut:",
+            "Anteil am Gesamtwaschgut",
             getGesamtwaschgutFeld(),
             getKrankenhausCheck());
 

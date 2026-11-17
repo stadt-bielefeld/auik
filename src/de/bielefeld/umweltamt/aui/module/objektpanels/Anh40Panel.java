@@ -124,19 +124,19 @@ public class Anh40Panel extends ObjectPanel {
         addRowFieldAndDateChooser(innerPanel, gbc, 3,
             "Ansprechpartner:in",
             getAnsprechpartnerFeld(),
-            "Genehmigung §58:",
+            "Genehmigung §58",
             getGen58Datum());
 
         // Zeile 4: Herkunftsbereich | Genehmigung §59
         addRowFieldAndDateChooser(innerPanel, gbc, 4,
-            "Herkunftsbereich:",
+            "Herkunftsbereich",
             getHerkunftsbereichFeld(),
-            "Genehmigung §59:",
+            "Genehmigung §59",
             getGen59Datum());
 
         // Zeile 5: Kläranlage | Nachtrag
         addRow(innerPanel, gbc, 5,
-            "Kläranlage:",
+            "Kläranlage",
             getKlaeranlageFeld(),
             getNachtragCheck());
 

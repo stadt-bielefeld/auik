@@ -117,7 +117,7 @@ public class Anh50Panel extends ObjectPanel {
         gbc.gridy = 1; gbc.gridwidth = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Antrag:"), gbc);
+        innerPanel.add(new JLabel("Antrag"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -130,7 +130,7 @@ public class Anh50Panel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Genehmigung:"), gbc);
+        innerPanel.add(new JLabel("Genehmigung"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
@@ -143,7 +143,7 @@ public class Anh50Panel extends ObjectPanel {
         gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        innerPanel.add(new JLabel("Gefährdungsklasse:"), gbc);
+        innerPanel.add(new JLabel("Gefährdungsklasse"), gbc);
         gbc.gridx = 1; gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;

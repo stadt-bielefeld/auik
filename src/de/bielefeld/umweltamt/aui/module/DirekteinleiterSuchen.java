@@ -176,9 +176,9 @@ public class DirekteinleiterSuchen extends AbstractQueryModul<Wasserrecht> {
 
 			// Noch etwas Layout...
 			queryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-			queryPanel.add(new JLabel("Aktenzeichen:"));
+			queryPanel.add(new JLabel("Aktenzeichen"));
 			queryPanel.add(azFeld);
-			queryPanel.add(new JLabel("Genehmigungsdatum:"));
+			queryPanel.add(new JLabel("Genehmigungsdatum"));
 			queryPanel.add(genDatum);
 			queryPanel.add(suchenButton);
 			queryPanel.add(createExportButton());
