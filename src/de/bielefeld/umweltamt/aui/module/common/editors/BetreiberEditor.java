@@ -21,9 +21,15 @@
 
 package de.bielefeld.umweltamt.aui.module.common.editors;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,17 +56,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.SwingConstants;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -171,11 +174,32 @@ public class BetreiberEditor extends AbstractApplyEditor {
 
 	}
 
+    // ── Separator Hilfsmethode ─────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
+    }
+
 	@SuppressWarnings("deprecation")
 	@Override
 	protected JComponent buildContentArea() {
 		ResourceBundle i18n = SettingsManager.getInstance().getI18nBundle();
 
+        // ── Felder initialisieren ──────────────────────────
 		anredeFeld = new LimitedTextField(100);
 		vornamenFeld = new LimitedTextField(100);
 		namenFeld = new LimitedTextField(100);
@@ -205,10 +229,11 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		daten_whgCheck = new JCheckBox(i18n.getString("editor.betreiber.whg"));
 		ueberschgebCheck = new JCheckBox(i18n.getString("editor.betreiber.uberschwemmGeb"));
 
-		revdatumsFeld = new JTextField();
+        revdatumsFeld = new JTextField(8);
 		revdatumsFeld.setEditable(false);
 		revdatumsFeld.setFocusable(false);
 		revdatumsFeld.setToolTipText(i18n.getString("tooltip.autoSet"));
+
 		handzeichenAltFeld = new LimitedTextField(10, "");
 		handzeichenAltFeld.setEditable(false);
 		handzeichenAltFeld.setFocusable(false);
@@ -218,6 +243,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 
 		flurFeld = new LimitedTextField(50);
 		flurStkFeld = new LimitedTextField(50);
+
 		gemarkungBox = new JComboBox<Gemarkung>();
 		entwGebBox = new JComboBox<String>();
 		standortGgBox = new JComboBox<Standortgghwsg>();
@@ -232,6 +258,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		wirtschaftszweigBox = new JComboBox<Wirtschaftszweig>();
 		wirtschaftszweigBox.setRenderer(new LongNameComboBoxRenderer());
 
+        // ── KeyListener ────────────────────────────────────
 		// Der folgende KeyListener wird benutzt um bei Enter
 		// im Handzeichen-Feld (wenn das Feld nicht leer ist)
 		// zum Speichern-Button zu springen.
@@ -253,134 +280,400 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		bemerkungsScroller.getVerticalScrollBar().setFocusable(false);
 		bemerkungsScroller.getHorizontalScrollBar().setFocusable(false);
 
-		FormLayout layout = new FormLayout(
-				"right:pref, 3dlu, 20dlu, 40dlu, 3dlu, 40dlu, 3dlu, 40dlu, 10dlu, right:pref, 5dlu, 100dlu, 40dlu", // Spalten
-				"pref, 3dlu, " +
-						"pref, 3dlu, " + // 3
-						"pref, 3dlu, " + // 5
-						"pref, 3dlu, " + // 7
-						"pref, 3dlu, " + // 9
-						"pref, 3dlu, " + // 11
-						"pref, 3dlu, " + // 13
-						"pref, 3dlu, " + // 15
-						"pref, 3dlu, " + // 17
-						"pref, 3dlu, " + // 19
-						"pref, 3dlu, " + // 21
-						"pref, 3dlu, " + // 23
-						"pref, 3dlu, " + // 25
-						"pref, 3dlu, " + // 27
-						"pref, 3dlu, " + // 29
-						"pref, 3dlu, " + // 31
-						"pref, 3dlu, " + // 33
-						"pref, 3dlu, " + // 35
-						"pref, 3dlu, " + // 37
-						"pref, 3dlu, " + // 39
-						"pref, 3dlu, " + // 41
-						"pref, 3dlu, " + // 43
-						"pref, 3dlu, " + // 45
-						"pref, 3dlu, " + // 47
-						"pref, 3dlu, " + // 49
-						"pref, 3dlu, " + // 51
-						"pref, 3dlu, " + // 53
-						"pref, 3dlu, " + // 55
-						"pref, 3dlu, " + // 57
-						"pref, 3dlu, "); // 59
+        // ══════════════════════════════════════════════════
+        // Linkes Panel: Inhaber (schmaler, ~45%)
+        // ══════════════════════════════════════════════════
+        JPanel leftPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints lc = new GridBagConstraints();
+        lc.insets = new Insets(1, 2, 1, 2);
 
-		layout.setRowGroups(new int[][] {
-				{ 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59 } });
+        // SEPARATOR: Inhaber
+        lc.gridx = 0; lc.gridy = 0;
+        lc.gridwidth = 4; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(createSeparator(i18n.getString("editor.betreiber.separator.owner")), lc);
 
-		PanelBuilder builder = new PanelBuilder(layout);
-		CellConstraints cc = new CellConstraints();
+        // Firma/Name
+        lc.gridy = 1; lc.gridwidth = 1;
+        lc.weightx = 0; lc.fill = GridBagConstraints.NONE;
+        lc.anchor = GridBagConstraints.EAST;
+        namenLabel = new JLabel(i18n.getString("editor.betreiber.company_name"));
+        leftPanel.add(namenLabel, lc);
+        lc.gridx = 1; lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(namenFeld, lc);
 
-		// Inhaber
-		// Links oben
+        // Anrede
+        lc.gridx = 0; lc.gridy = 2;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE; lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString("editor.betreiber.salutation")), lc);
+        lc.gridx = 1; lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(anredeFeld, lc);
 
-		builder.addSeparator(i18n.getString("editor.betreiber.separator.owner"), cc.xyw(1, 1, 8)); // Adresse----
-		namenLabel = builder.addLabel(i18n.getString("editor.betreiber.company_name"), cc.xy(1, 3)); // Name
-		builder.add(namenFeld, cc.xyw(3, 3, 6));
-		builder.addLabel(i18n.getString("editor.betreiber.salutation"), cc.xy(1, 5)); // Anrede
-		builder.add(anredeFeld, cc.xyw(3, 5, 6));
-		builder.addLabel(i18n.getString("editor.betreiber.first_name"), cc.xy(1, 7)); // Vorname
-		builder.add(vornamenFeld, cc.xyw(3, 7, 6));
-		builder.addLabel(i18n.getString("editor.betreiber.addition"), cc.xy(1, 9)); // Zusatz
-		builder.add(nameZusFeld, cc.xyw(3, 9, 6));
-		builder.addLabel(i18n.getString("editor.betreiber.industry"), cc.xy(1, 11)); // Wirtscahftszweig
-		builder.add(wirtschaftszweigBox, cc.xyw(3, 11, 6));
-		kassenzeichenLabel = builder.addLabel(i18n.getString("editor.betreiber.ref_number"), cc.xy(1, 13)); // Kassenzeichen
-		builder.add(kassenzeichenFeld, cc.xyw(3, 13, 6));
+        // Vorname
+        lc.gridx = 0; lc.gridy = 3;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE; lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString("editor.betreiber.first_name")), lc);
+        lc.gridx = 1; lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(vornamenFeld, lc);
 
-		// Rechts oben
+        // Zusatz
+        lc.gridx = 0; lc.gridy = 4;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE; lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString("editor.betreiber.addition")), lc);
+        lc.gridx = 1; lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(nameZusFeld, lc);
 
-		builder.addSeparator(i18n.getString("editor.betreiber.separator.contact"), cc.xyw(10, 1, 4)); // Ansprechpartner--
-		builder.addLabel(i18n.getString("editor.betreiber.contact_first_name"), cc.xy(10, 3)); // Vorname
-		builder.add(betrBeaufVornameFeld, cc.xyw(12, 3, 2));
-		builder.addLabel(i18n.getString("editor.betreiber.contact_last_name"), cc.xy(10, 5)); // Nachname
-		builder.add(betrBeaufNachnameFeld, cc.xyw(12, 5, 2));
-		builder.addLabel(i18n.getString("editor.betreiber.telephone"), cc.xy(10, 7)); // Telefon
-		builder.add(telefonFeld, cc.xyw(12, 7, 2));
-		builder.addLabel(i18n.getString("editor.betreiber.fax"), cc.xy(10, 9)); // Telefax
-		builder.add(telefaxFeld, cc.xyw(12, 9, 2));
-		builder.addLabel(i18n.getString("editor.betreiber.mail"), cc.xy(10, 11)); // Email
-		builder.add(emailFeld, cc.xyw(12, 11, 2));
-		builder.addLabel(i18n.getString("editor.betreiber.water_amount"), cc.xy(10, 13)); // Wassermenge
-		builder.add(wassermengeFeld, cc.xyw(12, 13, 2));
+        // Wirtschaftszweig
+        lc.gridx = 0; lc.gridy = 5;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE; lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString("editor.betreiber.industry")), lc);
+        lc.gridx = 1; lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(wirtschaftszweigBox, lc);
 
+        // Kassenzeichen
+        lc.gridx = 0; lc.gridy = 6;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE; lc.anchor = GridBagConstraints.EAST;
+        kassenzeichenLabel = new JLabel(i18n.getString("editor.betreiber.ref_number"));
+        leftPanel.add(kassenzeichenLabel, lc);
+        lc.gridx = 1; lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(kassenzeichenFeld, lc);
 
-		// Adresse
-		// Links
-		builder.addSeparator(i18n.getString("editor.betreiber.separator.address"), cc.xyw(1, 15, 8));
-		builder.addLabel(i18n.getString("editor.betreiber.street"), cc.xy(1, 17)); // Straße
-		builder.add(strasseFeld, cc.xyw(3, 17, 2));
-		builder.add(hausnrFeld, cc.xy(6, 17)); // Hausnr
-		builder.add(hausnrZusFeld, cc.xy(8, 17)); // HausnrZusatz
-		builder.addLabel(i18n.getString("editor.betreiber.city"), cc.xy(1, 19));
-		builder.add(plzZsFeld, cc.xy(3, 19)); // PLZ-Zusatz
-		builder.add(plzFeld, cc.xy(4, 19)); // PLZ
-		builder.add(ortFeld, cc.xyw(6, 19, 3)); // Stadt
-		builder.addLabel(i18n.getString("editor.betreiber.location_cond"), cc.xy(1, 21));
-		builder.add(standortGgBox, cc.xyw(3, 21, 6));
-		builder.addLabel(i18n.getString("editor.betreiber.area"), cc.xy(1, 23));
-		builder.add(wEinzugsGebBox, cc.xyw(3, 23, 6));
-		builder.addLabel(i18n.getString("editor.betreiber.drain_area"), cc.xy(1, 25));
-		builder.add(entwGebBox, cc.xyw(3, 25, 2));
-		builder.add(ueberschgebCheck, cc.xyw(6, 25, 3)); // Ueberschgeb Check
-		builder.addLabel(i18n.getString("editor.betreiber.marking"), cc.xy(1, 27));
-		builder.add(gemarkungBox, cc.xyw(3, 27, 6));
-		builder.addLabel(i18n.getString("editor.betreiber.parcel"), cc.xy(1, 29));
-		builder.add(flurFeld, cc.xy(3, 29));
-		builder.add(flurStkFeld, cc.xyw(4, 29, 5));
+        // SEPARATOR: Adresse
+        lc.gridx = 0; lc.gridy = 7;
+        lc.gridwidth = 4; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(createSeparator(i18n.getString("editor.betreiber.separator.address")), lc);
 
+     // Straße + Hausnr + HausnrZus
+        lc.gridx = 0; lc.gridy = 8;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE;
+        lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString(
+            "editor.betreiber.street")), lc);
 
-		// Rechts
+        JPanel strassePanel = new JPanel(
+            new FlowLayout(FlowLayout.LEFT, 2, 0));
+        strasseFeld.setPreferredSize(new java.awt.Dimension(150,
+            strasseFeld.getPreferredSize().height));
+        hausnrFeld.setPreferredSize(new java.awt.Dimension(45,
+            hausnrFeld.getPreferredSize().height));
+        hausnrZusFeld.setPreferredSize(new java.awt.Dimension(35,
+            hausnrZusFeld.getPreferredSize().height));
+        strassePanel.add(strasseFeld);
+        strassePanel.add(hausnrFeld);
+        strassePanel.add(hausnrZusFeld);
+        lc.gridx = 1; lc.gridy = 8;
+        lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        lc.anchor = GridBagConstraints.WEST;
+        leftPanel.add(strassePanel, lc);
+        lc.gridwidth = 1;
 
-		builder.addSeparator(i18n.getString("label.select"), cc.xyw(10, 15, 4)); // Adresse auswählen--
-		builder.add(getStrassenBox(), cc.xyw(10, 17, 4)); // Drop Straßen
-		builder.add(getAdressenScroller(), cc.xywh(10, 19, 4, 11)); // Straßen Scroller
+        // Stadt: PLZ-Zus + PLZ + Ort
+        lc.gridx = 0; lc.gridy = 9;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE;
+        lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString(
+            "editor.betreiber.city")), lc);
 
-		// Standort/Lage
+        JPanel stadtPanel = new JPanel(
+            new FlowLayout(FlowLayout.LEFT, 2, 0));
+        plzZsFeld.setPreferredSize(new java.awt.Dimension(22,
+            plzZsFeld.getPreferredSize().height));
+        plzFeld.setPreferredSize(new java.awt.Dimension(55,
+            plzFeld.getPreferredSize().height));
+        ortFeld.setPreferredSize(new java.awt.Dimension(150,
+            ortFeld.getPreferredSize().height));
+        stadtPanel.add(plzZsFeld);
+        stadtPanel.add(plzFeld);
+        stadtPanel.add(ortFeld);
+        lc.gridx = 1; lc.gridy = 9;
+        lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        lc.anchor = GridBagConstraints.WEST;
+        leftPanel.add(stadtPanel, lc);
+        lc.gridwidth = 1;
 
-		builder.addSeparator(i18n.getString("editor.betreiber.separator.location"), cc.xyw(1, 31, 13)); // Standorte----
-		builder.add(getStandorteScroller(), cc.xywh(1, 33, 13, 7)); // Standortetabelle
+        // Standortgegebenheit
+        lc.gridx = 0; lc.gridy = 10;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE; lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString("editor.betreiber.location_cond")), lc);
+        lc.gridx = 1; lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(standortGgBox, lc);
 
-		// DSGVO
+        // W. Einzugsgebiet
+        lc.gridx = 0; lc.gridy = 11;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE; lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString("editor.betreiber.area")), lc);
+        lc.gridx = 1; lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(wEinzugsGebBox, lc);
 
-		builder.addSeparator(i18n.getString("editor.betreiber.separator.data_prot_notice"), cc.xyw(1, 41, 13)); // DSGVO
-		builder.add(daten_awsvCheck, cc.xyw(1, 43, 2)); // AWSV Check
-		builder.add(daten_esatzungCheck, cc.xyw(5, 43, 2)); // ESatzung Check
-		builder.add(daten_whgCheck, cc.xyw(9, 43, 2)); // WHG Check
+        // Entwässerungsgebiet + Überschwemmungsgebiet
+        lc.gridx = 0; lc.gridy = 12;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE; lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString("editor.betreiber.drain_area")), lc);
+        lc.gridx = 1; lc.gridwidth = 1; lc.weightx = 0.4;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(entwGebBox, lc);
+        lc.gridx = 2; lc.gridwidth = 2; lc.weightx = 0.6;
+        leftPanel.add(ueberschgebCheck, lc);
 
-		builder.addSeparator(i18n.getString("editor.betreiber.remark"), cc.xyw(1, 45, 13)); // Bemerkungen ---
-		builder.add(bemerkungsScroller, cc.xywh(1, 47, 13, 7)); // Bemerkungen Scroller
+        // Gemarkung
+        lc.gridx = 0; lc.gridy = 13;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE; lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString("editor.betreiber.marking")), lc);
+        lc.gridx = 1; lc.gridwidth = 3; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(gemarkungBox, lc);
 
-		builder.addSeparator(i18n.getString("editor.betreiber.last_rev"), cc.xyw(1, 55, 8));		//Letzte Revision--
-		builder.addLabel(i18n.getString("editor.betreiber.date"), cc.xy(1, 57));						//Datum
-		builder.add(revdatumsFeld, cc.xyw(3, 57, 4));
-		handzeichenLabel = builder.addLabel(i18n.getString("editor.betreiber.sign"), cc.xy(1, 59));		//Handzeichen
-		builder.add(handzeichenAltFeld, cc.xyw(3, 59, 4));
-		builder.addSeparator(i18n.getString("editor.betreiber.separator.new_rev"), cc.xyw(10, 55, 4));		//Neue Revison--
-		handzeichenLabel = builder.addLabel(i18n.getString("editor.betreiber.sign"), cc.xy(10, 57));
-		builder.add(handzeichenNeuFeld, cc.xyw(12, 57, 2));
+        // Flur/Flurstücke
+        lc.gridx = 0; lc.gridy = 14;
+        lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE; lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(i18n.getString("editor.betreiber.parcel")), lc);
+        lc.gridx = 1; lc.gridwidth = 1; lc.weightx = 0.35;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(flurFeld, lc);
+        lc.gridx = 2; lc.gridwidth = 2; lc.weightx = 0.65;
+        leftPanel.add(flurStkFeld, lc);
 
+        // ══════════════════════════════════════════════════
+        // Rechtes Panel: Ansprechpartner + auswählen (55%)
+        // ══════════════════════════════════════════════════
+        JPanel rightPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints rc = new GridBagConstraints();
+        rc.insets = new Insets(1, 2, 1, 2);
+
+        // SEPARATOR: Ansprechpartner
+        rc.gridx = 0; rc.gridy = 0;
+        rc.gridwidth = 3; rc.weightx = 1.0;
+        rc.fill = GridBagConstraints.HORIZONTAL;
+        rightPanel.add(createSeparator(i18n.getString("editor.betreiber.separator.contact")), rc);
+
+        // Vorname
+        rc.gridy = 1; rc.gridwidth = 1; rc.weightx = 0;
+        rc.fill = GridBagConstraints.NONE; rc.anchor = GridBagConstraints.EAST;
+        rightPanel.add(new JLabel(i18n.getString("editor.betreiber.contact_first_name")), rc);
+        rc.gridx = 1; rc.gridwidth = 2; rc.weightx = 1.0;
+        rc.fill = GridBagConstraints.HORIZONTAL;
+        rightPanel.add(betrBeaufVornameFeld, rc);
+
+        // Nachname
+        rc.gridx = 0; rc.gridy = 2;
+        rc.gridwidth = 1; rc.weightx = 0;
+        rc.fill = GridBagConstraints.NONE; rc.anchor = GridBagConstraints.EAST;
+        rightPanel.add(new JLabel(i18n.getString("editor.betreiber.contact_last_name")), rc);
+        rc.gridx = 1; rc.gridwidth = 2; rc.weightx = 1.0;
+        rc.fill = GridBagConstraints.HORIZONTAL;
+        rightPanel.add(betrBeaufNachnameFeld, rc);
+
+        // Telefon
+        rc.gridx = 0; rc.gridy = 3;
+        rc.gridwidth = 1; rc.weightx = 0;
+        rc.fill = GridBagConstraints.NONE; rc.anchor = GridBagConstraints.EAST;
+        rightPanel.add(new JLabel(i18n.getString("editor.betreiber.telephone")), rc);
+        rc.gridx = 1; rc.gridwidth = 2; rc.weightx = 1.0;
+        rc.fill = GridBagConstraints.HORIZONTAL;
+        rightPanel.add(telefonFeld, rc);
+
+        // Telefax
+        rc.gridx = 0; rc.gridy = 4;
+        rc.gridwidth = 1; rc.weightx = 0;
+        rc.fill = GridBagConstraints.NONE; rc.anchor = GridBagConstraints.EAST;
+        rightPanel.add(new JLabel(i18n.getString("editor.betreiber.fax")), rc);
+        rc.gridx = 1; rc.gridwidth = 2; rc.weightx = 1.0;
+        rc.fill = GridBagConstraints.HORIZONTAL;
+        rightPanel.add(telefaxFeld, rc);
+
+        // E-Mail
+        rc.gridx = 0; rc.gridy = 5;
+        rc.gridwidth = 1; rc.weightx = 0;
+        rc.fill = GridBagConstraints.NONE; rc.anchor = GridBagConstraints.EAST;
+        rightPanel.add(new JLabel(i18n.getString("editor.betreiber.mail")), rc);
+        rc.gridx = 1; rc.gridwidth = 2; rc.weightx = 1.0;
+        rc.fill = GridBagConstraints.HORIZONTAL;
+        rightPanel.add(emailFeld, rc);
+
+        // Wassermenge
+        rc.gridx = 0; rc.gridy = 6;
+        rc.gridwidth = 1; rc.weightx = 0;
+        rc.fill = GridBagConstraints.NONE; rc.anchor = GridBagConstraints.EAST;
+        rightPanel.add(new JLabel(i18n.getString("editor.betreiber.water_amount")), rc);
+        rc.gridx = 1; rc.gridwidth = 2; rc.weightx = 1.0;
+        rc.fill = GridBagConstraints.HORIZONTAL;
+        rightPanel.add(wassermengeFeld, rc);
+
+        // SEPARATOR: auswählen
+        rc.gridx = 0; rc.gridy = 7;
+        rc.gridwidth = 3; rc.weightx = 1.0;
+        rc.fill = GridBagConstraints.HORIZONTAL;
+        rightPanel.add(createSeparator(i18n.getString("label.select")), rc);
+
+        // Strassenbox
+        rc.gridy = 8; rc.gridwidth = 3; rc.weightx = 1.0;
+        rc.fill = GridBagConstraints.HORIZONTAL;
+        rightPanel.add(getStrassenBox(), rc);
+
+        // Adressentabelle – etwas mehr Platz (weighty = 0.5)
+        rc.gridy = 9; rc.gridwidth = 3;
+        rc.gridheight = 6;
+        rc.weightx = 1.0; rc.weighty = 0.5;
+        rc.fill = GridBagConstraints.BOTH;
+        rightPanel.add(getAdressenScroller(), rc);
+        rc.gridheight = 1; rc.weighty = 0;
+
+        // ══════════════════════════════════════════════════
+        // Haupt Panel
+        // ══════════════════════════════════════════════════
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints mc = new GridBagConstraints();
+        mc.insets = new Insets(2, 3, 2, 3);
+
+     //  linker und rechter Block gleich breit
+        JPanel leftWrapper = new JPanel(new BorderLayout());
+        leftWrapper.add(leftPanel, BorderLayout.NORTH);   // oben ausrichten
+        JPanel rightWrapper = new JPanel(new BorderLayout());
+        rightWrapper.add(rightPanel, BorderLayout.CENTER);
+
+        JPanel topPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+        topPanel.add(leftWrapper);
+        topPanel.add(rightWrapper);
+
+        mc.gridx = 0; mc.gridy = 0;
+        mc.gridwidth = 2; mc.weightx = 1.0; mc.weighty = 0;
+        mc.fill = GridBagConstraints.BOTH;
+        mc.anchor = GridBagConstraints.NORTH;
+        mainPanel.add(topPanel, mc);
+        mc.gridwidth = 1;
+
+        // SEPARATOR: Standort / Lage
+        mc.gridx = 0; mc.gridy = 1;
+        mc.gridwidth = 2; mc.weightx = 1.0;
+        mc.weighty = 0;
+        mc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(createSeparator(i18n.getString("editor.betreiber.separator.location")), mc);
+
+        // Standortetabelle – deutlich mehr Platz (weighty = 0.35)
+        mc.gridy = 2; mc.gridwidth = 2;
+        mc.weightx = 1.0; mc.weighty = 0.35;
+        mc.fill = GridBagConstraints.BOTH;
+        mainPanel.add(getStandorteScroller(), mc);
+        mc.weighty = 0;
+
+        // SEPARATOR: Datenschutzhinweis
+        mc.gridy = 3; mc.gridwidth = 2;
+        mc.weightx = 1.0; mc.weighty = 0;
+        mc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(createSeparator(
+            i18n.getString("editor.betreiber.separator.data_prot_notice")), mc);
+
+        // DSGVO Checkboxen
+        JPanel dsgvoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 2));
+        dsgvoPanel.add(daten_awsvCheck);
+        dsgvoPanel.add(daten_esatzungCheck);
+        dsgvoPanel.add(daten_whgCheck);
+        mc.gridy = 4; mc.gridwidth = 2;
+        mc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(dsgvoPanel, mc);
+
+        // SEPARATOR: Bemerkungen
+        mc.gridy = 5; mc.gridwidth = 2;
+        mc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(createSeparator(i18n.getString("editor.betreiber.remark")), mc);
+
+        // Bemerkungen –
+        mc.gridy = 6; mc.gridwidth = 2;
+        mc.weightx = 1.0; mc.weighty = 0.2;
+        mc.fill = GridBagConstraints.BOTH;
+        mainPanel.add(bemerkungsScroller, mc);
+        mc.weighty = 0;
+
+        // ── Revision: Links + Rechts ───────────────────────
+        // Revision Links
+        JPanel revLeftPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints rlc = new GridBagConstraints();
+        rlc.insets = new Insets(1, 2, 1, 2);
+
+        rlc.gridx = 0; rlc.gridy = 0;
+        rlc.gridwidth = 2; rlc.weightx = 1.0;
+        rlc.fill = GridBagConstraints.HORIZONTAL;
+        revLeftPanel.add(createSeparator(i18n.getString("editor.betreiber.last_rev")), rlc);
+
+        // Datum
+        rlc.gridy = 1; rlc.gridwidth = 1; rlc.weightx = 0;
+        rlc.fill = GridBagConstraints.NONE; rlc.anchor = GridBagConstraints.EAST;
+        revLeftPanel.add(new JLabel(i18n.getString("editor.betreiber.date")), rlc);
+        rlc.gridx = 1; rlc.weightx = 1.0;
+        rlc.fill = GridBagConstraints.NONE; rlc.anchor = GridBagConstraints.WEST;
+        revdatumsFeld.setPreferredSize(new java.awt.Dimension(90, revdatumsFeld.getPreferredSize().height));
+        revLeftPanel.add(revdatumsFeld, rlc);
+
+        // Handzeichen (alt) – normales Label
+        rlc.gridx = 0; rlc.gridy = 2; rlc.weightx = 0;
+        rlc.fill = GridBagConstraints.NONE; rlc.anchor = GridBagConstraints.EAST;
+        revLeftPanel.add(new JLabel(i18n.getString("editor.betreiber.sign")), rlc);
+        rlc.gridx = 1; rlc.weightx = 1.0;
+        rlc.fill = GridBagConstraints.NONE; rlc.anchor = GridBagConstraints.WEST;
+        handzeichenAltFeld.setPreferredSize(new java.awt.Dimension(90, handzeichenAltFeld.getPreferredSize().height));
+        revLeftPanel.add(handzeichenAltFeld, rlc);
+
+        // Revision Rechts
+        JPanel revRightPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints rrc = new GridBagConstraints();
+        rrc.insets = new Insets(1, 2, 1, 2);
+
+        rrc.gridx = 0; rrc.gridy = 0;
+        rrc.gridwidth = 2; rrc.weightx = 1.0;
+        rrc.fill = GridBagConstraints.HORIZONTAL;
+        revRightPanel.add(createSeparator(i18n.getString("editor.betreiber.separator.new_rev")), rrc);
+
+        // Handzeichen (neu) – dieses Label wird bei fehlender Eingabe rot
+        rrc.gridy = 1; rrc.gridwidth = 1; rrc.weightx = 0;
+        rrc.fill = GridBagConstraints.NONE; rrc.anchor = GridBagConstraints.EAST;
+        handzeichenLabel = new JLabel(i18n.getString("editor.betreiber.sign"));
+        revRightPanel.add(handzeichenLabel, rrc);
+        rrc.gridx = 1; rrc.weightx = 1.0;
+        rrc.fill = GridBagConstraints.NONE; rrc.anchor = GridBagConstraints.WEST;
+        handzeichenNeuFeld.setPreferredSize(new java.awt.Dimension(90, handzeichenNeuFeld.getPreferredSize().height));
+        revRightPanel.add(handzeichenNeuFeld, rrc);
+
+        // Beide Revision-Blöcke 50/50 nebeneinander, oben ausgerichtet
+        JPanel revLeftWrapper = new JPanel(new BorderLayout());
+        revLeftWrapper.add(revLeftPanel, BorderLayout.NORTH);
+        JPanel revRightWrapper = new JPanel(new BorderLayout());
+        revRightWrapper.add(revRightPanel, BorderLayout.NORTH);
+
+        JPanel revPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+        revPanel.add(revLeftWrapper);
+        revPanel.add(revRightWrapper);
+
+        mc.gridx = 0; mc.gridy = 7;
+        mc.gridwidth = 2; mc.weightx = 1.0;
+        mc.weighty = 0;
+        mc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(revPanel, mc);
+        mc.gridwidth = 1;
+
+        // ── Button + Listener ─────────────────────────────
 		button3.setText(i18n.getString("editor.betreiber.button.change_address"));
 
 		BetreiberListener dialogListener = new BetreiberListener();
@@ -388,9 +681,7 @@ public class BetreiberEditor extends AbstractApplyEditor {
 		strasseFeld.addActionListener(dialogListener);
 		strassenBox.addActionListener(dialogListener);
 
-		JPanel panel =  builder.getPanel();
-		panel.setBorder(Paddings.DIALOG);
-		return panel;
+        return mainPanel;
 	}
 
     private Action getStandortLoeschAction() {

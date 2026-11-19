@@ -82,7 +82,7 @@ public class BasisObjektModel extends ListTableModel<Objekt> {
             case 1:
                 if ("Standort".equals(secondColumn)) {
                     tmp = DatabaseQuery.getStandortString(bo.getStandortid());
-                } else if ("Betreiber".equals(secondColumn)) {
+                } else if ("Betreiber:in".equals(secondColumn)) {
                     tmp = bo.getBetreiberid();
                 } else {
                     tmp = secondColumn;

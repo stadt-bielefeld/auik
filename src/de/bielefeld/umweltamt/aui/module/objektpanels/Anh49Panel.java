@@ -73,6 +73,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -87,21 +93,21 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -111,7 +117,6 @@ import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.module.common.editors.AbscheiderEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.Anh49AbscheiderModel;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextField;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -127,18 +132,18 @@ public class Anh49Panel extends AbstractAnhangPanel {
     /* Note: As these strings are used as keys in the underlying HashMap,     *
      * they should be unique.                                                 */
     /* Widgets - left */
-    private final String ANSPRECHPARTNER = "Ansprechpartner:";
-    private final String SACHKUNDE_LFA = "Sachkunde LFA:";
-    private final String ANALYSEMONAT = "Analysemonat:";
+    private final String ANSPRECHPARTNER = "Ansprechpartner:in";
+    private final String SACHKUNDE_LFA = "Sachkunde LFA";
+    private final String ANALYSEMONAT = "Analysemonat";
     private final String BEMERKUNGEN = "Bemerkungen";
     /* Widgets - right */
-    private final String GENEHMIGUNGSDATUM = "Genehmigungsdatum:";
-    private final String AENDERUNGSGENEHMIGUNGSDATUM = "Änderungsgen.-datum:";
+    private final String GENEHMIGUNGSDATUM = "Genehmigungsdatum";
+    private final String AENDERUNGSGENEHMIGUNGSDATUM = "Änderungsgen.-datum";
     private final String ABGEMELDET = "abgemeldet";
     private final String ABWASSERFREI = "abwasserfrei";
     private final String E_SATZUNG = "Überwachung nach E-Satzung";
     private final String SICHERHEITSABSCHEIDER = "Sicherheitsabscheider";
-    private final String WIEDERVORLAGEDATUM = "Wiedervorlagedatum:";
+    private final String WIEDERVORLAGEDATUM = "Wiedervorlagedatum";
     /* Widgets - bottom */
     private final String SPEICHERN = "Speichern";
 
@@ -165,22 +170,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         TableFocusListener tfl = TableFocusListener.getInstance();
         getAbscheiderTabelle().addFocusListener(tfl);
 
-        JScrollPane abscheiderScroller = new JScrollPane(
-                getAbscheiderTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-            abscheiderScroller.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    showAbscheiderPopup(e);
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    showAbscheiderPopup(e);
-                }
-            });
-
+        // ── Widgets registrieren ──────────────────────────
         /* Add components to the "Anhang" panel */
         /* Left column */
         super.addComponent(this.ANSPRECHPARTNER, new LimitedTextField(50));
@@ -202,105 +192,189 @@ public class Anh49Panel extends AbstractAnhangPanel {
         super.addComponent(this.WIEDERVORLAGEDATUM, new TextFieldDateChooser());
         super.addComponent(this.SPEICHERN, getSaveAnh49Button());
 
-        FormLayout layout = new FormLayout(
-            "pref, 5dlu, 100dlu, 10dlu, pref, 5dlu, 100dlu", // Spalten
-            "pref, " + // Bearbeitung | Erfassung
-                "3dlu, " + //
-                "pref, " + // Sachbearbeiter | Genehmigungsdatum
-                "3dlu, " + //
-                "pref, " + // Ansprechpartner | Änderungsgenehmigungsdatum
-                "3dlu, " + //
-                "pref, " + // Sachkunde LFA | abgemeldet
-                "3dlu, " + //
-                "pref, " + // Analyse | abwasserfrei
-                "3dlu, " + //
-                "pref, " + // Analysemonat | E-Satzung
-                "3dlu, " + //
-                "pref, " + // Bemerkung | Kontrolle
-                "3dlu, " + //
-                "pref, " + // Bemerkung | Wiedervorlage
-                "30dlu, " + //
-                "3dlu, " + //
-                "pref, " + // Abscheiderdetails
-                "5dlu, " + //
-                "fill:100dlu, " + // Tabelle
-                "5dlu, " + //
-                "pref"); // Buttons
+        // ── AbscheiderScroller ────────────────────────────
+        JScrollPane abscheiderScroller = new JScrollPane(
+                getAbscheiderTabelle(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        abscheiderScroller.setPreferredSize(
+            new java.awt.Dimension(0, 120));
+        abscheiderScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 120));
+            abscheiderScroller.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    showAbscheiderPopup(e);
+                }
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    showAbscheiderPopup(e);
+                }
+        });
 
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        CellConstraints cc = new CellConstraints();
+        // ══════════════════════════════════════════════════
+        // innerPanel mit GridBagLayout
+        // ══════════════════════════════════════════════════
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
 
-        /* Left column */
-        Integer row = 1;
-        Integer labelCol = 1;
-        Integer fieldCol = 3;
-        Integer colWidth = 3;
-        Integer cols = 7;
+        // ── ZEILE 0: Zwei Spalten nebeneinander ───────────
+        // Linke Spalte (Bearbeitung + Analyse)
+        JPanel leftPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints lc = new GridBagConstraints();
+        lc.insets = new Insets(2, 3, 2, 3);
 
-        builder.addSeparator("Bearbeitung", cc.xyw(labelCol, row, colWidth));
-        row += 2;
-        builder.addLabel(this.ANSPRECHPARTNER, cc.xy(labelCol, row));
-        builder.add(super.getComponent(this.ANSPRECHPARTNER),
-            cc.xy(fieldCol, row));
-        row += 2;
-        builder.addLabel(this.SACHKUNDE_LFA, cc.xy(labelCol, row));
-        builder.add(super.getComponent(this.SACHKUNDE_LFA),
-            cc.xy(fieldCol, row));
-        row += 2;
+        // SEPARATOR: Bearbeitung
+        lc.gridx = 0; lc.gridy = 0;
+        lc.gridwidth = 2; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(createSeparator("Bearbeitung"), lc);
 
-        builder.addSeparator("Analyse", cc.xyw(labelCol, row, colWidth));
-        row += 2;
-        builder.addLabel(this.ANALYSEMONAT, cc.xy(labelCol, row));
-        builder
-            .add(super.getComponent(this.ANALYSEMONAT), cc.xy(fieldCol, row));
-        row += 2;
+        // Ansprechpartner
+        lc.gridy = 1; lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE;
+        lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(this.ANSPRECHPARTNER), lc);
+        lc.gridx = 1; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        super.getComponent(this.ANSPRECHPARTNER)
+            .setPreferredSize(new java.awt.Dimension(200,
+                super.getComponent(this.ANSPRECHPARTNER).getPreferredSize().height));
+        leftPanel.add(super.getComponent(this.ANSPRECHPARTNER), lc);
 
-        builder.addSeparator("Bemerkungen", cc.xyw(labelCol, row, cols));
-        row += 2;
-        builder.add(new JScrollPane(super.getComponent(this.BEMERKUNGEN),
+        // Sachkunde LFA
+        lc.gridx = 0; lc.gridy = 2; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE;
+        lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(this.SACHKUNDE_LFA), lc);
+        lc.gridx = 1; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        super.getComponent(this.SACHKUNDE_LFA)
+            .setPreferredSize(new java.awt.Dimension(200,
+                super.getComponent(this.SACHKUNDE_LFA).getPreferredSize().height));
+        leftPanel.add(super.getComponent(this.SACHKUNDE_LFA), lc);
+
+        // SEPARATOR: Analyse
+        lc.gridx = 0; lc.gridy = 3;
+        lc.gridwidth = 2; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        leftPanel.add(createSeparator("Analyse"), lc);
+
+        // Analysemonat
+        lc.gridy = 4; lc.gridwidth = 1; lc.weightx = 0;
+        lc.fill = GridBagConstraints.NONE;
+        lc.anchor = GridBagConstraints.EAST;
+        leftPanel.add(new JLabel(this.ANALYSEMONAT), lc);
+        lc.gridx = 1; lc.weightx = 1.0;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        super.getComponent(this.ANALYSEMONAT)
+            .setPreferredSize(new java.awt.Dimension(200,
+                super.getComponent(this.ANALYSEMONAT).getPreferredSize().height));
+        leftPanel.add(super.getComponent(this.ANALYSEMONAT), lc);
+
+        // Rechte Spalte (Erfassung)
+        JPanel rightPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints rc = new GridBagConstraints();
+        rc.insets = new Insets(2, 3, 2, 3);
+
+        // SEPARATOR: Erfassung
+        rc.gridx = 0; rc.gridy = 0;
+        rc.gridwidth = 2; rc.weightx = 1.0;
+        rc.fill = GridBagConstraints.HORIZONTAL;
+        rightPanel.add(createSeparator("Erfassung"), rc);
+
+        // abgemeldet + E-Satzung
+        rc.gridy = 1; rc.gridwidth = 1; rc.weightx = 0;
+        rc.fill = GridBagConstraints.NONE;
+        rc.anchor = GridBagConstraints.WEST;
+        rightPanel.add(super.getComponent(this.ABGEMELDET), rc);
+        rc.gridx = 1;
+        rightPanel.add(super.getComponent(this.E_SATZUNG), rc);
+
+        // abwasserfrei + Sicherheitsabscheider
+        rc.gridx = 0; rc.gridy = 2;
+        rightPanel.add(super.getComponent(this.ABWASSERFREI), rc);
+        rc.gridx = 1;
+        rightPanel.add(super.getComponent(this.SICHERHEITSABSCHEIDER), rc);
+
+        // ── Zwei Spalten ins innerPanel ───────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        innerPanel.add(leftPanel, gbc);
+
+        gbc.gridx = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        innerPanel.add(rightPanel, gbc);
+
+        // ── SEPARATOR: Bemerkungen ────────────────────────
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridwidth = 2; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Bemerkungen"), gbc);
+
+        // ── BemerkungsArea ────────────────────────────────
+        JScrollPane bemerkungsScroller = new JScrollPane(
+            super.getComponent(this.BEMERKUNGEN),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), cc.xywh(labelCol,
-            row, cols, 4));
-        row += 5;
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        bemerkungsScroller.setPreferredSize(
+            new java.awt.Dimension(0, 60));
+        bemerkungsScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 60));
+        gbc.gridy = 2; gbc.gridwidth = 2;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(bemerkungsScroller, gbc);
 
-        builder.addSeparator("Abscheiderdetails", cc.xyw(labelCol, row, cols));
-        row += 2;
+        // ── SEPARATOR: Abscheiderdetails ──────────────────
+        gbc.gridy = 3; gbc.gridwidth = 2;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Abscheiderdetails"), gbc);
 
-        builder.add(abscheiderScroller, cc.xyw(labelCol, row, cols));
-        row += 2;
+        // ── AbscheiderTabelle ─────────────────────────────
+        gbc.gridy = 4; gbc.gridwidth = 2;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(abscheiderScroller, gbc);
 
-        /* Bottom */
-        builder.add(ComponentFactory.buildRightAlignedBar(
-            getNeuerAbscheiderButton(), getSaveAnh49Button()), cc.xyw(labelCol,
-            row, cols));
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getNeuerAbscheiderButton());
+        buttonBar.add(getSaveAnh49Button());
+        gbc.gridy = 5; gbc.gridwidth = 2;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
 
-        /* Right column */
-        row = 1;
-        labelCol = 5;
-        fieldCol = 7;
+        // ── Wrapper: links schmal, rechts leer ───────────
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(innerPanel, BorderLayout.WEST);
 
-        builder.appendRow("fill:100dlu");
+        this.setLayout(new BorderLayout());
+        this.add(wrapperPanel, BorderLayout.NORTH);
+    }
 
-        builder.addSeparator("Erfassung", cc.xyw(labelCol, row, colWidth));
-        row += 2;
-        builder.add(super.getComponent(this.ABGEMELDET),
-            cc.xy(labelCol, row, "l,d"));
-        builder.add(super.getComponent(this.E_SATZUNG),
-            cc.xy(fieldCol, row, "l,d"));
-        row += 2;
-        builder.add(super.getComponent(this.ABWASSERFREI),
-            cc.xy(labelCol, row, "l,d"));
-        builder.add(super.getComponent(this.SICHERHEITSABSCHEIDER),
-                cc.xy(fieldCol, row, "l,d"));
-        row += 2;
-
-       // builder.addSeparator("Wiedervorlage", cc.xyw(labelCol, row, colWidth));
-       // row += 2;
-       // builder.addLabel(this.WIEDERVORLAGEDATUM, cc.xy(labelCol, row));
-       // builder.add(super.getComponent(this.WIEDERVORLAGEDATUM),
-       //    cc.xy(fieldCol, row));
-
-        builder.nextLine();
+    // ── Separator Hilfsmethode ─────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
     }
 
     private Action getAbscheiderLoeschAction() {
@@ -513,7 +587,7 @@ public class Anh49Panel extends AbstractAnhangPanel {
         Set<Anfallstelle> list = this.hauptModul.getObjekt().getAnfallstelles();
         this.fachdaten = Anh49Fachdaten.findByAnfallstelleId(
                 list.iterator().next().getId());
-        log.debug("Anhang 40 Objekt aus DB geholt: ID" + this.fachdaten);
+        log.debug("Anhang 49 Objekt aus DB geholt: ID" + this.fachdaten);
     }
 
     public void updateForm() {

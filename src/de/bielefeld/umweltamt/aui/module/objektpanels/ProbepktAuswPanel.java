@@ -25,6 +25,11 @@
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,9 +61,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -70,10 +77,6 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -140,59 +143,94 @@ public class ProbepktAuswPanel extends JPanel {
         this.einheiten = DatabaseQuery.getEinheiten();
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "20dlu, 5dlu, 70dlu, 5dlu, 20dlu, 5dlu, 140dlu, 5dlu, r:16px, 5dlu, c:70dlu:g(0.1), 5dlu, l:16px, 10dlu, 300dlu", // Spalten
-            "pref, 3dlu" + ", " + // 1
-                "pref, 3dlu " + ", " + // 2
-                "pref, 3dlu" + ", " + // 3
-                "pref, 3dlu" + ", " + // 4
-                "pref, 3dlu" + ", " + // 5
-                "pref, 3dlu" + ", " + // 6
-                "pref, 3dlu" + ", " + // 7
-                "pref, 3dlu" + ", " + // 8
-                "pref, 3dlu" + ", " + // 9
-                "pref, 3dlu" + ", " + // 10
-                "pref, 3dlu" + ", " + // 11
-                "pref, 3dlu" + ", " + // 12
-                "pref, 3dlu" + ", " + // 13
-                "pref, 3dlu" + ", " + // 14
-                "pref, 3dlu" + ", " + // 15
-                "pref, 3dlu" + ", " + // 16
-                "pref, 3dlu" + ", " + // 17
-                "pref, 3dlu" + ", " + // 18
-                "pref, 3dlu" + ", " + // 19
-                "pref, 3dlu" + ", " + // 20
-                "pref, 3dlu" + ", " + // 21
-                "pref, 3dlu" + ", " + // 22
-                "pref, 3dlu" + ", " + // 23
-                "pref, 3dlu" + ", " + // 24
-                "pref, 3dlu" + ", " + // 25
-                "pref, 3dlu" + ", " + // 26
-                "pref"); // 27
+        // ── Haupt-Layout ──────────────────────────────────
+        this.setLayout(new BorderLayout());
 
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        CellConstraints cc = new CellConstraints();
-        CellConstraints cc2 = (CellConstraints) cc.clone();
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
 
-        builder.addSeparator("Zeitraum", cc.xyw(1, 1, 11));
-        builder.addSeparator("Analyse von...", cc.xyw(15, 1, 1));
+        // ── ZEILE 0: Zeitraum (links) + Analyse von (rechts)
+        // Separator Zeitraum
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 3; gbc.weightx = 0.7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Zeitraum"), gbc);
 
-        builder.add(new JLabel("Von:"), cc.xy(1, 3, "r,d"),
-            getVonDateChooser(), cc2.xy(3, 3, "l,d"));
-        builder.add(new JLabel("Bis:"), cc.xy(5, 3, "r,d"),
-            getBisDateChooser(), cc2.xy(7, 3, "l,d"));
-        builder.add(getAnalyseVonBox(), cc2.xyw(15, 3, 1, "l,d"));
+        // Separator Analyse von
+        gbc.gridx = 3; gbc.gridwidth = 1;
+        gbc.weightx = 0.3;
+        innerPanel.add(createSeparator("Analyse von..."), gbc);
 
-        builder.addSeparator("Parameter", cc.xyw(1, 5, 15));
+     // ── ZEILE 1: Von + Bis + AnalyseVonBox ───────────
+     JPanel vonBisPanel = new JPanel(
+         new FlowLayout(FlowLayout.LEFT, 5, 0));
+     vonBisPanel.add(new JLabel("Von"));
+     getVonDateChooser().setPreferredSize(
+         new java.awt.Dimension(110,
+             getVonDateChooser().getPreferredSize().height));
+     vonBisPanel.add(getVonDateChooser());
+     vonBisPanel.add(new JLabel("Bis"));
+     getBisDateChooser().setPreferredSize(
+         new java.awt.Dimension(110,
+             getBisDateChooser().getPreferredSize().height));
+     vonBisPanel.add(getBisDateChooser());
 
-        builder.add(new JLabel("Erste Y-Achse"), cc.xyw(1, 7, 7));
-        builder.add(new JLabel("Zweite Y-Achse"), cc.xy(15, 7));
+     gbc.gridx = 0; gbc.gridy = 1;
+     gbc.gridwidth = 3; gbc.weightx = 0.7;
+     gbc.fill = GridBagConstraints.NONE;
+     gbc.anchor = GridBagConstraints.WEST;
+     innerPanel.add(vonBisPanel, gbc);
 
-        JList<Parameter> lList = getLeftList();
-        JList<Parameter> rList = getRightList();
-        builder.add(new JScrollPane(lList), cc.xywh(1, 9, 7, 15, "fill, fill"));
-        builder
-            .add(new JScrollPane(rList), cc.xywh(15, 9, 1, 15, "fill, fill"));
+     // AnalyseVonBox
+     gbc.gridx = 3; gbc.gridwidth = 1;
+     gbc.weightx = 0.3;
+     gbc.fill = GridBagConstraints.HORIZONTAL;
+     gbc.anchor = GridBagConstraints.WEST;
+     getAnalyseVonBox().setPreferredSize(
+         new java.awt.Dimension(200,
+             getAnalyseVonBox().getPreferredSize().height));
+     innerPanel.add(getAnalyseVonBox(), gbc);
+
+
+
+
+
+
+        // ── ZEILE 2: Separator Parameter ─────────────────
+        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridwidth = 4; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Parameter"), gbc);
+
+        // ── ZEILE 3: Labels ───────────────────────────────
+        gbc.gridx = 0; gbc.gridy = 3;
+        gbc.gridwidth = 1; gbc.weightx = 0.35;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        innerPanel.add(new JLabel("Erste Y-Achse"), gbc);
+
+        gbc.gridx = 3; gbc.weightx = 0.35;
+        innerPanel.add(new JLabel("Zweite Y-Achse"), gbc);
+
+        // ── ZEILE 4+: Listen + Buttons ────────────────────
+        // Linke Liste
+        JScrollPane leftScroller = new JScrollPane(
+            getLeftList());
+        leftScroller.setPreferredSize(
+            new java.awt.Dimension(200, 220));
+
+        // Rechte Liste
+        JScrollPane rightScroller = new JScrollPane(
+            getRightList());
+        rightScroller.setPreferredSize(
+            new java.awt.Dimension(200, 220));
+
+        // Mittleres Panel mit Buttons + Labels
+        JPanel middlePanel = new JPanel(
+            new GridBagLayout());
+        GridBagConstraints mc = new GridBagConstraints();
+        mc.insets = new Insets(2, 3, 2, 3);
 
         String[] paramIDs = {
             DatabaseConstants.ATL_PARAMETER_ID_CADMIUM,
@@ -203,28 +241,134 @@ public class ProbepktAuswPanel extends JPanel {
             DatabaseConstants.ATL_PARAMETER_ID_BLEI,
             DatabaseConstants.ATL_PARAMETER_ID_ZINK
         };
-        int y = 9;
+
+        int mRow = 0;
         for (String paramID : paramIDs) {
-            builder.add(createRLButton(true, paramID), cc.xy(9, y));
-            builder.add(new JLabel(
-                Parameter.findById(paramID).getBezeichnung(), JLabel.CENTER),
-                cc.xy(11, y, "f,d"));
-            builder.add(createRLButton(false, paramID), cc.xy(13, y));
-            y += 2;
+            mc.gridx = 0; mc.gridy = mRow;
+            mc.weightx = 0;
+            mc.fill = GridBagConstraints.NONE;
+            middlePanel.add(
+                createRLButton(true, paramID), mc);
+
+            mc.gridx = 1; mc.weightx = 1.0;
+            mc.fill = GridBagConstraints.HORIZONTAL;
+            middlePanel.add(new JLabel(
+                Parameter.findById(paramID)
+                    .getBezeichnung(),
+                JLabel.CENTER), mc);
+
+            mc.gridx = 2; mc.weightx = 0;
+            mc.fill = GridBagConstraints.NONE;
+            middlePanel.add(
+                createRLButton(false, paramID), mc);
+            mRow++;
         }
 
-        builder.add(createRLButton(true, "box"), cc.xy(9, 23));
-        builder.add(getParameterBox(), cc.xy(11, 23, "f,d"));
-        builder.add(createRLButton(false, "box"), cc.xy(13, 23));
+        // Parameter Box Zeile
+        mc.gridx = 0; mc.gridy = mRow;
+        mc.weightx = 0;
+        mc.fill = GridBagConstraints.NONE;
+        middlePanel.add(
+            createRLButton(true, "box"), mc);
 
-        builder.add(getLeftEinheitenBox(), cc.xyw(1, 25, 7, "c,d"));
-        builder.add(new JLabel("<  Einheit  >", JLabel.CENTER),
-            cc.xy(11, 25, "f,d"));
-        builder.add(getRightEinheitenBox(), cc.xy(15, 25, "c,d"));
+        mc.gridx = 1; mc.weightx = 1.0;
+        mc.fill = GridBagConstraints.HORIZONTAL;
+        getParameterBox().setPreferredSize(
+            new java.awt.Dimension(180,
+                getParameterBox().getPreferredSize().height));
+        middlePanel.add(getParameterBox(), mc);
 
-        builder.add(getLeftDeleteButton(), cc.xyw(1, 27, 7, "c,d"));
-        builder.add(getRightDeleteButton(), cc.xy(15, 27, "c,d"));
-        builder.add(getSubmitButton(), cc.xy(11, 27));
+        mc.gridx = 2; mc.weightx = 0;
+        mc.fill = GridBagConstraints.NONE;
+        middlePanel.add(
+            createRLButton(false, "box"), mc);
+
+        // Drei Spalten ins innerPanel
+        gbc.gridx = 0; gbc.gridy = 4;
+        gbc.gridwidth = 1; gbc.weightx = 0.35;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        innerPanel.add(leftScroller, gbc);
+
+        gbc.gridx = 1; gbc.gridwidth = 2;
+        gbc.weightx = 0.3; gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        innerPanel.add(middlePanel, gbc);
+
+        gbc.gridx = 3; gbc.gridwidth = 1;
+        gbc.weightx = 0.35; gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        innerPanel.add(rightScroller, gbc);
+
+        // ── ZEILE 5: Einheiten ────────────────────────────
+        gbc.gridx = 0; gbc.gridy = 5;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        getLeftEinheitenBox().setPreferredSize(
+            new java.awt.Dimension(120,
+                getLeftEinheitenBox()
+                    .getPreferredSize().height));
+        innerPanel.add(getLeftEinheitenBox(), gbc);
+
+        gbc.gridx = 1; gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        innerPanel.add(
+            new JLabel("<  Einheit  >", JLabel.CENTER),
+            gbc);
+
+        gbc.gridx = 3; gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        getRightEinheitenBox().setPreferredSize(
+            new java.awt.Dimension(120,
+                getRightEinheitenBox()
+                    .getPreferredSize().height));
+        innerPanel.add(getRightEinheitenBox(), gbc);
+
+        // ── ZEILE 6: Buttons ──────────────────────────────
+        gbc.gridx = 0; gbc.gridy = 6;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        innerPanel.add(getLeftDeleteButton(), gbc);
+
+        gbc.gridx = 1; gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        innerPanel.add(getSubmitButton(), gbc);
+
+        gbc.gridx = 3; gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        innerPanel.add(getRightDeleteButton(), gbc);
+
+        // ── Wrapper ───────────────────────────────────────
+        JPanel wrapperPanel = new JPanel(
+            new BorderLayout());
+        wrapperPanel.add(innerPanel, BorderLayout.NORTH);
+        this.add(wrapperPanel, BorderLayout.CENTER);
+    }
+
+    // ── createSeparator() ─────────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(
+            new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
     }
 
     private class AuswertungsDialog extends JDialog {
@@ -453,8 +597,6 @@ public class ProbepktAuswPanel extends JPanel {
             JComponent buttonBar = ComponentFactory.buildOKCancelApplyBar(
                 this.speichernButton, this.printButton, this.abbrechenButton);
             tmp.add(buttonBar, BorderLayout.SOUTH);
-            tmp.setBorder(Paddings.TABBED_DIALOG);
-
             this.setContentPane(tmp);
             this.pack();
             this.setLocationRelativeTo(owner);
@@ -478,10 +620,7 @@ public class ProbepktAuswPanel extends JPanel {
                 chart = Charts.createDefaultTimeSeriesChart(this.title,
                     this.leftDataset, this.rightDataset);
             }
-
             this.chartPanel = new ChartPanel(chart, false);
-            this.chartPanel.setBorder(Paddings.DIALOG);
-
             return this.chartPanel;
         }
 
@@ -506,22 +645,23 @@ public class ProbepktAuswPanel extends JPanel {
                 }
             });
 
-            DefaultTableCellRenderer zentrierterRenderer = new DefaultTableCellRenderer();
-            zentrierterRenderer
-                .setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-
-            DefaultTableCellRenderer rechtsBuendigRenderer = new DefaultTableCellRenderer();
-            rechtsBuendigRenderer
-                .setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+            DefaultTableCellRenderer zentriert =
+                new DefaultTableCellRenderer();
+            zentriert.setHorizontalAlignment(
+                DefaultTableCellRenderer.CENTER);
+            DefaultTableCellRenderer rechts =
+                new DefaultTableCellRenderer();
+            rechts.setHorizontalAlignment(
+                DefaultTableCellRenderer.RIGHT);
 
             TableColumn column = null;
             for (int i = 0; i < this.exportTable.getColumnCount(); i++) {
                 column = this.exportTable.getColumnModel().getColumn(i);
-                if (i == 0) {// || i == 1) {
-                    column.setCellRenderer(zentrierterRenderer);
+                if (i == 0) {
+                    column.setCellRenderer(zentriert);
                     column.setPreferredWidth(100);
                 } else {
-                    column.setCellRenderer(rechtsBuendigRenderer);
+                    column.setCellRenderer(rechts);
                     column.setPreferredWidth(90);
                 }
             }
@@ -529,8 +669,6 @@ public class ProbepktAuswPanel extends JPanel {
             JScrollPane tabellenScroller = new JScrollPane(this.exportTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            tabellenScroller.setBorder(Paddings.DIALOG);
-
             return tabellenScroller;
         }
 
@@ -559,7 +697,7 @@ public class ProbepktAuswPanel extends JPanel {
                 if (exportDatei.exists()) {
                     boolean answer = GUIManager.getInstance().showQuestion(
                         "Soll die vorhandene Datei " + exportDatei.getName()
-                            + " wirklich überschrieben werden?",
+                            + " wirklich überschrieben",
                         "Datei bereits vorhanden!");
                     if (answer && exportDatei.canWrite()) {
                         doIt = true;
@@ -575,7 +713,7 @@ public class ProbepktAuswPanel extends JPanel {
                     if (AuikUtils.exportTableDataToCVS(this.exportTable,
                         exportDatei)) {
                         GUIManager.getInstance().showInfoMessage(
-                            "Speichern der CSV-Datei erfolgreich!",
+                            "Speichern der CSV-Datei",
                             "Speichern erfolgreich");
                     } else {
                         log.debug("Beim Speichern der Datei '" + exportDatei
@@ -644,7 +782,7 @@ public class ProbepktAuswPanel extends JPanel {
                 try {
                     this.chartPanel.doSaveAs();
                 } catch (IOException e) {
-                    log.debug("Konnte Datei nicht speichern!");
+                    log.debug("Konnte Datei nicht");
                 }
             } else if (this.tabbedPane.getSelectedIndex() == 1) {
                 saveTabelle();

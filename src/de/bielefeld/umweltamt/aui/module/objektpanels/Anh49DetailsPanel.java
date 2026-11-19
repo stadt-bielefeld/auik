@@ -101,6 +101,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -119,10 +120,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh49Abscheiderdetails;
@@ -188,13 +185,8 @@ public class Anh49DetailsPanel extends JPanel {
         TabAction ta = new TabAction();
         ta.addComp(getAbscheiderTabelle());
 
-        FormLayout layout = new FormLayout("150dlu:grow, 100dlu", // Spalten
-            "100dlu:grow, 3dlu, pref"); // Zeilen
-
-        PanelBuilder builder = new PanelBuilder(layout, this);
-        CellConstraints cc = new CellConstraints();
-
-        builder.add(abscheiderScroller, cc.xyw(1, 1, 2));
+        this.setLayout(new BorderLayout());
+        this.add(abscheiderScroller, BorderLayout.CENTER);
     }
 
     private Action getAbscheiderLoeschAction() {

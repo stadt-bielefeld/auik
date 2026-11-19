@@ -33,7 +33,7 @@ public class ESonderbauwerkModel extends ListTableModel<ESonderbauwerk> {
                 "Inbetriebnahme",
                 "Stillgelegt am",
                 "Standort",
-                "Betreiber"
+                "Betreiber:in"
                 },
                 false,
                 true);

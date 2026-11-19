@@ -36,7 +36,7 @@ public class BasisAbfrageModel extends ListTableModel<Object[]> {
     private final int ADRESS_COLUMN_INDEX = 1;
     public BasisAbfrageModel() {
         super(new String[]{
-            "Betreibername",
+            "Betriebsname",
             "Standort",
             "Entwässerungsgebiet",
             "SB",

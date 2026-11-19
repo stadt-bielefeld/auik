@@ -60,7 +60,12 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -74,14 +79,15 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -89,9 +95,6 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -111,7 +114,6 @@ import de.bielefeld.umweltamt.aui.module.common.editors.StandortEditor;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
 import de.bielefeld.umweltamt.aui.utils.MyKeySelectionManager;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
@@ -187,78 +189,203 @@ public class BasisPanel extends ObjectPanel {
         this.name = "Objekt";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:70dlu, 5dlu, 100dlu, 3dlu, 165dlu, 3dlu, l:min(55dlu;p)", ""
-            // Zeilen werden dynamisch erzeugt
-        );
+        // ── InnerPanel ────────────────────────────────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 5, 3, 5);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        // ── SEPARATOR: Eigenschaften ──────────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 3; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Eigenschaften"), gbc);
 
-        builder.appendSeparator("Eigenschaften");
-        builder.append("Betreiber-Adresse:", getBetreiberFeld(), 3);
-        builder.append(getBetreiberToolBar());
-        builder.nextLine();
+        // Betreiber-Adresse
+        gbc.gridy = 1; gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        innerPanel.add(new JLabel("Betriebsadresse"), gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(getBetreiberFeld(), gbc);
+        gbc.gridx = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        innerPanel.add(getBetreiberToolBar(), gbc);
 
-        builder.append("Standort / Lage:", getStandortFeld(), 3);
-        builder.append(getStandortToolBar());
-        builder.nextLine();
+        // Standort / Lage
+        gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Standort / Lage"), gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(getStandortFeld(), gbc);
+        gbc.gridx = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        innerPanel.add(getStandortToolBar(), gbc);
 
-        builder.append("Art:", getArtBox(), 3);
-        builder.nextLine();
+        // Art
+        gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Art"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getArtBox().setPreferredSize(
+            new java.awt.Dimension(300,
+                getArtBox().getPreferredSize().height));
+        innerPanel.add(getArtBox(), gbc);
 
-        builder.append("Sachbearbeiter:", getSachbearbeiterBox(), 3);
-        builder.nextLine();
+        // Sachbearbeiter
+        gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Sachbearbeiter:in"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getSachbearbeiterBox().setPreferredSize(
+            new java.awt.Dimension(300,
+                getSachbearbeiterBox().getPreferredSize().height));
+        innerPanel.add(getSachbearbeiterBox(), gbc);
 
-        builder.append("Wiedervorlage:", getWiedervorlageDatum(), 3);
-        builder.nextLine();
+        // Wiedervorlage
+        gbc.gridx = 0; gbc.gridy = 5; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Wiedervorlage"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getWiedervorlageDatum().setPreferredSize(
+            new java.awt.Dimension(150,
+                getWiedervorlageDatum().getPreferredSize().height));
+        innerPanel.add(getWiedervorlageDatum(), gbc);
 
-        builder.append("Inaktiv:", getInaktivBox());
-        builder.nextLine();
+        // Inaktiv
+        gbc.gridx = 0; gbc.gridy = 6; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Inaktiv"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        innerPanel.add(getInaktivBox(), gbc);
 
-        builder.append("Abwasserfrei:", getAbwasserfreiBox());
-        builder.nextLine();
+        // Abwasserfrei
+        gbc.gridx = 0; gbc.gridy = 7; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(new JLabel("Abwasserfrei"), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        innerPanel.add(getAbwasserfreiBox(), gbc);
 
-        builder.append(getElkarelevantLabel(), getElkarelevantBox());
-        builder.nextLine();
+        // ELKA relevant
+        gbc.gridx = 0; gbc.gridy = 8; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(getElkarelevantLabel(), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        innerPanel.add(getElkarelevantBox(), gbc);
 
-        builder.append(getPrioritaetLabel(), getPrioritaetFeld());
-        builder.nextLine();
+        // Priorität
+        gbc.gridx = 0; gbc.gridy = 9; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        innerPanel.add(getPrioritaetLabel(), gbc);
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        getPrioritaetFeld().setPreferredSize(
+            new java.awt.Dimension(100,
+                getPrioritaetFeld().getPreferredSize().height));
+        innerPanel.add(getPrioritaetFeld(), gbc);
 
-
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // ── SEPARATOR: Bemerkungen ────────────────────────
+        gbc.gridx = 0; gbc.gridy = 10;
+        gbc.gridwidth = 3; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Bemerkungen"), gbc);
 
         JScrollPane beschreibungsScroller = new JScrollPane(
             getBeschreibungsArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:25dlu");
-        builder.append(beschreibungsScroller, 5);
+        beschreibungsScroller.setPreferredSize(
+            new java.awt.Dimension(0, 60));
+        beschreibungsScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 60));
+        gbc.gridy = 11; gbc.gridwidth = 3;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(beschreibungsScroller, gbc);
 
-        builder.appendRelatedComponentsGapRow();
-        builder.nextLine(2);
+        // ── SEPARATOR: Verknüpfte Objekte ─────────────────
+        gbc.gridy = 12; gbc.gridwidth = 3;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(
+            createSeparator("Verknüpfte Objekte"), gbc);
 
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 5);
-        builder.nextLine();
+        objektverknuepfungScroller.setPreferredSize(
+            new java.awt.Dimension(0, 100));
+        objektverknuepfungScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 100));
+        gbc.gridy = 13; gbc.gridwidth = 3;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(objektverknuepfungScroller, gbc);
 
-        JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-            getSelectObjektButton(), getSaveButton());
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getSelectObjektButton());
+        buttonBar.add(getSaveButton());
+        gbc.gridy = 14; gbc.gridwidth = 3;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
 
-        builder.append(buttonBar, 5);
+        // ── Wrapper ───────────────────────────────────────
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(innerPanel, BorderLayout.WEST);
+        this.setLayout(new BorderLayout());
+        this.add(wrapperPanel, BorderLayout.NORTH);
+
         addChangeListeners(
             getBetreiberFeld(), getStandortFeld(), getLageFeld(), getArtBox(),
             getSachbearbeiterBox(), getWiedervorlageDatum(), getInaktivBox(),
             getElkarelevantBox(), getPrioritaetFeld(), getAbwasserfreiBox(),
             getBeschreibungsArea());
+    }
+
+    // ── createSeparator() ─────────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(
+            new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
     }
 
     public void fetchFormData() {
@@ -422,20 +549,7 @@ public class BasisPanel extends ObjectPanel {
                 }
             }
 
-            if (!neu) {
-                if (!this.hauptModul.getObjekt().getObjektarten()
-                        .getAbteilung().equals("AwSV")) {
-                    getPrioritaetFeld().setVisible(true);
-                    getPrioritaetLabel().setVisible(true);
-                    getElkarelevantBox().setVisible(true);
-                    getElkarelevantLabel().setVisible(true);
-                } else {
-                    getPrioritaetFeld().setVisible(false);
-                    getPrioritaetLabel().setVisible(false);
-                    getElkarelevantBox().setVisible(false);
-                    getElkarelevantLabel().setVisible(false);
-                }
-            }
+            updateElkaPrioritaetSichtbarkeit();
 
             if (this.hauptModul.getObjekt().getBeschreibung() != null) {
                 getBeschreibungsArea().setText(
@@ -495,7 +609,7 @@ public class BasisPanel extends ObjectPanel {
             getBeschreibungsArea().setEnabled(enabled);
         }
         else
-            log.debug("Objekt oder Sachbearbeiter null - Objekt: " + this.hauptModul.getObjekt() + ", Sachbearbeiter: " + this.hauptModul.getObjekt().getSachbearbeiter());
+            log.debug("Objekt oder Sachbearbeiter null" + this.hauptModul.getObjekt() + ", Sachbearbeiter: " + this.hauptModul.getObjekt().getSachbearbeiter());
     }
 
     @Override
@@ -684,7 +798,7 @@ public class BasisPanel extends ObjectPanel {
                 "edit.png", ""));
             this.betreiberEditButton
                 .setHorizontalAlignment(SwingConstants.CENTER);
-            this.betreiberEditButton.setToolTipText("Betreiber bearbeiten");
+            this.betreiberEditButton.setToolTipText("Betreiber:in bearbeiten");
             this.betreiberEditButton.setActionCommand("betreiber_edit");
 
             this.betreiberEditButton.addActionListener(getEditButtonListener());
@@ -817,6 +931,9 @@ public class BasisPanel extends ObjectPanel {
 
             this.artBox = new JComboBox<>();
             this.artBox.setKeySelectionManager(new MyKeySelectionManager());
+            // bei Wechsel der Art ELKA/Priorität ein-/ausblenden
+            this.artBox.addActionListener(
+                e -> updateElkaPrioritaetSichtbarkeit());
 
         }
         return this.artBox;
@@ -875,7 +992,7 @@ public class BasisPanel extends ObjectPanel {
 
     private JLabel getPrioritaetLabel() {
         if (this.prioritaetLabel == null) {
-            this.prioritaetLabel = new JLabel("Priorität:");
+            this.prioritaetLabel = new JLabel("Priorität");
             this.prioritaetLabel.setVisible(false);
         }
         return this.prioritaetLabel;
@@ -883,10 +1000,30 @@ public class BasisPanel extends ObjectPanel {
 
     private JLabel getElkarelevantLabel() {
         if (this.elkarelevantLabel == null) {
-            this.elkarelevantLabel = new JLabel("ELKA relevant:");
+            this.elkarelevantLabel = new JLabel("ELKA relevant");
             this.elkarelevantLabel.setVisible(false);
         }
         return this.elkarelevantLabel;
+    }
+
+    /**
+     * Blendet "ELKA relevant" und "Priorität" ein, außer bei
+     * Objektarten der Abteilung AwSV. Wird beim Laden des Formulars
+     * und bei jedem Wechsel der Art aufgerufen.
+     */
+    private void updateElkaPrioritaetSichtbarkeit() {
+        boolean sichtbar = true;
+        Object art = getArtBox().getSelectedItem();
+        if (art instanceof Objektarten) {
+            sichtbar = !"AwSV".equals(
+                ((Objektarten) art).getAbteilung());
+        }
+        getElkarelevantLabel().setVisible(sichtbar);
+        getElkarelevantBox().setVisible(sichtbar);
+        getPrioritaetLabel().setVisible(sichtbar);
+        getPrioritaetFeld().setVisible(sichtbar);
+        revalidate();
+        repaint();
     }
 
     public JTextArea getBeschreibungsArea() {
@@ -919,14 +1056,14 @@ public class BasisPanel extends ObjectPanel {
                             BasisPanel.this.hauptModul.setNew(false);
                         } else {
                             BasisPanel.this.hauptModul.getFrame().changeStatus(
-                                "Konnte Objekt nicht speichern!",
+                                "Konnte Objekt nicht",
                                 HauptFrame.ERROR_COLOR);
                         }
 
                         BasisPanel.this.hauptModul.fillForm();
                     } else {
                         BasisPanel.this.hauptModul.getFrame().changeStatus(
-                            "Kein Betreiber/Standort ausgewählt!",
+                            "Kein:e Betreiber:in/Standort ausgewählt!",
                             HauptFrame.ERROR_COLOR);
                     }
                 }
@@ -1176,7 +1313,7 @@ public class BasisPanel extends ObjectPanel {
             this.betreiberDeleteButton = new JButton(AuikUtils.getIcon(16,"exit.png",""));
             this.betreiberDeleteButton
                 .setHorizontalAlignment(SwingConstants.CENTER);
-            this.betreiberDeleteButton.setToolTipText("Betreiber löschen");
+            this.betreiberDeleteButton.setToolTipText("Betreiber:in löschen");
             this.betreiberDeleteButton.setActionCommand("betreiber_delete");
 
             this.betreiberDeleteButton.addActionListener(getDeleteButtonListener());
@@ -1206,10 +1343,10 @@ public class BasisPanel extends ObjectPanel {
     private boolean delCheck(boolean betr){
 
         if(betr == true){
-            JOptionPane dcp = new JOptionPane ("Betreiber löschen");
+            JOptionPane dcp = new JOptionPane ("Betreiber:in löschen");
             Object[] options = new String[]{"Ja", "Nein"};
             JDialog dia = dcp.createDialog("Wirklich löschen?");
-            int a = JOptionPane.showOptionDialog(dia, "Soll der Betreiber gelöscht werden?",
+            int a = JOptionPane.showOptionDialog(dia, "Soll der/die Betreiber:in gelöscht werden?",
                     "Wirklich löschen?", JOptionPane.YES_NO_OPTION,
                     JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
             if (a == JOptionPane.YES_OPTION) return true;

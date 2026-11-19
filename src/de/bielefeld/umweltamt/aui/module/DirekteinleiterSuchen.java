@@ -28,6 +28,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -36,11 +37,9 @@ import java.util.Date;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
@@ -176,18 +175,13 @@ public class DirekteinleiterSuchen extends AbstractQueryModul<Wasserrecht> {
 			});
 
 			// Noch etwas Layout...
-			FormLayout layout = new FormLayout(
-					"pref, 3dlu, pref, 3dlu, pref, 20dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref");
-			DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-			// FÃ¼r Darstellung der Suchoptionen im oberen Panel
-			builder.append("Aktenzeichen:", azFeld);
-			builder.append("Genehmigungsdatum:", genDatum);
-			builder.append(suchenButton, createExportButton());
-			builder.nextLine();
-			builder.append("");
-
-			queryPanel = builder.getPanel();
+			queryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+			queryPanel.add(new JLabel("Aktenzeichen"));
+			queryPanel.add(azFeld);
+			queryPanel.add(new JLabel("Genehmigungsdatum"));
+			queryPanel.add(genDatum);
+			queryPanel.add(suchenButton);
+			queryPanel.add(createExportButton());
 		}
 
 		return queryPanel;

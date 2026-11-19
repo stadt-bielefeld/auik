@@ -42,13 +42,13 @@
  */
 package de.bielefeld.umweltamt.aui.utils.dialogbase;
 
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 
@@ -60,8 +60,6 @@ import de.bielefeld.umweltamt.aui.HauptFrame;
 public abstract class OkCancelDialog extends SimpleDialog {
     private static final long serialVersionUID = -1999038310745668506L;
 
-    private KeyEventDispatcher keyEventDispatcher;
-
     public OkCancelDialog(HauptFrame frame) {
         this(null, frame);
     }
@@ -72,20 +70,21 @@ public abstract class OkCancelDialog extends SimpleDialog {
         // Use enter to submit
         this.getRootPane().setDefaultButton(button1);
 
-        // Use ESC to cancel
-        keyEventDispatcher = new KeyEventDispatcher() {
-            @Override
-            public boolean dispatchKeyEvent(KeyEvent e) {
-                if (e.getID() == KeyEvent.KEY_PRESSED
-                    && e.getKeyCode() == KeyEvent.VK_ESCAPE
-                ) {
+        // ESC schließt den Dialog. Als Tastenbelegung des Fensters statt
+        // als globaler KeyEventDispatcher: So schließt ESC nur den aktiven
+        // Dialog (nicht alle offenen), und Komponenten im Dialog wie
+        // Tabellenzellen oder aufgeklappte Listen verarbeiten ESC zuerst.
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+            KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "dialogSchliessen");
+        getRootPane().getActionMap().put("dialogSchliessen",
+            new AbstractAction() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
                     close();
                 }
-                return false;
-            }
-        };
-        KeyboardFocusManager.getCurrentKeyboardFocusManager()
-            .addKeyEventDispatcher(keyEventDispatcher);
+            });
     }
 
     @Override

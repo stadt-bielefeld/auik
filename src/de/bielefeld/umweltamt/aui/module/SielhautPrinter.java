@@ -20,6 +20,11 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -44,10 +49,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableColumn;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
@@ -87,6 +88,7 @@ public class SielhautPrinter extends AbstractModul {
 
     @SuppressWarnings("deprecation")
     public SielhautPrinter() {
+        // ── Tabelle ───────────────────────────────────────
         //Create components
         //Result table
         this.sielhautTable = new JTable();
@@ -105,9 +107,10 @@ public class SielhautPrinter extends AbstractModul {
             new CheckBoxTableHeader(new CheckBoxHeaderClickListener()));
         this.checkBoxColumn.setMaxWidth(25);
         this.checkBoxColumn.setResizable(false);
+
         //Checkbox column click listener
         this.sielhautTable.addMouseListener(new CheckboxColumnClickListener());
-
+        // ── Drucken Button ────────────────────────────────
         //Toolbar
         this.printButton = new JButton("Drucken");
         this.printButton.addActionListener(new java.awt.event.ActionListener() {
@@ -122,20 +125,23 @@ public class SielhautPrinter extends AbstractModul {
             }
         });
 
-        //Content panel
-        FormLayout layout = new FormLayout(
-            "3dlu, 180dlu:g, 3dlu, min(36dlu;p), 3dlu",
-            "3dlu, 400dlu:g, 3dlu, 20dlu,");
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
+        // ── Content Panel ─────────────────────────────────
+        this.contentPanel = new JPanel(
+            new BorderLayout(3, 3));
 
-        builder.add(printButton, cc.xy(4, 4));
-        builder.add(tableScrollPane, cc.xyw(2, 2, 3));
-        this.contentPanel = builder.build();
+        this.contentPanel.add(
+            this.tableScrollPane,
+            BorderLayout.CENTER);
+
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 2));
+        buttonBar.add(this.printButton);
+        this.contentPanel.add(
+            buttonBar, BorderLayout.SOUTH);
 
         this.loadTableData();
 
-        //Get output path
+        // ── Output Path ───────────────────────────────────
         SettingsManager sm = SettingsManager.getInstance();
         this.outputPath = sm.getSetting("auik.system.spath_steckbriefe");
     }
@@ -147,11 +153,14 @@ public class SielhautPrinter extends AbstractModul {
     @SuppressWarnings("deprecation")
     private JDialog createPrintDialog() {
         JDialog dialog = new JDialog();
+        dialog.setTitle("Steckbriefe erstellen");
+        dialog.setModal(true);
+        dialog.setSize(600, 250);
 
-        JLabel countLabel = new JLabel("Sielhautpunkte ausgewählt:");
+        JLabel countLabel = new JLabel("Sielhautpunkte ausgewählt");
         JLabel count = new JLabel(
             String.valueOf(sielhautModel.getSelectedCount()));
-        JLabel pathLabel = new JLabel("Dateipfad:");
+        JLabel pathLabel = new JLabel("Dateipfad");
         JTextArea path = new JTextArea(this.outputPath);
         JButton pathButton = new JButton("Pfad wählen");
         pathButton.addActionListener(new java.awt.event.ActionListener() {
@@ -177,8 +186,8 @@ public class SielhautPrinter extends AbstractModul {
             public void actionPerformed(ActionEvent arg0) {
                 //Check if target dir exists. If not, try to create it
                 String targetDir = path.getText();
-                Path path = Paths.get(targetDir);
-                if (!Files.exists(path)) {
+                    Path p = Paths.get(targetDir);
+                    if (!Files.exists(p)) {
                     boolean created = new File(targetDir).mkdirs();
                     if (!created) {
                         GUIManager.getInstance().showErrorMessage(
@@ -187,8 +196,8 @@ public class SielhautPrinter extends AbstractModul {
                         GUIManager.getInstance().setErrorStatus(
                             "Erstellen der Sielhautsteckbriefe fehlgeschlagen");
                         return;
+                        }
                     }
-                }
 
                 Map<String, String> exportResult = createReports(targetDir);
                 JDialog resultDialog = createResultDialog(
@@ -197,36 +206,61 @@ public class SielhautPrinter extends AbstractModul {
                 dialog.setVisible(false);
                 resultDialog.setVisible(true);
                 GUIManager.getInstance().setInfoStatus(
-                    String.format("%s Sielhautsteckbrief(e) erstellt", count.getText()));
+                    String.format("%s Sielhautsteckbrief(e)", count.getText()));
             }
         });
 
-        FormLayout layout = new FormLayout(
-            "5dlu, 100dlu, 75dlu:g, 25dlu, 5dlu, 25dlu, 3dlu, 25dlu, 5dlu",
-            "5dlu, 35dlu, 35dlu, 3dlu:g, 35dlu, 5dlu");
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-        builder.add(countLabel, cc.xy(2, 2));
-        builder.add(count, cc.xyw(3, 2, 5));
-        builder.add(pathLabel, cc.xy(2, 3));
-        builder.add(path, cc.xyw(3, 3, 2));
-        builder.add(pathButton, cc.xyw(6, 3, 3));
-        builder.add(cancelButton, cc.xyw(4, 5, 3));
-        builder.add(okButton, cc.xy(8, 5));
+        // ── Dialog Layout ─────────────────────────────────
+        JPanel dialogPanel = new JPanel(
+            new GridBagLayout());
+        GridBagConstraints gbc =
+            new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-        JPanel dialogContent = builder.build();
+        // Zeile 1: Anzahl
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0; gbc.fill =
+            GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        dialogPanel.add(countLabel, gbc);
+        gbc.gridx = 1; gbc.gridwidth = 3;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        dialogPanel.add(count, gbc);
 
-        dialog.setTitle("Steckbriefe erstellen");
-        dialog.setModal(true);
-        dialog.setSize(600, 250);
+        // Zeile 2: Pfad
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        dialogPanel.add(pathLabel, gbc);
+        gbc.gridx = 1; gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        dialogPanel.add(path, gbc);
+        gbc.gridx = 3; gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        dialogPanel.add(pathButton, gbc);
 
-        dialog.add(dialogContent);
+        // Zeile 3: Buttons
+        JPanel btnPanel = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        btnPanel.add(cancelButton);
+        btnPanel.add(okButton);
+        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridwidth = 4; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        dialogPanel.add(btnPanel, gbc);
+
+        dialog.add(dialogPanel);
         return dialog;
     }
 
     private Map<String, String> createReports(String path) {
         Map<String, String> result = new HashMap<String, String>();
 
+        //Get output path
         SettingsManager sm = SettingsManager.getInstance();
         String fotoPath = sm.getSetting("auik.system.spath_fotos");
         String mapPath = sm.getSetting("auik.system.spath_karten");
@@ -285,6 +319,7 @@ public class SielhautPrinter extends AbstractModul {
         dialog.setSize(400, 600);
 
         JLabel resultText = new JLabel(resultString);
+
         JButton okButton = new JButton("OK");
         okButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -310,17 +345,19 @@ public class SielhautPrinter extends AbstractModul {
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        FormLayout layout = new FormLayout(
-            "5dlu, 100dlu:g, 65dlu, 2dlu, 35dlu, 5dlu",
-            "5dlu, 100dlu:g, 2dlu, 35dlu, 5dlu");
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
+        JPanel btnPanel = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        btnPanel.add(openButton);
+        btnPanel.add(okButton);
 
-        builder.add(scroller, cc.xyw(2,2, 4));
-        builder.add(openButton, cc.xy(3, 4));
-        builder.add(okButton, cc.xy(5, 4));
+        JPanel resultPanel = new JPanel(
+            new BorderLayout(3, 3));
+        resultPanel.add(scroller,
+            BorderLayout.CENTER);
+        resultPanel.add(btnPanel,
+            BorderLayout.SOUTH);
 
-        dialog.add(builder.build());
+        dialog.add(resultPanel);
         return dialog;
     }
 

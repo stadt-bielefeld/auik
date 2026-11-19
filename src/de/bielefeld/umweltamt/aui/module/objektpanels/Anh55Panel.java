@@ -75,28 +75,33 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.SwingConstants;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.elka.Anfallstelle;
 import de.bielefeld.umweltamt.aui.mappings.indeinl.Anh55Fachdaten;
 import de.bielefeld.umweltamt.aui.module.BasisObjektBearbeiten;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
-import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
 import de.bielefeld.umweltamt.aui.utils.DoubleField;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.LimitedTextArea;
@@ -158,83 +163,209 @@ public class Anh55Panel extends ObjectPanel {
         this.hauptModul = hauptModul;
         this.anfallstelle = anfallstelle;
 
-        FormLayout layout = new FormLayout(
-            "r:90dlu, 5dlu, 95dlu, 5dlu, r:0dlu, 0dlu, 90dlu", // Spalten
-            "");
+        // ── InnerPanel ────────────────────────────────────
+        JPanel innerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(2, 5, 2, 5);
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
+        // ── SEPARATOR: Fachdaten ──────────────────────────
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 4; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Fachdaten"), gbc);
 
-        builder.appendSeparator("Fachdaten");
-        builder.append("Entwässerungsgebiet:", getEntgebIdFeld());
-        builder.append("", getAbgemeldetCheck());
-        builder.nextLine();
-        builder.append("Branche:", getBrancheFeld());
-        builder.append("", getPutztuecherCheck());
-        builder.nextLine();
-        builder.append("Ansprechpartner:", getAnsprechpartnerFeld());
-        builder.append("", getMattenCheck());
-        builder.nextLine();
-        builder.append("Menge:", getMengeFeld());
-        builder.append("", getTeppichCheck());
-        builder.nextLine();
-        builder.append("Sonstige Textilien:", getSonsttexFeld());
-        builder.append("", getBerufsklCheck());
-        builder.nextLine();
-        builder.append("Monatl. Wasserverbrauch:", getMonatwasserverbFeld());
-        builder.append("", getHaushaltstexCheck());
-        builder.nextLine();
-        builder.append("Anteil am Waschgut:", getAnteilwaschgutFeld());
-        builder.append("", getGasthotelCheck());
-        builder.nextLine();
-        builder.append("Anteil am Gesamtwaschgut:", getGesamtwaschgutFeld());
-        builder.append("", getKrankenhausCheck());
-        builder.nextLine();
-        builder.append("Sachbearbeiter/in:", getSachbearbeiterFeld());
-        builder.append("", getHeimwaescheCheck());
-        builder.nextLine();
-        builder.append("", getVliesCheck());
-        builder.append("", getFischCheck());
-        builder.nextLine();
-        builder.append("", getLoesungsmittelCheck());
-        builder.append("", getBetrwasseraufberCheck());
-        builder.nextLine();
-        builder.append("", getChlorCheck());
-        builder.append("", getAktivchlorCheck());
-        builder.nextLine();
+        // ── Hilfsmethode für Zeile: Label + Feld + Checkbox
+        // Zeile 1: Entwässerungsgebiet | Abgemeldet
+        addRow(innerPanel, gbc, 1,
+            "Entwässerungsgebiet", getEntgebIdFeld(),
+            getAbgemeldetCheck());
 
-        builder.appendSeparator("Wasch-Situation");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // Zeile 2: Branche | Putztücher
+        addRow(innerPanel, gbc, 2,
+            "Branche", getBrancheFeld(),
+            getPutztuecherCheck());
+
+        // Zeile 3: Ansprechpartner | Matten
+        addRow(innerPanel, gbc, 3,
+            "Ansprechpartner", getAnsprechpartnerFeld(),
+            getMattenCheck());
+
+        // Zeile 4: Menge | Teppiche
+        addRow(innerPanel, gbc, 4,
+            "Menge", getMengeFeld(),
+            getTeppichCheck());
+
+        // Zeile 5: Sonstige Textilien | Berufskleidung
+        addRow(innerPanel, gbc, 5,
+            "Sonstige Textilien", getSonsttexFeld(),
+            getBerufsklCheck());
+
+        // Zeile 6: Monatl. Wasserverbrauch | Haushaltstextilien
+        addRow(innerPanel, gbc, 6,
+            "Monatl. Wasserverbrauch",
+            getMonatwasserverbFeld(),
+            getHaushaltstexCheck());
+
+        // Zeile 7: Anteil am Waschgut | Gaststätten
+        addRow(innerPanel, gbc, 7,
+            "Anteil am Waschgut",
+            getAnteilwaschgutFeld(),
+            getGasthotelCheck());
+
+        // Zeile 8: Anteil am Gesamtwaschgut | Krankenhaus
+        addRow(innerPanel, gbc, 8,
+            "Anteil am Gesamtwaschgut",
+            getGesamtwaschgutFeld(),
+            getKrankenhausCheck());
+
+        // Zeile 9: Sachbearbeiter | Heimwäsche
+        addRow(innerPanel, gbc, 9,
+            "Sachbearbeiter:in", getSachbearbeiterFeld(),
+            getHeimwaescheCheck());
+
+        // Zeile 10: Vlies | Fisch
+        addRowTwoChecks(innerPanel, gbc, 10,
+            getVliesCheck(), getFischCheck());
+
+        // Zeile 11: Lösungsmittel | Betriebswasseraufbereitung
+        addRowTwoChecks(innerPanel, gbc, 11,
+            getLoesungsmittelCheck(),
+            getBetrwasseraufberCheck());
+
+        // Zeile 12: Chlor | Aktiv-Chlor
+        addRowTwoChecks(innerPanel, gbc, 12,
+            getChlorCheck(), getAktivchlorCheck());
+
+        // ── SEPARATOR: Wasch-Situation ────────────────────
+        gbc.gridx = 0; gbc.gridy = 13;
+        gbc.gridwidth = 4; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Wasch-Situation"), gbc);
+
         JScrollPane waschsituationScroller = new JScrollPane(
             getWaschsituationArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(waschsituationScroller, 7);
+        waschsituationScroller.setPreferredSize(
+            new java.awt.Dimension(0, 60));
+        waschsituationScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 60));
+        gbc.gridy = 14; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(waschsituationScroller, gbc);
 
-        builder.appendSeparator("Bemerkungen");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // ── SEPARATOR: Bemerkungen ────────────────────────
+        gbc.gridy = 15; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(createSeparator("Bemerkungen"), gbc);
         JScrollPane bemerkungsScroller = new JScrollPane(getBemerkungenArea(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:30dlu");
-        builder.append(bemerkungsScroller, 7);
+        bemerkungsScroller.setPreferredSize(
+            new java.awt.Dimension(0, 60));
+        bemerkungsScroller.setMaximumSize(
+            new java.awt.Dimension(Integer.MAX_VALUE, 60));
+        gbc.gridy = 16; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(bemerkungsScroller, gbc);
 
-        JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
-            getSaveAnh55Button());
+        // ── ButtonBar ─────────────────────────────────────
+        JPanel buttonBar = new JPanel(
+            new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonBar.add(getSaveAnh55Button());
+        gbc.gridy = 17; gbc.gridwidth = 4;
+        gbc.weightx = 1.0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        innerPanel.add(buttonBar, gbc);
 
-        // JComponent buttonBar = ComponentFactory.buildOKBar(getSaveAnh55Button());
-        builder.append(buttonBar, 7);
+        // ── Wrapper ───────────────────────────────────────
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(innerPanel, BorderLayout.WEST);
+        this.setLayout(new BorderLayout());
+        this.add(wrapperPanel, BorderLayout.NORTH);
+
         addChangeListeners(getAbgemeldetCheck(), getSachbearbeiterFeld(),
             getEntgebIdFeld(), getMengeFeld(), getSonsttexFeld(),
             getMonatwasserverbFeld(), getWaschsituationArea(), getAnsprechpartnerFeld(),
             getBrancheFeld(), getPutztuecherCheck(), getTeppichCheck(), getMattenCheck(),
             getHaushaltstexCheck(), getBerufsklCheck(), getGasthotelCheck(), getKrankenhausCheck(),
             getHeimwaescheCheck(), getAnteilwaschgutFeld(), getGesamtwaschgutFeld(), getBetrwasseraufberCheck(),
-            getChlorCheck(), getAktivchlorCheck(), getVliesCheck(), getFischCheck(), getBemerkungenArea(),
-            getAbgemeldetCheck());
+            getChlorCheck(),
+            getAktivchlorCheck(),
+            getVliesCheck(),
+            getFischCheck(),
+            getBemerkungenArea());
+    }
 
+    /** Label + Textfeld links, Checkbox rechts */
+    private void addRow(JPanel panel, GridBagConstraints gbc,
+        int row, String label,
+        java.awt.Component field,
+        JCheckBox check) {
+        gbc.gridy = row; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        panel.add(new JLabel(label), gbc);
+
+        gbc.gridx = 1; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        if (field instanceof JTextField) {
+            ((JTextField) field).setPreferredSize(
+                new java.awt.Dimension(200,
+                    field.getPreferredSize().height));
+        } else if (field instanceof JFormattedTextField) {
+            ((JFormattedTextField) field).setPreferredSize(
+                new java.awt.Dimension(200,
+                    field.getPreferredSize().height));
+        } else if (field instanceof DoubleField) {
+            field.setPreferredSize(
+                new java.awt.Dimension(200,
+                    field.getPreferredSize().height));
+        }
+        panel.add(field, gbc);
+
+        gbc.gridx = 2; gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel.add(check, gbc);
+    }
+
+    /** Zwei Checkboxen nebeneinander (ohne Label/Feld) */
+    private void addRowTwoChecks(JPanel panel,
+        GridBagConstraints gbc,
+        int row,
+        JCheckBox check1, JCheckBox check2) {
+        gbc.gridy = row; gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 1;
+        panel.add(check1, gbc);
+        gbc.gridx = 2;
+        panel.add(check2, gbc);
+    }
+
+    // ── createSeparator() ─────────────────────────────────
+    private JPanel createSeparator(String title) {
+        JPanel sepPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(lbl.getFont().deriveFont(Font.BOLD));
+        sepPanel.add(lbl, gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        sepPanel.add(
+            new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        return sepPanel;
     }
 
     public void completeObjekt(Anfallstelle anfallstelle) {

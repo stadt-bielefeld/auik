@@ -320,7 +320,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * Output format is List<[Adresse]>
 	 *
 	 * @param search
-	 *            String Betreibername
+	 *            String Betriebsname
 	 * @param property
 	 *            String
 	 * @return <code>List&lt;Adresse[]&gt;</code>
@@ -531,7 +531,7 @@ abstract class DatabaseBasisQuery extends DatabaseIndeinlQuery {
 	 * Output format is List<[Standort]>
 	 *
 	 * @param search
-	 *            String Betreibername
+	 *            String Betriebsname
 	 * @param property
 	 *            String
 	 * @return <code>List&lt;Standort[]&gt;</code>

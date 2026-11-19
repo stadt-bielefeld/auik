@@ -39,6 +39,7 @@
  */
 package de.bielefeld.umweltamt.aui.module;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,11 +59,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -70,6 +66,7 @@ import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Gemarkung;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.EditorGemarkungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.tablemodelbase.ListTableModel;
 
@@ -156,16 +153,10 @@ public class EditorGemarkungen extends AbstractModul {
             });
 
             // Noch etwas Layout...
-            FormLayout layout = new FormLayout("pref, 4dlu, pref:grow", "pref, 3dlu, f:150dlu:grow");
-            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-            CellConstraints cc = new CellConstraints();
-
-            builder.add(submitButton, cc.xy(1, 1));
-            builder.add(getTableScroller(), cc.xyw(1, 3, 3));
-
-            panel = builder.getPanel();
-            panel.setBorder(Paddings.DIALOG);
+            panel = new JPanel(new BorderLayout(0, 5));
+            FormHelper.setDialogBorder(panel);
+            panel.add(FormHelper.buttonBarLeft(submitButton), BorderLayout.NORTH);
+            panel.add(getTableScroller(), BorderLayout.CENTER);
         }
 
         return panel;

@@ -21,19 +21,18 @@
 
 package de.bielefeld.umweltamt.aui.module.common;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.basis.Objekt;
@@ -62,7 +61,7 @@ public class ObjektChooser extends OkCancelDialog {
     public ObjektChooser(HauptFrame owner, Objekt objekt, ObjektVerknuepfungModel objektVerknuepfungModel) {
         super("Objekt auswählen", owner);
 
-        objektModel = new BasisObjektModel("Betreiber", null);
+        objektModel = new BasisObjektModel("Betreiber:in", null);
         this.objekt = objekt;
         this.objektVerknuepfungModel = objektVerknuepfungModel;
         getErgebnisTabelle().setModel(objektModel);
@@ -126,14 +125,11 @@ public class ObjektChooser extends OkCancelDialog {
         TabAction ta = new TabAction();
         ta.addComp(ergebnisTabelle);
 
-        FormLayout layout = new FormLayout("180dlu:g, 3dlu, min(16dlu;p)", // spalten
-                "300dlu:g"); // zeilen
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
+        tabellenScroller.setPreferredSize(new Dimension(320, 500));
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.add(tabellenScroller, BorderLayout.CENTER);
 
-        builder.add(tabellenScroller, cc.xyw(1, 1, 3));
-
-        return builder.getPanel();
+        return contentPanel;
     }
 
     private JTable getErgebnisTabelle() {

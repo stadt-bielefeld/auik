@@ -24,6 +24,7 @@
  */
 package de.bielefeld.umweltamt.aui.module.objektpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,14 +39,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.HauptFrame;
@@ -56,6 +55,7 @@ import de.bielefeld.umweltamt.aui.module.common.ObjektChooser;
 import de.bielefeld.umweltamt.aui.module.common.tablemodels.ObjektVerknuepfungModel;
 import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.IntegerField;
 import de.bielefeld.umweltamt.aui.utils.TextFieldDateChooser;
 
@@ -101,47 +101,41 @@ public class SuevPanel extends ObjectPanel {
         this.name = "SüwVO-Abw-Teil1";
         this.hauptModul = hauptModul;
 
-        FormLayout layout = new FormLayout(
-            "r:70dlu, 5dlu, 90dlu, 5dlu, 10dlu, 5dlu, 90dlu", // Spalten
-            "");
+        JPanel innerPanel = FormHelper.createFormPanel();
+        int row = 0;
 
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout, this);
-        builder.appendSeparator("Fachdaten");
-        builder.append("Datum Anschreiben:", getDatAnschreibenDatum());
-        builder.append("", getSanierungskonzeptCheck());
-        builder.nextLine();
-        builder.append("Datum Anzeige:", getDatAnzeige58Datum());
-        builder.append("", getSanierungErfolgtCheck());
-        builder.nextLine();
-        builder.append("versiegelte Fläche:", getVersFlaecheFeld());
-        builder.append("", getDirektrwCheck());
-        builder.nextLine();
-        builder.append("", getGroesser3haCheck());
-        builder.append("", getDirektswCheck());
-        builder.nextLine();
-        builder.append("", getSuevkanPflichtCheck());
-        builder.append("", getIndirektrwCheck());
-        builder.nextLine();
-        builder.append("", getKeineAngabenCheck());
-        builder.append("", getIndirektswCheck());
-        builder.nextLine();
+        // ── Fachdaten ─────────────────────────────────────
+        // linke Spalte: Label + Feld | rechte Spalte: Checkboxen
+        FormHelper.addSeparator(innerPanel, row++, "Fachdaten");
+        FormHelper.addLabelField(innerPanel, row, 0, "Datum Anschreiben", getDatAnschreibenDatum());
+        FormHelper.addLabelField(innerPanel, row++, 1, null, getSanierungskonzeptCheck());
+        FormHelper.addLabelField(innerPanel, row, 0, "Datum Anzeige", getDatAnzeige58Datum());
+        FormHelper.addLabelField(innerPanel, row++, 1, null, getSanierungErfolgtCheck());
+        FormHelper.addLabelField(innerPanel, row, 0, "versiegelte Fläche", getVersFlaecheFeld());
+        FormHelper.addLabelField(innerPanel, row++, 1, null, getDirektrwCheck());
+        FormHelper.addLabelField(innerPanel, row, 0, null, getGroesser3haCheck());
+        FormHelper.addLabelField(innerPanel, row++, 1, null, getDirektswCheck());
+        FormHelper.addLabelField(innerPanel, row, 0, null, getSuevkanPflichtCheck());
+        FormHelper.addLabelField(innerPanel, row++, 1, null, getIndirektrwCheck());
+        FormHelper.addLabelField(innerPanel, row, 0, null, getKeineAngabenCheck());
+        FormHelper.addLabelField(innerPanel, row++, 1, null, getIndirektswCheck());
 
-        builder.appendSeparator("Verknüpfte Objekte");
-        builder.appendRow("3dlu");
-        builder.nextLine(2);
+        // ── Verknüpfte Objekte ────────────────────────────
+        FormHelper.addSeparator(innerPanel, row++, "Verknüpfte Objekte");
         JScrollPane objektverknuepfungScroller = new JScrollPane(
             getObjektverknuepungTabelle(),
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        builder.appendRow("fill:100dlu");
-        builder.append(objektverknuepfungScroller, 7);
-        builder.nextLine();
+        FormHelper.addFull(innerPanel, row++, objektverknuepfungScroller, 150);
 
+        // ── ButtonBar ─────────────────────────────────────
         JComponent buttonBar = ComponentFactory.buildRightAlignedBar(
             getSelectObjektButton(), getSaveSuevButton());
+        FormHelper.addFull(innerPanel, row++, buttonBar);
 
-        // JPanel buttonBar = ComponentFactory.buildOKBar(getSaveSuevButton());
-        builder.append(buttonBar, 7);
+        // ── Wrapper ───────────────────────────────────────
+        this.setLayout(new BorderLayout());
+        this.add(FormHelper.wrapNorthWest(innerPanel), BorderLayout.NORTH);
         addChangeListeners(getVersFlaecheFeld(), getDatAnschreibenDatum(),
             getDatAnzeige58Datum(), getDirektrwCheck(), getDirektswCheck(),
             getGroesser3haCheck(), getIndirektrwCheck(), getKeineAngabenCheck(),

@@ -23,6 +23,8 @@ package de.bielefeld.umweltamt.aui.module;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -38,10 +40,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.AbstractModul;
 import de.bielefeld.umweltamt.aui.GUIManager;
 import de.bielefeld.umweltamt.aui.module.importer.AbstractImporter;
@@ -49,6 +47,7 @@ import de.bielefeld.umweltamt.aui.module.importer.AbwasserImporter;
 import de.bielefeld.umweltamt.aui.module.importer.SielhautImporter;
 import de.bielefeld.umweltamt.aui.module.importer.AbstractImporter.ImporterException;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 
 /**
  * Generic importer module
@@ -211,35 +210,38 @@ public class Import extends AbstractModul {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public JPanel getPanel() {
         if (this.panel != null) {
             return this.panel;
         }
 
-        FormLayout layout = new FormLayout("40px,5dlu,65dlu,5dlu,175dlu:g", "");
-        DefaultFormBuilder b = new DefaultFormBuilder(layout);
+        JPanel innerPanel = FormHelper.createDialogPanel();
 
-        b.append(chooseFileStepLabel, fileButton, fileLabel);
-        b.append("", typeLabel, typeCBox);
-        b.appendRelatedComponentsGapRow();
-        b.appendRow("f:50dlu:g");
-        b.nextLine(2);
+        // Spalte 0: Schritt-Symbole, Spalten 1 und 2: Inhalt
+        FormHelper.add(innerPanel, chooseFileStepLabel, 0, 0, 1);
+        FormHelper.add(innerPanel, fileButton, 1, 0, 1);
+        FormHelper.add(innerPanel, fileLabel, 2, 0, 1,
+            GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
 
-        b.append(chooseRecordStepLabel);
-        b.append(listScroller, 3);
-        b.appendRelatedComponentsGapRow();
-        b.nextLine(2);
+        FormHelper.add(innerPanel, typeLabel, 1, 1, 1);
+        FormHelper.add(innerPanel, typeCBox, 2, 1, 1);
 
-        b.append(""); // no label in front of the descriptions
-        b.append(descriptionLabel, 3);
-        b.appendRelatedComponentsGapRow();
-        b.nextLine(2);
+        FormHelper.add(innerPanel, chooseRecordStepLabel, 0, 2, 1,
+            GridBagConstraints.NONE, GridBagConstraints.NORTHWEST);
+        listScroller.setPreferredSize(new Dimension(0, 400));
+        GridBagConstraints gbc = FormHelper.constraints(1, 2, 2);
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        innerPanel.add(listScroller, gbc);
 
-        b.append(importStepLabel, importButton);
+        FormHelper.add(innerPanel, descriptionLabel, 1, 3, 2,
+            GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
 
-        this.panel = b.getPanel();
-        this.panel.setBorder(Paddings.DIALOG);
+        FormHelper.add(innerPanel, importStepLabel, 0, 4, 1);
+        FormHelper.add(innerPanel, importButton, 1, 4, 1);
+
+        this.panel = innerPanel;
 
         return this.panel;
     }

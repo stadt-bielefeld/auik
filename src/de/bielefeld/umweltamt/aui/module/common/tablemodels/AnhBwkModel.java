@@ -61,7 +61,7 @@ public class AnhBwkModel extends ListTableModel<BwkFachdaten> {
      * Erzeugt ein einfaches TableModel für Brennwertkessel-Fachdaten.
      */
     public AnhBwkModel() {
-        super(new String[] {"Betreiber", "Standort", "Hersteller",
+        super(new String[] {"Betreiber:in", "Standort", "Hersteller",
                 "Brennmittel", "Leistung", "Erfassung", "Anschreiben",
                 "Genehmigung", "Beschreibung"}, false);
     }

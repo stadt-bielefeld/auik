@@ -76,7 +76,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
+import java.awt.Insets;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
@@ -114,13 +117,6 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 
 import org.hibernate.HibernateException;
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.looks.HeaderStyle;
-import com.jgoodies.looks.Options;
 
 import de.bielefeld.umweltamt.aui.gui.PasswordChangeDialog;
 import de.bielefeld.umweltamt.aui.module.common.editors.EinstellungenEditor;
@@ -235,26 +231,29 @@ public class HauptFrame extends JFrame {
      */
     private void initialize() {
         try {
-            // Systemschriftarten benutzen
-            UIManager.put(Options.USE_SYSTEM_FONTS_APP_KEY, Boolean.TRUE);
-           //TODO Options.setGlobalFontSizeHints(FontSizeHints.MIXED);
-            Options.setUseSystemFonts(true);
-
             // Look & Feel umschalten
             UIManager
-                    .setLookAndFeel(Options.getSystemLookAndFeelClassName());
+                    .setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-            /*
-             * Falls mal ein Wechsel auf Linux anstehen sollte, wird der
-             * Windows-L'n'F vermutlich nicht mehr funktionieren. Auch kann es
-             * sein, dass man auf allen NT- und XP-Rechner den selben L'n'F
-             * haben möchte. Dann einfach statt der Zeile oben die folgende
-             * nehmen:
-             */
-            // UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
+            // Einheitliche Schrift, da JGoodies-Looks die Systemschrift
+            // nicht mehr setzt
+            Font defaultFont = new Font("SansSerif", Font.PLAIN, 12);
+            for (String key : new String[] {"Button", "Label", "TextField",
+                "FormattedTextField", "PasswordField", "ComboBox", "Table",
+                "TableHeader", "TextArea", "CheckBox", "RadioButton",
+                "ToggleButton", "TitledBorder", "Menu", "MenuItem",
+                "PopupMenu", "ToolTip", "List", "Panel", "ScrollPane",
+                "Viewport", "TabbedPane", "ToolBar", "Tree", "Spinner"}) {
+                UIManager.put(key + ".font", defaultFont);
+            }
 
-            // Erleichert das Finden von manchen Layout-Fehlern
-            // ClearLookManager.setMode(ClearLookMode.DEBUG);
+            // Tabellen: helle Linien, hellblaue Auswahl
+            UIManager.put("Table.gridColor", new Color(220, 220, 220));
+            UIManager.put("Table.background", new Color(255, 255, 255));
+            UIManager.put("Table.alternateRowColor", new Color(245, 245, 245));
+            UIManager.put("Table.selectionBackground", new Color(173, 216, 230));
+            UIManager.put("Table.selectionForeground", new Color(0, 0, 0));
+            UIManager.put("Table.rowHeight", 18);
         } catch (Exception e) {
             log.debug("Konnte Look & Feel nicht ändern!");
         }
@@ -572,8 +571,6 @@ public class HauptFrame extends JFrame {
             hauptMenue.add(getEditMenu());
             // hauptMenue.add(Box.createHorizontalGlue());
             hauptMenue.add(getHelpMenu());
-            hauptMenue.putClientProperty(
-                    Options.HEADER_STYLE_KEY, HeaderStyle.SINGLE);
         }
         return hauptMenue;
     }
@@ -621,7 +618,6 @@ public class HauptFrame extends JFrame {
             helpMenu = new JMenu();
             helpMenu.setText("Hilfe");
             helpMenu.setMnemonic(KeyEvent.VK_H);
-            helpMenu.putClientProperty(Options.NO_ICONS_KEY, Boolean.TRUE);
             helpMenu.add(getAboutMenuItem());
             helpMenu.add(getDoku());
         }
@@ -730,7 +726,7 @@ public class HauptFrame extends JFrame {
                                     "<html><table valign='top'>"
                                     + "<tr><th align='left'>Version:</th><td>"
                                     + guiManager.getVersion() + "</td>"
-                                    + "<tr><th align='left'>Copyright:</th>"
+                                    + "<tr><th align='left'>"
                                     + "<td>2005 - 2011 Umweltamt Bielefeld</td></tr>"
                                     + "<tr><th align='left'>Projekthomepage:</th>"
 // TODO: Get the URL (and other stuff) from the Manifest
@@ -1061,8 +1057,10 @@ public class HauptFrame extends JFrame {
             KeyboardFocusManager.getCurrentKeyboardFocusManager()
                     .addKeyEventDispatcher(escListener);
             this.textLabel = new JLabel(
-                    "<html>Bitte geben Sie ihren Benutzernamen und <br>"
-                    + "ihr Passwort ein und klicken Sie auf <br>"
+                "<html>Bitte geben Sie ihre"
+                + " Kennung und <br>"
+                + "ihr Passwort ein und klicken"
+                + " Sie auf <br>"
                     + "den Button \"Login\".</html>");
             this.benutzerFeld = new JTextField(10);
             if (settings.getSetting("auik.prefs.lastuser") == null) {
@@ -1135,8 +1133,16 @@ public class HauptFrame extends JFrame {
                                     BenutzerDatenDialog.this.close();
                                 } else {
                                     GUIManager.getInstance().showErrorMessage(
-                                        "Der eingegebene Benutzername oder das Passwort war falsch (oder es ist aus anderen\n"
-                                        + "Gründen keine Verbindung mit der Datenbank möglich), bitte versuchen Sie es erneut!",
+                                        "Der eingegebene"
+                                        + " Kennung oder"
+                                        + " das Passwort war"
+                                        + " falsch (oder es"
+                                        + " ist aus anderen\n"
+                                        + "Gründen keine"
+                                        + " Verbindung mit der"
+                                        + " Datenbank möglich)"
+                                        + ", bitte versuchen"
+                                        + " Sie es erneut!",
                                         "Fehler");
                                     benutzerFeld.setEnabled(true);
                                     passwortFeld.setEnabled(true);
@@ -1153,24 +1159,57 @@ public class HauptFrame extends JFrame {
                 }
             });
 
-            FormLayout layout = new FormLayout(
-                    "right:pref, 4dlu, pref:grow, 4dlu, pref", // Spalten
-                    "pref:grow, 3dlu, pref, 3dlu, pref, 5dlu:grow" // Zeilen
-            );
 
-            layout.setRowGroups(new int[][]{{3, 5}});
+            JPanel panel = new JPanel(
+                new GridBagLayout());
+            GridBagConstraints gbc =
+                new GridBagConstraints();
+            gbc.insets = new Insets(3, 4, 3, 4);
 
-            PanelBuilder builder = new PanelBuilder(layout);
-            CellConstraints cc = new CellConstraints();
+            // Text Label
+            gbc.gridx = 0; gbc.gridy = 0;
+            gbc.gridwidth = 3;
+            gbc.weightx = 1.0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            panel.add(textLabel, gbc);
 
-            builder.add(textLabel, cc.xyw(1, 1, 5));
-            builder.addLabel("Benutzer:", cc.xy(1, 3));
-            builder.add(benutzerFeld, cc.xy(3, 3));
-            builder.addLabel("Passwort:", cc.xy(1, 5));
-            builder.add(passwortFeld, cc.xy(3, 5));
-            builder.add(loginButton, cc.xy(5, 5));
-            JPanel panel = builder.getPanel();
-            panel.setBorder(Paddings.DIALOG);
+            // Label Benutzer
+            gbc.gridy = 1;
+            gbc.gridwidth = 1;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.EAST;
+            panel.add(new JLabel("Kennung"), gbc);
+
+            // BenutzerFeld
+            gbc.gridx = 1;
+            gbc.weightx = 1.0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            panel.add(benutzerFeld, gbc);
+
+            // Label Passwort
+            gbc.gridx = 0; gbc.gridy = 2;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.EAST;
+            panel.add(new JLabel("Passwort"), gbc);
+
+            // PasswortFeld
+            gbc.gridx = 1;
+            gbc.weightx = 1.0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            panel.add(passwortFeld, gbc);
+
+            // Login Button
+            gbc.gridx = 2;
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            panel.add(loginButton, gbc);
+
+            panel.setBorder(
+                BorderFactory.createEmptyBorder(
+                    7, 7, 7, 7));
+
             this.setContentPane(panel);
             this.pack();
 

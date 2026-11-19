@@ -1,6 +1,8 @@
 package de.bielefeld.umweltamt.aui.module.common;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,11 +25,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Paddings;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import de.bielefeld.umweltamt.aui.HauptFrame;
 import de.bielefeld.umweltamt.aui.mappings.DatabaseQuery;
 import de.bielefeld.umweltamt.aui.mappings.basis.Adresse;
@@ -40,6 +37,7 @@ import de.bielefeld.umweltamt.aui.utils.AuikLogger;
 import de.bielefeld.umweltamt.aui.utils.AuikUtils;
 import de.bielefeld.umweltamt.aui.utils.BasicEntryField;
 import de.bielefeld.umweltamt.aui.utils.ComponentFactory;
+import de.bielefeld.umweltamt.aui.utils.FormHelper;
 import de.bielefeld.umweltamt.aui.utils.SwingWorkerVariant;
 import de.bielefeld.umweltamt.aui.utils.TabAction;
 import de.bielefeld.umweltamt.aui.utils.TableFocusListener;
@@ -93,7 +91,7 @@ public class AdresseChooser extends JDialog {
                 this.adresseModel.setList(initialList);
             }
         } else if (initial instanceof Inhaber && caller == "betreiber") {
-            setTitle("Inhaber auswählen");
+            setTitle("Inhaber:in auswählen");
             this.inhaber = (Inhaber) initial;
             this.inhaberModel = new BasisInhaberModel();
             if (this.inhaber.getId() != null) {
@@ -162,36 +160,45 @@ public class AdresseChooser extends JDialog {
 		submitToolBar.setRollover(true);
 		submitToolBar.add(getSubmitButton());
 
-		FormLayout layout = new FormLayout("pref, 3dlu, 400dlu:g, 3dlu, pref, 3dlu, 30dlu:g, 3dlu, pref", // spalten
-				"pref, 3dlu, pref, 3dlu, pref, 3dlu, 320dlu:g, 3dlu, 3dlu, pref"); // zeilen
-		PanelBuilder builder = new PanelBuilder(layout);
-		CellConstraints cc = new CellConstraints();
+		JPanel panel = FormHelper.createDialogPanel();
+		GridBagConstraints gbc;
 
 		//nach Namen kann nur bei Inhabern und Standorten gesucht werden
 		if (caller.equals("standort") || caller.equals("betreiber")) {
-			builder.addLabel("Name:", cc.xy(1, 1));
-			builder.add(getNameFeld(), cc.xyw(3, 1, 5));
-			builder.add(getSubmitButton(), cc.xy(9, 1));
+			FormHelper.addLabel(panel, 0, 0, "Name");
+			FormHelper.add(panel, getNameFeld(), 1, 0, 3,
+					GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
+			FormHelper.add(panel, getSubmitButton(), 4, 0, 1);
 		}
 
 		//nach Strasse und Hausnummer kann in jedem Fall gesucht werden
-		builder.addLabel("Straße:", cc.xy(1, 3));
-		builder.add(getStrassenFeld(), cc.xy(3, 3));
-		builder.addLabel("Hausnr.:", cc.xy(5, 3));
-		builder.add(getHausnrFeld(), cc.xy(7, 3));
-		builder.add(getSubmitButtonAdresse(), cc.xy(9, 3));
+		FormHelper.addLabel(panel, 0, 1, "Straße");
+		FormHelper.add(panel, getStrassenFeld(), 1, 1, 1,
+				GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
+		FormHelper.addLabel(panel, 2, 1, "Hausnr.");
+		FormHelper.fixWidth(getHausnrFeld(), 60);
+		FormHelper.add(panel, getHausnrFeld(), 3, 1, 1,
+				GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
+		FormHelper.add(panel, getSubmitButtonAdresse(), 4, 1, 1);
 
 		//eine Standortbezeichnung kann natürlich nur ein Standort haben
 		if (caller.equals("standort")) {
-			builder.addLabel("Standort:", cc.xy(1, 5));
-			builder.add(getStandortFeld(), cc.xyw(3, 5, 5));
-			builder.add(getSubmitButtonStandort(), cc.xy(9, 5));
+			FormHelper.addLabel(panel, 0, 2, "Standort");
+			FormHelper.add(panel, getStandortFeld(), 1, 2, 3,
+					GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
+			FormHelper.add(panel, getSubmitButtonStandort(), 4, 2, 1);
 		}
-		builder.add(tabellenScroller, cc.xywh(1, 7, 9, 2));
-		builder.add(buttonBar, cc.xyw(3, 10, 3));
 
-		JPanel panel = builder.getPanel();
-		panel.setBorder(Paddings.DIALOG);
+		// Tabelle wächst mit dem Dialog
+		tabellenScroller.setPreferredSize(new Dimension(700, 400));
+		gbc = FormHelper.constraints(0, 3, GridBagConstraints.REMAINDER);
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
+		panel.add(tabellenScroller, gbc);
+
+		// OK / Abbrechen
+		FormHelper.add(panel, buttonBar, 1, 4, 1);
 
 		return (panel);
 	}
