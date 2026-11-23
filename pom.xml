@@ -368,7 +368,7 @@
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>10.2</version>
+            <version>13.3.0</version>
           </dependency>
           <!-- Needed for running Checkstyle directly without Maven,
                which can be useful e.g. for editor integration. -->
