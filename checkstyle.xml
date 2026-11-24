@@ -53,8 +53,6 @@ Maven Checkstyle plugin. Some design related checks where removed.
     <property name="message" value="Line has trailing spaces."/>
   </module>
 
-  <module name="LineEnding"/>
-
   <module name="TreeWalker">
 
     <!-- <property name="cacheFile" value="${checkstyle.cache.file}"/> -->
