@@ -11,6 +11,8 @@ jobs:
   build:
     name: Create Release
     runs-on: windows-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@master
@@ -35,44 +37,16 @@ jobs:
           ls
       - name: Create Release
         id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        uses: softprops/action-gh-release@v3
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          name: Release ${{ github.ref_name }}
           body: |
             Änderungen in diesem Release:
             "Wir haben Fehler behoben, die Leistung gesteigert, den Müll runtergebracht und den Rasen gemäht – Zeit für ein Nickerchen"
           draft: true
           prerelease: true
-      - name: Upload Release Assets
-        id: upload-release-asset-jar
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./target/auik-${{ github.ref_name }}.jar
-          asset_name: auik-${{ github.ref_name }}.jar
-          asset_content_type: application/java-archive
-      - name: Upload Release Assets
-        id: upload-release-asset-sha256
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./target/auik-${{ github.ref_name }}.jar.sha256sum
-          asset_name: auik-${{ github.ref_name }}.jar.sha256sum
-          asset_content_type: text/plain
-      - name: Upload Release Assets
-        id: upload-release-asset-schema
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./data/db/fisumwelt_schema.sql
-          asset_name: fisumwelt_schema.sql
-          asset_content_type: text/plain
+          files: |
+            ./target/auik-${{ github.ref_name }}.jar
+            ./target/auik-${{ github.ref_name }}.jar.sha256sum
+            ./data/db/fisumwelt_schema.sql
+          fail_on_unmatched_files: true
